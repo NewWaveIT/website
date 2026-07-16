@@ -1,35 +1,40 @@
 # Brand-assets
 
-De website verwacht de officiële merkbestanden onder `public/assets/`. Deze
-staan in het Claude Design-project (`assets/` en `uploads/`) en in de merkpakket
--PDF's. Kopieer ze hierheen met exact deze paden en namen.
+## Status
 
-## Logos — `public/assets/logos/`
-| Bestand | Gebruikt in |
-|---|---|
-| `logo-horizontal-espresso.png` | Header (lichte achtergrond) |
-| `logo-horizontal-white.png` | Footer (donkere achtergrond) |
-| `icon-orange.png` | Favicon / beeldmerk |
+- ✅ **Logos** (`logos/`) — 10 varianten, gecomprimeerd en geplaatst.
+- ✅ **Brand-badges** (`brand/`) — wave-badge espresso + eggshell, geplaatst.
+- ⏳ **Foto's** (`photos/`) — **nog toe te voegen** (zie hieronder).
 
-## Brand — `public/assets/brand/`
-| Bestand | Gebruikt in |
-|---|---|
-| `wave-badge-espresso.png` | Hero-achtergrond (homepage) |
+De logos/brand zijn opgehaald uit het Claude Design-project en gecomprimeerd
+met `scripts/optimize-assets.mjs` (resize + PNG-optimalisatie, ~73% kleiner).
 
-## Foto's — `public/assets/photos/`
-| Bestand | Gebruikt in |
-|---|---|
-| `team-presentatie-breed.png` | Featured case + Werken-bij |
-| `overleg-laptop.png` | Diensten (Mendix) + inzichten |
-| `team-overleg-scherm.png` | Diensten (AI) |
-| `klantgesprek-tafel.png` | Diensten (Strategie) + inzichten |
-| `overleg-lachend.png` | Mensen-sectie + inzichten |
-| `portret-blauw.png` | Mensen-collage + lead-card (CEO) |
-| `portret-bordeaux.png` | Mensen-collage |
+## Foto's nog toevoegen
 
-> Tot deze bestanden geplaatst zijn tonen de `next/image`-slots een lege ruimte
-> en het logo een alt-tekst. De rest van de pagina rendert volledig.
->
-> Alternatief: exporteer ze uit het Design-project met de `DesignSync`-tool
-> (`ui_kits/website` + `assets/`), of gebruik het merkpakket uit
-> `uploads/TheNewWaveIT_*.png`.
+De teamfoto's konden niet automatisch worden opgehaald: de design-import-tool
+kapt bestanden af op **256 KB** en de foto's zijn groter. Voeg ze zelf toe:
+
+1. Exporteer/download deze bestanden uit het Design-project (map `assets/photos/`)
+   of gebruik de originelen, en zet ze in `public/assets/photos/`:
+
+   | Bestand | Gebruikt in |
+   |---|---|
+   | `team-presentatie-breed.png` | Featured case + Werken-bij |
+   | `overleg-laptop.png` | Diensten (Mendix) + inzichten |
+   | `team-overleg-scherm.png` | Diensten (AI) |
+   | `klantgesprek-tafel.png` | Diensten (Strategie) + inzichten |
+   | `overleg-lachend.png` | Mensen-sectie + inzichten |
+   | `portret-blauw.png` | Mensen-collage + lead-card (CEO) |
+   | `portret-bordeaux.png` | Mensen-collage |
+   | `portret-3.png`, `portret-duimen.png` | Team/over-ons |
+   | `founders-trio.png` | Over-ons |
+   | `cutout-spreker-bordeaux.png`, `cutout-spreker-groen.png` | Sector/dienst-hero's |
+
+2. Comprimeer ze in één keer (resize naar max 1600px + optimalisatie):
+
+   ```bash
+   node scripts/optimize-assets.mjs --public
+   ```
+
+Tot de foto's er staan renderen de pagina's volledig, maar blijven de
+`next/image`-vlakken leeg.
