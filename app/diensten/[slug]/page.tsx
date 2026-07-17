@@ -12,6 +12,7 @@ import {
   ArrowRight,
 } from "lucide-react";
 import { DIENSTEN, DIENST_SLUGS } from "@/lib/diensten-detail";
+import { SectorHeroAnim } from "@/components/sector-hero-anim";
 import "./dienst-detail.css";
 
 const BADGE_ICON = { boxes: Boxes, "brain-circuit": BrainCircuit, route: Route };
@@ -62,6 +63,7 @@ export default async function DienstPage({
       />
 
       <section className="shero">
+        <SectorHeroAnim theme={slug} />
         <div className="wrap-wide">
           <div className="crumbs">
             <Link href="/">Home</Link> / <Link href="/diensten">Diensten</Link> /{" "}

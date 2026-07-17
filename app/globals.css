@@ -309,3 +309,39 @@ footer.site-footer { background: var(--ink-950); color: var(--text-on-dark-muted
 @media (prefers-reduced-motion: reduce) {
   .rv { opacity: 1; transform: none; transition: none; }
 }
+
+/* ============================================================
+   Sector/dienst-hero animaties (geport uit sector-hero.js)
+   ============================================================ */
+.shero-anim {
+  position: absolute;
+  inset: 0 0 0 auto;
+  width: 54%;
+  pointer-events: none;
+  -webkit-mask-image: linear-gradient(to left, #000 55%, transparent);
+  mask-image: linear-gradient(to left, #000 55%, transparent);
+}
+.shero-anim svg { width: 100%; height: 100%; display: block; }
+
+@keyframes tnw-drive { from { transform: translateX(-180px); } to { transform: translateX(980px); } }
+@keyframes tnw-dash { to { stroke-dashoffset: -120; } }
+@keyframes tnw-twinkle { 0%, 100% { opacity: 0.15; } 50% { opacity: 0.9; } }
+@keyframes tnw-drift { from { transform: translateX(-140px); } to { transform: translateX(940px); } }
+@keyframes tnw-flag { 0%, 100% { transform: skewY(0deg); } 50% { transform: skewY(-4deg); } }
+@keyframes tnw-bar { from { transform: scaleY(0.72); } to { transform: scaleY(1); } }
+@keyframes tnw-draw { 0% { stroke-dashoffset: 100; } 55% { stroke-dashoffset: 0; } 100% { stroke-dashoffset: 0; } }
+@keyframes tnw-blink { 0%, 54%, 100% { opacity: 0; } 60%, 92% { opacity: 1; } }
+@keyframes tnw-ecg { from { stroke-dashoffset: 1000; } to { stroke-dashoffset: 0; } }
+@keyframes tnw-beat { 0%, 26%, 100% { transform: scale(1); } 8% { transform: scale(1.1); } 16% { transform: scale(1); } 22% { transform: scale(1.06); } }
+@keyframes tnw-spin { to { transform: rotate(360deg); } }
+@keyframes tnw-spin-rev { to { transform: rotate(-360deg); } }
+@keyframes tnw-belt { from { transform: translateX(-120px); } to { transform: translateX(920px); } }
+@keyframes tnw-block { 0% { opacity: 0; transform: translateY(16px); } 10%, 80% { opacity: 1; transform: translateY(0); } 92%, 100% { opacity: 0; transform: translateY(0); } }
+@keyframes tnw-nodepulse { 0%, 100% { transform: scale(1); opacity: 0.55; } 50% { transform: scale(1.35); opacity: 1; } }
+@keyframes tnw-linepulse { 0% { stroke-dashoffset: 110; } 45% { stroke-dashoffset: -100; } 100% { stroke-dashoffset: -100; } }
+@keyframes tnw-pop { 0%, 8% { transform: scale(0); opacity: 0; } 14%, 86% { transform: scale(1); opacity: 1; } 94%, 100% { transform: scale(0); opacity: 0; } }
+@keyframes tnw-ring { 0%, 10% { transform: scale(0.4); opacity: 0; } 16% { opacity: 0.7; } 40%, 100% { transform: scale(2.4); opacity: 0; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .shero-anim * { animation: none !important; }
+}

@@ -10,6 +10,7 @@ import {
   HeartPulse,
   Factory,
 } from "lucide-react";
+import { SectorHeroAnim } from "@/components/sector-hero-anim";
 import "./diensten.css";
 
 export const metadata: Metadata = {
@@ -38,6 +39,7 @@ export default function DienstenPage() {
       />
 
       <section className="dhero">
+        <SectorHeroAnim theme="diensten" />
         <div className="wrap-wide">
           <div className="crumbs">
             <Link href="/">Home</Link> / Diensten

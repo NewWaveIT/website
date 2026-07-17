@@ -12,6 +12,7 @@ import {
   ArrowRight,
 } from "lucide-react";
 import { SECTOREN, SECTOR_SLUGS } from "@/lib/sectoren-detail";
+import { SectorHeroAnim } from "@/components/sector-hero-anim";
 import "./sector-detail.css";
 
 const ICONS = {
@@ -69,6 +70,7 @@ export default async function SectorPage({
       />
 
       <section className="shero">
+        <SectorHeroAnim theme={slug === "publieke-sector" ? "publiek" : slug} />
         <div className="wrap-wide">
           <div className="crumbs">
             <Link href="/">Home</Link> / <Link href="/sectoren">Sectoren</Link> /{" "}

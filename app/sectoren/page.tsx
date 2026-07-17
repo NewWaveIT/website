@@ -9,6 +9,7 @@ import {
   MessageCircleQuestion,
   ArrowRight,
 } from "lucide-react";
+import { SectorHeroAnim } from "@/components/sector-hero-anim";
 import "./sectoren.css";
 
 export const metadata: Metadata = {
@@ -86,6 +87,7 @@ export default function SectorenPage() {
       />
 
       <section className="dhero">
+        <SectorHeroAnim theme="sectoren" />
         <div className="wrap-wide">
           <div className="crumbs">
             <Link href="/">Home</Link> / Sectoren
