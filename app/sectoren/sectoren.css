@@ -1,0 +1,39 @@
+/* Sectorenpagina — geport uit ui_kits/website/sectoren.html (gescoopt onder .p-sectoren) */
+
+.p-sectoren .crumbs { font-family: var(--font-mono); font-size: var(--text-xs); color: var(--ink-400); padding: var(--space-5) 0 0; }
+.p-sectoren .crumbs a { color: var(--ink-400); }
+.p-sectoren .crumbs a:hover { color: var(--color-primary); }
+
+.p-sectoren .dhero { background: var(--ink-900); color: var(--eggshell); position: relative; overflow: hidden; }
+.p-sectoren .dhero .wrap-wide { position: relative; padding: var(--space-8) 0 var(--space-9); }
+.p-sectoren .dhero h1 { font-family: var(--font-display-expanded); font-weight: var(--fw-black); font-size: var(--text-4xl); line-height: var(--leading-tight); color: #fff; margin: var(--space-5) 0; max-width: 20ch; }
+.p-sectoren .dhero h1 em { font-style: normal; color: var(--orange-400); }
+.p-sectoren .dhero p { font-size: var(--text-lg); color: var(--text-on-dark-muted); line-height: var(--leading-relaxed); max-width: 52ch; margin: 0; }
+
+.p-sectoren .sgrid { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-6); }
+.p-sectoren .scard { display: flex; flex-direction: column; background: var(--white); border: 1px solid var(--border-default); border-radius: var(--radius-lg); padding: var(--space-7); transition: transform 160ms, box-shadow 160ms, border-color 160ms; color: var(--text-body); }
+.p-sectoren .scard:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); border-color: var(--color-primary); color: var(--text-body); }
+.p-sectoren .scard .top { display: flex; align-items: center; gap: var(--space-4); margin-bottom: var(--space-4); }
+.p-sectoren .scard .ic { width: 48px; height: 48px; border-radius: var(--radius-md); background: rgba(241, 88, 34, 0.1); display: flex; align-items: center; justify-content: center; flex: none; }
+.p-sectoren .scard .ic .lucide { width: 24px; height: 24px; color: var(--color-primary); }
+.p-sectoren .scard h2 { font-size: var(--text-xl); font-weight: var(--fw-extrabold); margin: 0; }
+.p-sectoren .scard .hook { font-family: var(--font-display); font-weight: var(--fw-bold); font-size: var(--text-md); line-height: var(--leading-snug); color: var(--text-strong); margin: 0 0 var(--space-3); }
+.p-sectoren .scard p { font-size: var(--text-sm); color: var(--text-muted); line-height: var(--leading-relaxed); margin: 0 0 var(--space-5); flex: 1; }
+.p-sectoren .scard .foot { display: flex; align-items: center; justify-content: space-between; gap: var(--space-4); border-top: 1px solid var(--border-subtle); padding-top: var(--space-4); }
+.p-sectoren .scard .kpi { font-family: var(--font-mono); font-size: var(--text-xs); color: var(--text-subtle); text-transform: uppercase; letter-spacing: var(--tracking-kicker); }
+.p-sectoren .scard .go { font-size: var(--text-sm); font-weight: var(--fw-semibold); color: var(--color-primary); display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; }
+.p-sectoren .scard .go .lucide { width: 15px; height: 15px; }
+.p-sectoren .scard.alt { background: var(--eggshell); border-style: dashed; justify-content: center; align-items: flex-start; }
+
+.p-sectoren .werkwijze { background: var(--ink-900); color: var(--eggshell); }
+.p-sectoren .werkwijze .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-6); }
+.p-sectoren .wcard { border: 1px solid var(--border-dark); border-radius: var(--radius-lg); padding: var(--space-6); background: rgba(255, 255, 255, 0.03); }
+.p-sectoren .wcard .num { font-family: var(--font-mono); font-size: var(--text-sm); color: var(--orange-400); }
+.p-sectoren .wcard h3 { color: #fff; font-size: var(--text-lg); font-weight: var(--fw-bold); margin: 10px 0; }
+.p-sectoren .wcard p { font-size: var(--text-sm); color: var(--text-on-dark-muted); line-height: var(--leading-relaxed); margin: 0; }
+
+@media (max-width: 900px) {
+  .p-sectoren .sgrid { grid-template-columns: 1fr; }
+  .p-sectoren .werkwijze .grid { grid-template-columns: 1fr; }
+  .p-sectoren .dhero h1 { font-size: var(--text-3xl); }
+}
