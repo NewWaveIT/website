@@ -13,7 +13,9 @@ import {
 } from "lucide-react";
 import { SECTOREN, SECTOR_SLUGS } from "@/lib/sectoren-detail";
 import { SectorHeroAnim } from "@/components/sector-hero-anim";
+import { MobileSectorDetail } from "@/components/mobile/mobile-sector-detail";
 import "./sector-detail.css";
+import "./mobile.css";
 
 const ICONS = {
   "building-2": Building2,
@@ -63,7 +65,9 @@ export default async function SectorPage({
   };
 
   return (
-    <div className="p-sector">
+    <>
+      <MobileSectorDetail sector={s} />
+    <div className="p-sector only-desktop">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }}
@@ -240,5 +244,6 @@ export default async function SectorPage({
         </div>
       </section>
     </div>
+    </>
   );
 }

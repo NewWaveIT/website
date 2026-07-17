@@ -11,7 +11,9 @@ import {
   Linkedin,
 } from "lucide-react";
 import { ContactForm } from "@/components/contact/contact-form";
+import { MobileContact } from "@/components/mobile/mobile-contact";
 import "./contact.css";
+import "./mobile.css";
 
 export const metadata: Metadata = {
   title: "Plan een strategiegesprek",
@@ -23,6 +25,8 @@ export const metadata: Metadata = {
 export default function ContactPage() {
   return (
     <>
+      <MobileContact />
+      <div className="only-desktop">
       <section className="chero">
         <div className="wrap-wide">
           <div className="crumbs">
@@ -171,6 +175,7 @@ export default function ContactPage() {
           </Link>
         </div>
       </section>
+      </div>
     </>
   );
 }
