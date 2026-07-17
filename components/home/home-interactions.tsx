@@ -138,44 +138,6 @@ export function HomeInteractions() {
       });
     })();
 
-    // Stats: count-up bij in-view
-    (() => {
-      if (reduced || !("IntersectionObserver" in window)) return;
-      const els = document.querySelectorAll<HTMLElement>(".pstat .n");
-      const animate = (el: HTMLElement) => {
-        const orig = el.textContent ?? "";
-        const t0 = performance.now();
-        const dur = 1400;
-        const frame = (now: number) => {
-          const p = Math.min((now - t0) / dur, 1);
-          const ease = 1 - Math.pow(1 - p, 3);
-          el.textContent = orig.replace(
-            /\d+(\.\d+)?/g,
-            (m, _d, off: number) => {
-              if (orig.charAt(off - 1) === "/") return m;
-              const dec = (m.split(".")[1] || "").length;
-              return (parseFloat(m) * ease).toFixed(dec);
-            },
-          );
-          if (p < 1) requestAnimationFrame(frame);
-          else el.textContent = orig;
-        };
-        requestAnimationFrame(frame);
-      };
-      const cio = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((e) => {
-            if (!e.isIntersecting) return;
-            cio.unobserve(e.target);
-            animate(e.target as HTMLElement);
-          });
-        },
-        { threshold: 0.6 },
-      );
-      els.forEach((el) => cio.observe(el));
-      cleanups.push(() => cio.disconnect());
-    })();
-
     // Featured case: parallax op Ken Burns-laag
     (() => {
       if (reduced) return;
@@ -205,7 +167,7 @@ export function HomeInteractions() {
     (() => {
       if (reduced || !("IntersectionObserver" in window)) return;
       const targets = document.querySelectorAll<HTMLElement>(
-        ".sector-card, .fcase, .wcard, .post, .lead-card, .pstat, .sec-head, .eyebrow-row",
+        ".sector-card, .fcase, .wcard, .post, .lead-card, .sec-head, .eyebrow-row",
       );
       targets.forEach((el) => el.classList.add("reveal"));
       const io = new IntersectionObserver(
