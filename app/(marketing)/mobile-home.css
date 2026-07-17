@@ -37,14 +37,10 @@
 
   /* Proof */
   .m-proof { background: var(--ink-950); color: var(--eggshell); border-top: 1px solid var(--border-dark); padding: 32px 0; }
-  .m-proof-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-  .m-pstat .n { font-family: var(--font-mono); font-size: var(--text-xl); font-weight: var(--fw-medium); color: var(--orange-400); line-height: 1; }
-  .m-pstat .l { margin-top: 7px; font-size: var(--text-xs); color: var(--text-on-dark-muted); line-height: 1.5; }
-  .m-logos { margin-top: 26px; padding-top: 20px; border-top: 1px solid var(--border-dark); }
   .m-logos .cap { font-family: var(--font-mono); font-size: 10px; text-transform: uppercase; letter-spacing: var(--tracking-kicker); color: var(--ink-400); display: block; margin-bottom: 14px; }
   .m-logos .track { overflow: hidden; -webkit-mask-image: linear-gradient(to right, transparent, #000 12%, #000 88%, transparent); mask-image: linear-gradient(to right, transparent, #000 12%, #000 88%, transparent); }
-  .m-logos .set { display: flex; gap: 36px; align-items: center; width: max-content; animation: logoScroll 26s linear infinite; }
-  .m-logos .set span { font-family: var(--font-display); font-weight: var(--fw-bold); font-size: var(--text-base); color: var(--ink-400); white-space: nowrap; }
+  .m-logos .set { display: flex; gap: 36px; align-items: center; width: max-content; animation: clientScroll 26s linear infinite; }
+  .m-logos .set span { font-family: var(--font-display); font-weight: var(--fw-bold); font-size: var(--text-md); color: var(--ink-300, #b9b0a2); white-space: nowrap; }
 
   /* Sector-carrousel */
   .m-carousel { display: flex; gap: 14px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 2px 20px 6px; margin: 0 -20px; scrollbar-width: none; }

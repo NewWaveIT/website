@@ -107,39 +107,25 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Proof */}
+      {/* Klantenband */}
       <div className="proof">
         <div className="wrap-wide">
-          <div className="proof-stats">
-            <div className="pstat">
-              <div className="n">6–10×</div>
-              <div className="l">
-                Snellere oplevering met low-code dan traditionele bouw
-              </div>
-            </div>
-            <div className="pstat">
-              <div className="n">15+ jaar</div>
-              <div className="l">Ervaring in onze vijf focussectoren</div>
-            </div>
-            <div className="pstat">
-              <div className="n">98%</div>
-              <div className="l">Projecten binnen scope opgeleverd</div>
-            </div>
-          </div>
-          <div className="logos">
-            <span className="cap">Vertrouwd door organisaties in jouw sector</span>
+          <div className="clientband">
+            <span className="cap">Vertrouwd door</span>
             <div className="track">
               <div className="set">
-                <span>COA</span>
-                <span>Gemeente Rotterdam</span>
-                <span>NORTHWIND</span>
-                <span>MERIDIAN Zorg</span>
-                <span>Stroom</span>
-                <span aria-hidden="true">COA</span>
-                <span aria-hidden="true">Gemeente Rotterdam</span>
-                <span aria-hidden="true">NORTHWIND</span>
-                <span aria-hidden="true">MERIDIAN Zorg</span>
-                <span aria-hidden="true">Stroom</span>
+                <span className="client">COA</span>
+                <span className="client">Gemeente Rotterdam</span>
+                <span className="client">Rabobank</span>
+                <span className="client">Netradyne</span>
+                <span className="client">Welcome app</span>
+                <span className="client">Van Mossel</span>
+                <span className="client" aria-hidden="true">COA</span>
+                <span className="client" aria-hidden="true">Gemeente Rotterdam</span>
+                <span className="client" aria-hidden="true">Rabobank</span>
+                <span className="client" aria-hidden="true">Netradyne</span>
+                <span className="client" aria-hidden="true">Welcome app</span>
+                <span className="client" aria-hidden="true">Van Mossel</span>
               </div>
             </div>
           </div>

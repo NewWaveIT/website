@@ -110,26 +110,6 @@ export function MobileHome() {
       cleanups.push(() => { window.removeEventListener("resize", resize); cancelAnimationFrame(raf); });
     }
 
-    // Count-up
-    if (!reduced && "IntersectionObserver" in window) {
-      const cio = new IntersectionObserver((entries) => {
-        entries.forEach((e) => {
-          if (!e.isIntersecting) return;
-          cio.unobserve(e.target);
-          const el = e.target as HTMLElement;
-          const orig = el.textContent ?? ""; const t0 = performance.now();
-          const frame = (now: number) => {
-            const p = Math.min((now - t0) / 1400, 1); const ease = 1 - Math.pow(1 - p, 3);
-            el.textContent = orig.replace(/\d+(\.\d+)?/g, (m) => (parseFloat(m) * ease).toFixed((m.split(".")[1] || "").length));
-            if (p < 1) requestAnimationFrame(frame); else el.textContent = orig;
-          };
-          requestAnimationFrame(frame);
-        });
-      }, { threshold: 0.6 });
-      root.querySelectorAll(".m-pstat .n").forEach((el) => cio.observe(el));
-      cleanups.push(() => cio.disconnect());
-    }
-
     // Ken Burns parallax
     const kb = root.querySelector<HTMLElement>(".m-fcase .kbwrap");
     if (kb?.parentElement && !reduced) {
@@ -219,18 +199,12 @@ export function MobileHome() {
 
       <div className="m-proof">
         <div className="m-wrap">
-          <div className="m-proof-stats">
-            <div className="m-pstat"><div className="n">6–10×</div><div className="l">Sneller opgeleverd</div></div>
-            <div className="m-pstat"><div className="n">15+ jaar</div><div className="l">Sectorervaring</div></div>
-            <div className="m-pstat"><div className="n">98%</div><div className="l">Binnen scope</div></div>
-            <div className="m-pstat"><div className="n">40+</div><div className="l">Consultants</div></div>
-          </div>
           <div className="m-logos">
-            <span className="cap">Vertrouwd door organisaties in jouw sector</span>
+            <span className="cap">Vertrouwd door</span>
             <div className="track">
               <div className="set">
-                {["COA", "Gemeente Rotterdam", "NORTHWIND", "MERIDIAN Zorg", "Stroom"].concat(["COA", "Gemeente Rotterdam", "NORTHWIND", "MERIDIAN Zorg", "Stroom"]).map((n, i) => (
-                  <span key={i} aria-hidden={i >= 5}>{n}</span>
+                {["COA", "Gemeente Rotterdam", "Rabobank", "Netradyne", "Welcome app", "Van Mossel"].concat(["COA", "Gemeente Rotterdam", "Rabobank", "Netradyne", "Welcome app", "Van Mossel"]).map((n, i) => (
+                  <span key={i} aria-hidden={i >= 6}>{n}</span>
                 ))}
               </div>
             </div>
