@@ -12,10 +12,10 @@ import {
   ArrowRight,
 } from "lucide-react";
 import { SECTOREN, SECTOR_SLUGS } from "@/lib/sectoren-detail";
+import { MOBILE_SECTOREN } from "@/lib/mobile-detail";
 import { SectorHeroAnim } from "@/components/sector-hero-anim";
-import { MobileSectorDetail } from "@/components/mobile/mobile-sector-detail";
+import { MobileDetail } from "@/components/mobile/mobile-detail";
 import "./sector-detail.css";
-import "./mobile.css";
 
 const ICONS = {
   "building-2": Building2,
@@ -66,7 +66,7 @@ export default async function SectorPage({
 
   return (
     <>
-      <MobileSectorDetail sector={s} />
+      {MOBILE_SECTOREN[slug] && <MobileDetail data={MOBILE_SECTOREN[slug]} />}
     <div className="p-sector only-desktop">
       <script
         type="application/ld+json"
