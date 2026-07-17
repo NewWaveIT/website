@@ -1,0 +1,53 @@
+/* Werken bij — geport uit ui_kits/website/werken-bij.html (gescoopt onder .p-werken) */
+
+.p-werken .crumbs { font-family: var(--font-mono); font-size: var(--text-xs); color: var(--ink-400); padding: var(--space-5) 0 0; }
+.p-werken .crumbs a { color: var(--ink-400); }
+.p-werken .crumbs a:hover { color: var(--color-primary); }
+
+.p-werken .shero { background: var(--ink-900); color: var(--eggshell); position: relative; overflow: hidden; }
+.p-werken .shero .wrap-wide { position: relative; padding: var(--space-9) 0 var(--space-10); z-index: 1; }
+.p-werken .shero h1 { font-family: var(--font-display-expanded); font-weight: var(--fw-black); font-size: var(--text-4xl); line-height: var(--leading-tight); color: #fff; margin: var(--space-5) 0; max-width: 20ch; }
+.p-werken .shero h1 em { font-style: normal; color: var(--orange-400); }
+.p-werken .shero p { font-size: var(--text-lg); color: var(--text-on-dark-muted); line-height: var(--leading-relaxed); max-width: 44ch; margin: 0 0 var(--space-7); }
+.p-werken .shero .hero-actions { display: flex; gap: var(--space-5); flex-wrap: wrap; }
+.p-werken .shero .cutout { position: absolute; right: 2%; bottom: 0; height: 82%; width: 32%; }
+.p-werken .shero .cutout img { object-fit: contain; object-position: bottom right; }
+
+.p-werken .groei { background: var(--eggshell); }
+.p-werken .groei .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-6); }
+.p-werken .gcard { background: var(--white); border: 1px solid var(--border-default); border-radius: var(--radius-lg); padding: var(--space-6); }
+.p-werken .gcard .num { font-family: var(--font-mono); font-size: var(--text-sm); color: var(--color-primary); }
+.p-werken .gcard h3 { font-size: var(--text-lg); font-weight: var(--fw-bold); margin: 10px 0; line-height: var(--leading-snug); }
+.p-werken .gcard p { font-size: var(--text-sm); color: var(--text-muted); line-height: var(--leading-relaxed); margin: 0; }
+
+.p-werken .totalpeople { background: var(--white); border-top: 1px solid var(--border-default); border-bottom: 1px solid var(--border-default); }
+.p-werken .totalpeople .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-6); }
+.p-werken .tp { border-left: 3px solid var(--color-primary); padding-left: var(--space-5); }
+.p-werken .tp h3 { font-family: var(--font-display-expanded); font-weight: var(--fw-extrabold); font-size: var(--text-xl); margin: 0 0 var(--space-3); }
+.p-werken .tp p { font-size: var(--text-sm); color: var(--text-muted); line-height: var(--leading-relaxed); margin: 0; }
+
+.p-werken .cultuur .grid { display: grid; grid-template-columns: 1fr 1.1fr; gap: var(--space-9); align-items: center; }
+.p-werken .cultuur .media-img { position: relative; width: 100%; min-height: 380px; border-radius: var(--radius-lg); border: 1px solid var(--border-default); overflow: hidden; }
+.p-werken .cultuur .media-img img { object-fit: cover; }
+.p-werken .cultuur p { font-size: var(--text-md); color: var(--text-muted); line-height: var(--leading-relaxed); margin: 0 0 var(--space-5); max-width: 48ch; }
+.p-werken .cultuur ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 12px; }
+.p-werken .cultuur li { display: flex; gap: 10px; font-size: var(--text-base); color: var(--text-body); align-items: flex-start; }
+.p-werken .cultuur li .lucide { width: 20px; height: 20px; color: var(--color-primary); flex: none; }
+
+.p-werken .vacatures { background: var(--ink-900); color: var(--eggshell); }
+.p-werken .vacatures .list { display: flex; flex-direction: column; }
+.p-werken .vrow { display: grid; grid-template-columns: 2fr 1fr 1fr auto; gap: var(--space-6); align-items: center; padding: var(--space-5) 0; border-bottom: 1px solid var(--border-dark); color: var(--eggshell); }
+.p-werken .vrow:first-child { border-top: 1px solid var(--border-dark); }
+.p-werken .vrow h3 { font-size: var(--text-lg); font-weight: var(--fw-bold); color: #fff; margin: 0; }
+.p-werken .vrow .meta { font-family: var(--font-mono); font-size: var(--text-xs); color: var(--text-on-dark-muted); text-transform: uppercase; letter-spacing: var(--tracking-kicker); }
+.p-werken .vrow .arrow { color: var(--orange-400); transition: transform 140ms ease; }
+.p-werken .vrow:hover .arrow { transform: translateX(4px); }
+.p-werken .vrow:hover h3 { color: var(--orange-400); }
+
+@media (max-width: 1100px) { .p-werken .shero .cutout { display: none; } }
+@media (max-width: 900px) {
+  .p-werken .groei .grid, .p-werken .totalpeople .grid, .p-werken .cultuur .grid { grid-template-columns: 1fr; }
+  .p-werken .shero h1 { font-size: var(--text-3xl); }
+  .p-werken .vrow { grid-template-columns: 1fr auto; }
+  .p-werken .vrow .meta { display: none; }
+}

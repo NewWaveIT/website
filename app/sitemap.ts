@@ -1,4 +1,5 @@
 import type { MetadataRoute } from "next";
+import { VACATURE_SLUGS } from "@/lib/vacatures";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://thenewwaveit.com";
 
@@ -47,6 +48,15 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: now,
       changeFrequency: "monthly",
       priority: 0.7,
+    });
+  }
+
+  for (const slug of VACATURE_SLUGS) {
+    entries.push({
+      url: `${SITE_URL}/vacatures/${slug}`,
+      lastModified: now,
+      changeFrequency: "weekly",
+      priority: 0.6,
     });
   }
 
