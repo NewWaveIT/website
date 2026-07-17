@@ -1,0 +1,23 @@
+/* Mobiele inzichten-overzicht — geport uit mobile-inzichten.html (.m-inzichten, ≤767px) */
+@media (max-width: 767px) {
+  .m-inzichten .feat { border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-lg); display: block; margin-bottom: 20px; color: inherit; }
+  .m-inzichten .feat .media { height: 180px; background-size: cover; background-position: center; }
+  .m-inzichten .feat .body { background: var(--ink-900); color: var(--eggshell); padding: 22px 20px 24px; }
+  .m-inzichten .feat h2 { color: #fff; font-size: var(--text-lg); font-weight: var(--fw-extrabold); line-height: 1.3; margin: 10px 0; }
+  .m-inzichten .feat p { font-size: var(--text-sm); color: var(--text-on-dark-muted); line-height: 1.6; margin: 0 0 14px; }
+  .m-inzichten .feat .meta { font-family: var(--font-mono); font-size: 10px; color: var(--ink-400); }
+
+  .m-inzichten .plist { display: flex; flex-direction: column; gap: 12px; }
+  .m-inzichten .post { display: flex; gap: 14px; padding: 16px; border: 1px solid var(--border-default); border-radius: var(--radius-lg); background: var(--white); color: var(--text-body); align-items: center; }
+  .m-inzichten .post .cover { width: 92px; height: 92px; flex: none; border-radius: var(--radius-md); background-size: cover; background-position: center; }
+  .m-inzichten .post .cat { display: inline-block; font-family: var(--font-mono); font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--color-primary); margin-bottom: 5px; }
+  .m-inzichten .post h3 { font-size: var(--text-sm); font-weight: var(--fw-bold); line-height: 1.4; margin: 0 0 6px; }
+  .m-inzichten .post .meta { font-family: var(--font-mono); font-size: 10px; color: var(--text-subtle); }
+
+  .m-inzichten .nieuwsbrief .inner { background: var(--white); border: 1px solid var(--border-default); border-radius: var(--radius-lg); padding: 24px 20px; }
+  .m-inzichten .nieuwsbrief h2 { font-size: var(--text-lg); font-weight: var(--fw-extrabold); margin: 10px 0 8px; }
+  .m-inzichten .nieuwsbrief p { font-size: var(--text-sm); color: var(--text-muted); line-height: 1.6; margin: 0 0 16px; }
+  .m-inzichten .nieuwsbrief form { display: flex; flex-direction: column; gap: 10px; }
+  .m-inzichten .nieuwsbrief input { font-family: var(--font-sans); font-size: 16px; color: var(--text-body); background: var(--paper); border: 1px solid var(--border-strong); border-radius: var(--radius-md); padding: 13px 14px; min-height: 48px; outline: none; }
+  .m-inzichten .nieuwsbrief input:focus { border-color: var(--color-primary); box-shadow: 0 0 0 3px rgba(241, 88, 34, 0.15); }
+}

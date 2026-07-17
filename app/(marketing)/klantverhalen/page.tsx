@@ -3,7 +3,9 @@ import Link from "next/link";
 import { Play, ArrowRight } from "lucide-react";
 import { KLANTVERHALEN } from "@/lib/klantverhalen";
 import { SectorHeroAnim } from "@/components/sector-hero-anim";
+import { MobileKlantverhalen } from "@/components/mobile/mobile-klantverhalen";
 import "./klantverhalen.css";
+import "./mobile.css";
 
 export const metadata: Metadata = {
   title: "Klantverhalen — resultaat dat je kunt navragen",
@@ -17,7 +19,9 @@ const FILTERS = ["Alle", "Publieke sector", "Mobiliteit", "Banken", "Zorg", "Man
 export default function KlantverhalenPage() {
   const featured = KLANTVERHALEN[0];
   return (
-    <div className="p-klanten">
+    <>
+      <MobileKlantverhalen />
+    <div className="p-klanten only-desktop">
       <section className="dhero">
         <SectorHeroAnim theme="klantverhalen" />
         <div className="wrap-wide">
@@ -105,5 +109,6 @@ export default function KlantverhalenPage() {
         </div>
       </section>
     </div>
+    </>
   );
 }

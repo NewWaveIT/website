@@ -3,7 +3,9 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { ARTIKELEN } from "@/lib/inzichten";
 import { SectorHeroAnim } from "@/components/sector-hero-anim";
+import { MobileInzichten } from "@/components/mobile/mobile-inzichten";
 import "./inzichten.css";
+import "./mobile.css";
 
 export const metadata: Metadata = {
   title: "Inzichten — kennis die je morgen kunt gebruiken",
@@ -18,7 +20,9 @@ export default function InzichtenPage() {
   const featured = ARTIKELEN[0];
   const grid = ARTIKELEN.slice(1, 7);
   return (
-    <div className="p-inzichten">
+    <>
+      <MobileInzichten />
+    <div className="p-inzichten only-desktop">
       <section className="dhero">
         <SectorHeroAnim theme="inzichten" />
         <div className="wrap-wide">
@@ -111,5 +115,6 @@ export default function InzichtenPage() {
         </div>
       </section>
     </div>
+    </>
   );
 }

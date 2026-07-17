@@ -1,0 +1,24 @@
+/* Mobiele klantverhalen-overzicht — geport uit mobile-klantverhalen.html (.m-klanten, ≤767px) */
+@media (max-width: 767px) {
+  .m-klanten .fcase { border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-lg); background: var(--white); }
+  .m-klanten .fcase .media { position: relative; height: 200px; overflow: hidden; }
+  .m-klanten .fcase .kbwrap { position: absolute; inset: 0; }
+  .m-klanten .fcase .kb { position: absolute; inset: 0; background-size: cover; background-position: center; animation: kenburns 26s ease-in-out infinite alternate; }
+  .m-klanten .fcase .playbig { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: 58px; height: 58px; border-radius: 50%; background: rgba(255, 255, 255, 0.92); display: flex; align-items: center; justify-content: center; box-shadow: var(--shadow-lg); border: none; }
+  .m-klanten .fcase .playbig .lucide { width: 21px; height: 21px; color: var(--color-primary); }
+  .m-klanten .fcase .body { padding: 22px 20px 24px; }
+  .m-klanten .fcase blockquote { font-family: var(--font-display); font-weight: var(--fw-bold); font-size: var(--text-md); line-height: 1.4; color: var(--text-strong); margin: 10px 0 14px; }
+  .m-klanten .fcase .who { font-size: var(--text-sm); color: var(--text-muted); }
+  .m-klanten .fcase .who strong { color: var(--text-strong); }
+
+  .m-klanten .cgrid { display: flex; flex-direction: column; gap: 14px; }
+  .m-klanten .ccard { display: flex; flex-direction: column; border-radius: var(--radius-lg); overflow: hidden; border: 1px solid var(--border-default); background: var(--white); color: var(--text-body); }
+  .m-klanten .ccard .cover { position: relative; height: 150px; background-size: cover; background-position: center; }
+  .m-klanten .ccard .cat { position: absolute; top: 12px; left: 12px; background: var(--color-primary); color: #fff; font-weight: var(--fw-semibold); font-size: 11px; padding: 5px 11px; border-radius: var(--radius-pill); }
+  .m-klanten .ccard .cbody { padding: 16px 18px 20px; display: flex; flex-direction: column; flex: 1; }
+  .m-klanten .ccard .metric { font-family: var(--font-mono); font-size: var(--text-xl); font-weight: var(--fw-medium); color: var(--color-primary); line-height: 1; }
+  .m-klanten .ccard h3 { font-size: var(--text-base); font-weight: var(--fw-bold); line-height: 1.35; margin: 10px 0 6px; }
+  .m-klanten .ccard .org { font-size: var(--text-xs); color: var(--text-muted); margin: 0 0 12px; flex: 1; }
+  .m-klanten .ccard .more { font-size: var(--text-sm); font-weight: var(--fw-semibold); display: inline-flex; align-items: center; gap: 6px; color: var(--color-primary); }
+  .m-klanten .ccard .more .lucide { width: 15px; height: 15px; }
+}
