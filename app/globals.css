@@ -394,3 +394,16 @@ body.m-menu-open { overflow: hidden; }
   .only-desktop { display: none !important; }
   .only-mobile { display: block; }
 }
+
+/* ============================================================
+   Voortgangsgolf (desktop) — geport uit guidelines/motion-scrollwave.html.
+   Eén dunne golf direct onder de sticky nav; oranje = afgelegd, grijs = rest.
+   Mobiel gebruikt de golf in MobileShell.
+   ============================================================ */
+.scrollwave-d { display: none; }
+@media (min-width: 768px) {
+  .scrollwave-d { display: block; position: fixed; top: 76px; left: 0; right: 0; height: 22px; z-index: 49; pointer-events: none; }
+  .scrollwave-d svg { width: 100%; height: 100%; display: block; }
+  .scrollwave-d .sw-base { fill: none; stroke: rgba(46, 37, 26, 0.12); stroke-width: 2; }
+  .scrollwave-d .sw-fill { fill: none; stroke: var(--color-primary); stroke-width: 3; stroke-linecap: round; }
+}
