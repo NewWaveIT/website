@@ -88,8 +88,24 @@ supabase link --project-ref <project-ref>
 supabase db push         # voert supabase/migrations/*.sql uit
 ```
 
-De migratie maakt `contact_aanvragen` en `sollicitaties` aan met RLS: anonieme
-bezoekers mogen alleen indienen (INSERT), ingelogde staff mag lezen.
+De migraties maken `contact_aanvragen`, `sollicitaties` en de CMS-contenttabellen
+aan met RLS: anonieme bezoekers mogen formulieren indienen en alleen `live`
+content lezen; ingelogde staff beheert alles.
+
+### 4. CMS / admin (`/admin`)
+
+De admin draait op `/admin` (buiten de site-huisstijl, eigen layout) en is
+beveiligd met Supabase Auth via `middleware.ts`.
+
+1. Maak een admin-gebruiker aan in Supabase → **Authentication → Users → Add user**
+   (e-mail + wachtwoord). Optioneel `user_metadata`: `{ "naam": "Merel Jansen",
+   "rol": "Marketing & HR" }` voor de weergave in de sidebar.
+2. Ga naar `/admin/login` en log in.
+3. **Dashboard** toont openstaande aanvragen/sollicitaties; **Aanvragen** en
+   **Sollicitaties** zijn kanban-borden met detail-drawers (status, eigenaar,
+   notities). **Content** (pagina's, cases, inzichten, vacatures) leest uit de
+   `cms_*`-tabellen; de WYSIWYG-editor en het live-lezen door de publieke
+   pagina's volgen in de volgende fase.
 
 ## Scripts
 

@@ -3,7 +3,7 @@
 import { useActionState } from "react";
 import { useFormStatus } from "react-dom";
 import { ArrowRight } from "lucide-react";
-import { submitContact, type ContactState } from "@/app/contact/actions";
+import { submitContact, type ContactState } from "@/app/(marketing)/contact/actions";
 
 const initial: ContactState = { ok: false, message: "" };
 

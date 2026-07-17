@@ -1,0 +1,33 @@
+export interface AdminNavItem {
+  href: string;
+  label: string;
+  icon: string; // lucide key
+  countKey?: string;
+}
+export interface AdminNavGroup {
+  groep: string;
+  items: AdminNavItem[];
+}
+
+export const ADMIN_NAV: AdminNavGroup[] = [
+  {
+    groep: "Overzicht",
+    items: [{ href: "/admin", label: "Dashboard", icon: "layout-dashboard" }],
+  },
+  {
+    groep: "Content",
+    items: [
+      { href: "/admin/paginas", label: "Pagina's", icon: "file-text", countKey: "paginas" },
+      { href: "/admin/cases", label: "Cases", icon: "briefcase", countKey: "cases" },
+      { href: "/admin/inzichten", label: "Inzichten", icon: "newspaper", countKey: "artikelen" },
+      { href: "/admin/vacatures", label: "Vacatures", icon: "users", countKey: "vacatures" },
+    ],
+  },
+  {
+    groep: "Opvolging",
+    items: [
+      { href: "/admin/aanvragen", label: "Aanvragen", icon: "inbox", countKey: "aanvragen" },
+      { href: "/admin/sollicitaties", label: "Sollicitaties", icon: "user-check", countKey: "sollicitaties" },
+    ],
+  },
+];

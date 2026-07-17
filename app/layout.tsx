@@ -1,7 +1,5 @@
 import type { Metadata } from "next";
 import { Archivo, IBM_Plex_Sans, IBM_Plex_Mono } from "next/font/google";
-import { Header } from "@/components/layout/header";
-import { Footer } from "@/components/layout/footer";
 import "./globals.css";
 
 // Display: Archivo (variabel). Archivo Black dekt ook de "expanded" headline-rol
@@ -53,11 +51,7 @@ export default function RootLayout({
       lang="nl"
       className={`${archivo.variable} ${plexSans.variable} ${plexMono.variable}`}
     >
-      <body>
-        <Header />
-        <main>{children}</main>
-        <Footer />
-      </body>
+      <body>{children}</body>
     </html>
   );
 }
