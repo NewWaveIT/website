@@ -1,0 +1,30 @@
+/* Mobiele case-detail — geport uit mobile-case.html (.m-case, ≤767px) */
+@media (max-width: 767px) {
+  .m-case .mhero .tag { display: inline-flex; align-items: center; gap: 7px; font-family: var(--font-mono); font-size: 10px; text-transform: uppercase; letter-spacing: var(--tracking-kicker); color: var(--orange-400); border: 1px solid var(--border-dark); border-radius: var(--radius-pill); padding: 6px 12px; margin-bottom: 14px; }
+  .m-case .mhero .tag .lucide { width: 14px; height: 14px; }
+  .m-case .video { position: relative; height: 210px; border-radius: var(--radius-lg); overflow: hidden; margin-top: 22px; }
+  .m-case .video .kb { position: absolute; inset: 0; background-size: cover; background-position: center; animation: kenburns 26s ease-in-out infinite alternate; }
+  .m-case .video .playbig { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: 58px; height: 58px; border-radius: 50%; background: rgba(255, 255, 255, 0.92); display: flex; align-items: center; justify-content: center; box-shadow: var(--shadow-lg); border: none; }
+  .m-case .video .playbig .lucide { width: 21px; height: 21px; color: var(--color-primary); }
+  .m-case .video .cap { position: absolute; bottom: 12px; left: 12px; font-family: var(--font-mono); font-size: 10px; color: #fff; background: rgba(46, 37, 26, 0.6); padding: 5px 10px; border-radius: var(--radius-pill); }
+  .m-case .impact { background: var(--ink-950); color: var(--eggshell); padding: 28px 0; }
+  .m-case .prose h2 { font-size: var(--text-lg); font-weight: var(--fw-extrabold); margin: 26px 0 10px; }
+  .m-case .prose h2:first-child { margin-top: 0; }
+  .m-case .prose p { font-size: var(--text-sm); color: var(--text-muted); line-height: 1.7; margin: 0 0 14px; }
+  .m-case .prose .pull { font-family: var(--font-display); font-weight: var(--fw-bold); font-size: var(--text-md); line-height: 1.45; color: var(--text-strong); border-left: 3px solid var(--color-primary); padding-left: 16px; margin: 20px 0; }
+  .m-case .aside-card { border: 1px solid var(--border-default); border-radius: var(--radius-lg); padding: 6px 20px 20px; background: var(--white); margin-top: 26px; }
+  .m-case .aside-card h4 { font-family: var(--font-mono); font-size: 10px; text-transform: uppercase; letter-spacing: var(--tracking-kicker); color: var(--text-subtle); margin: 16px 0 6px; font-weight: var(--fw-medium); }
+  .m-case .aside-card .row { display: flex; justify-content: space-between; gap: 12px; padding: 9px 0; border-bottom: 1px solid var(--border-subtle); font-size: var(--text-sm); }
+  .m-case .aside-card .row:last-of-type { border-bottom: 0; }
+  .m-case .aside-card .k { color: var(--text-muted); }
+  .m-case .aside-card .v { color: var(--text-strong); font-weight: var(--fw-semibold); }
+  .m-case .qblock { background: var(--eggshell); }
+  .m-case .qblock blockquote { font-family: var(--font-display); font-weight: var(--fw-bold); font-size: var(--text-lg); line-height: 1.4; color: var(--text-strong); margin: 0 0 12px; }
+  .m-case .qblock .who { font-size: var(--text-sm); color: var(--text-muted); }
+  .m-case .qblock .who strong { color: var(--text-strong); }
+  .m-case .postlist { display: flex; flex-direction: column; gap: 12px; }
+  .m-case .post { display: flex; gap: 14px; padding: 14px; border: 1px solid var(--border-default); border-radius: var(--radius-lg); background: var(--white); color: var(--text-body); align-items: center; }
+  .m-case .post .cover { width: 78px; height: 78px; flex: none; border-radius: var(--radius-md); background-size: cover; background-position: center; }
+  .m-case .post .cat { display: inline-block; font-family: var(--font-mono); font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--color-primary); margin-bottom: 4px; }
+  .m-case .post h3 { font-size: var(--text-sm); font-weight: var(--fw-bold); line-height: 1.4; margin: 0; }
+}

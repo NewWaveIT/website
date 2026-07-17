@@ -3,7 +3,9 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Building2, Play, ArrowRight } from "lucide-react";
 import { KLANTVERHAAL_MAP, KLANTVERHAAL_SLUGS, KLANTVERHALEN } from "@/lib/klantverhalen";
+import { MobileCase } from "@/components/mobile/mobile-case";
 import "./case.css";
+import "./mobile.css";
 
 export function generateStaticParams() {
   return KLANTVERHAAL_SLUGS.map((slug) => ({ slug }));
@@ -45,7 +47,9 @@ export default async function CasePage({
   };
 
   return (
-    <div className="p-case">
+    <>
+      <MobileCase k={k} meer={meer} />
+    <div className="p-case only-desktop">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }}
@@ -172,5 +176,6 @@ export default async function CasePage({
         </div>
       </section>
     </div>
+    </>
   );
 }

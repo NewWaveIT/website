@@ -4,7 +4,9 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 import { Check, ArrowRight, Phone } from "lucide-react";
 import { VACATURE_MAP, VACATURE_SLUGS, VACATURES } from "@/lib/vacatures";
+import { MobileVacature } from "@/components/mobile/mobile-vacature";
 import "./vacature.css";
+import "./mobile.css";
 
 const PROCES = [
   { num: "01", titel: "Kennismaken", p: "Videocall of koffie met Mitchel. Geen assessment, wél een goed gesprek over jouw ambitie." },
@@ -57,7 +59,9 @@ export default async function VacaturePage({
   };
 
   return (
-    <div className="p-vacature">
+    <>
+      <MobileVacature v={v} andere={andere} />
+    <div className="p-vacature only-desktop">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }}
@@ -201,5 +205,6 @@ export default async function VacaturePage({
         </div>
       </section>
     </div>
+    </>
   );
 }
