@@ -1,6 +1,7 @@
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { MobileShell } from "@/components/layout/mobile-shell";
+import "./mobile-base.css";
 
 export default function MarketingLayout({
   children,

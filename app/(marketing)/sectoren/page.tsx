@@ -10,7 +10,9 @@ import {
   ArrowRight,
 } from "lucide-react";
 import { SectorHeroAnim } from "@/components/sector-hero-anim";
+import { MobileSectoren } from "@/components/mobile/mobile-sectoren";
 import "./sectoren.css";
+import "./mobile.css";
 
 export const metadata: Metadata = {
   title: "Sectoren — publieke sector, mobiliteit, banken, zorg, manufacturing",
@@ -80,7 +82,9 @@ const jsonLd = {
 
 export default function SectorenPage() {
   return (
-    <div className="p-sectoren">
+    <>
+      <MobileSectoren />
+    <div className="p-sectoren only-desktop">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }}
@@ -195,5 +199,6 @@ export default function SectorenPage() {
         </div>
       </section>
     </div>
+    </>
   );
 }

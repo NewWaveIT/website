@@ -11,7 +11,9 @@ import {
   Factory,
 } from "lucide-react";
 import { SectorHeroAnim } from "@/components/sector-hero-anim";
+import { MobileDiensten } from "@/components/mobile/mobile-diensten";
 import "./diensten.css";
+import "./mobile.css";
 
 export const metadata: Metadata = {
   title: "Diensten — Mendix, AI en digitale strategie",
@@ -32,7 +34,9 @@ const jsonLd = {
 
 export default function DienstenPage() {
   return (
-    <div className="p-diensten">
+    <>
+      <MobileDiensten />
+    <div className="p-diensten only-desktop">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }}
@@ -253,5 +257,6 @@ export default function DienstenPage() {
         </div>
       </section>
     </div>
+    </>
   );
 }
