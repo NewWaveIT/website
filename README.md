@@ -113,5 +113,5 @@ bezoekers mogen alleen indienen (INSERT), ingelogde staff mag lezen.
 - [x] Contact met Supabase-server action
 - [x] Geanimeerde hero-vignettes (sector-hero) + SEO (sitemap/robots/JSON-LD)
 - [x] Logos/brand-assets gecomprimeerd geplaatst
-- [ ] 12 teamfoto's plaatsen in `public/assets/photos/` (zie ASSETS.md)
+- [x] 12 teamfoto's geplaatst + gecomprimeerd in `public/assets/photos/`
 - [ ] CMS/admin: content beheren + inzendingen bekijken

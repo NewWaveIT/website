@@ -4,7 +4,10 @@
 
 - ✅ **Logos** (`logos/`) — 10 varianten, gecomprimeerd en geplaatst.
 - ✅ **Brand-badges** (`brand/`) — wave-badge espresso + eggshell, geplaatst.
-- ⏳ **Foto's** (`photos/`) — **nog toe te voegen** (zie hieronder).
+- ✅ **Foto's** (`photos/`) — 12 teamfoto's geplaatst en gecomprimeerd (16MB → 4,2MB).
+
+Nieuwe foto's toevoegen? Zet ze in `public/assets/photos/` en draai
+`node scripts/optimize-assets.mjs --public`.
 
 De logos/brand zijn opgehaald uit het Claude Design-project en gecomprimeerd
 met `scripts/optimize-assets.mjs` (resize + PNG-optimalisatie, ~73% kleiner).
