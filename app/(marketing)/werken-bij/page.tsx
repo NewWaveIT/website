@@ -3,7 +3,9 @@ import Link from "next/link";
 import Image from "next/image";
 import { Check, ArrowRight } from "lucide-react";
 import { VACATURES } from "@/lib/vacatures";
+import { MobileWerkenBij } from "@/components/mobile/mobile-werken-bij";
 import "./werken-bij.css";
+import "./mobile.css";
 
 export const metadata: Metadata = {
   title: "Werken bij — word een Waver",
@@ -33,7 +35,9 @@ const CULTUUR = [
 
 export default function WerkenBijPage() {
   return (
-    <div className="p-werken">
+    <>
+      <MobileWerkenBij />
+    <div className="p-werken only-desktop">
       <section className="shero">
         <div className="cutout">
           <Image src="/assets/photos/cutout-spreker-groen.png" alt="" fill sizes="32vw" />
@@ -179,5 +183,6 @@ export default function WerkenBijPage() {
         </div>
       </section>
     </div>
+    </>
   );
 }

@@ -2,7 +2,9 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import { Users, Scale, Sparkles, Leaf, MapPin, Award, Mail, ArrowRight } from "lucide-react";
+import { MobileOverOns } from "@/components/mobile/mobile-over-ons";
 import "./over-ons.css";
+import "./mobile.css";
 
 export const metadata: Metadata = {
   title: "Over ons — de ondernemende mens zorgt voor vooruitgang",
@@ -36,7 +38,9 @@ const jsonLd = {
 
 export default function OverOnsPage() {
   return (
-    <div className="p-over">
+    <>
+      <MobileOverOns />
+    <div className="p-over only-desktop">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }}
@@ -198,5 +202,6 @@ export default function OverOnsPage() {
         </div>
       </section>
     </div>
+    </>
   );
 }
