@@ -1,0 +1,43 @@
+/* Klantverhalen overzicht — geport uit ui_kits/website/klantverhalen.html (.p-klanten) */
+
+.p-klanten .crumbs { font-family: var(--font-mono); font-size: var(--text-xs); color: var(--ink-400); padding: var(--space-5) 0 0; }
+.p-klanten .crumbs a { color: var(--ink-400); }
+
+.p-klanten .dhero { background: var(--ink-900); color: var(--eggshell); position: relative; overflow: hidden; }
+.p-klanten .dhero .wrap-wide { position: relative; padding: var(--space-8) 0 var(--space-9); }
+.p-klanten .dhero h1 { font-family: var(--font-display-expanded); font-weight: var(--fw-black); font-size: var(--text-4xl); line-height: var(--leading-tight); color: #fff; margin: var(--space-5) 0; max-width: 20ch; }
+.p-klanten .dhero h1 em { font-style: normal; color: var(--orange-400); }
+.p-klanten .dhero p { font-size: var(--text-lg); color: var(--text-on-dark-muted); line-height: var(--leading-relaxed); max-width: 50ch; margin: 0; }
+
+.p-klanten .case-mini { display: grid; grid-template-columns: 1fr 1.1fr; gap: 0; border-radius: var(--radius-xl); overflow: hidden; box-shadow: var(--shadow-lg); }
+.p-klanten .case-mini .media { min-height: 380px; position: relative; display: flex; align-items: center; justify-content: center; background-size: cover; background-position: center; }
+.p-klanten .case-mini .media .playbig { width: 72px; height: 72px; border-radius: 50%; background: rgba(255, 255, 255, 0.92); display: flex; align-items: center; justify-content: center; box-shadow: var(--shadow-lg); border: none; }
+.p-klanten .case-mini .media .playbig .lucide { width: 26px; height: 26px; color: var(--color-primary); }
+.p-klanten .case-mini .body { background: var(--white); padding: var(--space-8); display: flex; flex-direction: column; }
+.p-klanten .case-mini .body blockquote { font-family: var(--font-display); font-weight: var(--fw-bold); font-size: var(--text-xl); line-height: var(--leading-snug); color: var(--text-strong); margin: var(--space-4) 0 var(--space-6); }
+.p-klanten .case-mini .body .who { margin-top: auto; font-size: var(--text-sm); }
+.p-klanten .case-mini .body .who strong { color: var(--text-strong); }
+
+.p-klanten .filters { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: var(--space-7); }
+.p-klanten .fchip { font-size: var(--text-sm); font-weight: var(--fw-medium); color: var(--text-body); border: 1px solid var(--border-strong); border-radius: var(--radius-pill); padding: 8px 18px; background: var(--paper); }
+.p-klanten .fchip.on { background: var(--ink-900); border-color: var(--ink-900); color: var(--eggshell); }
+
+.p-klanten .cgrid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-6); }
+.p-klanten .ccard { display: flex; flex-direction: column; border-radius: var(--radius-lg); overflow: hidden; border: 1px solid var(--border-default); background: var(--white); transition: transform 160ms, box-shadow 160ms; color: var(--text-body); }
+.p-klanten .ccard:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); color: var(--text-body); }
+.p-klanten .ccard .cover { position: relative; height: 180px; background-color: var(--ink-200); background-size: cover; background-position: center; }
+.p-klanten .ccard .cover .cat { position: absolute; top: 14px; left: 14px; background: var(--color-primary); color: #fff; font-weight: var(--fw-semibold); font-size: var(--text-xs); padding: 5px 12px; border-radius: var(--radius-pill); }
+.p-klanten .ccard .cbody { padding: var(--space-5) var(--space-6) var(--space-6); display: flex; flex-direction: column; flex: 1; }
+.p-klanten .ccard .metric { font-family: var(--font-mono); font-size: var(--text-2xl); font-weight: var(--fw-medium); color: var(--color-primary); line-height: 1; }
+.p-klanten .ccard h3 { font-size: var(--text-md); font-weight: var(--fw-bold); line-height: var(--leading-snug); margin: var(--space-3) 0; }
+.p-klanten .ccard .org { font-size: var(--text-sm); color: var(--text-muted); margin: 0 0 var(--space-4); flex: 1; }
+.p-klanten .ccard .more { font-size: var(--text-sm); font-weight: var(--fw-semibold); display: inline-flex; align-items: center; gap: 6px; color: var(--color-primary); }
+.p-klanten .ccard .more .lucide { width: 15px; height: 15px; }
+
+@media (max-width: 1024px) { .p-klanten .cgrid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 900px) {
+  .p-klanten .case-mini { grid-template-columns: 1fr; }
+  .p-klanten .case-mini .media { min-height: 240px; }
+  .p-klanten .dhero h1 { font-size: var(--text-3xl); }
+}
+@media (max-width: 640px) { .p-klanten .cgrid { grid-template-columns: 1fr; } }

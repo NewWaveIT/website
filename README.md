@@ -104,8 +104,14 @@ bezoekers mogen alleen indienen (INSERT), ingelogde staff mag lezen.
 ## Status
 
 - [x] Fundament: Next.js, tokens, fonts, layout, Supabase-clients
-- [x] Homepage (`/`)
-- [ ] Overige pagina's: sectoren, diensten, klantverhalen, inzichten, over-ons,
-      werken-bij, vacatures, contact
-- [ ] Formulieren aansluiten op Supabase
-- [ ] Brand-assets plaatsen
+- [x] Homepage (`/`) met hero-canvas + interacties
+- [x] Sectoren (`/sectoren` + 5 detailpagina's)
+- [x] Diensten (`/diensten` + mendix/ai/strategie)
+- [x] Klantverhalen (`/klantverhalen` + case-details)
+- [x] Inzichten (`/inzichten` + artikel-details)
+- [x] Over ons, Werken bij + vacature-details
+- [x] Contact met Supabase-server action
+- [x] Geanimeerde hero-vignettes (sector-hero) + SEO (sitemap/robots/JSON-LD)
+- [x] Logos/brand-assets gecomprimeerd geplaatst
+- [ ] 12 teamfoto's plaatsen in `public/assets/photos/` (zie ASSETS.md)
+- [ ] CMS/admin: content beheren + inzendingen bekijken

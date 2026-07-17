@@ -1,0 +1,22 @@
+/* Inzicht-artikel detail (.p-artikel) — layout in de huisstijl (design leverde geen artikelbody) */
+
+.p-artikel .crumbs { font-family: var(--font-mono); font-size: var(--text-xs); color: var(--ink-400); padding: var(--space-5) 0; }
+.p-artikel .crumbs a { color: var(--ink-400); }
+.p-artikel .crumbs a:hover { color: var(--color-primary); }
+
+.p-artikel .ahero { background: var(--ink-900); color: var(--eggshell); }
+.p-artikel .ahero .wrap { padding: var(--space-6) 0 var(--space-9); max-width: 820px; }
+.p-artikel .ahero h1 { font-family: var(--font-display-expanded); font-weight: var(--fw-black); font-size: var(--text-4xl); line-height: var(--leading-tight); color: #fff; margin: var(--space-5) 0; }
+.p-artikel .ahero .meta { font-family: var(--font-mono); font-size: var(--text-sm); color: var(--text-on-dark-muted); }
+
+.p-artikel .acover { max-width: 980px; margin: calc(-1 * var(--space-8)) auto 0; position: relative; height: 420px; border-radius: var(--radius-xl); overflow: hidden; border: 1px solid var(--border-default); }
+.p-artikel .acover img { object-fit: cover; }
+
+.p-artikel .aprose { max-width: 720px; margin: 0 auto; }
+.p-artikel .aprose .lead { font-size: var(--text-lg); color: var(--text-strong); line-height: var(--leading-relaxed); margin: 0 0 var(--space-6); font-weight: var(--fw-medium); }
+.p-artikel .aprose p { font-size: var(--text-md); color: var(--text-body); line-height: var(--leading-relaxed); margin: 0 0 var(--space-5); }
+
+@media (max-width: 900px) {
+  .p-artikel .ahero h1 { font-size: var(--text-3xl); }
+  .p-artikel .acover { height: 260px; margin-top: calc(-1 * var(--space-6)); }
+}
