@@ -22,7 +22,9 @@ import {
   FileDown,
 } from "lucide-react";
 import { HomeInteractions } from "@/components/home/home-interactions";
+import { MobileHome } from "@/components/mobile/mobile-home";
 import "./home.css";
+import "./mobile-home.css";
 
 export const metadata: Metadata = {
   title: "Business-specialist in Mendix, AI en strategie",
@@ -44,7 +46,9 @@ const jsonLd = {
 
 export default function HomePage() {
   return (
-    <div className="home">
+    <>
+      <MobileHome />
+      <div className="home only-desktop">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
@@ -869,6 +873,7 @@ export default function HomePage() {
       </section>
 
       <HomeInteractions />
-    </div>
+      </div>
+    </>
   );
 }

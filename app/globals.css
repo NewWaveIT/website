@@ -387,3 +387,10 @@ footer.site-footer { background: var(--ink-950); color: var(--text-on-dark-muted
 }
 
 body.m-menu-open { overflow: hidden; }
+
+/* Mobiel/desktop-schakelaar: desktopcontent verbergen ≤767px en vice versa. */
+.only-mobile { display: none; }
+@media (max-width: 767px) {
+  .only-desktop { display: none !important; }
+  .only-mobile { display: block; }
+}
