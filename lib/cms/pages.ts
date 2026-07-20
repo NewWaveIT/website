@@ -36,6 +36,18 @@ export const PAGE_FIELDS: Record<string, FieldDef[]> = {
     { key: "joinusKicker", label: "Word een Waver — kicker", type: "text" },
     { key: "joinusTitel", label: "Word een Waver — titel", type: "text" },
     { key: "joinusLead", label: "Word een Waver — introtekst", type: "textarea" },
+    { key: "leadgenKicker", label: "Lead-gen — kicker", type: "text" },
+    { key: "leadgenTitel", label: "Lead-gen — titel", type: "text" },
+    { key: "leadgenIntro", label: "Lead-gen — intro", type: "textarea" },
+    { key: "lead1Aud", label: "Lead-kaart 1 — doelgroep", type: "text" },
+    { key: "lead1Titel", label: "Lead-kaart 1 — titel", type: "text" },
+    { key: "lead1Tekst", label: "Lead-kaart 1 — tekst", type: "textarea" },
+    { key: "lead2Aud", label: "Lead-kaart 2 — doelgroep", type: "text" },
+    { key: "lead2Titel", label: "Lead-kaart 2 — titel", type: "text" },
+    { key: "lead2Tekst", label: "Lead-kaart 2 — tekst", type: "textarea" },
+    { key: "lead3Aud", label: "Lead-kaart 3 — doelgroep", type: "text" },
+    { key: "lead3Titel", label: "Lead-kaart 3 — titel", type: "text" },
+    { key: "lead3Tekst", label: "Lead-kaart 3 — tekst", type: "textarea" },
   ],
   "over-ons": [
     { key: "heroTitleStart", label: "Hero — titel (begin)", type: "text" },
@@ -65,6 +77,13 @@ export const PAGE_FIELDS: Record<string, FieldDef[]> = {
     { key: "heroAccent", label: "Hero — accentwoord", type: "text" },
     { key: "heroLead", label: "Hero — introtekst", type: "textarea" },
     { key: "heroLeadMobiel", label: "Hero — introtekst (mobiel)", type: "textarea" },
+    { key: "verwachtTitel", label: "Wat je kunt verwachten — titel", type: "text" },
+    { key: "verwacht1Titel", label: "Stap 1 — titel", type: "text" },
+    { key: "verwacht1Tekst", label: "Stap 1 — tekst", type: "textarea" },
+    { key: "verwacht2Titel", label: "Stap 2 — titel", type: "text" },
+    { key: "verwacht2Tekst", label: "Stap 2 — tekst", type: "textarea" },
+    { key: "verwacht3Titel", label: "Stap 3 — titel", type: "text" },
+    { key: "verwacht3Tekst", label: "Stap 3 — tekst", type: "textarea" },
     { key: "ctaTitel", label: "Slot-CTA — titel", type: "text" },
   ],
   diensten: [
@@ -190,6 +209,22 @@ export const PAGE_DEFAULTS: Record<string, Record<string, string>> = {
     joinusTitel: "Bouw je aan onze klanten, of word je er zelf een?",
     joinusLead:
       "Dezelfde mensen die naast onze klanten staan, kiezen hier hun eigen groeipad. Een gelijk speelveld, open feedback en ruimte om te ondernemen. Misschien versterk jij straks de golf.",
+    leadgenKicker: "Zet de volgende stap",
+    leadgenTitel: "Kies het gesprek dat bij je past",
+    leadgenIntro:
+      "Of je nu strategisch verkent of concreet wilt starten: er is een passende ingang.",
+    lead1Aud: "Voor directie & C-suite",
+    lead1Titel: "Strategiegesprek",
+    lead1Tekst:
+      "Een vrijblijvend gesprek van 45 minuten over jouw sectorvraagstuk en waar technologie het verschil maakt.",
+    lead2Aud: "Voor IT & afdelingsmanagers",
+    lead2Titel: "Quick scan",
+    lead2Tekst:
+      "In één sessie brengen we samen je grootste kans in kaart, met een concreet vervolgadvies.",
+    lead3Aud: "Voor de verdieping",
+    lead3Titel: "Sectorrapport",
+    lead3Tekst:
+      "Download het rapport voor jouw markt: businessvraagstukken, benchmarks en concrete outcomes.",
   },
   "over-ons": {
     heroTitleStart: "De ondernemende mens zorgt voor ",
@@ -230,6 +265,16 @@ export const PAGE_DEFAULTS: Record<string, Record<string, string>> = {
     heroLead:
       "Een strategiegesprek plannen kan, maar een korte vraag stellen mag ook gewoon. Bel, mail, app of kom langs, je zit nergens aan vast.",
     heroLeadMobiel: "Bel, mail, app of kom langs, je zit nergens aan vast.",
+    verwachtTitel: "Wat je kunt verwachten",
+    verwacht1Titel: "Voorbereiding",
+    verwacht1Tekst:
+      "We verdiepen ons vooraf in jouw sector en organisatie, zodat het gesprek meteen de diepte in kan.",
+    verwacht2Titel: "Het gesprek",
+    verwacht2Tekst:
+      "45 minuten met een practice lead, over jouw businessvraagstuk, niet over onze diensten.",
+    verwacht3Titel: "Concreet vervolg",
+    verwacht3Tekst:
+      "Binnen drie dagen een eerste analyse met mogelijke routes, geheel vrijblijvend.",
     ctaTitel: "Liever eerst zien wat we voor anderen deden?",
   },
   diensten: {

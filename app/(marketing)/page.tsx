@@ -747,24 +747,18 @@ export default async function HomePage() {
       <section className="block leadgen" id="lead">
         <div className="wrap-wide">
           <div className="sec-head center">
-            <div className="kicker">Zet de volgende stap</div>
-            <h2>Kies het gesprek dat bij je past</h2>
-            <p>
-              Of je nu strategisch verkent of concreet wilt starten: er is een
-              passende ingang.
-            </p>
+            <div className="kicker">{t.leadgenKicker}</div>
+            <h2>{t.leadgenTitel}</h2>
+            <p>{t.leadgenIntro}</p>
           </div>
           <div className="lead-grid">
             <div className="lead-card">
               <div className="ic">
                 <CalendarCheck />
               </div>
-              <div className="aud">Voor directie &amp; C-suite</div>
-              <h3>Strategiegesprek</h3>
-              <p>
-                Een vrijblijvend gesprek van 45 minuten over jouw sectorvraagstuk
-                en waar technologie het verschil maakt.
-              </p>
+              <div className="aud">{t.lead1Aud}</div>
+              <h3>{t.lead1Titel}</h3>
+              <p>{t.lead1Tekst}</p>
               <div className="spokesperson">
                 <Image
                   src="/assets/photos/portret-blauw.png"
@@ -784,12 +778,9 @@ export default async function HomePage() {
               <div className="ic">
                 <Gauge />
               </div>
-              <div className="aud">Voor IT &amp; afdelingsmanagers</div>
-              <h3>Quick scan</h3>
-              <p>
-                In één sessie brengen we samen je grootste kans in kaart, met een
-                concreet vervolgadvies.
-              </p>
+              <div className="aud">{t.lead2Aud}</div>
+              <h3>{t.lead2Titel}</h3>
+              <p>{t.lead2Tekst}</p>
               <Link href="/contact?type=quickscan" className="go">
                 Doe de quick scan <ArrowRight />
               </Link>
@@ -798,12 +789,9 @@ export default async function HomePage() {
               <div className="ic">
                 <FileDown />
               </div>
-              <div className="aud">Voor de verdieping</div>
-              <h3>Sectorrapport</h3>
-              <p>
-                Download het rapport voor jouw markt: businessvraagstukken,
-                benchmarks en concrete outcomes.
-              </p>
+              <div className="aud">{t.lead3Aud}</div>
+              <h3>{t.lead3Titel}</h3>
+              <p>{t.lead3Tekst}</p>
               <Link href="/contact?type=sectorrapport" className="go">
                 Download het rapport <ArrowRight />
               </Link>

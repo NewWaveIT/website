@@ -104,29 +104,16 @@ export default async function ContactPage() {
           <ContactForm />
           <aside className="aside">
             <div className="expect">
-              <h3>Wat je kunt verwachten</h3>
+              <h3>{t.verwachtTitel}</h3>
               <ol>
-                <li>
-                  <div>
-                    <strong>Voorbereiding</strong>
-                    We verdiepen ons vooraf in jouw sector en organisatie, zodat
-                    het gesprek meteen de diepte in kan.
-                  </div>
-                </li>
-                <li>
-                  <div>
-                    <strong>Het gesprek</strong>
-                    45 minuten met een practice lead, over jouw businessvraagstuk,
-                    niet over onze diensten.
-                  </div>
-                </li>
-                <li>
-                  <div>
-                    <strong>Concreet vervolg</strong>
-                    Binnen drie dagen een eerste analyse met mogelijke routes,
-                    geheel vrijblijvend.
-                  </div>
-                </li>
+                {["1", "2", "3"].map((n) => (
+                  <li key={n}>
+                    <div>
+                      <strong>{t[`verwacht${n}Titel`]}</strong>
+                      {t[`verwacht${n}Tekst`]}
+                    </div>
+                  </li>
+                ))}
               </ol>
             </div>
             <div className="expert">
