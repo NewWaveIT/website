@@ -19,6 +19,23 @@ export const PAGE_FIELDS: Record<string, FieldDef[]> = {
     { key: "ctaKnop", label: "Slot-CTA — knoptekst", type: "text" },
     { key: "heroKickerMobiel", label: "Hero — kicker (mobiel)", type: "text" },
     { key: "heroLeadMobiel", label: "Hero — introtekst (mobiel)", type: "textarea" },
+    { key: "waaromKicker", label: "Waarom wij — kicker", type: "text" },
+    { key: "waaromTitel", label: "Waarom wij — titel", type: "text" },
+    { key: "waarom1Titel", label: "Waarom 1 — titel", type: "text" },
+    { key: "waarom1Tekst", label: "Waarom 1 — tekst", type: "textarea" },
+    { key: "waarom2Titel", label: "Waarom 2 — titel", type: "text" },
+    { key: "waarom2Tekst", label: "Waarom 2 — tekst", type: "textarea" },
+    { key: "waarom3Titel", label: "Waarom 3 — titel", type: "text" },
+    { key: "waarom3Tekst", label: "Waarom 3 — tekst", type: "textarea" },
+    { key: "waarom4Titel", label: "Waarom 4 — titel", type: "text" },
+    { key: "waarom4Tekst", label: "Waarom 4 — tekst", type: "textarea" },
+    { key: "mensenKicker", label: "Mensen — kicker", type: "text" },
+    { key: "mensenTitel", label: "Mensen — titel", type: "text" },
+    { key: "mensenP1", label: "Mensen — alinea 1", type: "textarea" },
+    { key: "mensenP2", label: "Mensen — alinea 2", type: "textarea" },
+    { key: "joinusKicker", label: "Word een Waver — kicker", type: "text" },
+    { key: "joinusTitel", label: "Word een Waver — titel", type: "text" },
+    { key: "joinusLead", label: "Word een Waver — introtekst", type: "textarea" },
   ],
   "over-ons": [
     { key: "heroTitleStart", label: "Hero — titel (begin)", type: "text" },
@@ -94,6 +111,30 @@ export const PAGE_DEFAULTS: Record<string, Record<string, string>> = {
     heroKickerMobiel: "// IT-consultancy voor vijf sectoren",
     heroLeadMobiel:
       "Sectorkennis × Mendix, AI en strategie. Oplossingen die werken voor de mensen die ermee werken.",
+    waaromKicker: "Waarom sectorleiders voor ons kiezen",
+    waaromTitel: "Senioriteit die je merkt vanaf gesprek één.",
+    waarom1Titel: "Bewezen impact",
+    waarom1Tekst:
+      "Meetbare resultaten in publieke sector, mobiliteit, banken, zorg en manufacturing. Geen beloftes, wel cijfers.",
+    waarom2Titel: "Senior teams",
+    waarom2Tekst:
+      "Consultants die de taal van de boardroom én de shopfloor spreken. Betrokken als partner, niet als leverancier.",
+    waarom3Titel: "Eén team, plan-build-run",
+    waarom3Tekst:
+      "Hetzelfde team adviseert, bouwt én beheert. Zo houden we vaart, kwaliteit en verantwoordelijkheid bij elkaar.",
+    waarom4Titel: "Sectorkennis & compliance",
+    waarom4Tekst:
+      "We kennen de regels en systemen van jouw markt: auditproof, veilig en schaalbaar vanaf dag één.",
+    mensenKicker: "De mens centraal",
+    mensenTitel: "Je werkt met mensen, niet met een leverancier.",
+    mensenP1:
+      "Geen anonieme delivery-machine: bij ons ken je de mensen die jouw vraagstuk oplossen. Gepassioneerde consultants en engineers die naast je team staan, van eerste sessie tot livegang en daarna.",
+    mensenP2:
+      "Ons doel? Dat jouw mensen er beter van worden. Technologie is het middel, de mens is de maat.",
+    joinusKicker: "Werken bij The New Wave IT",
+    joinusTitel: "Bouw je aan onze klanten, of word je er zelf een?",
+    joinusLead:
+      "Dezelfde mensen die naast onze klanten staan, kiezen hier hun eigen groeipad. Een gelijk speelveld, open feedback en ruimte om te ondernemen. Misschien versterk jij straks de golf.",
   },
   "over-ons": {
     heroTitleStart: "De ondernemende mens zorgt voor ",

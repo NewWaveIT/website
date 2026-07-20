@@ -491,9 +491,7 @@ export default async function HomePage() {
       <section className="block waarom">
         <div className="wrap-wide">
           <div className="sec-head">
-            <div className="kicker on-dark">
-              Waarom sectorleiders voor ons kiezen
-            </div>
+            <div className="kicker on-dark">{t.waaromKicker}</div>
             <h2
               style={{
                 color: "#fff",
@@ -502,7 +500,7 @@ export default async function HomePage() {
                 margin: "var(--space-4) 0 0",
               }}
             >
-              Senioriteit die je merkt vanaf gesprek één.
+              {t.waaromTitel}
             </h2>
           </div>
           <div className="grid">
@@ -510,41 +508,29 @@ export default async function HomePage() {
               <div className="ic">
                 <Target />
               </div>
-              <h4>Bewezen impact</h4>
-              <p>
-                Meetbare resultaten in publieke sector, mobiliteit, banken, zorg
-                en manufacturing. Geen beloftes, wel cijfers.
-              </p>
+              <h4>{t.waarom1Titel}</h4>
+              <p>{t.waarom1Tekst}</p>
             </div>
             <div className="wcard">
               <div className="ic">
                 <Users />
               </div>
-              <h4>Senior teams</h4>
-              <p>
-                Consultants die de taal van de boardroom én de shopfloor spreken.
-                Betrokken als partner, niet als leverancier.
-              </p>
+              <h4>{t.waarom2Titel}</h4>
+              <p>{t.waarom2Tekst}</p>
             </div>
             <div className="wcard">
               <div className="ic">
                 <Workflow />
               </div>
-              <h4>Eén team, plan-build-run</h4>
-              <p>
-                Hetzelfde team adviseert, bouwt én beheert. Zo houden we vaart,
-                kwaliteit en verantwoordelijkheid bij elkaar.
-              </p>
+              <h4>{t.waarom3Titel}</h4>
+              <p>{t.waarom3Tekst}</p>
             </div>
             <div className="wcard">
               <div className="ic">
                 <ShieldCheck />
               </div>
-              <h4>Sectorkennis &amp; compliance</h4>
-              <p>
-                We kennen de regels en systemen van jouw markt: auditproof, veilig
-                en schaalbaar vanaf dag één.
-              </p>
+              <h4>{t.waarom4Titel}</h4>
+              <p>{t.waarom4Tekst}</p>
             </div>
           </div>
         </div>
@@ -555,7 +541,7 @@ export default async function HomePage() {
         <div className="wrap-wide">
           <div className="grid">
             <div className="txt">
-              <div className="kicker">De mens centraal</div>
+              <div className="kicker">{t.mensenKicker}</div>
               <h2
                 style={{
                   fontSize: "var(--text-3xl)",
@@ -563,17 +549,10 @@ export default async function HomePage() {
                   margin: "var(--space-4) 0 var(--space-5)",
                 }}
               >
-                Je werkt met mensen, niet met een leverancier.
+                {t.mensenTitel}
               </h2>
-              <p>
-                Geen anonieme delivery-machine: bij ons ken je de mensen die jouw
-                vraagstuk oplossen. Gepassioneerde consultants en engineers die
-                naast je team staan, van eerste sessie tot livegang en daarna.
-              </p>
-              <p>
-                Ons doel? Dat jouw mensen er beter van worden. Technologie is het
-                middel, de mens is de maat.
-              </p>
+              <p>{t.mensenP1}</p>
+              <p>{t.mensenP2}</p>
               <div
                 style={{
                   display: "flex",
@@ -636,15 +615,9 @@ export default async function HomePage() {
         <div className="wrap-wide">
           <div className="grid">
             <div>
-              <div className="kicker on-dark">Werken bij The New Wave IT</div>
-              <h2>
-                Bouw je aan onze klanten, of <em>word je er zelf een</em>?
-              </h2>
-              <p className="lead">
-                Dezelfde mensen die naast onze klanten staan, kiezen hier hun
-                eigen groeipad. Een gelijk speelveld, open feedback en ruimte om
-                te ondernemen. Misschien versterk jij straks de golf.
-              </p>
+              <div className="kicker on-dark">{t.joinusKicker}</div>
+              <h2>{t.joinusTitel}</h2>
+              <p className="lead">{t.joinusLead}</p>
               <div className="roles">
                 <Link href="/vacatures/lead-mendix-consultant" className="role">
                   <Layers /> Lead Mendix Consultant
