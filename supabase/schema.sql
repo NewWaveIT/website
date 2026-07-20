@@ -22,6 +22,7 @@ create table if not exists public.contact_aanvragen (
 alter table public.contact_aanvragen enable row level security;
 
 -- Publiek formulier: iedereen mag een aanvraag indienen.
+drop policy if exists "anon kan contactaanvraag indienen" on public.contact_aanvragen;
 create policy "anon kan contactaanvraag indienen"
   on public.contact_aanvragen
   for insert
@@ -29,6 +30,7 @@ create policy "anon kan contactaanvraag indienen"
   with check (true);
 
 -- Alleen ingelogde (staff) gebruikers mogen lezen.
+drop policy if exists "auth kan contactaanvragen lezen" on public.contact_aanvragen;
 create policy "auth kan contactaanvragen lezen"
   on public.contact_aanvragen
   for select
@@ -52,12 +54,14 @@ create table if not exists public.sollicitaties (
 
 alter table public.sollicitaties enable row level security;
 
+drop policy if exists "anon kan solliciteren" on public.sollicitaties;
 create policy "anon kan solliciteren"
   on public.sollicitaties
   for insert
   to anon
   with check (true);
 
+drop policy if exists "auth kan sollicitaties lezen" on public.sollicitaties;
 create policy "auth kan sollicitaties lezen"
   on public.sollicitaties
   for select
@@ -114,6 +118,7 @@ begin
     execute format('alter table public.%I enable row level security;', t);
 
     -- Publiek: alleen live content leesbaar (anon + authenticated).
+    execute format('drop policy if exists "publiek leest live %1$s" on public.%1$I;', t);
     execute format($p$
       create policy "publiek leest live %1$s"
         on public.%1$I for select
@@ -121,6 +126,7 @@ begin
     $p$, t);
 
     -- Staff (ingelogd): volledige toegang.
+    execute format('drop policy if exists "auth beheert %1$s" on public.%1$I;', t);
     execute format($p$
       create policy "auth beheert %1$s"
         on public.%1$I for all
