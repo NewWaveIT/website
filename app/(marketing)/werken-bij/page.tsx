@@ -3,6 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Check, ArrowRight } from "lucide-react";
 import { getVacatures } from "@/lib/vacatures-data";
+import { getPagina } from "@/lib/paginas-data";
 import { MobileWerkenBij } from "@/components/mobile/mobile-werken-bij";
 import "./werken-bij.css";
 import "./mobile.css";
@@ -37,6 +38,7 @@ export const revalidate = 300;
 
 export default async function WerkenBijPage() {
   const vacatures = await getVacatures();
+  const t = await getPagina("werken-bij");
   return (
     <>
       <MobileWerkenBij vacatures={vacatures} />
@@ -53,14 +55,10 @@ export default async function WerkenBijPage() {
             {"// Werken bij The New Wave IT"}
           </div>
           <h1>
-            Word een <em>Waver</em>.
+            {t.heroTitleStart}
+            <em>{t.heroAccent}</em>.
           </h1>
-          <p>
-            Het is onze droom dat elk mens werk doet dat aansluit bij persoonlijke
-            doelen en drijfveren. Wij verzorgen de randvoorwaarden: een gelijk
-            speelveld, een open cultuur en alle ruimte om te groeien. Jij zorgt
-            voor de versnelling bij onze partners.
-          </p>
+          <p>{t.heroLead}</p>
           <div className="hero-actions">
             <a href="#vacatures" className="btn btn-primary">
               Bekijk vacatures <ArrowRight />
@@ -179,7 +177,7 @@ export default async function WerkenBijPage() {
 
       <section className="cta">
         <div className="wrap-wide">
-          <h2>Eerst een kop koffie? Kom kennismaken.</h2>
+          <h2>{t.ctaTitel}</h2>
           <a href="#vacatures" className="btn btn-on">
             Bekijk alle vacatures <ArrowRight />
           </a>

@@ -49,6 +49,12 @@ export const PAGE_FIELDS: Record<string, FieldDef[]> = {
     { key: "heroLead", label: "Hero — introtekst", type: "textarea" },
     { key: "ctaTitel", label: "Slot-CTA — titel", type: "text" },
   ],
+  "werken-bij": [
+    { key: "heroTitleStart", label: "Hero — titel (begin)", type: "text" },
+    { key: "heroAccent", label: "Hero — accentwoord", type: "text" },
+    { key: "heroLead", label: "Hero — introtekst", type: "textarea" },
+    { key: "ctaTitel", label: "Slot-CTA — titel", type: "text" },
+  ],
 };
 
 /** Bekende pagina's → hun publieke pad (voor revalidatie na opslaan). */
@@ -58,6 +64,7 @@ export const PAGE_PATH: Record<string, string> = {
   contact: "/contact",
   diensten: "/diensten",
   sectoren: "/sectoren",
+  "werken-bij": "/werken-bij",
 };
 
 /** Standaardteksten per pagina (fallback op de site + startwaarde in de editor). */
@@ -116,5 +123,12 @@ export const PAGE_DEFAULTS: Record<string, Record<string, string>> = {
     heroLead:
       "Geen generieke IT-dienstverlener, maar een business-specialist in vijf markten. We kennen de processen, de wetgeving en de systemen, zodat we bij het eerste gesprek al de diepte in kunnen.",
     ctaTitel: "Benieuwd wat dit voor jouw organisatie betekent?",
+  },
+  "werken-bij": {
+    heroTitleStart: "Word een ",
+    heroAccent: "Waver",
+    heroLead:
+      "Het is onze droom dat elk mens werk doet dat aansluit bij persoonlijke doelen en drijfveren. Wij verzorgen de randvoorwaarden: een gelijk speelveld, een open cultuur en alle ruimte om te groeien. Jij zorgt voor de versnelling bij onze partners.",
+    ctaTitel: "Eerst een kop koffie? Kom kennismaken.",
   },
 };
