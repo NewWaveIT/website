@@ -23,6 +23,7 @@ import {
 } from "lucide-react";
 import { HomeInteractions } from "@/components/home/home-interactions";
 import { MobileHome } from "@/components/mobile/mobile-home";
+import { getPagina } from "@/lib/paginas-data";
 import "./home.css";
 import "./mobile-home.css";
 
@@ -44,7 +45,10 @@ const jsonLd = {
   sameAs: ["https://www.linkedin.com/company/the-new-wave-it"],
 };
 
-export default function HomePage() {
+export const revalidate = 300;
+
+export default async function HomePage() {
+  const t = await getPagina("home");
   return (
     <>
       <MobileHome />
@@ -62,27 +66,21 @@ export default function HomePage() {
         <canvas className="hero-wave" aria-hidden="true" />
         <div className="wrap-wide">
           <div className="hero-inner">
-            <div className="kicker on-dark">
-              {"// Business-specialist in publieke sector · mobiliteit · banken · zorg · manufacturing"}
-            </div>
+            <div className="kicker on-dark">{t.heroKicker}</div>
             <h1>
-              Wij maken van business en IT{" "}
-              <span className="accent">één beweging</span>.
+              {t.heroTitleStart}
+              <span className="accent">{t.heroAccent}</span>.
             </h1>
-            <p className="lead">
-              The New Wave IT combineert diepgaande sectorkennis met Mendix, AI en
-              strategie. Zo vertalen we jouw ambitie naar oplossingen die werken
-              voor de mensen die ermee moeten werken.
-            </p>
+            <p className="lead">{t.heroLead}</p>
             <div className="hero-actions">
               <Link href="/contact" className="btn btn-primary">
-                Plan een strategiegesprek <ArrowRight />
+                {t.heroCtaPrimair} <ArrowRight />
               </Link>
               <Link href="/klantverhalen" className="play">
                 <span className="circle">
                   <Play />
                 </span>{" "}
-                Bekijk klantverhalen
+                {t.heroCtaVideo}
               </Link>
             </div>
             <div className="sector-chips">
@@ -136,17 +134,10 @@ export default function HomePage() {
       <section className="statement">
         <div className="wrap-wide">
           <div>
-            <div className="kicker">{"// Plan · build · run"}</div>
-            <h2 style={{ marginTop: "var(--space-4)" }}>
-              Wij adviseren niet alleen. Wij bouwen, leveren en{" "}
-              <em>beheren</em>.
-            </h2>
+            <div className="kicker">{t.statementKicker}</div>
+            <h2 style={{ marginTop: "var(--space-4)" }}>{t.statementTitel}</h2>
           </div>
-          <p>
-            Hetzelfde senior team dat jouw strategie mee vormgeeft, staat ook aan
-            de knoppen bij bouw en beheer. Zo blijft verantwoordelijkheid op één
-            plek en houden we vaart tot ver na livegang.
-          </p>
+          <p>{t.statementBody}</p>
         </div>
       </section>
 
@@ -851,9 +842,9 @@ export default function HomePage() {
       {/* CTA */}
       <section className="cta">
         <div className="wrap-wide">
-          <h2>Klaar om samen te bouwen aan meetbare groei?</h2>
+          <h2>{t.ctaTitel}</h2>
           <Link href="/contact" className="btn btn-on">
-            Plan een strategiegesprek <ArrowRight />
+            {t.ctaKnop} <ArrowRight />
           </Link>
         </div>
       </section>

@@ -83,9 +83,9 @@ export function fieldValue(data: Record<string, unknown>, f: FieldDef): string {
   return typeof v === "string" ? v : String(v);
 }
 
-/** Overige data-sleutels die niet in het schema zitten (voor de JSON-uitklap). */
-export function extraData(type: ContentType, data: Record<string, unknown>): Record<string, unknown> {
-  const known = new Set(FIELD_SCHEMAS[type].map((f) => f.key));
+/** Overige data-sleutels die niet in de gegeven velden zitten (voor de JSON-uitklap). */
+export function extraData(fields: FieldDef[], data: Record<string, unknown>): Record<string, unknown> {
+  const known = new Set(fields.map((f) => f.key));
   const rest: Record<string, unknown> = {};
   for (const [k, v] of Object.entries(data)) {
     if (!known.has(k)) rest[k] = v;

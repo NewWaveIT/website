@@ -4,7 +4,8 @@ import { useActionState, useState } from "react";
 import Link from "next/link";
 import { saveContent, deleteContent, type SaveState } from "@/app/admin/content/actions";
 import type { ContentRow, ContentType } from "@/lib/cms/content";
-import { FIELD_SCHEMAS, fieldValue, extraData } from "@/lib/cms/schema";
+import { FIELD_SCHEMAS, extraData } from "@/lib/cms/schema";
+import { PAGE_FIELDS, PAGE_DEFAULTS } from "@/lib/cms/pages";
 import { ImageField } from "./image-field";
 
 export function ContentEditor({
@@ -20,10 +21,19 @@ export function ContentEditor({
 }) {
   const [state, formAction, pending] = useActionState<SaveState, FormData>(saveContent, {});
   const [status, setStatus] = useState(row?.status === "live" ? "live" : "concept");
+  const [slug, setSlug] = useState(row?.slug ?? "");
   const data = (row?.data ?? {}) as Record<string, unknown>;
-  const fields = FIELD_SCHEMAS[type];
-  const rest = extraData(type, data);
+  const fields =
+    type === "paginas" ? (PAGE_FIELDS[slug] ?? FIELD_SCHEMAS.paginas) : FIELD_SCHEMAS[type];
+  const rest = extraData(fields, data);
   const extraInitial = Object.keys(rest).length ? JSON.stringify(rest, null, 2) : "";
+
+  // Startwaarde van een veld: opgeslagen data, anders de pagina-standaardtekst.
+  const initial = (key: string) => {
+    const v = data[key];
+    if (typeof v === "string" && v) return v;
+    return (type === "paginas" && PAGE_DEFAULTS[slug]?.[key]) || "";
+  };
 
   return (
     <>
@@ -60,7 +70,8 @@ export function ContentEditor({
               id="ce-slug"
               name="slug"
               type="text"
-              defaultValue={row?.slug ?? ""}
+              value={slug}
+              onChange={(e) => setSlug(e.target.value)}
               placeholder="bijv-mijn-artikel"
               pattern="[a-z0-9\-]+"
               required
@@ -86,7 +97,7 @@ export function ContentEditor({
 
         {fields.map((f) =>
           f.type === "image" ? (
-            <ImageField key={f.key} name={`f_${f.key}`} label={f.label} defaultValue={fieldValue(data, f)} />
+            <ImageField key={f.key} name={`f_${f.key}`} label={f.label} defaultValue={initial(f.key)} />
           ) : (
           <div className="fld" key={f.key}>
             <label htmlFor={`ce-${f.key}`}>{f.label}</label>
@@ -94,7 +105,7 @@ export function ContentEditor({
               <textarea
                 id={`ce-${f.key}`}
                 name={`f_${f.key}`}
-                defaultValue={fieldValue(data, f)}
+                defaultValue={initial(f.key)}
                 placeholder={f.placeholder}
                 spellCheck={f.type === "markdown" ? false : undefined}
                 style={
@@ -108,7 +119,7 @@ export function ContentEditor({
                 id={`ce-${f.key}`}
                 name={`f_${f.key}`}
                 type={f.type === "number" ? "number" : f.type === "date" ? "date" : "text"}
-                defaultValue={fieldValue(data, f)}
+                defaultValue={initial(f.key)}
                 placeholder={f.placeholder}
               />
             )}

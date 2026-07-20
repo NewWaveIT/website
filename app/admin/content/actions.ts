@@ -6,6 +6,7 @@ import { requireAdmin } from "@/lib/dal";
 import { createClient } from "@/lib/supabase/server";
 import { CONTENT_TABLE, type ContentType } from "@/lib/cms/content";
 import { FIELD_SCHEMAS } from "@/lib/cms/schema";
+import { PAGE_FIELDS, PAGE_PATH } from "@/lib/cms/pages";
 
 /** Adminlijst per contenttype (voor terugnavigatie + revalidatie). */
 const LIST_PATH: Record<ContentType, string> = {
@@ -58,7 +59,9 @@ export async function saveContent(_prev: SaveState, formData: FormData): Promise
     }
   }
 
-  for (const f of FIELD_SCHEMAS[type]) {
+  const fields =
+    type === "paginas" ? (PAGE_FIELDS[slug] ?? FIELD_SCHEMAS.paginas) : FIELD_SCHEMAS[type];
+  for (const f of fields) {
     const raw = String(formData.get(`f_${f.key}`) ?? "").trim();
     if (raw === "") {
       delete data[f.key];
