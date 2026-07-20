@@ -4,9 +4,10 @@ import { useActionState, useState } from "react";
 import Link from "next/link";
 import { saveContent, deleteContent, type SaveState } from "@/app/admin/content/actions";
 import type { ContentRow, ContentType } from "@/lib/cms/content";
-import { FIELD_SCHEMAS, extraData } from "@/lib/cms/schema";
+import { FIELD_SCHEMAS, extraData, isStructured } from "@/lib/cms/schema";
 import { PAGE_FIELDS, PAGE_DEFAULTS } from "@/lib/cms/pages";
 import { ImageField } from "./image-field";
+import { StructuredField } from "./structured-field";
 
 export function ContentEditor({
   type,
@@ -96,7 +97,9 @@ export function ContentEditor({
         </div>
 
         {fields.map((f) =>
-          f.type === "image" ? (
+          isStructured(f.type) ? (
+            <StructuredField key={f.key} field={f} initial={data[f.key]} />
+          ) : f.type === "image" ? (
             <ImageField key={f.key} name={`f_${f.key}`} label={f.label} defaultValue={initial(f.key)} />
           ) : (
           <div className="fld" key={f.key}>
@@ -128,23 +131,25 @@ export function ContentEditor({
           )
         )}
 
-        <details style={{ marginBottom: "var(--space-5)" }}>
-          <summary style={{ cursor: "pointer", fontSize: "var(--text-sm)", color: "var(--text-muted)" }}>
-            Overige velden (JSON)
-          </summary>
-          <div className="fld" style={{ marginTop: "var(--space-3)" }}>
-            <textarea
-              name="extra"
-              defaultValue={extraInitial}
-              spellCheck={false}
-              placeholder="{ }"
-              style={{ minHeight: 140, fontFamily: "var(--font-mono)", fontSize: "var(--text-xs)", lineHeight: 1.6 }}
-            />
-            <p className="t-sub" style={{ marginTop: 6 }}>
-              Extra sleutels die (nog) geen eigen veld hebben. Moet geldige JSON zijn.
-            </p>
-          </div>
-        </details>
+        {extraInitial && (
+          <details style={{ marginBottom: "var(--space-5)" }}>
+            <summary style={{ cursor: "pointer", fontSize: "var(--text-sm)", color: "var(--text-muted)" }}>
+              Geavanceerd — overige velden (JSON)
+            </summary>
+            <div className="fld" style={{ marginTop: "var(--space-3)" }}>
+              <textarea
+                name="extra"
+                defaultValue={extraInitial}
+                spellCheck={false}
+                placeholder="{ }"
+                style={{ minHeight: 140, fontFamily: "var(--font-mono)", fontSize: "var(--text-xs)", lineHeight: 1.6 }}
+              />
+              <p className="t-sub" style={{ marginTop: 6 }}>
+                Sleutels zonder eigen veld. Moet geldige JSON zijn.
+              </p>
+            </div>
+          </details>
+        )}
 
         <div style={{ display: "flex", gap: "var(--space-3)", justifyContent: "flex-end" }}>
           <Link href={listPath} className="btn btn-outline">

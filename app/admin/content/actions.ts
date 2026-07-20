@@ -5,7 +5,7 @@ import { redirect } from "next/navigation";
 import { requireAdmin } from "@/lib/dal";
 import { createClient } from "@/lib/supabase/server";
 import { CONTENT_TABLE, type ContentType } from "@/lib/cms/content";
-import { FIELD_SCHEMAS } from "@/lib/cms/schema";
+import { FIELD_SCHEMAS, isStructured } from "@/lib/cms/schema";
 import { PAGE_FIELDS, PAGE_PATH } from "@/lib/cms/pages";
 import { buildSeed } from "@/lib/cms/seed-data";
 
@@ -64,7 +64,14 @@ export async function saveContent(_prev: SaveState, formData: FormData): Promise
     type === "paginas" ? (PAGE_FIELDS[slug] ?? FIELD_SCHEMAS.paginas) : FIELD_SCHEMAS[type];
   for (const f of fields) {
     const raw = String(formData.get(`f_${f.key}`) ?? "").trim();
-    if (raw === "") {
+    if (isStructured(f.type)) {
+      try {
+        const parsed = raw ? JSON.parse(raw) : f.type === "group" ? {} : [];
+        data[f.key] = parsed;
+      } catch {
+        return { error: `Veld "${f.label}" kon niet worden opgeslagen.` };
+      }
+    } else if (raw === "") {
       delete data[f.key];
     } else if (f.type === "number") {
       const n = Number(raw);
