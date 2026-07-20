@@ -15,25 +15,6 @@ export const metadata: Metadata = {
   alternates: { canonical: "/werken-bij" },
 };
 
-const GROEI = [
-  { num: "01", titel: "Persoonlijk groeipad", p: "Jouw route bestaat uit activiteiten on-the-job, cursussen en trainingen, gekozen op basis van jouw ambitie, niet een standaardlijstje." },
-  { num: "02", titel: "Open feedbackcultuur", p: "Regelmatige, open en eerlijke feedback hoort bij onze cultuur. Elk half jaar haal je bovendien 360°-feedback op uit je omgeving." },
-  { num: "03", titel: "Learning week", p: "Jaarlijks trekken we er met z'n allen een volle week op uit om samen te ontwikkelen: vakinhoudelijk én persoonlijk." },
-];
-
-const TOTAL_PEOPLE = [
-  { titel: "Presteren", p: "Uitdagende opdrachten bij partners in de publieke sector, mobiliteit, banken, zorg en manufacturing. Een rol op maat die jij zelf kiest." },
-  { titel: "Groeien", p: "Zeggenschap over de koers: je beslist mee over strategie en investeringen van onze organisatie. Plus een persoonlijk groeipad met open feedback." },
-  { titel: "Ontspannen", p: "Werk dat aansluit bij jouw doelen en drijfveren, met ruimte voor rust. Duurzaam onderweg in een elektrische auto van de zaak." },
-];
-
-const CULTUUR = [
-  "Gelijke, transparante beloning bij gelijke ervaring, ongeacht gender of achtergrond",
-  "Projecten gekozen op jouw ervaring, skills én ambitie",
-  "Zeggenschap: meebeslissen over strategie en investeringen",
-  "Maatschappelijke impact: duurzaamheid, gendergelijkheid en arbeidsparticipatie",
-];
-
 export const revalidate = 300;
 
 export default async function WerkenBijPage() {
@@ -73,20 +54,16 @@ export default async function WerkenBijPage() {
       <section className="block groei">
         <div className="wrap-wide">
           <div className="sec-head">
-            <div className="kicker">Groei &amp; ontwikkeling</div>
-            <h2>Elke dag samen beter worden</h2>
-            <p>
-              Persoonlijke aandacht en focus op groei zijn de kern. Samen
-              verkennen we meerdere routes naar jouw ambitie en kiezen we de best
-              passende weg.
-            </p>
+            <div className="kicker">{t.groeiKicker}</div>
+            <h2>{t.groeiTitel}</h2>
+            <p>{t.groeiIntro}</p>
           </div>
           <div className="grid">
-            {GROEI.map((g) => (
-              <div className="gcard" key={g.num}>
-                <div className="num">{g.num}</div>
-                <h3>{g.titel}</h3>
-                <p>{g.p}</p>
+            {["1", "2", "3"].map((n) => (
+              <div className="gcard" key={n}>
+                <div className="num">{`0${n}`}</div>
+                <h3>{t[`groei${n}Titel`]}</h3>
+                <p>{t[`groei${n}Tekst`]}</p>
               </div>
             ))}
           </div>
@@ -96,18 +73,15 @@ export default async function WerkenBijPage() {
       <section className="block totalpeople">
         <div className="wrap-wide">
           <div className="sec-head">
-            <div className="kicker">Total People</div>
-            <h2>Presteren, groeien én ontspannen</h2>
-            <p>
-              Bij ons staat het Total People-principe centraal: de balans tussen
-              presteren, groeien en ontspannen. Jouw groei is onze groei.
-            </p>
+            <div className="kicker">{t.tpKicker}</div>
+            <h2>{t.tpTitel}</h2>
+            <p>{t.tpIntro}</p>
           </div>
           <div className="grid">
-            {TOTAL_PEOPLE.map((t) => (
-              <div className="tp" key={t.titel}>
-                <h3>{t.titel}</h3>
-                <p>{t.p}</p>
+            {["1", "2", "3"].map((n) => (
+              <div className="tp" key={n}>
+                <h3>{t[`tp${n}Titel`]}</h3>
+                <p>{t[`tp${n}Tekst`]}</p>
               </div>
             ))}
           </div>
@@ -126,19 +100,15 @@ export default async function WerkenBijPage() {
               />
             </div>
             <div>
-              <div className="kicker">Onze cultuur</div>
+              <div className="kicker">{t.cultuurKicker}</div>
               <h2 style={{ fontSize: "var(--text-3xl)", fontWeight: "var(--fw-extrabold)", margin: "var(--space-4) 0 var(--space-5)" }}>
-                Ondernemende mensen, gelijk speelveld.
+                {t.cultuurTitel}
               </h2>
-              <p>
-                Wij geloven dat de ondernemende mens zorgt voor vooruitgang en
-                succesvolle verandering. Dat vraagt om een omgeving waarin iedereen
-                gelijk is en verschillen versterken.
-              </p>
+              <p>{t.cultuurP}</p>
               <ul>
-                {CULTUUR.map((c, i) => (
-                  <li key={i}>
-                    <Check /> {c}
+                {["1", "2", "3", "4"].map((n) => (
+                  <li key={n}>
+                    <Check /> {t[`cultuur${n}`]}
                   </li>
                 ))}
               </ul>
