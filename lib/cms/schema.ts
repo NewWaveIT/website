@@ -55,12 +55,18 @@ export const FIELD_SCHEMAS: Record<ContentType, FieldDef[]> = {
     { key: "inhoud", label: "Inhoud (Markdown)", type: "markdown" },
   ],
   diensten: [
+    { key: "badgeLabel", label: "Badge-label", type: "text", placeholder: "Mendix Premium Partner" },
+    { key: "h1", label: "Titel (H1)", type: "text" },
     { key: "intro", label: "Intro", type: "textarea" },
-    { key: "inhoud", label: "Inhoud (Markdown)", type: "markdown" },
+    { key: "ctaTitle", label: "CTA-titel", type: "text" },
+    { key: "insightsTitle", label: "Titel inzichten-blok", type: "text", help: "Rijke onderdelen (kpis, pijlers, aanpak, experts…) via 'Overige velden (JSON)'." },
   ],
   sectoren: [
+    { key: "h1", label: "Titel (H1)", type: "text" },
     { key: "intro", label: "Intro", type: "textarea" },
-    { key: "inhoud", label: "Inhoud (Markdown)", type: "markdown" },
+    { key: "challengesIntro", label: "Intro businessvraagstukken", type: "textarea" },
+    { key: "ctaTitle", label: "CTA-titel", type: "text" },
+    { key: "insightsTitle", label: "Titel inzichten-blok", type: "text", help: "Rijke onderdelen (kpis, challenges, solutions, outcomes…) via 'Overige velden (JSON)'." },
   ],
   teamleden: [
     { key: "naam", label: "Naam", type: "text" },

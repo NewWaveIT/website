@@ -11,16 +11,18 @@ import {
   Play,
   ArrowRight,
 } from "lucide-react";
-import { DIENSTEN, DIENST_SLUGS } from "@/lib/diensten-detail";
+import { getDienstBySlug, getDienstSlugs } from "@/lib/diensten-detail-data";
 import { MOBILE_DIENSTEN } from "@/lib/mobile-detail";
 import { SectorHeroAnim } from "@/components/sector-hero-anim";
 import { MobileDetail } from "@/components/mobile/mobile-detail";
 import "./dienst-detail.css";
 
+export const revalidate = 300;
+
 const BADGE_ICON = { boxes: Boxes, "brain-circuit": BrainCircuit, route: Route };
 
-export function generateStaticParams() {
-  return DIENST_SLUGS.map((slug) => ({ slug }));
+export async function generateStaticParams() {
+  return (await getDienstSlugs()).map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({
@@ -29,7 +31,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const d = DIENSTEN[slug];
+  const d = await getDienstBySlug(slug);
   if (!d) return {};
   return {
     title: `${d.naam} — ${d.h1}`,
@@ -44,7 +46,7 @@ export default async function DienstPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const d = DIENSTEN[slug];
+  const d = await getDienstBySlug(slug);
   if (!d) notFound();
 
   const Badge = BADGE_ICON[d.badgeIcon];

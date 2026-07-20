@@ -11,11 +11,13 @@ import {
   Play,
   ArrowRight,
 } from "lucide-react";
-import { SECTOREN, SECTOR_SLUGS } from "@/lib/sectoren-detail";
+import { getSectorBySlug, getSectorSlugs } from "@/lib/sectoren-detail-data";
 import { MOBILE_SECTOREN } from "@/lib/mobile-detail";
 import { SectorHeroAnim } from "@/components/sector-hero-anim";
 import { MobileDetail } from "@/components/mobile/mobile-detail";
 import "./sector-detail.css";
+
+export const revalidate = 300;
 
 const ICONS = {
   "building-2": Building2,
@@ -25,8 +27,8 @@ const ICONS = {
   factory: Factory,
 };
 
-export function generateStaticParams() {
-  return SECTOR_SLUGS.map((slug) => ({ slug }));
+export async function generateStaticParams() {
+  return (await getSectorSlugs()).map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({
@@ -35,7 +37,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const s = SECTOREN[slug];
+  const s = await getSectorBySlug(slug);
   if (!s) return {};
   return {
     title: `${s.naam} — ${s.h1}`,
@@ -50,7 +52,7 @@ export default async function SectorPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const s = SECTOREN[slug];
+  const s = await getSectorBySlug(slug);
   if (!s) notFound();
 
   const Icon = ICONS[s.icon];

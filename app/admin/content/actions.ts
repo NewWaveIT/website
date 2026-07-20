@@ -111,6 +111,10 @@ function revalidatePublic(type: ContentType, slug: string) {
   } else if (type === "vacatures") {
     revalidatePath("/werken-bij");
     revalidatePath(`/vacatures/${slug}`);
+  } else if (type === "diensten") {
+    revalidatePath(`/diensten/${slug}`);
+  } else if (type === "sectoren") {
+    revalidatePath(`/sectoren/${slug}`);
   }
 }
 
