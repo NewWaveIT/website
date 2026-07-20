@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useState, type ChangeEvent } from "react";
+import { Upload } from "lucide-react";
 import { uploadImage } from "@/app/admin/content/actions";
 
 /** Gecontroleerd upload-veld (preview + bestand kiezen + pad). Herbruikbaar, ook genest. */
@@ -46,16 +47,25 @@ export function ImageControl({
           }}
         />
       ) : null}
+      <div style={{ display: "flex", gap: 10, alignItems: "center", flexWrap: "wrap" }}>
+        <button type="button" className="btn btn-outline" disabled={busy} onClick={() => fileRef.current?.click()}>
+          <Upload /> {value ? "Vervang afbeelding" : "Afbeelding uploaden"}
+        </button>
+        {busy && <span className="t-sub">Uploaden…</span>}
+        <input ref={fileRef} type="file" accept="image/*" onChange={onFile} style={{ display: "none" }} />
+      </div>
       <input
         type="text"
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        placeholder="/assets/… of geüploade URL"
+        placeholder="of plak een pad/URL"
+        style={{
+          marginTop: 8,
+          fontSize: "var(--text-xs)",
+          color: "var(--text-subtle)",
+          padding: "7px 10px",
+        }}
       />
-      <div style={{ marginTop: 8, display: "flex", gap: 10, alignItems: "center" }}>
-        <input ref={fileRef} type="file" accept="image/*" onChange={onFile} disabled={busy} style={{ fontSize: "var(--text-xs)" }} />
-        {busy && <span className="t-sub">Uploaden…</span>}
-      </div>
       {err && (
         <p className="t-sub" style={{ marginTop: 6, color: "var(--danger-500)" }}>
           {err}
