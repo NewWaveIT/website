@@ -9,12 +9,6 @@ const DIENSTEN = [
   { slug: "strategie", num: "03 · Richting", naam: "Digitale strategie", img: "/assets/photos/klantgesprek-tafel.png", alt: "Strategiesessie aan tafel", p: "Wij verbinden business en IT in een concreet plan en blijven aan boord tot het werkt. Geen dik rapport voor in de la.", li: ["Van ambitie naar geprioriteerde roadmap", "Businesscase per initiatief", "Begeleiding bij de verandering"] },
 ];
 
-const SAMEN = [
-  { num: "Strategie → Mendix", h: "Van roadmap naar werkende applicatie", p: "De roadmap bepaalt welke applicatie het eerst waarde oplevert; binnen weken staat de eerste versie in productie." },
-  { num: "Mendix → AI", h: "Slimme processen in je eigen apps", p: "AI direct in je bedrijfsapplicaties: van slimme formulieren tot automatische triage van aanvragen." },
-  { num: "AI → Strategie", h: "Data die je koers scherpt", p: "Inzichten uit pilots voeden de volgende strategische keuzes, leren en bijsturen in korte cycli." },
-];
-
 const SECTCHIPS = [
   { slug: "zorg", Icon: HeartPulse, naam: "Zorg" },
   { slug: "publieke-sector", Icon: Landmark, naam: "Publieke sector" },
@@ -53,15 +47,19 @@ export function MobileDiensten({ diensten }: { diensten: Record<string, string> 
       <section className="block samen">
         <div className="wrap">
           <div className="sec-head">
-            <div className="kicker on-dark">Sterker samen</div>
-            <h2 style={{ color: "#fff" }}>Waarom de combinatie werkt</h2>
+            <div className="kicker on-dark">{diensten.samenKicker}</div>
+            <h2 style={{ color: "#fff" }}>{diensten.samenTitel}</h2>
           </div>
           <div className="list">
-            {SAMEN.map((s) => (
-              <div className="scard rv" key={s.num}>
-                <div className="num">{s.num}</div>
-                <h3>{s.h}</h3>
-                <p>{s.p}</p>
+            {[
+              { n: "1", num: "Strategie → Mendix" },
+              { n: "2", num: "Mendix → AI" },
+              { n: "3", num: "AI → Strategie" },
+            ].map(({ n, num }) => (
+              <div className="scard rv" key={n}>
+                <div className="num">{num}</div>
+                <h3>{diensten[`samen${n}Titel`]}</h3>
+                <p>{diensten[`samen${n}Tekst`]}</p>
               </div>
             ))}
           </div>
@@ -71,8 +69,8 @@ export function MobileDiensten({ diensten }: { diensten: Record<string, string> 
       <section className="block" style={{ background: "var(--eggshell)" }}>
         <div className="wrap">
           <div className="sec-head">
-            <div className="kicker">Sectorkennis eerst</div>
-            <h2>Altijd vanuit jouw sector</h2>
+            <div className="kicker">{diensten.sectstripKicker}</div>
+            <h2>{diensten.sectstripTitel}</h2>
           </div>
           <div className="sectchips rv">
             {SECTCHIPS.map(({ slug, Icon, naam }) => (
@@ -84,7 +82,7 @@ export function MobileDiensten({ diensten }: { diensten: Record<string, string> 
 
       <section className="cta">
         <div className="wrap">
-          <h2>Niet zeker welke dienst bij jouw vraagstuk past?</h2>
+          <h2>{diensten.ctaTitel}</h2>
           <Link href="/contact" className="btn">Plan een strategiegesprek <ArrowRight /></Link>
         </div>
       </section>

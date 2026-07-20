@@ -23,12 +23,7 @@ const DIENSTEN = [
   { slug: "strategie", Icon: Route, titel: "Business & IT-strategie", img: "/assets/photos/klantgesprek-tafel.png", alt: "Strategiesessie aan tafel", p: "Van ambitie naar roadmap én uitvoering, we blijven tot het werkt.", link: "Meer over Strategie" },
 ];
 
-const WAAROM = [
-  { Icon: Target, h: "Bewezen impact", p: "Geen beloftes, wel cijfers." },
-  { Icon: Users, h: "Senior teams", p: "Taal van boardroom én werkvloer." },
-  { Icon: Workflow, h: "Eén team, plan-build-run", p: "Adviseert, bouwt én beheert." },
-  { Icon: ShieldCheck, h: "Compliance vanaf dag één", p: "Auditproof, veilig, schaalbaar." },
-];
+const WAAROM_ICONS = [Target, Users, Workflow, ShieldCheck];
 
 const ROLES = [
   { slug: "lead-mendix-consultant", Icon: Layers, naam: "Lead Mendix Consultant" },
@@ -309,15 +304,15 @@ export function MobileHome({ home }: { home: Record<string, string> }) {
       <section className="m-block m-waarom">
         <div className="m-wrap">
           <div className="m-sec-head">
-            <div className="m-kicker on-dark">Waarom wij</div>
-            <h2 style={{ color: "#fff" }}>Senioriteit die je merkt vanaf gesprek één.</h2>
+            <div className="m-kicker on-dark">{home.waaromKicker}</div>
+            <h2 style={{ color: "#fff" }}>{home.waaromTitel}</h2>
           </div>
           <div className="wlist">
-            {WAAROM.map(({ Icon, h, p }) => (
-              <div className="m-wcard" key={h}>
+            {WAAROM_ICONS.map((Icon, i) => (
+              <div className="m-wcard" key={i}>
                 <div className="ic"><Icon /></div>
-                <h4>{h}</h4>
-                <p>{p}</p>
+                <h4>{home[`waarom${i + 1}Titel`]}</h4>
+                <p>{home[`waarom${i + 1}Tekst`]}</p>
               </div>
             ))}
           </div>
@@ -329,22 +324,17 @@ export function MobileHome({ home }: { home: Record<string, string> }) {
           <div className="media-img">
             <Image src="/assets/photos/overleg-lachend.png" alt="Consultants in overleg" fill sizes="100vw" />
           </div>
-          <div className="m-kicker">De mens centraal</div>
-          <h2 style={{ fontSize: "var(--text-xl)", margin: "12px 0 14px" }}>
-            Je werkt met mensen, niet met een leverancier.
-          </h2>
-          <p>
-            Bij ons ken je de mensen die jouw vraagstuk oplossen, van eerste sessie
-            tot livegang en daarna.
-          </p>
+          <div className="m-kicker">{home.mensenKicker}</div>
+          <h2 style={{ fontSize: "var(--text-xl)", margin: "12px 0 14px" }}>{home.mensenTitel}</h2>
+          <p>{home.mensenP1}</p>
           <Link href="/over-ons" className="m-btn outline">Ontmoet ons team</Link>
         </div>
       </section>
 
       <section className="m-block m-joinus">
         <div className="m-wrap">
-          <div className="m-kicker on-dark">Werken bij</div>
-          <h2>Bouw je aan onze klanten, of <em>word je er zelf een</em>?</h2>
+          <div className="m-kicker on-dark">{home.joinusKicker}</div>
+          <h2>{home.joinusTitel}</h2>
           <div className="roles">
             {ROLES.map(({ slug, Icon, naam }) => (
               <Link key={slug} href={`/vacatures/${slug}`} className="role">
@@ -361,8 +351,8 @@ export function MobileHome({ home }: { home: Record<string, string> }) {
 
       <section className="m-cta">
         <div className="m-wrap">
-          <h2>Klaar om samen te bouwen aan meetbare groei?</h2>
-          <Link href="/contact" className="m-btn">Plan een strategiegesprek <ArrowRight /></Link>
+          <h2>{home.ctaTitel}</h2>
+          <Link href="/contact" className="m-btn">{home.ctaKnop} <ArrowRight /></Link>
         </div>
       </section>
     </div>

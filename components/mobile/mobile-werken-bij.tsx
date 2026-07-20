@@ -4,23 +4,6 @@ import { Check, ArrowRight } from "lucide-react";
 import type { Vacature } from "@/lib/vacatures";
 import { MobileFx } from "./mobile-fx";
 
-const GROEI = [
-  { num: "01", h: "Persoonlijk groeipad", p: "Activiteiten on-the-job, cursussen en trainingen, gekozen op jouw ambitie, niet een standaardlijstje." },
-  { num: "02", h: "Open feedbackcultuur", p: "Regelmatige eerlijke feedback, plus elk half jaar 360°-feedback uit je omgeving." },
-  { num: "03", h: "Learning week", p: "Jaarlijks een volle week samen ontwikkelen: vakinhoudelijk én persoonlijk." },
-];
-const TP = [
-  { h: "Presteren", p: "Uitdagende opdrachten bij partners in onze vijf sectoren. Een rol op maat die jij zelf kiest." },
-  { h: "Groeien", p: "Zeggenschap over de koers: je beslist mee over strategie en investeringen." },
-  { h: "Ontspannen", p: "Werk dat aansluit bij jouw doelen, met ruimte voor rust. Elektrische auto van de zaak." },
-];
-const CULTUUR = [
-  "Gelijke, transparante beloning bij gelijke ervaring",
-  "Projecten gekozen op jouw ervaring, skills én ambitie",
-  "Meebeslissen over strategie en investeringen",
-  "Maatschappelijke impact: duurzaamheid en gelijkheid",
-];
-
 export function MobileWerkenBij({ vacatures, werken }: { vacatures: Vacature[]; werken: Record<string, string> }) {
   return (
     <div className="m-page m-werken only-mobile">
@@ -39,10 +22,10 @@ export function MobileWerkenBij({ vacatures, werken }: { vacatures: Vacature[]; 
 
       <section className="block">
         <div className="wrap">
-          <div className="sec-head"><div className="kicker">Groei &amp; ontwikkeling</div><h2>Elke dag samen beter worden</h2></div>
+          <div className="sec-head"><div className="kicker">{werken.groeiKicker}</div><h2>{werken.groeiTitel}</h2></div>
           <div className="glist">
-            {GROEI.map((g) => (
-              <div className="gcard rv" key={g.num}><div className="num">{g.num}</div><h3>{g.h}</h3><p>{g.p}</p></div>
+            {["1", "2", "3"].map((n) => (
+              <div className="gcard rv" key={n}><div className="num">{`0${n}`}</div><h3>{werken[`groei${n}Titel`]}</h3><p>{werken[`groei${n}Tekst`]}</p></div>
             ))}
           </div>
         </div>
@@ -50,10 +33,10 @@ export function MobileWerkenBij({ vacatures, werken }: { vacatures: Vacature[]; 
 
       <section className="block" style={{ background: "var(--eggshell)" }}>
         <div className="wrap">
-          <div className="sec-head"><div className="kicker">Total People</div><h2>Presteren, groeien én ontspannen</h2></div>
+          <div className="sec-head"><div className="kicker">{werken.tpKicker}</div><h2>{werken.tpTitel}</h2></div>
           <div className="tplist">
-            {TP.map((t) => (
-              <div className="tp rv" key={t.h}><h3>{t.h}</h3><p>{t.p}</p></div>
+            {["1", "2", "3"].map((n) => (
+              <div className="tp rv" key={n}><h3>{werken[`tp${n}Titel`]}</h3><p>{werken[`tp${n}Tekst`]}</p></div>
             ))}
           </div>
         </div>
@@ -62,10 +45,10 @@ export function MobileWerkenBij({ vacatures, werken }: { vacatures: Vacature[]; 
       <section className="block cultuur" id="cultuur">
         <div className="wrap">
           <div className="media-img rv"><Image src="/assets/photos/team-presentatie-breed.png" alt="Wavers tijdens een kennissessie" fill sizes="100vw" /></div>
-          <div className="kicker">Onze cultuur</div>
-          <h2 style={{ fontSize: "var(--text-xl)", margin: "12px 0 16px" }}>Ondernemende mensen, gelijk speelveld.</h2>
+          <div className="kicker">{werken.cultuurKicker}</div>
+          <h2 style={{ fontSize: "var(--text-xl)", margin: "12px 0 16px" }}>{werken.cultuurTitel}</h2>
           <ul className="rv">
-            {CULTUUR.map((c) => <li key={c}><Check /> {c}</li>)}
+            {["1", "2", "3", "4"].map((n) => <li key={n}><Check /> {werken[`cultuur${n}`]}</li>)}
           </ul>
         </div>
       </section>
@@ -88,7 +71,7 @@ export function MobileWerkenBij({ vacatures, werken }: { vacatures: Vacature[]; 
 
       <section className="cta">
         <div className="wrap">
-          <h2>Eerst een kop koffie? Kom kennismaken.</h2>
+          <h2>{werken.ctaTitel}</h2>
           <Link href="/contact" className="btn">Plan een kennismaking <ArrowRight /></Link>
         </div>
       </section>

@@ -119,6 +119,8 @@ function revalidatePublic(type: ContentType, slug: string) {
     revalidatePath(`/diensten/${slug}`);
   } else if (type === "sectoren") {
     revalidatePath(`/sectoren/${slug}`);
+  } else if (type === "paginas" && PAGE_PATH[slug]) {
+    revalidatePath(PAGE_PATH[slug]);
   }
 }
 

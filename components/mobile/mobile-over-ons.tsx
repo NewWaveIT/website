@@ -3,12 +3,7 @@ import Image from "next/image";
 import { Users, Scale, Sparkles, Leaf, MapPin, Award, Mail, ArrowRight } from "lucide-react";
 import { MobileFx } from "./mobile-fx";
 
-const WAARDEN = [
-  { Icon: Users, h: "De mens 100% centraal", p: "We bouwen oplossingen rond de mensen die ermee moeten werken." },
-  { Icon: Scale, h: "Gelijk speelveld", p: "Beloning is gelijk en transparant bij gelijke ervaring, ongeacht gender of achtergrond." },
-  { Icon: Sparkles, h: "Verschillen versterken", p: "Diverse teams komen tot betere oplossingen, voor onze partners en elkaar." },
-  { Icon: Leaf, h: "Duurzaam ondernemen", p: "In 2030 is ons businessmodel 100% CO2-neutraal." },
-];
+const WAARDE_ICONS = [Users, Scale, Sparkles, Leaf];
 
 export function MobileOverOns({ over }: { over: Record<string, string> }) {
   return (
@@ -31,23 +26,23 @@ export function MobileOverOns({ over }: { over: Record<string, string> }) {
         <div className="wrap">
           <div className="media-img rv"><Image src="/assets/photos/klantgesprek-tafel.png" alt="Wavers in gesprek met een klant" fill sizes="100vw" /></div>
           <div className="kicker">Onze missie</div>
-          <h2 style={{ fontSize: "var(--text-xl)", margin: "12px 0 14px" }}>Maximale digitale impact, met de mens als maat.</h2>
-          <p>Met innovatieve low-code- en AI-oplossingen versnellen wij digitale transformatie en dragen we bij aan een duurzame toekomst.</p>
-          <p>Op elk project kiezen we de mensen van wie ervaring, skills en ambitie het beste passen bij jouw vraagstuk.</p>
+          <h2 style={{ fontSize: "var(--text-xl)", margin: "12px 0 14px" }}>{over.missieTitel}</h2>
+          <p>{over.missieP1}</p>
+          <p>{over.missieP2}</p>
         </div>
       </section>
 
       <section className="block" style={{ background: "var(--eggshell)" }}>
         <div className="wrap">
           <div className="sec-head">
-            <div className="kicker">Waar wij voor staan</div>
-            <h2>Vier overtuigingen die je terugziet in ons werk</h2>
+            <div className="kicker">{over.waardenKicker}</div>
+            <h2>{over.waardenTitel}</h2>
           </div>
           <div className="vlist">
-            {WAARDEN.map(({ Icon, h, p }) => (
-              <div className="vcard rv" key={h}>
+            {WAARDE_ICONS.map((Icon, i) => (
+              <div className="vcard rv" key={i}>
                 <span className="icbox"><Icon /></span>
-                <div><h3>{h}</h3><p>{p}</p></div>
+                <div><h3>{over[`waarde${i + 1}Titel`]}</h3><p>{over[`waarde${i + 1}Tekst`]}</p></div>
               </div>
             ))}
           </div>
@@ -58,8 +53,8 @@ export function MobileOverOns({ over }: { over: Record<string, string> }) {
         <div className="wrap">
           <div className="media-img rv"><Image src="/assets/photos/founders-trio.png" alt="Het team achter The New Wave IT" fill sizes="100vw" /></div>
           <div className="kicker">Het team</div>
-          <h2 style={{ fontSize: "var(--text-xl)", margin: "12px 0 14px" }}>Ontmoet de Wavers.</h2>
-          <p>Je kent de mensen die jouw vraagstuk oplossen: senior consultants en engineers die de taal van boardroom én werkvloer spreken. Hetzelfde team blijft aan boord, van sessie tot beheer.</p>
+          <h2 style={{ fontSize: "var(--text-xl)", margin: "12px 0 14px" }}>{over.teamTitel}</h2>
+          <p>{over.teamP1}</p>
           <div className="founder rv">
             <Image src="/assets/photos/portret-blauw.png" alt="Koen Wijsman" width={48} height={48} />
             <div><div className="nm">Koen Wijsman</div><div className="rl">CEO &amp; founder</div></div>
@@ -78,7 +73,7 @@ export function MobileOverOns({ over }: { over: Record<string, string> }) {
 
       <section className="cta">
         <div className="wrap">
-          <h2>Benieuwd wat onze mensen voor jouw doelen kunnen betekenen?</h2>
+          <h2>{over.ctaTitel}</h2>
           <Link href="/contact" className="btn">Plan een strategiegesprek <ArrowRight /></Link>
         </div>
       </section>

@@ -44,11 +44,11 @@ export function MobileContact({ contact }: { contact: Record<string, string> }) 
       <section className="block" style={{ paddingTop: 0 }}>
         <div className="wrap">
           <div className="expect rv">
-            <h3>Wat je kunt verwachten</h3>
+            <h3>{contact.verwachtTitel}</h3>
             <ol>
-              <li><div><strong>Voorbereiding</strong>We verdiepen ons vooraf in jouw sector en organisatie.</div></li>
-              <li><div><strong>Het gesprek</strong>45 minuten met een practice lead, over jouw businessvraagstuk.</div></li>
-              <li><div><strong>Concreet vervolg</strong>Binnen drie dagen een eerste analyse, geheel vrijblijvend.</div></li>
+              {["1", "2", "3"].map((n) => (
+                <li key={n}><div><strong>{contact[`verwacht${n}Titel`]}</strong>{contact[`verwacht${n}Tekst`]}</div></li>
+              ))}
             </ol>
           </div>
         </div>
@@ -56,7 +56,7 @@ export function MobileContact({ contact }: { contact: Record<string, string> }) 
 
       <section className="cta">
         <div className="wrap">
-          <h2>Liever eerst zien wat we voor anderen deden?</h2>
+          <h2>{contact.ctaTitel}</h2>
           <Link href="/klantverhalen" className="btn">Bekijk klantverhalen <ArrowRight /></Link>
         </div>
       </section>
