@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { requireAdmin } from "@/lib/dal";
 import { getLeads, getSollicitaties, STATUS_LABEL } from "@/lib/cms/inzendingen";
+import { SeedButton } from "@/components/admin/seed-button";
 
 function Chip({ status }: { status: string }) {
   const cls =
@@ -32,6 +33,7 @@ export default async function AdminDashboard() {
           <h1>Goedendag{naam ? `, ${naam}` : ""}</h1>
           <p className="sub">Dit staat er open sinds je laatste bezoek.</p>
         </div>
+        <SeedButton />
       </div>
 
       <div className="kpis">

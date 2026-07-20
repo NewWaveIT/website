@@ -7,6 +7,7 @@ import { createClient } from "@/lib/supabase/server";
 import { CONTENT_TABLE, type ContentType } from "@/lib/cms/content";
 import { FIELD_SCHEMAS } from "@/lib/cms/schema";
 import { PAGE_FIELDS, PAGE_PATH } from "@/lib/cms/pages";
+import { buildSeed } from "@/lib/cms/seed-data";
 
 /** Adminlijst per contenttype (voor terugnavigatie + revalidatie). */
 const LIST_PATH: Record<ContentType, string> = {
@@ -119,6 +120,36 @@ function revalidatePublic(type: ContentType, slug: string) {
   } else if (type === "sectoren") {
     revalidatePath(`/sectoren/${slug}`);
   }
+}
+
+/**
+ * Zet de huidige (lib-)content als bewerkbare rijen in Supabase. Idempotent:
+ * bestaande slugs worden overgeslagen, zodat latere bewerkingen niet sneuvelen.
+ */
+export async function seedContent(): Promise<{ toegevoegd: number; error?: string }> {
+  await requireAdmin();
+  const supabase = await createClient();
+  const seed = buildSeed();
+
+  let toegevoegd = 0;
+  for (const [type, rows] of Object.entries(seed) as [ContentType, ReturnType<typeof buildSeed>[ContentType]][]) {
+    if (!rows.length) continue;
+    const table = CONTENT_TABLE[type];
+
+    const { data: bestaande, error: leesFout } = await supabase.from(table).select("slug");
+    if (leesFout) return { toegevoegd, error: leesFout.message };
+    const aanwezig = new Set((bestaande ?? []).map((r: { slug: string }) => r.slug));
+
+    const nieuw = rows.filter((r) => !aanwezig.has(r.slug));
+    if (!nieuw.length) continue;
+
+    const { error } = await supabase.from(table).insert(nieuw);
+    if (error) return { toegevoegd, error: error.message };
+    toegevoegd += nieuw.length;
+  }
+
+  revalidatePath("/", "layout");
+  return { toegevoegd };
 }
 
 /** Upload een afbeelding naar de Supabase Storage-bucket 'content' en geef de publieke URL terug. */
