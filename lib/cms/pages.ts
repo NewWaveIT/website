@@ -30,12 +30,34 @@ export const PAGE_FIELDS: Record<string, FieldDef[]> = {
     { key: "teamP2", label: "Team — alinea 2", type: "textarea" },
     { key: "ctaTitel", label: "Slot-CTA — titel", type: "text" },
   ],
+  contact: [
+    { key: "heroTitleStart", label: "Hero — titel (begin)", type: "text" },
+    { key: "heroAccent", label: "Hero — accentwoord", type: "text" },
+    { key: "heroLead", label: "Hero — introtekst", type: "textarea" },
+    { key: "ctaTitel", label: "Slot-CTA — titel", type: "text" },
+  ],
+  diensten: [
+    { key: "heroTitleStart", label: "Hero — titel (begin)", type: "text" },
+    { key: "heroAccent", label: "Hero — accentwoord", type: "text" },
+    { key: "heroTitleEnd", label: "Hero — titel (eind)", type: "text" },
+    { key: "heroLead", label: "Hero — introtekst", type: "textarea" },
+    { key: "ctaTitel", label: "Slot-CTA — titel", type: "text" },
+  ],
+  sectoren: [
+    { key: "heroTitleStart", label: "Hero — titel (begin)", type: "text" },
+    { key: "heroAccent", label: "Hero — accentwoord", type: "text" },
+    { key: "heroLead", label: "Hero — introtekst", type: "textarea" },
+    { key: "ctaTitel", label: "Slot-CTA — titel", type: "text" },
+  ],
 };
 
 /** Bekende pagina's → hun publieke pad (voor revalidatie na opslaan). */
 export const PAGE_PATH: Record<string, string> = {
   home: "/",
   "over-ons": "/over-ons",
+  contact: "/contact",
+  diensten: "/diensten",
+  sectoren: "/sectoren",
 };
 
 /** Standaardteksten per pagina (fallback op de site + startwaarde in de editor). */
@@ -72,5 +94,27 @@ export const PAGE_DEFAULTS: Record<string, Record<string, string>> = {
     teamP2:
       "Van strategische sessies tot livegang en beheer: hetzelfde team blijft aan boord. Zo houden we vaart, kwaliteit en verantwoordelijkheid bij elkaar.",
     ctaTitel: "Benieuwd wat onze mensen voor jouw doelen kunnen betekenen?",
+  },
+  contact: {
+    heroTitleStart: "Waar kunnen we je ",
+    heroAccent: "mee helpen",
+    heroLead:
+      "Een strategiegesprek plannen kan, maar een korte vraag stellen mag ook gewoon. Bel, mail, app of kom langs, je zit nergens aan vast.",
+    ctaTitel: "Liever eerst zien wat we voor anderen deden?",
+  },
+  diensten: {
+    heroTitleStart: "Drie diensten, ",
+    heroAccent: "één doel",
+    heroTitleEnd: ": jouw resultaat.",
+    heroLead:
+      "Wij combineren Mendix, AI en digitale strategie tot oplossingen die werken voor de mensen die ermee moeten werken. Altijd vanuit jouw sectorvraagstuk, nooit vanuit de technologie.",
+    ctaTitel: "Niet zeker welke dienst bij jouw vraagstuk past?",
+  },
+  sectoren: {
+    heroTitleStart: "Wij spreken de taal van ",
+    heroAccent: "jouw sector",
+    heroLead:
+      "Geen generieke IT-dienstverlener, maar een business-specialist in vijf markten. We kennen de processen, de wetgeving en de systemen, zodat we bij het eerste gesprek al de diepte in kunnen.",
+    ctaTitel: "Benieuwd wat dit voor jouw organisatie betekent?",
   },
 };

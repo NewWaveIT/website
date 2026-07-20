@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import { SectorHeroAnim } from "@/components/sector-hero-anim";
 import { MobileDiensten } from "@/components/mobile/mobile-diensten";
+import { getPagina } from "@/lib/paginas-data";
 import "./diensten.css";
 import "./mobile.css";
 
@@ -32,7 +33,10 @@ const jsonLd = {
   ],
 };
 
-export default function DienstenPage() {
+export const revalidate = 300;
+
+export default async function DienstenPage() {
+  const t = await getPagina("diensten");
   return (
     <>
       <MobileDiensten />
@@ -52,13 +56,11 @@ export default function DienstenPage() {
             {"// Diensten"}
           </div>
           <h1>
-            Drie diensten, <em>één doel</em>: jouw resultaat.
+            {t.heroTitleStart}
+            <em>{t.heroAccent}</em>
+            {t.heroTitleEnd}
           </h1>
-          <p>
-            Wij combineren Mendix, AI en digitale strategie tot oplossingen die
-            werken voor de mensen die ermee moeten werken. Altijd vanuit jouw
-            sectorvraagstuk, nooit vanuit de technologie.
-          </p>
+          <p>{t.heroLead}</p>
         </div>
       </section>
 
@@ -250,7 +252,7 @@ export default function DienstenPage() {
 
       <section className="cta">
         <div className="wrap-wide">
-          <h2>Niet zeker welke dienst bij jouw vraagstuk past?</h2>
+          <h2>{t.ctaTitel}</h2>
           <Link href="/contact" className="btn btn-on">
             Plan een strategiegesprek <ArrowRight />
           </Link>

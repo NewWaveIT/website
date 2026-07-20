@@ -11,6 +11,7 @@ import {
 } from "lucide-react";
 import { SectorHeroAnim } from "@/components/sector-hero-anim";
 import { MobileSectoren } from "@/components/mobile/mobile-sectoren";
+import { getPagina } from "@/lib/paginas-data";
 import "./sectoren.css";
 import "./mobile.css";
 
@@ -80,7 +81,10 @@ const jsonLd = {
   })),
 };
 
-export default function SectorenPage() {
+export const revalidate = 300;
+
+export default async function SectorenPage() {
+  const t = await getPagina("sectoren");
   return (
     <>
       <MobileSectoren />
@@ -100,13 +104,10 @@ export default function SectorenPage() {
             {"// Sectoren"}
           </div>
           <h1>
-            Wij spreken de taal van <em>jouw sector</em>.
+            {t.heroTitleStart}
+            <em>{t.heroAccent}</em>.
           </h1>
-          <p>
-            Geen generieke IT-dienstverlener, maar een business-specialist in vijf
-            markten. We kennen de processen, de wetgeving en de systemen, zodat we
-            bij het eerste gesprek al de diepte in kunnen.
-          </p>
+          <p>{t.heroLead}</p>
         </div>
       </section>
 
@@ -192,7 +193,7 @@ export default function SectorenPage() {
 
       <section className="cta">
         <div className="wrap-wide">
-          <h2>Benieuwd wat dit voor jouw organisatie betekent?</h2>
+          <h2>{t.ctaTitel}</h2>
           <Link href="/contact" className="btn btn-on">
             Plan een strategiegesprek <ArrowRight />
           </Link>

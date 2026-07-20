@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import { ContactForm } from "@/components/contact/contact-form";
 import { MobileContact } from "@/components/mobile/mobile-contact";
+import { getPagina } from "@/lib/paginas-data";
 import "./contact.css";
 import "./mobile.css";
 
@@ -22,7 +23,10 @@ export const metadata: Metadata = {
   alternates: { canonical: "/contact" },
 };
 
-export default function ContactPage() {
+export const revalidate = 300;
+
+export default async function ContactPage() {
+  const t = await getPagina("contact");
   return (
     <>
       <MobileContact />
@@ -36,12 +40,10 @@ export default function ContactPage() {
             {"// Contact"}
           </div>
           <h1>
-            Waar kunnen we je <em>mee helpen</em>?
+            {t.heroTitleStart}
+            <em>{t.heroAccent}</em>?
           </h1>
-          <p>
-            Een strategiegesprek plannen kan, maar een korte vraag stellen mag ook
-            gewoon. Bel, mail, app of kom langs, je zit nergens aan vast.
-          </p>
+          <p>{t.heroLead}</p>
         </div>
       </section>
 
@@ -169,7 +171,7 @@ export default function ContactPage() {
 
       <section className="cta">
         <div className="wrap-wide">
-          <h2>Liever eerst zien wat we voor anderen deden?</h2>
+          <h2>{t.ctaTitel}</h2>
           <Link href="/klantverhalen" className="btn btn-on">
             Bekijk klantverhalen <ArrowRight />
           </Link>
