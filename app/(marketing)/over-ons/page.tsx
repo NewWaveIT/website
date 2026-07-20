@@ -3,6 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Users, Scale, Sparkles, Leaf, MapPin, Award, Mail, ArrowRight } from "lucide-react";
 import { MobileOverOns } from "@/components/mobile/mobile-over-ons";
+import { getPagina } from "@/lib/paginas-data";
 import "./over-ons.css";
 import "./mobile.css";
 
@@ -36,7 +37,10 @@ const jsonLd = {
   },
 };
 
-export default function OverOnsPage() {
+export const revalidate = 300;
+
+export default async function OverOnsPage() {
+  const t = await getPagina("over-ons");
   return (
     <>
       <MobileOverOns />
@@ -58,14 +62,10 @@ export default function OverOnsPage() {
             {"// Over ons"}
           </div>
           <h1>
-            De ondernemende mens zorgt voor <em>vooruitgang</em>.
+            {t.heroTitleStart}
+            <em>{t.heroAccent}</em>.
           </h1>
-          <p>
-            Wij geloven dat succesvolle verandering begint bij mensen. Daarom
-            verzorgen wij alle randvoorwaarden voor onze Wavers, en helpen zij
-            onze partners maximaal digitaal versnellen. Zo staat jouw organisatie
-            klaar voor de dag van overmorgen.
-          </p>
+          <p>{t.heroLead}</p>
           <div className="kpis">
             <div>
               <div className="n">2023</div>
@@ -89,20 +89,10 @@ export default function OverOnsPage() {
             <div>
               <div className="kicker">Onze missie</div>
               <h2 style={{ fontSize: "var(--text-3xl)", fontWeight: "var(--fw-extrabold)", margin: "var(--space-4) 0 var(--space-5)" }}>
-                Maximale digitale impact, met de mens als maat.
+                {t.missieTitel}
               </h2>
-              <p>
-                Onze missie is bedrijven te helpen maximale digitale impact te
-                realiseren door technologie én mens centraal te stellen. Met
-                innovatieve low-code- en AI-oplossingen versnellen wij digitale
-                transformatie en dragen we bij aan een duurzame toekomst.
-              </p>
-              <p>
-                Dat doen we door op elk project de mensen te kiezen van wie de
-                ervaring, skills en ambitie het beste passen bij jouw vraagstuk.
-                Ons doel? Dat elk mens werk doet dat aansluit bij zijn of haar
-                persoonlijke doelen en drijfveren.
-              </p>
+              <p>{t.missieP1}</p>
+              <p>{t.missieP2}</p>
             </div>
             <div className="media-img">
               <Image
@@ -150,18 +140,10 @@ export default function OverOnsPage() {
             <div>
               <div className="kicker">Het team</div>
               <h2 style={{ fontSize: "var(--text-3xl)", fontWeight: "var(--fw-extrabold)", margin: "var(--space-4) 0 var(--space-5)" }}>
-                Ontmoet de Wavers.
+                {t.teamTitel}
               </h2>
-              <p>
-                Geen anonieme delivery-machine: je kent de mensen die jouw
-                vraagstuk oplossen. Senior consultants en engineers die de taal
-                van de boardroom én de werkvloer spreken, betrokken als partner.
-              </p>
-              <p>
-                Van strategische sessies tot livegang en beheer: hetzelfde team
-                blijft aan boord. Zo houden we vaart, kwaliteit en
-                verantwoordelijkheid bij elkaar.
-              </p>
+              <p>{t.teamP1}</p>
+              <p>{t.teamP2}</p>
               <div className="founder">
                 <Image src="/assets/photos/portret-blauw.png" alt="Koen Wijsman" width={56} height={56} />
                 <div>
@@ -195,7 +177,7 @@ export default function OverOnsPage() {
 
       <section className="cta">
         <div className="wrap-wide">
-          <h2>Benieuwd wat onze mensen voor jouw doelen kunnen betekenen?</h2>
+          <h2>{t.ctaTitel}</h2>
           <Link href="/contact" className="btn btn-on">
             Plan een strategiegesprek <ArrowRight />
           </Link>
