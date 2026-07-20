@@ -73,6 +73,18 @@ export const PAGE_FIELDS: Record<string, FieldDef[]> = {
     { key: "heroTitleEnd", label: "Hero — titel (eind)", type: "text" },
     { key: "heroLead", label: "Hero — introtekst", type: "textarea" },
     { key: "heroLeadMobiel", label: "Hero — introtekst (mobiel)", type: "textarea" },
+    { key: "samenKicker", label: "Sterker samen — kicker", type: "text" },
+    { key: "samenTitel", label: "Sterker samen — titel", type: "text" },
+    { key: "samenIntro", label: "Sterker samen — intro", type: "textarea" },
+    { key: "samen1Titel", label: "Combinatie 1 — titel", type: "text" },
+    { key: "samen1Tekst", label: "Combinatie 1 — tekst", type: "textarea" },
+    { key: "samen2Titel", label: "Combinatie 2 — titel", type: "text" },
+    { key: "samen2Tekst", label: "Combinatie 2 — tekst", type: "textarea" },
+    { key: "samen3Titel", label: "Combinatie 3 — titel", type: "text" },
+    { key: "samen3Tekst", label: "Combinatie 3 — tekst", type: "textarea" },
+    { key: "sectstripKicker", label: "Sectorstrip — kicker", type: "text" },
+    { key: "sectstripTitel", label: "Sectorstrip — titel", type: "text" },
+    { key: "sectstripIntro", label: "Sectorstrip — intro", type: "textarea" },
     { key: "ctaTitel", label: "Slot-CTA — titel", type: "text" },
   ],
   sectoren: [
@@ -80,6 +92,14 @@ export const PAGE_FIELDS: Record<string, FieldDef[]> = {
     { key: "heroAccent", label: "Hero — accentwoord", type: "text" },
     { key: "heroLead", label: "Hero — introtekst", type: "textarea" },
     { key: "heroLeadMobiel", label: "Hero — introtekst (mobiel)", type: "textarea" },
+    { key: "werkwijzeKicker", label: "Waarom sectorfocus — kicker", type: "text" },
+    { key: "werkwijzeTitel", label: "Waarom sectorfocus — titel", type: "text" },
+    { key: "wijze1Titel", label: "Reden 1 — titel", type: "text" },
+    { key: "wijze1Tekst", label: "Reden 1 — tekst", type: "textarea" },
+    { key: "wijze2Titel", label: "Reden 2 — titel", type: "text" },
+    { key: "wijze2Tekst", label: "Reden 2 — tekst", type: "textarea" },
+    { key: "wijze3Titel", label: "Reden 3 — titel", type: "text" },
+    { key: "wijze3Tekst", label: "Reden 3 — tekst", type: "textarea" },
     { key: "ctaTitel", label: "Slot-CTA — titel", type: "text" },
   ],
   "werken-bij": [
@@ -220,6 +240,23 @@ export const PAGE_DEFAULTS: Record<string, Record<string, string>> = {
       "Wij combineren Mendix, AI en digitale strategie tot oplossingen die werken voor de mensen die ermee moeten werken. Altijd vanuit jouw sectorvraagstuk, nooit vanuit de technologie.",
     heroLeadMobiel:
       "Mendix, AI en digitale strategie, altijd vanuit jouw sectorvraagstuk, nooit vanuit de technologie.",
+    samenKicker: "Sterker samen",
+    samenTitel: "Waarom de combinatie werkt",
+    samenIntro:
+      "De meeste vraagstukken vragen niet om één dienst, maar om de juiste mix. Zo grijpen ze in elkaar.",
+    samen1Titel: "Van roadmap naar werkende applicatie",
+    samen1Tekst:
+      "De roadmap bepaalt welke applicatie het eerst waarde oplevert; binnen weken staat de eerste versie in productie.",
+    samen2Titel: "Slimme processen in je eigen apps",
+    samen2Tekst:
+      "AI direct in je bedrijfsapplicaties: van slimme formulieren tot automatische triage van aanvragen.",
+    samen3Titel: "Data die je koers scherpt",
+    samen3Tekst:
+      "Inzichten uit pilots voeden de volgende strategische keuzes, leren en bijsturen in korte cycli.",
+    sectstripKicker: "Sectorkennis eerst",
+    sectstripTitel: "Altijd vanuit jouw sector",
+    sectstripIntro:
+      "Elke dienst begint bij het businessvraagstuk van jouw sector, bekijk hoe we dat per markt aanpakken.",
     ctaTitel: "Niet zeker welke dienst bij jouw vraagstuk past?",
   },
   sectoren: {
@@ -229,6 +266,17 @@ export const PAGE_DEFAULTS: Record<string, Record<string, string>> = {
       "Geen generieke IT-dienstverlener, maar een business-specialist in vijf markten. We kennen de processen, de wetgeving en de systemen, zodat we bij het eerste gesprek al de diepte in kunnen.",
     heroLeadMobiel:
       "Business-specialist in vijf markten. We kennen de processen, de wetgeving en de systemen, zodat het eerste gesprek meteen de diepte in kan.",
+    werkwijzeKicker: "Waarom sectorfocus",
+    werkwijzeTitel: "Wat sectorkennis je oplevert",
+    wijze1Titel: "Geen inwerktijd",
+    wijze1Tekst:
+      "We kennen de wetgeving, ketens en kernsystemen van jouw markt. Het eerste gesprek gaat meteen over jouw vraagstuk.",
+    wijze2Titel: "Bewezen patronen",
+    wijze2Tekst:
+      "Oplossingen die zich in jouw sector al bewezen hebben, vertalen we naar jouw organisatie, sneller live, minder risico.",
+    wijze3Titel: "Netwerk dat meedenkt",
+    wijze3Tekst:
+      "Via onze partners en klanten in de sector leer je van organisaties die hetzelfde vraagstuk al oplosten.",
     ctaTitel: "Benieuwd wat dit voor jouw organisatie betekent?",
   },
   "werken-bij": {

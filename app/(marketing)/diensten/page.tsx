@@ -182,40 +182,24 @@ export default async function DienstenPage() {
       <section className="block samen">
         <div className="wrap-wide">
           <div className="sec-head">
-            <div className="kicker on-dark">Sterker samen</div>
+            <div className="kicker on-dark">{t.samenKicker}</div>
             <h2 style={{ color: "#fff", fontSize: "var(--text-3xl)", fontWeight: "var(--fw-extrabold)", margin: "var(--space-4) 0" }}>
-              Waarom de combinatie werkt
+              {t.samenTitel}
             </h2>
-            <p style={{ color: "var(--text-on-dark-muted)" }}>
-              De meeste vraagstukken vragen niet om één dienst, maar om de juiste
-              mix. Zo grijpen ze in elkaar.
-            </p>
+            <p style={{ color: "var(--text-on-dark-muted)" }}>{t.samenIntro}</p>
           </div>
           <div className="grid">
-            <div className="scard">
-              <div className="num">Strategie → Mendix</div>
-              <h3>Van roadmap naar werkende applicatie</h3>
-              <p>
-                De roadmap bepaalt welke applicatie het eerst waarde oplevert;
-                binnen weken staat de eerste versie in productie.
-              </p>
-            </div>
-            <div className="scard">
-              <div className="num">Mendix → AI</div>
-              <h3>Slimme processen in je eigen apps</h3>
-              <p>
-                AI direct in je bedrijfsapplicaties: van slimme formulieren tot
-                automatische triage van aanvragen.
-              </p>
-            </div>
-            <div className="scard">
-              <div className="num">AI → Strategie</div>
-              <h3>Data die je koers scherpt</h3>
-              <p>
-                Inzichten uit pilots voeden de volgende strategische keuzes,
-                leren en bijsturen in korte cycli.
-              </p>
-            </div>
+            {[
+              { n: "1", num: "Strategie → Mendix" },
+              { n: "2", num: "Mendix → AI" },
+              { n: "3", num: "AI → Strategie" },
+            ].map(({ n, num }) => (
+              <div className="scard" key={n}>
+                <div className="num">{num}</div>
+                <h3>{t[`samen${n}Titel`]}</h3>
+                <p>{t[`samen${n}Tekst`]}</p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
@@ -223,12 +207,9 @@ export default async function DienstenPage() {
       <section className="block sect-strip">
         <div className="wrap-wide">
           <div className="sec-head">
-            <div className="kicker">Sectorkennis eerst</div>
-            <h2>Altijd vanuit jouw sector</h2>
-            <p>
-              Elke dienst begint bij het businessvraagstuk van jouw sector,
-              bekijk hoe we dat per markt aanpakken.
-            </p>
+            <div className="kicker">{t.sectstripKicker}</div>
+            <h2>{t.sectstripTitel}</h2>
+            <p>{t.sectstripIntro}</p>
           </div>
           <div className="row">
             <Link href="/sectoren/publieke-sector" className="sect-chip">

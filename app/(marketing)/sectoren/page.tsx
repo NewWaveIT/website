@@ -157,36 +157,19 @@ export default async function SectorenPage() {
       <section className="block werkwijze">
         <div className="wrap-wide">
           <div className="sec-head">
-            <div className="kicker on-dark">Waarom sectorfocus</div>
+            <div className="kicker on-dark">{t.werkwijzeKicker}</div>
             <h2 style={{ color: "#fff", fontSize: "var(--text-3xl)", fontWeight: "var(--fw-extrabold)", margin: "var(--space-4) 0 0" }}>
-              Wat sectorkennis je oplevert
+              {t.werkwijzeTitel}
             </h2>
           </div>
           <div className="grid">
-            <div className="wcard">
-              <div className="num">01</div>
-              <h3>Geen inwerktijd</h3>
-              <p>
-                We kennen de wetgeving, ketens en kernsystemen van jouw markt. Het
-                eerste gesprek gaat meteen over jouw vraagstuk.
-              </p>
-            </div>
-            <div className="wcard">
-              <div className="num">02</div>
-              <h3>Bewezen patronen</h3>
-              <p>
-                Oplossingen die zich in jouw sector al bewezen hebben, vertalen we
-                naar jouw organisatie, sneller live, minder risico.
-              </p>
-            </div>
-            <div className="wcard">
-              <div className="num">03</div>
-              <h3>Netwerk dat meedenkt</h3>
-              <p>
-                Via onze partners en klanten in de sector leer je van organisaties
-                die hetzelfde vraagstuk al oplosten.
-              </p>
-            </div>
+            {["1", "2", "3"].map((n) => (
+              <div className="wcard" key={n}>
+                <div className="num">{`0${n}`}</div>
+                <h3>{t[`wijze${n}Titel`]}</h3>
+                <p>{t[`wijze${n}Tekst`]}</p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
