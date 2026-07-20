@@ -4,6 +4,7 @@ import { useActionState, useState } from "react";
 import Link from "next/link";
 import { saveContent, deleteContent, type SaveState } from "@/app/admin/content/actions";
 import type { ContentRow, ContentType } from "@/lib/cms/content";
+import { FIELD_SCHEMAS, fieldValue, extraData } from "@/lib/cms/schema";
 
 export function ContentEditor({
   type,
@@ -18,7 +19,10 @@ export function ContentEditor({
 }) {
   const [state, formAction, pending] = useActionState<SaveState, FormData>(saveContent, {});
   const [status, setStatus] = useState(row?.status === "live" ? "live" : "concept");
-  const dataInitial = JSON.stringify(row?.data ?? {}, null, 2);
+  const data = (row?.data ?? {}) as Record<string, unknown>;
+  const fields = FIELD_SCHEMAS[type];
+  const rest = extraData(type, data);
+  const extraInitial = Object.keys(rest).length ? JSON.stringify(rest, null, 2) : "";
 
   return (
     <>
@@ -79,16 +83,52 @@ export function ContentEditor({
           </div>
         </div>
 
-        <div className="fld">
-          <label htmlFor="ce-data">Inhoud (JSON)</label>
-          <textarea
-            id="ce-data"
-            name="data"
-            defaultValue={dataInitial}
-            spellCheck={false}
-            style={{ minHeight: 260, fontFamily: "var(--font-mono)", fontSize: "var(--text-xs)", lineHeight: 1.6 }}
-          />
-        </div>
+        {fields.map((f) => (
+          <div className="fld" key={f.key}>
+            <label htmlFor={`ce-${f.key}`}>{f.label}</label>
+            {f.type === "textarea" || f.type === "markdown" ? (
+              <textarea
+                id={`ce-${f.key}`}
+                name={`f_${f.key}`}
+                defaultValue={fieldValue(data, f)}
+                placeholder={f.placeholder}
+                spellCheck={f.type === "markdown" ? false : undefined}
+                style={
+                  f.type === "markdown"
+                    ? { minHeight: 220, fontFamily: "var(--font-mono)", fontSize: "var(--text-xs)", lineHeight: 1.7 }
+                    : undefined
+                }
+              />
+            ) : (
+              <input
+                id={`ce-${f.key}`}
+                name={`f_${f.key}`}
+                type={f.type === "number" ? "number" : f.type === "date" ? "date" : "text"}
+                defaultValue={fieldValue(data, f)}
+                placeholder={f.placeholder}
+              />
+            )}
+            {f.help && <p className="t-sub" style={{ marginTop: 6 }}>{f.help}</p>}
+          </div>
+        ))}
+
+        <details style={{ marginBottom: "var(--space-5)" }}>
+          <summary style={{ cursor: "pointer", fontSize: "var(--text-sm)", color: "var(--text-muted)" }}>
+            Overige velden (JSON)
+          </summary>
+          <div className="fld" style={{ marginTop: "var(--space-3)" }}>
+            <textarea
+              name="extra"
+              defaultValue={extraInitial}
+              spellCheck={false}
+              placeholder="{ }"
+              style={{ minHeight: 140, fontFamily: "var(--font-mono)", fontSize: "var(--text-xs)", lineHeight: 1.6 }}
+            />
+            <p className="t-sub" style={{ marginTop: 6 }}>
+              Extra sleutels die (nog) geen eigen veld hebben. Moet geldige JSON zijn.
+            </p>
+          </div>
+        </details>
 
         <div style={{ display: "flex", gap: "var(--space-3)", justifyContent: "flex-end" }}>
           <Link href={listPath} className="btn btn-outline">

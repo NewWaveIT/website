@@ -5,6 +5,7 @@ import { redirect } from "next/navigation";
 import { requireAdmin } from "@/lib/dal";
 import { createClient } from "@/lib/supabase/server";
 import { CONTENT_TABLE, type ContentType } from "@/lib/cms/content";
+import { FIELD_SCHEMAS } from "@/lib/cms/schema";
 
 /** Adminlijst per contenttype (voor terugnavigatie + revalidatie). */
 const LIST_PATH: Record<ContentType, string> = {
@@ -34,7 +35,6 @@ export async function saveContent(_prev: SaveState, formData: FormData): Promise
   const slug = String(formData.get("slug") ?? "").trim();
   const status = String(formData.get("status") ?? "concept");
   const volgorde = Number.parseInt(String(formData.get("volgorde") ?? "0"), 10) || 0;
-  const dataRaw = String(formData.get("data") ?? "").trim();
 
   if (!titel) return { error: "Titel is verplicht." };
   if (!/^[a-z0-9-]+$/.test(slug)) {
@@ -42,12 +42,31 @@ export async function saveContent(_prev: SaveState, formData: FormData): Promise
   }
   if (status !== "live" && status !== "concept") return { error: "Ongeldige status." };
 
-  let data: unknown = {};
-  if (dataRaw) {
+  // Overige velden (JSON-uitklap) eerst, zodat de schemavelden erover heen winnen.
+  const extraRaw = String(formData.get("extra") ?? "").trim();
+  let data: Record<string, unknown> = {};
+  if (extraRaw) {
     try {
-      data = JSON.parse(dataRaw);
+      const parsed = JSON.parse(extraRaw);
+      if (parsed && typeof parsed === "object" && !Array.isArray(parsed)) {
+        data = parsed as Record<string, unknown>;
+      } else {
+        return { error: "Overige velden moeten een JSON-object zijn." };
+      }
     } catch {
-      return { error: "Inhoud (JSON) is geen geldige JSON." };
+      return { error: "Overige velden bevatten geen geldige JSON." };
+    }
+  }
+
+  for (const f of FIELD_SCHEMAS[type]) {
+    const raw = String(formData.get(`f_${f.key}`) ?? "").trim();
+    if (raw === "") {
+      delete data[f.key];
+    } else if (f.type === "number") {
+      const n = Number(raw);
+      if (!Number.isNaN(n)) data[f.key] = n;
+    } else {
+      data[f.key] = raw;
     }
   }
 
