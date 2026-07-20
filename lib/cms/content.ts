@@ -82,6 +82,23 @@ export async function getContentBySlug<T = Record<string, unknown>>(
   }
 }
 
+export async function getContentById<T = Record<string, unknown>>(
+  type: ContentType,
+  id: string,
+): Promise<ContentRow<T> | null> {
+  try {
+    const supabase = await createClient();
+    const { data } = await supabase
+      .from(CONTENT_TABLE[type])
+      .select("*")
+      .eq("id", id)
+      .maybeSingle();
+    return (data as ContentRow<T>) ?? null;
+  } catch {
+    return null;
+  }
+}
+
 /** Gepubliceerde ('live') content voor de publieke site. */
 export async function getPublishedContent<T = Record<string, unknown>>(
   type: ContentType,

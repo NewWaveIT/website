@@ -1,4 +1,6 @@
-import type { ContentRow } from "@/lib/cms/content";
+import Link from "next/link";
+import { Plus } from "lucide-react";
+import type { ContentRow, ContentType } from "@/lib/cms/content";
 
 function fmt(iso: string) {
   try {
@@ -9,11 +11,13 @@ function fmt(iso: string) {
 }
 
 export function AdminContentList({
+  type,
   crumb,
   titel,
   sub,
   rows,
 }: {
+  type: ContentType;
   crumb: string;
   titel: string;
   sub: string;
@@ -27,6 +31,9 @@ export function AdminContentList({
           <h1>{titel}</h1>
           <p className="sub">{sub}</p>
         </div>
+        <Link href={`/admin/content/${type}/new`} className="btn btn-primary">
+          <Plus /> Nieuw
+        </Link>
       </div>
       <div className="card">
         <table>
@@ -39,9 +46,11 @@ export function AdminContentList({
           </thead>
           <tbody>
             {rows.map((r) => (
-              <tr key={r.id}>
+              <tr key={r.id} className="clickable">
                 <td>
-                  <div className="t-title">{r.titel}</div>
+                  <Link href={`/admin/content/${type}/${r.id}`} className="t-title">
+                    {r.titel}
+                  </Link>
                   <div className="t-sub">/{r.slug}</div>
                 </td>
                 <td>
@@ -59,9 +68,7 @@ export function AdminContentList({
             {rows.length === 0 && (
               <tr>
                 <td colSpan={3}>
-                  <div className="empty">
-                    Nog geen items. Vul de Supabase-tabel of draai de seed.
-                  </div>
+                  <div className="empty">Nog geen items. Klik op ‘Nieuw’ om er een aan te maken.</div>
                 </td>
               </tr>
             )}

@@ -5,5 +5,5 @@ import { AdminContentList } from "@/components/admin/content-list";
 export default async function CasesPage() {
   await requireAdmin();
   const rows = await listContent("cases");
-  return <AdminContentList crumb="Content" titel="Cases" sub="Klantverhalen op de website." rows={rows} />;
+  return <AdminContentList type="cases" crumb="Content" titel="Cases" sub="Klantverhalen op de website." rows={rows} />;
 }
