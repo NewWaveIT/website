@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Play, ArrowRight } from "lucide-react";
-import { KLANTVERHALEN } from "@/lib/klantverhalen";
+import { getKlantverhalen } from "@/lib/klantverhalen-data";
 import { SectorHeroAnim } from "@/components/sector-hero-anim";
 import { MobileKlantverhalen } from "@/components/mobile/mobile-klantverhalen";
 import "./klantverhalen.css";
@@ -14,13 +14,16 @@ export const metadata: Metadata = {
   alternates: { canonical: "/klantverhalen" },
 };
 
+export const revalidate = 300;
+
 const FILTERS = ["Alle", "Publieke sector", "Mobiliteit", "Banken", "Zorg", "Manufacturing"];
 
-export default function KlantverhalenPage() {
-  const featured = KLANTVERHALEN[0];
+export default async function KlantverhalenPage() {
+  const verhalen = await getKlantverhalen();
+  const featured = verhalen[0];
   return (
     <>
-      <MobileKlantverhalen />
+      <MobileKlantverhalen verhalen={verhalen} />
     <div className="p-klanten only-desktop">
       <section className="dhero">
         <SectorHeroAnim theme="klantverhalen" />
@@ -41,35 +44,37 @@ export default function KlantverhalenPage() {
         </div>
       </section>
 
-      <section className="block" style={{ background: "var(--eggshell)" }}>
-        <div className="wrap-wide">
-          <div className="sec-head">
-            <div className="kicker">Uitgelicht</div>
-            <h2>{featured.cardTitel}</h2>
-          </div>
-          <div className="case-mini">
-            <div className="media" style={{ backgroundImage: `url('${featured.image}')` }}>
-              <button type="button" className="playbig" aria-label="Bekijk video">
-                <Play />
-              </button>
+      {featured && (
+        <section className="block" style={{ background: "var(--eggshell)" }}>
+          <div className="wrap-wide">
+            <div className="sec-head">
+              <div className="kicker">Uitgelicht</div>
+              <h2>{featured.cardTitel}</h2>
             </div>
-            <div className="body">
-              <div className="kicker">{featured.tag}</div>
-              <blockquote>{featured.quote}</blockquote>
-              <div className="who">
-                <strong>{featured.quoteNaam}</strong>, {featured.quoteRol}
-                <br />
-                <Link
-                  href={`/klantverhalen/${featured.slug}`}
-                  style={{ display: "inline-block", marginTop: 14, fontWeight: "var(--fw-semibold)" }}
-                >
-                  Lees het volledige verhaal →
-                </Link>
+            <div className="case-mini">
+              <div className="media" style={{ backgroundImage: `url('${featured.image}')` }}>
+                <button type="button" className="playbig" aria-label="Bekijk video">
+                  <Play />
+                </button>
+              </div>
+              <div className="body">
+                <div className="kicker">{featured.tag}</div>
+                <blockquote>{featured.quote}</blockquote>
+                <div className="who">
+                  <strong>{featured.quoteNaam}</strong>, {featured.quoteRol}
+                  <br />
+                  <Link
+                    href={`/klantverhalen/${featured.slug}`}
+                    style={{ display: "inline-block", marginTop: 14, fontWeight: "var(--fw-semibold)" }}
+                  >
+                    Lees het volledige verhaal →
+                  </Link>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       <section className="block">
         <div className="wrap-wide">
@@ -81,7 +86,7 @@ export default function KlantverhalenPage() {
             ))}
           </div>
           <div className="cgrid">
-            {KLANTVERHALEN.map((k) => (
+            {verhalen.map((k) => (
               <Link href={`/klantverhalen/${k.slug}`} className="ccard" key={k.slug}>
                 <div className="cover" style={{ backgroundImage: `url('${k.image}')` }}>
                   <span className="cat">{k.sector}</span>

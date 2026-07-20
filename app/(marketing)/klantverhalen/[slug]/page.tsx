@@ -2,13 +2,15 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Building2, Play, ArrowRight } from "lucide-react";
-import { KLANTVERHAAL_MAP, KLANTVERHAAL_SLUGS, KLANTVERHALEN } from "@/lib/klantverhalen";
+import { getKlantverhalen, getKlantverhaalBySlug } from "@/lib/klantverhalen-data";
 import { MobileCase } from "@/components/mobile/mobile-case";
 import "./case.css";
 import "./mobile.css";
 
-export function generateStaticParams() {
-  return KLANTVERHAAL_SLUGS.map((slug) => ({ slug }));
+export const revalidate = 300;
+
+export async function generateStaticParams() {
+  return (await getKlantverhalen()).map((k) => ({ slug: k.slug }));
 }
 
 export async function generateMetadata({
@@ -17,7 +19,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const k = KLANTVERHAAL_MAP[slug];
+  const k = await getKlantverhaalBySlug(slug);
   if (!k) return {};
   return {
     title: `Klantverhaal ${k.tag}`,
@@ -32,10 +34,10 @@ export default async function CasePage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const k = KLANTVERHAAL_MAP[slug];
+  const k = await getKlantverhaalBySlug(slug);
   if (!k) notFound();
 
-  const meer = KLANTVERHALEN.filter((x) => x.slug !== slug).slice(0, 3);
+  const meer = (await getKlantverhalen()).filter((x) => x.slug !== slug).slice(0, 3);
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Article",

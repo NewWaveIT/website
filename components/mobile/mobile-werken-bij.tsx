@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Check, ArrowRight } from "lucide-react";
-import { VACATURES } from "@/lib/vacatures";
+import type { Vacature } from "@/lib/vacatures";
 import { MobileFx } from "./mobile-fx";
 
 const GROEI = [
@@ -21,7 +21,7 @@ const CULTUUR = [
   "Maatschappelijke impact: duurzaamheid en gelijkheid",
 ];
 
-export function MobileWerkenBij() {
+export function MobileWerkenBij({ vacatures }: { vacatures: Vacature[] }) {
   return (
     <div className="m-page m-werken only-mobile">
       <section className="mhero">
@@ -73,7 +73,7 @@ export function MobileWerkenBij() {
       <section className="block vacatures" id="vacatures">
         <div className="wrap">
           <div className="sec-head"><div className="kicker on-dark">Vacatures</div><h2 style={{ color: "#fff" }}>Kom de golf versterken.</h2></div>
-          {VACATURES.map((v) => (
+          {vacatures.map((v) => (
             <Link key={v.slug} href={`/vacatures/${v.slug}`} className="vrow rv">
               <div><h3>{v.functietitel}</h3><span className="meta">{v.discipline} · {v.locatie}</span></div>
               <ArrowRight className="arrow" />

@@ -1,12 +1,12 @@
 import Link from "next/link";
 import { Play, ArrowRight } from "lucide-react";
-import { KLANTVERHALEN } from "@/lib/klantverhalen";
+import type { Klantverhaal } from "@/lib/klantverhalen";
 import { MobileFx } from "./mobile-fx";
 
 const FILTERS = ["Alle", "Publieke sector", "Mobiliteit", "Banken", "Zorg", "Manufacturing"];
 
-export function MobileKlantverhalen() {
-  const featured = KLANTVERHALEN[0];
+export function MobileKlantverhalen({ verhalen }: { verhalen: Klantverhaal[] }) {
+  const featured = verhalen[0];
   return (
     <div className="m-page m-klanten only-mobile">
       <section className="mhero">
@@ -18,25 +18,27 @@ export function MobileKlantverhalen() {
         </div>
       </section>
 
-      <section className="block" style={{ background: "var(--eggshell)" }}>
-        <div className="wrap">
-          <div className="sec-head"><div className="kicker">Uitgelicht</div><h2>{featured.cardTitel}</h2></div>
-          <div className="fcase rv">
-            <div className="media">
-              <div className="kbwrap"><div className="kb" style={{ backgroundImage: `url('${featured.image}')` }} /></div>
-              <button type="button" className="playbig" aria-label="Bekijk video"><Play /></button>
-            </div>
-            <div className="body">
-              <div className="kicker">{featured.tag}</div>
-              <blockquote>{featured.quote}</blockquote>
-              <div className="who"><strong>{featured.quoteNaam}</strong>, {featured.quoteRol}</div>
-              <Link href={`/klantverhalen/${featured.slug}`} className="btn btn-outline btn-block" style={{ marginTop: 16 }}>
-                Lees het volledige verhaal <ArrowRight />
-              </Link>
+      {featured && (
+        <section className="block" style={{ background: "var(--eggshell)" }}>
+          <div className="wrap">
+            <div className="sec-head"><div className="kicker">Uitgelicht</div><h2>{featured.cardTitel}</h2></div>
+            <div className="fcase rv">
+              <div className="media">
+                <div className="kbwrap"><div className="kb" style={{ backgroundImage: `url('${featured.image}')` }} /></div>
+                <button type="button" className="playbig" aria-label="Bekijk video"><Play /></button>
+              </div>
+              <div className="body">
+                <div className="kicker">{featured.tag}</div>
+                <blockquote>{featured.quote}</blockquote>
+                <div className="who"><strong>{featured.quoteNaam}</strong>, {featured.quoteRol}</div>
+                <Link href={`/klantverhalen/${featured.slug}`} className="btn btn-outline btn-block" style={{ marginTop: 16 }}>
+                  Lees het volledige verhaal <ArrowRight />
+                </Link>
+              </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       <section className="block">
         <div className="wrap">
@@ -46,7 +48,7 @@ export function MobileKlantverhalen() {
             ))}
           </div>
           <div className="cgrid">
-            {KLANTVERHALEN.map((k) => (
+            {verhalen.map((k) => (
               <Link key={k.slug} href={`/klantverhalen/${k.slug}`} className="ccard rv">
                 <div className="cover" style={{ backgroundImage: `url('${k.image}')` }}>
                   <span className="cat">{k.sector}</span>

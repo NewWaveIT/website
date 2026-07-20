@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import { Check, ArrowRight } from "lucide-react";
-import { VACATURES } from "@/lib/vacatures";
+import { getVacatures } from "@/lib/vacatures-data";
 import { MobileWerkenBij } from "@/components/mobile/mobile-werken-bij";
 import "./werken-bij.css";
 import "./mobile.css";
@@ -33,10 +33,13 @@ const CULTUUR = [
   "Maatschappelijke impact: duurzaamheid, gendergelijkheid en arbeidsparticipatie",
 ];
 
-export default function WerkenBijPage() {
+export const revalidate = 300;
+
+export default async function WerkenBijPage() {
+  const vacatures = await getVacatures();
   return (
     <>
-      <MobileWerkenBij />
+      <MobileWerkenBij vacatures={vacatures} />
     <div className="p-werken only-desktop">
       <section className="shero">
         <div className="cutout">
@@ -155,7 +158,7 @@ export default function WerkenBijPage() {
             </h2>
           </div>
           <div className="list">
-            {VACATURES.map((v) => (
+            {vacatures.map((v) => (
               <Link href={`/vacatures/${v.slug}`} className="vrow" key={v.slug}>
                 <h3>{v.functietitel}</h3>
                 <span className="meta">{v.discipline}</span>

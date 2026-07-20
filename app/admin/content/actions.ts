@@ -105,6 +105,12 @@ function revalidatePublic(type: ContentType, slug: string) {
   if (type === "artikelen") {
     revalidatePath("/inzichten");
     revalidatePath(`/inzichten/${slug}`);
+  } else if (type === "cases") {
+    revalidatePath("/klantverhalen");
+    revalidatePath(`/klantverhalen/${slug}`);
+  } else if (type === "vacatures") {
+    revalidatePath("/werken-bij");
+    revalidatePath(`/vacatures/${slug}`);
   }
 }
 
@@ -120,5 +126,7 @@ export async function deleteContent(formData: FormData): Promise<void> {
 
   revalidatePath(LIST_PATH[type]);
   if (type === "artikelen") revalidatePath("/inzichten");
+  if (type === "cases") revalidatePath("/klantverhalen");
+  if (type === "vacatures") revalidatePath("/werken-bij");
   redirect(LIST_PATH[type]);
 }

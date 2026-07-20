@@ -3,10 +3,12 @@ import Link from "next/link";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { Check, ArrowRight, Phone } from "lucide-react";
-import { VACATURE_MAP, VACATURE_SLUGS, VACATURES } from "@/lib/vacatures";
+import { getVacatures, getVacatureBySlug } from "@/lib/vacatures-data";
 import { MobileVacature } from "@/components/mobile/mobile-vacature";
 import "./vacature.css";
 import "./mobile.css";
+
+export const revalidate = 300;
 
 const PROCES = [
   { num: "01", titel: "Kennismaken", p: "Videocall of koffie met Mitchel. Geen assessment, wél een goed gesprek over jouw ambitie." },
@@ -15,8 +17,8 @@ const PROCES = [
   { num: "04", titel: "Voorstel", p: "Transparant aanbod, inclusief groeipad. Bedenktijd hoort erbij." },
 ];
 
-export function generateStaticParams() {
-  return VACATURE_SLUGS.map((slug) => ({ slug }));
+export async function generateStaticParams() {
+  return (await getVacatures()).map((v) => ({ slug: v.slug }));
 }
 
 export async function generateMetadata({
@@ -25,7 +27,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const v = VACATURE_MAP[slug];
+  const v = await getVacatureBySlug(slug);
   if (!v) return {};
   return {
     title: `Vacature ${v.functietitel}`,
@@ -40,10 +42,10 @@ export default async function VacaturePage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const v = VACATURE_MAP[slug];
+  const v = await getVacatureBySlug(slug);
   if (!v) notFound();
 
-  const andere = VACATURES.filter((x) => x.slug !== slug);
+  const andere = (await getVacatures()).filter((x) => x.slug !== slug);
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "JobPosting",
