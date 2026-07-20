@@ -3,11 +3,13 @@ import Link from "next/link";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { ArrowRight } from "lucide-react";
-import { ARTIKEL_MAP, ARTIKEL_SLUGS } from "@/lib/inzichten";
+import { getArtikelen, getArtikelBySlug } from "@/lib/inzichten-data";
 import "./article.css";
 
-export function generateStaticParams() {
-  return ARTIKEL_SLUGS.map((slug) => ({ slug }));
+export const revalidate = 300;
+
+export async function generateStaticParams() {
+  return (await getArtikelen()).map((a) => ({ slug: a.slug }));
 }
 
 export async function generateMetadata({
@@ -16,7 +18,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const a = ARTIKEL_MAP[slug];
+  const a = await getArtikelBySlug(slug);
   if (!a) return {};
   return {
     title: a.titel,
@@ -32,7 +34,7 @@ export default async function ArtikelPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const a = ARTIKEL_MAP[slug];
+  const a = await getArtikelBySlug(slug);
   if (!a) notFound();
 
   const jsonLd = {

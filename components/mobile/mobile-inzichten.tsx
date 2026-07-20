@@ -1,13 +1,13 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-import { ARTIKELEN } from "@/lib/inzichten";
+import type { Artikel } from "@/lib/inzichten";
 import { MobileFx } from "./mobile-fx";
 
 const FILTERS = ["Alle", "AI", "Mendix", "Strategie", "Sectoren"];
 
-export function MobileInzichten() {
-  const featured = ARTIKELEN[0];
-  const rest = ARTIKELEN.slice(1);
+export function MobileInzichten({ artikelen }: { artikelen: Artikel[] }) {
+  const featured = artikelen[0];
+  const rest = artikelen.slice(1);
   return (
     <div className="m-page m-inzichten only-mobile">
       <section className="mhero">
@@ -27,15 +27,17 @@ export function MobileInzichten() {
             ))}
           </div>
 
-          <Link href={`/inzichten/${featured.slug}`} className="feat rv">
-            <div className="media" style={{ backgroundImage: `url('${featured.image}')` }} />
-            <div className="body">
-              <div className="kicker on-dark">Uitgelicht · {featured.cat}</div>
-              <h2>{featured.titel}</h2>
-              <p>{featured.intro}</p>
-              <div className="meta">{featured.leestijd} leestijd · {featured.datum} · {featured.auteur}</div>
-            </div>
-          </Link>
+          {featured && (
+            <Link href={`/inzichten/${featured.slug}`} className="feat rv">
+              <div className="media" style={{ backgroundImage: `url('${featured.image}')` }} />
+              <div className="body">
+                <div className="kicker on-dark">Uitgelicht · {featured.cat}</div>
+                <h2>{featured.titel}</h2>
+                <p>{featured.intro}</p>
+                <div className="meta">{featured.leestijd} leestijd · {featured.datum} · {featured.auteur}</div>
+              </div>
+            </Link>
+          )}
 
           <div className="plist">
             {rest.map((a) => (

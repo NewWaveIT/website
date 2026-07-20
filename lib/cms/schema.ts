@@ -20,8 +20,9 @@ export const FIELD_SCHEMAS: Record<ContentType, FieldDef[]> = {
     { key: "samenvatting", label: "Samenvatting", type: "textarea", help: "Korte intro in overzichten en meta-omschrijving." },
     { key: "cover", label: "Cover-afbeelding (pad)", type: "text", placeholder: "/assets/photos/klantgesprek-tafel.png" },
     { key: "leestijd", label: "Leestijd", type: "text", placeholder: "4 min" },
+    { key: "auteur", label: "Auteur", type: "text", placeholder: "Koen Wijsman" },
     { key: "datum", label: "Publicatiedatum", type: "date" },
-    { key: "inhoud", label: "Inhoud (Markdown)", type: "markdown" },
+    { key: "inhoud", label: "Inhoud (Markdown)", type: "markdown", help: "Alinea's gescheiden door een lege regel." },
   ],
   cases: [
     { key: "klant", label: "Klant", type: "text", placeholder: "COA" },

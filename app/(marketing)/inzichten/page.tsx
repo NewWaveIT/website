@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-import { ARTIKELEN } from "@/lib/inzichten";
+import { getArtikelen } from "@/lib/inzichten-data";
 import { SectorHeroAnim } from "@/components/sector-hero-anim";
 import { MobileInzichten } from "@/components/mobile/mobile-inzichten";
 import "./inzichten.css";
@@ -14,14 +14,18 @@ export const metadata: Metadata = {
   alternates: { canonical: "/inzichten" },
 };
 
+// Publieke content komt uit Supabase (met lib-fallback); ververs periodiek.
+export const revalidate = 300;
+
 const FILTERS = ["Alle", "AI", "Mendix", "Strategie", "Sectoren"];
 
-export default function InzichtenPage() {
-  const featured = ARTIKELEN[0];
-  const grid = ARTIKELEN.slice(1, 7);
+export default async function InzichtenPage() {
+  const artikelen = await getArtikelen();
+  const featured = artikelen[0];
+  const grid = artikelen.slice(1, 7);
   return (
     <>
-      <MobileInzichten />
+      <MobileInzichten artikelen={artikelen} />
     <div className="p-inzichten only-desktop">
       <section className="dhero">
         <SectorHeroAnim theme="inzichten" />
@@ -52,17 +56,19 @@ export default function InzichtenPage() {
             ))}
           </div>
 
-          <Link href={`/inzichten/${featured.slug}`} className="feat">
-            <div className="media" style={{ backgroundImage: `url('${featured.image}')` }} />
-            <div className="body">
-              <div className="kicker on-dark">Uitgelicht · {featured.cat}</div>
-              <h2>{featured.titel}</h2>
-              <p>{featured.intro}</p>
-              <div className="meta">
-                {featured.leestijd} leestijd · {featured.datum} · door {featured.auteur}
+          {featured && (
+            <Link href={`/inzichten/${featured.slug}`} className="feat">
+              <div className="media" style={{ backgroundImage: `url('${featured.image}')` }} />
+              <div className="body">
+                <div className="kicker on-dark">Uitgelicht · {featured.cat}</div>
+                <h2>{featured.titel}</h2>
+                <p>{featured.intro}</p>
+                <div className="meta">
+                  {featured.leestijd} leestijd · {featured.datum} · door {featured.auteur}
+                </div>
               </div>
-            </div>
-          </Link>
+            </Link>
+          )}
 
           <div className="cards3">
             {grid.map((a) => (

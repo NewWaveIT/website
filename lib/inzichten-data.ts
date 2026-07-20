@@ -1,0 +1,45 @@
+import "server-only";
+import { getPublishedContent, type ContentRow } from "@/lib/cms/content";
+import { ARTIKELEN, ARTIKEL_MAP, type Artikel } from "@/lib/inzichten";
+
+/** ISO-datum (YYYY-MM-DD) → Nederlandse weergave; laat andere strings ongemoeid. */
+function fmtDatum(d: string): string {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(d)) return d;
+  try {
+    return new Date(d).toLocaleDateString("nl-NL", { day: "numeric", month: "short", year: "numeric" });
+  } catch {
+    return d;
+  }
+}
+
+function mapRow(row: ContentRow): Artikel {
+  const d = row.data as Record<string, unknown>;
+  const str = (k: string) => (typeof d[k] === "string" ? (d[k] as string) : "");
+  const inhoud = str("inhoud");
+  return {
+    slug: row.slug,
+    titel: row.titel,
+    cat: str("categorie") || "Inzicht",
+    datum: fmtDatum(str("datum")),
+    leestijd: str("leestijd"),
+    auteur: str("auteur") || "The New Wave IT",
+    image: str("cover") || "/assets/photos/team-presentatie-breed.png",
+    intro: str("samenvatting"),
+    body: inhoud ? inhoud.split(/\n\s*\n/).map((p) => p.trim()).filter(Boolean) : [],
+  };
+}
+
+/** Gepubliceerde artikelen uit Supabase; valt terug op de statische lib-data. */
+export async function getArtikelen(): Promise<Artikel[]> {
+  const rows = await getPublishedContent("artikelen");
+  return rows.length ? rows.map(mapRow) : ARTIKELEN;
+}
+
+export async function getArtikelBySlug(slug: string): Promise<Artikel | null> {
+  const rows = await getPublishedContent("artikelen");
+  if (rows.length) {
+    const r = rows.find((x) => x.slug === slug);
+    return r ? mapRow(r) : null;
+  }
+  return ARTIKEL_MAP[slug] ?? null;
+}

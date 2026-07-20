@@ -96,7 +96,16 @@ export async function saveContent(_prev: SaveState, formData: FormData): Promise
   }
 
   revalidatePath(LIST_PATH[type]);
+  revalidatePublic(type, slug);
   redirect(LIST_PATH[type]);
+}
+
+/** Ververs de publieke routes die (via fase C) live uit Supabase lezen. */
+function revalidatePublic(type: ContentType, slug: string) {
+  if (type === "artikelen") {
+    revalidatePath("/inzichten");
+    revalidatePath(`/inzichten/${slug}`);
+  }
 }
 
 export async function deleteContent(formData: FormData): Promise<void> {
@@ -110,5 +119,6 @@ export async function deleteContent(formData: FormData): Promise<void> {
   await supabase.from(CONTENT_TABLE[type]).delete().eq("id", id);
 
   revalidatePath(LIST_PATH[type]);
+  if (type === "artikelen") revalidatePath("/inzichten");
   redirect(LIST_PATH[type]);
 }
