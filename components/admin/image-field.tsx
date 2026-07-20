@@ -3,16 +3,14 @@
 import { useRef, useState, type ChangeEvent } from "react";
 import { uploadImage } from "@/app/admin/content/actions";
 
-export function ImageField({
-  name,
-  label,
-  defaultValue,
+/** Gecontroleerd upload-veld (preview + bestand kiezen + pad). Herbruikbaar, ook genest. */
+export function ImageControl({
+  value,
+  onChange,
 }: {
-  name: string;
-  label: string;
-  defaultValue: string;
+  value: string;
+  onChange: (v: string) => void;
 }) {
-  const [url, setUrl] = useState(defaultValue);
   const [busy, setBusy] = useState(false);
   const [err, setErr] = useState("");
   const fileRef = useRef<HTMLInputElement>(null);
@@ -27,17 +25,16 @@ export function ImageField({
     const res = await uploadImage(fd);
     setBusy(false);
     if (res.error) setErr(res.error);
-    else if (res.url) setUrl(res.url);
+    else if (res.url) onChange(res.url);
     if (fileRef.current) fileRef.current.value = "";
   }
 
   return (
-    <div className="fld">
-      <label htmlFor={`img-${name}`}>{label}</label>
-      {url ? (
+    <>
+      {value ? (
         // eslint-disable-next-line @next/next/no-img-element
         <img
-          src={url}
+          src={value}
           alt=""
           style={{
             maxHeight: 120,
@@ -50,22 +47,13 @@ export function ImageField({
         />
       ) : null}
       <input
-        id={`img-${name}`}
-        name={name}
         type="text"
-        value={url}
-        onChange={(e) => setUrl(e.target.value)}
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
         placeholder="/assets/… of geüploade URL"
       />
       <div style={{ marginTop: 8, display: "flex", gap: 10, alignItems: "center" }}>
-        <input
-          ref={fileRef}
-          type="file"
-          accept="image/*"
-          onChange={onFile}
-          disabled={busy}
-          style={{ fontSize: "var(--text-xs)" }}
-        />
+        <input ref={fileRef} type="file" accept="image/*" onChange={onFile} disabled={busy} style={{ fontSize: "var(--text-xs)" }} />
         {busy && <span className="t-sub">Uploaden…</span>}
       </div>
       {err && (
@@ -73,6 +61,26 @@ export function ImageField({
           {err}
         </p>
       )}
+    </>
+  );
+}
+
+/** Top-level afbeeldingsveld met eigen label + verborgen input voor formulierverzending. */
+export function ImageField({
+  name,
+  label,
+  defaultValue,
+}: {
+  name: string;
+  label: string;
+  defaultValue: string;
+}) {
+  const [url, setUrl] = useState(defaultValue);
+  return (
+    <div className="fld">
+      <label>{label}</label>
+      <input type="hidden" name={name} value={url} />
+      <ImageControl value={url} onChange={setUrl} />
     </div>
   );
 }

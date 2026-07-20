@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Plus, Trash2, ChevronUp, ChevronDown } from "lucide-react";
 import type { FieldDef } from "@/lib/cms/schema";
+import { ImageControl } from "./image-field";
 
 type Obj = Record<string, unknown>;
 
@@ -91,6 +92,10 @@ function Control({
         </button>
       </div>
     );
+  }
+
+  if (field.type === "image") {
+    return <ImageControl value={str(value)} onChange={onChange} />;
   }
 
   if (field.type === "textarea" || field.type === "markdown") {
