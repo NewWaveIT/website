@@ -36,7 +36,7 @@ const ROLES = [
   { slug: "business-consultant", Icon: Route, naam: "Business Consultant" },
 ];
 
-export function MobileHome() {
+export function MobileHome({ home }: { home: Record<string, string> }) {
   const rootRef = useRef<HTMLDivElement>(null);
   const carRef = useRef<HTMLDivElement>(null);
   const [dot, setDot] = useState(0);
@@ -168,20 +168,18 @@ export function MobileHome() {
       <section className="m-hero">
         <canvas className="m-hero-wave" aria-hidden="true" />
         <div className="m-wrap">
-          <span className="m-kicker on-dark">{"// IT-consultancy voor vijf sectoren"}</span>
+          <span className="m-kicker on-dark">{home.heroKickerMobiel}</span>
           <h1>
-            Wij maken van business en IT <span className="accent">één beweging</span>.
+            {home.heroTitleStart}
+            <span className="accent">{home.heroAccent}</span>.
           </h1>
-          <p className="lead">
-            Sectorkennis × Mendix, AI en strategie. Oplossingen die werken voor de
-            mensen die ermee werken.
-          </p>
+          <p className="lead">{home.heroLeadMobiel}</p>
           <div className="m-hero-actions">
             <Link href="/contact" className="m-btn primary">
-              Plan een strategiegesprek <ArrowRight />
+              {home.heroCtaPrimair} <ArrowRight />
             </Link>
             <Link href="/klantverhalen" className="m-btn ghost-dark">
-              <Play /> Bekijk klantverhalen
+              <Play /> {home.heroCtaVideo}
             </Link>
           </div>
           <div className="m-chiprow">

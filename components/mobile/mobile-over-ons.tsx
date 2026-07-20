@@ -10,15 +10,15 @@ const WAARDEN = [
   { Icon: Leaf, h: "Duurzaam ondernemen", p: "In 2030 is ons businessmodel 100% CO2-neutraal." },
 ];
 
-export function MobileOverOns() {
+export function MobileOverOns({ over }: { over: Record<string, string> }) {
   return (
     <div className="m-page m-over only-mobile">
       <section className="mhero">
         <div className="wrap">
           <div className="crumbs"><Link href="/">Home</Link> / Over ons</div>
           <div className="kicker on-dark">{"// Over ons"}</div>
-          <h1>De ondernemende mens zorgt voor <em>vooruitgang</em>.</h1>
-          <p>Succesvolle verandering begint bij mensen. Wij verzorgen de randvoorwaarden voor onze Wavers, zij helpen onze partners maximaal digitaal versnellen.</p>
+          <h1>{over.heroTitleStart}<em>{over.heroAccent}</em>.</h1>
+          <p>{over.heroLeadMobiel}</p>
           <div className="statgrid">
             <div className="pstat"><div className="n">2023</div><div className="l">Opgericht, kantoor in Utrecht</div></div>
             <div className="pstat"><div className="n">100%</div><div className="l">De mens centraal</div></div>

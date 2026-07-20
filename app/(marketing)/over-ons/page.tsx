@@ -43,7 +43,7 @@ export default async function OverOnsPage() {
   const t = await getPagina("over-ons");
   return (
     <>
-      <MobileOverOns />
+      <MobileOverOns over={t} />
     <div className="p-over only-desktop">
       <script
         type="application/ld+json"

@@ -51,7 +51,7 @@ export default async function HomePage() {
   const t = await getPagina("home");
   return (
     <>
-      <MobileHome />
+      <MobileHome home={t} />
       <div className="home only-desktop">
       <script
         type="application/ld+json"

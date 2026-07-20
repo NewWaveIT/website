@@ -17,6 +17,8 @@ export const PAGE_FIELDS: Record<string, FieldDef[]> = {
     { key: "statementBody", label: "Statement — tekst", type: "textarea" },
     { key: "ctaTitel", label: "Slot-CTA — titel", type: "text" },
     { key: "ctaKnop", label: "Slot-CTA — knoptekst", type: "text" },
+    { key: "heroKickerMobiel", label: "Hero — kicker (mobiel)", type: "text" },
+    { key: "heroLeadMobiel", label: "Hero — introtekst (mobiel)", type: "textarea" },
   ],
   "over-ons": [
     { key: "heroTitleStart", label: "Hero — titel (begin)", type: "text" },
@@ -29,6 +31,7 @@ export const PAGE_FIELDS: Record<string, FieldDef[]> = {
     { key: "teamP1", label: "Team — alinea 1", type: "textarea" },
     { key: "teamP2", label: "Team — alinea 2", type: "textarea" },
     { key: "ctaTitel", label: "Slot-CTA — titel", type: "text" },
+    { key: "heroLeadMobiel", label: "Hero — introtekst (mobiel)", type: "textarea" },
   ],
   contact: [
     { key: "heroTitleStart", label: "Hero — titel (begin)", type: "text" },
@@ -84,6 +87,9 @@ export const PAGE_DEFAULTS: Record<string, Record<string, string>> = {
       "Hetzelfde senior team dat jouw strategie mee vormgeeft, staat ook aan de knoppen bij bouw en beheer. Zo blijft verantwoordelijkheid op één plek en houden we vaart tot ver na livegang.",
     ctaTitel: "Klaar om samen te bouwen aan meetbare groei?",
     ctaKnop: "Plan een strategiegesprek",
+    heroKickerMobiel: "// IT-consultancy voor vijf sectoren",
+    heroLeadMobiel:
+      "Sectorkennis × Mendix, AI en strategie. Oplossingen die werken voor de mensen die ermee werken.",
   },
   "over-ons": {
     heroTitleStart: "De ondernemende mens zorgt voor ",
@@ -101,6 +107,8 @@ export const PAGE_DEFAULTS: Record<string, Record<string, string>> = {
     teamP2:
       "Van strategische sessies tot livegang en beheer: hetzelfde team blijft aan boord. Zo houden we vaart, kwaliteit en verantwoordelijkheid bij elkaar.",
     ctaTitel: "Benieuwd wat onze mensen voor jouw doelen kunnen betekenen?",
+    heroLeadMobiel:
+      "Succesvolle verandering begint bij mensen. Wij verzorgen de randvoorwaarden voor onze Wavers, zij helpen onze partners maximaal digitaal versnellen.",
   },
   contact: {
     heroTitleStart: "Waar kunnen we je ",
