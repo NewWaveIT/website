@@ -118,6 +118,28 @@ function revalidatePublic(type: ContentType, slug: string) {
   }
 }
 
+/** Upload een afbeelding naar de Supabase Storage-bucket 'content' en geef de publieke URL terug. */
+export async function uploadImage(formData: FormData): Promise<{ url?: string; error?: string }> {
+  await requireAdmin();
+
+  const file = formData.get("file");
+  if (!(file instanceof File) || file.size === 0) return { error: "Geen bestand gekozen." };
+  if (!file.type.startsWith("image/")) return { error: "Alleen afbeeldingen zijn toegestaan." };
+  if (file.size > 5 * 1024 * 1024) return { error: "Maximaal 5 MB." };
+
+  const ext = (file.name.split(".").pop() ?? "png").toLowerCase().replace(/[^a-z0-9]/g, "") || "png";
+  const path = `${crypto.randomUUID()}.${ext}`;
+
+  const supabase = await createClient();
+  const { error } = await supabase.storage
+    .from("content")
+    .upload(path, file, { contentType: file.type, upsert: false });
+  if (error) return { error: error.message };
+
+  const { data } = supabase.storage.from("content").getPublicUrl(path);
+  return { url: data.publicUrl };
+}
+
 export async function deleteContent(formData: FormData): Promise<void> {
   await requireAdmin();
 

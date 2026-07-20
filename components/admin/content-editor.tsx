@@ -5,6 +5,7 @@ import Link from "next/link";
 import { saveContent, deleteContent, type SaveState } from "@/app/admin/content/actions";
 import type { ContentRow, ContentType } from "@/lib/cms/content";
 import { FIELD_SCHEMAS, fieldValue, extraData } from "@/lib/cms/schema";
+import { ImageField } from "./image-field";
 
 export function ContentEditor({
   type,
@@ -83,7 +84,10 @@ export function ContentEditor({
           </div>
         </div>
 
-        {fields.map((f) => (
+        {fields.map((f) =>
+          f.type === "image" ? (
+            <ImageField key={f.key} name={`f_${f.key}`} label={f.label} defaultValue={fieldValue(data, f)} />
+          ) : (
           <div className="fld" key={f.key}>
             <label htmlFor={`ce-${f.key}`}>{f.label}</label>
             {f.type === "textarea" || f.type === "markdown" ? (
@@ -110,7 +114,8 @@ export function ContentEditor({
             )}
             {f.help && <p className="t-sub" style={{ marginTop: 6 }}>{f.help}</p>}
           </div>
-        ))}
+          )
+        )}
 
         <details style={{ marginBottom: "var(--space-5)" }}>
           <summary style={{ cursor: "pointer", fontSize: "var(--text-sm)", color: "var(--text-muted)" }}>

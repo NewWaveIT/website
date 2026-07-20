@@ -4,7 +4,7 @@
 
 import type { ContentType } from "./content";
 
-export type FieldType = "text" | "textarea" | "markdown" | "number" | "date";
+export type FieldType = "text" | "textarea" | "markdown" | "number" | "date" | "image";
 
 export interface FieldDef {
   key: string;
@@ -18,7 +18,7 @@ export const FIELD_SCHEMAS: Record<ContentType, FieldDef[]> = {
   artikelen: [
     { key: "categorie", label: "Categorie", type: "text", placeholder: "Publieke sector" },
     { key: "samenvatting", label: "Samenvatting", type: "textarea", help: "Korte intro in overzichten en meta-omschrijving." },
-    { key: "cover", label: "Cover-afbeelding (pad)", type: "text", placeholder: "/assets/photos/klantgesprek-tafel.png" },
+    { key: "cover", label: "Cover-afbeelding", type: "image" },
     { key: "leestijd", label: "Leestijd", type: "text", placeholder: "4 min" },
     { key: "auteur", label: "Auteur", type: "text", placeholder: "Koen Wijsman" },
     { key: "datum", label: "Publicatiedatum", type: "date" },
@@ -29,7 +29,7 @@ export const FIELD_SCHEMAS: Record<ContentType, FieldDef[]> = {
     { key: "metric", label: "Teaser-metric", type: "text", placeholder: "-60%" },
     { key: "cardTitel", label: "Titel op de kaart", type: "text" },
     { key: "org", label: "Organisatie-regel", type: "text", placeholder: "COA · Mendix + AI" },
-    { key: "image", label: "Cover-afbeelding (pad)", type: "text", placeholder: "/assets/photos/..." },
+    { key: "image", label: "Cover-afbeelding", type: "image" },
     { key: "tag", label: "Tag (detail)", type: "text", placeholder: "Publieke sector · COA" },
     { key: "h1", label: "Titel (detailpagina)", type: "text" },
     { key: "intro", label: "Intro", type: "textarea" },
@@ -71,7 +71,7 @@ export const FIELD_SCHEMAS: Record<ContentType, FieldDef[]> = {
   teamleden: [
     { key: "naam", label: "Naam", type: "text" },
     { key: "rol", label: "Rol", type: "text" },
-    { key: "foto", label: "Foto (pad)", type: "text", placeholder: "/assets/photos/portret-...png" },
+    { key: "foto", label: "Foto", type: "image" },
     { key: "bio", label: "Bio", type: "textarea" },
   ],
 };
