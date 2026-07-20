@@ -29,7 +29,7 @@ export default async function ContactPage() {
   const t = await getPagina("contact");
   return (
     <>
-      <MobileContact />
+      <MobileContact contact={t} />
       <div className="only-desktop">
       <section className="chero">
         <div className="wrap-wide">

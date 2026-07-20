@@ -21,15 +21,15 @@ const CULTUUR = [
   "Maatschappelijke impact: duurzaamheid en gelijkheid",
 ];
 
-export function MobileWerkenBij({ vacatures }: { vacatures: Vacature[] }) {
+export function MobileWerkenBij({ vacatures, werken }: { vacatures: Vacature[]; werken: Record<string, string> }) {
   return (
     <div className="m-page m-werken only-mobile">
       <section className="mhero">
         <div className="wrap">
           <div className="crumbs"><Link href="/">Home</Link> / Werken bij</div>
           <div className="kicker on-dark">{"// Werken bij The New Wave IT"}</div>
-          <h1>Word een <em>Waver</em>.</h1>
-          <p>Een gelijk speelveld, een open cultuur en alle ruimte om te groeien. Jij zorgt voor de versnelling bij onze partners.</p>
+          <h1>{werken.heroTitleStart}<em>{werken.heroAccent}</em>.</h1>
+          <p>{werken.heroLeadMobiel}</p>
           <div style={{ display: "flex", flexDirection: "column", gap: 12, marginTop: 22 }}>
             <a href="#vacatures" className="btn btn-primary">Bekijk vacatures <ArrowRight /></a>
             <Link href="/over-ons" className="btn btn-ghost-dark">Leer ons eerst kennen</Link>

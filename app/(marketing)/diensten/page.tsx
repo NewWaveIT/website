@@ -39,7 +39,7 @@ export default async function DienstenPage() {
   const t = await getPagina("diensten");
   return (
     <>
-      <MobileDiensten />
+      <MobileDiensten diensten={t} />
     <div className="p-diensten only-desktop">
       <script
         type="application/ld+json"

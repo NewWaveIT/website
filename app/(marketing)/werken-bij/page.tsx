@@ -41,7 +41,7 @@ export default async function WerkenBijPage() {
   const t = await getPagina("werken-bij");
   return (
     <>
-      <MobileWerkenBij vacatures={vacatures} />
+      <MobileWerkenBij vacatures={vacatures} werken={t} />
     <div className="p-werken only-desktop">
       <section className="shero">
         <div className="cutout">

@@ -37,6 +37,7 @@ export const PAGE_FIELDS: Record<string, FieldDef[]> = {
     { key: "heroTitleStart", label: "Hero — titel (begin)", type: "text" },
     { key: "heroAccent", label: "Hero — accentwoord", type: "text" },
     { key: "heroLead", label: "Hero — introtekst", type: "textarea" },
+    { key: "heroLeadMobiel", label: "Hero — introtekst (mobiel)", type: "textarea" },
     { key: "ctaTitel", label: "Slot-CTA — titel", type: "text" },
   ],
   diensten: [
@@ -44,18 +45,21 @@ export const PAGE_FIELDS: Record<string, FieldDef[]> = {
     { key: "heroAccent", label: "Hero — accentwoord", type: "text" },
     { key: "heroTitleEnd", label: "Hero — titel (eind)", type: "text" },
     { key: "heroLead", label: "Hero — introtekst", type: "textarea" },
+    { key: "heroLeadMobiel", label: "Hero — introtekst (mobiel)", type: "textarea" },
     { key: "ctaTitel", label: "Slot-CTA — titel", type: "text" },
   ],
   sectoren: [
     { key: "heroTitleStart", label: "Hero — titel (begin)", type: "text" },
     { key: "heroAccent", label: "Hero — accentwoord", type: "text" },
     { key: "heroLead", label: "Hero — introtekst", type: "textarea" },
+    { key: "heroLeadMobiel", label: "Hero — introtekst (mobiel)", type: "textarea" },
     { key: "ctaTitel", label: "Slot-CTA — titel", type: "text" },
   ],
   "werken-bij": [
     { key: "heroTitleStart", label: "Hero — titel (begin)", type: "text" },
     { key: "heroAccent", label: "Hero — accentwoord", type: "text" },
     { key: "heroLead", label: "Hero — introtekst", type: "textarea" },
+    { key: "heroLeadMobiel", label: "Hero — introtekst (mobiel)", type: "textarea" },
     { key: "ctaTitel", label: "Slot-CTA — titel", type: "text" },
   ],
 };
@@ -115,6 +119,7 @@ export const PAGE_DEFAULTS: Record<string, Record<string, string>> = {
     heroAccent: "mee helpen",
     heroLead:
       "Een strategiegesprek plannen kan, maar een korte vraag stellen mag ook gewoon. Bel, mail, app of kom langs, je zit nergens aan vast.",
+    heroLeadMobiel: "Bel, mail, app of kom langs, je zit nergens aan vast.",
     ctaTitel: "Liever eerst zien wat we voor anderen deden?",
   },
   diensten: {
@@ -123,6 +128,8 @@ export const PAGE_DEFAULTS: Record<string, Record<string, string>> = {
     heroTitleEnd: ": jouw resultaat.",
     heroLead:
       "Wij combineren Mendix, AI en digitale strategie tot oplossingen die werken voor de mensen die ermee moeten werken. Altijd vanuit jouw sectorvraagstuk, nooit vanuit de technologie.",
+    heroLeadMobiel:
+      "Mendix, AI en digitale strategie, altijd vanuit jouw sectorvraagstuk, nooit vanuit de technologie.",
     ctaTitel: "Niet zeker welke dienst bij jouw vraagstuk past?",
   },
   sectoren: {
@@ -130,6 +137,8 @@ export const PAGE_DEFAULTS: Record<string, Record<string, string>> = {
     heroAccent: "jouw sector",
     heroLead:
       "Geen generieke IT-dienstverlener, maar een business-specialist in vijf markten. We kennen de processen, de wetgeving en de systemen, zodat we bij het eerste gesprek al de diepte in kunnen.",
+    heroLeadMobiel:
+      "Business-specialist in vijf markten. We kennen de processen, de wetgeving en de systemen, zodat het eerste gesprek meteen de diepte in kan.",
     ctaTitel: "Benieuwd wat dit voor jouw organisatie betekent?",
   },
   "werken-bij": {
@@ -137,6 +146,8 @@ export const PAGE_DEFAULTS: Record<string, Record<string, string>> = {
     heroAccent: "Waver",
     heroLead:
       "Het is onze droom dat elk mens werk doet dat aansluit bij persoonlijke doelen en drijfveren. Wij verzorgen de randvoorwaarden: een gelijk speelveld, een open cultuur en alle ruimte om te groeien. Jij zorgt voor de versnelling bij onze partners.",
+    heroLeadMobiel:
+      "Een gelijk speelveld, een open cultuur en alle ruimte om te groeien. Jij zorgt voor de versnelling bij onze partners.",
     ctaTitel: "Eerst een kop koffie? Kom kennismaken.",
   },
 };

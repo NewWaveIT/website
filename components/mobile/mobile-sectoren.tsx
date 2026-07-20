@@ -16,7 +16,7 @@ const WERKWIJZE = [
   { num: "03", h: "Netwerk dat meedenkt", p: "Leer via onze partners en klanten van organisaties die hetzelfde vraagstuk al oplosten." },
 ];
 
-export function MobileSectoren() {
+export function MobileSectoren({ sectoren }: { sectoren: Record<string, string> }) {
   return (
     <div className="m-page m-sectoren only-mobile">
       <section className="mhero">
@@ -25,8 +25,8 @@ export function MobileSectoren() {
             <Link href="/">Home</Link> / Sectoren
           </div>
           <div className="kicker on-dark">{"// Sectoren"}</div>
-          <h1>Wij spreken de taal van <em>jouw sector</em>.</h1>
-          <p>Business-specialist in vijf markten. We kennen de processen, de wetgeving en de systemen, zodat het eerste gesprek meteen de diepte in kan.</p>
+          <h1>{sectoren.heroTitleStart}<em>{sectoren.heroAccent}</em>.</h1>
+          <p>{sectoren.heroLeadMobiel}</p>
         </div>
       </section>
 

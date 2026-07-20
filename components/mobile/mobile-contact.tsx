@@ -3,15 +3,15 @@ import { Phone, Mail, MessageCircle, ArrowRight } from "lucide-react";
 import { ContactForm } from "@/components/contact/contact-form";
 import { MobileFx } from "./mobile-fx";
 
-export function MobileContact() {
+export function MobileContact({ contact }: { contact: Record<string, string> }) {
   return (
     <div className="m-page m-contact only-mobile">
       <section className="mhero light">
         <div className="wrap">
           <div className="crumbs"><Link href="/">Home</Link> / Contact</div>
           <div className="kicker">{"// Contact"}</div>
-          <h1>Waar kunnen we je <em>mee helpen</em>?</h1>
-          <p>Bel, mail, app of kom langs, je zit nergens aan vast.</p>
+          <h1>{contact.heroTitleStart}<em>{contact.heroAccent}</em>?</h1>
+          <p>{contact.heroLeadMobiel}</p>
         </div>
       </section>
 

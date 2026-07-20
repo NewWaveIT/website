@@ -87,7 +87,7 @@ export default async function SectorenPage() {
   const t = await getPagina("sectoren");
   return (
     <>
-      <MobileSectoren />
+      <MobileSectoren sectoren={t} />
     <div className="p-sectoren only-desktop">
       <script
         type="application/ld+json"

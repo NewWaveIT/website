@@ -23,15 +23,15 @@ const SECTCHIPS = [
   { slug: "manufacturing", Icon: Factory, naam: "Manufacturing" },
 ];
 
-export function MobileDiensten() {
+export function MobileDiensten({ diensten }: { diensten: Record<string, string> }) {
   return (
     <div className="m-page m-diensten only-mobile">
       <section className="mhero">
         <div className="wrap">
           <div className="crumbs"><Link href="/">Home</Link> / Diensten</div>
           <div className="kicker on-dark">{"// Diensten"}</div>
-          <h1>Drie diensten, <em>één doel</em>: jouw resultaat.</h1>
-          <p>Mendix, AI en digitale strategie, altijd vanuit jouw sectorvraagstuk, nooit vanuit de technologie.</p>
+          <h1>{diensten.heroTitleStart}<em>{diensten.heroAccent}</em>{diensten.heroTitleEnd}</h1>
+          <p>{diensten.heroLeadMobiel}</p>
         </div>
       </section>
 
