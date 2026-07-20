@@ -68,7 +68,13 @@ export function AdminContentList({
             {rows.length === 0 && (
               <tr>
                 <td colSpan={3}>
-                  <div className="empty">Nog geen items. Klik op ‘Nieuw’ om er een aan te maken.</div>
+                  <div className="empty">
+                    Nog geen items. Klik op ‘Nieuw’ om er een aan te maken — of ga naar het{" "}
+                    <Link href="/admin" style={{ color: "var(--color-primary)", fontWeight: "var(--fw-semibold)" }}>
+                      dashboard
+                    </Link>{" "}
+                    en klik op ‘Importeer bestaande content’ om de huidige website-content in te laden.
+                  </div>
                 </td>
               </tr>
             )}

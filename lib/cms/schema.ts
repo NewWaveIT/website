@@ -40,7 +40,7 @@ export const FIELD_SCHEMAS: Record<ContentType, FieldDef[]> = {
     { key: "leestijd", label: "Leestijd", type: "text", placeholder: "4 min" },
     { key: "auteur", label: "Auteur", type: "text", placeholder: "Koen Wijsman" },
     { key: "datum", label: "Publicatiedatum", type: "date" },
-    { key: "inhoud", label: "Inhoud (Markdown)", type: "markdown", help: "Alinea's gescheiden door een lege regel." },
+    { key: "inhoud", label: "Inhoud", type: "markdown", help: "Alinea's gescheiden door een lege regel." },
   ],
   cases: [
     { key: "sector", label: "Sector (filterlabel)", type: "text", placeholder: "Publieke sector" },
@@ -90,7 +90,7 @@ export const FIELD_SCHEMAS: Record<ContentType, FieldDef[]> = {
     { key: "discipline", label: "Discipline (lijstlabel)", type: "text", placeholder: "Mendix · Senior" },
     { key: "locatie", label: "Locatie", type: "text", placeholder: "Utrecht / hybride" },
     { key: "intro", label: "Intro", type: "textarea" },
-    { key: "employmentType", label: "Dienstverband (schema.org)", type: "text", placeholder: "FULL_TIME" },
+    { key: "employmentType", label: "Type dienstverband", type: "text", placeholder: "FULL_TIME", help: "FULL_TIME of PART_TIME." },
     { key: "gepubliceerdOp", label: "Gepubliceerd op", type: "date" },
     { key: "tags", label: "Tags", type: "list", help: "Bv. Mendix, Senior, Utrecht / hybride." },
     {
@@ -119,11 +119,11 @@ export const FIELD_SCHEMAS: Record<ContentType, FieldDef[]> = {
   paginas: [
     { key: "metaTitle", label: "Meta-titel", type: "text" },
     { key: "metaDescription", label: "Meta-omschrijving", type: "textarea" },
-    { key: "inhoud", label: "Inhoud (Markdown)", type: "markdown" },
+    { key: "inhoud", label: "Inhoud", type: "markdown" },
   ],
   diensten: [
     { key: "naam", label: "Naam", type: "text" },
-    { key: "badgeIcon", label: "Badge-icoon (boxes/brain-circuit/route)", type: "text" },
+    { key: "badgeIcon", label: "Badge-icoon", type: "text", help: "Kies: boxes, brain-circuit of route." },
     { key: "badgeLabel", label: "Badge-label", type: "text", placeholder: "Mendix Premium Partner" },
     { key: "h1", label: "Titel (H1)", type: "text" },
     { key: "intro", label: "Intro", type: "textarea" },
@@ -152,7 +152,7 @@ export const FIELD_SCHEMAS: Record<ContentType, FieldDef[]> = {
       { key: "titel", label: "Titel", type: "text" },
       { key: "p", label: "Tekst", type: "textarea" },
       { key: "punten", label: "Punten", type: "list" },
-      { key: "ph", label: "Placeholder-label", type: "text" },
+      { key: "ph", label: "Afbeelding-bijschrift", type: "text" },
     ] },
     { key: "waarom", label: "Waarom wij", type: "items", itemLabel: "Reden", of: [
       { key: "titel", label: "Titel", type: "text" },
@@ -186,7 +186,7 @@ export const FIELD_SCHEMAS: Record<ContentType, FieldDef[]> = {
   ],
   sectoren: [
     { key: "naam", label: "Naam", type: "text" },
-    { key: "icon", label: "Icoon (building-2/train-front/banknote/heart-pulse/factory)", type: "text" },
+    { key: "icon", label: "Icoon", type: "text", help: "Kies: building-2, train-front, banknote, heart-pulse of factory." },
     { key: "h1", label: "Titel (H1)", type: "text" },
     { key: "intro", label: "Intro", type: "textarea" },
     { key: "kpis", label: "KPI's (hero)", type: "items", itemLabel: "KPI", of: [
@@ -204,7 +204,7 @@ export const FIELD_SCHEMAS: Record<ContentType, FieldDef[]> = {
       { key: "titel", label: "Titel", type: "text" },
       { key: "p", label: "Tekst", type: "textarea" },
       { key: "punten", label: "Punten", type: "list" },
-      { key: "ph", label: "Placeholder-label", type: "text" },
+      { key: "ph", label: "Afbeelding-bijschrift", type: "text" },
     ] },
     { key: "outcomes", label: "Resultaten", type: "items", itemLabel: "Resultaat", of: [
       { key: "n", label: "Cijfer", type: "text" },
