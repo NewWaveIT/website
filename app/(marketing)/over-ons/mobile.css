@@ -14,7 +14,9 @@
   .m-over .founder img { width: 48px; height: 48px; border-radius: 50%; object-fit: cover; object-position: top; }
   .m-over .founder .nm { font-weight: var(--fw-bold); color: var(--text-strong); font-size: var(--text-sm); }
   .m-over .founder .rl { font-size: var(--text-xs); color: var(--text-muted); }
-  .m-over .m-team-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 18px 0 4px; }
+  .m-over .m-team-grid { display: flex; gap: 14px; overflow-x: auto; scroll-snap-type: x mandatory; margin: 18px -20px 4px; padding: 0 20px 8px; scrollbar-width: none; }
+  .m-over .m-team-grid::-webkit-scrollbar { display: none; }
+  .m-over .m-tcard { flex: 0 0 58%; scroll-snap-align: start; }
   .m-over .m-tcard .pf { position: relative; width: 100%; aspect-ratio: 1 / 1; border-radius: var(--radius-md); overflow: hidden; background: var(--ink-100); margin-bottom: 10px; }
   .m-over .m-tcard .pf img { object-fit: cover; }
   .m-over .m-tcard .nm { font-family: var(--font-display); font-weight: var(--fw-bold); color: var(--text-strong); font-size: var(--text-sm); }

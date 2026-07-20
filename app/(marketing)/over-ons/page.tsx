@@ -5,6 +5,7 @@ import { Users, Scale, Sparkles, Leaf, MapPin, Award, Mail, ArrowRight } from "l
 import { MobileOverOns } from "@/components/mobile/mobile-over-ons";
 import { getPagina } from "@/lib/paginas-data";
 import { getTeamleden } from "@/lib/team-data";
+import { TeamCarousel } from "@/components/team-carousel";
 import "./over-ons.css";
 import "./mobile.css";
 
@@ -146,18 +147,7 @@ export default async function OverOnsPage() {
               </Link>
             </div>
           </div>
-          <div className="team-grid">
-            {team.map((m) => (
-              <div className="tcard" key={m.slug}>
-                <div className="pf">
-                  <Image src={m.foto} alt={m.naam} fill sizes="(max-width: 900px) 50vw, 220px" style={{ objectPosition: "top" }} />
-                </div>
-                <div className="nm">{m.naam}</div>
-                <div className="rl">{m.rol}</div>
-                {m.bio && <p>{m.bio}</p>}
-              </div>
-            ))}
-          </div>
+          <TeamCarousel team={team} />
         </div>
       </section>
 
