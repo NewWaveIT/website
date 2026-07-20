@@ -14,12 +14,7 @@ export const metadata: Metadata = {
   alternates: { canonical: "/over-ons" },
 };
 
-const WAARDEN = [
-  { Icon: Users, titel: "De mens 100% centraal", p: "Technologie is het middel. We bouwen oplossingen rond de mensen die ermee moeten werken, bij jou en bij ons." },
-  { Icon: Scale, titel: "Gelijk speelveld", p: "Beloning is bij ons gelijk en transparant voor iedereen met dezelfde ervaring, ongeacht gender of achtergrond." },
-  { Icon: Sparkles, titel: "Verschillen versterken", p: "Elk mens is gelijk. We geloven dat diverse teams tot betere oplossingen komen, voor onze partners en elkaar." },
-  { Icon: Leaf, titel: "Duurzaam ondernemen", p: "Ondernemen en maatschappelijke bijdrage horen bij elkaar. In 2030 is ons businessmodel 100% CO2-neutraal." },
-];
+const WAARDE_ICONS = [Users, Scale, Sparkles, Leaf];
 
 const jsonLd = {
   "@context": "https://schema.org",
@@ -109,17 +104,17 @@ export default async function OverOnsPage() {
       <section className="block waarden">
         <div className="wrap-wide">
           <div className="sec-head">
-            <div className="kicker">Waar wij voor staan</div>
-            <h2>Vier overtuigingen die je terugziet in ons werk</h2>
+            <div className="kicker">{t.waardenKicker}</div>
+            <h2>{t.waardenTitel}</h2>
           </div>
           <div className="grid">
-            {WAARDEN.map(({ Icon, titel, p }) => (
-              <div className="vcard" key={titel}>
+            {WAARDE_ICONS.map((Icon, i) => (
+              <div className="vcard" key={i}>
                 <div className="ic">
                   <Icon />
                 </div>
-                <h3>{titel}</h3>
-                <p>{p}</p>
+                <h3>{t[`waarde${i + 1}Titel`]}</h3>
+                <p>{t[`waarde${i + 1}Tekst`]}</p>
               </div>
             ))}
           </div>

@@ -49,6 +49,16 @@ export const PAGE_FIELDS: Record<string, FieldDef[]> = {
     { key: "teamP2", label: "Team — alinea 2", type: "textarea" },
     { key: "ctaTitel", label: "Slot-CTA — titel", type: "text" },
     { key: "heroLeadMobiel", label: "Hero — introtekst (mobiel)", type: "textarea" },
+    { key: "waardenKicker", label: "Waarden — kicker", type: "text" },
+    { key: "waardenTitel", label: "Waarden — titel", type: "text" },
+    { key: "waarde1Titel", label: "Waarde 1 — titel", type: "text" },
+    { key: "waarde1Tekst", label: "Waarde 1 — tekst", type: "textarea" },
+    { key: "waarde2Titel", label: "Waarde 2 — titel", type: "text" },
+    { key: "waarde2Tekst", label: "Waarde 2 — tekst", type: "textarea" },
+    { key: "waarde3Titel", label: "Waarde 3 — titel", type: "text" },
+    { key: "waarde3Tekst", label: "Waarde 3 — tekst", type: "textarea" },
+    { key: "waarde4Titel", label: "Waarde 4 — titel", type: "text" },
+    { key: "waarde4Tekst", label: "Waarde 4 — tekst", type: "textarea" },
   ],
   contact: [
     { key: "heroTitleStart", label: "Hero — titel (begin)", type: "text" },
@@ -154,6 +164,20 @@ export const PAGE_DEFAULTS: Record<string, Record<string, string>> = {
     ctaTitel: "Benieuwd wat onze mensen voor jouw doelen kunnen betekenen?",
     heroLeadMobiel:
       "Succesvolle verandering begint bij mensen. Wij verzorgen de randvoorwaarden voor onze Wavers, zij helpen onze partners maximaal digitaal versnellen.",
+    waardenKicker: "Waar wij voor staan",
+    waardenTitel: "Vier overtuigingen die je terugziet in ons werk",
+    waarde1Titel: "De mens 100% centraal",
+    waarde1Tekst:
+      "Technologie is het middel. We bouwen oplossingen rond de mensen die ermee moeten werken, bij jou en bij ons.",
+    waarde2Titel: "Gelijk speelveld",
+    waarde2Tekst:
+      "Beloning is bij ons gelijk en transparant voor iedereen met dezelfde ervaring, ongeacht gender of achtergrond.",
+    waarde3Titel: "Verschillen versterken",
+    waarde3Tekst:
+      "Elk mens is gelijk. We geloven dat diverse teams tot betere oplossingen komen, voor onze partners en elkaar.",
+    waarde4Titel: "Duurzaam ondernemen",
+    waarde4Tekst:
+      "Ondernemen en maatschappelijke bijdrage horen bij elkaar. In 2030 is ons businessmodel 100% CO2-neutraal.",
   },
   contact: {
     heroTitleStart: "Waar kunnen we je ",
