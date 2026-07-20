@@ -1,11 +1,12 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Users, Scale, Sparkles, Leaf, MapPin, Award, Mail, ArrowRight } from "lucide-react";
+import type { Teamlid } from "@/lib/team";
 import { MobileFx } from "./mobile-fx";
 
 const WAARDE_ICONS = [Users, Scale, Sparkles, Leaf];
 
-export function MobileOverOns({ over }: { over: Record<string, string> }) {
+export function MobileOverOns({ over, team }: { over: Record<string, string>; team: Teamlid[] }) {
   return (
     <div className="m-page m-over only-mobile">
       <section className="mhero">
@@ -55,11 +56,16 @@ export function MobileOverOns({ over }: { over: Record<string, string> }) {
           <div className="kicker">Het team</div>
           <h2 style={{ fontSize: "var(--text-xl)", margin: "12px 0 14px" }}>{over.teamTitel}</h2>
           <p>{over.teamP1}</p>
-          <div className="founder rv">
-            <Image src="/assets/photos/portret-blauw.png" alt="Koen Wijsman" width={48} height={48} />
-            <div><div className="nm">Koen Wijsman</div><div className="rl">CEO &amp; founder</div></div>
-            <Link href="/contact" className="btn btn-outline" style={{ marginLeft: "auto", minHeight: 40, padding: "8px 14px", fontSize: "var(--text-xs)" }}>Kennismaken</Link>
+          <div className="m-team-grid rv">
+            {team.map((m) => (
+              <div className="m-tcard" key={m.slug}>
+                <div className="pf"><Image src={m.foto} alt={m.naam} fill sizes="45vw" style={{ objectPosition: "top" }} /></div>
+                <div className="nm">{m.naam}</div>
+                <div className="rl">{m.rol}</div>
+              </div>
+            ))}
           </div>
+          <Link href="/contact" className="btn btn-outline btn-block" style={{ marginTop: 18 }}>Kom kennismaken</Link>
         </div>
       </section>
 

@@ -128,6 +128,8 @@ function revalidatePublic(type: ContentType, slug: string) {
     revalidatePath(`/sectoren/${slug}`);
   } else if (type === "paginas" && PAGE_PATH[slug]) {
     revalidatePath(PAGE_PATH[slug]);
+  } else if (type === "teamleden") {
+    revalidatePath("/over-ons");
   }
 }
 

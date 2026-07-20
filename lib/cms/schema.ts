@@ -224,10 +224,9 @@ export const FIELD_SCHEMAS: Record<ContentType, FieldDef[]> = {
     { key: "ctaTitle", label: "Slot-CTA — titel", type: "text" },
   ],
   teamleden: [
-    { key: "naam", label: "Naam", type: "text" },
-    { key: "rol", label: "Rol", type: "text" },
+    { key: "rol", label: "Rol", type: "text", placeholder: "CEO & founder" },
     { key: "foto", label: "Foto", type: "image" },
-    { key: "bio", label: "Bio", type: "textarea" },
+    { key: "bio", label: "Bio", type: "textarea", help: "Titel = de naam van het teamlid." },
   ],
 };
 

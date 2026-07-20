@@ -5,6 +5,7 @@ import { VACATURES } from "@/lib/vacatures";
 import { DIENSTEN } from "@/lib/diensten-detail";
 import { SECTOREN } from "@/lib/sectoren-detail";
 import { PAGE_DEFAULTS } from "@/lib/cms/pages";
+import { TEAMLEDEN } from "@/lib/team";
 import type { ContentType } from "@/lib/cms/content";
 
 export interface SeedRow {
@@ -71,6 +72,12 @@ export function buildSeed(): Record<ContentType, SeedRow[]> {
       return { slug, titel: s.naam, status: "live", volgorde: i, data };
     }),
 
-    teamleden: [],
+    teamleden: TEAMLEDEN.map((t, i) => ({
+      slug: t.slug,
+      titel: t.naam,
+      status: "live",
+      volgorde: i,
+      data: { rol: t.rol, foto: t.foto, bio: t.bio },
+    })),
   };
 }

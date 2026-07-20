@@ -4,6 +4,7 @@ import Image from "next/image";
 import { Users, Scale, Sparkles, Leaf, MapPin, Award, Mail, ArrowRight } from "lucide-react";
 import { MobileOverOns } from "@/components/mobile/mobile-over-ons";
 import { getPagina } from "@/lib/paginas-data";
+import { getTeamleden } from "@/lib/team-data";
 import "./over-ons.css";
 import "./mobile.css";
 
@@ -36,9 +37,10 @@ export const revalidate = 300;
 
 export default async function OverOnsPage() {
   const t = await getPagina("over-ons");
+  const team = await getTeamleden();
   return (
     <>
-      <MobileOverOns over={t} />
+      <MobileOverOns over={t} team={team} />
     <div className="p-over only-desktop">
       <script
         type="application/ld+json"
@@ -139,17 +141,22 @@ export default async function OverOnsPage() {
               </h2>
               <p>{t.teamP1}</p>
               <p>{t.teamP2}</p>
-              <div className="founder">
-                <Image src="/assets/photos/portret-blauw.png" alt="Koen Wijsman" width={56} height={56} />
-                <div>
-                  <div className="nm">Koen Wijsman</div>
-                  <div className="rl">CEO &amp; founder</div>
-                </div>
-                <Link href="/contact" className="btn btn-outline btn-sm" style={{ marginLeft: "auto" }}>
-                  Kom kennismaken
-                </Link>
-              </div>
+              <Link href="/contact" className="btn btn-outline btn-sm">
+                Kom kennismaken
+              </Link>
             </div>
+          </div>
+          <div className="team-grid">
+            {team.map((m) => (
+              <div className="tcard" key={m.slug}>
+                <div className="pf">
+                  <Image src={m.foto} alt={m.naam} fill sizes="(max-width: 900px) 50vw, 220px" style={{ objectPosition: "top" }} />
+                </div>
+                <div className="nm">{m.naam}</div>
+                <div className="rl">{m.rol}</div>
+                {m.bio && <p>{m.bio}</p>}
+              </div>
+            ))}
           </div>
         </div>
       </section>

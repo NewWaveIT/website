@@ -31,17 +31,19 @@
 .p-over .team .media-img { position: relative; width: 100%; min-height: 360px; border-radius: var(--radius-lg); overflow: hidden; }
 .p-over .team .media-img img { object-fit: cover; }
 .p-over .team p { font-size: var(--text-md); color: var(--text-muted); line-height: var(--leading-relaxed); margin: 0 0 var(--space-5); max-width: 46ch; }
-.p-over .founder { display: flex; align-items: center; gap: 14px; margin-top: var(--space-6); padding-top: var(--space-5); border-top: 1px solid var(--border-subtle); }
-.p-over .founder img { width: 56px; height: 56px; border-radius: 50%; object-fit: cover; object-position: top; flex: none; }
-.p-over .founder .nm { font-weight: var(--fw-semibold); color: var(--text-strong); font-size: var(--text-base); }
-.p-over .founder .rl { font-size: var(--text-sm); color: var(--text-muted); }
+.p-over .team-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-6); margin-top: var(--space-9); }
+.p-over .tcard .pf { position: relative; width: 100%; aspect-ratio: 1 / 1; border-radius: var(--radius-lg); overflow: hidden; background: var(--ink-100); margin-bottom: var(--space-4); }
+.p-over .tcard .pf img { object-fit: cover; }
+.p-over .tcard .nm { font-family: var(--font-display); font-weight: var(--fw-bold); color: var(--text-strong); font-size: var(--text-md); }
+.p-over .tcard .rl { font-family: var(--font-mono); font-size: 11px; text-transform: uppercase; letter-spacing: var(--tracking-kicker); color: var(--color-primary); margin-top: 3px; }
+.p-over .tcard p { font-size: var(--text-sm); color: var(--text-muted); line-height: var(--leading-normal); margin: var(--space-3) 0 0; }
 
 .p-over .feiten { background: var(--ink-900); color: var(--eggshell); }
 .p-over .feiten .row { display: flex; gap: var(--space-8); justify-content: space-between; flex-wrap: wrap; padding: var(--space-7) 0; }
 .p-over .feiten .f { font-family: var(--font-mono); font-size: var(--text-sm); color: var(--text-on-dark-muted); display: flex; align-items: center; gap: 10px; }
 .p-over .feiten .f .lucide { width: 18px; height: 18px; color: var(--orange-400); }
 
-@media (max-width: 1024px) { .p-over .waarden .grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 1024px) { .p-over .waarden .grid, .p-over .team-grid { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 900px) {
   .p-over .missie .grid, .p-over .team .grid { grid-template-columns: 1fr; }
   .p-over .shero h1 { font-size: var(--text-3xl); }
