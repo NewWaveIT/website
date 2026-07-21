@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import { Play, ArrowRight } from "lucide-react";
 import { getKlantverhalen } from "@/lib/klantverhalen-data";
 import { SectorHeroAnim } from "@/components/sector-hero-anim";
@@ -52,7 +53,8 @@ export default async function KlantverhalenPage() {
               <h2>{featured.cardTitel}</h2>
             </div>
             <div className="case-mini">
-              <div className="media" style={{ backgroundImage: `url('${featured.image}')` }}>
+              <div className="media">
+                <Image src={featured.image} alt={featured.cardTitel} fill sizes="(max-width: 980px) 100vw, 45vw" style={{ objectFit: "cover" }} />
                 <button type="button" className="playbig" aria-label="Bekijk video">
                   <Play />
                 </button>
@@ -88,7 +90,8 @@ export default async function KlantverhalenPage() {
           <div className="cgrid">
             {verhalen.map((k) => (
               <Link href={`/klantverhalen/${k.slug}`} className="ccard" key={k.slug}>
-                <div className="cover" style={{ backgroundImage: `url('${k.image}')` }}>
+                <div className="cover">
+                  <Image src={k.image} alt={k.cardTitel} fill sizes="(max-width: 980px) 100vw, 33vw" style={{ objectFit: "cover" }} />
                   <span className="cat">{k.sector}</span>
                 </div>
                 <div className="cbody">

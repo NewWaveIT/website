@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 import { getArtikelen } from "@/lib/inzichten-data";
 import { SectorHeroAnim } from "@/components/sector-hero-anim";
@@ -58,7 +59,9 @@ export default async function InzichtenPage() {
 
           {featured && (
             <Link href={`/inzichten/${featured.slug}`} className="feat">
-              <div className="media" style={{ backgroundImage: `url('${featured.image}')` }} />
+              <div className="media">
+                <Image src={featured.image} alt={featured.titel} fill sizes="(max-width: 980px) 100vw, 45vw" style={{ objectFit: "cover" }} />
+              </div>
               <div className="body">
                 <div className="kicker on-dark">Uitgelicht · {featured.cat}</div>
                 <h2>{featured.titel}</h2>
@@ -73,7 +76,8 @@ export default async function InzichtenPage() {
           <div className="cards3">
             {grid.map((a) => (
               <Link href={`/inzichten/${a.slug}`} className="post" key={a.slug}>
-                <div className="cover" style={{ backgroundImage: `url('${a.image}')` }}>
+                <div className="cover">
+                  <Image src={a.image} alt={a.titel} fill sizes="(max-width: 980px) 100vw, 33vw" style={{ objectFit: "cover" }} />
                   <span className="cat">{a.cat}</span>
                 </div>
                 <div className="pbody">
