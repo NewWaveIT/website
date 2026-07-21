@@ -1,5 +1,6 @@
 "use server";
 
+import sharp from "sharp";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { requireAdmin } from "@/lib/dal";
@@ -172,13 +173,25 @@ export async function uploadImage(formData: FormData): Promise<{ url?: string; e
   if (!file.type.startsWith("image/")) return { error: "Alleen afbeeldingen zijn toegestaan." };
   if (file.size > 5 * 1024 * 1024) return { error: "Maximaal 5 MB." };
 
+  // Converteer naar WebP voor snelheid; val terug op het origineel als dat niet lukt (bv. SVG).
   const ext = (file.name.split(".").pop() ?? "png").toLowerCase().replace(/[^a-z0-9]/g, "") || "png";
-  const path = `${crypto.randomUUID()}.${ext}`;
+  let body: Buffer | File = file;
+  let outExt = ext;
+  let contentType = file.type;
+  try {
+    const input = Buffer.from(await file.arrayBuffer());
+    body = await sharp(input).rotate().webp({ quality: 82 }).toBuffer();
+    outExt = "webp";
+    contentType = "image/webp";
+  } catch {
+    // origineel behouden
+  }
+  const path = `${crypto.randomUUID()}.${outExt}`;
 
   const supabase = await createClient();
   const { error } = await supabase.storage
     .from("content")
-    .upload(path, file, { contentType: file.type, upsert: false });
+    .upload(path, body, { contentType, upsert: false });
   if (error) return { error: error.message };
 
   const { data } = supabase.storage.from("content").getPublicUrl(path);

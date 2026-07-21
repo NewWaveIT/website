@@ -19,7 +19,7 @@ function skeleton(row: ContentRow): SectorDetail {
     caseQuote: "",
     caseNaam: "",
     caseRol: "",
-    caseImage: "/assets/photos/team-presentatie-breed.png",
+    caseImage: "/assets/photos/team-presentatie-breed.webp",
     insightsTitle: "",
     insights: [],
     ctaTitle: "",

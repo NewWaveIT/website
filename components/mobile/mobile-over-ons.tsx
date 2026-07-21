@@ -25,7 +25,7 @@ export function MobileOverOns({ over, team }: { over: Record<string, string>; te
 
       <section className="block missie">
         <div className="wrap">
-          <div className="media-img rv"><Image src="/assets/photos/klantgesprek-tafel.png" alt="Wavers in gesprek met een klant" fill sizes="100vw" /></div>
+          <div className="media-img rv"><Image src="/assets/photos/klantgesprek-tafel.webp" alt="Wavers in gesprek met een klant" fill sizes="100vw" /></div>
           <div className="kicker">Onze missie</div>
           <h2 style={{ fontSize: "var(--text-xl)", margin: "12px 0 14px" }}>{over.missieTitel}</h2>
           <p>{over.missieP1}</p>
@@ -52,7 +52,7 @@ export function MobileOverOns({ over, team }: { over: Record<string, string>; te
 
       <section className="block team">
         <div className="wrap">
-          <div className="media-img rv"><Image src="/assets/photos/founders-trio.png" alt="Het team achter The New Wave IT" fill sizes="100vw" /></div>
+          <div className="media-img rv"><Image src="/assets/photos/founders-trio.webp" alt="Het team achter The New Wave IT" fill sizes="100vw" /></div>
           <div className="kicker">Het team</div>
           <h2 style={{ fontSize: "var(--text-xl)", margin: "12px 0 14px" }}>{over.teamTitel}</h2>
           <p>{over.teamP1}</p>

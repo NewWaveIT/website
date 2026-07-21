@@ -44,7 +44,7 @@ export function MobileWerkenBij({ vacatures, werken }: { vacatures: Vacature[]; 
 
       <section className="block cultuur" id="cultuur">
         <div className="wrap">
-          <div className="media-img rv"><Image src="/assets/photos/team-presentatie-breed.png" alt="Wavers tijdens een kennissessie" fill sizes="100vw" /></div>
+          <div className="media-img rv"><Image src="/assets/photos/team-presentatie-breed.webp" alt="Wavers tijdens een kennissessie" fill sizes="100vw" /></div>
           <div className="kicker">{werken.cultuurKicker}</div>
           <h2 style={{ fontSize: "var(--text-xl)", margin: "12px 0 16px" }}>{werken.cultuurTitel}</h2>
           <ul className="rv">

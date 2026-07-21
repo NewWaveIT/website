@@ -18,9 +18,9 @@ const SECTOREN = [
 ];
 
 const DIENSTEN = [
-  { slug: "mendix", Icon: Layers, titel: "Mendix-applicaties", img: "/assets/photos/overleg-laptop.png", alt: "Consultants werken aan een Mendix-applicatie", p: "Low-code applicaties op maat, 6–10× sneller dan traditionele bouw.", link: "Meer over Mendix" },
-  { slug: "ai", Icon: BrainCircuit, titel: "AI die processen verbetert", img: "/assets/photos/team-overleg-scherm.png", alt: "Team bespreekt AI-toepassing", p: "Verantwoorde AI binnen je bestaande landschap. Geen hype, wél meetbaar resultaat.", link: "Meer over AI" },
-  { slug: "strategie", Icon: Route, titel: "Business & IT-strategie", img: "/assets/photos/klantgesprek-tafel.png", alt: "Strategiesessie aan tafel", p: "Van ambitie naar roadmap én uitvoering, we blijven tot het werkt.", link: "Meer over Strategie" },
+  { slug: "mendix", Icon: Layers, titel: "Mendix-applicaties", img: "/assets/photos/overleg-laptop.webp", alt: "Consultants werken aan een Mendix-applicatie", p: "Low-code applicaties op maat, 6–10× sneller dan traditionele bouw.", link: "Meer over Mendix" },
+  { slug: "ai", Icon: BrainCircuit, titel: "AI die processen verbetert", img: "/assets/photos/team-overleg-scherm.webp", alt: "Team bespreekt AI-toepassing", p: "Verantwoorde AI binnen je bestaande landschap. Geen hype, wél meetbaar resultaat.", link: "Meer over AI" },
+  { slug: "strategie", Icon: Route, titel: "Business & IT-strategie", img: "/assets/photos/klantgesprek-tafel.webp", alt: "Strategiesessie aan tafel", p: "Van ambitie naar roadmap én uitvoering, we blijven tot het werkt.", link: "Meer over Strategie" },
 ];
 
 const WAAROM_ICONS = [Target, Users, Workflow, ShieldCheck];
@@ -322,7 +322,7 @@ export function MobileHome({ home }: { home: Record<string, string> }) {
       <section className="m-block m-mensen">
         <div className="m-wrap">
           <div className="media-img">
-            <Image src="/assets/photos/overleg-lachend.png" alt="Consultants in overleg" fill sizes="100vw" />
+            <Image src="/assets/photos/overleg-lachend.webp" alt="Consultants in overleg" fill sizes="100vw" />
           </div>
           <div className="m-kicker">{home.mensenKicker}</div>
           <h2 style={{ fontSize: "var(--text-xl)", margin: "12px 0 14px" }}>{home.mensenTitel}</h2>

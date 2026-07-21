@@ -50,7 +50,7 @@ export default async function OverOnsPage() {
 
       <section className="shero">
         <div className="badge-img">
-          <Image src="/assets/photos/overleg-lachend.png" alt="" fill sizes="46vw" />
+          <Image src="/assets/photos/overleg-lachend.webp" alt="" fill sizes="46vw" />
         </div>
         <div className="wrap-wide">
           <div className="crumbs">
@@ -94,7 +94,7 @@ export default async function OverOnsPage() {
             </div>
             <div className="media-img">
               <Image
-                src="/assets/photos/klantgesprek-tafel.png"
+                src="/assets/photos/klantgesprek-tafel.webp"
                 alt="Wavers in gesprek met een klant"
                 fill
                 sizes="(max-width: 900px) 100vw, 45vw"
@@ -129,7 +129,7 @@ export default async function OverOnsPage() {
           <div className="grid">
             <div className="media-img">
               <Image
-                src="/assets/photos/founders-trio.png"
+                src="/assets/photos/founders-trio.webp"
                 alt="Het team achter The New Wave IT"
                 fill
                 sizes="(max-width: 900px) 100vw, 40vw"

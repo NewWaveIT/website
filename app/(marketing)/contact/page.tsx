@@ -119,7 +119,7 @@ export default async function ContactPage() {
             <div className="expert">
               <Image
                 className="avatar"
-                src="/assets/photos/portret-blauw.png"
+                src="/assets/photos/portret-blauw.webp"
                 alt="Koen Wijsman, CEO van The New Wave IT"
                 width={76}
                 height={76}

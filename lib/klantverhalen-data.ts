@@ -25,7 +25,7 @@ function mapRow(row: ContentRow): Klantverhaal {
     metric: s("metric"),
     cardTitel: s("cardTitel") || row.titel,
     org: s("org"),
-    image: s("image") || "/assets/photos/team-presentatie-breed.png",
+    image: s("image") || "/assets/photos/team-presentatie-breed.webp",
     tag: s("tag") || s("sector"),
     h1: s("h1") || row.titel,
     intro: s("intro"),

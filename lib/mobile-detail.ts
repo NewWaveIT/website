@@ -480,7 +480,7 @@ export const MOBILE_SECTOREN: Record<string, MobileDetailData> = {
       quote: "“Onze teams registreren in de app tijdens het werk, niet erna aan het bureau.”",
       naam: "Annemiek Bos",
       rol: "Bestuurder",
-      img: "/assets/photos/overleg-lachend.png",
+      img: "/assets/photos/overleg-lachend.webp",
       href: "/klantverhalen/coa",
     },
     ctaTitle: "Benieuwd wat dit voor jouw organisatie betekent?",

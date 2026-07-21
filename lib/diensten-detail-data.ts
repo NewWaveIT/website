@@ -26,7 +26,7 @@ function skeleton(row: ContentRow): DienstDetail {
     caseQuote: "",
     caseNaam: "",
     caseRol: "",
-    caseImage: "/assets/photos/team-presentatie-breed.png",
+    caseImage: "/assets/photos/team-presentatie-breed.webp",
     insightsTitle: "",
     insights: [],
     ctaTitle: "",

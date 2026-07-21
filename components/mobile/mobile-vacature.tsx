@@ -43,7 +43,7 @@ export function MobileVacature({ v, andere }: { v: Vacature; andere: Vacature[] 
           </div>
           <div className="apply-card rv" id="solliciteer">
             <div className="rec">
-              <Image src="/assets/photos/portret-3.png" alt="Mitchel Wallaart, recruiter" width={52} height={52} />
+              <Image src="/assets/photos/portret-3.webp" alt="Mitchel Wallaart, recruiter" width={52} height={52} />
               <div>
                 <div className="role">Recruiter</div>
                 <h4>Mitchel Wallaart</h4>

@@ -34,7 +34,7 @@ export const KLANTVERHALEN: Klantverhaal[] = [
     metric: "-60%",
     cardTitel: "Van maanden naar weken: aanvragen die burgers niet laten wachten",
     org: "COA · Mendix + AI",
-    image: "/assets/photos/team-presentatie-breed.png",
+    image: "/assets/photos/team-presentatie-breed.webp",
     tag: "Publieke sector · COA",
     h1: "Van maanden naar weken: aanvragen die burgers niet meer laten wachten.",
     intro:
@@ -65,7 +65,7 @@ export const KLANTVERHALEN: Klantverhaal[] = [
     metric: "6 wkn",
     cardTitel: "Van Excel-planning naar realtime assetbeheer",
     org: "OV-bedrijf · Mendix",
-    image: "/assets/photos/overleg-laptop.png",
+    image: "/assets/photos/overleg-laptop.webp",
     tag: "Mobiliteit · OV-bedrijf",
     h1: "Van Excel-planning naar realtime grip op de vloot.",
     intro:
@@ -96,7 +96,7 @@ export const KLANTVERHALEN: Klantverhaal[] = [
     metric: "100%",
     cardTitel: "Audit-proof klantacceptatie zonder extra fte's",
     org: "Retailbank · Strategie + Mendix",
-    image: "/assets/photos/klantgesprek-tafel.png",
+    image: "/assets/photos/klantgesprek-tafel.webp",
     tag: "Banken · Retailbank",
     h1: "Audit-proof klantacceptatie, zonder extra fte's.",
     intro:
@@ -127,7 +127,7 @@ export const KLANTVERHALEN: Klantverhaal[] = [
     metric: "-35%",
     cardTitel: "Registratielast omlaag, tijd voor zorg omhoog",
     org: "VVT-instelling · Mendix",
-    image: "/assets/photos/overleg-lachend.png",
+    image: "/assets/photos/overleg-lachend.webp",
     tag: "Zorg · VVT-instelling",
     h1: "Minder registreren, meer tijd voor de patiënt.",
     intro:
@@ -158,7 +158,7 @@ export const KLANTVERHALEN: Klantverhaal[] = [
     metric: "+22%",
     cardTitel: "Machinedata die eindelijk de planning stuurt",
     org: "Maakbedrijf · AI",
-    image: "/assets/photos/team-presentatie-breed.png",
+    image: "/assets/photos/team-presentatie-breed.webp",
     tag: "Manufacturing · Maakbedrijf",
     h1: "Machinedata die eindelijk de planning stuurt.",
     intro:
@@ -189,7 +189,7 @@ export const KLANTVERHALEN: Klantverhaal[] = [
     metric: "8 wkn",
     cardTitel: "Subsidieproces digitaal én volledig aantoonbaar",
     org: "Provincie · Strategie + Mendix",
-    image: "/assets/photos/founders-trio.png",
+    image: "/assets/photos/founders-trio.webp",
     tag: "Publieke sector · Provincie",
     h1: "Subsidies digitaal aanvragen, volledig aantoonbaar afgehandeld.",
     intro:

@@ -114,7 +114,7 @@ export default async function VacaturePage({
           <aside className="vac-aside" id="solliciteer">
             <div className="apply-card">
               <div className="rec">
-                <Image src="/assets/photos/portret-3.png" alt="Mitchel Wallaart, recruiter" width={64} height={64} />
+                <Image src="/assets/photos/portret-3.webp" alt="Mitchel Wallaart, recruiter" width={64} height={64} />
                 <div>
                   <div className="role">Recruiter</div>
                   <h4>Mitchel Wallaart</h4>

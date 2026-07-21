@@ -21,7 +21,7 @@ export const ARTIKELEN: Artikel[] = [
     leestijd: "5 min",
     titel: "De AI Act komt eraan: wat moet je nu regelen?",
     auteur: "Koen Wijsman",
-    image: "/assets/photos/team-presentatie-breed.png",
+    image: "/assets/photos/team-presentatie-breed.webp",
     intro:
       "De Europese AI-verordening raakt elke organisatie die AI inzet in primaire processen. Dit zijn de stappen die je dit kwartaal zet, en de valkuilen die we in de praktijk zien.",
     body: [
@@ -37,7 +37,7 @@ export const ARTIKELEN: Artikel[] = [
     leestijd: "6 min",
     titel: "Van ChatGPT-experiment naar geborgd proces",
     auteur: "Sanne Willems",
-    image: "/assets/photos/team-overleg-scherm.png",
+    image: "/assets/photos/team-overleg-scherm.webp",
     intro:
       "Iedereen experimenteert met generatieve AI. De sprong naar een betrouwbaar, geborgd proces is waar het echt gebeurt, en waar het vaak misgaat.",
     body: [
@@ -52,7 +52,7 @@ export const ARTIKELEN: Artikel[] = [
     leestijd: "4 min",
     titel: "Low-code in kernprocessen: wanneer wel, wanneer niet",
     auteur: "Jesse de Boer",
-    image: "/assets/photos/overleg-laptop.png",
+    image: "/assets/photos/overleg-laptop.webp",
     intro:
       "Low-code is snel en schaalbaar, maar geen wondermiddel. Een eerlijk afwegingskader voor je meest kritische processen.",
     body: [
@@ -67,7 +67,7 @@ export const ARTIKELEN: Artikel[] = [
     leestijd: "7 min",
     titel: "Waarom digitale roadmaps stranden (en hoe niet)",
     auteur: "Koen Wijsman",
-    image: "/assets/photos/klantgesprek-tafel.png",
+    image: "/assets/photos/klantgesprek-tafel.webp",
     intro:
       "De meeste digitale strategieën falen niet op techniek, maar op executie. Drie oorzaken en hoe je ze voorkomt.",
     body: [
@@ -82,7 +82,7 @@ export const ARTIKELEN: Artikel[] = [
     leestijd: "4 min",
     titel: "Uitlegbaarheid als ontwerpeis, niet als sausje",
     auteur: "Sanne Willems",
-    image: "/assets/photos/overleg-lachend.png",
+    image: "/assets/photos/overleg-lachend.webp",
     intro:
       "Uitlegbaarheid achteraf toevoegen aan een AI-model is dweilen met de kraan open. Neem het mee vanaf het ontwerp.",
     body: [
@@ -97,7 +97,7 @@ export const ARTIKELEN: Artikel[] = [
     leestijd: "5 min",
     titel: "Registratielast in de zorg: drie processen die morgen slimmer kunnen",
     auteur: "Jesse de Boer",
-    image: "/assets/photos/team-presentatie-breed.png",
+    image: "/assets/photos/team-presentatie-breed.webp",
     intro:
       "Zorgprofessionals registreren te veel en zorgen te weinig. Drie processen waar snelle winst zit.",
     body: [
@@ -112,7 +112,7 @@ export const ARTIKELEN: Artikel[] = [
     leestijd: "4 min",
     titel: "Vergunningverlening in weken, niet maanden",
     auteur: "Koen Wijsman",
-    image: "/assets/photos/klantgesprek-tafel.png",
+    image: "/assets/photos/klantgesprek-tafel.webp",
     intro:
       "Hoe gemeenten met low-code de doorlooptijd van aanvragen structureel verkorten, zonder in te leveren op zorgvuldigheid.",
     body: [
@@ -127,7 +127,7 @@ export const ARTIKELEN: Artikel[] = [
     leestijd: "5 min",
     titel: "AI in de zorg: 5 toepassingen die tijd teruggeven",
     auteur: "Sanne Willems",
-    image: "/assets/photos/overleg-lachend.png",
+    image: "/assets/photos/overleg-lachend.webp",
     intro:
       "Concrete voorbeelden van AI die zorgprofessionals ontlast, verantwoord ingezet en met de mens aan het stuur.",
     body: [
@@ -142,7 +142,7 @@ export const ARTIKELEN: Artikel[] = [
     leestijd: "6 min",
     titel: "Compliant én snel: de valse tegenstelling",
     auteur: "Jesse de Boer",
-    image: "/assets/photos/overleg-laptop.png",
+    image: "/assets/photos/overleg-laptop.webp",
     intro:
       "Veiligheid en snelheid hoeven elkaar niet uit te sluiten in financiële IT, als je beheersing vanaf het ontwerp meeneemt.",
     body: [

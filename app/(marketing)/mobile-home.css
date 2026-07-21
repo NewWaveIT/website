@@ -65,7 +65,7 @@
   .m-fcase { border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-lg); background: var(--white); }
   .m-fcase .media { position: relative; height: 220px; overflow: hidden; }
   .m-fcase .kbwrap { position: absolute; inset: -30px 0; will-change: transform; }
-  .m-fcase .kb { position: absolute; inset: 0; background: url("/assets/photos/team-presentatie-breed.png") center / cover; animation: kenburns 26s ease-in-out infinite alternate; }
+  .m-fcase .kb { position: absolute; inset: 0; background: url("/assets/photos/team-presentatie-breed.webp") center / cover; animation: kenburns 26s ease-in-out infinite alternate; }
   .m-fcase .tag { position: absolute; top: 14px; left: 14px; background: var(--color-primary); color: #fff; font-weight: var(--fw-bold); font-size: var(--text-xs); padding: 7px 13px; border-radius: var(--radius-md); }
   .m-fcase .playbig { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: 60px; height: 60px; border-radius: 50%; background: rgba(255, 255, 255, 0.92); display: flex; align-items: center; justify-content: center; box-shadow: var(--shadow-lg); border: none; }
   .m-fcase .playbig .lucide { width: 22px; height: 22px; color: var(--color-primary); }

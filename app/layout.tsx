@@ -41,7 +41,7 @@ export const metadata: Metadata = {
     url: SITE_URL,
     images: [
       {
-        url: "/assets/photos/team-presentatie-breed.png",
+        url: "/assets/photos/team-presentatie-breed.webp",
         width: 1200,
         height: 630,
         alt: "The New Wave IT — business-specialist in Mendix, AI en strategie",
@@ -53,7 +53,7 @@ export const metadata: Metadata = {
     title: "The New Wave IT · Business-specialist in Mendix, AI en strategie",
     description:
       "Diepgaande sectorkennis gecombineerd met Mendix, AI en strategie. Enterprise-kwaliteit, menselijk geleverd.",
-    images: ["/assets/photos/team-presentatie-breed.png"],
+    images: ["/assets/photos/team-presentatie-breed.webp"],
   },
   robots: { index: true, follow: true },
 };

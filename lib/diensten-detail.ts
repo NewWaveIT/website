@@ -137,8 +137,8 @@ export const DIENSTEN: Record<string, DienstDetail> = {
     ],
     expertsHead: "Werk met een expert, onze leads denken vrijblijvend mee over jouw applicatielandschap.",
     experts: [
-      { img: "/assets/photos/portret-bordeaux.png", role: "Practice Lead Mendix", naam: "Jesse de Boer", tel: "+31610751254" },
-      { img: "/assets/photos/portret-3.png", role: "CEO · Strategie & Sales", naam: "Koen Wijsman", tel: "+31610751254" },
+      { img: "/assets/photos/portret-bordeaux.webp", role: "Practice Lead Mendix", naam: "Jesse de Boer", tel: "+31610751254" },
+      { img: "/assets/photos/portret-3.webp", role: "CEO · Strategie & Sales", naam: "Koen Wijsman", tel: "+31610751254" },
     ],
     partners: ["Mendix", "Siemens", "Microsoft Azure", "AWS"],
     outcomes: [
@@ -152,7 +152,7 @@ export const DIENSTEN: Record<string, DienstDetail> = {
     caseQuote: "“Efficiënte en betrouwbare IT-oplossingen. The New Wave IT denkt echt mee met onze uitdagingen.”",
     caseNaam: "Peter van Dam",
     caseRol: "IT Manager, COA",
-    caseImage: "/assets/photos/team-presentatie-breed.png",
+    caseImage: "/assets/photos/team-presentatie-breed.webp",
     insightsTitle: "Kennis over bouwen met low-code",
     insights: [
       { cat: "Mendix", meta: "5 min · 15 mei 2026", titel: "Wanneer low-code wél en niet de juiste keuze is" },
@@ -227,8 +227,8 @@ export const DIENSTEN: Record<string, DienstDetail> = {
     ],
     expertsHead: "Werk direct met een expert, onze practice leads denken vrijblijvend mee.",
     experts: [
-      { img: "/assets/photos/portret-blauw.png", role: "CEO · Strategie & Sales", naam: "Koen Wijsman", tel: "+31610751254" },
-      { img: "/assets/photos/portret-bordeaux.png", role: "Lead Data & Fundament", naam: "Sanne Willems", tel: "+31610751255" },
+      { img: "/assets/photos/portret-blauw.webp", role: "CEO · Strategie & Sales", naam: "Koen Wijsman", tel: "+31610751254" },
+      { img: "/assets/photos/portret-bordeaux.webp", role: "Lead Data & Fundament", naam: "Sanne Willems", tel: "+31610751255" },
     ],
     partners: ["Mendix", "Microsoft Azure", "OpenAI", "Databricks"],
     outcomes: [
@@ -242,7 +242,7 @@ export const DIENSTEN: Record<string, DienstDetail> = {
     caseQuote: "“AI sorteert nu voor, onze mensen beslissen. De doorlooptijd is gehalveerd en elk besluit blijft uitlegbaar.”",
     caseNaam: "Fatima el Idrissi",
     caseRol: "Directeur Uitvoering",
-    caseImage: "/assets/photos/team-overleg-scherm.png",
+    caseImage: "/assets/photos/team-overleg-scherm.webp",
     insightsTitle: "Kennis over verantwoorde AI",
     insights: [
       { cat: "AI", meta: "5 min · 19 mei 2026", titel: "De AI Act komt eraan: wat moet je nu regelen?" },
@@ -316,8 +316,8 @@ export const DIENSTEN: Record<string, DienstDetail> = {
     ],
     expertsHead: "Werk direct met een expert, onze leads denken vrijblijvend mee.",
     experts: [
-      { img: "/assets/photos/portret-blauw.png", role: "CEO · Strategie & Sales", naam: "Koen Wijsman", tel: "+31610751254" },
-      { img: "/assets/photos/portret-3.png", role: "Lead Business Consulting", naam: "Sanne Willems", tel: "+31610751255" },
+      { img: "/assets/photos/portret-blauw.webp", role: "CEO · Strategie & Sales", naam: "Koen Wijsman", tel: "+31610751254" },
+      { img: "/assets/photos/portret-3.webp", role: "Lead Business Consulting", naam: "Sanne Willems", tel: "+31610751255" },
     ],
     partners: ["Mendix", "Microsoft Azure", "OpenAI", "Databricks"],
     outcomes: [
@@ -331,7 +331,7 @@ export const DIENSTEN: Record<string, DienstDetail> = {
     caseQuote: "“Voor het eerst hebben business en IT hetzelfde plan. En het werkt, want elk kwartaal staat er iets nieuws in productie.”",
     caseNaam: "Willem Hartog",
     caseRol: "Algemeen directeur, familiebedrijf",
-    caseImage: "/assets/photos/klantgesprek-tafel.png",
+    caseImage: "/assets/photos/klantgesprek-tafel.webp",
     insightsTitle: "Kennis die je koers vooruit denkt",
     insights: [
       { cat: "Strategie", meta: "5 min · 14 mei 2026", titel: "Waarom digitale strategieën stranden in de la" },

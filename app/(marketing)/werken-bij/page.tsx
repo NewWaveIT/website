@@ -26,7 +26,7 @@ export default async function WerkenBijPage() {
     <div className="p-werken only-desktop">
       <section className="shero">
         <div className="cutout">
-          <Image src="/assets/photos/cutout-spreker-groen.png" alt="" fill sizes="32vw" />
+          <Image src="/assets/photos/cutout-spreker-groen.webp" alt="" fill sizes="32vw" />
         </div>
         <div className="wrap-wide">
           <div className="crumbs">
@@ -93,7 +93,7 @@ export default async function WerkenBijPage() {
           <div className="grid">
             <div className="media-img">
               <Image
-                src="/assets/photos/team-presentatie-breed.png"
+                src="/assets/photos/team-presentatie-breed.webp"
                 alt="Wavers tijdens een kennissessie"
                 fill
                 sizes="(max-width: 900px) 100vw, 45vw"

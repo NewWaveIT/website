@@ -95,7 +95,7 @@ export default async function DienstenPage() {
             </div>
             <div className="media-img">
               <Image
-                src="/assets/photos/overleg-laptop.png"
+                src="/assets/photos/overleg-laptop.webp"
                 alt="Consultants werken aan een Mendix-applicatie"
                 fill
                 sizes="(max-width: 900px) 100vw, 50vw"
@@ -132,7 +132,7 @@ export default async function DienstenPage() {
             </div>
             <div className="media-img">
               <Image
-                src="/assets/photos/team-overleg-scherm.png"
+                src="/assets/photos/team-overleg-scherm.webp"
                 alt="Team bespreekt een AI-toepassing"
                 fill
                 sizes="(max-width: 900px) 100vw, 50vw"
@@ -169,7 +169,7 @@ export default async function DienstenPage() {
             </div>
             <div className="media-img">
               <Image
-                src="/assets/photos/klantgesprek-tafel.png"
+                src="/assets/photos/klantgesprek-tafel.webp"
                 alt="Strategiesessie aan tafel"
                 fill
                 sizes="(max-width: 900px) 100vw, 50vw"

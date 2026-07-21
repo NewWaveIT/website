@@ -19,7 +19,7 @@ const SECTOREN = [
   {
     slug: "publieke-sector",
     naam: "Publieke sector",
-    image: "/assets/photos/klantgesprek-tafel.png",
+    image: "/assets/photos/klantgesprek-tafel.webp",
     hook: "“Onze doorlooptijden groeien sneller dan onze formatie.”",
     tekst:
       "Van vergunningverlening tot subsidies: wij helpen overheden processen versnellen, papierstromen vervangen en volledig aantoonbaar werken, veilig en binnen alle kaders.",
@@ -28,7 +28,7 @@ const SECTOREN = [
   {
     slug: "mobiliteit",
     naam: "Mobiliteit & logistiek",
-    image: "/assets/photos/overleg-laptop.png",
+    image: "/assets/photos/overleg-laptop.webp",
     hook: "“Onze assets worden slimmer, onze systemen niet.”",
     tekst:
       "Van assetbeheer tot reizigersinformatie: wij bouwen de systemen waarmee infra, OV en logistiek sneller schakelen op verstoringen én op groei.",
@@ -37,7 +37,7 @@ const SECTOREN = [
   {
     slug: "banken",
     naam: "Banken & financials",
-    image: "/assets/photos/team-overleg-scherm.png",
+    image: "/assets/photos/team-overleg-scherm.webp",
     hook: "“Elke innovatie strandt op compliance.”",
     tekst:
       "Compliant én wendbaar: wij digitaliseren kernprocessen van banken en financials zonder concessies aan toezicht, beheersing en klantvertrouwen.",
@@ -46,7 +46,7 @@ const SECTOREN = [
   {
     slug: "zorg",
     naam: "Zorg",
-    image: "/assets/photos/overleg-lachend.png",
+    image: "/assets/photos/overleg-lachend.webp",
     hook: "“Onze mensen registreren meer dan ze zorgen.”",
     tekst:
       "Wij nemen registratielast weg en geven zorgprofessionals systemen die met ze meewerken: veilig, gekoppeld aan je EPD en gebouwd rond het echte werkproces.",
@@ -55,7 +55,7 @@ const SECTOREN = [
   {
     slug: "manufacturing",
     naam: "Manufacturing",
-    image: "/assets/photos/team-presentatie-breed.png",
+    image: "/assets/photos/team-presentatie-breed.webp",
     hook: "“Onze machines produceren data die niemand gebruikt.”",
     tekst:
       "Wij verbinden productie, planning en kwaliteit in applicaties die je operatie écht versnellen, gebouwd op de data die je machines al produceren.",

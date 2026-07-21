@@ -95,7 +95,7 @@ export const SECTOREN: Record<string, SectorDetail> = {
     caseQuote: "“Efficiënte en betrouwbare IT-oplossingen. The New Wave IT denkt echt mee met onze uitdagingen.”",
     caseNaam: "Peter van Dam",
     caseRol: "IT Manager, COA",
-    caseImage: "/assets/photos/overleg-laptop.png",
+    caseImage: "/assets/photos/overleg-laptop.webp",
     insightsTitle: "Kennis die je beleid vooruit denkt",
     insights: [
       { meta: "4 min · 15 mrt 2026", titel: "Vergunningverlening in weken, niet maanden" },
@@ -144,7 +144,7 @@ export const SECTOREN: Record<string, SectorDetail> = {
     caseQuote: "“We zien nu in één beeld wat er speelt en kunnen direct bijsturen. Dat scheelt reizigers uren.”",
     caseNaam: "Ilse Vermeer",
     caseRol: "Manager Operatie",
-    caseImage: "/assets/photos/team-presentatie-breed.png",
+    caseImage: "/assets/photos/team-presentatie-breed.webp",
     insightsTitle: "Kennis voor mobiliteit en logistiek",
     insights: [
       { meta: "5 min · 12 mrt 2026", titel: "Van sensordata naar sturende systemen" },
@@ -193,7 +193,7 @@ export const SECTOREN: Record<string, SectorDetail> = {
     caseQuote: "“Voor het eerst gaan snelheid en compliance hand in hand. We leveren wendbaar, en de toezichthouder is tevreden.”",
     caseNaam: "Mark de Wit",
     caseRol: "Hoofd Digitalisering",
-    caseImage: "/assets/photos/klantgesprek-tafel.png",
+    caseImage: "/assets/photos/klantgesprek-tafel.webp",
     insightsTitle: "Kennis voor banken en financials",
     insights: [
       { meta: "6 min · 5 mrt 2026", titel: "Compliant én snel: de valse tegenstelling" },
@@ -242,7 +242,7 @@ export const SECTOREN: Record<string, SectorDetail> = {
     caseQuote: "“Onze mensen zijn weer bezig met zorg in plaats van formulieren. Het systeem werkt eindelijk mee.”",
     caseNaam: "Anouk Prins",
     caseRol: "Manager Zorg & Innovatie",
-    caseImage: "/assets/photos/overleg-lachend.png",
+    caseImage: "/assets/photos/overleg-lachend.webp",
     insightsTitle: "Kennis voor de zorg",
     insights: [
       { meta: "5 min · 10 mrt 2026", titel: "AI in de zorg: 5 toepassingen die tijd teruggeven" },
@@ -291,7 +291,7 @@ export const SECTOREN: Record<string, SectorDetail> = {
     caseQuote: "“We zien nu direct wat er op de lijn gebeurt en sturen bij vóór het misgaat. De omsteltijden zijn flink korter.”",
     caseNaam: "Bram Kok",
     caseRol: "Operations Director",
-    caseImage: "/assets/photos/team-overleg-scherm.png",
+    caseImage: "/assets/photos/team-overleg-scherm.webp",
     insightsTitle: "Kennis voor manufacturing",
     insights: [
       { meta: "5 min · 8 mrt 2026", titel: "Van machinedata naar sturende systemen" },

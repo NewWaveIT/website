@@ -153,35 +153,35 @@ export default async function HomePage() {
                 naam: "Publieke sector",
                 href: "/sectoren/publieke-sector",
                 cap: "Publieke sector",
-                image: "/assets/photos/klantgesprek-tafel.png",
+                image: "/assets/photos/klantgesprek-tafel.webp",
                 chal: "Digitale dienstverlening die burgers vertrouwen: sneller vergunnen, minder papier, volledig aantoonbaar.",
               },
               {
                 naam: "Mobiliteit & logistiek",
                 href: "/sectoren/mobiliteit",
                 cap: "Mobiliteit & logistiek",
-                image: "/assets/photos/overleg-laptop.png",
+                image: "/assets/photos/overleg-laptop.webp",
                 chal: "Realtime grip op planning, assets en stromen, van de eerste kilometer tot de laatste.",
               },
               {
                 naam: "Banken & financials",
                 href: "/sectoren/banken",
                 cap: "Banken & financials",
-                image: "/assets/photos/team-overleg-scherm.png",
+                image: "/assets/photos/team-overleg-scherm.webp",
                 chal: "Compliant, veilig en schaalbaar, zonder in te leveren op snelheid of gebruiksgemak.",
               },
               {
                 naam: "Zorg",
                 href: "/sectoren/zorg",
                 cap: "Zorg",
-                image: "/assets/photos/overleg-lachend.png",
+                image: "/assets/photos/overleg-lachend.webp",
                 chal: "Meer tijd voor de patiënt door betrouwbare, veilige processen die zorgprofessionals ontlasten.",
               },
               {
                 naam: "Manufacturing",
                 href: "/sectoren/manufacturing",
                 cap: "Manufacturing",
-                image: "/assets/photos/team-presentatie-breed.png",
+                image: "/assets/photos/team-presentatie-breed.webp",
                 chal: "Productie die meebeweegt met de vraag, gestuurd op data, van shopfloor tot boardroom.",
               },
             ]}
@@ -213,7 +213,7 @@ export default async function HomePage() {
                   className="kb"
                   style={{
                     backgroundImage:
-                      "url('/assets/photos/team-presentatie-breed.png')",
+                      "url('/assets/photos/team-presentatie-breed.webp')",
                   }}
                 />
               </div>
@@ -328,7 +328,7 @@ export default async function HomePage() {
             </div>
             <div className="media-img">
               <Image
-                src="/assets/photos/overleg-laptop.png"
+                src="/assets/photos/overleg-laptop.webp"
                 alt="Consultants werken samen aan een Mendix-applicatie"
                 fill
                 sizes="(max-width: 900px) 100vw, 45vw"
@@ -375,7 +375,7 @@ export default async function HomePage() {
             </div>
             <div className="media-img">
               <Image
-                src="/assets/photos/team-overleg-scherm.png"
+                src="/assets/photos/team-overleg-scherm.webp"
                 alt="Team bespreekt een AI-toepassing"
                 fill
                 sizes="(max-width: 900px) 100vw, 45vw"
@@ -423,7 +423,7 @@ export default async function HomePage() {
             </div>
             <div className="media-img">
               <Image
-                src="/assets/photos/klantgesprek-tafel.png"
+                src="/assets/photos/klantgesprek-tafel.webp"
                 alt="Strategiesessie aan tafel"
                 fill
                 sizes="(max-width: 900px) 100vw, 45vw"
@@ -527,7 +527,7 @@ export default async function HomePage() {
             <div className="collage">
               <div className="slot big">
                 <Image
-                  src="/assets/photos/overleg-lachend.png"
+                  src="/assets/photos/overleg-lachend.webp"
                   alt="Consultants van The New Wave IT in overleg"
                   fill
                   sizes="(max-width: 900px) 100vw, 35vw"
@@ -535,7 +535,7 @@ export default async function HomePage() {
               </div>
               <div className="slot small">
                 <Image
-                  src="/assets/photos/portret-blauw.png"
+                  src="/assets/photos/portret-blauw.webp"
                   alt="Teamlid van The New Wave IT"
                   fill
                   sizes="(max-width: 900px) 50vw, 20vw"
@@ -544,7 +544,7 @@ export default async function HomePage() {
               </div>
               <div className="slot small">
                 <Image
-                  src="/assets/photos/portret-bordeaux.png"
+                  src="/assets/photos/portret-bordeaux.webp"
                   alt="Teamlid van The New Wave IT"
                   fill
                   sizes="(max-width: 900px) 50vw, 20vw"
@@ -586,7 +586,7 @@ export default async function HomePage() {
             </div>
             <div className="figure">
               <Image
-                src="/assets/photos/team-presentatie-breed.png"
+                src="/assets/photos/team-presentatie-breed.webp"
                 alt="Wavers tijdens een kennissessie"
                 fill
                 sizes="(max-width: 900px) 100vw, 45vw"
@@ -618,7 +618,7 @@ export default async function HomePage() {
                 href="/inzichten/vergunningverlening-in-weken"
                 className="cover"
                 style={{
-                  backgroundImage: "url('/assets/photos/klantgesprek-tafel.png')",
+                  backgroundImage: "url('/assets/photos/klantgesprek-tafel.webp')",
                   backgroundPosition: "center",
                 }}
               >
@@ -644,7 +644,7 @@ export default async function HomePage() {
                 href="/inzichten/ai-in-de-zorg"
                 className="cover"
                 style={{
-                  backgroundImage: "url('/assets/photos/overleg-lachend.png')",
+                  backgroundImage: "url('/assets/photos/overleg-lachend.webp')",
                   backgroundPosition: "center",
                 }}
               >
@@ -667,7 +667,7 @@ export default async function HomePage() {
                 href="/inzichten/compliant-en-snel"
                 className="cover"
                 style={{
-                  backgroundImage: "url('/assets/photos/overleg-laptop.png')",
+                  backgroundImage: "url('/assets/photos/overleg-laptop.webp')",
                   backgroundPosition: "center 30%",
                 }}
               >
@@ -707,7 +707,7 @@ export default async function HomePage() {
               <p>{t.lead1Tekst}</p>
               <div className="spokesperson">
                 <Image
-                  src="/assets/photos/portret-blauw.png"
+                  src="/assets/photos/portret-blauw.webp"
                   alt="Koen Wijsman, CEO"
                   width={40}
                   height={40}

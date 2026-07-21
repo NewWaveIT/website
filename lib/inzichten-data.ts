@@ -23,7 +23,7 @@ function mapRow(row: ContentRow): Artikel {
     datum: fmtDatum(str("datum")),
     leestijd: str("leestijd"),
     auteur: str("auteur") || "The New Wave IT",
-    image: str("cover") || "/assets/photos/team-presentatie-breed.png",
+    image: str("cover") || "/assets/photos/team-presentatie-breed.webp",
     intro: str("samenvatting"),
     body: inhoud ? inhoud.split(/\n\s*\n/).map((p) => p.trim()).filter(Boolean) : [],
   };
