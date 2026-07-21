@@ -8,6 +8,7 @@ import { FIELD_SCHEMAS, extraData, isStructured } from "@/lib/cms/schema";
 import { PAGE_FIELDS, PAGE_DEFAULTS, PAGE_PATH } from "@/lib/cms/pages";
 import { ImageField } from "./image-field";
 import { StructuredField } from "./structured-field";
+import { IconField } from "./icon-field";
 
 /** Maakt een net webadres van een titel (kleine letters, koppeltekens). */
 function slugify(s: string): string {
@@ -154,6 +155,8 @@ export function ContentEditor({
             <StructuredField key={f.key} field={f} initial={data[f.key]} />
           ) : f.type === "image" ? (
             <ImageField key={f.key} name={`f_${f.key}`} label={f.label} defaultValue={initial(f.key)} />
+          ) : f.type === "icon" ? (
+            <IconField key={f.key} name={`f_${f.key}`} label={f.label} options={f.options ?? []} defaultValue={initial(f.key)} />
           ) : (
           <div className="fld" key={f.key}>
             <label htmlFor={`ce-${f.key}`}>{f.label}</label>

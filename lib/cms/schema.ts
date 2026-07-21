@@ -13,7 +13,8 @@ export type FieldType =
   | "image"
   | "list" // array van tekst (herhaalbaar)
   | "group" // vast object met subvelden
-  | "items"; // herhaalbare kaarten (array van objecten)
+  | "items" // herhaalbare kaarten (array van objecten)
+  | "icon"; // visuele iconkeuze (lucide-naam)
 
 export interface FieldDef {
   key: string;
@@ -25,6 +26,8 @@ export interface FieldDef {
   of?: FieldDef[];
   /** enkelvoudig label voor 'items' (bv. "Resultaat") */
   itemLabel?: string;
+  /** keuzemogelijkheden voor 'icon' (lucide-namen) */
+  options?: string[];
 }
 
 /** true voor veldtypes waarvan de waarde JSON is (object/array) i.p.v. tekst. */
@@ -123,7 +126,7 @@ export const FIELD_SCHEMAS: Record<ContentType, FieldDef[]> = {
   ],
   diensten: [
     { key: "naam", label: "Naam", type: "text" },
-    { key: "badgeIcon", label: "Badge-icoon", type: "text", help: "Kies: boxes, brain-circuit of route." },
+    { key: "badgeIcon", label: "Badge-icoon", type: "icon", options: ["boxes", "brain-circuit", "route"] },
     { key: "badgeLabel", label: "Badge-label", type: "text", placeholder: "Mendix Premium Partner" },
     { key: "h1", label: "Titel (H1)", type: "text" },
     { key: "intro", label: "Intro", type: "textarea" },
@@ -186,7 +189,7 @@ export const FIELD_SCHEMAS: Record<ContentType, FieldDef[]> = {
   ],
   sectoren: [
     { key: "naam", label: "Naam", type: "text" },
-    { key: "icon", label: "Icoon", type: "text", help: "Kies: building-2, train-front, banknote, heart-pulse of factory." },
+    { key: "icon", label: "Icoon", type: "icon", options: ["building-2", "train-front", "banknote", "heart-pulse", "factory"] },
     { key: "h1", label: "Titel (H1)", type: "text" },
     { key: "intro", label: "Intro", type: "textarea" },
     { key: "kpis", label: "KPI's (hero)", type: "items", itemLabel: "KPI", of: [
