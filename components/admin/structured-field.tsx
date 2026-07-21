@@ -34,7 +34,7 @@ function Control({
               onChange={(e) => onChange(list.map((x, j) => (j === i ? e.target.value : x)))}
               style={{ flex: 1 }}
             />
-            <button type="button" className="btn btn-outline" aria-label="Verwijderen" style={{ padding: "8px 10px" }} onClick={() => onChange(list.filter((_, j) => j !== i))}>
+            <button type="button" className="btn btn-outline iconbtn" aria-label="Verwijderen" onClick={() => onChange(list.filter((_, j) => j !== i))}>
               <Trash2 />
             </button>
           </div>
@@ -75,9 +75,9 @@ function Control({
             <div style={{ display: "flex", alignItems: "center", marginBottom: 10 }}>
               <span className="t-sub" style={{ fontWeight: "var(--fw-semibold)" }}>{itemLabel} {i + 1}</span>
               <div style={{ marginLeft: "auto", display: "flex", gap: 6 }}>
-                <button type="button" className="btn btn-outline" style={{ padding: "6px 8px" }} aria-label="Omhoog" onClick={() => move(i, -1)}><ChevronUp /></button>
-                <button type="button" className="btn btn-outline" style={{ padding: "6px 8px" }} aria-label="Omlaag" onClick={() => move(i, 1)}><ChevronDown /></button>
-                <button type="button" className="btn btn-outline" style={{ padding: "6px 8px", color: "var(--danger-500)" }} aria-label="Verwijderen" onClick={() => set(rows.filter((_, j) => j !== i))}><Trash2 /></button>
+                <button type="button" className="btn btn-outline iconbtn" aria-label="Omhoog" onClick={() => move(i, -1)}><ChevronUp /></button>
+                <button type="button" className="btn btn-outline iconbtn" aria-label="Omlaag" onClick={() => move(i, 1)}><ChevronDown /></button>
+                <button type="button" className="btn btn-outline iconbtn" style={{ color: "var(--danger-500)" }} aria-label="Verwijderen" onClick={() => set(rows.filter((_, j) => j !== i))}><Trash2 /></button>
               </div>
             </div>
             <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
