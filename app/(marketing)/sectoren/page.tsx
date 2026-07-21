@@ -1,15 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import {
-  Landmark,
-  TrainFront,
-  Banknote,
-  HeartPulse,
-  Factory,
-  MessageCircleQuestion,
-  ArrowRight,
-} from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { SectorHeroAnim } from "@/components/sector-hero-anim";
+import { SectorSplit } from "@/components/sector-split";
 import { MobileSectoren } from "@/components/mobile/mobile-sectoren";
 import { getPagina } from "@/lib/paginas-data";
 import "./sectoren.css";
@@ -26,7 +19,7 @@ const SECTOREN = [
   {
     slug: "publieke-sector",
     naam: "Publieke sector",
-    Icon: Landmark,
+    image: "/assets/photos/klantgesprek-tafel.png",
     hook: "“Onze doorlooptijden groeien sneller dan onze formatie.”",
     tekst:
       "Van vergunningverlening tot subsidies: wij helpen overheden processen versnellen, papierstromen vervangen en volledig aantoonbaar werken, veilig en binnen alle kaders.",
@@ -34,8 +27,8 @@ const SECTOREN = [
   },
   {
     slug: "mobiliteit",
-    naam: "Mobiliteit",
-    Icon: TrainFront,
+    naam: "Mobiliteit & logistiek",
+    image: "/assets/photos/overleg-laptop.png",
     hook: "“Onze assets worden slimmer, onze systemen niet.”",
     tekst:
       "Van assetbeheer tot reizigersinformatie: wij bouwen de systemen waarmee infra, OV en logistiek sneller schakelen op verstoringen én op groei.",
@@ -43,8 +36,8 @@ const SECTOREN = [
   },
   {
     slug: "banken",
-    naam: "Banken",
-    Icon: Banknote,
+    naam: "Banken & financials",
+    image: "/assets/photos/team-overleg-scherm.png",
     hook: "“Elke innovatie strandt op compliance.”",
     tekst:
       "Compliant én wendbaar: wij digitaliseren kernprocessen van banken en financials zonder concessies aan toezicht, beheersing en klantvertrouwen.",
@@ -53,7 +46,7 @@ const SECTOREN = [
   {
     slug: "zorg",
     naam: "Zorg",
-    Icon: HeartPulse,
+    image: "/assets/photos/overleg-lachend.png",
     hook: "“Onze mensen registreren meer dan ze zorgen.”",
     tekst:
       "Wij nemen registratielast weg en geven zorgprofessionals systemen die met ze meewerken: veilig, gekoppeld aan je EPD en gebouwd rond het echte werkproces.",
@@ -62,7 +55,7 @@ const SECTOREN = [
   {
     slug: "manufacturing",
     naam: "Manufacturing",
-    Icon: Factory,
+    image: "/assets/photos/team-presentatie-breed.png",
     hook: "“Onze machines produceren data die niemand gebruikt.”",
     tekst:
       "Wij verbinden productie, planning en kwaliteit in applicaties die je operatie écht versnellen, gebouwd op de data die je machines al produceren.",
@@ -113,44 +106,24 @@ export default async function SectorenPage() {
 
       <section className="block">
         <div className="wrap-wide">
-          <div className="sgrid">
-            {SECTOREN.map(({ slug, naam, Icon, hook, tekst, kpi }) => (
-              <Link key={slug} href={`/sectoren/${slug}`} className="scard">
-                <div className="top">
-                  <span className="ic">
-                    <Icon />
-                  </span>
-                  <h2>{naam}</h2>
-                </div>
-                <div className="hook">{hook}</div>
-                <p>{tekst}</p>
-                <div className="foot">
-                  <span className="kpi">{kpi}</span>
-                  <span className="go">
-                    Bekijk de sector <ArrowRight />
-                  </span>
-                </div>
-              </Link>
-            ))}
-            <Link href="/contact" className="scard alt">
-              <div className="top">
-                <span className="ic">
-                  <MessageCircleQuestion />
-                </span>
-                <h2>Jouw sector er niet bij?</h2>
-              </div>
-              <p>
-                Onze aanpak, businessvraagstuk eerst en technologie als middel,
-                werkt ook daarbuiten. Leg je vraagstuk voor en we vertellen eerlijk
-                of we de juiste partner zijn.
-              </p>
-              <div className="foot" style={{ borderTop: 0, paddingTop: 0 }}>
-                <span className="go">
-                  Neem contact op <ArrowRight />
-                </span>
-              </div>
-            </Link>
-          </div>
+          <SectorSplit
+            big
+            kicker="Vijf focusmarkten"
+            titel="Kies jouw sector."
+            intro="Beweeg over een sector om het beeld te wisselen, of klik door naar de volledige sectoroplossing."
+            items={SECTOREN.map((s) => ({
+              naam: s.naam,
+              href: `/sectoren/${s.slug}`,
+              chal: s.tekst,
+              hook: s.hook,
+              kpi: s.kpi,
+              image: s.image,
+              cap: s.naam,
+            }))}
+            moreHref="/contact"
+            moreTitel="Jouw sector er niet bij?"
+            moreChal="Onze aanpak, businessvraagstuk eerst en technologie als middel, werkt ook daarbuiten. Leg je vraagstuk voor en we vertellen eerlijk of we de juiste partner zijn."
+          />
         </div>
       </section>
 

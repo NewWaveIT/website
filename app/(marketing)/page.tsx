@@ -9,7 +9,6 @@ import {
   Landmark,
   HeartPulse,
   Factory,
-  Compass,
   Target,
   Users,
   Workflow,
@@ -23,6 +22,7 @@ import {
 } from "lucide-react";
 import { HomeInteractions } from "@/components/home/home-interactions";
 import { MobileHome } from "@/components/mobile/mobile-home";
+import { SectorSplit } from "@/components/sector-split";
 import { getPagina } from "@/lib/paginas-data";
 import "./home.css";
 import "./mobile-home.css";
@@ -144,104 +144,50 @@ export default async function HomePage() {
       {/* Sectoren */}
       <section className="block sectoren">
         <div className="wrap-wide">
-          <div className="eyebrow-row">
-            <div>
-              <div className="kicker">Onze sectoren</div>
-              <h2>Vijf sectoren. Eén partner die de taal spreekt.</h2>
-            </div>
-            <p
-              style={{
-                maxWidth: "38ch",
-                color: "var(--text-muted)",
-                fontSize: "var(--text-md)",
-                lineHeight: "var(--leading-relaxed)",
-                margin: 0,
-              }}
-            >
-              Wij kennen de regels, de systemen en de druk waaronder jouw
-              organisatie werkt. Daardoor leveren we sneller iets dat écht past.
-            </p>
-          </div>
-          <div className="sec-grid">
-            <Link href="/sectoren/publieke-sector" className="sector-card">
-              <div className="ic">
-                <Building2 />
-              </div>
-              <h3>Publieke sector</h3>
-              <p className="chal">
-                Digitale dienstverlening die burgers vertrouwen: sneller
-                vergunnen, minder papier, volledig aantoonbaar.
-              </p>
-              <span className="go">
-                Bekijk sectoroplossing <ArrowRight />
-              </span>
-            </Link>
-            <Link href="/sectoren/mobiliteit" className="sector-card">
-              <div className="ic">
-                <Truck />
-              </div>
-              <h3>Mobiliteit &amp; logistiek</h3>
-              <p className="chal">
-                Realtime grip op planning, assets en stromen, van de eerste
-                kilometer tot de laatste.
-              </p>
-              <span className="go">
-                Bekijk sectoroplossing <ArrowRight />
-              </span>
-            </Link>
-            <Link href="/sectoren/banken" className="sector-card">
-              <div className="ic">
-                <Landmark />
-              </div>
-              <h3>Banken &amp; financials</h3>
-              <p className="chal">
-                Compliant, veilig en schaalbaar, zonder in te leveren op snelheid
-                of gebruiksgemak.
-              </p>
-              <span className="go">
-                Bekijk sectoroplossing <ArrowRight />
-              </span>
-            </Link>
-            <Link href="/sectoren/zorg" className="sector-card">
-              <div className="ic">
-                <HeartPulse />
-              </div>
-              <h3>Zorg</h3>
-              <p className="chal">
-                Meer tijd voor de patiënt door betrouwbare, veilige processen die
-                zorgprofessionals ontlasten.
-              </p>
-              <span className="go">
-                Bekijk sectoroplossing <ArrowRight />
-              </span>
-            </Link>
-            <Link href="/sectoren/manufacturing" className="sector-card">
-              <div className="ic">
-                <Factory />
-              </div>
-              <h3>Manufacturing</h3>
-              <p className="chal">
-                Productie die meebeweegt met de vraag, gestuurd op data, van
-                shopfloor tot boardroom.
-              </p>
-              <span className="go">
-                Bekijk sectoroplossing <ArrowRight />
-              </span>
-            </Link>
-            <Link href="/sectoren" className="sector-card more">
-              <div className="ic">
-                <Compass />
-              </div>
-              <h3>Niet jouw sector?</h3>
-              <p className="chal">
-                We denken graag mee over jouw specifieke businessvraagstuk, ook
-                buiten deze vijf markten.
-              </p>
-              <span className="go">
-                Plan een verkenning <ArrowRight />
-              </span>
-            </Link>
-          </div>
+          <SectorSplit
+            kicker="Onze sectoren"
+            titel="Wij spreken de taal van jouw sector."
+            intro="Wij kennen de regels, de systemen en de druk waaronder jouw organisatie werkt. Daardoor leveren we sneller iets dat écht past."
+            items={[
+              {
+                naam: "Publieke sector",
+                href: "/sectoren/publieke-sector",
+                cap: "Publieke sector",
+                image: "/assets/photos/klantgesprek-tafel.png",
+                chal: "Digitale dienstverlening die burgers vertrouwen: sneller vergunnen, minder papier, volledig aantoonbaar.",
+              },
+              {
+                naam: "Mobiliteit & logistiek",
+                href: "/sectoren/mobiliteit",
+                cap: "Mobiliteit & logistiek",
+                image: "/assets/photos/overleg-laptop.png",
+                chal: "Realtime grip op planning, assets en stromen, van de eerste kilometer tot de laatste.",
+              },
+              {
+                naam: "Banken & financials",
+                href: "/sectoren/banken",
+                cap: "Banken & financials",
+                image: "/assets/photos/team-overleg-scherm.png",
+                chal: "Compliant, veilig en schaalbaar, zonder in te leveren op snelheid of gebruiksgemak.",
+              },
+              {
+                naam: "Zorg",
+                href: "/sectoren/zorg",
+                cap: "Zorg",
+                image: "/assets/photos/overleg-lachend.png",
+                chal: "Meer tijd voor de patiënt door betrouwbare, veilige processen die zorgprofessionals ontlasten.",
+              },
+              {
+                naam: "Manufacturing",
+                href: "/sectoren/manufacturing",
+                cap: "Manufacturing",
+                image: "/assets/photos/team-presentatie-breed.png",
+                chal: "Productie die meebeweegt met de vraag, gestuurd op data, van shopfloor tot boardroom.",
+              },
+            ]}
+            moreHref="/sectoren"
+            moreTitel="Niet jouw sector? Plan een verkenning"
+          />
         </div>
       </section>
 
