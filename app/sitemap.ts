@@ -1,20 +1,16 @@
 import type { MetadataRoute } from "next";
-import { VACATURE_SLUGS } from "@/lib/vacatures";
-import { KLANTVERHAAL_SLUGS } from "@/lib/klantverhalen";
-import { ARTIKEL_SLUGS } from "@/lib/inzichten";
+import { getArtikelen } from "@/lib/inzichten-data";
+import { getKlantverhalen } from "@/lib/klantverhalen-data";
+import { getVacatures } from "@/lib/vacatures-data";
+import { getDienstSlugs } from "@/lib/diensten-detail-data";
+import { getSectorSlugs } from "@/lib/sectoren-detail-data";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://thenewwaveit.com";
 
-const SECTOREN = [
-  "publieke-sector",
-  "mobiliteit",
-  "banken",
-  "zorg",
-  "manufacturing",
-];
-const DIENSTEN = ["mendix", "ai", "strategie"];
+// Periodiek verversen zodat nieuwe CMS-content vanzelf in de sitemap komt.
+export const revalidate = 3600;
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const now = new Date();
 
   const staticPaths = [
@@ -35,50 +31,30 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: path === "" ? 1 : 0.8,
   }));
 
-  for (const slug of SECTOREN) {
-    entries.push({
-      url: `${SITE_URL}/sectoren/${slug}`,
-      lastModified: now,
-      changeFrequency: "monthly",
-      priority: 0.7,
-    });
-  }
+  const [sectoren, diensten, vacatures, cases, artikelen] = await Promise.all([
+    getSectorSlugs(),
+    getDienstSlugs(),
+    getVacatures(),
+    getKlantverhalen(),
+    getArtikelen(),
+  ]);
 
-  for (const slug of DIENSTEN) {
-    entries.push({
-      url: `${SITE_URL}/diensten/${slug}`,
-      lastModified: now,
-      changeFrequency: "monthly",
-      priority: 0.7,
-    });
-  }
+  const push = (
+    base: string,
+    slugs: string[],
+    changeFrequency: "weekly" | "monthly",
+    priority: number,
+  ) => {
+    for (const slug of slugs) {
+      entries.push({ url: `${SITE_URL}${base}/${slug}`, lastModified: now, changeFrequency, priority });
+    }
+  };
 
-  for (const slug of VACATURE_SLUGS) {
-    entries.push({
-      url: `${SITE_URL}/vacatures/${slug}`,
-      lastModified: now,
-      changeFrequency: "weekly",
-      priority: 0.6,
-    });
-  }
-
-  for (const slug of KLANTVERHAAL_SLUGS) {
-    entries.push({
-      url: `${SITE_URL}/klantverhalen/${slug}`,
-      lastModified: now,
-      changeFrequency: "monthly",
-      priority: 0.6,
-    });
-  }
-
-  for (const slug of ARTIKEL_SLUGS) {
-    entries.push({
-      url: `${SITE_URL}/inzichten/${slug}`,
-      lastModified: now,
-      changeFrequency: "monthly",
-      priority: 0.6,
-    });
-  }
+  push("/sectoren", sectoren, "monthly", 0.7);
+  push("/diensten", diensten, "monthly", 0.7);
+  push("/vacatures", vacatures.map((v) => v.slug), "weekly", 0.6);
+  push("/klantverhalen", cases.map((k) => k.slug), "monthly", 0.6);
+  push("/inzichten", artikelen.map((a) => a.slug), "monthly", 0.6);
 
   return entries;
 }

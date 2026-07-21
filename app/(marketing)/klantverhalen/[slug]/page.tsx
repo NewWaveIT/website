@@ -25,6 +25,7 @@ export async function generateMetadata({
     title: `Klantverhaal ${k.tag}`,
     description: k.intro,
     alternates: { canonical: `/klantverhalen/${slug}` },
+    openGraph: { type: "article", images: [k.image] },
   };
 }
 
