@@ -73,6 +73,7 @@ export async function saveContent(_prev: SaveState, formData: FormData): Promise
         return { error: `Veld "${f.label}" kon niet worden opgeslagen.` };
       }
     } else if (raw === "") {
+      if (f.required) return { error: `${f.label} is verplicht.` };
       delete data[f.key];
     } else if (f.type === "number") {
       const n = Number(raw);

@@ -4,7 +4,7 @@ import { useActionState, useState } from "react";
 import Link from "next/link";
 import { saveContent, deleteContent, type SaveState } from "@/app/admin/content/actions";
 import type { ContentRow, ContentType } from "@/lib/cms/content";
-import { FIELD_SCHEMAS, extraData, isStructured } from "@/lib/cms/schema";
+import { FIELD_SCHEMAS, extraData, isStructured, type FieldDef } from "@/lib/cms/schema";
 import { PAGE_FIELDS, PAGE_DEFAULTS, PAGE_PATH } from "@/lib/cms/pages";
 import { ImageField } from "./image-field";
 import { StructuredField } from "./structured-field";
@@ -67,11 +67,16 @@ export function ContentEditor({
   const rest = extraData(fields, data);
   const extraInitial = Object.keys(rest).length ? JSON.stringify(rest, null, 2) : "";
 
-  // Startwaarde van een veld: opgeslagen data, anders de pagina-standaardtekst.
-  const initial = (key: string) => {
-    const v = data[key];
+  const [today] = useState(() => new Date().toISOString().slice(0, 10));
+
+  // Startwaarde van een veld: opgeslagen data, anders pagina-standaardtekst,
+  // anders (nieuw item) vandaag voor date-velden met defaultToday.
+  const initial = (f: FieldDef): string => {
+    const v = data[f.key];
     if (typeof v === "string" && v) return v;
-    return (type === "paginas" && PAGE_DEFAULTS[slug]?.[key]) || "";
+    if (type === "paginas" && PAGE_DEFAULTS[slug]?.[f.key]) return PAGE_DEFAULTS[slug][f.key];
+    if (isNew && f.defaultToday) return today;
+    return "";
   };
 
   return (
@@ -155,11 +160,11 @@ export function ContentEditor({
           isStructured(f.type) ? (
             <StructuredField key={f.key} field={f} initial={data[f.key]} />
           ) : f.type === "image" ? (
-            <ImageField key={f.key} name={`f_${f.key}`} label={f.label} defaultValue={initial(f.key)} />
+            <ImageField key={f.key} name={`f_${f.key}`} label={f.label} defaultValue={initial(f)} />
           ) : f.type === "icon" ? (
-            <IconField key={f.key} name={`f_${f.key}`} label={f.label} options={f.options ?? []} defaultValue={initial(f.key)} />
+            <IconField key={f.key} name={`f_${f.key}`} label={f.label} options={f.options ?? []} defaultValue={initial(f)} />
           ) : f.type === "select" ? (
-            <SelectField key={f.key} name={`f_${f.key}`} label={f.label} options={f.options ?? []} defaultValue={initial(f.key)} help={f.help} />
+            <SelectField key={f.key} name={`f_${f.key}`} label={f.label} options={f.options ?? []} defaultValue={initial(f)} help={f.help} />
           ) : (
           <div className="fld" key={f.key}>
             <label htmlFor={`ce-${f.key}`}>{f.label}</label>
@@ -167,8 +172,9 @@ export function ContentEditor({
               <textarea
                 id={`ce-${f.key}`}
                 name={`f_${f.key}`}
-                defaultValue={initial(f.key)}
+                defaultValue={initial(f)}
                 placeholder={f.placeholder}
+                required={f.required}
                 spellCheck={f.type === "markdown" ? false : undefined}
                 style={
                   f.type === "markdown"
@@ -181,8 +187,9 @@ export function ContentEditor({
                 id={`ce-${f.key}`}
                 name={`f_${f.key}`}
                 type={f.type === "number" ? "number" : f.type === "date" ? "date" : "text"}
-                defaultValue={initial(f.key)}
+                defaultValue={initial(f)}
                 placeholder={f.placeholder}
+                required={f.required}
               />
             )}
             {f.help && <p className="t-sub" style={{ marginTop: 6 }}>{f.help}</p>}

@@ -27,8 +27,12 @@ export interface FieldDef {
   of?: FieldDef[];
   /** enkelvoudig label voor 'items' (bv. "Resultaat") */
   itemLabel?: string;
-  /** keuzemogelijkheden voor 'icon' (lucide-namen) */
+  /** keuzemogelijkheden voor 'icon' en 'select' */
   options?: string[];
+  /** verplicht veld (client + server gevalideerd) */
+  required?: boolean;
+  /** date-veld: standaard op vandaag bij een nieuw item */
+  defaultToday?: boolean;
 }
 
 /** true voor veldtypes waarvan de waarde JSON is (object/array) i.p.v. tekst. */
@@ -44,7 +48,7 @@ export const FIELD_SCHEMAS: Record<ContentType, FieldDef[]> = {
     { key: "cover", label: "Cover-afbeelding", type: "image" },
     { key: "leestijd", label: "Leestijd", type: "text", placeholder: "4 min" },
     { key: "auteur", label: "Auteur", type: "text", placeholder: "Koen Wijsman" },
-    { key: "datum", label: "Publicatiedatum", type: "date" },
+    { key: "datum", label: "Publicatiedatum", type: "date", required: true, defaultToday: true },
     { key: "inhoud", label: "Inhoud", type: "markdown", help: "Alinea's gescheiden door een lege regel." },
   ],
   cases: [
