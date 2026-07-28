@@ -13,7 +13,7 @@ function cleanHtml(html: string): string {
     ],
     allowedAttributes: {
       a: ["href", "target", "rel"],
-      img: ["src", "alt"],
+      img: ["src", "alt", "width", "height"],
       figure: ["data-type", "data-align"],
     },
     allowedSchemes: ["http", "https", "mailto", "tel"],

@@ -86,7 +86,10 @@ function Toolbar({ editor }: { editor: Editor }) {
     editor
       .chain()
       .focus()
-      .insertContent({ type: "figureImage", attrs: { src: res.url, alt, align: "center", caption } })
+      .insertContent({
+        type: "figureImage",
+        attrs: { src: res.url, alt, align: "center", caption, width: res.width ?? null, height: res.height ?? null },
+      })
       .run();
   };
 

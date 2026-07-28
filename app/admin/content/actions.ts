@@ -165,8 +165,10 @@ export async function seedContent(): Promise<{ toegevoegd: number; error?: strin
   return { toegevoegd };
 }
 
-/** Upload een afbeelding naar de Supabase Storage-bucket 'content' en geef de publieke URL terug. */
-export async function uploadImage(formData: FormData): Promise<{ url?: string; error?: string }> {
+/** Upload een afbeelding naar de Supabase Storage-bucket 'content' en geef de publieke URL + afmetingen terug. */
+export async function uploadImage(
+  formData: FormData,
+): Promise<{ url?: string; width?: number; height?: number; error?: string }> {
   await requireAdmin();
 
   const file = formData.get("file");
@@ -179,11 +181,16 @@ export async function uploadImage(formData: FormData): Promise<{ url?: string; e
   let body: Buffer | File = file;
   let outExt = ext;
   let contentType = file.type;
+  let width: number | undefined;
+  let height: number | undefined;
   try {
     const input = Buffer.from(await file.arrayBuffer());
     body = await sharp(input).rotate().webp({ quality: 82 }).toBuffer();
     outExt = "webp";
     contentType = "image/webp";
+    const meta = await sharp(body).metadata();
+    width = meta.width;
+    height = meta.height;
   } catch {
     // origineel behouden
   }
@@ -196,7 +203,7 @@ export async function uploadImage(formData: FormData): Promise<{ url?: string; e
   if (error) return { error: error.message };
 
   const { data } = supabase.storage.from("content").getPublicUrl(path);
-  return { url: data.publicUrl };
+  return { url: data.publicUrl, width, height };
 }
 
 export async function deleteContent(formData: FormData): Promise<void> {

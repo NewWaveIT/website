@@ -4,6 +4,7 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 import { ArrowRight } from "lucide-react";
 import { getArtikelen, getArtikelBySlug } from "@/lib/inzichten-data";
+import { ArticleContent } from "@/components/article-content";
 import "./article.css";
 
 export const revalidate = 300;
@@ -85,7 +86,7 @@ export default async function ArtikelPage({
         <div className="wrap aprose">
           <p className="lead">{a.intro}</p>
           {a.inhoudHtml ? (
-            <div dangerouslySetInnerHTML={{ __html: a.inhoudHtml }} />
+            <ArticleContent html={a.inhoudHtml} />
           ) : (
             a.body.map((p, i) => <p key={i}>{p}</p>)
           )}
