@@ -88,7 +88,7 @@
 .p-dienst .post { border-radius: var(--radius-lg); overflow: hidden; border: 1px solid var(--border-default); background: var(--white); transition: transform 160ms, box-shadow 160ms; }
 .p-dienst .post:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
 .p-dienst .post .cover { position: relative; height: 170px; background-color: var(--ink-200); background-image: repeating-linear-gradient(45deg, transparent, transparent 12px, rgba(46, 37, 26, 0.06) 12px, rgba(46, 37, 26, 0.06) 24px); }
-.p-dienst .post .cover .cat { position: absolute; top: 14px; left: 14px; background: var(--color-primary); color: #fff; font-weight: var(--fw-semibold); font-size: var(--text-xs); padding: 5px 12px; border-radius: var(--radius-pill); }
+.p-dienst .post .cover .cat { position: absolute; z-index: 1; top: 14px; left: 14px; background: var(--color-primary); color: #fff; font-weight: var(--fw-semibold); font-size: var(--text-xs); padding: 5px 12px; border-radius: var(--radius-pill); }
 .p-dienst .post .pbody { padding: var(--space-5) var(--space-6) var(--space-6); }
 .p-dienst .post .meta { font-family: var(--font-mono); font-size: var(--text-xs); color: var(--text-subtle); }
 .p-dienst .post h3 { font-size: var(--text-md); font-weight: var(--fw-bold); line-height: var(--leading-snug); margin: var(--space-3) 0; }

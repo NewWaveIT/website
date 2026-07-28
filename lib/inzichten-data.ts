@@ -45,6 +45,33 @@ export async function getArtikelen(): Promise<Artikel[]> {
   return rows.length ? rows.map(mapRow) : ARTIKELEN;
 }
 
+const SECTOR_SLUG_TO_CAT: Record<string, string> = {
+  "publieke-sector": "Publieke sector",
+  mobiliteit: "Mobiliteit",
+  banken: "Banken",
+  zorg: "Zorg",
+  manufacturing: "Manufacturing",
+};
+const DIENST_SLUG_TO_DISC: Record<string, string> = {
+  mendix: "Mendix",
+  ai: "AI",
+  strategie: "Strategie",
+};
+
+/** Gepubliceerde artikelen die aan deze sector zijn gekoppeld. */
+export async function getArtikelenVoorSector(slug: string): Promise<Artikel[]> {
+  const cat = SECTOR_SLUG_TO_CAT[slug];
+  if (!cat) return [];
+  return (await getArtikelen()).filter((a) => a.sector === cat);
+}
+
+/** Gepubliceerde artikelen die aan deze discipline zijn gekoppeld. */
+export async function getArtikelenVoorDienst(slug: string): Promise<Artikel[]> {
+  const disc = DIENST_SLUG_TO_DISC[slug];
+  if (!disc) return [];
+  return (await getArtikelen()).filter((a) => a.discipline === disc);
+}
+
 export async function getArtikelBySlug(slug: string): Promise<Artikel | null> {
   const rows = await getPublishedContent("artikelen");
   if (rows.length) {

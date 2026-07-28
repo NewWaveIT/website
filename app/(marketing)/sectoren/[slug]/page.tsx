@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import {
   Building2,
@@ -12,6 +13,7 @@ import {
   ArrowRight,
 } from "lucide-react";
 import { getSectorBySlug, getSectorSlugs } from "@/lib/sectoren-detail-data";
+import { getArtikelenVoorSector } from "@/lib/inzichten-data";
 import { MOBILE_SECTOREN } from "@/lib/mobile-detail";
 import { SectorHeroAnim } from "@/components/sector-hero-anim";
 import { MobileDetail } from "@/components/mobile/mobile-detail";
@@ -54,6 +56,7 @@ export default async function SectorPage({
   const { slug } = await params;
   const s = await getSectorBySlug(slug);
   if (!s) notFound();
+  const artikelen = await getArtikelenVoorSector(slug);
 
   const Icon = ICONS[s.icon];
   const jsonLd = {
@@ -219,20 +222,36 @@ export default async function SectorPage({
             </Link>
           </div>
           <div className="cards3">
-            {s.insights.map((post, i) => (
-              <article className="post" key={i}>
-                <div className="cover">
-                  <span className="cat">{s.naam}</span>
-                </div>
-                <div className="pbody">
-                  <div className="meta">{post.meta}</div>
-                  <h3>{post.titel}</h3>
-                  <Link href="/inzichten" className="more">
-                    Lees meer <ArrowRight />
+            {artikelen.length > 0
+              ? artikelen.slice(0, 3).map((a) => (
+                  <Link href={`/inzichten/${a.slug}`} className="post" key={a.slug}>
+                    <div className="cover">
+                      <Image src={a.image} alt={a.titel} fill sizes="(max-width: 980px) 100vw, 33vw" style={{ objectFit: "cover" }} />
+                      <span className="cat">{a.cat}</span>
+                    </div>
+                    <div className="pbody">
+                      <div className="meta">{a.leestijd} · {a.datum}</div>
+                      <h3>{a.titel}</h3>
+                      <span className="more">
+                        Lees meer <ArrowRight />
+                      </span>
+                    </div>
                   </Link>
-                </div>
-              </article>
-            ))}
+                ))
+              : s.insights.map((post, i) => (
+                  <article className="post" key={i}>
+                    <div className="cover">
+                      <span className="cat">{s.naam}</span>
+                    </div>
+                    <div className="pbody">
+                      <div className="meta">{post.meta}</div>
+                      <h3>{post.titel}</h3>
+                      <Link href="/inzichten" className="more">
+                        Lees meer <ArrowRight />
+                      </Link>
+                    </div>
+                  </article>
+                ))}
           </div>
         </div>
       </section>
