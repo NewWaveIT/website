@@ -20,6 +20,7 @@
   --orange-300: #f6a883;
   --orange-400: #f47c4d;
   --orange-500: #f15822; /* brand Flame Orange */
+  --orange-text: #c2410c; /* AA-veilig oranje voor kleine tekst op licht (5.18:1) */
   --orange-600: #d8481a;
   --orange-700: #b23a15;
   --orange-800: #8a2d11;
@@ -275,7 +276,7 @@ h1, h2, h3, h4 {
   text-transform: uppercase;
   letter-spacing: var(--tracking-kicker);
   font-size: var(--text-xs);
-  color: var(--color-primary);
+  color: var(--orange-text);
   font-weight: var(--fw-medium);
 }
 .kicker.on-dark { color: var(--orange-400); }
