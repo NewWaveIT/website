@@ -39,10 +39,15 @@ function mapRow(row: ContentRow): Artikel {
   };
 }
 
-/** Gepubliceerde artikelen uit Supabase; valt terug op de statische lib-data. */
+/** Gepubliceerde artikelen uit Supabase, nieuwste eerst (op datum); valt terug op de lib-data. */
 export async function getArtikelen(): Promise<Artikel[]> {
   const rows = await getPublishedContent("artikelen");
-  return rows.length ? rows.map(mapRow) : ARTIKELEN;
+  if (!rows.length) return ARTIKELEN;
+  const datum = (r: (typeof rows)[number]) => String((r.data as Record<string, unknown>).datum ?? "");
+  return rows
+    .slice()
+    .sort((a, b) => datum(b).localeCompare(datum(a)))
+    .map(mapRow);
 }
 
 const SECTOR_SLUG_TO_CAT: Record<string, string> = {
