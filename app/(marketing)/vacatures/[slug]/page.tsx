@@ -4,6 +4,7 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 import { Check, ArrowRight, Phone } from "lucide-react";
 import { getVacatures, getVacatureBySlug } from "@/lib/vacatures-data";
+import { stripHtml } from "@/lib/cms/sanitize";
 import { MobileVacature } from "@/components/mobile/mobile-vacature";
 import "./vacature.css";
 import "./mobile.css";
@@ -31,7 +32,7 @@ export async function generateMetadata({
   if (!v) return {};
   return {
     title: `Vacature ${v.functietitel}`,
-    description: v.intro,
+    description: stripHtml(v.intro),
     alternates: { canonical: `/vacatures/${slug}` },
   };
 }
@@ -50,7 +51,7 @@ export default async function VacaturePage({
     "@context": "https://schema.org",
     "@type": "JobPosting",
     title: v.functietitel,
-    description: v.intro,
+    description: stripHtml(v.intro),
     datePosted: v.gepubliceerdOp,
     employmentType: v.employmentType,
     hiringOrganization: { "@type": "Organization", name: "The New Wave IT" },
@@ -83,7 +84,7 @@ export default async function VacaturePage({
             ))}
           </div>
           <h1>{v.functietitel}</h1>
-          <p>{v.intro}</p>
+          <p dangerouslySetInnerHTML={{ __html: v.intro }} />
           <div className="hero-actions">
             <a href="#solliciteer" className="btn btn-primary">
               Solliciteer direct <ArrowRight />

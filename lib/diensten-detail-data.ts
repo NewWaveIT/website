@@ -1,6 +1,7 @@
 import "server-only";
 import { getPublishedContent, type ContentRow } from "@/lib/cms/content";
 import { DIENSTEN, DIENST_SLUGS, type DienstDetail } from "@/lib/diensten-detail";
+import { sanitizeInline } from "@/lib/cms/sanitize";
 
 function skeleton(row: ContentRow): DienstDetail {
   return {
@@ -37,7 +38,9 @@ function skeleton(row: ContentRow): DienstDetail {
 function mapRow(row: ContentRow): DienstDetail {
   const base = DIENSTEN[row.slug] ?? skeleton(row);
   const d = (row.data ?? {}) as Partial<DienstDetail>;
-  return { ...base, ...d, slug: row.slug, naam: (d.naam as string) || base.naam };
+  const merged = { ...base, ...d, slug: row.slug, naam: (d.naam as string) || base.naam };
+  merged.intro = sanitizeInline(String(merged.intro ?? ""));
+  return merged;
 }
 
 export async function getDienstBySlug(slug: string): Promise<DienstDetail | null> {

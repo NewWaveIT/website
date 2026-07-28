@@ -1,6 +1,7 @@
 import "server-only";
 import { getPublishedContent, type ContentRow } from "@/lib/cms/content";
 import { SECTOREN, SECTOR_SLUGS, type SectorDetail } from "@/lib/sectoren-detail";
+import { sanitizeInline } from "@/lib/cms/sanitize";
 
 function skeleton(row: ContentRow): SectorDetail {
   return {
@@ -29,7 +30,9 @@ function skeleton(row: ContentRow): SectorDetail {
 function mapRow(row: ContentRow): SectorDetail {
   const base = SECTOREN[row.slug] ?? skeleton(row);
   const d = (row.data ?? {}) as Partial<SectorDetail>;
-  return { ...base, ...d, slug: row.slug, naam: (d.naam as string) || base.naam };
+  const merged = { ...base, ...d, slug: row.slug, naam: (d.naam as string) || base.naam };
+  merged.intro = sanitizeInline(String(merged.intro ?? ""));
+  return merged;
 }
 
 export async function getSectorBySlug(slug: string): Promise<SectorDetail | null> {

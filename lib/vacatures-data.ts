@@ -1,5 +1,6 @@
 import "server-only";
 import { getPublishedContent, type ContentRow } from "@/lib/cms/content";
+import { sanitizeInline } from "@/lib/cms/sanitize";
 import { VACATURES, VACATURE_MAP, type Vacature, type VacatureSectie } from "@/lib/vacatures";
 
 function strList(v: unknown): string[] {
@@ -23,7 +24,7 @@ function mapRow(row: ContentRow): Vacature {
     discipline: s("discipline"),
     locatie: s("locatie"),
     tags: strList(d.tags),
-    intro: s("intro"),
+    intro: sanitizeInline(s("intro")),
     secties: secties(d.secties),
     facts: {
       team: String(f.team ?? ""),

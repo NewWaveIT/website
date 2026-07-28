@@ -19,7 +19,7 @@ export function MobileVacature({ v, andere }: { v: Vacature; andere: Vacature[] 
           <div className="crumbs"><Link href="/">Home</Link> / <Link href="/werken-bij">Werken bij</Link> / Vacature</div>
           <div className="tags">{v.tags.map((t) => <span className="tag" key={t}>{t}</span>)}</div>
           <h1>{v.functietitel}</h1>
-          <p>{v.intro}</p>
+          <p dangerouslySetInnerHTML={{ __html: v.intro }} />
           <a href="#solliciteer" className="btn btn-primary btn-block" style={{ marginTop: 22 }}>Solliciteer direct <ArrowRight /></a>
         </div>
       </section>

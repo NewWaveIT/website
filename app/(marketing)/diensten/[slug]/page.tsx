@@ -12,6 +12,7 @@ import {
   ArrowRight,
 } from "lucide-react";
 import { getDienstBySlug, getDienstSlugs } from "@/lib/diensten-detail-data";
+import { stripHtml } from "@/lib/cms/sanitize";
 import { getArtikelenVoorDienst } from "@/lib/inzichten-data";
 import { MOBILE_DIENSTEN } from "@/lib/mobile-detail";
 import { SectorHeroAnim } from "@/components/sector-hero-anim";
@@ -36,7 +37,7 @@ export async function generateMetadata({
   if (!d) return {};
   return {
     title: `${d.naam} — ${d.h1}`,
-    description: d.intro,
+    description: stripHtml(d.intro),
     alternates: { canonical: `/diensten/${slug}` },
   };
 }
@@ -56,7 +57,7 @@ export default async function DienstPage({
     "@context": "https://schema.org",
     "@type": "Service",
     name: d.naam,
-    description: d.intro,
+    description: stripHtml(d.intro),
     provider: { "@type": "Organization", name: "The New Wave IT" },
     url: `https://thenewwaveit.com/diensten/${slug}`,
   };
@@ -82,7 +83,7 @@ export default async function DienstPage({
               <Badge /> {d.badgeLabel}
             </span>
             <h1>{d.h1}</h1>
-            <p>{d.intro}</p>
+            <p dangerouslySetInnerHTML={{ __html: d.intro }} />
             <div className="hero-actions">
               <Link href="/contact" className="btn btn-primary">
                 Plan een strategiegesprek <ArrowRight />

@@ -101,7 +101,7 @@ export const FIELD_SCHEMAS: Record<ContentType, FieldDef[]> = {
     { key: "functietitel", label: "Functietitel", type: "text" },
     { key: "discipline", label: "Discipline (lijstlabel)", type: "text", placeholder: "Mendix · Senior" },
     { key: "locatie", label: "Locatie", type: "text", placeholder: "Utrecht / hybride" },
-    { key: "intro", label: "Intro", type: "textarea" },
+    { key: "intro", label: "Intro", type: "richtext-lite" },
     { key: "employmentType", label: "Type dienstverband", type: "text", placeholder: "FULL_TIME", help: "FULL_TIME of PART_TIME." },
     { key: "gepubliceerdOp", label: "Gepubliceerd op", type: "date" },
     { key: "tags", label: "Tags", type: "list", help: "Bv. Mendix, Senior, Utrecht / hybride." },
@@ -138,7 +138,7 @@ export const FIELD_SCHEMAS: Record<ContentType, FieldDef[]> = {
     { key: "badgeIcon", label: "Badge-icoon", type: "icon", options: ["boxes", "brain-circuit", "route"] },
     { key: "badgeLabel", label: "Badge-label", type: "text", placeholder: "Mendix Premium Partner" },
     { key: "h1", label: "Titel (H1)", type: "text" },
-    { key: "intro", label: "Intro", type: "textarea" },
+    { key: "intro", label: "Intro", type: "richtext-lite" },
     { key: "ctaSecondary", label: "Tweede knop", type: "text" },
     { key: "kpis", label: "KPI's (hero)", type: "items", itemLabel: "KPI", of: [
       { key: "n", label: "Cijfer", type: "text" },
@@ -200,7 +200,7 @@ export const FIELD_SCHEMAS: Record<ContentType, FieldDef[]> = {
     { key: "naam", label: "Naam", type: "text" },
     { key: "icon", label: "Icoon", type: "icon", options: ["building-2", "train-front", "banknote", "heart-pulse", "factory"] },
     { key: "h1", label: "Titel (H1)", type: "text" },
-    { key: "intro", label: "Intro", type: "textarea" },
+    { key: "intro", label: "Intro", type: "richtext-lite" },
     { key: "kpis", label: "KPI's (hero)", type: "items", itemLabel: "KPI", of: [
       { key: "n", label: "Cijfer", type: "text" },
       { key: "l", label: "Toelichting", type: "text" },

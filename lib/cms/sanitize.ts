@@ -23,6 +23,23 @@ export function sanitizeFull(html: string): string {
   });
 }
 
+/** Inline opmaak (intro's in hero's): alleen nadruk + links, geen blokken. Veilig binnen een <p>. */
+export function sanitizeInline(html: string): string {
+  return sanitizeHtml(html, {
+    allowedTags: ["strong", "b", "em", "i", "a", "br"],
+    allowedAttributes: { a: ["href", "target", "rel"] },
+    allowedSchemes: SCHEMES,
+    transformTags: linkTransform,
+  }).trim();
+}
+
+/** Alle tags weg → platte tekst (voor meta-description en JSON-LD). */
+export function stripHtml(html: string): string {
+  return sanitizeHtml(html, { allowedTags: [], allowedAttributes: {} })
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
 /** Lichte opmaak (body-velden buiten artikelen): alleen inline + eenvoudige lijsten. */
 export function sanitizeLite(html: string): string {
   const clean = sanitizeHtml(html, {

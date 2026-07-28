@@ -13,6 +13,7 @@ import {
   ArrowRight,
 } from "lucide-react";
 import { getSectorBySlug, getSectorSlugs } from "@/lib/sectoren-detail-data";
+import { stripHtml } from "@/lib/cms/sanitize";
 import { getArtikelenVoorSector } from "@/lib/inzichten-data";
 import { MOBILE_SECTOREN } from "@/lib/mobile-detail";
 import { SectorHeroAnim } from "@/components/sector-hero-anim";
@@ -43,7 +44,7 @@ export async function generateMetadata({
   if (!s) return {};
   return {
     title: `${s.naam} — ${s.h1}`,
-    description: s.intro,
+    description: stripHtml(s.intro),
     alternates: { canonical: `/sectoren/${slug}` },
   };
 }
@@ -64,7 +65,7 @@ export default async function SectorPage({
     "@type": "Service",
     serviceType: `IT-consultancy voor ${s.naam.toLowerCase()}`,
     name: `The New Wave IT — ${s.naam}`,
-    description: s.intro,
+    description: stripHtml(s.intro),
     provider: { "@type": "Organization", name: "The New Wave IT" },
     url: `https://thenewwaveit.com/sectoren/${slug}`,
   };
@@ -90,7 +91,7 @@ export default async function SectorPage({
               <Icon /> {s.naam}
             </span>
             <h1>{s.h1}</h1>
-            <p>{s.intro}</p>
+            <p dangerouslySetInnerHTML={{ __html: s.intro }} />
             <div className="hero-actions">
               <Link href="/contact" className="btn btn-primary">
                 Plan een strategiegesprek <ArrowRight />
