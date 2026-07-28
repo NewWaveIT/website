@@ -10,7 +10,7 @@
   .m-inzichten .plist { display: flex; flex-direction: column; gap: 12px; }
   .m-inzichten .post { display: flex; gap: 14px; padding: 16px; border: 1px solid var(--border-default); border-radius: var(--radius-lg); background: var(--white); color: var(--text-body); align-items: center; }
   .m-inzichten .post .cover { width: 92px; height: 92px; flex: none; border-radius: var(--radius-md); background-size: cover; background-position: center; }
-  .m-inzichten .post .cat { display: inline-block; font-family: var(--font-mono); font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--color-primary); margin-bottom: 5px; }
+  .m-inzichten .post .cat { display: inline-block; font-family: var(--font-mono); font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--orange-text); margin-bottom: 5px; }
   .m-inzichten .post h3 { font-size: var(--text-sm); font-weight: var(--fw-bold); line-height: 1.4; margin: 0 0 6px; }
   .m-inzichten .post .meta { font-family: var(--font-mono); font-size: 10px; color: var(--text-subtle); }
 

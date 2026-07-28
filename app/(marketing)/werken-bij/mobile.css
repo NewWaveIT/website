@@ -3,7 +3,7 @@
   .m-werken .glist { display: flex; flex-direction: column; gap: 12px; }
   .m-werken .tplist { display: flex; flex-direction: column; gap: 22px; }
   .m-werken .gcard { border: 1px solid var(--border-default); border-radius: var(--radius-lg); padding: 20px; background: var(--white); }
-  .m-werken .gcard .num { font-family: var(--font-mono); font-size: var(--text-xs); color: var(--color-primary); }
+  .m-werken .gcard .num { font-family: var(--font-mono); font-size: var(--text-xs); color: var(--orange-text); }
   .m-werken .gcard h3 { font-size: var(--text-md); font-weight: var(--fw-bold); margin: 9px 0; }
   .m-werken .gcard p { font-size: var(--text-sm); color: var(--text-muted); line-height: 1.6; margin: 0; }
   .m-werken .tp { border-top: 3px solid var(--color-primary); padding-top: 14px; }
@@ -13,7 +13,7 @@
   .m-werken .media-img img { object-fit: cover; }
   .m-werken .cultuur ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 11px; }
   .m-werken .cultuur li { display: flex; gap: 9px; font-size: var(--text-sm); color: var(--text-body); line-height: 1.55; }
-  .m-werken .cultuur li .lucide { width: 17px; height: 17px; color: var(--color-primary); flex: none; }
+  .m-werken .cultuur li .lucide { width: 17px; height: 17px; color: var(--orange-text); flex: none; }
   .m-werken .vacatures { background: var(--ink-900); color: var(--eggshell); }
   .m-werken .vrow { display: flex; align-items: center; gap: 12px; padding: 18px 0; border-bottom: 1px solid var(--border-dark); color: var(--eggshell); }
   .m-werken .vrow:first-of-type { border-top: 1px solid var(--border-dark); }

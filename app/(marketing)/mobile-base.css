@@ -2,7 +2,7 @@
    alleen ≤767px. Elke mobiele pagina-component gebruikt <div class="m-page …">. */
 @media (max-width: 767px) {
   .m-page .wrap { padding: 0 20px; }
-  .m-page .kicker { font-family: var(--font-mono); text-transform: uppercase; letter-spacing: var(--tracking-kicker); font-size: 11px; color: var(--color-primary); font-weight: var(--fw-medium); }
+  .m-page .kicker { font-family: var(--font-mono); text-transform: uppercase; letter-spacing: var(--tracking-kicker); font-size: 11px; color: var(--orange-text); font-weight: var(--fw-medium); }
   .m-page .kicker.on-dark { color: var(--orange-400); }
 
   .m-page .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; font-weight: var(--fw-semibold); font-size: var(--text-sm); padding: 14px 22px; min-height: 48px; border-radius: var(--radius-md); border: 1px solid transparent; }
@@ -20,7 +20,7 @@
   .m-page .mhero h1 { font-family: var(--font-display-expanded); font-weight: var(--fw-black); font-size: 30px; line-height: 1.15; color: #fff; margin: 12px 0 14px; }
   .m-page .mhero.light h1 { color: var(--text-strong); }
   .m-page .mhero h1 em { font-style: normal; color: var(--orange-400); }
-  .m-page .mhero.light h1 em { color: var(--color-primary); }
+  .m-page .mhero.light h1 em { color: var(--orange-text); }
   .m-page .mhero p { font-size: var(--text-base); line-height: 1.65; color: var(--text-on-dark-muted); margin: 0; }
   .m-page .mhero.light p { color: var(--text-muted); }
   .m-page .mhero > .wrap > * { animation: riseIn 0.7s cubic-bezier(0.22, 1, 0.36, 1) both; }
@@ -33,7 +33,7 @@
   .m-page .sec-head h2 { font-size: var(--text-xl); font-weight: var(--fw-extrabold); line-height: 1.25; margin-top: 12px; }
   .m-page .sec-head p { font-size: var(--text-sm); color: var(--text-muted); line-height: 1.65; margin: 12px 0 0; }
 
-  .m-page .icbox { width: 44px; height: 44px; border-radius: var(--radius-md); background: var(--orange-50); color: var(--color-primary); display: flex; align-items: center; justify-content: center; flex: none; }
+  .m-page .icbox { width: 44px; height: 44px; border-radius: var(--radius-md); background: var(--orange-50); color: var(--orange-text); display: flex; align-items: center; justify-content: center; flex: none; }
   .m-page .icbox .lucide { width: 20px; height: 20px; }
 
   /* Horizontale chips */
@@ -57,7 +57,7 @@
   .m-page .acc-head .icbox { width: 38px; height: 38px; }
   .m-page .acc-head .icbox .lucide { width: 18px; height: 18px; }
   .m-page .acc-head .chev { margin-left: auto; color: var(--text-subtle); transition: transform 240ms cubic-bezier(0.22, 1, 0.36, 1); }
-  .m-page .acc-item.open .acc-head .chev { transform: rotate(180deg); color: var(--color-primary); }
+  .m-page .acc-item.open .acc-head .chev { transform: rotate(180deg); color: var(--orange-text); }
   .m-page .acc-body { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 320ms cubic-bezier(0.22, 1, 0.36, 1); }
   .m-page .acc-item.open .acc-body { grid-template-rows: 1fr; }
   .m-page .acc-body > div { overflow: hidden; }
@@ -65,7 +65,7 @@
   .m-page .acc-body p { font-size: var(--text-sm); color: var(--text-muted); line-height: 1.65; margin: 0 0 14px; }
   .m-page .acc-body ul { list-style: none; padding: 0; margin: 0 0 18px; display: flex; flex-direction: column; gap: 9px; }
   .m-page .acc-body li { display: flex; gap: 9px; font-size: var(--text-sm); color: var(--text-body); line-height: 1.5; }
-  .m-page .acc-body li::before { content: "→"; color: var(--color-primary); font-weight: 700; }
+  .m-page .acc-body li::before { content: "→"; color: var(--orange-text); font-weight: 700; }
 
   /* Stats */
   .m-page .statgrid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
@@ -86,7 +86,7 @@
   /* CTA-band */
   .m-page .cta { background: var(--color-primary); color: #fff; padding: 44px 0; }
   .m-page .cta h2 { color: #fff; font-family: var(--font-display-expanded); font-weight: var(--fw-black); font-size: var(--text-xl); line-height: 1.25; margin-bottom: 20px; }
-  .m-page .cta .btn { background: #fff; color: var(--color-primary); width: 100%; border-color: #fff; }
+  .m-page .cta .btn { background: #fff; color: var(--orange-text); width: 100%; border-color: #fff; }
 
   .m-page .rv { opacity: 0; transform: translateY(22px); transition: opacity 0.65s ease, transform 0.65s cubic-bezier(0.22, 1, 0.36, 1); }
   .m-page .rv.in { opacity: 1; transform: translateY(0); }
@@ -106,7 +106,7 @@
 
   .m-detail .challist { display: flex; flex-direction: column; gap: 12px; }
   .m-detail .chal-card { background: var(--white); border: 1px solid var(--border-default); border-radius: var(--radius-lg); padding: 20px; }
-  .m-detail .chal-card .q { font-family: var(--font-mono); font-size: 10px; text-transform: uppercase; letter-spacing: var(--tracking-kicker); color: var(--color-primary); }
+  .m-detail .chal-card .q { font-family: var(--font-mono); font-size: 10px; text-transform: uppercase; letter-spacing: var(--tracking-kicker); color: var(--orange-text); }
   .m-detail .chal-card h3 { font-size: var(--text-base); font-weight: var(--fw-bold); line-height: 1.4; margin: 9px 0 7px; }
   .m-detail .chal-card p { font-size: var(--text-sm); color: var(--text-muted); line-height: 1.6; margin: 0; }
 
@@ -118,11 +118,11 @@
   .m-detail .sol-card p { font-size: var(--text-sm); color: var(--text-muted); line-height: 1.65; margin: 0 0 14px; }
   .m-detail .sol-card ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 9px; }
   .m-detail .sol-card li { display: flex; gap: 9px; font-size: var(--text-sm); color: var(--text-body); line-height: 1.5; }
-  .m-detail .sol-card li .lucide { width: 17px; height: 17px; color: var(--color-primary); flex: none; }
+  .m-detail .sol-card li .lucide { width: 17px; height: 17px; color: var(--orange-text); flex: none; }
 
   .m-detail .steplist { display: flex; flex-direction: column; gap: 20px; }
   .m-detail .step { border-top: 3px solid var(--color-primary); padding-top: 13px; }
-  .m-detail .step .num { font-family: var(--font-mono); font-size: var(--text-xs); color: var(--color-primary); }
+  .m-detail .step .num { font-family: var(--font-mono); font-size: var(--text-xs); color: var(--orange-text); }
   .m-detail .step h3 { font-size: var(--text-base); font-weight: var(--fw-bold); margin: 7px 0 5px; }
   .m-detail .step p { font-size: var(--text-sm); color: var(--text-muted); line-height: 1.55; margin: 0; }
 
@@ -132,7 +132,7 @@
   .m-detail .fcase .media { position: relative; height: 190px; overflow: hidden; }
   .m-detail .fcase .kb { position: absolute; inset: 0; background-size: cover; background-position: center; animation: kenburns 26s ease-in-out infinite alternate; }
   .m-detail .fcase .playbig { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: 56px; height: 56px; border-radius: 50%; background: rgba(255, 255, 255, 0.92); display: flex; align-items: center; justify-content: center; box-shadow: var(--shadow-lg); border: none; animation: pulseRing 2.8s ease-out infinite; }
-  .m-detail .fcase .playbig .lucide { width: 20px; height: 20px; color: var(--color-primary); }
+  .m-detail .fcase .playbig .lucide { width: 20px; height: 20px; color: var(--orange-text); }
   .m-detail .fcase .body { padding: 20px; }
   .m-detail .fcase blockquote { font-family: var(--font-display); font-weight: var(--fw-bold); font-size: var(--text-md); line-height: 1.4; color: var(--text-strong); margin: 8px 0 12px; }
   .m-detail .fcase .who { font-size: var(--text-sm); color: var(--text-muted); }

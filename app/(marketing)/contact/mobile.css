@@ -5,7 +5,7 @@
   .m-contact .opt h3 { font-size: var(--text-base); font-weight: var(--fw-bold); margin: 0 0 3px; }
   .m-contact .opt p { font-size: var(--text-xs); color: var(--text-muted); line-height: 1.5; margin: 0; }
   .m-contact .opt .icbox { flex: none; }
-  .m-contact .opt .arrow { margin-left: auto; color: var(--color-primary); width: 17px; height: 17px; flex: none; }
+  .m-contact .opt .arrow { margin-left: auto; color: var(--orange-text); width: 17px; height: 17px; flex: none; }
   .m-contact .form-card { background: var(--white); border: 1px solid var(--border-default); border-radius: var(--radius-lg); padding: 24px 20px; box-shadow: var(--shadow-md); }
   .m-contact .form-card h2 { font-size: var(--text-lg); font-weight: var(--fw-extrabold); margin: 0 0 6px; }
   .m-contact .form-card .sub { font-size: var(--text-sm); color: var(--text-muted); margin: 0 0 20px; line-height: 1.55; }
@@ -16,6 +16,6 @@
   .m-contact .expect h3 { font-size: var(--text-base); font-weight: var(--fw-bold); margin: 0 0 14px; }
   .m-contact .expect ol { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 14px; counter-reset: s; }
   .m-contact .expect li { display: grid; grid-template-columns: 30px 1fr; gap: 10px; font-size: var(--text-sm); color: var(--text-muted); line-height: 1.55; }
-  .m-contact .expect li::before { counter-increment: s; content: "0" counter(s); font-family: var(--font-mono); color: var(--color-primary); font-size: var(--text-sm); }
+  .m-contact .expect li::before { counter-increment: s; content: "0" counter(s); font-family: var(--font-mono); color: var(--orange-text); font-size: var(--text-sm); }
   .m-contact .expect li strong { display: block; color: var(--text-strong); margin-bottom: 2px; }
 }

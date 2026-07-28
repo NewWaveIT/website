@@ -2,7 +2,7 @@
 
 .p-vacature .crumbs { font-family: var(--font-mono); font-size: var(--text-xs); color: var(--ink-400); padding: var(--space-5) 0 0; }
 .p-vacature .crumbs a { color: var(--ink-400); }
-.p-vacature .crumbs a:hover { color: var(--color-primary); }
+.p-vacature .crumbs a:hover { color: var(--orange-text); }
 
 .p-vacature .shero { background: var(--ink-900); color: var(--eggshell); position: relative; overflow: hidden; }
 .p-vacature .shero .wrap-wide { position: relative; padding: var(--space-8) 0 var(--space-9); }
@@ -18,13 +18,13 @@
 .p-vacature .vac-body p { font-size: var(--text-md); color: var(--text-muted); line-height: var(--leading-relaxed); margin: 0 0 var(--space-4); max-width: 60ch; }
 .p-vacature .vac-body ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 12px; }
 .p-vacature .vac-body li { display: flex; gap: 10px; font-size: var(--text-base); color: var(--text-body); line-height: var(--leading-normal); align-items: flex-start; }
-.p-vacature .vac-body li .lucide { width: 20px; height: 20px; color: var(--color-primary); flex: none; }
+.p-vacature .vac-body li .lucide { width: 20px; height: 20px; color: var(--orange-text); flex: none; }
 
 .p-vacature .vac-aside { position: sticky; top: 100px; display: flex; flex-direction: column; gap: var(--space-5); }
 .p-vacature .apply-card { background: var(--white); border: 1px solid var(--border-default); border-radius: var(--radius-lg); padding: var(--space-6); }
 .p-vacature .apply-card .rec { display: flex; gap: var(--space-4); align-items: center; margin-bottom: var(--space-5); }
 .p-vacature .apply-card .rec img { width: 64px; height: 64px; border-radius: 50%; object-fit: cover; }
-.p-vacature .apply-card .role { font-family: var(--font-mono); font-size: var(--text-xs); text-transform: uppercase; letter-spacing: var(--tracking-kicker); color: var(--color-primary); }
+.p-vacature .apply-card .role { font-family: var(--font-mono); font-size: var(--text-xs); text-transform: uppercase; letter-spacing: var(--tracking-kicker); color: var(--orange-text); }
 .p-vacature .apply-card h4 { font-size: var(--text-md); font-weight: var(--fw-bold); margin: 4px 0; }
 .p-vacature .apply-card .contact { font-size: var(--text-sm); display: flex; gap: var(--space-4); }
 .p-vacature .apply-card .btn { width: 100%; justify-content: center; }
@@ -39,7 +39,7 @@
 .p-vacature .proces { background: var(--eggshell); }
 .p-vacature .proces .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-6); }
 .p-vacature .step { border-top: 3px solid var(--color-primary); padding-top: var(--space-4); }
-.p-vacature .step .num { font-family: var(--font-mono); font-size: var(--text-sm); color: var(--color-primary); }
+.p-vacature .step .num { font-family: var(--font-mono); font-size: var(--text-sm); color: var(--orange-text); }
 .p-vacature .step h3 { font-size: var(--text-md); font-weight: var(--fw-bold); margin: 8px 0; }
 .p-vacature .step p { font-size: var(--text-sm); color: var(--text-muted); line-height: var(--leading-relaxed); margin: 0; }
 

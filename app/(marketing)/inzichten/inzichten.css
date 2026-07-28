@@ -29,7 +29,7 @@
 .p-inzichten .post .pbody { padding: var(--space-5) var(--space-6) var(--space-6); display: flex; flex-direction: column; flex: 1; }
 .p-inzichten .post .meta { font-family: var(--font-mono); font-size: var(--text-xs); color: var(--text-subtle); }
 .p-inzichten .post h3 { font-size: var(--text-md); font-weight: var(--fw-bold); line-height: var(--leading-snug); margin: var(--space-3) 0; flex: 1; }
-.p-inzichten .post .more { font-size: var(--text-sm); font-weight: var(--fw-semibold); display: inline-flex; align-items: center; gap: 6px; color: var(--color-primary); }
+.p-inzichten .post .more { font-size: var(--text-sm); font-weight: var(--fw-semibold); display: inline-flex; align-items: center; gap: 6px; color: var(--orange-text); }
 .p-inzichten .post .more .lucide { width: 15px; height: 15px; }
 
 .p-inzichten .nieuwsbrief { background: var(--eggshell); }

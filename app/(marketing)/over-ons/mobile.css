@@ -20,8 +20,8 @@
   .m-over .m-tcard .pf { position: relative; width: 100%; aspect-ratio: 1 / 1; border-radius: var(--radius-md); overflow: hidden; background: var(--ink-100); margin-bottom: 10px; }
   .m-over .m-tcard .pf img { object-fit: cover; }
   .m-over .m-tcard .nm { font-family: var(--font-display); font-weight: var(--fw-bold); color: var(--text-strong); font-size: var(--text-sm); }
-  .m-over .m-tcard .rl { font-family: var(--font-mono); font-size: 10px; text-transform: uppercase; letter-spacing: var(--tracking-kicker); color: var(--color-primary); margin-top: 2px; }
+  .m-over .m-tcard .rl { font-family: var(--font-mono); font-size: 10px; text-transform: uppercase; letter-spacing: var(--tracking-kicker); color: var(--orange-text); margin-top: 2px; }
   .m-over .feiten { background: var(--eggshell); padding: 24px 0; }
   .m-over .feiten .f { display: flex; align-items: center; gap: 10px; font-size: var(--text-sm); color: var(--text-body); padding: 8px 0; }
-  .m-over .feiten .lucide { width: 17px; height: 17px; color: var(--color-primary); flex: none; }
+  .m-over .feiten .lucide { width: 17px; height: 17px; color: var(--orange-text); flex: none; }
 }

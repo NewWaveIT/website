@@ -12,5 +12,5 @@
 .p-legal .prose p { font-size: var(--text-base); line-height: var(--leading-relaxed); color: var(--text-body); margin: 0 0 var(--space-4); }
 .p-legal .prose ul { margin: 0 0 var(--space-4) var(--space-5); }
 .p-legal .prose li { font-size: var(--text-base); line-height: var(--leading-relaxed); color: var(--text-body); margin-bottom: var(--space-2); }
-.p-legal .prose a { color: var(--color-primary); font-weight: var(--fw-medium); }
+.p-legal .prose a { color: var(--orange-text); font-weight: var(--fw-medium); }
 .p-legal .prose address { font-style: normal; background: var(--white); border: 1px solid var(--border-default); border-radius: var(--radius-md); padding: var(--space-4) var(--space-5); margin: var(--space-4) 0; line-height: var(--leading-relaxed); }

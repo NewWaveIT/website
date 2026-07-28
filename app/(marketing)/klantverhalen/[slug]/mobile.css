@@ -5,14 +5,14 @@
   .m-case .video { position: relative; height: 210px; border-radius: var(--radius-lg); overflow: hidden; margin-top: 22px; }
   .m-case .video .kb { position: absolute; inset: 0; background-size: cover; background-position: center; animation: kenburns 26s ease-in-out infinite alternate; }
   .m-case .video .playbig { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: 58px; height: 58px; border-radius: 50%; background: rgba(255, 255, 255, 0.92); display: flex; align-items: center; justify-content: center; box-shadow: var(--shadow-lg); border: none; }
-  .m-case .video .playbig .lucide { width: 21px; height: 21px; color: var(--color-primary); }
+  .m-case .video .playbig .lucide { width: 21px; height: 21px; color: var(--orange-text); }
   .m-case .video .cap { position: absolute; bottom: 12px; left: 12px; font-family: var(--font-mono); font-size: 10px; color: #fff; background: rgba(46, 37, 26, 0.6); padding: 5px 10px; border-radius: var(--radius-pill); }
   .m-case .impact { background: var(--ink-950); color: var(--eggshell); padding: 28px 0; }
   .m-case .prose h2 { font-size: var(--text-lg); font-weight: var(--fw-extrabold); margin: 26px 0 10px; }
   .m-case .prose h2:first-child { margin-top: 0; }
   .m-case .prose p { font-size: var(--text-sm); color: var(--text-muted); line-height: 1.7; margin: 0 0 14px; }
   .m-case .prose .pull { font-family: var(--font-display); font-weight: var(--fw-bold); font-size: var(--text-md); line-height: 1.45; color: var(--text-strong); border-left: 3px solid var(--color-primary); padding-left: 16px; margin: 20px 0; }
-  .m-case .prose a { color: var(--color-primary); text-decoration: underline; }
+  .m-case .prose a { color: var(--orange-text); text-decoration: underline; }
   .m-case .prose ul, .m-case .prose ol { margin: 0 0 14px; padding-left: 1.3em; }
   .m-case .prose li { font-size: var(--text-sm); color: var(--text-muted); line-height: 1.6; margin: 0 0 6px; }
   .m-case .aside-card { border: 1px solid var(--border-default); border-radius: var(--radius-lg); padding: 6px 20px 20px; background: var(--white); margin-top: 26px; }
@@ -28,6 +28,6 @@
   .m-case .postlist { display: flex; flex-direction: column; gap: 12px; }
   .m-case .post { display: flex; gap: 14px; padding: 14px; border: 1px solid var(--border-default); border-radius: var(--radius-lg); background: var(--white); color: var(--text-body); align-items: center; }
   .m-case .post .cover { width: 78px; height: 78px; flex: none; border-radius: var(--radius-md); background-size: cover; background-position: center; }
-  .m-case .post .cat { display: inline-block; font-family: var(--font-mono); font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--color-primary); margin-bottom: 4px; }
+  .m-case .post .cat { display: inline-block; font-family: var(--font-mono); font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--orange-text); margin-bottom: 4px; }
   .m-case .post h3 { font-size: var(--text-sm); font-weight: var(--fw-bold); line-height: 1.4; margin: 0; }
 }

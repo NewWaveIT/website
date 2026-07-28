@@ -9,7 +9,7 @@
   .m-sectoren .scard p { font-size: var(--text-sm); color: var(--text-muted); line-height: 1.6; margin: 0 0 16px; flex: 1; }
   .m-sectoren .scard .foot { display: flex; align-items: center; justify-content: space-between; gap: 12px; border-top: 1px solid var(--border-subtle); padding-top: 13px; }
   .m-sectoren .scard .kpi { font-family: var(--font-mono); font-size: 10px; color: var(--text-subtle); text-transform: uppercase; letter-spacing: var(--tracking-kicker); }
-  .m-sectoren .scard .go { font-size: var(--text-sm); font-weight: var(--fw-semibold); color: var(--color-primary); display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; }
+  .m-sectoren .scard .go { font-size: var(--text-sm); font-weight: var(--fw-semibold); color: var(--orange-text); display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; }
   .m-sectoren .scard .go .lucide { width: 15px; height: 15px; }
   .m-sectoren .werkwijze { background: var(--ink-900); color: var(--eggshell); }
   .m-sectoren .wlist { display: flex; flex-direction: column; gap: 12px; }
