@@ -51,7 +51,9 @@ export function Footer() {
         </div>
         <div className="foot-bottom">
           <span>© {new Date().getFullYear()} The New Wave IT</span>
-          <span>Privacy · Voorwaarden</span>
+          <span>
+            <Link href="/privacy">Privacybeleid</Link>
+          </span>
         </div>
       </div>
     </footer>

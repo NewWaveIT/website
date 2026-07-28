@@ -11,10 +11,11 @@ export default function MarketingLayout({
 }) {
   return (
     <>
+      <a href="#main" className="skip-link">Direct naar inhoud</a>
       <Header />
       <ScrollWave />
       <MobileShell />
-      <main>{children}</main>
+      <main id="main">{children}</main>
       <Footer />
     </>
   );

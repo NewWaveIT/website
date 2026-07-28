@@ -188,6 +188,23 @@ h1, h2, h3, h4 {
   border-radius: var(--radius-sm);
 }
 
+/* Skip-to-content: onzichtbaar tot focus (toetsenbord/screenreader) */
+.skip-link {
+  position: absolute;
+  left: 12px;
+  top: -60px;
+  z-index: 200;
+  background: var(--color-primary);
+  color: #fff;
+  padding: 10px 16px;
+  border-radius: var(--radius-md);
+  font-weight: var(--fw-semibold);
+  transition: top 160ms ease;
+}
+.skip-link:focus {
+  top: 12px;
+}
+
 .wrap { max-width: var(--container-max); margin: 0 auto; padding: 0 var(--space-6); }
 .wrap-wide { max-width: var(--container-wide); margin: 0 auto; padding: 0 var(--space-6); }
 

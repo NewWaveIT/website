@@ -102,8 +102,8 @@ export function ContactForm({ type = "strategiegesprek" }: { type?: string }) {
         </div>
       </div>
 
-      <div className="field">
-        <label>In welke sector werk je?</label>
+      <div className="field" role="group" aria-labelledby="lbl-sector">
+        <label id="lbl-sector">In welke sector werk je?</label>
         <div className="chips">
           {SECTOREN.map((s) => (
             <label className="chip" key={s}>
@@ -114,8 +114,8 @@ export function ContactForm({ type = "strategiegesprek" }: { type?: string }) {
         </div>
       </div>
 
-      <div className="field">
-        <label>Waar gaat je vraagstuk over?</label>
+      <div className="field" role="group" aria-labelledby="lbl-onderwerp">
+        <label id="lbl-onderwerp">Waar gaat je vraagstuk over?</label>
         <div className="chips">
           {ONDERWERPEN.map((o) => (
             <label className="chip" key={o}>
@@ -150,7 +150,8 @@ export function ContactForm({ type = "strategiegesprek" }: { type?: string }) {
 
       <p className="privacy">
         We gebruiken je gegevens alleen om dit gesprek te plannen. Geen
-        nieuwsbrief, geen belrondes.
+        nieuwsbrief, geen belrondes. Zie ons{" "}
+        <a href="/privacy">privacybeleid</a>.
       </p>
     </form>
   );
