@@ -36,21 +36,26 @@ export function buildSeed(): Record<ContentType, SeedRow[]> {
       volgorde: i,
     })),
 
-    artikelen: ARTIKELEN.map((a, i) => ({
-      slug: a.slug,
-      titel: a.titel,
-      status: "live",
-      volgorde: i,
-      data: {
-        categorie: a.cat,
-        samenvatting: a.intro,
-        cover: a.image,
-        leestijd: a.leestijd,
-        auteur: a.auteur,
-        datum: a.datum,
-        inhoud: a.body.join("\n\n"),
-      },
-    })),
+    artikelen: ARTIKELEN.map((a, i) => {
+      const disciplines = ["Mendix", "AI", "Strategie"];
+      const sectoren = ["Publieke sector", "Mobiliteit", "Banken", "Zorg", "Manufacturing"];
+      return {
+        slug: a.slug,
+        titel: a.titel,
+        status: "live",
+        volgorde: i,
+        data: {
+          discipline: disciplines.includes(a.cat) ? a.cat : "Algemeen",
+          sector: sectoren.includes(a.cat) ? a.cat : "Algemeen",
+          samenvatting: a.intro,
+          cover: a.image,
+          leestijd: a.leestijd,
+          auteur: a.auteur,
+          datum: a.datum,
+          inhoud: a.body.join("\n\n"),
+        },
+      };
+    }),
 
     cases: KLANTVERHALEN.map((k, i) => {
       const { slug, ...data } = k;

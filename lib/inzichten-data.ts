@@ -16,10 +16,20 @@ function mapRow(row: ContentRow): Artikel {
   const d = row.data as Record<string, unknown>;
   const str = (k: string) => (typeof d[k] === "string" ? (d[k] as string) : "");
   const inhoud = str("inhoud");
+  const discipline = str("discipline") || "Algemeen";
+  const sector = str("sector") || "Algemeen";
+  // Badge: sector wint, anders discipline, anders oude vrije 'categorie', anders 'Inzicht'.
+  const cat =
+    (sector !== "Algemeen" && sector) ||
+    (discipline !== "Algemeen" && discipline) ||
+    str("categorie") ||
+    "Inzicht";
   return {
     slug: row.slug,
     titel: row.titel,
-    cat: str("categorie") || "Inzicht",
+    cat,
+    discipline,
+    sector,
     datum: fmtDatum(str("datum")),
     leestijd: str("leestijd"),
     auteur: str("auteur") || "The New Wave IT",

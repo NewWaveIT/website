@@ -43,6 +43,12 @@
 .cms .icontile:hover { border-color: var(--border-strong); background: var(--ink-50); }
 .cms .icontile.active { border-color: var(--color-primary); background: rgba(241, 88, 34, 0.08); color: var(--color-primary); }
 .cms .icontile.active .lucide { color: var(--color-primary); }
+
+/* Keuze-chips (vaste selectie) */
+.cms .choicechips { display: flex; flex-wrap: wrap; gap: 8px; }
+.cms .choicechips .chip { font-family: var(--font-sans); font-size: var(--text-sm); font-weight: var(--fw-medium); text-transform: none; letter-spacing: 0; color: var(--text-body); background: var(--white); border: 1px solid var(--border-strong); border-radius: var(--radius-pill); padding: 10px 16px; min-height: 44px; display: inline-flex; align-items: center; cursor: pointer; transition: all 120ms ease; }
+.cms .choicechips .chip:hover { border-color: var(--color-primary); }
+.cms .choicechips .chip.on { background: var(--color-primary); border-color: var(--color-primary); color: #fff; }
 .cms .btn-primary { background: var(--color-primary); color: #fff; }
 .cms .btn-primary:hover { background: var(--color-primary-hover); }
 .cms .btn-outline { background: var(--white); color: var(--text-strong); border-color: var(--border-strong); }

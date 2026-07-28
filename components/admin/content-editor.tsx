@@ -9,6 +9,7 @@ import { PAGE_FIELDS, PAGE_DEFAULTS, PAGE_PATH } from "@/lib/cms/pages";
 import { ImageField } from "./image-field";
 import { StructuredField } from "./structured-field";
 import { IconField } from "./icon-field";
+import { SelectField } from "./select-field";
 
 /** Maakt een net webadres van een titel (kleine letters, koppeltekens). */
 function slugify(s: string): string {
@@ -157,6 +158,8 @@ export function ContentEditor({
             <ImageField key={f.key} name={`f_${f.key}`} label={f.label} defaultValue={initial(f.key)} />
           ) : f.type === "icon" ? (
             <IconField key={f.key} name={`f_${f.key}`} label={f.label} options={f.options ?? []} defaultValue={initial(f.key)} />
+          ) : f.type === "select" ? (
+            <SelectField key={f.key} name={`f_${f.key}`} label={f.label} options={f.options ?? []} defaultValue={initial(f.key)} help={f.help} />
           ) : (
           <div className="fld" key={f.key}>
             <label htmlFor={`ce-${f.key}`}>{f.label}</label>

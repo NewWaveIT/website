@@ -14,7 +14,8 @@ export type FieldType =
   | "list" // array van tekst (herhaalbaar)
   | "group" // vast object met subvelden
   | "items" // herhaalbare kaarten (array van objecten)
-  | "icon"; // visuele iconkeuze (lucide-naam)
+  | "icon" // visuele iconkeuze (lucide-naam)
+  | "select"; // vaste keuze uit opties (chips)
 
 export interface FieldDef {
   key: string;
@@ -37,7 +38,8 @@ export function isStructured(t: FieldType): boolean {
 
 export const FIELD_SCHEMAS: Record<ContentType, FieldDef[]> = {
   artikelen: [
-    { key: "categorie", label: "Categorie", type: "text", placeholder: "Publieke sector" },
+    { key: "discipline", label: "Discipline", type: "select", options: ["Algemeen", "Mendix", "AI", "Strategie"], help: "Koppelt het artikel aan een dienst (of 'Algemeen' voor geen koppeling)." },
+    { key: "sector", label: "Sector", type: "select", options: ["Algemeen", "Publieke sector", "Mobiliteit", "Banken", "Zorg", "Manufacturing"], help: "Koppelt het artikel aan een sector (of 'Algemeen')." },
     { key: "samenvatting", label: "Samenvatting", type: "textarea", help: "Korte intro in overzichten en meta-omschrijving." },
     { key: "cover", label: "Cover-afbeelding", type: "image" },
     { key: "leestijd", label: "Leestijd", type: "text", placeholder: "4 min" },

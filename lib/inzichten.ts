@@ -3,7 +3,7 @@
 
 export interface Artikel {
   slug: string;
-  cat: string;
+  cat: string; // weergavebadge (afgeleid van sector/discipline)
   datum: string;
   leestijd: string;
   titel: string;
@@ -11,6 +11,9 @@ export interface Artikel {
   image: string;
   intro: string;
   body: string[];
+  /** Koppeling: 'Algemeen' = niet gekoppeld. */
+  discipline?: string;
+  sector?: string;
 }
 
 export const ARTIKELEN: Artikel[] = [
