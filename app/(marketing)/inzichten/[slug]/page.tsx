@@ -63,8 +63,14 @@ export default async function ArtikelPage({
           </div>
           <div className="kicker on-dark">{`// ${a.cat}`}</div>
           <h1>{a.titel}</h1>
-          <div className="meta">
-            {a.leestijd} leestijd · {a.datum} · door {a.auteur}
+          <div className="byline">
+            {a.auteurFoto && (
+              <Image className="av" src={a.auteurFoto} alt={a.auteur} width={40} height={40} />
+            )}
+            <span>
+              door <strong>{a.auteur}</strong>
+              <span className="sub">{a.leestijd} leestijd · {a.datum}</span>
+            </span>
           </div>
         </div>
       </section>
@@ -78,9 +84,11 @@ export default async function ArtikelPage({
       <article className="block">
         <div className="wrap aprose">
           <p className="lead">{a.intro}</p>
-          {a.body.map((p, i) => (
-            <p key={i}>{p}</p>
-          ))}
+          {a.inhoudHtml ? (
+            <div dangerouslySetInnerHTML={{ __html: a.inhoudHtml }} />
+          ) : (
+            a.body.map((p, i) => <p key={i}>{p}</p>)
+          )}
         </div>
       </article>
 

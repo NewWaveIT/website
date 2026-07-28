@@ -15,6 +15,19 @@
 .p-artikel .aprose { max-width: 720px; margin: 0 auto; }
 .p-artikel .aprose .lead { font-size: var(--text-lg); color: var(--text-strong); line-height: var(--leading-relaxed); margin: 0 0 var(--space-6); font-weight: var(--fw-medium); }
 .p-artikel .aprose p { font-size: var(--text-md); color: var(--text-body); line-height: var(--leading-relaxed); margin: 0 0 var(--space-5); }
+/* Opgemaakte inhoud uit de rich-text editor */
+.p-artikel .aprose h2 { font-size: var(--text-2xl); font-weight: var(--fw-bold); line-height: var(--leading-snug); margin: var(--space-7) 0 var(--space-3); }
+.p-artikel .aprose h3 { font-size: var(--text-xl); font-weight: var(--fw-bold); line-height: var(--leading-snug); margin: var(--space-6) 0 var(--space-3); }
+.p-artikel .aprose ul, .p-artikel .aprose ol { margin: 0 0 var(--space-5); padding-left: 1.4em; }
+.p-artikel .aprose li { font-size: var(--text-md); color: var(--text-body); line-height: var(--leading-relaxed); margin: 0 0 var(--space-2); }
+.p-artikel .aprose a { color: var(--color-primary); text-decoration: underline; }
+.p-artikel .aprose blockquote { border-left: 3px solid var(--color-primary); padding-left: var(--space-4); margin: 0 0 var(--space-5); color: var(--text-muted); font-style: italic; }
+
+/* Auteur-byline */
+.p-artikel .ahero .byline { display: flex; align-items: center; gap: 12px; margin-top: var(--space-5); color: var(--text-on-dark-muted); font-size: var(--text-sm); }
+.p-artikel .ahero .byline .av { border-radius: 50%; object-fit: cover; border: 1px solid var(--border-dark); }
+.p-artikel .ahero .byline strong { color: #fff; font-weight: var(--fw-semibold); }
+.p-artikel .ahero .byline .sub { display: block; font-family: var(--font-mono); font-size: var(--text-xs); color: var(--ink-400); margin-top: 2px; }
 
 @media (max-width: 900px) {
   .p-artikel .ahero h1 { font-size: var(--text-3xl); }

@@ -1,6 +1,20 @@
 import "server-only";
 import { getPublishedContent, type ContentRow } from "@/lib/cms/content";
 import { ARTIKELEN, ARTIKEL_MAP, type Artikel } from "@/lib/inzichten";
+import { getTeamleden } from "@/lib/team-data";
+
+type AuthorResolver = (raw: string) => { naam: string; foto?: string };
+
+async function authorResolver(): Promise<AuthorResolver> {
+  const team = await getTeamleden();
+  const bySlug = new Map(team.map((m) => [m.slug, m]));
+  const byNaam = new Map(team.map((m) => [m.naam, m]));
+  return (raw: string) => {
+    const m = bySlug.get(raw) ?? byNaam.get(raw);
+    if (m) return { naam: m.naam, foto: m.foto };
+    return { naam: raw || "The New Wave IT" };
+  };
+}
 
 /** ISO-datum (YYYY-MM-DD) → Nederlandse weergave; laat andere strings ongemoeid. */
 function fmtDatum(d: string): string {
@@ -12,10 +26,11 @@ function fmtDatum(d: string): string {
   }
 }
 
-function mapRow(row: ContentRow): Artikel {
+function mapRow(row: ContentRow, resolve: AuthorResolver): Artikel {
   const d = row.data as Record<string, unknown>;
   const str = (k: string) => (typeof d[k] === "string" ? (d[k] as string) : "");
   const inhoud = str("inhoud");
+  const isHtml = /<[a-z][\s\S]*>/i.test(inhoud);
   const discipline = str("discipline") || "Algemeen";
   const sector = str("sector") || "Algemeen";
   // Badge: sector wint, anders discipline, anders oude vrije 'categorie', anders 'Inzicht'.
@@ -24,6 +39,7 @@ function mapRow(row: ContentRow): Artikel {
     (discipline !== "Algemeen" && discipline) ||
     str("categorie") ||
     "Inzicht";
+  const auteur = resolve(str("auteur"));
   return {
     slug: row.slug,
     titel: row.titel,
@@ -32,10 +48,12 @@ function mapRow(row: ContentRow): Artikel {
     sector,
     datum: fmtDatum(str("datum")),
     leestijd: str("leestijd"),
-    auteur: str("auteur") || "The New Wave IT",
+    auteur: auteur.naam,
+    auteurFoto: auteur.foto,
     image: str("cover") || "/assets/photos/team-presentatie-breed.webp",
     intro: str("samenvatting"),
-    body: inhoud ? inhoud.split(/\n\s*\n/).map((p) => p.trim()).filter(Boolean) : [],
+    inhoudHtml: isHtml ? inhoud : undefined,
+    body: !isHtml && inhoud ? inhoud.split(/\n\s*\n/).map((p) => p.trim()).filter(Boolean) : [],
   };
 }
 
@@ -43,11 +61,12 @@ function mapRow(row: ContentRow): Artikel {
 export async function getArtikelen(): Promise<Artikel[]> {
   const rows = await getPublishedContent("artikelen");
   if (!rows.length) return ARTIKELEN;
+  const resolve = await authorResolver();
   const datum = (r: (typeof rows)[number]) => String((r.data as Record<string, unknown>).datum ?? "");
   return rows
     .slice()
     .sort((a, b) => datum(b).localeCompare(datum(a)))
-    .map(mapRow);
+    .map((r) => mapRow(r, resolve));
 }
 
 const SECTOR_SLUG_TO_CAT: Record<string, string> = {
@@ -81,7 +100,7 @@ export async function getArtikelBySlug(slug: string): Promise<Artikel | null> {
   const rows = await getPublishedContent("artikelen");
   if (rows.length) {
     const r = rows.find((x) => x.slug === slug);
-    return r ? mapRow(r) : null;
+    return r ? mapRow(r, await authorResolver()) : null;
   }
   return ARTIKEL_MAP[slug] ?? null;
 }

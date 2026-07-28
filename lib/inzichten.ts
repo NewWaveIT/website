@@ -11,6 +11,10 @@ export interface Artikel {
   image: string;
   intro: string;
   body: string[];
+  /** Opgemaakte inhoud (HTML uit de rich-text editor); heeft voorrang op body. */
+  inhoudHtml?: string;
+  /** Profielfoto van de auteur (als die een teamlid is). */
+  auteurFoto?: string;
   /** Koppeling: 'Algemeen' = niet gekoppeld. */
   discipline?: string;
   sector?: string;

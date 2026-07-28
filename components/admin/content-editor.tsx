@@ -10,6 +10,8 @@ import { ImageField } from "./image-field";
 import { StructuredField } from "./structured-field";
 import { IconField } from "./icon-field";
 import { SelectField } from "./select-field";
+import { RichTextEditor } from "./rich-text-editor";
+import { AuthorField, type TeamOptie } from "./author-field";
 
 /** Maakt een net webadres van een titel (kleine letters, koppeltekens). */
 function slugify(s: string): string {
@@ -34,11 +36,13 @@ export function ContentEditor({
   label,
   listPath,
   row,
+  teamleden = [],
 }: {
   type: ContentType;
   label: string;
   listPath: string;
   row: ContentRow | null;
+  teamleden?: TeamOptie[];
 }) {
   const [state, formAction, pending] = useActionState<SaveState, FormData>(saveContent, {});
   const [status, setStatus] = useState(row?.status === "live" ? "live" : "concept");
@@ -165,6 +169,10 @@ export function ContentEditor({
             <IconField key={f.key} name={`f_${f.key}`} label={f.label} options={f.options ?? []} defaultValue={initial(f)} />
           ) : f.type === "select" ? (
             <SelectField key={f.key} name={`f_${f.key}`} label={f.label} options={f.options ?? []} defaultValue={initial(f)} help={f.help} />
+          ) : f.type === "author" ? (
+            <AuthorField key={f.key} name={`f_${f.key}`} label={f.label} options={teamleden} defaultValue={initial(f)} />
+          ) : f.type === "richtext" ? (
+            <RichTextEditor key={f.key} name={`f_${f.key}`} label={f.label} defaultValue={initial(f)} help={f.help} />
           ) : (
           <div className="fld" key={f.key}>
             <label htmlFor={`ce-${f.key}`}>{f.label}</label>

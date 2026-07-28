@@ -15,7 +15,9 @@ export type FieldType =
   | "group" // vast object met subvelden
   | "items" // herhaalbare kaarten (array van objecten)
   | "icon" // visuele iconkeuze (lucide-naam)
-  | "select"; // vaste keuze uit opties (chips)
+  | "select" // vaste keuze uit opties (chips)
+  | "author" // keuze uit teamleden (naam + foto)
+  | "richtext"; // opgemaakte tekst (HTML)
 
 export interface FieldDef {
   key: string;
@@ -47,9 +49,9 @@ export const FIELD_SCHEMAS: Record<ContentType, FieldDef[]> = {
     { key: "samenvatting", label: "Samenvatting", type: "textarea", help: "Korte intro in overzichten en meta-omschrijving." },
     { key: "cover", label: "Cover-afbeelding", type: "image" },
     { key: "leestijd", label: "Leestijd", type: "text", placeholder: "4 min" },
-    { key: "auteur", label: "Auteur", type: "text", placeholder: "Koen Wijsman" },
+    { key: "auteur", label: "Auteur", type: "author" },
     { key: "datum", label: "Publicatiedatum", type: "date", required: true, defaultToday: true },
-    { key: "inhoud", label: "Inhoud", type: "markdown", help: "Alinea's gescheiden door een lege regel." },
+    { key: "inhoud", label: "Inhoud", type: "richtext", help: "Gebruik de werkbalk voor koppen, opsommingen, links en nadruk." },
   ],
   cases: [
     { key: "sector", label: "Sector (filterlabel)", type: "text", placeholder: "Publieke sector" },
