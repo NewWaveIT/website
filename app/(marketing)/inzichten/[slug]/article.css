@@ -21,7 +21,21 @@
 .p-artikel .aprose ul, .p-artikel .aprose ol { margin: 0 0 var(--space-5); padding-left: 1.4em; }
 .p-artikel .aprose li { font-size: var(--text-md); color: var(--text-body); line-height: var(--leading-relaxed); margin: 0 0 var(--space-2); }
 .p-artikel .aprose a { color: var(--color-primary); text-decoration: underline; }
-.p-artikel .aprose blockquote { border-left: 3px solid var(--color-primary); padding-left: var(--space-4); margin: 0 0 var(--space-5); color: var(--text-muted); font-style: italic; }
+/* Pull-quote */
+.p-artikel .aprose blockquote { border-left: 3px solid var(--color-primary); padding: var(--space-2) 0 var(--space-2) var(--space-6); margin: var(--space-7) 0; color: var(--text-strong); font-family: var(--font-display); font-weight: var(--fw-bold); font-size: var(--text-2xl); line-height: var(--leading-snug); font-style: normal; }
+.p-artikel .aprose blockquote p { font-size: inherit; color: inherit; margin: 0; }
+
+/* Afbeeldingen met uitlijning + bijschrift */
+.p-artikel .aprose figure { margin: var(--space-6) 0; }
+.p-artikel .aprose figure img { max-width: 100%; border-radius: var(--radius-lg); display: block; }
+.p-artikel .aprose figure figcaption { font-size: var(--text-sm); color: var(--text-subtle); margin-top: var(--space-3); text-align: center; }
+.p-artikel .aprose figure[data-align="center"] img { margin: 0 auto; }
+.p-artikel .aprose figure[data-align="full"] img { width: 100%; }
+.p-artikel .aprose figure[data-align="left"] { float: left; max-width: 46%; margin: var(--space-2) var(--space-6) var(--space-4) 0; }
+.p-artikel .aprose figure[data-align="right"] { float: right; max-width: 46%; margin: var(--space-2) 0 var(--space-4) var(--space-6); }
+@media (max-width: 640px) {
+  .p-artikel .aprose figure[data-align="left"], .p-artikel .aprose figure[data-align="right"] { float: none; max-width: 100%; margin: var(--space-6) 0; }
+}
 
 /* Auteur-byline */
 .p-artikel .ahero .byline { display: flex; align-items: center; gap: 12px; margin-top: var(--space-5); color: var(--text-on-dark-muted); font-size: var(--text-sm); }

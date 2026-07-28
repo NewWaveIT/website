@@ -74,6 +74,19 @@
 .cms .rte .ProseMirror ul, .cms .rte .ProseMirror ol { padding-left: 1.4em; margin: 0 0 0.8em; }
 .cms .rte .ProseMirror blockquote { border-left: 3px solid var(--color-primary); padding-left: 14px; color: var(--text-muted); margin: 0 0 0.8em; }
 .cms .rte .ProseMirror a { color: var(--color-primary); text-decoration: underline; }
+/* Afbeeldingen in de editor */
+.cms .rte .ProseMirror figure { margin: 0 0 0.9em; }
+.cms .rte .ProseMirror figure img { max-width: 100%; border-radius: var(--radius-md); display: block; }
+.cms .rte .ProseMirror figure figcaption { font-size: var(--text-xs); color: var(--text-subtle); margin-top: 6px; text-align: center; }
+.cms .rte .ProseMirror figure[data-align="center"] { text-align: center; }
+.cms .rte .ProseMirror figure[data-align="center"] img { margin: 0 auto; }
+.cms .rte .ProseMirror figure[data-align="left"] { float: left; max-width: 48%; margin: 0 1em 0.6em 0; }
+.cms .rte .ProseMirror figure[data-align="right"] { float: right; max-width: 48%; margin: 0 0 0.6em 1em; }
+.cms .rte .ProseMirror figure[data-align="full"] img { width: 100%; }
+.cms .rte .ProseMirror .ProseMirror-selectednode { outline: 2px solid var(--color-primary); outline-offset: 3px; border-radius: var(--radius-md); }
+/* Contextbalk voor de geselecteerde afbeelding */
+.cms .rte-ctx { display: flex; align-items: center; gap: 2px; margin-left: auto; padding-left: 8px; border-left: 1px solid var(--border-default); }
+.cms .rte-ctx-lbl { font-family: var(--font-mono); font-size: 10px; text-transform: uppercase; letter-spacing: var(--tracking-kicker); color: var(--text-subtle); margin-right: 4px; }
 .cms .btn-primary { background: var(--color-primary); color: #fff; }
 .cms .btn-primary:hover { background: var(--color-primary-hover); }
 .cms .btn-outline { background: var(--white); color: var(--text-strong); border-color: var(--border-strong); }

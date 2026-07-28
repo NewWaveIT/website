@@ -3,7 +3,7 @@
 import { useEditor, EditorContent, type Editor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import Link from "@tiptap/extension-link";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import {
   Bold,
   Italic,
@@ -13,9 +13,18 @@ import {
   ListOrdered,
   Quote,
   Link as LinkIcon,
+  ImagePlus,
+  AlignLeft,
+  AlignCenter,
+  AlignRight,
+  Maximize2,
+  Captions,
+  Trash2,
   Undo,
   Redo,
 } from "lucide-react";
+import { uploadImage } from "@/app/admin/content/actions";
+import { FigureImage } from "./tiptap-figure";
 
 function Btn({
   active,
@@ -46,6 +55,11 @@ function Btn({
 }
 
 function Toolbar({ editor }: { editor: Editor }) {
+  const fileRef = useRef<HTMLInputElement>(null);
+  const [busy, setBusy] = useState(false);
+  const imgSelected = editor.isActive("figureImage");
+  const align = (editor.getAttributes("figureImage").align as string) ?? "center";
+
   const setLink = () => {
     const prev = editor.getAttributes("link").href as string | undefined;
     const url = window.prompt("Link-URL (leeg = verwijderen):", prev ?? "https://");
@@ -53,6 +67,37 @@ function Toolbar({ editor }: { editor: Editor }) {
     if (url === "") editor.chain().focus().extendMarkRange("link").unsetLink().run();
     else editor.chain().focus().extendMarkRange("link").setLink({ href: url }).run();
   };
+
+  const onFile = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setBusy(true);
+    const fd = new FormData();
+    fd.append("file", file);
+    const res = await uploadImage(fd);
+    setBusy(false);
+    if (fileRef.current) fileRef.current.value = "";
+    if (res.error || !res.url) {
+      window.alert(res.error ?? "Uploaden mislukt.");
+      return;
+    }
+    const alt = window.prompt("Omschrijving van de afbeelding (voor SEO/toegankelijkheid):", "") ?? "";
+    const caption = window.prompt("Bijschrift (optioneel, leeg = geen):", "") ?? "";
+    editor
+      .chain()
+      .focus()
+      .insertContent({ type: "figureImage", attrs: { src: res.url, alt, align: "center", caption } })
+      .run();
+  };
+
+  const setAlign = (a: string) => editor.chain().focus().updateAttributes("figureImage", { align: a }).run();
+  const editCaption = () => {
+    const prev = (editor.getAttributes("figureImage").caption as string) ?? "";
+    const caption = window.prompt("Bijschrift (leeg = geen):", prev);
+    if (caption === null) return;
+    editor.chain().focus().updateAttributes("figureImage", { caption }).run();
+  };
+
   return (
     <div className="rte-bar">
       <Btn title="Kop" active={editor.isActive("heading", { level: 2 })} onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}><Heading2 /></Btn>
@@ -63,9 +108,23 @@ function Toolbar({ editor }: { editor: Editor }) {
       <Btn title="Genummerd" active={editor.isActive("orderedList")} onClick={() => editor.chain().focus().toggleOrderedList().run()}><ListOrdered /></Btn>
       <Btn title="Citaat" active={editor.isActive("blockquote")} onClick={() => editor.chain().focus().toggleBlockquote().run()}><Quote /></Btn>
       <Btn title="Link" active={editor.isActive("link")} onClick={setLink}><LinkIcon /></Btn>
+      <Btn title={busy ? "Uploaden…" : "Afbeelding"} disabled={busy} onClick={() => fileRef.current?.click()}><ImagePlus /></Btn>
+      <input ref={fileRef} type="file" accept="image/*" onChange={onFile} style={{ display: "none" }} />
       <span className="rte-sep" />
       <Btn title="Ongedaan maken" disabled={!editor.can().undo()} onClick={() => editor.chain().focus().undo().run()}><Undo /></Btn>
       <Btn title="Opnieuw" disabled={!editor.can().redo()} onClick={() => editor.chain().focus().redo().run()}><Redo /></Btn>
+
+      {imgSelected && (
+        <div className="rte-ctx">
+          <span className="rte-ctx-lbl">Afbeelding:</span>
+          <Btn title="Links (tekst eromheen)" active={align === "left"} onClick={() => setAlign("left")}><AlignLeft /></Btn>
+          <Btn title="Midden" active={align === "center"} onClick={() => setAlign("center")}><AlignCenter /></Btn>
+          <Btn title="Rechts (tekst eromheen)" active={align === "right"} onClick={() => setAlign("right")}><AlignRight /></Btn>
+          <Btn title="Volle breedte" active={align === "full"} onClick={() => setAlign("full")}><Maximize2 /></Btn>
+          <Btn title="Bijschrift" onClick={editCaption}><Captions /></Btn>
+          <Btn title="Verwijderen" onClick={() => editor.chain().focus().deleteSelection().run()}><Trash2 /></Btn>
+        </div>
+      )}
     </div>
   );
 }
@@ -87,6 +146,7 @@ export function RichTextEditor({
     extensions: [
       StarterKit.configure({ link: false }),
       Link.configure({ openOnClick: false, autolink: true }),
+      FigureImage,
     ],
     content: defaultValue || "",
     onUpdate: ({ editor }) => setHtml(editor.getHTML()),

@@ -7,8 +7,15 @@ import { getTeamleden } from "@/lib/team-data";
 /** Schoont door de editor gegenereerde HTML voordat die op de site komt. */
 function cleanHtml(html: string): string {
   return sanitizeHtml(html, {
-    allowedTags: ["p", "h2", "h3", "strong", "b", "em", "i", "s", "u", "ul", "ol", "li", "blockquote", "a", "br", "code", "pre"],
-    allowedAttributes: { a: ["href", "target", "rel"] },
+    allowedTags: [
+      "p", "h2", "h3", "strong", "b", "em", "i", "s", "u", "ul", "ol", "li",
+      "blockquote", "a", "br", "code", "pre", "figure", "img", "figcaption",
+    ],
+    allowedAttributes: {
+      a: ["href", "target", "rel"],
+      img: ["src", "alt"],
+      figure: ["data-type", "data-align"],
+    },
     allowedSchemes: ["http", "https", "mailto", "tel"],
     transformTags: {
       a: sanitizeHtml.simpleTransform("a", { rel: "noopener noreferrer nofollow" }),
