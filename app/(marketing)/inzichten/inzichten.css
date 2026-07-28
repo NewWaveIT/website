@@ -10,7 +10,8 @@
 .p-inzichten .dhero p { font-size: var(--text-lg); color: var(--text-on-dark-muted); line-height: var(--leading-relaxed); max-width: 50ch; margin: 0; }
 
 .p-inzichten .filters { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: var(--space-7); }
-.p-inzichten .fchip { font-size: var(--text-sm); font-weight: var(--fw-medium); color: var(--text-body); border: 1px solid var(--border-strong); border-radius: var(--radius-pill); padding: 8px 18px; background: var(--paper); }
+.p-inzichten .fchip { font-family: inherit; font-size: var(--text-sm); font-weight: var(--fw-medium); color: var(--text-body); border: 1px solid var(--border-strong); border-radius: var(--radius-pill); padding: 9px 18px; min-height: 40px; background: var(--paper); cursor: pointer; transition: all 120ms ease; }
+.p-inzichten .fchip:hover { border-color: var(--color-primary); }
 .p-inzichten .fchip.on { background: var(--ink-900); border-color: var(--ink-900); color: var(--eggshell); }
 
 .p-inzichten .feat { display: grid; grid-template-columns: 1.1fr 1fr; gap: 0; border-radius: var(--radius-xl); overflow: hidden; box-shadow: var(--shadow-lg); margin-bottom: var(--space-9); color: inherit; }

@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 import { getArtikelen } from "@/lib/inzichten-data";
 import { SectorHeroAnim } from "@/components/sector-hero-anim";
+import { InzichtenList } from "@/components/inzichten-list";
 import { MobileInzichten } from "@/components/mobile/mobile-inzichten";
 import "./inzichten.css";
 import "./mobile.css";
@@ -18,12 +18,8 @@ export const metadata: Metadata = {
 // Publieke content komt uit Supabase (met lib-fallback); ververs periodiek.
 export const revalidate = 300;
 
-const FILTERS = ["Alle", "AI", "Mendix", "Strategie", "Sectoren"];
-
 export default async function InzichtenPage() {
   const artikelen = await getArtikelen();
-  const featured = artikelen[0];
-  const grid = artikelen.slice(1, 7);
   return (
     <>
       <MobileInzichten artikelen={artikelen} />
@@ -49,49 +45,7 @@ export default async function InzichtenPage() {
 
       <section className="block">
         <div className="wrap-wide">
-          <div className="filters">
-            {FILTERS.map((f, i) => (
-              <span className={i === 0 ? "fchip on" : "fchip"} key={f}>
-                {f}
-              </span>
-            ))}
-          </div>
-
-          {featured && (
-            <Link href={`/inzichten/${featured.slug}`} className="feat">
-              <div className="media">
-                <Image src={featured.image} alt={featured.titel} fill sizes="(max-width: 980px) 100vw, 45vw" style={{ objectFit: "cover" }} />
-              </div>
-              <div className="body">
-                <div className="kicker on-dark">Uitgelicht · {featured.cat}</div>
-                <h2>{featured.titel}</h2>
-                <p>{featured.intro}</p>
-                <div className="meta">
-                  {featured.leestijd} leestijd · {featured.datum} · door {featured.auteur}
-                </div>
-              </div>
-            </Link>
-          )}
-
-          <div className="cards3">
-            {grid.map((a) => (
-              <Link href={`/inzichten/${a.slug}`} className="post" key={a.slug}>
-                <div className="cover">
-                  <Image src={a.image} alt={a.titel} fill sizes="(max-width: 980px) 100vw, 33vw" style={{ objectFit: "cover" }} />
-                  <span className="cat">{a.cat}</span>
-                </div>
-                <div className="pbody">
-                  <div className="meta">
-                    {a.leestijd} · {a.datum}
-                  </div>
-                  <h3>{a.titel}</h3>
-                  <span className="more">
-                    Lees meer <ArrowRight />
-                  </span>
-                </div>
-              </Link>
-            ))}
-          </div>
+          <InzichtenList artikelen={artikelen} />
         </div>
       </section>
 

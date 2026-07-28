@@ -39,7 +39,7 @@
   /* Horizontale chips */
   .m-page .hscroll { display: flex; gap: 8px; overflow-x: auto; padding: 2px 20px; margin: 0 -20px; scrollbar-width: none; }
   .m-page .hscroll::-webkit-scrollbar { display: none; }
-  .m-page .fchip { flex: none; font-size: var(--text-sm); font-weight: var(--fw-medium); color: var(--text-body); border: 1px solid var(--border-strong); border-radius: var(--radius-pill); padding: 10px 18px; min-height: 44px; display: inline-flex; align-items: center; background: var(--paper); }
+  .m-page .fchip { flex: none; font-family: inherit; font-size: var(--text-sm); font-weight: var(--fw-medium); color: var(--text-body); border: 1px solid var(--border-strong); border-radius: var(--radius-pill); padding: 10px 18px; min-height: 44px; display: inline-flex; align-items: center; background: var(--paper); cursor: pointer; }
   .m-page .fchip.on { background: var(--ink-900); border-color: var(--ink-900); color: var(--eggshell); }
 
   /* Carrousel + dots */

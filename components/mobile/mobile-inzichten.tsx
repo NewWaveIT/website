@@ -1,13 +1,23 @@
+"use client";
+
+import { useState } from "react";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import type { Artikel } from "@/lib/inzichten";
 import { MobileFx } from "./mobile-fx";
 
-const FILTERS = ["Alle", "AI", "Mendix", "Strategie", "Sectoren"];
+const ALLE = "Alle";
+const CATEGORIEEN = ["Mendix", "AI", "Strategie", "Publieke sector", "Mobiliteit", "Banken", "Zorg", "Manufacturing"];
 
 export function MobileInzichten({ artikelen }: { artikelen: Artikel[] }) {
-  const featured = artikelen[0];
-  const rest = artikelen.slice(1);
+  const [actief, setActief] = useState(ALLE);
+  const beschikbaar = CATEGORIEEN.filter((c) => artikelen.some((a) => a.discipline === c || a.sector === c));
+  const chips = [ALLE, ...beschikbaar];
+  const gefilterd =
+    actief === ALLE ? artikelen : artikelen.filter((a) => a.discipline === actief || a.sector === actief);
+  const featured = gefilterd[0];
+  const rest = gefilterd.slice(1);
+
   return (
     <div className="m-page m-inzichten only-mobile">
       <section className="mhero">
@@ -22,13 +32,15 @@ export function MobileInzichten({ artikelen }: { artikelen: Artikel[] }) {
       <section className="block">
         <div className="wrap">
           <div className="hscroll" style={{ marginBottom: 20 }}>
-            {FILTERS.map((f, i) => (
-              <span key={f} className={i === 0 ? "fchip on" : "fchip"}>{f}</span>
+            {chips.map((c) => (
+              <button key={c} type="button" className={c === actief ? "fchip on" : "fchip"} onClick={() => setActief(c)}>
+                {c}
+              </button>
             ))}
           </div>
 
           {featured && (
-            <Link href={`/inzichten/${featured.slug}`} className="feat rv">
+            <Link href={`/inzichten/${featured.slug}`} className="feat">
               <div className="media" style={{ backgroundImage: `url('${featured.image}')` }} />
               <div className="body">
                 <div className="kicker on-dark">Uitgelicht · {featured.cat}</div>
@@ -41,7 +53,7 @@ export function MobileInzichten({ artikelen }: { artikelen: Artikel[] }) {
 
           <div className="plist">
             {rest.map((a) => (
-              <Link key={a.slug} href={`/inzichten/${a.slug}`} className="post rv">
+              <Link key={a.slug} href={`/inzichten/${a.slug}`} className="post">
                 <div className="cover" style={{ backgroundImage: `url('${a.image}')` }} />
                 <div>
                   <span className="cat">{a.cat}</span>
