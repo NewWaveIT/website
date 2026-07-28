@@ -27,10 +27,18 @@ export function MobileShell() {
     setOpen(false);
   }, [pathname]);
 
-  // Body-scroll blokkeren bij open menu
+  // Body-scroll blokkeren bij open menu + Esc sluit
   useEffect(() => {
     document.body.classList.toggle("m-menu-open", open);
-    return () => document.body.classList.remove("m-menu-open");
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(false);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => {
+      document.body.classList.remove("m-menu-open");
+      window.removeEventListener("keydown", onKey);
+    };
   }, [open]);
 
   // Scroll-voortgangsgolf + sticky CTA
@@ -87,7 +95,7 @@ export function MobileShell() {
               style={{ height: 24, width: "auto" }}
             />
           </Link>
-          <button className="burger" aria-label="Menu" aria-expanded={open} onClick={() => setOpen(true)}>
+          <button className="burger" aria-label="Menu" aria-expanded={open} aria-controls="m-menu" onClick={() => setOpen(true)}>
             <Menu />
           </button>
         </div>
@@ -100,7 +108,7 @@ export function MobileShell() {
         </svg>
       </div>
 
-      <div className={cn("m-menu", open && "open")}>
+      <div className={cn("m-menu", open && "open")} id="m-menu" aria-hidden={!open} inert={!open}>
         <div className="mtop">
           <Image
             src="/assets/logos/logo-horizontal-white.png"

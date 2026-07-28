@@ -43,12 +43,26 @@ export function MobileFx() {
     // Accordeon
     const heads = scope.querySelectorAll<HTMLButtonElement>(".acc-head");
     heads.forEach((h) => {
+      // Toegankelijkheid: koppel kop aan paneel + geef open-status door.
+      const item = h.parentElement;
+      const body = item?.querySelector<HTMLElement>(".acc-body");
+      h.setAttribute("aria-expanded", item?.classList.contains("open") ? "true" : "false");
+      if (body) {
+        const bid = body.id || `acc-panel-${Math.random().toString(36).slice(2, 8)}`;
+        body.id = bid;
+        h.setAttribute("aria-controls", bid);
+      }
       const handler = () => {
-        const item = h.parentElement;
         if (!item) return;
         const wasOpen = item.classList.contains("open");
-        item.closest(".acc")?.querySelectorAll(".acc-item").forEach((i) => i.classList.remove("open"));
-        if (!wasOpen) item.classList.add("open");
+        item.closest(".acc")?.querySelectorAll(".acc-item").forEach((i) => {
+          i.classList.remove("open");
+          i.querySelector(".acc-head")?.setAttribute("aria-expanded", "false");
+        });
+        if (!wasOpen) {
+          item.classList.add("open");
+          h.setAttribute("aria-expanded", "true");
+        }
       };
       h.addEventListener("click", handler);
       cleanups.push(() => h.removeEventListener("click", handler));
