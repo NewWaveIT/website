@@ -54,7 +54,7 @@ function Btn({
   );
 }
 
-function Toolbar({ editor }: { editor: Editor }) {
+function Toolbar({ editor, lite }: { editor: Editor; lite: boolean }) {
   const fileRef = useRef<HTMLInputElement>(null);
   const [busy, setBusy] = useState(false);
   const imgSelected = editor.isActive("figureImage");
@@ -103,21 +103,29 @@ function Toolbar({ editor }: { editor: Editor }) {
 
   return (
     <div className="rte-bar">
-      <Btn title="Kop" active={editor.isActive("heading", { level: 2 })} onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}><Heading2 /></Btn>
-      <Btn title="Subkop" active={editor.isActive("heading", { level: 3 })} onClick={() => editor.chain().focus().toggleHeading({ level: 3 }).run()}><Heading3 /></Btn>
+      {!lite && (
+        <>
+          <Btn title="Kop" active={editor.isActive("heading", { level: 2 })} onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}><Heading2 /></Btn>
+          <Btn title="Subkop" active={editor.isActive("heading", { level: 3 })} onClick={() => editor.chain().focus().toggleHeading({ level: 3 }).run()}><Heading3 /></Btn>
+        </>
+      )}
       <Btn title="Vet" active={editor.isActive("bold")} onClick={() => editor.chain().focus().toggleBold().run()}><Bold /></Btn>
       <Btn title="Cursief" active={editor.isActive("italic")} onClick={() => editor.chain().focus().toggleItalic().run()}><Italic /></Btn>
       <Btn title="Opsomming" active={editor.isActive("bulletList")} onClick={() => editor.chain().focus().toggleBulletList().run()}><List /></Btn>
       <Btn title="Genummerd" active={editor.isActive("orderedList")} onClick={() => editor.chain().focus().toggleOrderedList().run()}><ListOrdered /></Btn>
-      <Btn title="Citaat" active={editor.isActive("blockquote")} onClick={() => editor.chain().focus().toggleBlockquote().run()}><Quote /></Btn>
       <Btn title="Link" active={editor.isActive("link")} onClick={setLink}><LinkIcon /></Btn>
-      <Btn title={busy ? "Uploaden…" : "Afbeelding"} disabled={busy} onClick={() => fileRef.current?.click()}><ImagePlus /></Btn>
-      <input ref={fileRef} type="file" accept="image/*" onChange={onFile} style={{ display: "none" }} />
+      {!lite && (
+        <>
+          <Btn title="Citaat" active={editor.isActive("blockquote")} onClick={() => editor.chain().focus().toggleBlockquote().run()}><Quote /></Btn>
+          <Btn title={busy ? "Uploaden…" : "Afbeelding"} disabled={busy} onClick={() => fileRef.current?.click()}><ImagePlus /></Btn>
+          <input ref={fileRef} type="file" accept="image/*" onChange={onFile} style={{ display: "none" }} />
+        </>
+      )}
       <span className="rte-sep" />
       <Btn title="Ongedaan maken" disabled={!editor.can().undo()} onClick={() => editor.chain().focus().undo().run()}><Undo /></Btn>
       <Btn title="Opnieuw" disabled={!editor.can().redo()} onClick={() => editor.chain().focus().redo().run()}><Redo /></Btn>
 
-      {imgSelected && (
+      {!lite && imgSelected && (
         <div className="rte-ctx">
           <span className="rte-ctx-lbl">Afbeelding:</span>
           <Btn title="Links (tekst eromheen)" active={align === "left"} onClick={() => setAlign("left")}><AlignLeft /></Btn>
@@ -137,20 +145,28 @@ export function RichTextEditor({
   label,
   defaultValue,
   help,
+  variant = "full",
 }: {
   name: string;
   label: string;
   defaultValue: string;
   help?: string;
+  variant?: "full" | "lite";
 }) {
+  const lite = variant === "lite";
   const [html, setHtml] = useState(defaultValue || "");
   const editor = useEditor({
     immediatelyRender: false,
-    extensions: [
-      StarterKit.configure({ link: false }),
-      Link.configure({ openOnClick: false, autolink: true }),
-      FigureImage,
-    ],
+    extensions: lite
+      ? [
+          StarterKit.configure({ link: false, heading: false }),
+          Link.configure({ openOnClick: false, autolink: true }),
+        ]
+      : [
+          StarterKit.configure({ link: false }),
+          Link.configure({ openOnClick: false, autolink: true }),
+          FigureImage,
+        ],
     content: defaultValue || "",
     onUpdate: ({ editor }) => setHtml(editor.getHTML()),
   });
@@ -159,10 +175,10 @@ export function RichTextEditor({
     <div className="fld">
       <label>{label}</label>
       <input type="hidden" name={name} value={html} />
-      <div className="rte">
+      <div className={`rte${lite ? " rte-lite" : ""}`}>
         {editor && (
           <>
-            <Toolbar editor={editor} />
+            <Toolbar editor={editor} lite={lite} />
             <EditorContent editor={editor} />
           </>
         )}

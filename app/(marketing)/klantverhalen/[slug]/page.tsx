@@ -93,14 +93,14 @@ export default async function CasePage({
         <div className="wrap-wide article">
           <div className="prose">
             <h2>De uitdaging</h2>
-            <p>{k.challenge}</p>
+            <div dangerouslySetInnerHTML={{ __html: k.challenge }} />
             <p className="pull">{k.pull}</p>
             <h2>De aanpak</h2>
             {k.aanpak.map((p, i) => (
               <p key={i}>{p}</p>
             ))}
             <h2>Het resultaat</h2>
-            <p>{k.resultaat}</p>
+            <div dangerouslySetInnerHTML={{ __html: k.resultaat }} />
           </div>
           <aside>
             <div className="aside-card">

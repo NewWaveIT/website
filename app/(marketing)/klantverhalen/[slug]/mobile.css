@@ -12,6 +12,9 @@
   .m-case .prose h2:first-child { margin-top: 0; }
   .m-case .prose p { font-size: var(--text-sm); color: var(--text-muted); line-height: 1.7; margin: 0 0 14px; }
   .m-case .prose .pull { font-family: var(--font-display); font-weight: var(--fw-bold); font-size: var(--text-md); line-height: 1.45; color: var(--text-strong); border-left: 3px solid var(--color-primary); padding-left: 16px; margin: 20px 0; }
+  .m-case .prose a { color: var(--color-primary); text-decoration: underline; }
+  .m-case .prose ul, .m-case .prose ol { margin: 0 0 14px; padding-left: 1.3em; }
+  .m-case .prose li { font-size: var(--text-sm); color: var(--text-muted); line-height: 1.6; margin: 0 0 6px; }
   .m-case .aside-card { border: 1px solid var(--border-default); border-radius: var(--radius-lg); padding: 6px 20px 20px; background: var(--white); margin-top: 26px; }
   .m-case .aside-card h4 { font-family: var(--font-mono); font-size: 10px; text-transform: uppercase; letter-spacing: var(--tracking-kicker); color: var(--text-subtle); margin: 16px 0 6px; font-weight: var(--fw-medium); }
   .m-case .aside-card .row { display: flex; justify-content: space-between; gap: 12px; padding: 9px 0; border-bottom: 1px solid var(--border-subtle); font-size: var(--text-sm); }

@@ -1,5 +1,6 @@
 import "server-only";
 import { getPublishedContent, type ContentRow } from "@/lib/cms/content";
+import { sanitizeLite } from "@/lib/cms/sanitize";
 import { KLANTVERHALEN, KLANTVERHAAL_MAP, type Klantverhaal, type KPI } from "@/lib/klantverhalen";
 
 function paragraphs(v: unknown): string[] {
@@ -30,10 +31,10 @@ function mapRow(row: ContentRow): Klantverhaal {
     h1: s("h1") || row.titel,
     intro: s("intro"),
     impact: impactList(d.impact),
-    challenge: s("challenge"),
+    challenge: sanitizeLite(s("challenge")),
     pull: s("pull"),
     aanpak: paragraphs(d.aanpak),
-    resultaat: s("resultaat"),
+    resultaat: sanitizeLite(s("resultaat")),
     aside: {
       sector: String(aside.sector ?? s("sector")),
       diensten: String(aside.diensten ?? ""),

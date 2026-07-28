@@ -17,7 +17,8 @@ export type FieldType =
   | "icon" // visuele iconkeuze (lucide-naam)
   | "select" // vaste keuze uit opties (chips)
   | "author" // keuze uit teamleden (naam + foto)
-  | "richtext"; // opgemaakte tekst (HTML)
+  | "richtext" // volledige opmaak (koppen, beeld, quote)
+  | "richtext-lite"; // lichte opmaak (vet/cursief/link/lijst)
 
 export interface FieldDef {
   key: string;
@@ -62,9 +63,9 @@ export const FIELD_SCHEMAS: Record<ContentType, FieldDef[]> = {
     { key: "tag", label: "Tag (detail)", type: "text", placeholder: "Publieke sector · COA" },
     { key: "h1", label: "Titel (detailpagina)", type: "text" },
     { key: "intro", label: "Intro", type: "textarea" },
-    { key: "challenge", label: "De uitdaging", type: "textarea" },
+    { key: "challenge", label: "De uitdaging", type: "richtext-lite" },
     { key: "pull", label: "Pull-quote", type: "text" },
-    { key: "resultaat", label: "Het resultaat", type: "textarea" },
+    { key: "resultaat", label: "Het resultaat", type: "richtext-lite" },
     { key: "quote", label: "Quote", type: "textarea" },
     { key: "quoteNaam", label: "Quote — naam", type: "text" },
     { key: "quoteRol", label: "Quote — rol", type: "text" },

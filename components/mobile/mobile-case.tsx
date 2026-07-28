@@ -32,12 +32,12 @@ export function MobileCase({ k, meer }: { k: Klantverhaal; meer: Klantverhaal[] 
         <div className="wrap">
           <div className="prose rv">
             <h2>De uitdaging</h2>
-            <p>{k.challenge}</p>
+            <div dangerouslySetInnerHTML={{ __html: k.challenge }} />
             <p className="pull">{k.pull}</p>
             <h2>De aanpak</h2>
             {k.aanpak.map((p, i) => <p key={i}>{p}</p>)}
             <h2>Het resultaat</h2>
-            <p>{k.resultaat}</p>
+            <div dangerouslySetInnerHTML={{ __html: k.resultaat }} />
           </div>
           <div className="aside-card rv">
             <h4>Over dit project</h4>

@@ -68,6 +68,7 @@
 .cms .rte-btn:disabled { opacity: 0.4; cursor: default; }
 .cms .rte-sep { width: 1px; align-self: stretch; background: var(--border-default); margin: 4px 6px; }
 .cms .rte .ProseMirror { min-height: 260px; padding: 14px 16px; outline: none; font-size: var(--text-base); line-height: 1.7; color: var(--text-body); }
+.cms .rte-lite .ProseMirror { min-height: 130px; }
 .cms .rte .ProseMirror h2 { font-size: var(--text-xl); font-weight: var(--fw-bold); margin: 1em 0 0.4em; }
 .cms .rte .ProseMirror h3 { font-size: var(--text-lg); font-weight: var(--fw-bold); margin: 1em 0 0.4em; }
 .cms .rte .ProseMirror p { margin: 0 0 0.8em; }

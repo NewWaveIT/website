@@ -173,6 +173,8 @@ export function ContentEditor({
             <AuthorField key={f.key} name={`f_${f.key}`} label={f.label} options={teamleden} defaultValue={initial(f)} />
           ) : f.type === "richtext" ? (
             <RichTextEditor key={f.key} name={`f_${f.key}`} label={f.label} defaultValue={initial(f)} help={f.help} />
+          ) : f.type === "richtext-lite" ? (
+            <RichTextEditor key={f.key} name={`f_${f.key}`} label={f.label} defaultValue={initial(f)} help={f.help} variant="lite" />
           ) : (
           <div className="fld" key={f.key}>
             <label htmlFor={`ce-${f.key}`}>{f.label}</label>
