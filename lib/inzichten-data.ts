@@ -1,7 +1,20 @@
 import "server-only";
+import sanitizeHtml from "sanitize-html";
 import { getPublishedContent, type ContentRow } from "@/lib/cms/content";
 import { ARTIKELEN, ARTIKEL_MAP, type Artikel } from "@/lib/inzichten";
 import { getTeamleden } from "@/lib/team-data";
+
+/** Schoont door de editor gegenereerde HTML voordat die op de site komt. */
+function cleanHtml(html: string): string {
+  return sanitizeHtml(html, {
+    allowedTags: ["p", "h2", "h3", "strong", "b", "em", "i", "s", "u", "ul", "ol", "li", "blockquote", "a", "br", "code", "pre"],
+    allowedAttributes: { a: ["href", "target", "rel"] },
+    allowedSchemes: ["http", "https", "mailto", "tel"],
+    transformTags: {
+      a: sanitizeHtml.simpleTransform("a", { rel: "noopener noreferrer nofollow" }),
+    },
+  });
+}
 
 type AuthorResolver = (raw: string) => { naam: string; foto?: string };
 
@@ -52,7 +65,7 @@ function mapRow(row: ContentRow, resolve: AuthorResolver): Artikel {
     auteurFoto: auteur.foto,
     image: str("cover") || "/assets/photos/team-presentatie-breed.webp",
     intro: str("samenvatting"),
-    inhoudHtml: isHtml ? inhoud : undefined,
+    inhoudHtml: isHtml ? cleanHtml(inhoud) : undefined,
     body: !isHtml && inhoud ? inhoud.split(/\n\s*\n/).map((p) => p.trim()).filter(Boolean) : [],
   };
 }
