@@ -110,10 +110,12 @@
 .cms tbody tr.clickable { cursor: pointer; position: relative; }
 .cms tbody tr.clickable:hover { background: var(--ink-50); }
 .cms tbody tr.clickable td { padding-top: 16px; padding-bottom: 16px; }
-/* Hele rij klikbaar (stretched link over de titel-link) */
-.cms td .t-title { position: static; }
-.cms td .t-title::after { content: ""; position: absolute; inset: 0; z-index: 1; }
-.cms td .t-title:focus-visible::after { outline: 2px solid var(--color-primary); outline-offset: -3px; border-radius: var(--radius-md); }
+/* Hele rij klikbaar (stretched link over de titel-link) — ALLEEN in klikbare
+   rijen. Anders lekt het inset:0-pseudo-element (geen positioned ouder) uit tot
+   over het hele scherm en blokkeert het alle kliks. */
+.cms tr.clickable td .t-title { position: static; }
+.cms tr.clickable td .t-title::after { content: ""; position: absolute; inset: 0; z-index: 1; }
+.cms tr.clickable td .t-title:focus-visible::after { outline: 2px solid var(--color-primary); outline-offset: -3px; border-radius: var(--radius-md); }
 .cms td .t-title { font-weight: var(--fw-semibold); color: var(--text-strong); }
 /* Kleine, gedempte info-/hulptekst — overal in het CMS (niet alleen in tabellen) */
 .cms .t-sub { font-size: var(--text-xs); color: var(--text-subtle); line-height: 1.5; }
