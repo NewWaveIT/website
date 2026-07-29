@@ -115,7 +115,9 @@
 .cms td .t-title::after { content: ""; position: absolute; inset: 0; z-index: 1; }
 .cms td .t-title:focus-visible::after { outline: 2px solid var(--color-primary); outline-offset: -3px; border-radius: var(--radius-md); }
 .cms td .t-title { font-weight: var(--fw-semibold); color: var(--text-strong); }
-.cms td .t-sub { font-size: var(--text-xs); color: var(--text-subtle); margin-top: 2px; }
+/* Kleine, gedempte info-/hulptekst — overal in het CMS (niet alleen in tabellen) */
+.cms .t-sub { font-size: var(--text-xs); color: var(--text-subtle); line-height: 1.5; }
+.cms td .t-sub { margin-top: 2px; }
 
 .cms .chip { display: inline-flex; align-items: center; gap: 6px; font-family: var(--font-mono); font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; border-radius: var(--radius-pill); padding: 4px 10px; white-space: nowrap; }
 .cms .chip .dot { width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
