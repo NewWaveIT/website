@@ -104,7 +104,7 @@ export const FIELD_SCHEMAS: Record<ContentType, FieldDef[]> = {
     { key: "discipline", label: "Discipline (lijstlabel)", type: "text", placeholder: "Mendix · Senior", panel: "side" },
     { key: "locatie", label: "Locatie", type: "text", placeholder: "Utrecht / hybride", panel: "side" },
     { key: "intro", label: "Intro", type: "richtext-lite" },
-    { key: "employmentType", label: "Type dienstverband", type: "text", placeholder: "FULL_TIME", help: "FULL_TIME of PART_TIME.", panel: "side" },
+    { key: "employmentType", label: "Type dienstverband", type: "select", options: ["FULL_TIME", "PART_TIME"], help: "Voltijd of deeltijd (wordt gebruikt voor vacature-structured data).", panel: "side" },
     { key: "gepubliceerdOp", label: "Gepubliceerd op", type: "date", panel: "side" },
     { key: "tags", label: "Tags", type: "list", help: "Bv. Mendix, Senior, Utrecht / hybride." },
     {
