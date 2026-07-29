@@ -25,6 +25,28 @@ function slugify(s: string): string {
     .replace(/^-+|-+$/g, "");
 }
 
+/**
+ * Groepeert velden op het deel vóór " — " in hun label (bv. "Hero — kicker"
+ * → sectie "Hero", subveld "Kicker"). Velden zonder streepje komen in "Algemeen".
+ * Volgorde blijft behouden; gebruikt voor de lange pagina-formulieren.
+ */
+function groupFields(fields: FieldDef[]): { heading: string; fields: { f: FieldDef; sub: string }[] }[] {
+  const groups: { heading: string; fields: { f: FieldDef; sub: string }[] }[] = [];
+  const index = new Map<string, number>();
+  for (const f of fields) {
+    const i = f.label.indexOf(" — ");
+    const heading = i >= 0 ? f.label.slice(0, i) : "Algemeen";
+    const raw = i >= 0 ? f.label.slice(i + 3) : f.label;
+    const sub = raw.charAt(0).toUpperCase() + raw.slice(1);
+    if (!index.has(heading)) {
+      index.set(heading, groups.length);
+      groups.push({ heading, fields: [] });
+    }
+    groups[index.get(heading)!].fields.push({ f, sub });
+  }
+  return groups;
+}
+
 const VIEW_BASE: Partial<Record<ContentType, string>> = {
   artikelen: "/inzichten",
   cases: "/klantverhalen",
@@ -208,7 +230,16 @@ export function ContentEditor({
                 />
               </div>
 
-              {mainFields.map(renderField)}
+              {isPaginas
+                ? groupFields(mainFields).map((g) => (
+                    <details key={g.heading} className="ce-sec" open>
+                      <summary>{g.heading}</summary>
+                      <div className="ce-sec-body">
+                        {g.fields.map(({ f, sub }) => renderField({ ...f, label: sub }))}
+                      </div>
+                    </details>
+                  ))
+                : mainFields.map(renderField)}
 
               {extraInitial && (
                 <details style={{ marginTop: "var(--space-2)" }}>

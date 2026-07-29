@@ -178,6 +178,17 @@
 .cms .ce-side > .card { padding: var(--space-5); }
 .cms .ce-side > .card > h3 { font-family: var(--font-mono); font-size: 11px; text-transform: uppercase; letter-spacing: var(--tracking-kicker); color: var(--text-subtle); margin: 0 0 var(--space-4); }
 .cms .ce-side > .card > .fld:last-child { margin-bottom: 0; }
+/* Inklapbare secties op lange (pagina-)formulieren */
+.cms .ce-sec { border-top: 1px solid var(--border-subtle); }
+.cms .ce-sec:first-of-type { border-top: 0; }
+.cms .ce-sec > summary { list-style: none; cursor: pointer; display: flex; align-items: center; gap: 10px; padding: var(--space-4) 0; font-family: var(--font-mono); font-size: 11px; text-transform: uppercase; letter-spacing: var(--tracking-kicker); color: var(--text-subtle); font-weight: var(--fw-medium); user-select: none; }
+.cms .ce-sec > summary::-webkit-details-marker { display: none; }
+.cms .ce-sec > summary::before { content: ""; width: 0; height: 0; border-left: 5px solid currentColor; border-top: 4px solid transparent; border-bottom: 4px solid transparent; transition: transform 120ms ease; flex: none; }
+.cms .ce-sec[open] > summary::before { transform: rotate(90deg); }
+.cms .ce-sec > summary:hover { color: var(--text-body); }
+.cms .ce-sec-body { padding: var(--space-2) 0 var(--space-4); }
+.cms .ce-sec-body .fld:last-child { margin-bottom: 0; }
+
 .cms .ce-actions { display: flex; flex-direction: column; gap: var(--space-3); }
 .cms .ce-actions .btn { width: 100%; }
 .cms .ce-actions-row { display: flex; gap: var(--space-3); }
