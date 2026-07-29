@@ -129,6 +129,12 @@
 .cms .search { display: flex; align-items: center; gap: 8px; background: var(--white); border: 1px solid var(--border-default); border-radius: var(--radius-md); padding: 9px 12px; min-width: 260px; }
 .cms .search input { border: 0; outline: 0; font-family: var(--font-sans); font-size: var(--text-sm); flex: 1; background: transparent; color: var(--text-body); }
 .cms .search .lucide { width: 16px; height: 16px; color: var(--text-subtle); }
+.cms .toolbar .tsel { font-family: var(--font-sans); font-size: var(--text-sm); color: var(--text-body); background: var(--white); border: 1px solid var(--border-default); border-radius: var(--radius-md); padding: 9px 12px; min-height: 40px; cursor: pointer; }
+.cms .toolbar .tsel:focus { outline: none; border-color: var(--color-primary); }
+.cms .toolbar .tsel-reset { display: inline-flex; align-items: center; gap: 6px; font-family: var(--font-sans); font-size: var(--text-sm); font-weight: var(--fw-medium); color: var(--text-muted); background: none; border: 0; cursor: pointer; padding: 8px 6px; }
+.cms .toolbar .tsel-reset:hover { color: var(--text-body); }
+.cms .toolbar .tsel-reset .lucide { width: 15px; height: 15px; }
+.cms .toolbar .tcount { margin-left: auto; font-family: var(--font-mono); font-size: 11px; color: var(--text-subtle); white-space: nowrap; }
 
 /* Pipeline board */
 .cms .pipe { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-4); align-items: start; }
