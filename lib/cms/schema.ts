@@ -36,6 +36,8 @@ export interface FieldDef {
   required?: boolean;
   /** date-veld: standaard op vandaag bij een nieuw item */
   defaultToday?: boolean;
+  /** 'side' plaatst het veld in de instellingen-rail rechts i.p.v. de contentkolom */
+  panel?: "side";
 }
 
 /** true voor veldtypes waarvan de waarde JSON is (object/array) i.p.v. tekst. */
@@ -45,22 +47,22 @@ export function isStructured(t: FieldType): boolean {
 
 export const FIELD_SCHEMAS: Record<ContentType, FieldDef[]> = {
   artikelen: [
-    { key: "discipline", label: "Discipline", type: "select", options: ["Algemeen", "Mendix", "AI", "Strategie"], help: "Koppelt het artikel aan een dienst (of 'Algemeen' voor geen koppeling)." },
-    { key: "sector", label: "Sector", type: "select", options: ["Algemeen", "Publieke sector", "Mobiliteit", "Banken", "Zorg", "Manufacturing"], help: "Koppelt het artikel aan een sector (of 'Algemeen')." },
-    { key: "samenvatting", label: "Samenvatting", type: "textarea", help: "Korte intro in overzichten en meta-omschrijving." },
-    { key: "cover", label: "Cover-afbeelding", type: "image" },
-    { key: "leestijd", label: "Leestijd", type: "text", placeholder: "4 min" },
-    { key: "auteur", label: "Auteur", type: "author" },
-    { key: "datum", label: "Publicatiedatum", type: "date", required: true, defaultToday: true },
+    { key: "discipline", label: "Discipline", type: "select", options: ["Algemeen", "Mendix", "AI", "Strategie"], help: "Koppelt het artikel aan een dienst (of 'Algemeen' voor geen koppeling).", panel: "side" },
+    { key: "sector", label: "Sector", type: "select", options: ["Algemeen", "Publieke sector", "Mobiliteit", "Banken", "Zorg", "Manufacturing"], help: "Koppelt het artikel aan een sector (of 'Algemeen').", panel: "side" },
+    { key: "samenvatting", label: "Samenvatting", type: "textarea", help: "Korte intro in overzichten en meta-omschrijving.", panel: "side" },
+    { key: "cover", label: "Cover-afbeelding", type: "image", panel: "side" },
+    { key: "leestijd", label: "Leestijd", type: "text", placeholder: "4 min", panel: "side" },
+    { key: "auteur", label: "Auteur", type: "author", panel: "side" },
+    { key: "datum", label: "Publicatiedatum", type: "date", required: true, defaultToday: true, panel: "side" },
     { key: "inhoud", label: "Inhoud", type: "richtext", help: "Gebruik de werkbalk voor koppen, opsommingen, links en nadruk." },
   ],
   cases: [
-    { key: "sector", label: "Sector (filterlabel)", type: "text", placeholder: "Publieke sector" },
-    { key: "metric", label: "Teaser-metric", type: "text", placeholder: "-60%" },
-    { key: "cardTitel", label: "Titel op de kaart", type: "text" },
-    { key: "org", label: "Organisatie-regel", type: "text", placeholder: "COA · Mendix + AI" },
-    { key: "image", label: "Cover-afbeelding", type: "image" },
-    { key: "tag", label: "Tag (detail)", type: "text", placeholder: "Publieke sector · COA" },
+    { key: "sector", label: "Sector (filterlabel)", type: "text", placeholder: "Publieke sector", panel: "side" },
+    { key: "metric", label: "Teaser-metric", type: "text", placeholder: "-60%", panel: "side" },
+    { key: "cardTitel", label: "Titel op de kaart", type: "text", panel: "side" },
+    { key: "org", label: "Organisatie-regel", type: "text", placeholder: "COA · Mendix + AI", panel: "side" },
+    { key: "image", label: "Cover-afbeelding", type: "image", panel: "side" },
+    { key: "tag", label: "Tag (detail)", type: "text", placeholder: "Publieke sector · COA", panel: "side" },
     { key: "h1", label: "Titel (detailpagina)", type: "text" },
     { key: "intro", label: "Intro", type: "textarea" },
     { key: "challenge", label: "De uitdaging", type: "richtext-lite" },
@@ -99,11 +101,11 @@ export const FIELD_SCHEMAS: Record<ContentType, FieldDef[]> = {
   ],
   vacatures: [
     { key: "functietitel", label: "Functietitel", type: "text" },
-    { key: "discipline", label: "Discipline (lijstlabel)", type: "text", placeholder: "Mendix · Senior" },
-    { key: "locatie", label: "Locatie", type: "text", placeholder: "Utrecht / hybride" },
+    { key: "discipline", label: "Discipline (lijstlabel)", type: "text", placeholder: "Mendix · Senior", panel: "side" },
+    { key: "locatie", label: "Locatie", type: "text", placeholder: "Utrecht / hybride", panel: "side" },
     { key: "intro", label: "Intro", type: "richtext-lite" },
-    { key: "employmentType", label: "Type dienstverband", type: "text", placeholder: "FULL_TIME", help: "FULL_TIME of PART_TIME." },
-    { key: "gepubliceerdOp", label: "Gepubliceerd op", type: "date" },
+    { key: "employmentType", label: "Type dienstverband", type: "text", placeholder: "FULL_TIME", help: "FULL_TIME of PART_TIME.", panel: "side" },
+    { key: "gepubliceerdOp", label: "Gepubliceerd op", type: "date", panel: "side" },
     { key: "tags", label: "Tags", type: "list", help: "Bv. Mendix, Senior, Utrecht / hybride." },
     {
       key: "secties",
@@ -135,8 +137,8 @@ export const FIELD_SCHEMAS: Record<ContentType, FieldDef[]> = {
   ],
   diensten: [
     { key: "naam", label: "Naam", type: "text" },
-    { key: "badgeIcon", label: "Badge-icoon", type: "icon", options: ["boxes", "brain-circuit", "route"] },
-    { key: "badgeLabel", label: "Badge-label", type: "text", placeholder: "Mendix Premium Partner" },
+    { key: "badgeIcon", label: "Badge-icoon", type: "icon", options: ["boxes", "brain-circuit", "route"], panel: "side" },
+    { key: "badgeLabel", label: "Badge-label", type: "text", placeholder: "Mendix Premium Partner", panel: "side" },
     { key: "h1", label: "Titel (H1)", type: "text" },
     { key: "intro", label: "Intro", type: "richtext-lite" },
     { key: "ctaSecondary", label: "Tweede knop", type: "text" },
@@ -198,7 +200,7 @@ export const FIELD_SCHEMAS: Record<ContentType, FieldDef[]> = {
   ],
   sectoren: [
     { key: "naam", label: "Naam", type: "text" },
-    { key: "icon", label: "Icoon", type: "icon", options: ["building-2", "train-front", "banknote", "heart-pulse", "factory"] },
+    { key: "icon", label: "Icoon", type: "icon", options: ["building-2", "train-front", "banknote", "heart-pulse", "factory"], panel: "side" },
     { key: "h1", label: "Titel (H1)", type: "text" },
     { key: "intro", label: "Intro", type: "richtext-lite" },
     { key: "kpis", label: "KPI's (hero)", type: "items", itemLabel: "KPI", of: [
@@ -236,8 +238,8 @@ export const FIELD_SCHEMAS: Record<ContentType, FieldDef[]> = {
     { key: "ctaTitle", label: "Slot-CTA — titel", type: "text" },
   ],
   teamleden: [
-    { key: "rol", label: "Rol", type: "text", placeholder: "CEO & founder" },
-    { key: "foto", label: "Foto", type: "image" },
+    { key: "rol", label: "Rol", type: "text", placeholder: "CEO & founder", panel: "side" },
+    { key: "foto", label: "Foto", type: "image", panel: "side" },
     { key: "bio", label: "Bio", type: "textarea", help: "Titel = de naam van het teamlid." },
   ],
 };

@@ -25,6 +25,13 @@ import {
 } from "lucide-react";
 import { uploadImage } from "@/app/admin/content/actions";
 import { FigureImage } from "./tiptap-figure";
+import { Modal } from "./modal";
+
+/** Actieve modal-status binnen de werkbalk. */
+type RtePrompt =
+  | { kind: "link"; url: string }
+  | { kind: "image"; url: string; width: number | null; height: number | null; alt: string; caption: string }
+  | { kind: "caption"; alt: string; caption: string };
 
 function Btn({
   active,
@@ -57,15 +64,13 @@ function Btn({
 function Toolbar({ editor, lite }: { editor: Editor; lite: boolean }) {
   const fileRef = useRef<HTMLInputElement>(null);
   const [busy, setBusy] = useState(false);
+  const [prompt, setPrompt] = useState<RtePrompt | null>(null);
   const imgSelected = editor.isActive("figureImage");
   const align = (editor.getAttributes("figureImage").align as string) ?? "center";
 
-  const setLink = () => {
-    const prev = editor.getAttributes("link").href as string | undefined;
-    const url = window.prompt("Link-URL (leeg = verwijderen):", prev ?? "https://");
-    if (url === null) return;
-    if (url === "") editor.chain().focus().extendMarkRange("link").unsetLink().run();
-    else editor.chain().focus().extendMarkRange("link").setLink({ href: url }).run();
+  const openLink = () => {
+    const prev = (editor.getAttributes("link").href as string | undefined) ?? "";
+    setPrompt({ kind: "link", url: prev || "https://" });
   };
 
   const onFile = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -78,27 +83,49 @@ function Toolbar({ editor, lite }: { editor: Editor; lite: boolean }) {
     setBusy(false);
     if (fileRef.current) fileRef.current.value = "";
     if (res.error || !res.url) {
+      setPrompt(null);
       window.alert(res.error ?? "Uploaden mislukt.");
       return;
     }
-    const alt = window.prompt("Omschrijving van de afbeelding (voor SEO/toegankelijkheid):", "") ?? "";
-    const caption = window.prompt("Bijschrift (optioneel, leeg = geen):", "") ?? "";
-    editor
-      .chain()
-      .focus()
-      .insertContent({
-        type: "figureImage",
-        attrs: { src: res.url, alt, align: "center", caption, width: res.width ?? null, height: res.height ?? null },
-      })
-      .run();
+    setPrompt({ kind: "image", url: res.url, width: res.width ?? null, height: res.height ?? null, alt: "", caption: "" });
   };
 
   const setAlign = (a: string) => editor.chain().focus().updateAttributes("figureImage", { align: a }).run();
-  const editCaption = () => {
-    const prev = (editor.getAttributes("figureImage").caption as string) ?? "";
-    const caption = window.prompt("Bijschrift (leeg = geen):", prev);
-    if (caption === null) return;
-    editor.chain().focus().updateAttributes("figureImage", { caption }).run();
+  const openCaption = () => {
+    setPrompt({
+      kind: "caption",
+      alt: (editor.getAttributes("figureImage").alt as string) ?? "",
+      caption: (editor.getAttributes("figureImage").caption as string) ?? "",
+    });
+  };
+
+  // Past de actieve modal toe op de editor en sluit de modal.
+  const applyPrompt = () => {
+    if (!prompt) return;
+    if (prompt.kind === "link") {
+      const url = prompt.url.trim();
+      if (url === "" || url === "https://") editor.chain().focus().extendMarkRange("link").unsetLink().run();
+      else editor.chain().focus().extendMarkRange("link").setLink({ href: url }).run();
+    } else if (prompt.kind === "image") {
+      editor
+        .chain()
+        .focus()
+        .insertContent({
+          type: "figureImage",
+          attrs: {
+            src: prompt.url,
+            alt: prompt.alt.trim(),
+            align: "center",
+            caption: prompt.caption.trim(),
+            width: prompt.width,
+            height: prompt.height,
+          },
+        })
+        .run();
+    } else {
+      editor.chain().focus().updateAttributes("figureImage", { alt: prompt.alt.trim(), caption: prompt.caption.trim() }).run();
+    }
+    setPrompt(null);
   };
 
   return (
@@ -113,7 +140,7 @@ function Toolbar({ editor, lite }: { editor: Editor; lite: boolean }) {
       <Btn title="Cursief" active={editor.isActive("italic")} onClick={() => editor.chain().focus().toggleItalic().run()}><Italic /></Btn>
       <Btn title="Opsomming" active={editor.isActive("bulletList")} onClick={() => editor.chain().focus().toggleBulletList().run()}><List /></Btn>
       <Btn title="Genummerd" active={editor.isActive("orderedList")} onClick={() => editor.chain().focus().toggleOrderedList().run()}><ListOrdered /></Btn>
-      <Btn title="Link" active={editor.isActive("link")} onClick={setLink}><LinkIcon /></Btn>
+      <Btn title="Link" active={editor.isActive("link")} onClick={openLink}><LinkIcon /></Btn>
       {!lite && (
         <>
           <Btn title="Citaat" active={editor.isActive("blockquote")} onClick={() => editor.chain().focus().toggleBlockquote().run()}><Quote /></Btn>
@@ -132,9 +159,93 @@ function Toolbar({ editor, lite }: { editor: Editor; lite: boolean }) {
           <Btn title="Midden" active={align === "center"} onClick={() => setAlign("center")}><AlignCenter /></Btn>
           <Btn title="Rechts (tekst eromheen)" active={align === "right"} onClick={() => setAlign("right")}><AlignRight /></Btn>
           <Btn title="Volle breedte" active={align === "full"} onClick={() => setAlign("full")}><Maximize2 /></Btn>
-          <Btn title="Bijschrift" onClick={editCaption}><Captions /></Btn>
+          <Btn title="Bijschrift & omschrijving" onClick={openCaption}><Captions /></Btn>
           <Btn title="Verwijderen" onClick={() => editor.chain().focus().deleteSelection().run()}><Trash2 /></Btn>
         </div>
+      )}
+
+      {prompt && (
+        <Modal
+          title={prompt.kind === "link" ? "Link" : prompt.kind === "image" ? "Afbeelding invoegen" : "Bijschrift & omschrijving"}
+          onClose={() => setPrompt(null)}
+          footer={
+            <>
+              <button type="button" className="btn btn-outline" onClick={() => setPrompt(null)}>
+                Annuleren
+              </button>
+              <button type="button" className="btn btn-primary" onClick={applyPrompt}>
+                {prompt.kind === "image" ? "Invoegen" : "Toepassen"}
+              </button>
+            </>
+          }
+        >
+          {prompt.kind === "link" ? (
+            <div className="fld" style={{ marginBottom: 0 }}>
+              <label htmlFor="rte-link">Link-URL</label>
+              <input
+                id="rte-link"
+                type="text"
+                autoFocus
+                value={prompt.url}
+                onChange={(e) => setPrompt({ ...prompt, url: e.target.value })}
+                onKeyDown={(e) => e.key === "Enter" && (e.preventDefault(), applyPrompt())}
+                placeholder="https://"
+              />
+              <p className="t-sub" style={{ marginTop: 6 }}>Laat leeg (of “https://”) om de link te verwijderen.</p>
+            </div>
+          ) : prompt.kind === "image" ? (
+            <>
+              <div className="fld">
+                <img src={prompt.url} alt="" style={{ maxWidth: "100%", borderRadius: "var(--radius-md)", display: "block" }} />
+              </div>
+              <div className="fld">
+                <label htmlFor="rte-alt">Omschrijving (alt-tekst)</label>
+                <input
+                  id="rte-alt"
+                  type="text"
+                  autoFocus
+                  value={prompt.alt}
+                  onChange={(e) => setPrompt({ ...prompt, alt: e.target.value })}
+                  placeholder="Wat is er te zien? (voor SEO en schermlezers)"
+                />
+              </div>
+              <div className="fld" style={{ marginBottom: 0 }}>
+                <label htmlFor="rte-cap">Bijschrift (optioneel)</label>
+                <input
+                  id="rte-cap"
+                  type="text"
+                  value={prompt.caption}
+                  onChange={(e) => setPrompt({ ...prompt, caption: e.target.value })}
+                  placeholder="Zichtbaar onder de afbeelding"
+                />
+              </div>
+            </>
+          ) : (
+            <>
+              <div className="fld">
+                <label htmlFor="rte-alt2">Omschrijving (alt-tekst)</label>
+                <input
+                  id="rte-alt2"
+                  type="text"
+                  autoFocus
+                  value={prompt.alt}
+                  onChange={(e) => setPrompt({ ...prompt, alt: e.target.value })}
+                  placeholder="Wat is er te zien? (voor SEO en schermlezers)"
+                />
+              </div>
+              <div className="fld" style={{ marginBottom: 0 }}>
+                <label htmlFor="rte-cap2">Bijschrift (optioneel)</label>
+                <input
+                  id="rte-cap2"
+                  type="text"
+                  value={prompt.caption}
+                  onChange={(e) => setPrompt({ ...prompt, caption: e.target.value })}
+                  placeholder="Zichtbaar onder de afbeelding"
+                />
+              </div>
+            </>
+          )}
+        </Modal>
       )}
     </div>
   );
