@@ -33,4 +33,11 @@ export const ADMIN_NAV: AdminNavGroup[] = [
       { href: "/admin/sollicitaties", label: "Sollicitaties", icon: "user-check", countKey: "sollicitaties" },
     ],
   },
+  {
+    groep: "Beheer",
+    items: [
+      { href: "/admin/gebruikers", label: "Gebruikers", icon: "shield" },
+      { href: "/admin/activiteit", label: "Activiteit", icon: "history" },
+    ],
+  },
 ];

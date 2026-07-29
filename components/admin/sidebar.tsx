@@ -14,6 +14,8 @@ import {
   UserRound,
   Inbox,
   UserCheck,
+  Shield,
+  History,
   LogOut,
 } from "lucide-react";
 import { ADMIN_NAV } from "@/lib/admin-nav";
@@ -31,6 +33,8 @@ const ICONS: Record<string, React.ComponentType> = {
   "user-round": UserRound,
   inbox: Inbox,
   "user-check": UserCheck,
+  shield: Shield,
+  history: History,
 };
 
 export function Sidebar({

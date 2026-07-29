@@ -232,6 +232,8 @@
 .cms .card > .chead h3 { font-size: var(--text-base); font-weight: var(--fw-bold); }
 .cms .card > .chead a { font-family: var(--font-mono); font-size: 11px; text-transform: uppercase; letter-spacing: 0.07em; cursor: pointer; }
 .cms .empty { text-align: center; padding: var(--space-8); color: var(--text-subtle); font-size: var(--text-sm); }
+.cms .acty-link { color: var(--text-strong); font-weight: var(--fw-semibold); }
+.cms .acty-link:hover { color: var(--color-primary); }
 
 /* Login */
 .cms-login { min-height: 100vh; display: flex; align-items: center; justify-content: center; background: var(--ink-950); padding: var(--space-6); }

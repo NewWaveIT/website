@@ -9,6 +9,12 @@ import { CONTENT_TABLE, type ContentType } from "@/lib/cms/content";
 import { FIELD_SCHEMAS, isStructured } from "@/lib/cms/schema";
 import { PAGE_FIELDS, PAGE_PATH } from "@/lib/cms/pages";
 import { buildSeed } from "@/lib/cms/seed-data";
+import { logAudit } from "@/lib/cms/audit";
+
+/** Weergavenaam van de ingelogde gebruiker (voor audit + bewerkt_door). */
+function gebruikerNaam(user: { user_metadata?: Record<string, unknown>; email?: string | null }): string | null {
+  return (user.user_metadata?.naam as string) || user.email?.split("@")[0] || null;
+}
 
 /** Adminlijst per contenttype (voor terugnavigatie + revalidatie). */
 const LIST_PATH: Record<ContentType, string> = {
@@ -96,7 +102,8 @@ export async function saveContent(_prev: SaveState, formData: FormData): Promise
   const supabase = await createClient();
   const table = CONTENT_TABLE[type];
 
-  if (id && id !== "new") {
+  const bestaat = Boolean(id && id !== "new");
+  if (bestaat) {
     const { error } = await supabase.from(table).update(record).eq("id", id);
     if (error) return { error: error.message };
   } else {
@@ -107,6 +114,15 @@ export async function saveContent(_prev: SaveState, formData: FormData): Promise
       };
     }
   }
+
+  await logAudit({
+    gebruiker_email: user.email ?? null,
+    gebruiker_naam: gebruikerNaam(user),
+    actie: bestaat ? "bijgewerkt" : "aangemaakt",
+    content_type: type,
+    slug,
+    titel,
+  });
 
   revalidatePath(LIST_PATH[type]);
   revalidatePublic(type, slug);
@@ -207,14 +223,28 @@ export async function uploadImage(
 }
 
 export async function deleteContent(formData: FormData): Promise<void> {
-  await requireAdmin();
+  const user = await requireAdmin();
 
   const type = String(formData.get("type") ?? "");
   const id = String(formData.get("id") ?? "").trim();
   if (!isType(type) || !id) return;
 
   const supabase = await createClient();
+  const { data: bestaand } = await supabase
+    .from(CONTENT_TABLE[type])
+    .select("slug, titel")
+    .eq("id", id)
+    .maybeSingle();
   await supabase.from(CONTENT_TABLE[type]).delete().eq("id", id);
+
+  await logAudit({
+    gebruiker_email: user.email ?? null,
+    gebruiker_naam: gebruikerNaam(user),
+    actie: "verwijderd",
+    content_type: type,
+    slug: (bestaand as { slug?: string } | null)?.slug ?? null,
+    titel: (bestaand as { titel?: string } | null)?.titel ?? null,
+  });
 
   revalidatePath(LIST_PATH[type]);
   if (type === "artikelen") revalidatePath("/inzichten");
