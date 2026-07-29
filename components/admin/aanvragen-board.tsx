@@ -11,7 +11,7 @@ const EIGENAREN = ["—", "Merel", "Ruben", "Fatima", "Sanne", "Mitchel"];
 
 function fmt(iso: string) {
   try {
-    return new Date(iso).toLocaleString("nl-NL", { day: "numeric", month: "short", hour: "2-digit", minute: "2-digit" });
+    return new Date(iso).toLocaleString("nl-NL", { timeZone: "Europe/Amsterdam", day: "numeric", month: "short", hour: "2-digit", minute: "2-digit" });
   } catch {
     return iso;
   }

@@ -21,7 +21,7 @@ async function authorResolver(): Promise<AuthorResolver> {
 function fmtDatum(d: string): string {
   if (!/^\d{4}-\d{2}-\d{2}$/.test(d)) return d;
   try {
-    return new Date(d).toLocaleDateString("nl-NL", { day: "numeric", month: "short", year: "numeric" });
+    return new Date(d).toLocaleDateString("nl-NL", { timeZone: "Europe/Amsterdam", day: "numeric", month: "short", year: "numeric" });
   } catch {
     return d;
   }

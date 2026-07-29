@@ -9,7 +9,7 @@ export type Facet = { key: string; label: string };
 
 function fmt(iso: string) {
   try {
-    return new Date(iso).toLocaleDateString("nl-NL", { day: "numeric", month: "short", year: "numeric" });
+    return new Date(iso).toLocaleDateString("nl-NL", { timeZone: "Europe/Amsterdam", day: "numeric", month: "short", year: "numeric" });
   } catch {
     return iso;
   }

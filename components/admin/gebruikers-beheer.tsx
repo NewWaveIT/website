@@ -15,6 +15,7 @@ function fmtDateTime(iso: string | null): string {
   if (!iso) return "Nog niet ingelogd";
   try {
     return new Date(iso).toLocaleString("nl-NL", {
+      timeZone: "Europe/Amsterdam",
       day: "numeric",
       month: "short",
       year: "numeric",

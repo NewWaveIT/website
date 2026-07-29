@@ -31,6 +31,7 @@ const ACTIE_CLASS: Record<AuditActie, string> = {
 function fmt(iso: string): string {
   try {
     return new Date(iso).toLocaleString("nl-NL", {
+      timeZone: "Europe/Amsterdam",
       day: "numeric",
       month: "short",
       year: "numeric",

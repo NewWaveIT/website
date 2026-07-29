@@ -9,7 +9,7 @@ import { cn } from "@/lib/utils";
 
 function fmt(iso: string) {
   try {
-    return new Date(iso).toLocaleDateString("nl-NL", { day: "numeric", month: "short" });
+    return new Date(iso).toLocaleDateString("nl-NL", { timeZone: "Europe/Amsterdam", day: "numeric", month: "short" });
   } catch {
     return iso;
   }
