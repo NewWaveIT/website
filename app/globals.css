@@ -316,6 +316,19 @@ header.nav {
 .nav-links a { color: var(--text-body); font-weight: var(--fw-medium); font-size: var(--text-sm); }
 .nav-links a:hover { color: var(--color-primary); }
 .nav-links a.active { color: var(--color-primary); font-weight: var(--fw-semibold); }
+/* Sectoren-dropdown (hover + toetsenbord via focus-within) */
+.nav-drop { position: relative; display: inline-flex; align-items: center; }
+.nav-menu {
+  position: absolute; top: 100%; left: -12px; min-width: 220px;
+  background: var(--paper, #fff); border: 1px solid var(--border-subtle); border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg); padding: 8px; display: flex; flex-direction: column; gap: 2px;
+  opacity: 0; visibility: hidden; transform: translateY(6px);
+  transition: opacity 140ms ease, transform 140ms ease; z-index: 60;
+}
+.nav-menu::before { content: ""; position: absolute; top: -8px; left: 0; right: 0; height: 8px; }
+.nav-drop:hover .nav-menu, .nav-drop:focus-within .nav-menu { opacity: 1; visibility: visible; transform: none; }
+.nav-menu a { padding: 9px 12px; border-radius: var(--radius-sm); font-size: var(--text-sm); font-weight: var(--fw-medium); color: var(--text-body); white-space: nowrap; }
+.nav-menu a:hover { background: var(--ink-50); color: var(--color-primary); }
 .nav-cta { margin-left: auto; display: flex; align-items: center; gap: var(--space-4); }
 .nav-secondary { color: var(--text-body); font-weight: var(--fw-medium); font-size: var(--text-sm); }
 
