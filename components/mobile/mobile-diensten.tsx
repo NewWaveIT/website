@@ -23,7 +23,7 @@ export function MobileDiensten({ diensten }: { diensten: Record<string, string> 
       <section className="mhero">
         <div className="wrap">
           <div className="crumbs"><Link href="/">Home</Link> / Diensten</div>
-          <div className="kicker on-dark">{"// Diensten"}</div>
+          <div className="kicker on-dark">{"Diensten"}</div>
           <h1>{diensten.heroTitleStart}<em>{diensten.heroAccent}</em>{diensten.heroTitleEnd}</h1>
           <p>{diensten.heroLeadMobiel}</p>
         </div>

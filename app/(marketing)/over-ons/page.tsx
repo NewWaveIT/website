@@ -57,7 +57,7 @@ export default async function OverOnsPage() {
             <Link href="/">Home</Link> / Over ons
           </div>
           <div className="kicker on-dark" style={{ marginTop: "var(--space-6)" }}>
-            {"// Over ons"}
+            {"Over ons"}
           </div>
           <h1>
             {t.heroTitleStart}

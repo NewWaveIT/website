@@ -12,7 +12,7 @@ export function MobileOverOns({ over, team }: { over: Record<string, string>; te
       <section className="mhero">
         <div className="wrap">
           <div className="crumbs"><Link href="/">Home</Link> / Over ons</div>
-          <div className="kicker on-dark">{"// Over ons"}</div>
+          <div className="kicker on-dark">{"Over ons"}</div>
           <h1>{over.heroTitleStart}<em>{over.heroAccent}</em>.</h1>
           <p>{over.heroLeadMobiel}</p>
           <div className="statgrid">

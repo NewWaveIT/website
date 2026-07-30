@@ -18,7 +18,7 @@ export function MobileSectoren({ sectoren }: { sectoren: Record<string, string> 
           <div className="crumbs">
             <Link href="/">Home</Link> / Sectoren
           </div>
-          <div className="kicker on-dark">{"// Sectoren"}</div>
+          <div className="kicker on-dark">{"Sectoren"}</div>
           <h1>{sectoren.heroTitleStart}<em>{sectoren.heroAccent}</em>.</h1>
           <p>{sectoren.heroLeadMobiel}</p>
         </div>

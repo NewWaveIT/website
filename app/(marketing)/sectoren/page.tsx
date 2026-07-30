@@ -94,7 +94,7 @@ export default async function SectorenPage() {
             <Link href="/">Home</Link> / Sectoren
           </div>
           <div className="kicker on-dark" style={{ marginTop: "var(--space-6)" }}>
-            {"// Sectoren"}
+            {"Sectoren"}
           </div>
           <h1>
             {t.heroTitleStart}

@@ -53,7 +53,7 @@ export default async function DienstenPage() {
             <Link href="/">Home</Link> / Diensten
           </div>
           <div className="kicker on-dark" style={{ marginTop: "var(--space-6)" }}>
-            {"// Diensten"}
+            {"Diensten"}
           </div>
           <h1>
             {t.heroTitleStart}

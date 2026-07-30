@@ -9,7 +9,7 @@ export function MobileContact({ contact }: { contact: Record<string, string> }) 
       <section className="mhero light">
         <div className="wrap">
           <div className="crumbs"><Link href="/">Home</Link> / Contact</div>
-          <div className="kicker">{"// Contact"}</div>
+          <div className="kicker">{"Contact"}</div>
           <h1>{contact.heroTitleStart}<em>{contact.heroAccent}</em>?</h1>
           <p>{contact.heroLeadMobiel}</p>
         </div>

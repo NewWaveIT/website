@@ -31,7 +31,7 @@ export default async function InzichtenPage() {
             <Link href="/">Home</Link> / Inzichten
           </div>
           <div className="kicker on-dark" style={{ marginTop: "var(--space-6)" }}>
-            {"// Inzichten"}
+            {"Inzichten"}
           </div>
           <h1>
             Kennis die je <em>morgen</em> kunt gebruiken.

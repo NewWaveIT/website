@@ -37,7 +37,7 @@ export default async function ContactPage() {
             <Link href="/">Home</Link> / Contact
           </div>
           <div className="kicker" style={{ marginTop: "var(--space-6)" }}>
-            {"// Contact"}
+            {"Contact"}
           </div>
           <h1>
             {t.heroTitleStart}

@@ -33,7 +33,7 @@ export default async function WerkenBijPage() {
             <Link href="/">Home</Link> / Werken bij
           </div>
           <div className="kicker on-dark" style={{ marginTop: "var(--space-6)" }}>
-            {"// Werken bij The New Wave IT"}
+            {"Werken bij The New Wave IT"}
           </div>
           <h1>
             {t.heroTitleStart}

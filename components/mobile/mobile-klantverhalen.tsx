@@ -12,7 +12,7 @@ export function MobileKlantverhalen({ verhalen }: { verhalen: Klantverhaal[] }) 
       <section className="mhero">
         <div className="wrap">
           <div className="crumbs"><Link href="/">Home</Link> / Klantverhalen</div>
-          <div className="kicker on-dark">{"// Klantverhalen"}</div>
+          <div className="kicker on-dark">{"Klantverhalen"}</div>
           <h1>Resultaat dat je kunt <em>navragen</em>.</h1>
           <p>Geen beloftes maar bewijs, verteld met de cijfers erbij. Bel ze gerust, dat vinden ze niet erg.</p>
         </div>

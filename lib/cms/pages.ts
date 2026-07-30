@@ -169,20 +169,20 @@ export const PAGE_PATH: Record<string, string> = {
 export const PAGE_DEFAULTS: Record<string, Record<string, string>> = {
   home: {
     heroKicker:
-      "// Business-specialist in publieke sector · mobiliteit · banken · zorg · manufacturing",
+      "Business-specialist in publieke sector · mobiliteit · banken · zorg · manufacturing",
     heroTitleStart: "Wij maken van business en IT ",
     heroAccent: "één beweging",
     heroLead:
       "The New Wave IT combineert diepgaande sectorkennis met Mendix, AI en strategie. Zo vertalen we jouw ambitie naar oplossingen die werken voor de mensen die ermee moeten werken.",
     heroCtaPrimair: "Plan een strategiegesprek",
     heroCtaVideo: "Bekijk klantverhalen",
-    statementKicker: "// Plan · build · run",
+    statementKicker: "Plan · build · run",
     statementTitel: "Wij adviseren niet alleen. Wij bouwen, leveren en beheren.",
     statementBody:
       "Hetzelfde senior team dat jouw strategie mee vormgeeft, staat ook aan de knoppen bij bouw en beheer. Zo blijft verantwoordelijkheid op één plek en houden we vaart tot ver na livegang.",
     ctaTitel: "Klaar om samen te bouwen aan meetbare groei?",
     ctaKnop: "Plan een strategiegesprek",
-    heroKickerMobiel: "// IT-consultancy voor vijf sectoren",
+    heroKickerMobiel: "IT-consultancy voor vijf sectoren",
     heroLeadMobiel:
       "Sectorkennis × Mendix, AI en strategie. Oplossingen die werken voor de mensen die ermee werken.",
     waaromKicker: "Waarom sectorleiders voor ons kiezen",

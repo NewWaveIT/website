@@ -23,7 +23,7 @@ export function MobileInzichten({ artikelen }: { artikelen: Artikel[] }) {
       <section className="mhero">
         <div className="wrap">
           <div className="crumbs"><Link href="/">Home</Link> / Inzichten</div>
-          <div className="kicker on-dark">{"// Inzichten"}</div>
+          <div className="kicker on-dark">{"Inzichten"}</div>
           <h1>Kennis die je <em>morgen</em> kunt gebruiken.</h1>
           <p>Praktische artikelen over Mendix, AI en digitale strategie, zonder jargon.</p>
         </div>

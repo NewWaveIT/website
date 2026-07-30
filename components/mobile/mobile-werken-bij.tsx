@@ -10,7 +10,7 @@ export function MobileWerkenBij({ vacatures, werken }: { vacatures: Vacature[]; 
       <section className="mhero">
         <div className="wrap">
           <div className="crumbs"><Link href="/">Home</Link> / Werken bij</div>
-          <div className="kicker on-dark">{"// Werken bij The New Wave IT"}</div>
+          <div className="kicker on-dark">{"Werken bij The New Wave IT"}</div>
           <h1>{werken.heroTitleStart}<em>{werken.heroAccent}</em>.</h1>
           <p>{werken.heroLeadMobiel}</p>
           <div style={{ display: "flex", flexDirection: "column", gap: 12, marginTop: 22 }}>

@@ -33,7 +33,7 @@ export default async function KlantverhalenPage() {
             <Link href="/">Home</Link> / Klantverhalen
           </div>
           <div className="kicker on-dark" style={{ marginTop: "var(--space-6)" }}>
-            {"// Klantverhalen"}
+            {"Klantverhalen"}
           </div>
           <h1>
             Resultaat dat je kunt <em>navragen</em>.
