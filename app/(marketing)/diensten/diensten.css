@@ -42,4 +42,12 @@
   .p-diensten .dienst-row .media-img { min-height: 220px; }
   .p-diensten .samen .grid { grid-template-columns: 1fr; }
   .p-diensten .dhero h1 { font-size: var(--text-3xl); }
+  .p-diensten .fasen-grid { grid-template-columns: 1fr 1fr; }
 }
+
+/* Zo werken we — 5 fasen */
+.p-diensten .fasen-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: var(--space-5); }
+.p-diensten .fase { border-top: 2px solid var(--color-primary); padding-top: var(--space-4); }
+.p-diensten .fase .fnum { font-family: var(--font-mono); font-size: var(--text-sm); color: var(--orange-text); font-weight: var(--fw-medium); }
+.p-diensten .fase h3 { font-size: var(--text-md); font-weight: var(--fw-bold); margin: 8px 0 6px; line-height: var(--leading-snug); }
+.p-diensten .fase p { font-size: var(--text-sm); color: var(--text-muted); line-height: var(--leading-relaxed); margin: 0; }

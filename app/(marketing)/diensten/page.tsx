@@ -179,6 +179,34 @@ export default async function DienstenPage() {
         </div>
       </section>
 
+      <section className="block fasen">
+        <div className="wrap-wide">
+          <div className="sec-head">
+            <div className="kicker">Zo werken we</div>
+            <h2>Van vraagstuk naar livegang in vijf fasen</h2>
+            <p>
+              Strategie en bouw in één beweging: we starten bij het probleem en werken
+              snel naar iets dat écht draait — met Mendix en AI als middel.
+            </p>
+          </div>
+          <div className="fasen-grid">
+            {[
+              { titel: "Strategische sessies", tekst: "Samen maken we het vraagstuk scherp." },
+              { titel: "Delivery-model", tekst: "We zetten de aanpak op en scherpen die aan." },
+              { titel: "Eén use case", tekst: "We kiezen één concrete casus om mee te starten." },
+              { titel: "Direct bouwen", tekst: "We bouwen meteen, met Mendix en AI." },
+              { titel: "Itereren naar live", tekst: "In korte cycli verbeteren richting livegang." },
+            ].map((f, i) => (
+              <div className="fase" key={f.titel}>
+                <div className="fnum">{`0${i + 1}`}</div>
+                <h3>{f.titel}</h3>
+                <p>{f.tekst}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       <section className="block samen">
         <div className="wrap-wide">
           <div className="sec-head">
