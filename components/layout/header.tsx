@@ -77,11 +77,26 @@ export function Header() {
       </div>
 
       <nav className={cn("nav-mobile", open && "open")}>
-        {NAV_LINKS.map((link) => (
-          <Link key={link.href} href={link.href} onClick={() => setOpen(false)}>
-            {link.label}
-          </Link>
-        ))}
+        {NAV_LINKS.map((link) =>
+          link.href === "/sectoren" ? (
+            <div className="nav-mobile-group" key={link.href}>
+              <Link href={link.href} onClick={() => setOpen(false)}>
+                {link.label}
+              </Link>
+              <div className="nav-mobile-sub">
+                {FOOTER_SECTOREN.filter((s) => s.href !== "/sectoren").map((s) => (
+                  <Link key={s.href} href={s.href} onClick={() => setOpen(false)}>
+                    {s.label}
+                  </Link>
+                ))}
+              </div>
+            </div>
+          ) : (
+            <Link key={link.href} href={link.href} onClick={() => setOpen(false)}>
+              {link.label}
+            </Link>
+          ),
+        )}
         <Link href="/werken-bij" onClick={() => setOpen(false)}>
           Werken bij
         </Link>

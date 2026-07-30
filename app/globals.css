@@ -384,6 +384,10 @@ footer.site-footer { background: var(--ink-950); color: var(--text-on-dark-muted
 .nav-mobile a { padding: 11px 0; font-weight: var(--fw-medium); font-size: var(--text-md); color: var(--text-body); border-bottom: 1px solid var(--border-subtle); }
 .nav-mobile a:last-child { border-bottom: 0; }
 .nav-mobile .btn { justify-content: center; margin-top: var(--space-4); }
+.nav-mobile-group > a { display: block; }
+.nav-mobile-sub { display: flex; flex-direction: column; padding: 2px 0 8px var(--space-4); }
+.nav-mobile-sub a { padding: 8px 0; font-size: var(--text-sm); font-weight: var(--fw-medium); color: var(--text-muted); border-bottom: 0; }
+.nav-mobile-sub a:hover { color: var(--color-primary); }
 
 /* Responsive */
 @media (max-width: 1024px) {

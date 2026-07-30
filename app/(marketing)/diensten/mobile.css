@@ -19,4 +19,10 @@
   .m-diensten .sectchips { display: flex; gap: 8px; flex-wrap: wrap; }
   .m-diensten .sectchips a { display: inline-flex; align-items: center; gap: 8px; font-size: var(--text-sm); font-weight: var(--fw-semibold); color: var(--text-strong); background: var(--white); border: 1px solid var(--border-strong); border-radius: var(--radius-pill); padding: 11px 16px; min-height: 44px; }
   .m-diensten .sectchips .lucide { width: 15px; height: 15px; color: var(--orange-text); }
+
+  .m-diensten .fasen { display: flex; flex-direction: column; gap: var(--space-4); }
+  .m-diensten .fase { display: flex; gap: var(--space-4); }
+  .m-diensten .fase .fnum { font-family: var(--font-mono); font-size: var(--text-sm); color: var(--orange-text); font-weight: var(--fw-medium); flex: none; padding-top: 2px; }
+  .m-diensten .fase h3 { font-size: var(--text-md); font-weight: var(--fw-bold); margin: 0 0 4px; }
+  .m-diensten .fase p { font-size: var(--text-sm); color: var(--text-muted); line-height: var(--leading-relaxed); margin: 0; }
 }

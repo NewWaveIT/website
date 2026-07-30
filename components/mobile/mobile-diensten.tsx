@@ -44,6 +44,32 @@ export function MobileDiensten({ diensten }: { diensten: Record<string, string> 
         </div>
       </section>
 
+      <section className="block">
+        <div className="wrap">
+          <div className="sec-head">
+            <div className="kicker">Zo werken we</div>
+            <h2>Van vraagstuk naar livegang in 5 fasen</h2>
+          </div>
+          <div className="fasen">
+            {[
+              { titel: "Strategische sessies", tekst: "Samen maken we het vraagstuk scherp." },
+              { titel: "Delivery-model", tekst: "We zetten de aanpak op en scherpen die aan." },
+              { titel: "Eén use case", tekst: "We kiezen één concrete casus om mee te starten." },
+              { titel: "Direct bouwen", tekst: "We bouwen meteen, met Mendix en AI." },
+              { titel: "Itereren naar live", tekst: "In korte cycli verbeteren richting livegang." },
+            ].map((f, i) => (
+              <div className="fase rv" key={f.titel}>
+                <div className="fnum">{`0${i + 1}`}</div>
+                <div>
+                  <h3>{f.titel}</h3>
+                  <p>{f.tekst}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       <section className="block samen">
         <div className="wrap">
           <div className="sec-head">
