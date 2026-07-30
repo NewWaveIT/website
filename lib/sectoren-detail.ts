@@ -41,6 +41,8 @@ export interface SectorDetail {
   insightsTitle: string;
   insights: Insight[];
   ctaTitle: string;
+  /** PMC: slugs van proposities die op deze sectorpagina tonen (leeg = alle). */
+  proposities?: string[];
 }
 
 const SOL_AI_STRATEGIE: SolutionRow = {

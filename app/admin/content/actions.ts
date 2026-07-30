@@ -25,6 +25,7 @@ const LIST_PATH: Record<ContentType, string> = {
   artikelen: "/admin/inzichten",
   vacatures: "/admin/vacatures",
   teamleden: "/admin/teamleden",
+  proposities: "/admin/proposities",
 };
 
 function isType(v: string): v is ContentType {
@@ -77,6 +78,12 @@ export async function saveContent(_prev: SaveState, formData: FormData): Promise
         data[f.key] = parsed;
       } catch {
         return { error: `Veld "${f.label}" kon niet worden opgeslagen.` };
+      }
+    } else if (f.type === "proposities") {
+      try {
+        data[f.key] = raw ? JSON.parse(raw) : [];
+      } catch {
+        data[f.key] = [];
       }
     } else if (raw === "") {
       if (f.required) return { error: `${f.label} is verplicht.` };
@@ -144,6 +151,9 @@ function revalidatePublic(type: ContentType, slug: string) {
     revalidatePath(`/diensten/${slug}`);
   } else if (type === "sectoren") {
     revalidatePath(`/sectoren/${slug}`);
+  } else if (type === "proposities") {
+    // Proposities verschijnen als PMC op alle sectordetailpagina's.
+    revalidatePath("/sectoren/[slug]", "page");
   } else if (type === "paginas" && PAGE_PATH[slug]) {
     revalidatePath(PAGE_PATH[slug]);
   } else if (type === "teamleden") {

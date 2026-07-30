@@ -18,7 +18,8 @@ export type FieldType =
   | "select" // vaste keuze uit opties (chips)
   | "author" // keuze uit teamleden (naam + foto)
   | "richtext" // volledige opmaak (koppen, beeld, quote)
-  | "richtext-lite"; // lichte opmaak (vet/cursief/link/lijst)
+  | "richtext-lite" // lichte opmaak (vet/cursief/link/lijst)
+  | "proposities"; // meervoudige keuze van proposities (PMC-koppeling op sectoren)
 
 export interface FieldDef {
   key: string;
@@ -201,6 +202,7 @@ export const FIELD_SCHEMAS: Record<ContentType, FieldDef[]> = {
   sectoren: [
     { key: "naam", label: "Naam", type: "text" },
     { key: "icon", label: "Icoon", type: "icon", options: ["building-2", "train-front", "banknote", "heart-pulse", "factory"], panel: "side" },
+    { key: "proposities", label: "Proposities (PMC)", type: "proposities", panel: "side", help: "Welke proposities op deze sectorpagina verschijnen. Leeg = alle." },
     { key: "h1", label: "Titel (H1)", type: "text" },
     { key: "intro", label: "Intro", type: "richtext-lite" },
     { key: "kpis", label: "KPI's (hero)", type: "items", itemLabel: "KPI", of: [
@@ -241,6 +243,14 @@ export const FIELD_SCHEMAS: Record<ContentType, FieldDef[]> = {
     { key: "rol", label: "Rol", type: "text", placeholder: "CEO & founder", panel: "side" },
     { key: "foto", label: "Foto", type: "image", panel: "side" },
     { key: "bio", label: "Bio", type: "textarea", help: "Titel = de naam van het teamlid." },
+  ],
+  proposities: [
+    { key: "nummer", label: "Nummer", type: "number", panel: "side", help: "Volgnummer (1, 2, 3, …); bepaalt de volgorde." },
+    { key: "belofte", label: "Belofte (één zin)", type: "textarea", help: "Korte, concrete belofte — bv. 'Binnen 8 weken een werkend proces'." },
+    { key: "wat", label: "Wat het betekent", type: "list", help: "Elke regel een punt." },
+    { key: "hoe", label: "Hoe we dit doen", type: "list" },
+    { key: "onderscheid", label: "Waarom wij hierin onderscheiden", type: "list" },
+    { key: "solutions", label: "Solutions", type: "list" },
   ],
 };
 

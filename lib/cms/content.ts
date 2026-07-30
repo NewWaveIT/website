@@ -1,7 +1,7 @@
 import "server-only";
 import { createClient } from "@/lib/supabase/server";
 
-export type ContentType = "paginas" | "cases" | "diensten" | "sectoren" | "artikelen" | "vacatures" | "teamleden";
+export type ContentType = "paginas" | "cases" | "diensten" | "sectoren" | "artikelen" | "vacatures" | "teamleden" | "proposities";
 
 export const CONTENT_TABLE: Record<ContentType, string> = {
   paginas: "cms_paginas",
@@ -11,6 +11,7 @@ export const CONTENT_TABLE: Record<ContentType, string> = {
   artikelen: "cms_artikelen",
   vacatures: "cms_vacatures",
   teamleden: "cms_teamleden",
+  proposities: "cms_proposities",
 };
 
 export interface ContentRow<T = Record<string, unknown>> {
@@ -38,19 +39,20 @@ async function count(table: string, onlyOpen?: string): Promise<number> {
 
 /** Aantallen voor de admin-sidebar. Faalt stil (0) zonder Supabase. */
 export async function getAdminCounts(): Promise<Record<string, number>> {
-  const [paginas, cases, diensten, sectoren, artikelen, vacatures, teamleden, aanvragen, sollicitaties] =
+  const [paginas, cases, diensten, sectoren, proposities, artikelen, vacatures, teamleden, aanvragen, sollicitaties] =
     await Promise.all([
       count("cms_paginas"),
       count("cms_cases"),
       count("cms_diensten"),
       count("cms_sectoren"),
+      count("cms_proposities"),
       count("cms_artikelen"),
       count("cms_vacatures"),
       count("cms_teamleden"),
       count("contact_aanvragen", "afgerond"),
       count("sollicitaties", "afgerond"),
     ]);
-  return { paginas, cases, diensten, sectoren, artikelen, vacatures, teamleden, aanvragen, sollicitaties };
+  return { paginas, cases, diensten, sectoren, proposities, artikelen, vacatures, teamleden, aanvragen, sollicitaties };
 }
 
 export async function listContent<T = Record<string, unknown>>(

@@ -13,6 +13,7 @@ import {
   ArrowRight,
 } from "lucide-react";
 import { getSectorBySlug, getSectorSlugs } from "@/lib/sectoren-detail-data";
+import { getPropositiesVoorSector } from "@/lib/proposities-data";
 import { stripHtml } from "@/lib/cms/sanitize";
 import { getArtikelenVoorSector } from "@/lib/inzichten-data";
 import { MOBILE_SECTOREN } from "@/lib/mobile-detail";
@@ -58,6 +59,7 @@ export default async function SectorPage({
   const s = await getSectorBySlug(slug);
   if (!s) notFound();
   const artikelen = await getArtikelenVoorSector(slug);
+  const proposities = await getPropositiesVoorSector(s.proposities);
 
   const Icon = ICONS[s.icon];
   const jsonLd = {
@@ -132,6 +134,36 @@ export default async function SectorPage({
           </div>
         </div>
       </section>
+
+      {proposities.length > 0 && (
+        <section className="block pmc">
+          <div className="wrap-wide">
+            <div className="sec-head">
+              <div className="kicker">Onze proposities</div>
+              <h2 style={{ fontSize: "var(--text-3xl)", fontWeight: "var(--fw-extrabold)", margin: "var(--space-4) 0" }}>
+                Zo helpen we {s.naam.toLowerCase()} versnellen
+              </h2>
+              <p>Wij starten bij jouw vraagstuk en zetten Mendix, AI en strategie in als middel.</p>
+            </div>
+            <div className="pmc-grid">
+              {proposities.map((p) => (
+                <div className="pmc-card" key={p.slug}>
+                  <div className="num">{String(p.nummer).padStart(2, "0")}</div>
+                  <h3>{p.titel}</h3>
+                  <p className="belofte">{p.belofte}</p>
+                  {p.solutions.length > 0 && (
+                    <div className="pmc-tags">
+                      {p.solutions.map((sol, i) => (
+                        <span className="pmc-tag" key={i}>{sol}</span>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       <section className="block sol">
         <div className="wrap-wide">

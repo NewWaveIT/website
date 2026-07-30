@@ -13,6 +13,7 @@ import { IconField } from "./icon-field";
 import { SelectField } from "./select-field";
 import { RichTextEditor } from "./rich-text-editor";
 import { AuthorField, type TeamOptie } from "./author-field";
+import { PropositiesField, type PropositieOptie } from "./proposities-field";
 import { Modal } from "./modal";
 
 /** Maakt een net webadres van een titel (kleine letters, koppeltekens). */
@@ -93,12 +94,14 @@ export function ContentEditor({
   listPath,
   row,
   teamleden = [],
+  proposities = [],
 }: {
   type: ContentType;
   label: string;
   listPath: string;
   row: ContentRow | null;
   teamleden?: TeamOptie[];
+  proposities?: PropositieOptie[];
 }) {
   const [state, formAction, pending] = useActionState<SaveState, FormData>(saveContent, {});
   const [status, setStatus] = useState(row?.status === "live" ? "live" : "concept");
@@ -156,6 +159,15 @@ export function ContentEditor({
       <SelectField key={f.key} name={`f_${f.key}`} label={f.label} options={f.options ?? []} defaultValue={initial(f)} help={f.help} />
     ) : f.type === "author" ? (
       <AuthorField key={f.key} name={`f_${f.key}`} label={f.label} options={teamleden} defaultValue={initial(f)} />
+    ) : f.type === "proposities" ? (
+      <PropositiesField
+        key={f.key}
+        name={`f_${f.key}`}
+        label={f.label}
+        options={proposities}
+        defaultValue={Array.isArray(data[f.key]) ? (data[f.key] as string[]) : []}
+        help={f.help}
+      />
     ) : f.type === "richtext" ? (
       <RichTextEditor key={f.key} name={`f_${f.key}`} label={f.label} defaultValue={initial(f)} help={f.help} />
     ) : f.type === "richtext-lite" ? (

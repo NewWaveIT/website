@@ -6,6 +6,7 @@ import { DIENSTEN } from "@/lib/diensten-detail";
 import { SECTOREN } from "@/lib/sectoren-detail";
 import { PAGE_DEFAULTS } from "@/lib/cms/pages";
 import { TEAMLEDEN } from "@/lib/team";
+import { PROPOSITIES } from "@/lib/proposities";
 import type { ContentType } from "@/lib/cms/content";
 
 export interface SeedRow {
@@ -83,6 +84,21 @@ export function buildSeed(): Record<ContentType, SeedRow[]> {
       status: "live",
       volgorde: i,
       data: { rol: t.rol, foto: t.foto, bio: t.bio },
+    })),
+
+    proposities: PROPOSITIES.map((p, i) => ({
+      slug: p.slug,
+      titel: p.titel,
+      status: "live",
+      volgorde: i,
+      data: {
+        nummer: p.nummer,
+        belofte: p.belofte,
+        wat: p.wat,
+        hoe: p.hoe,
+        onderscheid: p.onderscheid,
+        solutions: p.solutions,
+      },
     })),
   };
 }
