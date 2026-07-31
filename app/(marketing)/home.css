@@ -73,6 +73,14 @@
 /* Featured case */
 .featured { background: var(--eggshell); }
 .fcase { display: grid; grid-template-columns: 1.05fr 1fr; border-radius: var(--radius-xl); overflow: hidden; box-shadow: var(--shadow-lg); background: var(--white); }
+/* Klantverhalen-carrousel */
+.fcase-nav { display: flex; align-items: center; justify-content: center; gap: var(--space-4); margin-top: var(--space-5); }
+.fcase-arrow { width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--border-strong); background: var(--white); display: inline-flex; align-items: center; justify-content: center; cursor: pointer; color: var(--text-strong); transition: border-color 140ms ease, color 140ms ease; }
+.fcase-arrow:hover { border-color: var(--color-primary); color: var(--color-primary); }
+.fcase-arrow .lucide { width: 20px; height: 20px; }
+.fcase-dots { display: flex; gap: 8px; }
+.fcase-dots button { width: 9px; height: 9px; border-radius: 50%; border: 0; padding: 0; background: var(--ink-200); cursor: pointer; transition: background 140ms ease, transform 140ms ease; }
+.fcase-dots button.on { background: var(--color-primary); transform: scale(1.25); }
 .fcase .media { position: relative; min-height: 460px; background-color: var(--ink-200); overflow: hidden; display: flex; align-items: center; justify-content: center; }
 .fcase .kbwrap { position: absolute; inset: -36px 0; will-change: transform; }
 .fcase .kb { position: absolute; inset: 0; background-color: var(--ink-200); background-size: cover; background-position: center; animation: kenburns 26s ease-in-out infinite alternate; }

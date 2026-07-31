@@ -3,7 +3,6 @@ import Link from "next/link";
 import Image from "next/image";
 import {
   ArrowRight,
-  Play,
   Phone,
   Award,
   Building2,
@@ -26,7 +25,9 @@ import { HomeInteractions } from "@/components/home/home-interactions";
 import { MobileHome } from "@/components/mobile/mobile-home";
 import { SectorSplit } from "@/components/sector-split";
 import { ClientLogos, AWARD } from "@/components/home/client-logos";
+import { CasesCarousel } from "@/components/home/cases-carousel";
 import { getPagina } from "@/lib/paginas-data";
+import { getKlantverhalen } from "@/lib/klantverhalen-data";
 import "./home.css";
 import "./mobile-home.css";
 
@@ -52,6 +53,15 @@ export const revalidate = 300;
 
 export default async function HomePage() {
   const t = await getPagina("home");
+  const cases = (await getKlantverhalen()).map((k) => ({
+    slug: k.slug,
+    tag: k.tag || k.sector,
+    image: k.image,
+    quote: k.quote || k.pull,
+    naam: k.quoteNaam,
+    rol: k.quoteRol,
+    impact: k.impact,
+  }));
   return (
     <>
       <MobileHome home={t} />
@@ -197,58 +207,7 @@ export default async function HomePage() {
               Business-impact, geen technische anekdote.
             </h2>
           </div>
-          <div className="fcase">
-            <div className="media">
-              <div className="kbwrap">
-                <div
-                  className="kb"
-                  style={{
-                    backgroundImage:
-                      "url('/assets/photos/team-presentatie-breed.webp')",
-                  }}
-                />
-              </div>
-              <span className="tag">Publieke sector · COA</span>
-              <button type="button" className="playbig" aria-label="Bekijk video">
-                <Play />
-              </button>
-            </div>
-            <div className="body">
-              <div className="kick">Doorlooptijd aanvragen</div>
-              <blockquote>
-                “The New Wave IT denkt écht mee met onze uitdagingen. We leveren
-                nu in weken wat eerst maanden kostte.”
-              </blockquote>
-              <div className="metrics">
-                <div className="m">
-                  <div className="n">-60%</div>
-                  <div className="l">Doorlooptijd per aanvraag</div>
-                </div>
-                <div className="m">
-                  <div className="n">8×</div>
-                  <div className="l">Sneller live dan geraamd</div>
-                </div>
-                <div className="m">
-                  <div className="n">100%</div>
-                  <div className="l">Auditproof opgeleverd</div>
-                </div>
-              </div>
-              <div className="who">
-                <div className="av">PD</div>
-                <div>
-                  <div className="nm">Peter van Dam</div>
-                  <div className="rl">IT Manager, COA</div>
-                </div>
-                <Link
-                  href="/klantverhalen/coa"
-                  className="btn btn-outline btn-sm"
-                  style={{ marginLeft: "auto" }}
-                >
-                  Lees het verhaal
-                </Link>
-              </div>
-            </div>
-          </div>
+          <CasesCarousel items={cases} />
         </div>
       </section>
 
