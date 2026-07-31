@@ -10,16 +10,6 @@ import {
   Landmark,
   HeartPulse,
   Factory,
-  Target,
-  Users,
-  Workflow,
-  ShieldCheck,
-  Layers,
-  BrainCircuit,
-  Route,
-  CalendarCheck,
-  Gauge,
-  FileDown,
 } from "lucide-react";
 import { HomeInteractions } from "@/components/home/home-interactions";
 import { MobileHome } from "@/components/mobile/mobile-home";
@@ -130,86 +120,6 @@ export default async function HomePage() {
           <ClientLogos />
         </div>
       </div>
-
-      {/* Statement */}
-      <section className="statement">
-        <div className="wrap-wide">
-          <div>
-            <div className="kicker">{t.statementKicker}</div>
-            <h2 style={{ marginTop: "var(--space-4)" }}>{t.statementTitel}</h2>
-          </div>
-          <p>{t.statementBody}</p>
-        </div>
-      </section>
-
-      {/* Sectoren */}
-      <section className="block sectoren">
-        <div className="wrap-wide">
-          <SectorSplit
-            kicker="Onze sectoren"
-            titel="Wij spreken de taal van jouw sector."
-            intro="Wij kennen de regels, de systemen en de druk waaronder jouw organisatie werkt. Daardoor leveren we sneller iets dat écht past."
-            items={[
-              {
-                naam: "Publieke sector",
-                href: "/sectoren/publieke-sector",
-                cap: "Publieke sector",
-                image: "/assets/sectoren/foto-publieke-sector.webp",
-                chal: "Digitale dienstverlening die burgers vertrouwen: sneller vergunnen, minder papier, volledig aantoonbaar.",
-              },
-              {
-                naam: "Mobiliteit & logistiek",
-                href: "/sectoren/mobiliteit",
-                cap: "Mobiliteit & logistiek",
-                image: "/assets/sectoren/foto-mobiliteit.webp",
-                chal: "Realtime grip op planning, assets en stromen, van de eerste kilometer tot de laatste.",
-              },
-              {
-                naam: "Banken & financials",
-                href: "/sectoren/banken",
-                cap: "Banken & financials",
-                image: "/assets/sectoren/foto-banken.webp",
-                chal: "Compliant, veilig en schaalbaar, zonder in te leveren op snelheid of gebruiksgemak.",
-              },
-              {
-                naam: "Zorg",
-                href: "/sectoren/zorg",
-                cap: "Zorg",
-                image: "/assets/sectoren/foto-zorg.webp",
-                chal: "Meer tijd voor de patiënt door betrouwbare, veilige processen die zorgprofessionals ontlasten.",
-              },
-              {
-                naam: "Manufacturing",
-                href: "/sectoren/manufacturing",
-                cap: "Manufacturing",
-                image: "/assets/sectoren/foto-manufacturing.webp",
-                chal: "Productie die meebeweegt met de vraag, gestuurd op data, van shopfloor tot boardroom.",
-              },
-            ]}
-            moreHref="/sectoren"
-            moreTitel="Niet jouw sector? Plan een verkenning"
-          />
-        </div>
-      </section>
-
-      {/* Featured case */}
-      <section className="block featured">
-        <div className="wrap-wide">
-          <div className="sec-head">
-            <div className="kicker">Klantverhaal</div>
-            <h2
-              style={{
-                fontSize: "var(--text-3xl)",
-                fontWeight: "var(--fw-extrabold)",
-                margin: "var(--space-4) 0 0",
-              }}
-            >
-              Business-impact, geen technische anekdote.
-            </h2>
-          </div>
-          <CasesCarousel items={cases} />
-        </div>
-      </section>
 
       {/* Diensten */}
       <section className="block diensten" id="diensten">
@@ -383,52 +293,72 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* Waarom wij */}
-      <section className="block waarom">
+      {/* Sectoren */}
+      <section className="block sectoren">
+        <div className="wrap-wide">
+          <SectorSplit
+            kicker="Onze sectoren"
+            titel="Wij spreken de taal van jouw sector."
+            intro="Wij kennen de regels, de systemen en de druk waaronder jouw organisatie werkt. Daardoor leveren we sneller iets dat écht past."
+            items={[
+              {
+                naam: "Publieke sector",
+                href: "/sectoren/publieke-sector",
+                cap: "Publieke sector",
+                image: "/assets/sectoren/foto-publieke-sector.webp",
+                chal: "Digitale dienstverlening die burgers vertrouwen: sneller vergunnen, minder papier, volledig aantoonbaar.",
+              },
+              {
+                naam: "Mobiliteit & logistiek",
+                href: "/sectoren/mobiliteit",
+                cap: "Mobiliteit & logistiek",
+                image: "/assets/sectoren/foto-mobiliteit.webp",
+                chal: "Realtime grip op planning, assets en stromen, van de eerste kilometer tot de laatste.",
+              },
+              {
+                naam: "Banken & financials",
+                href: "/sectoren/banken",
+                cap: "Banken & financials",
+                image: "/assets/sectoren/foto-banken.webp",
+                chal: "Compliant, veilig en schaalbaar, zonder in te leveren op snelheid of gebruiksgemak.",
+              },
+              {
+                naam: "Zorg",
+                href: "/sectoren/zorg",
+                cap: "Zorg",
+                image: "/assets/sectoren/foto-zorg.webp",
+                chal: "Meer tijd voor de patiënt door betrouwbare, veilige processen die zorgprofessionals ontlasten.",
+              },
+              {
+                naam: "Manufacturing",
+                href: "/sectoren/manufacturing",
+                cap: "Manufacturing",
+                image: "/assets/sectoren/foto-manufacturing.webp",
+                chal: "Productie die meebeweegt met de vraag, gestuurd op data, van shopfloor tot boardroom.",
+              },
+            ]}
+            moreHref="/sectoren"
+            moreTitel="Niet jouw sector? Plan een verkenning"
+          />
+        </div>
+      </section>
+
+      {/* Klantverhalen */}
+      <section className="block featured">
         <div className="wrap-wide">
           <div className="sec-head">
-            <div className="kicker on-dark">{t.waaromKicker}</div>
+            <div className="kicker">Klantverhalen</div>
             <h2
               style={{
-                color: "#fff",
                 fontSize: "var(--text-3xl)",
                 fontWeight: "var(--fw-extrabold)",
                 margin: "var(--space-4) 0 0",
               }}
             >
-              {t.waaromTitel}
+              Business-impact, geen technische anekdote.
             </h2>
           </div>
-          <div className="grid">
-            <div className="wcard">
-              <div className="ic">
-                <Target />
-              </div>
-              <h4>{t.waarom1Titel}</h4>
-              <p>{t.waarom1Tekst}</p>
-            </div>
-            <div className="wcard">
-              <div className="ic">
-                <Users />
-              </div>
-              <h4>{t.waarom2Titel}</h4>
-              <p>{t.waarom2Tekst}</p>
-            </div>
-            <div className="wcard">
-              <div className="ic">
-                <Workflow />
-              </div>
-              <h4>{t.waarom3Titel}</h4>
-              <p>{t.waarom3Tekst}</p>
-            </div>
-            <div className="wcard">
-              <div className="ic">
-                <ShieldCheck />
-              </div>
-              <h4>{t.waarom4Titel}</h4>
-              <p>{t.waarom4Tekst}</p>
-            </div>
-          </div>
+          <CasesCarousel items={cases} />
         </div>
       </section>
 
@@ -500,50 +430,6 @@ export default async function HomePage() {
                   sizes="(max-width: 900px) 50vw, 20vw"
                   style={{ objectPosition: "top" }}
                 />
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Word een Waver */}
-      <section className="block joinus">
-        <div className="wrap-wide">
-          <div className="grid">
-            <div>
-              <div className="kicker on-dark">{t.joinusKicker}</div>
-              <h2>{t.joinusTitel}</h2>
-              <p className="lead">{t.joinusLead}</p>
-              <div className="roles">
-                <Link href="/vacatures/lead-mendix-consultant" className="role">
-                  <Layers /> Lead Mendix Consultant
-                </Link>
-                <Link href="/vacatures/ai-engineer" className="role">
-                  <BrainCircuit /> AI Engineer
-                </Link>
-                <Link href="/vacatures/business-consultant" className="role">
-                  <Route /> Business Consultant
-                </Link>
-              </div>
-              <div className="actions">
-                <Link href="/werken-bij" className="btn btn-primary">
-                  Bekijk alle vacatures <ArrowRight />
-                </Link>
-                <Link href="/werken-bij#cultuur" className="btn btn-ghost-dark">
-                  Lees over onze cultuur
-                </Link>
-              </div>
-            </div>
-            <div className="figure">
-              <Image
-                src="/assets/photos/team-presentatie-breed.webp"
-                alt="Wavers tijdens een kennissessie"
-                fill
-                sizes="(max-width: 900px) 100vw, 45vw"
-              />
-              <div className="count">
-                <span className="num">3</span>
-                <span className="lbl">open rollen</span>
               </div>
             </div>
           </div>
@@ -635,63 +521,6 @@ export default async function HomePage() {
                 </Link>
               </div>
             </article>
-          </div>
-        </div>
-      </section>
-
-      {/* Lead-gen */}
-      <section className="block leadgen" id="lead">
-        <div className="wrap-wide">
-          <div className="sec-head center">
-            <div className="kicker">{t.leadgenKicker}</div>
-            <h2>{t.leadgenTitel}</h2>
-            <p>{t.leadgenIntro}</p>
-          </div>
-          <div className="lead-grid">
-            <div className="lead-card">
-              <div className="ic">
-                <CalendarCheck />
-              </div>
-              <div className="aud">{t.lead1Aud}</div>
-              <h3>{t.lead1Titel}</h3>
-              <p>{t.lead1Tekst}</p>
-              <div className="spokesperson">
-                <Image
-                  src="/assets/photos/portret-blauw.webp"
-                  alt="Koen Wijsman, CEO"
-                  width={40}
-                  height={40}
-                />
-                <span>
-                  Je spreekt direct met <strong>Koen Wijsman</strong>, CEO
-                </span>
-              </div>
-              <Link href="/contact" className="go">
-                Plan een gesprek <ArrowRight />
-              </Link>
-            </div>
-            <div className="lead-card">
-              <div className="ic">
-                <Gauge />
-              </div>
-              <div className="aud">{t.lead2Aud}</div>
-              <h3>{t.lead2Titel}</h3>
-              <p>{t.lead2Tekst}</p>
-              <Link href="/contact?type=quickscan" className="go">
-                Doe de quick scan <ArrowRight />
-              </Link>
-            </div>
-            <div className="lead-card">
-              <div className="ic">
-                <FileDown />
-              </div>
-              <div className="aud">{t.lead3Aud}</div>
-              <h3>{t.lead3Titel}</h3>
-              <p>{t.lead3Tekst}</p>
-              <Link href="/contact?type=sectorrapport" className="go">
-                Download het rapport <ArrowRight />
-              </Link>
-            </div>
           </div>
         </div>
       </section>

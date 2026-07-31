@@ -5,7 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import {
   Play, Phone, ArrowRight, Building2, Truck, Landmark, HeartPulse, Factory, Compass,
-  Layers, BrainCircuit, Route, Target, Users, Workflow, ShieldCheck, ChevronDown,
+  Layers, BrainCircuit, Route, ChevronDown,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { CLIENTS, AWARD } from "@/components/home/client-logos";
@@ -24,13 +24,6 @@ const DIENSTEN = [
   { slug: "strategie", Icon: Route, titel: "Business & IT-strategie", img: "/assets/photos/klantgesprek-tafel.webp", alt: "Strategiesessie aan tafel", p: "Van ambitie naar roadmap én uitvoering, we blijven tot het werkt.", link: "Meer over Strategie" },
 ];
 
-const WAAROM_ICONS = [Target, Users, Workflow, ShieldCheck];
-
-const ROLES = [
-  { slug: "lead-mendix-consultant", Icon: Layers, naam: "Lead Mendix Consultant" },
-  { slug: "ai-engineer", Icon: BrainCircuit, naam: "AI Engineer" },
-  { slug: "business-consultant", Icon: Route, naam: "Business Consultant" },
-];
 
 export function MobileHome({ home }: { home: Record<string, string> }) {
   const rootRef = useRef<HTMLDivElement>(null);
@@ -307,24 +300,6 @@ export function MobileHome({ home }: { home: Record<string, string> }) {
         </div>
       </section>
 
-      <section className="m-block m-waarom">
-        <div className="m-wrap">
-          <div className="m-sec-head">
-            <div className="m-kicker on-dark">{home.waaromKicker}</div>
-            <h2 style={{ color: "#fff" }}>{home.waaromTitel}</h2>
-          </div>
-          <div className="wlist">
-            {WAAROM_ICONS.map((Icon, i) => (
-              <div className="m-wcard" key={i}>
-                <div className="ic"><Icon /></div>
-                <h4>{home[`waarom${i + 1}Titel`]}</h4>
-                <p>{home[`waarom${i + 1}Tekst`]}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       <section className="m-block m-mensen">
         <div className="m-wrap">
           <div className="media-img">
@@ -333,24 +308,9 @@ export function MobileHome({ home }: { home: Record<string, string> }) {
           <div className="m-kicker">{home.mensenKicker}</div>
           <h2 style={{ fontSize: "var(--text-xl)", margin: "12px 0 14px" }}>{home.mensenTitel}</h2>
           <p>{home.mensenP1}</p>
-          <Link href="/over-ons" className="m-btn outline">Ontmoet ons team</Link>
-        </div>
-      </section>
-
-      <section className="m-block m-joinus">
-        <div className="m-wrap">
-          <div className="m-kicker on-dark">{home.joinusKicker}</div>
-          <h2>{home.joinusTitel}</h2>
-          <div className="roles">
-            {ROLES.map(({ slug, Icon, naam }) => (
-              <Link key={slug} href={`/vacatures/${slug}`} className="role">
-                <Icon /> {naam} <span className="n">→</span>
-              </Link>
-            ))}
-          </div>
-          <div className="actions">
-            <Link href="/werken-bij" className="m-btn primary">Bekijk alle vacatures <ArrowRight /></Link>
-            <Link href="/werken-bij#cultuur" className="m-btn ghost-dark">Lees over onze cultuur</Link>
+          <div className="actions" style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+            <Link href="/over-ons" className="m-btn outline">Ontmoet ons team</Link>
+            <Link href="/werken-bij" className="m-btn primary">Bekijk vacatures <ArrowRight /></Link>
           </div>
         </div>
       </section>
