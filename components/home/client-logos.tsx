@@ -18,9 +18,10 @@ export const CLIENTS: Client[] = [
   { naam: "Netradyne", logo: "/assets/logos/klanten/netradyne.svg" },
   { naam: "AutoBinck", logo: "/assets/logos/klanten/autobinck.svg" },
   { naam: "XXImo", logo: "/assets/logos/klanten/xximo.svg" },
-  // Nog aan te leveren officiële bestanden:
+  { naam: "Welcome app", logo: "/assets/logos/klanten/welcome-app.svg" },
+  // Nog aan te leveren officiële bestanden (schone SVG of transparante PNG):
+  // Moove is opgegaan in Netradyne (zelfde logo) — voorlopig wordmark.
   { naam: "Moove Connected Mobility" }, // moove.svg
-  { naam: "Welcome app" }, // welcome-app.svg
   { naam: "De Derde Linden Groep" }, // derde-linden-groep.svg
 ];
 
