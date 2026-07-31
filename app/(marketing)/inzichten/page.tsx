@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
 import { getArtikelen } from "@/lib/inzichten-data";
 import { SectorHeroAnim } from "@/components/sector-hero-anim";
 import { InzichtenList } from "@/components/inzichten-list";
+import { LeadCta } from "@/components/inzichten/lead-cta";
 import { MobileInzichten } from "@/components/mobile/mobile-inzichten";
 import "./inzichten.css";
 import "./mobile.css";
@@ -49,35 +49,7 @@ export default async function InzichtenPage() {
         </div>
       </section>
 
-      <section className="block nieuwsbrief">
-        <div className="wrap-wide">
-          <div className="inner">
-            <div>
-              <div className="kicker">Nieuwsbrief</div>
-              <h2>Eén mail per maand, alleen het beste</h2>
-              <p>
-                Onze scherpste inzichten over technologie in jouw sector. Geen
-                sales, uitschrijven kan altijd.
-              </p>
-            </div>
-            <form action="/contact">
-              <input type="email" placeholder="naam@organisatie.nl" aria-label="E-mailadres" />
-              <button type="submit" className="btn btn-primary">
-                Aanmelden
-              </button>
-            </form>
-          </div>
-        </div>
-      </section>
-
-      <section className="cta">
-        <div className="wrap-wide">
-          <h2>Liever sparren dan lezen?</h2>
-          <Link href="/contact" className="btn btn-on">
-            Plan een strategiegesprek <ArrowRight />
-          </Link>
-        </div>
-      </section>
+      <LeadCta />
     </div>
     </>
   );

@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import { notFound } from "next/navigation";
-import { ArrowRight } from "lucide-react";
 import { getArtikelen, getArtikelBySlug } from "@/lib/inzichten-data";
 import { ArticleContent } from "@/components/article-content";
+import { LeadCta } from "@/components/inzichten/lead-cta";
 import "./article.css";
 
 export const revalidate = 300;
@@ -93,14 +93,11 @@ export default async function ArtikelPage({
         </div>
       </article>
 
-      <section className="cta">
-        <div className="wrap-wide">
-          <h2>Liever sparren over jouw situatie?</h2>
-          <Link href="/contact" className="btn btn-on">
-            Plan een strategiegesprek <ArrowRight />
-          </Link>
-        </div>
-      </section>
+      <LeadCta
+        titel="Dit soort inzichten, één keer per maand"
+        tekst="Laat je e-mail achter en ontvang onze scherpste inzichten over technologie in jouw sector. Geen sales — uitschrijven kan altijd."
+      />
+
     </div>
   );
 }

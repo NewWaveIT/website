@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
 import type { Artikel } from "@/lib/inzichten";
+import { LeadCta } from "@/components/inzichten/lead-cta";
 import { MobileFx } from "./mobile-fx";
 
 const ALLE = "Alle";
@@ -66,26 +66,7 @@ export function MobileInzichten({ artikelen }: { artikelen: Artikel[] }) {
         </div>
       </section>
 
-      <section className="block nieuwsbrief" style={{ background: "var(--eggshell)" }}>
-        <div className="wrap">
-          <div className="inner rv">
-            <div className="kicker">Nieuwsbrief</div>
-            <h2>Eén mail per maand, alleen het beste</h2>
-            <p>Onze scherpste inzichten over technologie in jouw sector. Geen sales, uitschrijven kan altijd.</p>
-            <form action="/contact">
-              <input type="email" placeholder="naam@organisatie.nl" aria-label="E-mailadres" />
-              <button type="submit" className="btn btn-primary btn-block">Aanmelden</button>
-            </form>
-          </div>
-        </div>
-      </section>
-
-      <section className="cta">
-        <div className="wrap">
-          <h2>Liever sparren dan lezen?</h2>
-          <Link href="/contact" className="btn">Plan een strategiegesprek <ArrowRight /></Link>
-        </div>
-      </section>
+      <LeadCta />
 
       <MobileFx />
     </div>
