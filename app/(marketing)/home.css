@@ -51,9 +51,9 @@
 .logo-tile { flex: none; display: inline-flex; align-items: center; justify-content: center; height: 34px; }
 .logo-tile .wordmark { font-family: var(--font-sans); font-weight: var(--fw-semibold); font-size: var(--text-base); letter-spacing: 0.01em; color: var(--ink-300, #b9b0a2); white-space: nowrap; transition: color 200ms ease; }
 .logo-tile:hover .wordmark { color: var(--eggshell); }
-/* Echte logo's: uniform wit-monochroom op de donkere band */
-.logo-tile img { max-height: 30px; width: auto; object-fit: contain; filter: grayscale(1) brightness(0) invert(1); opacity: 0.82; transition: opacity 200ms ease; }
-.logo-tile:hover img { opacity: 1; }
+/* Echte logo's: vaste hoogte (breedte volgt), uniform wit-monochroom op de donkere band */
+.logo-tile .logo-img { height: 30px; width: auto; max-width: 200px; object-fit: contain; display: block; filter: grayscale(1) brightness(0) invert(1); opacity: 0.82; transition: opacity 200ms ease; }
+.logo-tile:hover .logo-img { opacity: 1; }
 @keyframes clientScroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 
 /* Sectoren */
