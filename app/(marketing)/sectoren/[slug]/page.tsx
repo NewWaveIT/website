@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 import { getSectorBySlug, getSectorSlugs } from "@/lib/sectoren-detail-data";
 import { getPropositiesVoorSector } from "@/lib/proposities-data";
+import { SlotCta } from "@/components/layout/slot-cta";
 import { stripHtml } from "@/lib/cms/sanitize";
 import { getArtikelenVoorSector } from "@/lib/inzichten-data";
 import { MOBILE_SECTOREN } from "@/lib/mobile-detail";
@@ -289,14 +290,7 @@ export default async function SectorPage({
         </div>
       </section>
 
-      <section className="cta">
-        <div className="wrap-wide">
-          <h2>{s.ctaTitle}</h2>
-          <Link href="/contact" className="btn btn-on">
-            Plan een strategiegesprek <ArrowRight />
-          </Link>
-        </div>
-      </section>
+      <SlotCta titel={s.ctaTitle} />
     </div>
     </>
   );

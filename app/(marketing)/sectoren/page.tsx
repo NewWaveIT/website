@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
 import { SectorHeroAnim } from "@/components/sector-hero-anim";
 import { SectorSplit } from "@/components/sector-split";
 import { MobileSectoren } from "@/components/mobile/mobile-sectoren";
+import { SlotCta } from "@/components/layout/slot-cta";
 import { getPagina } from "@/lib/paginas-data";
 import "./sectoren.css";
 import "./mobile.css";
@@ -147,14 +147,7 @@ export default async function SectorenPage() {
         </div>
       </section>
 
-      <section className="cta">
-        <div className="wrap-wide">
-          <h2>{t.ctaTitel}</h2>
-          <Link href="/contact" className="btn btn-on">
-            Plan een strategiegesprek <ArrowRight />
-          </Link>
-        </div>
-      </section>
+      <SlotCta titel={t.ctaTitel} />
     </div>
     </>
   );

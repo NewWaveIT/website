@@ -5,6 +5,7 @@ import { Check, ArrowRight, Award } from "lucide-react";
 import { getVacatures } from "@/lib/vacatures-data";
 import { getPagina } from "@/lib/paginas-data";
 import { AWARD } from "@/lib/award";
+import { SlotCta } from "@/components/layout/slot-cta";
 import { MobileWerkenBij } from "@/components/mobile/mobile-werken-bij";
 import "./werken-bij.css";
 import "./mobile.css";
@@ -149,14 +150,7 @@ export default async function WerkenBijPage() {
         </div>
       </section>
 
-      <section className="cta">
-        <div className="wrap-wide">
-          <h2>{t.ctaTitel}</h2>
-          <a href="#vacatures" className="btn btn-on">
-            Bekijk alle vacatures <ArrowRight />
-          </a>
-        </div>
-      </section>
+      <SlotCta titel={t.ctaTitel} knop="Kom kennismaken" />
     </div>
     </>
   );

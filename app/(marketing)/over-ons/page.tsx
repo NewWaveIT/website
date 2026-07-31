@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
-import { Users, Scale, Sparkles, Leaf, MapPin, Award, Mail, ArrowRight } from "lucide-react";
+import { Users, Scale, Sparkles, Leaf, MapPin, Award, Mail } from "lucide-react";
 import { MobileOverOns } from "@/components/mobile/mobile-over-ons";
 import { getPagina } from "@/lib/paginas-data";
 import { getTeamleden } from "@/lib/team-data";
 import { AWARD } from "@/lib/award";
+import { SlotCta } from "@/components/layout/slot-cta";
 import { TeamCarousel } from "@/components/team-carousel";
 import "./over-ons.css";
 import "./mobile.css";
@@ -171,14 +172,7 @@ export default async function OverOnsPage() {
         </div>
       </section>
 
-      <section className="cta">
-        <div className="wrap-wide">
-          <h2>{t.ctaTitel}</h2>
-          <Link href="/contact" className="btn btn-on">
-            Plan een strategiegesprek <ArrowRight />
-          </Link>
-        </div>
-      </section>
+      <SlotCta titel={t.ctaTitel} />
     </div>
     </>
   );

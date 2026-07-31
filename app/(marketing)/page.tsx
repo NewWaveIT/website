@@ -16,6 +16,7 @@ import { MobileHome } from "@/components/mobile/mobile-home";
 import { SectorSplit } from "@/components/sector-split";
 import { ClientLogos, AWARD } from "@/components/home/client-logos";
 import { CasesCarousel } from "@/components/home/cases-carousel";
+import { SlotCta } from "@/components/layout/slot-cta";
 import { getPagina } from "@/lib/paginas-data";
 import { getKlantverhalen } from "@/lib/klantverhalen-data";
 import "./home.css";
@@ -526,14 +527,7 @@ export default async function HomePage() {
       </section>
 
       {/* CTA */}
-      <section className="cta">
-        <div className="wrap-wide">
-          <h2>{t.ctaTitel}</h2>
-          <Link href="/contact" className="btn btn-on">
-            {t.ctaKnop} <ArrowRight />
-          </Link>
-        </div>
-      </section>
+      <SlotCta titel={t.ctaTitel} knop={t.ctaKnop} />
 
       <HomeInteractions />
       </div>

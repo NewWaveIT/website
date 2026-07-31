@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import { SectorHeroAnim } from "@/components/sector-hero-anim";
 import { MobileDiensten } from "@/components/mobile/mobile-diensten";
+import { SlotCta } from "@/components/layout/slot-cta";
 import { getPagina } from "@/lib/paginas-data";
 import "./diensten.css";
 import "./mobile.css";
@@ -259,14 +260,7 @@ export default async function DienstenPage() {
         </div>
       </section>
 
-      <section className="cta">
-        <div className="wrap-wide">
-          <h2>{t.ctaTitel}</h2>
-          <Link href="/contact" className="btn btn-on">
-            Plan een strategiegesprek <ArrowRight />
-          </Link>
-        </div>
-      </section>
+      <SlotCta titel={t.ctaTitel} />
     </div>
     </>
   );
