@@ -27,20 +27,24 @@ export const AWARD = {
 
 export function ClientLogos() {
   return (
-    <div className="logo-wall">
-      {CLIENTS.map((c) => (
-        <div className="logo-tile" key={c.naam}>
-          {c.logo ? (
-            <Image
-              src={c.logo}
-              alt={c.naam}
-              width={160}
-              height={44}
-              style={{ height: 28, width: "auto", objectFit: "contain" }}
-            />
-          ) : (
-            <span className="wordmark">{c.naam}</span>
-          )}
+    <div className="logo-track">
+      {[0, 1].map((dup) => (
+        <div className="logo-set" key={dup} aria-hidden={dup === 1}>
+          {CLIENTS.map((c) => (
+            <div className="logo-tile" key={c.naam}>
+              {c.logo ? (
+                <Image
+                  src={c.logo}
+                  alt={c.naam}
+                  width={160}
+                  height={40}
+                  style={{ height: 30, width: "auto", objectFit: "contain" }}
+                />
+              ) : (
+                <span className="wordmark">{c.naam}</span>
+              )}
+            </div>
+          ))}
         </div>
       ))}
     </div>
