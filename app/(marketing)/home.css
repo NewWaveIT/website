@@ -40,6 +40,17 @@
 .clientband .track:hover .set { animation-play-state: paused; }
 .client { font-family: var(--font-display); font-weight: var(--fw-bold); font-size: var(--text-lg); color: var(--ink-300, #b9b0a2); white-space: nowrap; transition: color 200ms ease; }
 .client:hover { color: var(--eggshell); }
+/* Social proof + logo-wall */
+.proof-head { display: flex; align-items: center; justify-content: space-between; gap: var(--space-5); flex-wrap: wrap; margin-bottom: var(--space-6); }
+.proof .award { display: inline-flex; align-items: center; gap: 8px; font-size: var(--text-sm); font-weight: var(--fw-semibold); color: var(--eggshell); background: rgba(255, 255, 255, 0.06); border: 1px solid var(--border-dark); border-radius: var(--radius-pill); padding: 8px 14px; }
+.proof .award:hover { border-color: var(--orange-400); color: #fff; }
+.proof .award .lucide { width: 16px; height: 16px; color: var(--orange-400); }
+.logo-wall { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-6) var(--space-8); }
+.logo-tile { display: flex; align-items: center; }
+.logo-tile .wordmark { font-family: var(--font-display); font-weight: var(--fw-bold); font-size: var(--text-lg); color: var(--ink-300, #b9b0a2); white-space: nowrap; transition: color 200ms ease; }
+.logo-tile:hover .wordmark { color: var(--eggshell); }
+.logo-tile img { opacity: 0.9; filter: grayscale(1) brightness(1.6); transition: opacity 200ms ease, filter 200ms ease; }
+.logo-tile:hover img { opacity: 1; filter: none; }
 @keyframes clientScroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 
 /* Sectoren */

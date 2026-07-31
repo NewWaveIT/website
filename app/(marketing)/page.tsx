@@ -4,6 +4,8 @@ import Image from "next/image";
 import {
   ArrowRight,
   Play,
+  Phone,
+  Award,
   Building2,
   Truck,
   Landmark,
@@ -23,6 +25,7 @@ import {
 import { HomeInteractions } from "@/components/home/home-interactions";
 import { MobileHome } from "@/components/mobile/mobile-home";
 import { SectorSplit } from "@/components/sector-split";
+import { ClientLogos, AWARD } from "@/components/home/client-logos";
 import { getPagina } from "@/lib/paginas-data";
 import "./home.css";
 import "./mobile-home.css";
@@ -76,12 +79,12 @@ export default async function HomePage() {
               <Link href="/contact" className="btn btn-primary">
                 {t.heroCtaPrimair} <ArrowRight />
               </Link>
-              <Link href="/klantverhalen" className="play">
+              <a href="tel:+31610751254" className="play">
                 <span className="circle">
-                  <Play />
+                  <Phone />
                 </span>{" "}
-                {t.heroCtaVideo}
-              </Link>
+                Bel 06–10751254
+              </a>
             </div>
             <div className="sector-chips">
               <span className="lab">Kies jouw sector</span>
@@ -108,25 +111,13 @@ export default async function HomePage() {
       {/* Klantenband */}
       <div className="proof">
         <div className="wrap-wide">
-          <div className="clientband">
+          <div className="proof-head">
             <span className="cap">Vertrouwd door</span>
-            <div className="track">
-              <div className="set">
-                <span className="client">COA</span>
-                <span className="client">Gemeente Rotterdam</span>
-                <span className="client">Rabobank</span>
-                <span className="client">Netradyne</span>
-                <span className="client">Welcome app</span>
-                <span className="client">Van Mossel</span>
-                <span className="client" aria-hidden="true">COA</span>
-                <span className="client" aria-hidden="true">Gemeente Rotterdam</span>
-                <span className="client" aria-hidden="true">Rabobank</span>
-                <span className="client" aria-hidden="true">Netradyne</span>
-                <span className="client" aria-hidden="true">Welcome app</span>
-                <span className="client" aria-hidden="true">Van Mossel</span>
-              </div>
-            </div>
+            <a className="award" href={AWARD.url} target="_blank" rel="noopener noreferrer">
+              <Award /> {AWARD.label}
+            </a>
           </div>
+          <ClientLogos />
         </div>
       </div>
 

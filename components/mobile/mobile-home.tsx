@@ -4,10 +4,11 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import {
-  Play, ArrowRight, Building2, Truck, Landmark, HeartPulse, Factory, Compass,
+  Play, Phone, ArrowRight, Building2, Truck, Landmark, HeartPulse, Factory, Compass,
   Layers, BrainCircuit, Route, Target, Users, Workflow, ShieldCheck, ChevronDown,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { CLIENTS, AWARD } from "@/components/home/client-logos";
 
 const SECTOREN = [
   { slug: "publieke-sector", Icon: Building2, naam: "Publieke sector", chal: "Sneller vergunnen, volledig aantoonbaar." },
@@ -173,9 +174,9 @@ export function MobileHome({ home }: { home: Record<string, string> }) {
             <Link href="/contact" className="m-btn primary">
               {home.heroCtaPrimair} <ArrowRight />
             </Link>
-            <Link href="/klantverhalen" className="m-btn ghost-dark">
-              <Play /> {home.heroCtaVideo}
-            </Link>
+            <a href="tel:+31610751254" className="m-btn ghost-dark">
+              <Phone /> Bel 06–10751254
+            </a>
           </div>
           <div className="m-chiprow">
             <span className="lab">Kies jouw sector</span>
@@ -193,11 +194,16 @@ export function MobileHome({ home }: { home: Record<string, string> }) {
       <div className="m-proof">
         <div className="m-wrap">
           <div className="m-logos">
-            <span className="cap">Vertrouwd door</span>
+            <div className="m-proof-head">
+              <span className="cap">Vertrouwd door</span>
+              <a className="m-award" href={AWARD.url} target="_blank" rel="noopener noreferrer">
+                {AWARD.label}
+              </a>
+            </div>
             <div className="track">
               <div className="set">
-                {["COA", "Gemeente Rotterdam", "Rabobank", "Netradyne", "Welcome app", "Van Mossel"].concat(["COA", "Gemeente Rotterdam", "Rabobank", "Netradyne", "Welcome app", "Van Mossel"]).map((n, i) => (
-                  <span key={i} aria-hidden={i >= 6}>{n}</span>
+                {CLIENTS.concat(CLIENTS).map((c, i) => (
+                  <span key={i} aria-hidden={i >= CLIENTS.length}>{c.naam}</span>
                 ))}
               </div>
             </div>
