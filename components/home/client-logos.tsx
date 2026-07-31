@@ -11,15 +11,16 @@ export type Client = { naam: string; logo?: string };
 // staat (SVG of transparante PNG). Zolang dat er niet is, toont de tegel een
 // nette tekst-wordmark. Verwachte bestandsnamen staan in het commentaar.
 export const CLIENTS: Client[] = [
-  { naam: "COA" }, // coa.svg
-  { naam: "Gemeente Rotterdam" }, // gemeente-rotterdam.svg
+  { naam: "COA", logo: "/assets/logos/klanten/coa.svg" },
+  { naam: "Gemeente Rotterdam", logo: "/assets/logos/klanten/gemeente-rotterdam.svg" },
   { naam: "Rabobank", logo: "/assets/logos/klanten/rabobank.svg" },
-  { naam: "Van Mossel" }, // van-mossel.svg
-  { naam: "Netradyne" }, // netradyne.svg
-  { naam: "Welcome app" }, // welcome-app.svg
+  { naam: "Van Mossel", logo: "/assets/logos/klanten/van-mossel.svg" },
+  { naam: "Netradyne", logo: "/assets/logos/klanten/netradyne.svg" },
+  { naam: "AutoBinck", logo: "/assets/logos/klanten/autobinck.svg" },
+  { naam: "XXImo", logo: "/assets/logos/klanten/xximo.svg" },
+  // Nog aan te leveren officiële bestanden:
   { naam: "Moove Connected Mobility" }, // moove.svg
-  { naam: "AutoBinck" }, // autobinck.svg
-  { naam: "XXImo" }, // xximo.svg
+  { naam: "Welcome app" }, // welcome-app.svg
   { naam: "De Derde Linden Groep" }, // derde-linden-groep.svg
 ];
 
