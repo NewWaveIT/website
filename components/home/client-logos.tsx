@@ -7,17 +7,20 @@ import Image from "next/image";
  */
 export type Client = { naam: string; logo?: string };
 
+// Zet een `logo`-pad zodra het officiële bestand in /public/assets/logos/klanten/
+// staat (SVG of transparante PNG). Zolang dat er niet is, toont de tegel een
+// nette tekst-wordmark. Verwachte bestandsnamen staan in het commentaar.
 export const CLIENTS: Client[] = [
-  { naam: "COA" },
-  { naam: "Gemeente Rotterdam" },
-  { naam: "Rabobank" },
-  { naam: "Van Mossel" },
-  { naam: "Netradyne" },
-  { naam: "Welcome app" },
-  { naam: "Moove Connected Mobility" },
-  { naam: "AutoBinck" },
-  { naam: "XXImo" },
-  { naam: "De Derde Linden Groep" },
+  { naam: "COA" }, // coa.svg
+  { naam: "Gemeente Rotterdam" }, // gemeente-rotterdam.svg
+  { naam: "Rabobank", logo: "/assets/logos/klanten/rabobank.svg" },
+  { naam: "Van Mossel" }, // van-mossel.svg
+  { naam: "Netradyne" }, // netradyne.svg
+  { naam: "Welcome app" }, // welcome-app.svg
+  { naam: "Moove Connected Mobility" }, // moove.svg
+  { naam: "AutoBinck" }, // autobinck.svg
+  { naam: "XXImo" }, // xximo.svg
+  { naam: "De Derde Linden Groep" }, // derde-linden-groep.svg
 ];
 
 export const AWARD = {
