@@ -380,6 +380,19 @@ export default async function HomePage() {
               </h2>
               <p>{t.mensenP1}</p>
               <p>{t.mensenP2}</p>
+              <p>
+                Dat onze mensen hier met plezier werken, blijkt ook extern: The New Wave IT
+                is bekroond in de Computable Werkgevers Awards 2025.
+              </p>
+              <a
+                className="award-badge on-light"
+                href={AWARD.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ marginBottom: "var(--space-5)" }}
+              >
+                <Award /> {AWARD.label}
+              </a>
               <div
                 style={{
                   display: "flex",

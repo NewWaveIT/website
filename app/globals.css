@@ -388,6 +388,10 @@ footer.site-footer { background: var(--ink-950); color: var(--text-on-dark-muted
 .award-badge { display: inline-flex; align-items: center; gap: 8px; font-size: var(--text-sm); font-weight: var(--fw-semibold); color: var(--eggshell); background: rgba(255, 255, 255, 0.06); border: 1px solid var(--border-dark); border-radius: var(--radius-pill); padding: 8px 14px; margin: var(--space-5) 0 0; }
 .award-badge:hover { border-color: var(--orange-400); color: #fff; }
 .award-badge .lucide { width: 16px; height: 16px; color: var(--orange-400); }
+/* Lichte variant voor lichte secties (bv. mensen-blok op de homepage) */
+.award-badge.on-light { color: var(--text-strong); background: var(--white); border-color: var(--border-strong); }
+.award-badge.on-light:hover { border-color: var(--color-primary); }
+.award-badge.on-light .lucide { color: var(--orange-text); }
 
 /* Lead-CTA (inzichten) — één afsluiter met e-mailcapture naar aanvragen */
 .lead-cta { background: var(--ink-900); color: var(--eggshell); }
