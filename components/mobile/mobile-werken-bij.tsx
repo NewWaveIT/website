@@ -1,7 +1,8 @@
 import Link from "next/link";
 import Image from "next/image";
-import { Check, ArrowRight } from "lucide-react";
+import { Check, ArrowRight, Award } from "lucide-react";
 import type { Vacature } from "@/lib/vacatures";
+import { AWARD } from "@/lib/award";
 import { MobileFx } from "./mobile-fx";
 
 export function MobileWerkenBij({ vacatures, werken }: { vacatures: Vacature[]; werken: Record<string, string> }) {
@@ -13,6 +14,9 @@ export function MobileWerkenBij({ vacatures, werken }: { vacatures: Vacature[]; 
           <div className="kicker on-dark">{"Werken bij The New Wave IT"}</div>
           <h1>{werken.heroTitleStart}<em>{werken.heroAccent}</em>.</h1>
           <p>{werken.heroLeadMobiel}</p>
+          <a className="award-badge" href={AWARD.url} target="_blank" rel="noopener noreferrer" style={{ marginTop: 16 }}>
+            <Award /> {AWARD.label}
+          </a>
           <div style={{ display: "flex", flexDirection: "column", gap: 12, marginTop: 22 }}>
             <a href="#vacatures" className="btn btn-primary">Bekijk vacatures <ArrowRight /></a>
             <Link href="/over-ons" className="btn btn-ghost-dark">Leer ons eerst kennen</Link>

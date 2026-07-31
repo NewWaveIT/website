@@ -5,6 +5,7 @@ import { Users, Scale, Sparkles, Leaf, MapPin, Award, Mail, ArrowRight } from "l
 import { MobileOverOns } from "@/components/mobile/mobile-over-ons";
 import { getPagina } from "@/lib/paginas-data";
 import { getTeamleden } from "@/lib/team-data";
+import { AWARD } from "@/lib/award";
 import { TeamCarousel } from "@/components/team-carousel";
 import "./over-ons.css";
 import "./mobile.css";
@@ -64,6 +65,9 @@ export default async function OverOnsPage() {
             <em>{t.heroAccent}</em>.
           </h1>
           <p>{t.heroLead}</p>
+          <a className="award-badge" href={AWARD.url} target="_blank" rel="noopener noreferrer">
+            <Award /> {AWARD.label}
+          </a>
           <div className="kpis">
             <div>
               <div className="n">2023</div>

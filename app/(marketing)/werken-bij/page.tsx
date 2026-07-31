@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
-import { Check, ArrowRight } from "lucide-react";
+import { Check, ArrowRight, Award } from "lucide-react";
 import { getVacatures } from "@/lib/vacatures-data";
 import { getPagina } from "@/lib/paginas-data";
+import { AWARD } from "@/lib/award";
 import { MobileWerkenBij } from "@/components/mobile/mobile-werken-bij";
 import "./werken-bij.css";
 import "./mobile.css";
@@ -40,7 +41,10 @@ export default async function WerkenBijPage() {
             <em>{t.heroAccent}</em>.
           </h1>
           <p>{t.heroLead}</p>
-          <div className="hero-actions">
+          <a className="award-badge" href={AWARD.url} target="_blank" rel="noopener noreferrer">
+            <Award /> Erkend werkgever · {AWARD.label}
+          </a>
+          <div className="hero-actions" style={{ marginTop: "var(--space-6)" }}>
             <a href="#vacatures" className="btn btn-primary">
               Bekijk vacatures <ArrowRight />
             </a>

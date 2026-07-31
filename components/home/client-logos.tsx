@@ -25,10 +25,7 @@ export const CLIENTS: Client[] = [
   { naam: "De Derde Linden Groep" }, // derde-linden-groep.svg
 ];
 
-export const AWARD = {
-  label: "#4 · Computable Werkgevers Awards 2025",
-  url: "https://computable.nl/e-magazine/editie-04-2025/pagina-03-werkgeversonderzoek-ict/",
-};
+export { AWARD } from "@/lib/award";
 
 export function ClientLogos() {
   return (

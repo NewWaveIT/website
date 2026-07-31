@@ -2,6 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Users, Scale, Sparkles, Leaf, MapPin, Award, Mail, ArrowRight } from "lucide-react";
 import type { Teamlid } from "@/lib/team";
+import { AWARD } from "@/lib/award";
 import { MobileFx } from "./mobile-fx";
 
 const WAARDE_ICONS = [Users, Scale, Sparkles, Leaf];
@@ -15,6 +16,9 @@ export function MobileOverOns({ over, team }: { over: Record<string, string>; te
           <div className="kicker on-dark">{"Over ons"}</div>
           <h1>{over.heroTitleStart}<em>{over.heroAccent}</em>.</h1>
           <p>{over.heroLeadMobiel}</p>
+          <a className="award-badge" href={AWARD.url} target="_blank" rel="noopener noreferrer" style={{ marginTop: 16 }}>
+            <Award /> {AWARD.label}
+          </a>
           <div className="statgrid">
             <div className="pstat"><div className="n">2023</div><div className="l">Opgericht, kantoor in Utrecht</div></div>
             <div className="pstat"><div className="n">100%</div><div className="l">De mens centraal</div></div>
