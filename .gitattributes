@@ -1,0 +1,13 @@
+# Normaliseer alle tekstbestanden naar LF in de repo (matcht Prettier endOfLine
+# "lf"), zodat format:check en diffs cross-platform stabiel zijn.
+* text=auto eol=lf
+
+# Binaire assets nooit aanraken.
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.webp binary
+*.avif binary
+*.ico binary
+*.woff binary
+*.woff2 binary
