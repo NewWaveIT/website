@@ -42,6 +42,16 @@ export function SectorSplit({
   const caption = key === "more" ? moreTitel : items[key]?.cap;
   const Head = big ? "h2" : "h3";
 
+  // Op touch (geen hover) werkt onMouseEnter niet. Eerste tik toont de preview,
+  // een tweede tik op het al-actieve item navigeert. Op desktop navigeert een
+  // klik meteen (de preview is er al via hover).
+  const onSelect = (e: React.MouseEvent, k: number | "more") => {
+    if (typeof window !== "undefined" && window.matchMedia("(hover: none)").matches && key !== k) {
+      e.preventDefault();
+      setKey(k);
+    }
+  };
+
   return (
     <div className="sec-split">
       <div className="sec-left">
@@ -68,6 +78,7 @@ export function SectorSplit({
             className={`sec-item${key === i ? " active" : ""}`}
             onMouseEnter={() => setKey(i)}
             onFocus={() => setKey(i)}
+            onClick={(e) => onSelect(e, i)}
           >
             <div className="top">
               <Head>{it.naam}</Head>
@@ -83,6 +94,7 @@ export function SectorSplit({
           className={`sec-item more${key === "more" ? " active" : ""}`}
           onMouseEnter={() => setKey("more")}
           onFocus={() => setKey("more")}
+          onClick={(e) => onSelect(e, "more")}
         >
           <div className="top">
             <Head>

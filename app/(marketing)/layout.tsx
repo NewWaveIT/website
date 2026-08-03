@@ -3,7 +3,6 @@ import { Footer } from "@/components/layout/footer";
 import { MobileShell } from "@/components/layout/mobile-shell";
 import { ScrollWave } from "@/components/layout/scroll-wave";
 import { Consent } from "@/components/consent/consent";
-import "./mobile-base.css";
 
 export default function MarketingLayout({
   children,
