@@ -5,9 +5,7 @@ import { notFound } from "next/navigation";
 import { Check, ArrowRight, Phone } from "lucide-react";
 import { getVacatures, getVacatureBySlug } from "@/lib/vacatures-data";
 import { stripHtml } from "@/lib/cms/sanitize";
-import { MobileVacature } from "@/components/mobile/mobile-vacature";
 import "./vacature.css";
-import "./mobile.css";
 
 export const revalidate = 300;
 
@@ -62,9 +60,7 @@ export default async function VacaturePage({
   };
 
   return (
-    <>
-      <MobileVacature v={v} andere={andere} />
-    <div className="p-vacature only-desktop">
+    <div className="p-vacature">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }}
@@ -208,6 +204,5 @@ export default async function VacaturePage({
         </div>
       </section>
     </div>
-    </>
   );
 }

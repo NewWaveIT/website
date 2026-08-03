@@ -17,9 +17,7 @@ import { getPropositiesVoorSector } from "@/lib/proposities-data";
 import { SlotCta } from "@/components/layout/slot-cta";
 import { stripHtml } from "@/lib/cms/sanitize";
 import { getArtikelenVoorSector } from "@/lib/inzichten-data";
-import { MOBILE_SECTOREN } from "@/lib/mobile-detail";
 import { SectorHeroAnim } from "@/components/sector-hero-anim";
-import { MobileDetail } from "@/components/mobile/mobile-detail";
 import "./sector-detail.css";
 
 export const revalidate = 300;
@@ -74,9 +72,7 @@ export default async function SectorPage({
   };
 
   return (
-    <>
-      {MOBILE_SECTOREN[slug] && <MobileDetail data={MOBILE_SECTOREN[slug]} />}
-    <div className="p-sector only-desktop">
+    <div className="p-sector">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }}
@@ -292,6 +288,5 @@ export default async function SectorPage({
 
       <SlotCta titel={s.ctaTitle} />
     </div>
-    </>
   );
 }

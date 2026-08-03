@@ -11,11 +11,9 @@ import {
   Factory,
 } from "lucide-react";
 import { SectorHeroAnim } from "@/components/sector-hero-anim";
-import { MobileDiensten } from "@/components/mobile/mobile-diensten";
 import { SlotCta } from "@/components/layout/slot-cta";
 import { getPagina } from "@/lib/paginas-data";
 import "./diensten.css";
-import "./mobile.css";
 
 export const metadata: Metadata = {
   title: "Diensten — Mendix, AI en digitale strategie",
@@ -39,9 +37,7 @@ export const revalidate = 300;
 export default async function DienstenPage() {
   const t = await getPagina("diensten");
   return (
-    <>
-      <MobileDiensten diensten={t} />
-    <div className="p-diensten only-desktop">
+    <div className="p-diensten">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }}
@@ -262,6 +258,5 @@ export default async function DienstenPage() {
 
       <SlotCta titel={t.ctaTitel} />
     </div>
-    </>
   );
 }

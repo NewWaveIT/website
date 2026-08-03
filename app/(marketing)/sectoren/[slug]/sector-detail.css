@@ -68,11 +68,10 @@
   .p-sector .case-mini { grid-template-columns: 1fr; }
   .p-sector .cards3 { grid-template-columns: 1fr; }
   .p-sector .shero h1 { font-size: var(--text-3xl); }
-  .p-sector .pmc-grid { grid-template-columns: 1fr; }
 }
 
 /* Proposities (PMC) */
-.p-sector .pmc-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-5); }
+.p-sector .pmc-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: var(--space-5); }
 .p-sector .pmc-card { border: 1px solid var(--border-default); border-radius: var(--radius-lg); padding: var(--space-6); background: var(--white); display: flex; flex-direction: column; }
 .p-sector .pmc-card .num { font-family: var(--font-mono); font-size: var(--text-sm); color: var(--orange-text); font-weight: var(--fw-medium); }
 .p-sector .pmc-card h3 { font-size: var(--text-xl); font-weight: var(--fw-bold); margin: 8px 0 6px; line-height: var(--leading-snug); }

@@ -3,9 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Building2, Play, ArrowRight } from "lucide-react";
 import { getKlantverhalen, getKlantverhaalBySlug } from "@/lib/klantverhalen-data";
-import { MobileCase } from "@/components/mobile/mobile-case";
 import "./case.css";
-import "./mobile.css";
 
 export const revalidate = 300;
 
@@ -50,9 +48,7 @@ export default async function CasePage({
   };
 
   return (
-    <>
-      <MobileCase k={k} meer={meer} />
-    <div className="p-case only-desktop">
+    <div className="p-case">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }}
@@ -179,6 +175,5 @@ export default async function CasePage({
         </div>
       </section>
     </div>
-    </>
   );
 }

@@ -14,9 +14,7 @@ import {
 import { getDienstBySlug, getDienstSlugs } from "@/lib/diensten-detail-data";
 import { stripHtml } from "@/lib/cms/sanitize";
 import { getArtikelenVoorDienst } from "@/lib/inzichten-data";
-import { MOBILE_DIENSTEN } from "@/lib/mobile-detail";
 import { SectorHeroAnim } from "@/components/sector-hero-anim";
-import { MobileDetail } from "@/components/mobile/mobile-detail";
 import "./dienst-detail.css";
 
 export const revalidate = 300;
@@ -63,9 +61,7 @@ export default async function DienstPage({
   };
 
   return (
-    <>
-      {MOBILE_DIENSTEN[slug] && <MobileDetail data={MOBILE_DIENSTEN[slug]} />}
-    <div className="p-dienst only-desktop">
+    <div className="p-dienst">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }}
@@ -350,6 +346,5 @@ export default async function DienstPage({
         </div>
       </section>
     </div>
-    </>
   );
 }
