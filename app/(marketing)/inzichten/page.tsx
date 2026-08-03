@@ -4,9 +4,7 @@ import { getArtikelen } from "@/lib/inzichten-data";
 import { SectorHeroAnim } from "@/components/sector-hero-anim";
 import { InzichtenList } from "@/components/inzichten-list";
 import { LeadCta } from "@/components/inzichten/lead-cta";
-import { MobileInzichten } from "@/components/mobile/mobile-inzichten";
 import "./inzichten.css";
-import "./mobile.css";
 
 export const metadata: Metadata = {
   title: "Inzichten — kennis die je morgen kunt gebruiken",
@@ -21,9 +19,7 @@ export const revalidate = 300;
 export default async function InzichtenPage() {
   const artikelen = await getArtikelen();
   return (
-    <>
-      <MobileInzichten artikelen={artikelen} />
-    <div className="p-inzichten only-desktop">
+    <div className="p-inzichten">
       <section className="dhero">
         <SectorHeroAnim theme="inzichten" />
         <div className="wrap-wide">
@@ -51,6 +47,5 @@ export default async function InzichtenPage() {
 
       <LeadCta />
     </div>
-    </>
   );
 }

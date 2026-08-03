@@ -2,14 +2,12 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import { Users, Scale, Sparkles, Leaf, MapPin, Award, Mail } from "lucide-react";
-import { MobileOverOns } from "@/components/mobile/mobile-over-ons";
 import { getPagina } from "@/lib/paginas-data";
 import { getTeamleden } from "@/lib/team-data";
 import { AWARD } from "@/lib/award";
 import { SlotCta } from "@/components/layout/slot-cta";
 import { TeamCarousel } from "@/components/team-carousel";
 import "./over-ons.css";
-import "./mobile.css";
 
 export const metadata: Metadata = {
   title: "Over ons — de ondernemende mens zorgt voor vooruitgang",
@@ -42,9 +40,7 @@ export default async function OverOnsPage() {
   const t = await getPagina("over-ons");
   const team = await getTeamleden();
   return (
-    <>
-      <MobileOverOns over={t} team={team} />
-    <div className="p-over only-desktop">
+    <div className="p-over">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }}
@@ -174,6 +170,5 @@ export default async function OverOnsPage() {
 
       <SlotCta titel={t.ctaTitel} />
     </div>
-    </>
   );
 }

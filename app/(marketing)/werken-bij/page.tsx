@@ -6,9 +6,7 @@ import { getVacatures } from "@/lib/vacatures-data";
 import { getPagina } from "@/lib/paginas-data";
 import { AWARD } from "@/lib/award";
 import { SlotCta } from "@/components/layout/slot-cta";
-import { MobileWerkenBij } from "@/components/mobile/mobile-werken-bij";
 import "./werken-bij.css";
-import "./mobile.css";
 
 export const metadata: Metadata = {
   title: "Werken bij — word een Waver",
@@ -23,9 +21,7 @@ export default async function WerkenBijPage() {
   const vacatures = await getVacatures();
   const t = await getPagina("werken-bij");
   return (
-    <>
-      <MobileWerkenBij vacatures={vacatures} werken={t} />
-    <div className="p-werken only-desktop">
+    <div className="p-werken">
       <section className="shero">
         <div className="cutout">
           <Image src="/assets/photos/cutout-spreker-groen.webp" alt="" fill sizes="32vw" />
@@ -152,6 +148,5 @@ export default async function WerkenBijPage() {
 
       <SlotCta titel={t.ctaTitel} knop="Kom kennismaken" />
     </div>
-    </>
   );
 }

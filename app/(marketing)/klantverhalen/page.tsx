@@ -4,9 +4,7 @@ import Image from "next/image";
 import { Play, ArrowRight } from "lucide-react";
 import { getKlantverhalen } from "@/lib/klantverhalen-data";
 import { SectorHeroAnim } from "@/components/sector-hero-anim";
-import { MobileKlantverhalen } from "@/components/mobile/mobile-klantverhalen";
 import "./klantverhalen.css";
-import "./mobile.css";
 
 export const metadata: Metadata = {
   title: "Klantverhalen — resultaat dat je kunt navragen",
@@ -23,9 +21,7 @@ export default async function KlantverhalenPage() {
   const verhalen = await getKlantverhalen();
   const featured = verhalen[0];
   return (
-    <>
-      <MobileKlantverhalen verhalen={verhalen} />
-    <div className="p-klanten only-desktop">
+    <div className="p-klanten">
       <section className="dhero">
         <SectorHeroAnim theme="klantverhalen" />
         <div className="wrap-wide">
@@ -117,6 +113,5 @@ export default async function KlantverhalenPage() {
         </div>
       </section>
     </div>
-    </>
   );
 }
