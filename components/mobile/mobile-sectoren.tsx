@@ -64,6 +64,7 @@ export function MobileSectoren({ sectoren }: { sectoren: Record<string, string> 
         <div className="wrap">
           <h2>{sectoren.ctaTitel}</h2>
           <Link href="/contact" className="btn">Plan een strategiegesprek <ArrowRight /></Link>
+          <a href="tel:+31610751254" style={{ display: "block", marginTop: 14, color: "#fff", fontWeight: "var(--fw-semibold)", opacity: 0.9 }}>of bel 06–10751254</a>
         </div>
       </section>
 
