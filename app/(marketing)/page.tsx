@@ -12,7 +12,6 @@ import {
   Factory,
 } from "lucide-react";
 import { HomeInteractions } from "@/components/home/home-interactions";
-import { MobileHome } from "@/components/mobile/mobile-home";
 import { SectorSplit } from "@/components/sector-split";
 import { ClientLogos, AWARD } from "@/components/home/client-logos";
 import { CasesCarousel } from "@/components/home/cases-carousel";
@@ -20,7 +19,6 @@ import { SlotCta } from "@/components/layout/slot-cta";
 import { getPagina } from "@/lib/paginas-data";
 import { getKlantverhalen } from "@/lib/klantverhalen-data";
 import "./home.css";
-import "./mobile-home.css";
 
 export const metadata: Metadata = {
   title: "Business-specialist in Mendix, AI en strategie",
@@ -54,9 +52,7 @@ export default async function HomePage() {
     impact: k.impact,
   }));
   return (
-    <>
-      <MobileHome home={t} />
-      <div className="home only-desktop">
+    <div className="home">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
@@ -543,7 +539,6 @@ export default async function HomePage() {
       <SlotCta titel={t.ctaTitel} knop={t.ctaKnop} />
 
       <HomeInteractions />
-      </div>
-    </>
+    </div>
   );
 }

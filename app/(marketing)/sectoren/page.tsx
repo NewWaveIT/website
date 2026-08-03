@@ -2,11 +2,9 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { SectorHeroAnim } from "@/components/sector-hero-anim";
 import { SectorSplit } from "@/components/sector-split";
-import { MobileSectoren } from "@/components/mobile/mobile-sectoren";
 import { SlotCta } from "@/components/layout/slot-cta";
 import { getPagina } from "@/lib/paginas-data";
 import "./sectoren.css";
-import "./mobile.css";
 
 export const metadata: Metadata = {
   title: "Sectoren — publieke sector, mobiliteit, banken, zorg, manufacturing",
@@ -79,9 +77,7 @@ export const revalidate = 300;
 export default async function SectorenPage() {
   const t = await getPagina("sectoren");
   return (
-    <>
-      <MobileSectoren sectoren={t} />
-    <div className="p-sectoren only-desktop">
+    <div className="p-sectoren">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }}
@@ -149,6 +145,5 @@ export default async function SectorenPage() {
 
       <SlotCta titel={t.ctaTitel} />
     </div>
-    </>
   );
 }
