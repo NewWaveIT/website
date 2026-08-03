@@ -9,10 +9,15 @@ export type GebruikerState = { error?: string; ok?: string };
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 /** Nieuwe gebruiker aanmaken (met beginwachtwoord; account wordt direct bevestigd). */
-export async function createGebruiker(_prev: GebruikerState, formData: FormData): Promise<GebruikerState> {
+export async function createGebruiker(
+  _prev: GebruikerState,
+  formData: FormData,
+): Promise<GebruikerState> {
   await requireAdmin();
 
-  const email = String(formData.get("email") ?? "").trim().toLowerCase();
+  const email = String(formData.get("email") ?? "")
+    .trim()
+    .toLowerCase();
   const naam = String(formData.get("naam") ?? "").trim();
   const wachtwoord = String(formData.get("wachtwoord") ?? "");
 
@@ -37,7 +42,10 @@ export async function createGebruiker(_prev: GebruikerState, formData: FormData)
 }
 
 /** Naam bijwerken en optioneel het wachtwoord opnieuw instellen. */
-export async function updateGebruiker(_prev: GebruikerState, formData: FormData): Promise<GebruikerState> {
+export async function updateGebruiker(
+  _prev: GebruikerState,
+  formData: FormData,
+): Promise<GebruikerState> {
   await requireAdmin();
 
   const id = String(formData.get("id") ?? "").trim();
@@ -45,7 +53,8 @@ export async function updateGebruiker(_prev: GebruikerState, formData: FormData)
   const wachtwoord = String(formData.get("wachtwoord") ?? "");
   if (!id) return { error: "Onbekende gebruiker." };
   if (!naam) return { error: "Naam is verplicht." };
-  if (wachtwoord && wachtwoord.length < 8) return { error: "Wachtwoord moet minimaal 8 tekens zijn." };
+  if (wachtwoord && wachtwoord.length < 8)
+    return { error: "Wachtwoord moet minimaal 8 tekens zijn." };
 
   const admin = createAdminClient();
   const { error } = await admin.auth.admin.updateUserById(id, {

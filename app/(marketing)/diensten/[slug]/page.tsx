@@ -2,15 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import { notFound } from "next/navigation";
-import {
-  Boxes,
-  BrainCircuit,
-  Route,
-  Check,
-  Plus,
-  Play,
-  ArrowRight,
-} from "lucide-react";
+import { Boxes, BrainCircuit, Route, Check, Plus, Play, ArrowRight } from "lucide-react";
 import { getDienstBySlug, getDienstSlugs } from "@/lib/diensten-detail-data";
 import { stripHtml } from "@/lib/cms/sanitize";
 import { getArtikelenVoorDienst } from "@/lib/inzichten-data";
@@ -40,11 +32,7 @@ export async function generateMetadata({
   };
 }
 
-export default async function DienstPage({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}) {
+export default async function DienstPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const d = await getDienstBySlug(slug);
   if (!d) notFound();
@@ -71,8 +59,7 @@ export default async function DienstPage({
         <SectorHeroAnim theme={slug} />
         <div className="wrap-wide">
           <div className="crumbs">
-            <Link href="/">Home</Link> / <Link href="/diensten">Diensten</Link> /{" "}
-            {d.naam}
+            <Link href="/">Home</Link> / <Link href="/diensten">Diensten</Link> / {d.naam}
           </div>
           <div style={{ position: "relative", paddingTop: "var(--space-6)" }}>
             <span className="badge">
@@ -114,7 +101,13 @@ export default async function DienstPage({
         <div className="wrap-wide">
           <div className="sec-head">
             <div className="kicker">Wanneer zet je dit in</div>
-            <h2 style={{ fontSize: "var(--text-3xl)", fontWeight: "var(--fw-extrabold)", margin: "var(--space-4) 0" }}>
+            <h2
+              style={{
+                fontSize: "var(--text-3xl)",
+                fontWeight: "var(--fw-extrabold)",
+                margin: "var(--space-4) 0",
+              }}
+            >
               Hiervoor komen organisaties bij ons
             </h2>
           </div>
@@ -134,7 +127,13 @@ export default async function DienstPage({
         <div className="wrap-wide">
           <div className="sec-head">
             <div className="kicker">Wat we doen</div>
-            <h2 style={{ fontSize: "var(--text-3xl)", fontWeight: "var(--fw-extrabold)", margin: "var(--space-4) 0" }}>
+            <h2
+              style={{
+                fontSize: "var(--text-3xl)",
+                fontWeight: "var(--fw-extrabold)",
+                margin: "var(--space-4) 0",
+              }}
+            >
               Onze {d.naam}-diensten
             </h2>
             <p>{d.pijlersIntro}</p>
@@ -163,7 +162,13 @@ export default async function DienstPage({
         <div className="wrap-wide">
           <div className="sec-head">
             <div className="kicker">Onze aanpak</div>
-            <h2 style={{ fontSize: "var(--text-3xl)", fontWeight: "var(--fw-extrabold)", margin: "var(--space-4) 0" }}>
+            <h2
+              style={{
+                fontSize: "var(--text-3xl)",
+                fontWeight: "var(--fw-extrabold)",
+                margin: "var(--space-4) 0",
+              }}
+            >
               Zo pakken we het aan
             </h2>
           </div>
@@ -193,7 +198,13 @@ export default async function DienstPage({
         <div className="wrap-wide">
           <div className="sec-head">
             <div className="kicker">Waarom The New Wave IT</div>
-            <h2 style={{ fontSize: "var(--text-3xl)", fontWeight: "var(--fw-extrabold)", margin: "var(--space-4) 0" }}>
+            <h2
+              style={{
+                fontSize: "var(--text-3xl)",
+                fontWeight: "var(--fw-extrabold)",
+                margin: "var(--space-4) 0",
+              }}
+            >
               De juiste partner voor jouw traject
             </h2>
           </div>
@@ -220,7 +231,11 @@ export default async function DienstPage({
                     <div className="links">
                       <a href={`tel:${e.tel}`}>{e.tel.replace("+31", "0")}</a>
                       <a href="mailto:hello@thenewwaveit.com">Mail</a>
-                      <a href="https://www.linkedin.com/company/the-new-wave-it" target="_blank" rel="noopener noreferrer">
+                      <a
+                        href="https://www.linkedin.com/company/the-new-wave-it"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
                         LinkedIn
                       </a>
                     </div>
@@ -247,7 +262,14 @@ export default async function DienstPage({
         <div className="wrap-wide">
           <div className="sec-head">
             <div className="kicker on-dark">Resultaten met {d.naam}</div>
-            <h2 style={{ color: "#fff", fontSize: "var(--text-3xl)", fontWeight: "var(--fw-extrabold)", margin: "var(--space-4) 0 0" }}>
+            <h2
+              style={{
+                color: "#fff",
+                fontSize: "var(--text-3xl)",
+                fontWeight: "var(--fw-extrabold)",
+                margin: "var(--space-4) 0 0",
+              }}
+            >
               Wat het oplevert
             </h2>
           </div>
@@ -266,7 +288,13 @@ export default async function DienstPage({
         <div className="wrap-wide">
           <div className="sec-head">
             <div className="kicker">Klantverhaal</div>
-            <h2 style={{ fontSize: "var(--text-3xl)", fontWeight: "var(--fw-extrabold)", margin: "var(--space-4) 0 0" }}>
+            <h2
+              style={{
+                fontSize: "var(--text-3xl)",
+                fontWeight: "var(--fw-extrabold)",
+                margin: "var(--space-4) 0 0",
+              }}
+            >
               {d.caseTitle}
             </h2>
           </div>
@@ -282,7 +310,11 @@ export default async function DienstPage({
               <div className="who">
                 <strong>{d.caseNaam}</strong>, {d.caseRol}
                 <br />
-                <Link href="/klantverhalen/coa" className="more" style={{ display: "inline-block", marginTop: 14 }}>
+                <Link
+                  href="/klantverhalen/coa"
+                  className="more"
+                  style={{ display: "inline-block", marginTop: 14 }}
+                >
                   Lees het volledige verhaal →
                 </Link>
               </div>
@@ -307,11 +339,19 @@ export default async function DienstPage({
               ? artikelen.slice(0, 3).map((a) => (
                   <Link href={`/inzichten/${a.slug}`} className="post" key={a.slug}>
                     <div className="cover">
-                      <Image src={a.image} alt={a.titel} fill sizes="(max-width: 980px) 100vw, 33vw" style={{ objectFit: "cover" }} />
+                      <Image
+                        src={a.image}
+                        alt={a.titel}
+                        fill
+                        sizes="(max-width: 980px) 100vw, 33vw"
+                        style={{ objectFit: "cover" }}
+                      />
                       <span className="cat">{a.cat}</span>
                     </div>
                     <div className="pbody">
-                      <div className="meta">{a.leestijd} · {a.datum}</div>
+                      <div className="meta">
+                        {a.leestijd} · {a.datum}
+                      </div>
                       <h3>{a.titel}</h3>
                       <span className="more">
                         Lees meer <ArrowRight />

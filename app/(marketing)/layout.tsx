@@ -4,14 +4,12 @@ import { MobileShell } from "@/components/layout/mobile-shell";
 import { ScrollWave } from "@/components/layout/scroll-wave";
 import { Consent } from "@/components/consent/consent";
 
-export default function MarketingLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function MarketingLayout({ children }: { children: React.ReactNode }) {
   return (
     <>
-      <a href="#main" className="skip-link">Direct naar inhoud</a>
+      <a href="#main" className="skip-link">
+        Direct naar inhoud
+      </a>
       <Header />
       <ScrollWave />
       <MobileShell />

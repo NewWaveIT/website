@@ -10,8 +10,26 @@ const linkTransform = {
 export function sanitizeFull(html: string): string {
   return sanitizeHtml(html, {
     allowedTags: [
-      "p", "h2", "h3", "strong", "b", "em", "i", "s", "u", "ul", "ol", "li",
-      "blockquote", "a", "br", "code", "pre", "figure", "img", "figcaption",
+      "p",
+      "h2",
+      "h3",
+      "strong",
+      "b",
+      "em",
+      "i",
+      "s",
+      "u",
+      "ul",
+      "ol",
+      "li",
+      "blockquote",
+      "a",
+      "br",
+      "code",
+      "pre",
+      "figure",
+      "img",
+      "figcaption",
     ],
     allowedAttributes: {
       a: ["href", "target", "rel"],
@@ -35,9 +53,7 @@ export function sanitizeInline(html: string): string {
 
 /** Alle tags weg → platte tekst (voor meta-description en JSON-LD). */
 export function stripHtml(html: string): string {
-  return sanitizeHtml(html, { allowedTags: [], allowedAttributes: {} })
-    .replace(/\s+/g, " ")
-    .trim();
+  return sanitizeHtml(html, { allowedTags: [], allowedAttributes: {} }).replace(/\s+/g, " ").trim();
 }
 
 /** Lichte opmaak (body-velden buiten artikelen): alleen inline + eenvoudige lijsten. */

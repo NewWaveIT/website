@@ -29,11 +29,7 @@ export async function generateMetadata({
   };
 }
 
-export default async function ArtikelPage({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}) {
+export default async function ArtikelPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const a = await getArtikelBySlug(slug);
   if (!a) notFound();
@@ -70,7 +66,9 @@ export default async function ArtikelPage({
             )}
             <span>
               door <strong>{a.auteur}</strong>
-              <span className="sub">{a.leestijd} leestijd · {a.datum}</span>
+              <span className="sub">
+                {a.leestijd} leestijd · {a.datum}
+              </span>
             </span>
           </div>
         </div>
@@ -97,7 +95,6 @@ export default async function ArtikelPage({
         titel="Dit soort inzichten, één keer per maand"
         tekst="Laat je e-mail achter en ontvang onze scherpste inzichten over technologie in jouw sector. Geen sales — uitschrijven kan altijd."
       />
-
     </div>
   );
 }

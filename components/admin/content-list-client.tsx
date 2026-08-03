@@ -9,7 +9,12 @@ export type Facet = { key: string; label: string };
 
 function fmt(iso: string) {
   try {
-    return new Date(iso).toLocaleDateString("nl-NL", { timeZone: "Europe/Amsterdam", day: "numeric", month: "short", year: "numeric" });
+    return new Date(iso).toLocaleDateString("nl-NL", {
+      timeZone: "Europe/Amsterdam",
+      day: "numeric",
+      month: "short",
+      year: "numeric",
+    });
   } catch {
     return iso;
   }
@@ -39,8 +44,8 @@ export function ContentListClient({
       facets
         .map((f) => ({
           ...f,
-          options: Array.from(new Set(rows.map((r) => val(r, f.key)).filter(Boolean))).sort((a, b) =>
-            a.localeCompare(b, "nl"),
+          options: Array.from(new Set(rows.map((r) => val(r, f.key)).filter(Boolean))).sort(
+            (a, b) => a.localeCompare(b, "nl"),
           ),
         }))
         .filter((f) => f.options.length > 0),
@@ -81,7 +86,12 @@ export function ContentListClient({
           />
         </div>
 
-        <select className="tsel" value={statusF} onChange={(e) => setStatusF(e.target.value as typeof statusF)} aria-label="Status">
+        <select
+          className="tsel"
+          value={statusF}
+          onChange={(e) => setStatusF(e.target.value as typeof statusF)}
+          aria-label="Status"
+        >
           <option value="all">Alle statussen</option>
           <option value="live">Live</option>
           <option value="concept">Concept</option>
@@ -109,7 +119,9 @@ export function ContentListClient({
             <X /> Wis filters
           </button>
         )}
-        <span className="tcount">{filtered.length} van {rows.length}</span>
+        <span className="tcount">
+          {filtered.length} van {rows.length}
+        </span>
       </div>
 
       <div className="card">
@@ -156,10 +168,14 @@ export function ContentListClient({
                 <td colSpan={3}>
                   <div className="empty">
                     Nog geen items. Klik op ‘Nieuw’ om er een aan te maken — of ga naar het{" "}
-                    <Link href="/admin" style={{ color: "var(--color-primary)", fontWeight: "var(--fw-semibold)" }}>
+                    <Link
+                      href="/admin"
+                      style={{ color: "var(--color-primary)", fontWeight: "var(--fw-semibold)" }}
+                    >
                       dashboard
                     </Link>{" "}
-                    en klik op ‘Importeer bestaande content’ om de huidige website-content in te laden.
+                    en klik op ‘Importeer bestaande content’ om de huidige website-content in te
+                    laden.
                   </div>
                 </td>
               </tr>

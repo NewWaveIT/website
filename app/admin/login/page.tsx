@@ -38,7 +38,13 @@ export default function LoginPage() {
           </div>
           <div className="fld">
             <label htmlFor="password">Wachtwoord</label>
-            <input id="password" name="password" type="password" autoComplete="current-password" required />
+            <input
+              id="password"
+              name="password"
+              type="password"
+              autoComplete="current-password"
+              required
+            />
           </div>
           <SubmitButton />
         </form>

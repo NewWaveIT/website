@@ -125,8 +125,8 @@ export default async function HomePage() {
             <div className="kicker">Hoe wij het doen</div>
             <h2>Technologie als middel: drie manieren waarop we versnellen</h2>
             <p>
-              Onze sectorkennis wordt tastbaar via drie disciplines. We kiezen wat
-              jouw vraagstuk oplost, niet wat toevallig in de mode is.
+              Onze sectorkennis wordt tastbaar via drie disciplines. We kiezen wat jouw vraagstuk
+              oplost, niet wat toevallig in de mode is.
             </p>
           </div>
           <div className="tabs" role="tablist">
@@ -136,12 +136,7 @@ export default async function HomePage() {
             <button className="tab" role="tab" aria-selected="false" data-tab="ai">
               AI
             </button>
-            <button
-              className="tab"
-              role="tab"
-              aria-selected="false"
-              data-tab="strategie"
-            >
+            <button className="tab" role="tab" aria-selected="false" data-tab="strategie">
               Strategie
             </button>
           </div>
@@ -150,9 +145,8 @@ export default async function HomePage() {
             <div>
               <h3>Mendix-applicaties op maat</h3>
               <p>
-                Op maat gemaakte low-code applicaties die jouw specifieke
-                uitdaging oplossen, een factor 6 tot 10 sneller dan traditionele
-                bouw. Slim, efficiënt en toekomstbestendig.
+                Op maat gemaakte low-code applicaties die jouw specifieke uitdaging oplossen, een
+                factor 6 tot 10 sneller dan traditionele bouw. Slim, efficiënt en toekomstbestendig.
               </p>
               <ul>
                 <li>Van proof-of-concept tot productie in weken</li>
@@ -197,9 +191,8 @@ export default async function HomePage() {
             <div>
               <h3>AI die processen echt verbetert</h3>
               <p>
-                Strategische inzet van AI binnen je bestaande IT-landschap. Geen
-                hype, wél oplossingen die processen verbeteren en de mens centraal
-                stellen.
+                Strategische inzet van AI binnen je bestaande IT-landschap. Geen hype, wél
+                oplossingen die processen verbeteren en de mens centraal stellen.
               </p>
               <ul>
                 <li>AI-scan van je processen en datalandschap</li>
@@ -244,9 +237,8 @@ export default async function HomePage() {
             <div>
               <h3>Business en IT, verbonden</h3>
               <p>
-                Wij ontwikkelen jouw strategie en vertalen die direct naar
-                praktische resultaten in de operatie. Zo werk je efficiënter en
-                ben je klaar voor de toekomst.
+                Wij ontwikkelen jouw strategie en vertalen die direct naar praktische resultaten in
+                de operatie. Zo werk je efficiënter en ben je klaar voor de toekomst.
               </p>
               <ul>
                 <li>Heldere roadmap van ambitie naar uitvoering</li>
@@ -273,8 +265,7 @@ export default async function HomePage() {
                     gap: 6,
                   }}
                 >
-                  Meer over Strategie{" "}
-                  <ArrowRight style={{ width: 15, height: 15 }} />
+                  Meer over Strategie <ArrowRight style={{ width: 15, height: 15 }} />
                 </Link>
               </div>
             </div>
@@ -377,8 +368,8 @@ export default async function HomePage() {
               <p>{t.mensenP1}</p>
               <p>{t.mensenP2}</p>
               <p>
-                Dat onze mensen hier met plezier werken, blijkt ook extern: The New Wave IT
-                is bekroond in de Computable Werkgevers Awards 2025.
+                Dat onze mensen hier met plezier werken, blijkt ook extern: The New Wave IT is
+                bekroond in de Computable Werkgevers Awards 2025.
               </p>
               <a
                 className="award-badge on-light"
@@ -409,8 +400,7 @@ export default async function HomePage() {
                     gap: 6,
                   }}
                 >
-                  Werken bij The New Wave IT{" "}
-                  <ArrowRight style={{ width: 15, height: 15 }} />
+                  Werken bij The New Wave IT <ArrowRight style={{ width: 15, height: 15 }} />
                 </Link>
               </div>
             </div>
@@ -474,13 +464,9 @@ export default async function HomePage() {
                 <div className="meta">Leestijd 4 min · 15 maart 2026</div>
                 <h3>Vergunningverlening in weken, niet maanden</h3>
                 <p>
-                  Hoe gemeenten met low-code de doorlooptijd van aanvragen
-                  structureel verkorten.
+                  Hoe gemeenten met low-code de doorlooptijd van aanvragen structureel verkorten.
                 </p>
-                <Link
-                  href="/inzichten/vergunningverlening-in-weken"
-                  className="more"
-                >
+                <Link href="/inzichten/vergunningverlening-in-weken" className="more">
                   Lees meer <ArrowRight />
                 </Link>
               </div>
@@ -500,8 +486,7 @@ export default async function HomePage() {
                 <div className="meta">Leestijd 5 min · 10 maart 2026</div>
                 <h3>AI in de zorg: 5 toepassingen die tijd teruggeven</h3>
                 <p>
-                  Concrete voorbeelden van AI die zorgprofessionals ontlast,
-                  verantwoord ingezet.
+                  Concrete voorbeelden van AI die zorgprofessionals ontlast, verantwoord ingezet.
                 </p>
                 <Link href="/inzichten/ai-in-de-zorg" className="more">
                   Lees meer <ArrowRight />
@@ -523,8 +508,7 @@ export default async function HomePage() {
                 <div className="meta">Leestijd 6 min · 5 maart 2026</div>
                 <h3>Compliant én snel: de valse tegenstelling</h3>
                 <p>
-                  Waarom veiligheid en snelheid elkaar niet hoeven uit te sluiten
-                  in financiële IT.
+                  Waarom veiligheid en snelheid elkaar niet hoeven uit te sluiten in financiële IT.
                 </p>
                 <Link href="/inzichten/compliant-en-snel" className="more">
                   Lees meer <ArrowRight />
@@ -536,7 +520,7 @@ export default async function HomePage() {
       </section>
 
       {/* CTA */}
-      <SlotCta titel={t.ctaTitel} knop={t.ctaKnop} />
+      <SlotCta titel={t.ctaTitel ?? ""} knop={t.ctaKnop} />
 
       <HomeInteractions />
     </div>

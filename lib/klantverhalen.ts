@@ -54,8 +54,14 @@ export const KLANTVERHALEN: Klantverhaal[] = [
     ],
     resultaat:
       "De doorlooptijd per aanvraag daalde met 60%, de oplossing was acht keer sneller live dan oorspronkelijk geraamd, en elke stap is volledig herleidbaar. Medewerkers houden tijd over voor het werk dat er echt toe doet, en burgers wachten korter.",
-    aside: { sector: "Publieke sector", diensten: "Mendix · AI", doorlooptijd: "14 weken", team: "Plan-build-run" },
-    quote: "“The New Wave IT denkt echt mee met onze uitdagingen. Efficiënt, betrouwbaar en menselijk.”",
+    aside: {
+      sector: "Publieke sector",
+      diensten: "Mendix · AI",
+      doorlooptijd: "14 weken",
+      team: "Plan-build-run",
+    },
+    quote:
+      "“The New Wave IT denkt echt mee met onze uitdagingen. Efficiënt, betrouwbaar en menselijk.”",
     quoteNaam: "Peter van Dam",
     quoteRol: "IT Manager, COA",
   },
@@ -85,7 +91,12 @@ export const KLANTVERHALEN: Klantverhaal[] = [
     ],
     resultaat:
       "Binnen zes weken stond de eerste release live. Planners werken nu vanuit één realtime beeld en verstoringen worden eerder opgevangen, met merkbaar minder impact op de reiziger.",
-    aside: { sector: "Mobiliteit", diensten: "Mendix", doorlooptijd: "6 weken tot release", team: "Plan-build-run" },
+    aside: {
+      sector: "Mobiliteit",
+      diensten: "Mendix",
+      doorlooptijd: "6 weken tot release",
+      team: "Plan-build-run",
+    },
     quote: "“Voor het eerst werken planning en operatie vanuit dezelfde, actuele data.”",
     quoteNaam: "Ilse Vermeer",
     quoteRol: "Manager Operatie",
@@ -116,7 +127,12 @@ export const KLANTVERHALEN: Klantverhaal[] = [
     ],
     resultaat:
       "Het acceptatieproces is volledig herleidbaar, de doorlooptijd halveerde en er waren geen extra fte's nodig, terwijl de toezichthouder tevreden is.",
-    aside: { sector: "Banken", diensten: "Strategie · Mendix", doorlooptijd: "16 weken", team: "Plan-build-run" },
+    aside: {
+      sector: "Banken",
+      diensten: "Strategie · Mendix",
+      doorlooptijd: "16 weken",
+      team: "Plan-build-run",
+    },
     quote: "“Wendbaar leveren én door de compliance-toets komen: het kan wél.”",
     quoteNaam: "Mark de Wit",
     quoteRol: "Hoofd Digitalisering",
@@ -178,7 +194,12 @@ export const KLANTVERHALEN: Klantverhaal[] = [
     ],
     resultaat:
       "De output steeg met 22% en omsteltijden werden korter, doordat verstoringen nu vroeg zichtbaar zijn en de planning meebeweegt met de realiteit.",
-    aside: { sector: "Manufacturing", diensten: "AI", doorlooptijd: "10 weken", team: "Plan-build-run" },
+    aside: {
+      sector: "Manufacturing",
+      diensten: "AI",
+      doorlooptijd: "10 weken",
+      team: "Plan-build-run",
+    },
     quote: "“Onze data doet eindelijk iets nuttigs op de vloer.”",
     quoteNaam: "Bram Kok",
     quoteRol: "Operations Director",
@@ -209,7 +230,12 @@ export const KLANTVERHALEN: Klantverhaal[] = [
     ],
     resultaat:
       "Binnen acht weken stond de eerste release live. Aanvragers dienen digitaal in, de organisatie handelt sneller af en elke stap is volledig aantoonbaar.",
-    aside: { sector: "Publieke sector", diensten: "Strategie · Mendix", doorlooptijd: "8 weken tot release", team: "Plan-build-run" },
+    aside: {
+      sector: "Publieke sector",
+      diensten: "Strategie · Mendix",
+      doorlooptijd: "8 weken tot release",
+      team: "Plan-build-run",
+    },
     quote: "“Digitaal én aantoonbaar bleek geen tegenstelling.”",
     quoteNaam: "Hanneke Bos",
     quoteRol: "Programmamanager Digitalisering",

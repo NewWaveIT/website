@@ -30,7 +30,9 @@ export function PropositiesField({
       <label>{label}</label>
       <input type="hidden" name={name} value={JSON.stringify(sel)} />
       {options.length === 0 ? (
-        <p className="t-sub">Nog geen proposities aangemaakt. Voeg ze eerst toe onder ‘Proposities’.</p>
+        <p className="t-sub">
+          Nog geen proposities aangemaakt. Voeg ze eerst toe onder ‘Proposities’.
+        </p>
       ) : (
         <div className="choicechips">
           {options.map((o) => (

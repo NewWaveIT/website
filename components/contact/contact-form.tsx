@@ -7,20 +7,8 @@ import { submitContact, type ContactState } from "@/app/(marketing)/contact/acti
 
 const initial: ContactState = { ok: false, message: "" };
 
-const SECTOREN = [
-  "Publieke sector",
-  "Mobiliteit",
-  "Banken",
-  "Zorg",
-  "Manufacturing",
-  "Anders",
-];
-const ONDERWERPEN = [
-  "Mendix / applicaties",
-  "AI",
-  "Digitale strategie",
-  "Weet ik nog niet",
-];
+const SECTOREN = ["Publieke sector", "Mobiliteit", "Banken", "Zorg", "Manufacturing", "Anders"];
+const ONDERWERPEN = ["Mendix / applicaties", "AI", "Digitale strategie", "Weet ik nog niet"];
 
 function SubmitButton() {
   const { pending } = useFormStatus();
@@ -49,8 +37,8 @@ export function ContactForm({ type = "strategiegesprek" }: { type?: string }) {
     <form className="form-card" action={formAction}>
       <h2>Plan een strategiegesprek</h2>
       <p className="sub">
-        Vertel kort waar je vraagstuk over gaat, we reageren binnen één werkdag
-        met een voorstel voor datum en deelnemers.
+        Vertel kort waar je vraagstuk over gaat, we reageren binnen één werkdag met een voorstel
+        voor datum en deelnemers.
       </p>
 
       <input type="hidden" name="type" value={type} />
@@ -71,34 +59,18 @@ export function ContactForm({ type = "strategiegesprek" }: { type?: string }) {
         </div>
         <div className="field">
           <label htmlFor="f-mail">Zakelijk e-mailadres</label>
-          <input
-            id="f-mail"
-            name="email"
-            type="email"
-            placeholder="naam@organisatie.nl"
-            required
-          />
+          <input id="f-mail" name="email" type="email" placeholder="naam@organisatie.nl" required />
         </div>
       </div>
 
       <div className="frow2">
         <div className="field">
           <label htmlFor="f-org">Organisatie</label>
-          <input
-            id="f-org"
-            name="organisatie"
-            type="text"
-            placeholder="Naam van je organisatie"
-          />
+          <input id="f-org" name="organisatie" type="text" placeholder="Naam van je organisatie" />
         </div>
         <div className="field">
           <label htmlFor="f-rol">Jouw rol</label>
-          <input
-            id="f-rol"
-            name="rol"
-            type="text"
-            placeholder="Bijv. CIO, manager uitvoering"
-          />
+          <input id="f-rol" name="rol" type="text" placeholder="Bijv. CIO, manager uitvoering" />
         </div>
       </div>
 
@@ -149,9 +121,8 @@ export function ContactForm({ type = "strategiegesprek" }: { type?: string }) {
       )}
 
       <p className="privacy">
-        We gebruiken je gegevens alleen om dit gesprek te plannen. Geen
-        nieuwsbrief, geen belrondes. Zie ons{" "}
-        <a href="/privacy">privacybeleid</a>.
+        We gebruiken je gegevens alleen om dit gesprek te plannen. Geen nieuwsbrief, geen belrondes.
+        Zie ons <a href="/privacy">privacybeleid</a>.
       </p>
     </form>
   );

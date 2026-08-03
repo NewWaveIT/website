@@ -17,9 +17,7 @@ export function HomeInteractions() {
     const tabs = Array.from(document.querySelectorAll<HTMLButtonElement>(".tab"));
     const onTab = (t: HTMLButtonElement) => () => {
       const id = t.getAttribute("data-tab");
-      tabs.forEach((x) =>
-        x.setAttribute("aria-selected", x === t ? "true" : "false"),
-      );
+      tabs.forEach((x) => x.setAttribute("aria-selected", x === t ? "true" : "false"));
       document.querySelectorAll<HTMLElement>(".panel").forEach((p) => {
         p.classList.toggle("active", p.getAttribute("data-panel") === id);
       });
@@ -65,10 +63,7 @@ export function HomeInteractions() {
       };
       split(h1);
       if (accent) {
-        const to = window.setTimeout(
-          () => accent.classList.add("draw"),
-          120 + idx * 55 + 350,
-        );
+        const to = window.setTimeout(() => accent.classList.add("draw"), 120 + idx * 55 + 350);
         cleanups.push(() => window.clearTimeout(to));
       }
     })();
@@ -82,9 +77,8 @@ export function HomeInteractions() {
       const ctx = cv.getContext("2d");
       if (!ctx) return;
       const orange =
-        getComputedStyle(document.documentElement)
-          .getPropertyValue("--orange-400")
-          .trim() || "#ff7a29";
+        getComputedStyle(document.documentElement).getPropertyValue("--orange-400").trim() ||
+        "#ff7a29";
       let W = 0,
         H = 0,
         t = 0,
@@ -175,9 +169,8 @@ export function HomeInteractions() {
           entries.forEach((e) => {
             if (!e.isIntersecting) return;
             const el = e.target as HTMLElement;
-            const sibs = Array.prototype.filter.call(
-              el.parentNode?.children ?? [],
-              (c: Element) => c.classList.contains("reveal"),
+            const sibs = Array.prototype.filter.call(el.parentNode?.children ?? [], (c: Element) =>
+              c.classList.contains("reveal"),
             );
             const i = sibs.indexOf(el);
             el.style.transitionDelay = `${i > 0 ? Math.min(i, 6) * 70 : 0}ms`;

@@ -86,7 +86,10 @@ export default async function ContactPage() {
                 <CalendarCheck />
               </span>
               <h3>Plan een strategiegesprek</h3>
-              <p>45 minuten met een practice lead over jouw vraagstuk. Vrijblijvend en zonder verkooppraatje.</p>
+              <p>
+                45 minuten met een practice lead over jouw vraagstuk. Vrijblijvend en zonder
+                verkooppraatje.
+              </p>
               <span className="go">
                 Plan het gesprek <ArrowRight />
               </span>

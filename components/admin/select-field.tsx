@@ -15,7 +15,7 @@ export function SelectField({
   defaultValue: string;
   help?: string;
 }) {
-  const initial = options.includes(defaultValue) ? defaultValue : options[0] ?? "";
+  const initial = options.includes(defaultValue) ? defaultValue : (options[0] ?? "");
   const [value, setValue] = useState(initial);
 
   return (
@@ -35,7 +35,11 @@ export function SelectField({
           </button>
         ))}
       </div>
-      {help && <p className="t-sub" style={{ marginTop: 8 }}>{help}</p>}
+      {help && (
+        <p className="t-sub" style={{ marginTop: 8 }}>
+          {help}
+        </p>
+      )}
     </div>
   );
 }

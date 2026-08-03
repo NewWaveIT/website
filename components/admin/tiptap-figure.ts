@@ -64,9 +64,7 @@ export const FigureImage = Node.create({
     if (height) imgAttrs.height = height;
     const img: DOMOutputSpec = ["img", mergeAttributes(imgAttrs)];
     return (
-      caption
-        ? ["figure", attrs, img, ["figcaption", {}, caption]]
-        : ["figure", attrs, img]
+      caption ? ["figure", attrs, img, ["figcaption", {}, caption]] : ["figure", attrs, img]
     ) as DOMOutputSpec;
   },
 });

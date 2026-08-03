@@ -5,5 +5,13 @@ import { AdminContentList } from "@/components/admin/content-list";
 export default async function DienstenAdminPage() {
   await requireAdmin();
   const rows = await listContent("diensten");
-  return <AdminContentList type="diensten" crumb="Content" titel="Diensten" sub="Mendix, AI en strategie." rows={rows} />;
+  return (
+    <AdminContentList
+      type="diensten"
+      crumb="Content"
+      titel="Diensten"
+      sub="Mendix, AI en strategie."
+      rows={rows}
+    />
+  );
 }

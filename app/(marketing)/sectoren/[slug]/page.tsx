@@ -49,11 +49,7 @@ export async function generateMetadata({
   };
 }
 
-export default async function SectorPage({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}) {
+export default async function SectorPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const s = await getSectorBySlug(slug);
   if (!s) notFound();
@@ -82,8 +78,7 @@ export default async function SectorPage({
         <SectorHeroAnim theme={slug === "publieke-sector" ? "publiek" : slug} />
         <div className="wrap-wide">
           <div className="crumbs">
-            <Link href="/">Home</Link> / <Link href="/sectoren">Sectoren</Link> /{" "}
-            {s.naam}
+            <Link href="/">Home</Link> / <Link href="/sectoren">Sectoren</Link> / {s.naam}
           </div>
           <div style={{ position: "relative", paddingTop: "var(--space-6)" }}>
             <span className="badge">
@@ -115,7 +110,13 @@ export default async function SectorPage({
         <div className="wrap-wide">
           <div className="sec-head">
             <div className="kicker">Businessvraagstukken</div>
-            <h2 style={{ fontSize: "var(--text-3xl)", fontWeight: "var(--fw-extrabold)", margin: "var(--space-4) 0" }}>
+            <h2
+              style={{
+                fontSize: "var(--text-3xl)",
+                fontWeight: "var(--fw-extrabold)",
+                margin: "var(--space-4) 0",
+              }}
+            >
               De uitdagingen die we dagelijks oplossen
             </h2>
             <p>{s.challengesIntro}</p>
@@ -137,7 +138,13 @@ export default async function SectorPage({
           <div className="wrap-wide">
             <div className="sec-head">
               <div className="kicker">Onze proposities</div>
-              <h2 style={{ fontSize: "var(--text-3xl)", fontWeight: "var(--fw-extrabold)", margin: "var(--space-4) 0" }}>
+              <h2
+                style={{
+                  fontSize: "var(--text-3xl)",
+                  fontWeight: "var(--fw-extrabold)",
+                  margin: "var(--space-4) 0",
+                }}
+              >
                 Zo helpen we {s.naam.toLowerCase()} versnellen
               </h2>
               <p>Wij starten bij jouw vraagstuk en zetten Mendix, AI en strategie in als middel.</p>
@@ -151,7 +158,9 @@ export default async function SectorPage({
                   {p.solutions.length > 0 && (
                     <div className="pmc-tags">
                       {p.solutions.map((sol, i) => (
-                        <span className="pmc-tag" key={i}>{sol}</span>
+                        <span className="pmc-tag" key={i}>
+                          {sol}
+                        </span>
                       ))}
                     </div>
                   )}
@@ -166,7 +175,13 @@ export default async function SectorPage({
         <div className="wrap-wide">
           <div className="sec-head">
             <div className="kicker">Onze aanpak</div>
-            <h2 style={{ fontSize: "var(--text-3xl)", fontWeight: "var(--fw-extrabold)", margin: "var(--space-4) 0" }}>
+            <h2
+              style={{
+                fontSize: "var(--text-3xl)",
+                fontWeight: "var(--fw-extrabold)",
+                margin: "var(--space-4) 0",
+              }}
+            >
               Van vraagstuk naar werkende oplossing
             </h2>
           </div>
@@ -196,7 +211,14 @@ export default async function SectorPage({
         <div className="wrap-wide">
           <div className="sec-head">
             <div className="kicker on-dark">Resultaten in {s.naam.toLowerCase()}</div>
-            <h2 style={{ color: "#fff", fontSize: "var(--text-3xl)", fontWeight: "var(--fw-extrabold)", margin: "var(--space-4) 0 0" }}>
+            <h2
+              style={{
+                color: "#fff",
+                fontSize: "var(--text-3xl)",
+                fontWeight: "var(--fw-extrabold)",
+                margin: "var(--space-4) 0 0",
+              }}
+            >
               Wat het oplevert
             </h2>
           </div>
@@ -215,7 +237,13 @@ export default async function SectorPage({
         <div className="wrap-wide">
           <div className="sec-head">
             <div className="kicker">Klantverhaal</div>
-            <h2 style={{ fontSize: "var(--text-3xl)", fontWeight: "var(--fw-extrabold)", margin: "var(--space-4) 0 0" }}>
+            <h2
+              style={{
+                fontSize: "var(--text-3xl)",
+                fontWeight: "var(--fw-extrabold)",
+                margin: "var(--space-4) 0 0",
+              }}
+            >
               {s.caseTitle}
             </h2>
           </div>
@@ -231,7 +259,11 @@ export default async function SectorPage({
               <div className="who">
                 <strong>{s.caseNaam}</strong>, {s.caseRol}
                 <br />
-                <Link href="/klantverhalen/coa" className="more" style={{ display: "inline-block", marginTop: 14 }}>
+                <Link
+                  href="/klantverhalen/coa"
+                  className="more"
+                  style={{ display: "inline-block", marginTop: 14 }}
+                >
                   Lees het volledige verhaal →
                 </Link>
               </div>
@@ -256,11 +288,19 @@ export default async function SectorPage({
               ? artikelen.slice(0, 3).map((a) => (
                   <Link href={`/inzichten/${a.slug}`} className="post" key={a.slug}>
                     <div className="cover">
-                      <Image src={a.image} alt={a.titel} fill sizes="(max-width: 980px) 100vw, 33vw" style={{ objectFit: "cover" }} />
+                      <Image
+                        src={a.image}
+                        alt={a.titel}
+                        fill
+                        sizes="(max-width: 980px) 100vw, 33vw"
+                        style={{ objectFit: "cover" }}
+                      />
                       <span className="cat">{a.cat}</span>
                     </div>
                     <div className="pbody">
-                      <div className="meta">{a.leestijd} · {a.datum}</div>
+                      <div className="meta">
+                        {a.leestijd} · {a.datum}
+                      </div>
                       <h3>{a.titel}</h3>
                       <span className="more">
                         Lees meer <ArrowRight />

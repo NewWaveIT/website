@@ -47,15 +47,35 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: number,
   ) => {
     for (const slug of slugs) {
-      entries.push({ url: `${SITE_URL}${base}/${slug}`, lastModified: now, changeFrequency, priority });
+      entries.push({
+        url: `${SITE_URL}${base}/${slug}`,
+        lastModified: now,
+        changeFrequency,
+        priority,
+      });
     }
   };
 
   push("/sectoren", sectoren, "monthly", 0.7);
   push("/diensten", diensten, "monthly", 0.7);
-  push("/vacatures", vacatures.map((v) => v.slug), "weekly", 0.6);
-  push("/klantverhalen", cases.map((k) => k.slug), "monthly", 0.6);
-  push("/inzichten", artikelen.map((a) => a.slug), "monthly", 0.6);
+  push(
+    "/vacatures",
+    vacatures.map((v) => v.slug),
+    "weekly",
+    0.6,
+  );
+  push(
+    "/klantverhalen",
+    cases.map((k) => k.slug),
+    "monthly",
+    0.6,
+  );
+  push(
+    "/inzichten",
+    artikelen.map((a) => a.slug),
+    "monthly",
+    0.6,
+  );
 
   return entries;
 }

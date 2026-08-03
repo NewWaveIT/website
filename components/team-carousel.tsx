@@ -30,7 +30,13 @@ export function TeamCarousel({ team }: { team: Teamlid[] }) {
         {team.map((m) => (
           <div className="tcard" key={m.slug}>
             <div className="pf">
-              <Image src={m.foto} alt={m.naam} fill sizes="300px" style={{ objectPosition: "top" }} />
+              <Image
+                src={m.foto}
+                alt={m.naam}
+                fill
+                sizes="300px"
+                style={{ objectPosition: "top" }}
+              />
             </div>
             <div className="nm">{m.naam}</div>
             <div className="rl">{m.rol}</div>

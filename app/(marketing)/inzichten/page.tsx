@@ -33,8 +33,8 @@ export default async function InzichtenPage() {
             Kennis die je <em>morgen</em> kunt gebruiken.
           </h1>
           <p>
-            Praktische artikelen over Mendix, AI en digitale strategie, geschreven
-            vanuit de vraagstukken van onze vijf sectoren, zonder jargon.
+            Praktische artikelen over Mendix, AI en digitale strategie, geschreven vanuit de
+            vraagstukken van onze vijf sectoren, zonder jargon.
           </p>
         </div>
       </section>

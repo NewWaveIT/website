@@ -1,51 +1,256 @@
 /* Inzichten overzicht — geport uit ui_kits/website/inzichten.html (.p-inzichten) */
 
-.p-inzichten .crumbs { font-family: var(--font-mono); font-size: var(--text-xs); color: var(--ink-400); padding: var(--space-5) 0 0; }
-.p-inzichten .crumbs a { color: var(--ink-400); }
-
-.p-inzichten .dhero { background: var(--ink-900); color: var(--eggshell); position: relative; overflow: hidden; }
-.p-inzichten .dhero .wrap-wide { position: relative; padding: var(--space-8) 0 var(--space-9); }
-.p-inzichten .dhero h1 { font-family: var(--font-display-expanded); font-weight: var(--fw-black); font-size: var(--text-4xl); line-height: var(--leading-tight); color: #fff; margin: var(--space-5) 0; max-width: 20ch; }
-.p-inzichten .dhero h1 em { font-style: normal; color: var(--orange-400); }
-.p-inzichten .dhero p { font-size: var(--text-lg); color: var(--text-on-dark-muted); line-height: var(--leading-relaxed); max-width: 50ch; margin: 0; }
-
-.p-inzichten .filters { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: var(--space-7); }
-.p-inzichten .fchip { font-family: inherit; font-size: var(--text-sm); font-weight: var(--fw-medium); color: var(--text-body); border: 1px solid var(--border-strong); border-radius: var(--radius-pill); padding: 9px 18px; min-height: 40px; background: var(--paper); cursor: pointer; transition: all 120ms ease; }
-.p-inzichten .fchip:hover { border-color: var(--color-primary); }
-.p-inzichten .fchip.on { background: var(--ink-900); border-color: var(--ink-900); color: var(--eggshell); }
-
-.p-inzichten .feat { display: grid; grid-template-columns: 1.1fr 1fr; gap: 0; border-radius: var(--radius-xl); overflow: hidden; box-shadow: var(--shadow-lg); margin-bottom: var(--space-9); color: inherit; }
-.p-inzichten .feat .media { position: relative; min-height: 340px; background-color: var(--ink-200); overflow: hidden; }
-.p-inzichten .feat .body { background: var(--ink-900); color: var(--eggshell); padding: var(--space-8); display: flex; flex-direction: column; }
-.p-inzichten .feat .body h2 { color: #fff; font-size: var(--text-2xl); font-weight: var(--fw-extrabold); line-height: var(--leading-snug); margin: var(--space-4) 0; }
-.p-inzichten .feat .body p { font-size: var(--text-md); color: var(--text-on-dark-muted); line-height: var(--leading-relaxed); margin: 0 0 var(--space-6); }
-.p-inzichten .feat .meta { font-family: var(--font-mono); font-size: var(--text-xs); color: var(--ink-400); }
-
-.p-inzichten .cards3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-6); }
-.p-inzichten .post { display: flex; flex-direction: column; border-radius: var(--radius-lg); overflow: hidden; border: 1px solid var(--border-default); background: var(--white); transition: transform 160ms, box-shadow 160ms; color: var(--text-body); }
-.p-inzichten .post:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); color: var(--text-body); }
-.p-inzichten .post .cover { position: relative; height: 170px; background-color: var(--ink-200); background-size: cover; background-position: center; }
-.p-inzichten .post .cover .cat { position: absolute; z-index: 1; top: 14px; left: 14px; background: var(--color-primary); color: #fff; font-weight: var(--fw-semibold); font-size: var(--text-xs); padding: 5px 12px; border-radius: var(--radius-pill); }
-.p-inzichten .post .pbody { padding: var(--space-5) var(--space-6) var(--space-6); display: flex; flex-direction: column; flex: 1; }
-.p-inzichten .post .meta { font-family: var(--font-mono); font-size: var(--text-xs); color: var(--text-subtle); }
-.p-inzichten .post h3 { font-size: var(--text-md); font-weight: var(--fw-bold); line-height: var(--leading-snug); margin: var(--space-3) 0; flex: 1; }
-.p-inzichten .post .more { font-size: var(--text-sm); font-weight: var(--fw-semibold); display: inline-flex; align-items: center; gap: 6px; color: var(--orange-text); }
-.p-inzichten .post .more .lucide { width: 15px; height: 15px; }
-
-.p-inzichten .nieuwsbrief { background: var(--eggshell); }
-.p-inzichten .nieuwsbrief .inner { display: grid; grid-template-columns: 1.2fr 1fr; gap: var(--space-8); align-items: center; background: var(--white); border: 1px solid var(--border-default); border-radius: var(--radius-xl); padding: var(--space-7) var(--space-8); }
-.p-inzichten .nieuwsbrief h2 { font-size: var(--text-2xl); font-weight: var(--fw-extrabold); margin: var(--space-3) 0; }
-.p-inzichten .nieuwsbrief p { font-size: var(--text-sm); color: var(--text-muted); line-height: var(--leading-relaxed); margin: 0; }
-.p-inzichten .nieuwsbrief form { display: flex; gap: var(--space-3); }
-.p-inzichten .nieuwsbrief input { flex: 1; font-family: var(--font-sans); font-size: var(--text-base); color: var(--text-body); background: var(--paper); border: 1px solid var(--border-strong); border-radius: var(--radius-md); padding: 12px 14px; outline: none; }
-.p-inzichten .nieuwsbrief input:focus { border-color: var(--color-primary); box-shadow: 0 0 0 3px rgba(241, 88, 34, 0.15); }
-
-@media (max-width: 1024px) { .p-inzichten .cards3 { grid-template-columns: repeat(2, 1fr); } }
-@media (max-width: 900px) {
-  .p-inzichten .feat { grid-template-columns: 1fr; }
-  .p-inzichten .feat .media { min-height: 220px; }
-  .p-inzichten .dhero h1 { font-size: var(--text-3xl); }
-  .p-inzichten .nieuwsbrief .inner { grid-template-columns: 1fr; }
-  .p-inzichten .nieuwsbrief form { flex-direction: column; }
+.p-inzichten .crumbs {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--ink-400);
+  padding: var(--space-5) 0 0;
 }
-@media (max-width: 640px) { .p-inzichten .cards3 { grid-template-columns: 1fr; } }
+.p-inzichten .crumbs a {
+  color: var(--ink-400);
+}
+
+.p-inzichten .dhero {
+  background: var(--ink-900);
+  color: var(--eggshell);
+  position: relative;
+  overflow: hidden;
+}
+.p-inzichten .dhero .wrap-wide {
+  position: relative;
+  padding: var(--space-8) 0 var(--space-9);
+}
+.p-inzichten .dhero h1 {
+  font-family: var(--font-display-expanded);
+  font-weight: var(--fw-black);
+  font-size: var(--text-4xl);
+  line-height: var(--leading-tight);
+  color: #fff;
+  margin: var(--space-5) 0;
+  max-width: 20ch;
+}
+.p-inzichten .dhero h1 em {
+  font-style: normal;
+  color: var(--orange-400);
+}
+.p-inzichten .dhero p {
+  font-size: var(--text-lg);
+  color: var(--text-on-dark-muted);
+  line-height: var(--leading-relaxed);
+  max-width: 50ch;
+  margin: 0;
+}
+
+.p-inzichten .filters {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: var(--space-7);
+}
+.p-inzichten .fchip {
+  font-family: inherit;
+  font-size: var(--text-sm);
+  font-weight: var(--fw-medium);
+  color: var(--text-body);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-pill);
+  padding: 9px 18px;
+  min-height: 40px;
+  background: var(--paper);
+  cursor: pointer;
+  transition: all 120ms ease;
+}
+.p-inzichten .fchip:hover {
+  border-color: var(--color-primary);
+}
+.p-inzichten .fchip.on {
+  background: var(--ink-900);
+  border-color: var(--ink-900);
+  color: var(--eggshell);
+}
+
+.p-inzichten .feat {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 0;
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+  margin-bottom: var(--space-9);
+  color: inherit;
+}
+.p-inzichten .feat .media {
+  position: relative;
+  min-height: 340px;
+  background-color: var(--ink-200);
+  overflow: hidden;
+}
+.p-inzichten .feat .body {
+  background: var(--ink-900);
+  color: var(--eggshell);
+  padding: var(--space-8);
+  display: flex;
+  flex-direction: column;
+}
+.p-inzichten .feat .body h2 {
+  color: #fff;
+  font-size: var(--text-2xl);
+  font-weight: var(--fw-extrabold);
+  line-height: var(--leading-snug);
+  margin: var(--space-4) 0;
+}
+.p-inzichten .feat .body p {
+  font-size: var(--text-md);
+  color: var(--text-on-dark-muted);
+  line-height: var(--leading-relaxed);
+  margin: 0 0 var(--space-6);
+}
+.p-inzichten .feat .meta {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--ink-400);
+}
+
+.p-inzichten .cards3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-6);
+}
+.p-inzichten .post {
+  display: flex;
+  flex-direction: column;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid var(--border-default);
+  background: var(--white);
+  transition:
+    transform 160ms,
+    box-shadow 160ms;
+  color: var(--text-body);
+}
+.p-inzichten .post:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+  color: var(--text-body);
+}
+.p-inzichten .post .cover {
+  position: relative;
+  height: 170px;
+  background-color: var(--ink-200);
+  background-size: cover;
+  background-position: center;
+}
+.p-inzichten .post .cover .cat {
+  position: absolute;
+  z-index: 1;
+  top: 14px;
+  left: 14px;
+  background: var(--color-primary);
+  color: #fff;
+  font-weight: var(--fw-semibold);
+  font-size: var(--text-xs);
+  padding: 5px 12px;
+  border-radius: var(--radius-pill);
+}
+.p-inzichten .post .pbody {
+  padding: var(--space-5) var(--space-6) var(--space-6);
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+.p-inzichten .post .meta {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--text-subtle);
+}
+.p-inzichten .post h3 {
+  font-size: var(--text-md);
+  font-weight: var(--fw-bold);
+  line-height: var(--leading-snug);
+  margin: var(--space-3) 0;
+  flex: 1;
+}
+.p-inzichten .post .more {
+  font-size: var(--text-sm);
+  font-weight: var(--fw-semibold);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--orange-text);
+}
+.p-inzichten .post .more .lucide {
+  width: 15px;
+  height: 15px;
+}
+
+.p-inzichten .nieuwsbrief {
+  background: var(--eggshell);
+}
+.p-inzichten .nieuwsbrief .inner {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: var(--space-8);
+  align-items: center;
+  background: var(--white);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-xl);
+  padding: var(--space-7) var(--space-8);
+}
+.p-inzichten .nieuwsbrief h2 {
+  font-size: var(--text-2xl);
+  font-weight: var(--fw-extrabold);
+  margin: var(--space-3) 0;
+}
+.p-inzichten .nieuwsbrief p {
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+  line-height: var(--leading-relaxed);
+  margin: 0;
+}
+.p-inzichten .nieuwsbrief form {
+  display: flex;
+  gap: var(--space-3);
+}
+.p-inzichten .nieuwsbrief input {
+  flex: 1;
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  color: var(--text-body);
+  background: var(--paper);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-md);
+  padding: 12px 14px;
+  outline: none;
+}
+.p-inzichten .nieuwsbrief input:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(241, 88, 34, 0.15);
+}
+
+@media (max-width: 1024px) {
+  .p-inzichten .cards3 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 900px) {
+  .p-inzichten .feat {
+    grid-template-columns: 1fr;
+  }
+  .p-inzichten .feat .media {
+    min-height: 220px;
+  }
+  .p-inzichten .dhero h1 {
+    font-size: var(--text-3xl);
+  }
+  .p-inzichten .nieuwsbrief .inner {
+    grid-template-columns: 1fr;
+  }
+  .p-inzichten .nieuwsbrief form {
+    flex-direction: column;
+  }
+}
+@media (max-width: 640px) {
+  .p-inzichten .cards3 {
+    grid-template-columns: 1fr;
+  }
+}

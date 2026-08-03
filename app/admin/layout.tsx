@@ -9,11 +9,7 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
-export default async function AdminLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default async function AdminLayout({ children }: { children: React.ReactNode }) {
   const user = await getCurrentUser();
 
   // Niet ingelogd → bare layout (loginpagina rendert zichzelf).
@@ -22,10 +18,7 @@ export default async function AdminLayout({
   }
 
   const counts = await getAdminCounts();
-  const naam =
-    (user.user_metadata?.naam as string) ||
-    user.email?.split("@")[0] ||
-    "Beheerder";
+  const naam = (user.user_metadata?.naam as string) || user.email?.split("@")[0] || "Beheerder";
   const rol = (user.user_metadata?.rol as string) || "Beheer";
 
   return (

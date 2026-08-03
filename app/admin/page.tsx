@@ -4,8 +4,7 @@ import { getLeads, getSollicitaties, STATUS_LABEL } from "@/lib/cms/inzendingen"
 import { SeedButton } from "@/components/admin/seed-button";
 
 function Chip({ status }: { status: string }) {
-  const cls =
-    status === "nieuw" ? "nieuw" : status === "afgerond" ? "klaar" : "bezig";
+  const cls = status === "nieuw" ? "nieuw" : status === "afgerond" ? "klaar" : "bezig";
   return (
     <span className={`chip ${cls}`}>
       <span className="dot" />
@@ -95,17 +94,20 @@ export default async function AdminDashboard() {
           </div>
           <table>
             <tbody>
-              {sols.filter((s) => s.status !== "afgerond").slice(0, 5).map((s) => (
-                <tr key={s.id}>
-                  <td>
-                    <div className="t-title">{s.naam}</div>
-                    <div className="t-sub">{s.vacature_slug}</div>
-                  </td>
-                  <td style={{ textAlign: "right" }}>
-                    <Chip status={s.status} />
-                  </td>
-                </tr>
-              ))}
+              {sols
+                .filter((s) => s.status !== "afgerond")
+                .slice(0, 5)
+                .map((s) => (
+                  <tr key={s.id}>
+                    <td>
+                      <div className="t-title">{s.naam}</div>
+                      <div className="t-sub">{s.vacature_slug}</div>
+                    </td>
+                    <td style={{ textAlign: "right" }}>
+                      <Chip status={s.status} />
+                    </td>
+                  </tr>
+                ))}
               {sols.length === 0 && (
                 <tr>
                   <td>

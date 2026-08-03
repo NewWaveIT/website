@@ -34,8 +34,7 @@ export async function submitContact(
 
   // Validatie
   if (naam.length < 2) return { ok: false, message: "Vul je naam in." };
-  if (!EMAIL_RE.test(email))
-    return { ok: false, message: "Vul een geldig e-mailadres in." };
+  if (!EMAIL_RE.test(email)) return { ok: false, message: "Vul een geldig e-mailadres in." };
   if (naam.length > 200 || email.length > 320 || toelichting.length > 5000)
     return { ok: false, message: "Een van de velden is te lang." };
 

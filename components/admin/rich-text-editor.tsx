@@ -30,7 +30,14 @@ import { Modal } from "./modal";
 /** Actieve modal-status binnen de werkbalk. */
 type RtePrompt =
   | { kind: "link"; url: string }
-  | { kind: "image"; url: string; width: number | null; height: number | null; alt: string; caption: string }
+  | {
+      kind: "image";
+      url: string;
+      width: number | null;
+      height: number | null;
+      alt: string;
+      caption: string;
+    }
   | { kind: "caption"; alt: string; caption: string };
 
 function Btn({
@@ -87,10 +94,18 @@ function Toolbar({ editor, lite }: { editor: Editor; lite: boolean }) {
       window.alert(res.error ?? "Uploaden mislukt.");
       return;
     }
-    setPrompt({ kind: "image", url: res.url, width: res.width ?? null, height: res.height ?? null, alt: "", caption: "" });
+    setPrompt({
+      kind: "image",
+      url: res.url,
+      width: res.width ?? null,
+      height: res.height ?? null,
+      alt: "",
+      caption: "",
+    });
   };
 
-  const setAlign = (a: string) => editor.chain().focus().updateAttributes("figureImage", { align: a }).run();
+  const setAlign = (a: string) =>
+    editor.chain().focus().updateAttributes("figureImage", { align: a }).run();
   const openCaption = () => {
     setPrompt({
       kind: "caption",
@@ -104,7 +119,8 @@ function Toolbar({ editor, lite }: { editor: Editor; lite: boolean }) {
     if (!prompt) return;
     if (prompt.kind === "link") {
       const url = prompt.url.trim();
-      if (url === "" || url === "https://") editor.chain().focus().extendMarkRange("link").unsetLink().run();
+      if (url === "" || url === "https://")
+        editor.chain().focus().extendMarkRange("link").unsetLink().run();
       else editor.chain().focus().extendMarkRange("link").setLink({ href: url }).run();
     } else if (prompt.kind === "image") {
       editor
@@ -123,7 +139,11 @@ function Toolbar({ editor, lite }: { editor: Editor; lite: boolean }) {
         })
         .run();
     } else {
-      editor.chain().focus().updateAttributes("figureImage", { alt: prompt.alt.trim(), caption: prompt.caption.trim() }).run();
+      editor
+        .chain()
+        .focus()
+        .updateAttributes("figureImage", { alt: prompt.alt.trim(), caption: prompt.caption.trim() })
+        .run();
     }
     setPrompt(null);
   };
@@ -132,41 +152,135 @@ function Toolbar({ editor, lite }: { editor: Editor; lite: boolean }) {
     <div className="rte-bar">
       {!lite && (
         <>
-          <Btn title="Kop" active={editor.isActive("heading", { level: 2 })} onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}><Heading2 /></Btn>
-          <Btn title="Subkop" active={editor.isActive("heading", { level: 3 })} onClick={() => editor.chain().focus().toggleHeading({ level: 3 }).run()}><Heading3 /></Btn>
+          <Btn
+            title="Kop"
+            active={editor.isActive("heading", { level: 2 })}
+            onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
+          >
+            <Heading2 />
+          </Btn>
+          <Btn
+            title="Subkop"
+            active={editor.isActive("heading", { level: 3 })}
+            onClick={() => editor.chain().focus().toggleHeading({ level: 3 }).run()}
+          >
+            <Heading3 />
+          </Btn>
         </>
       )}
-      <Btn title="Vet" active={editor.isActive("bold")} onClick={() => editor.chain().focus().toggleBold().run()}><Bold /></Btn>
-      <Btn title="Cursief" active={editor.isActive("italic")} onClick={() => editor.chain().focus().toggleItalic().run()}><Italic /></Btn>
-      <Btn title="Opsomming" active={editor.isActive("bulletList")} onClick={() => editor.chain().focus().toggleBulletList().run()}><List /></Btn>
-      <Btn title="Genummerd" active={editor.isActive("orderedList")} onClick={() => editor.chain().focus().toggleOrderedList().run()}><ListOrdered /></Btn>
-      <Btn title="Link" active={editor.isActive("link")} onClick={openLink}><LinkIcon /></Btn>
+      <Btn
+        title="Vet"
+        active={editor.isActive("bold")}
+        onClick={() => editor.chain().focus().toggleBold().run()}
+      >
+        <Bold />
+      </Btn>
+      <Btn
+        title="Cursief"
+        active={editor.isActive("italic")}
+        onClick={() => editor.chain().focus().toggleItalic().run()}
+      >
+        <Italic />
+      </Btn>
+      <Btn
+        title="Opsomming"
+        active={editor.isActive("bulletList")}
+        onClick={() => editor.chain().focus().toggleBulletList().run()}
+      >
+        <List />
+      </Btn>
+      <Btn
+        title="Genummerd"
+        active={editor.isActive("orderedList")}
+        onClick={() => editor.chain().focus().toggleOrderedList().run()}
+      >
+        <ListOrdered />
+      </Btn>
+      <Btn title="Link" active={editor.isActive("link")} onClick={openLink}>
+        <LinkIcon />
+      </Btn>
       {!lite && (
         <>
-          <Btn title="Citaat" active={editor.isActive("blockquote")} onClick={() => editor.chain().focus().toggleBlockquote().run()}><Quote /></Btn>
-          <Btn title={busy ? "Uploaden…" : "Afbeelding"} disabled={busy} onClick={() => fileRef.current?.click()}><ImagePlus /></Btn>
-          <input ref={fileRef} type="file" accept="image/*" onChange={onFile} style={{ display: "none" }} />
+          <Btn
+            title="Citaat"
+            active={editor.isActive("blockquote")}
+            onClick={() => editor.chain().focus().toggleBlockquote().run()}
+          >
+            <Quote />
+          </Btn>
+          <Btn
+            title={busy ? "Uploaden…" : "Afbeelding"}
+            disabled={busy}
+            onClick={() => fileRef.current?.click()}
+          >
+            <ImagePlus />
+          </Btn>
+          <input
+            ref={fileRef}
+            type="file"
+            accept="image/*"
+            onChange={onFile}
+            style={{ display: "none" }}
+          />
         </>
       )}
       <span className="rte-sep" />
-      <Btn title="Ongedaan maken" disabled={!editor.can().undo()} onClick={() => editor.chain().focus().undo().run()}><Undo /></Btn>
-      <Btn title="Opnieuw" disabled={!editor.can().redo()} onClick={() => editor.chain().focus().redo().run()}><Redo /></Btn>
+      <Btn
+        title="Ongedaan maken"
+        disabled={!editor.can().undo()}
+        onClick={() => editor.chain().focus().undo().run()}
+      >
+        <Undo />
+      </Btn>
+      <Btn
+        title="Opnieuw"
+        disabled={!editor.can().redo()}
+        onClick={() => editor.chain().focus().redo().run()}
+      >
+        <Redo />
+      </Btn>
 
       {!lite && imgSelected && (
         <div className="rte-ctx">
           <span className="rte-ctx-lbl">Afbeelding:</span>
-          <Btn title="Links (tekst eromheen)" active={align === "left"} onClick={() => setAlign("left")}><AlignLeft /></Btn>
-          <Btn title="Midden" active={align === "center"} onClick={() => setAlign("center")}><AlignCenter /></Btn>
-          <Btn title="Rechts (tekst eromheen)" active={align === "right"} onClick={() => setAlign("right")}><AlignRight /></Btn>
-          <Btn title="Volle breedte" active={align === "full"} onClick={() => setAlign("full")}><Maximize2 /></Btn>
-          <Btn title="Bijschrift & omschrijving" onClick={openCaption}><Captions /></Btn>
-          <Btn title="Verwijderen" onClick={() => editor.chain().focus().deleteSelection().run()}><Trash2 /></Btn>
+          <Btn
+            title="Links (tekst eromheen)"
+            active={align === "left"}
+            onClick={() => setAlign("left")}
+          >
+            <AlignLeft />
+          </Btn>
+          <Btn title="Midden" active={align === "center"} onClick={() => setAlign("center")}>
+            <AlignCenter />
+          </Btn>
+          <Btn
+            title="Rechts (tekst eromheen)"
+            active={align === "right"}
+            onClick={() => setAlign("right")}
+          >
+            <AlignRight />
+          </Btn>
+          <Btn title="Volle breedte" active={align === "full"} onClick={() => setAlign("full")}>
+            <Maximize2 />
+          </Btn>
+          <Btn title="Bijschrift & omschrijving" onClick={openCaption}>
+            <Captions />
+          </Btn>
+          <Btn title="Verwijderen" onClick={() => editor.chain().focus().deleteSelection().run()}>
+            <Trash2 />
+          </Btn>
         </div>
       )}
 
       {prompt && (
         <Modal
-          title={prompt.kind === "link" ? "Link" : prompt.kind === "image" ? "Afbeelding invoegen" : "Bijschrift & omschrijving"}
+          title={
+            prompt.kind === "link"
+              ? "Link"
+              : prompt.kind === "image"
+                ? "Afbeelding invoegen"
+                : "Bijschrift & omschrijving"
+          }
           onClose={() => setPrompt(null)}
           footer={
             <>
@@ -191,12 +305,20 @@ function Toolbar({ editor, lite }: { editor: Editor; lite: boolean }) {
                 onKeyDown={(e) => e.key === "Enter" && (e.preventDefault(), applyPrompt())}
                 placeholder="https://"
               />
-              <p className="t-sub" style={{ marginTop: 6 }}>Laat leeg (of “https://”) om de link te verwijderen.</p>
+              <p className="t-sub" style={{ marginTop: 6 }}>
+                Laat leeg (of “https://”) om de link te verwijderen.
+              </p>
             </div>
           ) : prompt.kind === "image" ? (
             <>
               <div className="fld">
-                <img src={prompt.url} alt="" style={{ maxWidth: "100%", borderRadius: "var(--radius-md)", display: "block" }} />
+                {/* Voorbeeld van een net-geüploade blob/URL in de editor — geen next/image nodig. */}
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={prompt.url}
+                  alt=""
+                  style={{ maxWidth: "100%", borderRadius: "var(--radius-md)", display: "block" }}
+                />
               </div>
               <div className="fld">
                 <label htmlFor="rte-alt">Omschrijving (alt-tekst)</label>
@@ -294,7 +416,11 @@ export function RichTextEditor({
           </>
         )}
       </div>
-      {help && <p className="t-sub" style={{ marginTop: 6 }}>{help}</p>}
+      {help && (
+        <p className="t-sub" style={{ marginTop: 6 }}>
+          {help}
+        </p>
+      )}
     </div>
   );
 }

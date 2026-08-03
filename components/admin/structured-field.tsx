@@ -8,7 +8,8 @@ import { ImageControl } from "./image-field";
 type Obj = Record<string, unknown>;
 
 const arr = (v: unknown): unknown[] => (Array.isArray(v) ? v : []);
-const obj = (v: unknown): Obj => (v && typeof v === "object" && !Array.isArray(v) ? (v as Obj) : {});
+const obj = (v: unknown): Obj =>
+  v && typeof v === "object" && !Array.isArray(v) ? (v as Obj) : {};
 const str = (v: unknown): string => (v === undefined || v === null ? "" : String(v));
 
 /** Recursief besturingselement voor één veld (waarde + onChange). */
@@ -34,12 +35,22 @@ function Control({
               onChange={(e) => onChange(list.map((x, j) => (j === i ? e.target.value : x)))}
               style={{ flex: 1 }}
             />
-            <button type="button" className="btn btn-outline iconbtn" aria-label="Verwijderen" onClick={() => onChange(list.filter((_, j) => j !== i))}>
+            <button
+              type="button"
+              className="btn btn-outline iconbtn"
+              aria-label="Verwijderen"
+              onClick={() => onChange(list.filter((_, j) => j !== i))}
+            >
               <Trash2 />
             </button>
           </div>
         ))}
-        <button type="button" className="btn btn-outline" style={{ alignSelf: "flex-start" }} onClick={() => onChange([...list, ""])}>
+        <button
+          type="button"
+          className="btn btn-outline"
+          style={{ alignSelf: "flex-start" }}
+          onClick={() => onChange([...list, ""])}
+        >
           <Plus /> Regel toevoegen
         </button>
       </div>
@@ -51,7 +62,12 @@ function Control({
     return (
       <div className="frow2">
         {(field.of ?? []).map((sub) => (
-          <SubLabelled key={sub.key} field={sub} value={o[sub.key]} onChange={(v) => onChange({ ...o, [sub.key]: v })} />
+          <SubLabelled
+            key={sub.key}
+            field={sub}
+            value={o[sub.key]}
+            onChange={(v) => onChange({ ...o, [sub.key]: v })}
+          />
         ))}
       </div>
     );
@@ -65,29 +81,75 @@ function Control({
       const j = i + dir;
       if (j < 0 || j >= rows.length) return;
       const next = [...rows];
-      [next[i], next[j]] = [next[j], next[i]];
+      const a = next[i];
+      const b = next[j];
+      if (!a || !b) return;
+      next[i] = b;
+      next[j] = a;
       set(next);
     };
     return (
       <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
         {rows.map((row, i) => (
-          <div key={i} style={{ border: "1px solid var(--border-default)", borderRadius: "var(--radius-md)", padding: "var(--space-4)", background: "var(--paper)" }}>
+          <div
+            key={i}
+            style={{
+              border: "1px solid var(--border-default)",
+              borderRadius: "var(--radius-md)",
+              padding: "var(--space-4)",
+              background: "var(--paper)",
+            }}
+          >
             <div style={{ display: "flex", alignItems: "center", marginBottom: 10 }}>
-              <span className="t-sub" style={{ fontWeight: "var(--fw-semibold)" }}>{itemLabel} {i + 1}</span>
+              <span className="t-sub" style={{ fontWeight: "var(--fw-semibold)" }}>
+                {itemLabel} {i + 1}
+              </span>
               <div style={{ marginLeft: "auto", display: "flex", gap: 6 }}>
-                <button type="button" className="btn btn-outline iconbtn" aria-label="Omhoog" onClick={() => move(i, -1)}><ChevronUp /></button>
-                <button type="button" className="btn btn-outline iconbtn" aria-label="Omlaag" onClick={() => move(i, 1)}><ChevronDown /></button>
-                <button type="button" className="btn btn-outline iconbtn" style={{ color: "var(--danger-500)" }} aria-label="Verwijderen" onClick={() => set(rows.filter((_, j) => j !== i))}><Trash2 /></button>
+                <button
+                  type="button"
+                  className="btn btn-outline iconbtn"
+                  aria-label="Omhoog"
+                  onClick={() => move(i, -1)}
+                >
+                  <ChevronUp />
+                </button>
+                <button
+                  type="button"
+                  className="btn btn-outline iconbtn"
+                  aria-label="Omlaag"
+                  onClick={() => move(i, 1)}
+                >
+                  <ChevronDown />
+                </button>
+                <button
+                  type="button"
+                  className="btn btn-outline iconbtn"
+                  style={{ color: "var(--danger-500)" }}
+                  aria-label="Verwijderen"
+                  onClick={() => set(rows.filter((_, j) => j !== i))}
+                >
+                  <Trash2 />
+                </button>
               </div>
             </div>
             <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
               {(field.of ?? []).map((sub) => (
-                <SubLabelled key={sub.key} field={sub} value={row[sub.key]} onChange={(v) => set(rows.map((r, j) => (j === i ? { ...r, [sub.key]: v } : r)))} />
+                <SubLabelled
+                  key={sub.key}
+                  field={sub}
+                  value={row[sub.key]}
+                  onChange={(v) => set(rows.map((r, j) => (j === i ? { ...r, [sub.key]: v } : r)))}
+                />
               ))}
             </div>
           </div>
         ))}
-        <button type="button" className="btn btn-outline" style={{ alignSelf: "flex-start" }} onClick={() => set([...rows, {}])}>
+        <button
+          type="button"
+          className="btn btn-outline"
+          style={{ alignSelf: "flex-start" }}
+          onClick={() => set([...rows, {}])}
+        >
           <Plus /> {itemLabel} toevoegen
         </button>
       </div>
@@ -99,16 +161,46 @@ function Control({
   }
 
   if (field.type === "textarea" || field.type === "markdown") {
-    return <textarea value={str(value)} placeholder={field.placeholder} onChange={(e) => onChange(e.target.value)} style={{ minHeight: 70 }} />;
+    return (
+      <textarea
+        value={str(value)}
+        placeholder={field.placeholder}
+        onChange={(e) => onChange(e.target.value)}
+        style={{ minHeight: 70 }}
+      />
+    );
   }
-  return <input type={field.type === "number" ? "number" : "text"} value={str(value)} placeholder={field.placeholder} onChange={(e) => onChange(e.target.value)} />;
+  return (
+    <input
+      type={field.type === "number" ? "number" : "text"}
+      value={str(value)}
+      placeholder={field.placeholder}
+      onChange={(e) => onChange(e.target.value)}
+    />
+  );
 }
 
 /** Subveld met een klein label erboven. */
-function SubLabelled({ field, value, onChange }: { field: FieldDef; value: unknown; onChange: (v: unknown) => void }) {
+function SubLabelled({
+  field,
+  value,
+  onChange,
+}: {
+  field: FieldDef;
+  value: unknown;
+  onChange: (v: unknown) => void;
+}) {
   return (
     <div>
-      <label style={{ fontSize: "var(--text-xs)", textTransform: "none", letterSpacing: 0, display: "block", marginBottom: 5 }}>
+      <label
+        style={{
+          fontSize: "var(--text-xs)",
+          textTransform: "none",
+          letterSpacing: 0,
+          display: "block",
+          marginBottom: 5,
+        }}
+      >
         {field.label}
       </label>
       <Control field={field} value={value} onChange={onChange} />
@@ -129,7 +221,11 @@ export function StructuredField({ field, initial }: { field: FieldDef; initial: 
       <label>{field.label}</label>
       <input type="hidden" name={`f_${field.key}`} value={JSON.stringify(value)} />
       <Control field={field} value={value} onChange={setValue} />
-      {field.help && <p className="t-sub" style={{ marginTop: 6 }}>{field.help}</p>}
+      {field.help && (
+        <p className="t-sub" style={{ marginTop: 6 }}>
+          {field.help}
+        </p>
+      )}
     </div>
   );
 }

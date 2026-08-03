@@ -21,7 +21,12 @@ async function authorResolver(): Promise<AuthorResolver> {
 function fmtDatum(d: string): string {
   if (!/^\d{4}-\d{2}-\d{2}$/.test(d)) return d;
   try {
-    return new Date(d).toLocaleDateString("nl-NL", { timeZone: "Europe/Amsterdam", day: "numeric", month: "short", year: "numeric" });
+    return new Date(d).toLocaleDateString("nl-NL", {
+      timeZone: "Europe/Amsterdam",
+      day: "numeric",
+      month: "short",
+      year: "numeric",
+    });
   } catch {
     return d;
   }
@@ -54,7 +59,13 @@ function mapRow(row: ContentRow, resolve: AuthorResolver): Artikel {
     image: str("cover") || "/assets/photos/team-presentatie-breed.webp",
     intro: str("samenvatting"),
     inhoudHtml: isHtml ? sanitizeFull(inhoud) : undefined,
-    body: !isHtml && inhoud ? inhoud.split(/\n\s*\n/).map((p) => p.trim()).filter(Boolean) : [],
+    body:
+      !isHtml && inhoud
+        ? inhoud
+            .split(/\n\s*\n/)
+            .map((p) => p.trim())
+            .filter(Boolean)
+        : [],
   };
 }
 
@@ -63,7 +74,8 @@ export async function getArtikelen(): Promise<Artikel[]> {
   const rows = await getPublishedContent("artikelen");
   if (!rows.length) return ARTIKELEN;
   const resolve = await authorResolver();
-  const datum = (r: (typeof rows)[number]) => String((r.data as Record<string, unknown>).datum ?? "");
+  const datum = (r: (typeof rows)[number]) =>
+    String((r.data as Record<string, unknown>).datum ?? "");
   return rows
     .slice()
     .sort((a, b) => datum(b).localeCompare(datum(a)))

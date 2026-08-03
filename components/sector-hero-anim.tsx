@@ -9,10 +9,6 @@ export function SectorHeroAnim({ theme }: { theme: string }) {
   const svg = buildHeroSvg(theme);
   if (!svg) return null;
   return (
-    <div
-      className="shero-anim"
-      aria-hidden="true"
-      dangerouslySetInnerHTML={{ __html: svg }}
-    />
+    <div className="shero-anim" aria-hidden="true" dangerouslySetInnerHTML={{ __html: svg }} />
   );
 }

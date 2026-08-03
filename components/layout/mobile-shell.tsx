@@ -19,8 +19,7 @@ export function MobileShell() {
   const baseRef = useRef<SVGPathElement>(null);
   const fillRef = useRef<SVGPathElement>(null);
 
-  const isActive = (href: string) =>
-    href === "/" ? pathname === "/" : pathname.startsWith(href);
+  const isActive = (href: string) => (href === "/" ? pathname === "/" : pathname.startsWith(href));
 
   // Sluit menu bij navigatie
   useEffect(() => {
@@ -44,7 +43,9 @@ export function MobileShell() {
   // Scroll-voortgangsgolf + sticky CTA
   useEffect(() => {
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const W = 390, MID = 8, AMP = 4;
+    const W = 390,
+      MID = 8,
+      AMP = 4;
     const wavePath = (len: number, phase: number) => {
       if (len <= 0) return `M0,${MID}`;
       let d = "";
@@ -95,7 +96,13 @@ export function MobileShell() {
               style={{ height: 24, width: "auto" }}
             />
           </Link>
-          <button className="burger" aria-label="Menu" aria-expanded={open} aria-controls="m-menu" onClick={() => setOpen(true)}>
+          <button
+            className="burger"
+            aria-label="Menu"
+            aria-expanded={open}
+            aria-controls="m-menu"
+            onClick={() => setOpen(true)}
+          >
             <Menu />
           </button>
         </div>

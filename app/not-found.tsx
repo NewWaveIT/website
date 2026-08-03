@@ -14,8 +14,8 @@ export default function NotFound() {
             <div className="nf-code">404</div>
             <h1>Deze pagina bestaat niet (meer)</h1>
             <p>
-              De link is mogelijk verouderd of verkeerd getypt. Ga terug naar de homepage,
-              bekijk onze sectoren, of neem gerust contact op.
+              De link is mogelijk verouderd of verkeerd getypt. Ga terug naar de homepage, bekijk
+              onze sectoren, of neem gerust contact op.
             </p>
             <div className="nf-actions">
               <Link href="/" className="btn btn-primary">

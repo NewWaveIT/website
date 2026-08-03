@@ -11,7 +11,13 @@ const EIGENAREN = ["—", "Merel", "Ruben", "Fatima", "Sanne", "Mitchel"];
 
 function fmt(iso: string) {
   try {
-    return new Date(iso).toLocaleString("nl-NL", { timeZone: "Europe/Amsterdam", day: "numeric", month: "short", hour: "2-digit", minute: "2-digit" });
+    return new Date(iso).toLocaleString("nl-NL", {
+      timeZone: "Europe/Amsterdam",
+      day: "numeric",
+      month: "short",
+      hour: "2-digit",
+      minute: "2-digit",
+    });
   } catch {
     return iso;
   }
@@ -47,7 +53,12 @@ export function AanvragenBoard({ leads }: { leads: Lead[] }) {
               </div>
               <div className="cards">
                 {cards.map((l) => (
-                  <button type="button" className="pcard" key={l.id} onClick={() => setSelectedId(l.id)}>
+                  <button
+                    type="button"
+                    className="pcard"
+                    key={l.id}
+                    onClick={() => setSelectedId(l.id)}
+                  >
                     <div className="who">
                       {l.naam}
                       {l.bedrijf ? ` · ${l.bedrijf}` : ""}
@@ -58,7 +69,9 @@ export function AanvragenBoard({ leads }: { leads: Lead[] }) {
                     <div className="meta">
                       <span className="src">{l.type}</span>
                       <span>
-                        {l.toegewezen_aan && l.toegewezen_aan !== "—" ? `${l.toegewezen_aan} · ` : ""}
+                        {l.toegewezen_aan && l.toegewezen_aan !== "—"
+                          ? `${l.toegewezen_aan} · `
+                          : ""}
                         {fmt(l.created_at)}
                       </span>
                     </div>
@@ -120,7 +133,11 @@ export function AanvragenBoard({ leads }: { leads: Lead[] }) {
                   <label>Eigenaar</label>
                   <select
                     value={selected.toegewezen_aan ?? "—"}
-                    onChange={(e) => patch(selected.id, { toegewezen_aan: e.target.value === "—" ? null : e.target.value })}
+                    onChange={(e) =>
+                      patch(selected.id, {
+                        toegewezen_aan: e.target.value === "—" ? null : e.target.value,
+                      })
+                    }
                   >
                     {EIGENAREN.map((o) => (
                       <option key={o}>{o}</option>

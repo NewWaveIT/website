@@ -10,10 +10,26 @@ import "./vacature.css";
 export const revalidate = 300;
 
 const PROCES = [
-  { num: "01", titel: "Kennismaken", p: "Videocall of koffie met Mitchel. Geen assessment, wél een goed gesprek over jouw ambitie." },
-  { num: "02", titel: "Verdieping", p: "Inhoudelijk gesprek met de practice lead: casuïstiek uit onze echte opdrachten." },
-  { num: "03", titel: "Meet the Wavers", p: "Lunch of borrel met je toekomstige team. Jij interviewt ons net zo hard." },
-  { num: "04", titel: "Voorstel", p: "Transparant aanbod, inclusief groeipad. Bedenktijd hoort erbij." },
+  {
+    num: "01",
+    titel: "Kennismaken",
+    p: "Videocall of koffie met Mitchel. Geen assessment, wél een goed gesprek over jouw ambitie.",
+  },
+  {
+    num: "02",
+    titel: "Verdieping",
+    p: "Inhoudelijk gesprek met de practice lead: casuïstiek uit onze echte opdrachten.",
+  },
+  {
+    num: "03",
+    titel: "Meet the Wavers",
+    p: "Lunch of borrel met je toekomstige team. Jij interviewt ons net zo hard.",
+  },
+  {
+    num: "04",
+    titel: "Voorstel",
+    p: "Transparant aanbod, inclusief groeipad. Bedenktijd hoort erbij.",
+  },
 ];
 
 export async function generateStaticParams() {
@@ -35,11 +51,7 @@ export async function generateMetadata({
   };
 }
 
-export default async function VacaturePage({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}) {
+export default async function VacaturePage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const v = await getVacatureBySlug(slug);
   if (!v) notFound();
@@ -111,7 +123,12 @@ export default async function VacaturePage({
           <aside className="vac-aside" id="solliciteer">
             <div className="apply-card">
               <div className="rec">
-                <Image src="/assets/photos/portret-3.webp" alt="Mitchel Wallaart, recruiter" width={64} height={64} />
+                <Image
+                  src="/assets/photos/portret-3.webp"
+                  alt="Mitchel Wallaart, recruiter"
+                  width={64}
+                  height={64}
+                />
                 <div>
                   <div className="role">Recruiter</div>
                   <h4>Mitchel Wallaart</h4>
@@ -178,7 +195,14 @@ export default async function VacaturePage({
         <div className="wrap-wide">
           <div className="sec-head">
             <div className="kicker on-dark">Andere vacatures</div>
-            <h2 style={{ color: "#fff", fontSize: "var(--text-3xl)", fontWeight: "var(--fw-extrabold)", margin: "var(--space-4) 0 0" }}>
+            <h2
+              style={{
+                color: "#fff",
+                fontSize: "var(--text-3xl)",
+                fontWeight: "var(--fw-extrabold)",
+                margin: "var(--space-4) 0 0",
+              }}
+            >
               Ook op zoek naar…
             </h2>
           </div>

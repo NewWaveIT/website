@@ -32,7 +32,13 @@ export function Modal({
         if (e.target === e.currentTarget) onClose();
       }}
     >
-      <div className="modal" role="dialog" aria-modal="true" aria-label={title} style={width ? { maxWidth: width } : undefined}>
+      <div
+        className="modal"
+        role="dialog"
+        aria-modal="true"
+        aria-label={title}
+        style={width ? { maxWidth: width } : undefined}
+      >
         <div className="mhead">
           <h2>{title}</h2>
           <button type="button" className="x" onClick={onClose} aria-label="Sluiten">

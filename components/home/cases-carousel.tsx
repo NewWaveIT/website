@@ -32,15 +32,18 @@ export function CasesCarousel({ items }: { items: CaseCard[] }) {
   if (items.length === 0) return null;
 
   const c = items[i];
+  if (!c) return null;
   const go = (d: number) => setI((v) => (v + d + items.length) % items.length);
 
   return (
     <div
       className="fcase-wrap"
-      onTouchStart={(e) => setTouch(e.touches[0].clientX)}
+      onTouchStart={(e) => setTouch(e.touches[0]?.clientX ?? null)}
       onTouchEnd={(e) => {
         if (touch === null) return;
-        const dx = e.changedTouches[0].clientX - touch;
+        const end = e.changedTouches[0]?.clientX;
+        if (end === undefined) return;
+        const dx = end - touch;
         if (Math.abs(dx) > 50) go(dx < 0 ? 1 : -1);
         setTouch(null);
       }}
@@ -74,7 +77,11 @@ export function CasesCarousel({ items }: { items: CaseCard[] }) {
                 </div>
               </>
             )}
-            <Link href={`/klantverhalen/${c.slug}`} className="btn btn-outline btn-sm" style={{ marginLeft: "auto" }}>
+            <Link
+              href={`/klantverhalen/${c.slug}`}
+              className="btn btn-outline btn-sm"
+              style={{ marginLeft: "auto" }}
+            >
               Lees het verhaal
             </Link>
           </div>
@@ -83,7 +90,12 @@ export function CasesCarousel({ items }: { items: CaseCard[] }) {
 
       {items.length > 1 && (
         <div className="fcase-nav">
-          <button type="button" className="fcase-arrow" aria-label="Vorige klantverhaal" onClick={() => go(-1)}>
+          <button
+            type="button"
+            className="fcase-arrow"
+            aria-label="Vorige klantverhaal"
+            onClick={() => go(-1)}
+          >
             <ChevronLeft />
           </button>
           <div className="fcase-dots">
@@ -98,7 +110,12 @@ export function CasesCarousel({ items }: { items: CaseCard[] }) {
               />
             ))}
           </div>
-          <button type="button" className="fcase-arrow" aria-label="Volgende klantverhaal" onClick={() => go(1)}>
+          <button
+            type="button"
+            className="fcase-arrow"
+            aria-label="Volgende klantverhaal"
+            onClick={() => go(1)}
+          >
             <ChevronRight />
           </button>
         </div>

@@ -12,7 +12,12 @@ export type Client = { naam: string; logo?: string; w?: number; h?: number };
 // nette tekst-wordmark.
 export const CLIENTS: Client[] = [
   { naam: "COA", logo: "/assets/logos/klanten/coa.svg", w: 71, h: 50 },
-  { naam: "Gemeente Rotterdam", logo: "/assets/logos/klanten/gemeente-rotterdam.svg", w: 320, h: 64 },
+  {
+    naam: "Gemeente Rotterdam",
+    logo: "/assets/logos/klanten/gemeente-rotterdam.svg",
+    w: 320,
+    h: 64,
+  },
   { naam: "Rabobank", logo: "/assets/logos/klanten/rabobank.svg", w: 130, h: 24 },
   { naam: "Van Mossel", logo: "/assets/logos/klanten/van-mossel.svg", w: 195, h: 30 },
   { naam: "Netradyne", logo: "/assets/logos/klanten/netradyne.svg", w: 261, h: 44 },
@@ -36,7 +41,14 @@ export function ClientLogos() {
             <div className="logo-tile" key={c.naam}>
               {c.logo ? (
                 // eslint-disable-next-line @next/next/no-img-element
-                <img src={c.logo} alt={c.naam} className="logo-img" width={c.w} height={c.h} loading="lazy" />
+                <img
+                  src={c.logo}
+                  alt={c.naam}
+                  className="logo-img"
+                  width={c.w}
+                  height={c.h}
+                  loading="lazy"
+                />
               ) : (
                 <span className="wordmark">{c.naam}</span>
               )}

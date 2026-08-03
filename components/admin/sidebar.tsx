@@ -75,9 +75,7 @@ export function Sidebar({
             {group.items.map((item) => {
               const Icon = ICONS[item.icon];
               const active =
-                item.href === "/admin"
-                  ? pathname === "/admin"
-                  : pathname.startsWith(item.href);
+                item.href === "/admin" ? pathname === "/admin" : pathname.startsWith(item.href);
               const cnt = item.countKey ? counts[item.countKey] : undefined;
               return (
                 <Link
@@ -85,7 +83,7 @@ export function Sidebar({
                   href={item.href}
                   className={cn("nav-item", active && "active")}
                 >
-                  <Icon />
+                  {Icon && <Icon />}
                   {item.label}
                   {cnt !== undefined && cnt > 0 && <span className="cnt">{cnt}</span>}
                 </Link>

@@ -26,9 +26,19 @@ const jsonLd = {
   "@context": "https://schema.org",
   "@type": "ItemList",
   itemListElement: [
-    { "@type": "Service", position: 1, name: "Mendix", url: "https://thenewwaveit.com/diensten/mendix" },
+    {
+      "@type": "Service",
+      position: 1,
+      name: "Mendix",
+      url: "https://thenewwaveit.com/diensten/mendix",
+    },
     { "@type": "Service", position: 2, name: "AI", url: "https://thenewwaveit.com/diensten/ai" },
-    { "@type": "Service", position: 3, name: "Digitale strategie", url: "https://thenewwaveit.com/diensten/strategie" },
+    {
+      "@type": "Service",
+      position: 3,
+      name: "Digitale strategie",
+      url: "https://thenewwaveit.com/diensten/strategie",
+    },
   ],
 };
 
@@ -68,9 +78,9 @@ export default async function DienstenPage() {
               <div className="num">01 · Applicaties</div>
               <h2>Mendix</h2>
               <p>
-                Bedrijfskritische low-code applicaties die aansluiten op je
-                landschap: van proof-of-concept tot productie in weken, niet
-                maanden. Schaalbaar, beheerbaar en gebouwd rond je mensen.
+                Bedrijfskritische low-code applicaties die aansluiten op je landschap: van
+                proof-of-concept tot productie in weken, niet maanden. Schaalbaar, beheerbaar en
+                gebouwd rond je mensen.
               </p>
               <ul>
                 <li>
@@ -105,9 +115,9 @@ export default async function DienstenPage() {
               <div className="num">02 · Intelligentie</div>
               <h2>AI</h2>
               <p>
-                Strategische en verantwoorde inzet van AI binnen je bestaande
-                IT-landschap. Geen hype, wél oplossingen die processen aantoonbaar
-                verbeteren en uitlegbaar blijven, met de mens aan het stuur.
+                Strategische en verantwoorde inzet van AI binnen je bestaande IT-landschap. Geen
+                hype, wél oplossingen die processen aantoonbaar verbeteren en uitlegbaar blijven,
+                met de mens aan het stuur.
               </p>
               <ul>
                 <li>
@@ -142,9 +152,8 @@ export default async function DienstenPage() {
               <div className="num">03 · Richting</div>
               <h2>Digitale strategie</h2>
               <p>
-                Wij verbinden business en IT in een concreet plan en blijven aan
-                boord tot het werkt. Geen dik rapport voor in de la, maar
-                mijlpalen die je operatie meteen merkt.
+                Wij verbinden business en IT in een concreet plan en blijven aan boord tot het
+                werkt. Geen dik rapport voor in de la, maar mijlpalen die je operatie meteen merkt.
               </p>
               <ul>
                 <li>
@@ -182,8 +191,8 @@ export default async function DienstenPage() {
             <div className="kicker">Zo werken we</div>
             <h2>Van vraagstuk naar livegang in vijf fasen</h2>
             <p>
-              Strategie en bouw in één beweging: we starten bij het probleem en werken
-              snel naar iets dat écht draait — met Mendix en AI als middel.
+              Strategie en bouw in één beweging: we starten bij het probleem en werken snel naar
+              iets dat écht draait — met Mendix en AI als middel.
             </p>
           </div>
           <div className="fasen-grid">
@@ -192,7 +201,10 @@ export default async function DienstenPage() {
               { titel: "Delivery-model", tekst: "We zetten de aanpak op en scherpen die aan." },
               { titel: "Eén use case", tekst: "We kiezen één concrete casus om mee te starten." },
               { titel: "Direct bouwen", tekst: "We bouwen meteen, met Mendix en AI." },
-              { titel: "Itereren naar live", tekst: "In korte cycli verbeteren richting livegang." },
+              {
+                titel: "Itereren naar live",
+                tekst: "In korte cycli verbeteren richting livegang.",
+              },
             ].map((f, i) => (
               <div className="fase" key={f.titel}>
                 <div className="fnum">{`0${i + 1}`}</div>
@@ -208,7 +220,14 @@ export default async function DienstenPage() {
         <div className="wrap-wide">
           <div className="sec-head">
             <div className="kicker on-dark">{t.samenKicker}</div>
-            <h2 style={{ color: "#fff", fontSize: "var(--text-3xl)", fontWeight: "var(--fw-extrabold)", margin: "var(--space-4) 0" }}>
+            <h2
+              style={{
+                color: "#fff",
+                fontSize: "var(--text-3xl)",
+                fontWeight: "var(--fw-extrabold)",
+                margin: "var(--space-4) 0",
+              }}
+            >
               {t.samenTitel}
             </h2>
             <p style={{ color: "var(--text-on-dark-muted)" }}>{t.samenIntro}</p>
@@ -256,7 +275,7 @@ export default async function DienstenPage() {
         </div>
       </section>
 
-      <SlotCta titel={t.ctaTitel} />
+      <SlotCta titel={t.ctaTitel ?? ""} />
     </div>
   );
 }

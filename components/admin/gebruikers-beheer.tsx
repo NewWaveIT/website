@@ -57,13 +57,26 @@ function GebruikerForm({
 
       <div className="fld">
         <label htmlFor="g-naam">Naam</label>
-        <input id="g-naam" name="naam" type="text" defaultValue={user?.naam ?? ""} required autoFocus />
+        <input
+          id="g-naam"
+          name="naam"
+          type="text"
+          defaultValue={user?.naam ?? ""}
+          required
+          autoFocus
+        />
       </div>
 
       <div className="fld">
         <label htmlFor="g-email">E-mailadres</label>
         {mode === "new" ? (
-          <input id="g-email" name="email" type="email" required placeholder="naam@thenewwaveit.com" />
+          <input
+            id="g-email"
+            name="email"
+            type="email"
+            required
+            placeholder="naam@thenewwaveit.com"
+          />
         ) : (
           <div className="ce-perma">
             <code>{user?.email}</code>
@@ -73,7 +86,14 @@ function GebruikerForm({
 
       <div className="fld" style={{ marginBottom: "var(--space-5)" }}>
         <label htmlFor="g-pw">{mode === "new" ? "Beginwachtwoord" : "Nieuw wachtwoord"}</label>
-        <input id="g-pw" name="wachtwoord" type="text" autoComplete="off" placeholder="Minimaal 8 tekens" required={mode === "new"} />
+        <input
+          id="g-pw"
+          name="wachtwoord"
+          type="text"
+          autoComplete="off"
+          placeholder="Minimaal 8 tekens"
+          required={mode === "new"}
+        />
         <p className="t-sub" style={{ marginTop: 6 }}>
           {mode === "new"
             ? "De gebruiker kan dit later zelf wijzigen. Deel het veilig."
@@ -100,7 +120,9 @@ export function GebruikersBeheer({
   gebruikers: Gebruiker[];
   currentUserId: string;
 }) {
-  const [modal, setModal] = useState<{ mode: "new" } | { mode: "edit"; user: Gebruiker } | null>(null);
+  const [modal, setModal] = useState<{ mode: "new" } | { mode: "edit"; user: Gebruiker } | null>(
+    null,
+  );
   const close = () => setModal(null);
 
   return (
@@ -134,7 +156,11 @@ export function GebruikersBeheer({
                   <td>
                     <div className="t-title">
                       {u.naam}
-                      {self && <span className="t-sub" style={{ marginLeft: 8 }}>(jij)</span>}
+                      {self && (
+                        <span className="t-sub" style={{ marginLeft: 8 }}>
+                          (jij)
+                        </span>
+                      )}
                     </div>
                   </td>
                   <td>{u.email}</td>

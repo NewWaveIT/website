@@ -35,8 +35,8 @@ export default async function KlantverhalenPage() {
             Resultaat dat je kunt <em>navragen</em>.
           </h1>
           <p>
-            Geen beloftes maar bewijs: verhalen van organisaties in onze sectoren,
-            verteld met de cijfers erbij. Bel ze gerust, dat vinden ze niet erg.
+            Geen beloftes maar bewijs: verhalen van organisaties in onze sectoren, verteld met de
+            cijfers erbij. Bel ze gerust, dat vinden ze niet erg.
           </p>
         </div>
       </section>
@@ -50,7 +50,13 @@ export default async function KlantverhalenPage() {
             </div>
             <div className="case-mini">
               <div className="media">
-                <Image src={featured.image} alt={featured.cardTitel} fill sizes="(max-width: 980px) 100vw, 45vw" style={{ objectFit: "cover" }} />
+                <Image
+                  src={featured.image}
+                  alt={featured.cardTitel}
+                  fill
+                  sizes="(max-width: 980px) 100vw, 45vw"
+                  style={{ objectFit: "cover" }}
+                />
                 <button type="button" className="playbig" aria-label="Bekijk video">
                   <Play />
                 </button>
@@ -63,7 +69,11 @@ export default async function KlantverhalenPage() {
                   <br />
                   <Link
                     href={`/klantverhalen/${featured.slug}`}
-                    style={{ display: "inline-block", marginTop: 14, fontWeight: "var(--fw-semibold)" }}
+                    style={{
+                      display: "inline-block",
+                      marginTop: 14,
+                      fontWeight: "var(--fw-semibold)",
+                    }}
                   >
                     Lees het volledige verhaal →
                   </Link>
@@ -87,7 +97,13 @@ export default async function KlantverhalenPage() {
             {verhalen.map((k) => (
               <Link href={`/klantverhalen/${k.slug}`} className="ccard" key={k.slug}>
                 <div className="cover">
-                  <Image src={k.image} alt={k.cardTitel} fill sizes="(max-width: 980px) 100vw, 33vw" style={{ objectFit: "cover" }} />
+                  <Image
+                    src={k.image}
+                    alt={k.cardTitel}
+                    fill
+                    sizes="(max-width: 980px) 100vw, 33vw"
+                    style={{ objectFit: "cover" }}
+                  />
                   <span className="cat">{k.sector}</span>
                 </div>
                 <div className="cbody">

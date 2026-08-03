@@ -99,7 +99,7 @@ beveiligd met Supabase Auth via `middleware.ts`.
 
 1. Maak een admin-gebruiker aan in Supabase → **Authentication → Users → Add user**
    (e-mail + wachtwoord). Optioneel `user_metadata`: `{ "naam": "Merel Jansen",
-   "rol": "Marketing & HR" }` voor de weergave in de sidebar.
+"rol": "Marketing & HR" }` voor de weergave in de sidebar.
 2. Ga naar `/admin/login` en log in.
 3. **Dashboard** toont openstaande aanvragen/sollicitaties; **Aanvragen** en
    **Sollicitaties** zijn kanban-borden met detail-drawers (status, eigenaar,
@@ -109,12 +109,12 @@ beveiligd met Supabase Auth via `middleware.ts`.
 
 ## Scripts
 
-| Script | Doel |
-|---|---|
-| `npm run dev` | Ontwikkelserver |
-| `npm run build` | Productiebuild |
-| `npm run start` | Productieserver |
-| `npm run lint` | ESLint |
+| Script              | Doel             |
+| ------------------- | ---------------- |
+| `npm run dev`       | Ontwikkelserver  |
+| `npm run build`     | Productiebuild   |
+| `npm run start`     | Productieserver  |
+| `npm run lint`      | ESLint           |
 | `npm run typecheck` | TypeScript-check |
 
 ## Status

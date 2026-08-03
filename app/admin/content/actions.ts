@@ -12,7 +12,10 @@ import { buildSeed } from "@/lib/cms/seed-data";
 import { logAudit } from "@/lib/cms/audit";
 
 /** Weergavenaam van de ingelogde gebruiker (voor audit + bewerkt_door). */
-function gebruikerNaam(user: { user_metadata?: Record<string, unknown>; email?: string | null }): string | null {
+function gebruikerNaam(user: {
+  user_metadata?: Record<string, unknown>;
+  email?: string | null;
+}): string | null {
   return (user.user_metadata?.naam as string) || user.email?.split("@")[0] || null;
 }
 
@@ -171,7 +174,10 @@ export async function seedContent(): Promise<{ toegevoegd: number; error?: strin
   const seed = buildSeed();
 
   let toegevoegd = 0;
-  for (const [type, rows] of Object.entries(seed) as [ContentType, ReturnType<typeof buildSeed>[ContentType]][]) {
+  for (const [type, rows] of Object.entries(seed) as [
+    ContentType,
+    ReturnType<typeof buildSeed>[ContentType],
+  ][]) {
     if (!rows.length) continue;
     const table = CONTENT_TABLE[type];
 
@@ -203,7 +209,8 @@ export async function uploadImage(
   if (file.size > 5 * 1024 * 1024) return { error: "Maximaal 5 MB." };
 
   // Converteer naar WebP voor snelheid; val terug op het origineel als dat niet lukt (bv. SVG).
-  const ext = (file.name.split(".").pop() ?? "png").toLowerCase().replace(/[^a-z0-9]/g, "") || "png";
+  const ext =
+    (file.name.split(".").pop() ?? "png").toLowerCase().replace(/[^a-z0-9]/g, "") || "png";
   let body: Buffer | File = file;
   let outExt = ext;
   let contentType = file.type;

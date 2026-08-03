@@ -102,7 +102,13 @@ export default async function WerkenBijPage() {
             </div>
             <div>
               <div className="kicker">{t.cultuurKicker}</div>
-              <h2 style={{ fontSize: "var(--text-3xl)", fontWeight: "var(--fw-extrabold)", margin: "var(--space-4) 0 var(--space-5)" }}>
+              <h2
+                style={{
+                  fontSize: "var(--text-3xl)",
+                  fontWeight: "var(--fw-extrabold)",
+                  margin: "var(--space-4) 0 var(--space-5)",
+                }}
+              >
                 {t.cultuurTitel}
               </h2>
               <p>{t.cultuurP}</p>
@@ -122,7 +128,14 @@ export default async function WerkenBijPage() {
         <div className="wrap-wide">
           <div className="sec-head">
             <div className="kicker on-dark">Vacatures</div>
-            <h2 style={{ color: "#fff", fontSize: "var(--text-3xl)", fontWeight: "var(--fw-extrabold)", margin: "var(--space-4) 0 0" }}>
+            <h2
+              style={{
+                color: "#fff",
+                fontSize: "var(--text-3xl)",
+                fontWeight: "var(--fw-extrabold)",
+                margin: "var(--space-4) 0 0",
+              }}
+            >
               Kom de golf versterken.
             </h2>
           </div>
@@ -136,7 +149,13 @@ export default async function WerkenBijPage() {
               </Link>
             ))}
           </div>
-          <p style={{ fontSize: "var(--text-sm)", color: "var(--text-on-dark-muted)", marginTop: "var(--space-6)" }}>
+          <p
+            style={{
+              fontSize: "var(--text-sm)",
+              color: "var(--text-on-dark-muted)",
+              marginTop: "var(--space-6)",
+            }}
+          >
             Staat jouw rol er niet tussen? Stuur een open sollicitatie naar{" "}
             <a href="mailto:hello@thenewwaveit.com" style={{ color: "var(--orange-400)" }}>
               hello@thenewwaveit.com
@@ -146,7 +165,7 @@ export default async function WerkenBijPage() {
         </div>
       </section>
 
-      <SlotCta titel={t.ctaTitel} knop="Kom kennismaken" />
+      <SlotCta titel={t.ctaTitel ?? ""} knop="Kom kennismaken" />
     </div>
   );
 }

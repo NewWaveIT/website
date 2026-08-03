@@ -15,7 +15,9 @@ export function ScrollWave() {
   useEffect(() => {
     if (!window.matchMedia("(min-width: 768px)").matches) return;
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const W = 1200, MID = 11, AMP = 5;
+    const W = 1200,
+      MID = 11,
+      AMP = 5;
     const wavePath = (len: number, phase: number) => {
       let d = "";
       for (let x = 0; x <= len; x += 6) {

@@ -16,8 +16,8 @@ export function Footer() {
               style={{ height: 30, width: "auto" }}
             />
             <p className="foot-blurb">
-              De business-specialist in publieke sector, mobiliteit, banken, zorg
-              en manufacturing. Technologie als middel, jouw resultaat als doel.
+              De business-specialist in publieke sector, mobiliteit, banken, zorg en manufacturing.
+              Technologie als middel, jouw resultaat als doel.
             </p>
           </div>
           <div>

@@ -19,9 +19,7 @@ import { existsSync } from "node:fs";
 import path from "node:path";
 import sharp from "sharp";
 
-const RESULTS_DIR =
-  process.argv[2] ??
-  path.join(process.cwd(), "..", "tool-results"); // fallback
+const RESULTS_DIR = process.argv[2] ?? path.join(process.cwd(), "..", "tool-results"); // fallback
 const PUBLIC_DIR = path.join(process.cwd(), "public");
 
 function fmt(bytes) {
@@ -147,7 +145,8 @@ async function main() {
   }
   console.log(
     `\n${ok} verwerkt · ${fmt(totalIn)} -> ${fmt(totalOut)} (${(
-      (1 - totalOut / totalIn) * 100
+      (1 - totalOut / totalIn) *
+      100
     ).toFixed(0)}% kleiner)`,
   );
   if (failed.length) {

@@ -5,7 +5,11 @@ import { KLANTVERHALEN, KLANTVERHAAL_MAP, type Klantverhaal, type KPI } from "@/
 
 function paragraphs(v: unknown): string[] {
   if (Array.isArray(v)) return v.filter((x): x is string => typeof x === "string");
-  if (typeof v === "string") return v.split(/\n\s*\n/).map((p) => p.trim()).filter(Boolean);
+  if (typeof v === "string")
+    return v
+      .split(/\n\s*\n/)
+      .map((p) => p.trim())
+      .filter(Boolean);
   return [];
 }
 

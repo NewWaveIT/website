@@ -43,7 +43,10 @@ export function Consent() {
     <>
       {choice === "granted" && GA_ID && (
         <>
-          <Script src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`} strategy="afterInteractive" />
+          <Script
+            src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
+            strategy="afterInteractive"
+          />
           <Script id="ga-init" strategy="afterInteractive">
             {`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${GA_ID}',{anonymize_ip:true});`}
           </Script>
@@ -62,7 +65,11 @@ export function Consent() {
               <button type="button" className="cookie-btn ghost" onClick={() => decide("denied")}>
                 Alleen functioneel
               </button>
-              <button type="button" className="cookie-btn primary" onClick={() => decide("granted")}>
+              <button
+                type="button"
+                className="cookie-btn primary"
+                onClick={() => decide("granted")}
+              >
                 Accepteren
               </button>
             </div>

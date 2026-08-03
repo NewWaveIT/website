@@ -1,11 +1,6 @@
 /** Gedeelde content-types voor The New Wave IT. */
 
-export type SectorSlug =
-  | "publieke-sector"
-  | "mobiliteit"
-  | "banken"
-  | "zorg"
-  | "manufacturing";
+export type SectorSlug = "publieke-sector" | "mobiliteit" | "banken" | "zorg" | "manufacturing";
 
 export type DienstSlug = "mendix" | "ai" | "strategie";
 

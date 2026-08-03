@@ -7,17 +7,30 @@ import { ArrowRight } from "lucide-react";
 import type { Artikel } from "@/lib/inzichten";
 
 const ALLE = "Alle";
-const CATEGORIEEN = ["Mendix", "AI", "Strategie", "Publieke sector", "Mobiliteit", "Banken", "Zorg", "Manufacturing"];
+const CATEGORIEEN = [
+  "Mendix",
+  "AI",
+  "Strategie",
+  "Publieke sector",
+  "Mobiliteit",
+  "Banken",
+  "Zorg",
+  "Manufacturing",
+];
 
 export function InzichtenList({ artikelen }: { artikelen: Artikel[] }) {
   const [actief, setActief] = useState(ALLE);
 
   // Alleen filters tonen waarvoor er artikelen zijn.
-  const beschikbaar = CATEGORIEEN.filter((c) => artikelen.some((a) => a.discipline === c || a.sector === c));
+  const beschikbaar = CATEGORIEEN.filter((c) =>
+    artikelen.some((a) => a.discipline === c || a.sector === c),
+  );
   const chips = [ALLE, ...beschikbaar];
 
   const gefilterd =
-    actief === ALLE ? artikelen : artikelen.filter((a) => a.discipline === actief || a.sector === actief);
+    actief === ALLE
+      ? artikelen
+      : artikelen.filter((a) => a.discipline === actief || a.sector === actief);
   const featured = gefilterd[0];
   const grid = gefilterd.slice(1, 7);
 
@@ -25,7 +38,12 @@ export function InzichtenList({ artikelen }: { artikelen: Artikel[] }) {
     <>
       <div className="filters">
         {chips.map((c) => (
-          <button key={c} type="button" className={c === actief ? "fchip on" : "fchip"} onClick={() => setActief(c)}>
+          <button
+            key={c}
+            type="button"
+            className={c === actief ? "fchip on" : "fchip"}
+            onClick={() => setActief(c)}
+          >
             {c}
           </button>
         ))}
@@ -34,7 +52,13 @@ export function InzichtenList({ artikelen }: { artikelen: Artikel[] }) {
       {featured && (
         <Link href={`/inzichten/${featured.slug}`} className="feat">
           <div className="media">
-            <Image src={featured.image} alt={featured.titel} fill sizes="(max-width: 980px) 100vw, 45vw" style={{ objectFit: "cover" }} />
+            <Image
+              src={featured.image}
+              alt={featured.titel}
+              fill
+              sizes="(max-width: 980px) 100vw, 45vw"
+              style={{ objectFit: "cover" }}
+            />
           </div>
           <div className="body">
             <div className="kicker on-dark">Uitgelicht · {featured.cat}</div>
@@ -51,7 +75,13 @@ export function InzichtenList({ artikelen }: { artikelen: Artikel[] }) {
         {grid.map((a) => (
           <Link href={`/inzichten/${a.slug}`} className="post" key={a.slug}>
             <div className="cover">
-              <Image src={a.image} alt={a.titel} fill sizes="(max-width: 980px) 100vw, 33vw" style={{ objectFit: "cover" }} />
+              <Image
+                src={a.image}
+                alt={a.titel}
+                fill
+                sizes="(max-width: 980px) 100vw, 33vw"
+                style={{ objectFit: "cover" }}
+              />
               <span className="cat">{a.cat}</span>
             </div>
             <div className="pbody">

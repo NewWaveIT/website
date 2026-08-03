@@ -9,7 +9,11 @@ import { cn } from "@/lib/utils";
 
 function fmt(iso: string) {
   try {
-    return new Date(iso).toLocaleDateString("nl-NL", { timeZone: "Europe/Amsterdam", day: "numeric", month: "short" });
+    return new Date(iso).toLocaleDateString("nl-NL", {
+      timeZone: "Europe/Amsterdam",
+      day: "numeric",
+      month: "short",
+    });
   } catch {
     return iso;
   }
@@ -51,7 +55,8 @@ export function SollicitatiesBoard({ sols }: { sols: Sollicitatie[] }) {
           const cards = items.filter(
             (s) =>
               s.status === st &&
-              (s.naam.toLowerCase().includes(query) || s.vacature_slug.toLowerCase().includes(query)),
+              (s.naam.toLowerCase().includes(query) ||
+                s.vacature_slug.toLowerCase().includes(query)),
           );
           return (
             <div className="pcol" key={st} data-first={i === 0} data-mid={i > 0 && i < 3}>
@@ -62,7 +67,12 @@ export function SollicitatiesBoard({ sols }: { sols: Sollicitatie[] }) {
               </div>
               <div className="cards">
                 {cards.map((s) => (
-                  <button type="button" className="pcard" key={s.id} onClick={() => setSelectedId(s.id)}>
+                  <button
+                    type="button"
+                    className="pcard"
+                    key={s.id}
+                    onClick={() => setSelectedId(s.id)}
+                  >
                     <div className="who">{s.naam}</div>
                     <div className="what">{s.vacature_slug}</div>
                     <div className="meta">

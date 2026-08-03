@@ -16,11 +16,25 @@ export default function AdminError({
     <div style={{ maxWidth: 640 }}>
       <div className="crumb">Er ging iets mis</div>
       <div className="card" style={{ padding: "var(--space-6)" }}>
-        <h1 style={{ fontSize: "var(--text-xl)", fontWeight: "var(--fw-extrabold)", marginBottom: "var(--space-3)" }}>
+        <h1
+          style={{
+            fontSize: "var(--text-xl)",
+            fontWeight: "var(--fw-extrabold)",
+            marginBottom: "var(--space-3)",
+          }}
+        >
           Deze pagina kon niet worden geladen
         </h1>
-        <p style={{ fontSize: "var(--text-sm)", color: "var(--text-body)", lineHeight: 1.7, margin: "0 0 var(--space-4)" }}>
-          Er trad een onverwachte fout op. Probeer het opnieuw of ga via het menu naar een andere pagina.
+        <p
+          style={{
+            fontSize: "var(--text-sm)",
+            color: "var(--text-body)",
+            lineHeight: 1.7,
+            margin: "0 0 var(--space-4)",
+          }}
+        >
+          Er trad een onverwachte fout op. Probeer het opnieuw of ga via het menu naar een andere
+          pagina.
         </p>
         {error?.message && (
           <p className="t-sub" style={{ margin: "0 0 var(--space-4)" }}>

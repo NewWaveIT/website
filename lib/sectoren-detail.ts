@@ -72,16 +72,32 @@ export const SECTOREN: Record<string, SectorDetail> = {
     ],
     challengesIntro: "Herkenbaar? Dit zijn de vragen waarmee publieke organisaties bij ons komen.",
     challenges: [
-      { q: "Snelheid", titel: "Hoe versnellen we vergunningverlening zonder in te leveren op zorgvuldigheid?", p: "Doorlooptijden lopen op, terwijl burgers digitale snelheid verwachten." },
-      { q: "Legacy", titel: "Hoe moderniseren we verouderde systemen zonder de dienstverlening te verstoren?", p: "Kritieke processen draaien op systemen die niemand meer durft aan te raken." },
-      { q: "Aantoonbaarheid", titel: "Hoe blijven we volledig auditproof en AVG-compliant?", p: "Elke stap moet herleidbaar zijn, zonder dat het werk verlamt." },
+      {
+        q: "Snelheid",
+        titel: "Hoe versnellen we vergunningverlening zonder in te leveren op zorgvuldigheid?",
+        p: "Doorlooptijden lopen op, terwijl burgers digitale snelheid verwachten.",
+      },
+      {
+        q: "Legacy",
+        titel: "Hoe moderniseren we verouderde systemen zonder de dienstverlening te verstoren?",
+        p: "Kritieke processen draaien op systemen die niemand meer durft aan te raken.",
+      },
+      {
+        q: "Aantoonbaarheid",
+        titel: "Hoe blijven we volledig auditproof en AVG-compliant?",
+        p: "Elke stap moet herleidbaar zijn, zonder dat het werk verlamt.",
+      },
     ],
     solutions: [
       {
         kicker: "Mendix",
         titel: "Processen digitaliseren die burgers écht merken",
         p: "We bouwen op maat gemaakte applicaties die aansluiten op je bestaande landschap: snel live, schaalbaar en beheerbaar door je eigen team.",
-        punten: ["Digitale aanvraag- en zaakprocessen", "Koppelingen met kernregistraties", "Realtime statusinzicht voor burger én ambtenaar"],
+        punten: [
+          "Digitale aanvraag- en zaakprocessen",
+          "Koppelingen met kernregistraties",
+          "Realtime statusinzicht voor burger én ambtenaar",
+        ],
         ph: "[ product shot · zaaksysteem ]",
       },
       SOL_AI_STRATEGIE,
@@ -94,7 +110,8 @@ export const SECTOREN: Record<string, SectorDetail> = {
     ],
     caseTitle: "COA: sneller en aantoonbaar",
     caseSector: "Publieke sector · COA",
-    caseQuote: "“Efficiënte en betrouwbare IT-oplossingen. The New Wave IT denkt echt mee met onze uitdagingen.”",
+    caseQuote:
+      "“Efficiënte en betrouwbare IT-oplossingen. The New Wave IT denkt echt mee met onze uitdagingen.”",
     caseNaam: "Peter van Dam",
     caseRol: "IT Manager, COA",
     caseImage: "/assets/photos/overleg-laptop.webp",
@@ -121,16 +138,32 @@ export const SECTOREN: Record<string, SectorDetail> = {
     ],
     challengesIntro: "De vragen waarmee mobiliteits- en logistieke organisaties bij ons komen.",
     challenges: [
-      { q: "Assets", titel: "Onze assets worden slimmer, onze systemen niet", p: "Sensordata stroomt binnen, maar de systemen die erop moeten sturen lopen achter." },
-      { q: "Verstoringen", titel: "Hoe schakelen we sneller bij verstoringen?", p: "Planning, onderhoud en reizigersinformatie hangen samen, maar zitten in losse systemen." },
-      { q: "Groei", titel: "Hoe schalen we mee met stijgende vraag?", p: "Volumes groeien; de operatie moet mee zonder handmatig werk te verdubbelen." },
+      {
+        q: "Assets",
+        titel: "Onze assets worden slimmer, onze systemen niet",
+        p: "Sensordata stroomt binnen, maar de systemen die erop moeten sturen lopen achter.",
+      },
+      {
+        q: "Verstoringen",
+        titel: "Hoe schakelen we sneller bij verstoringen?",
+        p: "Planning, onderhoud en reizigersinformatie hangen samen, maar zitten in losse systemen.",
+      },
+      {
+        q: "Groei",
+        titel: "Hoe schalen we mee met stijgende vraag?",
+        p: "Volumes groeien; de operatie moet mee zonder handmatig werk te verdubbelen.",
+      },
     ],
     solutions: [
       {
         kicker: "Mendix",
         titel: "Eén operationeel beeld, van shopfloor tot regie",
         p: "We verbinden planning, assetbeheer en informatievoorziening in applicaties die realtime meebewegen met je operatie.",
-        punten: ["Assetbeheer en onderhoudsplanning", "Koppelingen met sensoren en kernsystemen", "Realtime reizigers- en operationele informatie"],
+        punten: [
+          "Assetbeheer en onderhoudsplanning",
+          "Koppelingen met sensoren en kernsystemen",
+          "Realtime reizigers- en operationele informatie",
+        ],
         ph: "[ product shot · operationeel dashboard ]",
       },
       SOL_AI_STRATEGIE,
@@ -143,7 +176,8 @@ export const SECTOREN: Record<string, SectorDetail> = {
     ],
     caseTitle: "Vervoerder: sneller schakelen bij verstoringen",
     caseSector: "Mobiliteit · Vervoerder",
-    caseQuote: "“We zien nu in één beeld wat er speelt en kunnen direct bijsturen. Dat scheelt reizigers uren.”",
+    caseQuote:
+      "“We zien nu in één beeld wat er speelt en kunnen direct bijsturen. Dat scheelt reizigers uren.”",
     caseNaam: "Ilse Vermeer",
     caseRol: "Manager Operatie",
     caseImage: "/assets/photos/team-presentatie-breed.webp",
@@ -170,16 +204,32 @@ export const SECTOREN: Record<string, SectorDetail> = {
     ],
     challengesIntro: "De vragen waarmee banken en financials bij ons komen.",
     challenges: [
-      { q: "Compliance", titel: "Elke innovatie strandt op compliance", p: "Goede ideeën sneuvelen in de beheersings- en toezichtsvereisten." },
-      { q: "Legacy", titel: "Kernsystemen zijn stabiel maar star", p: "Wat betrouwbaar draait, is lastig te vernieuwen zonder risico." },
-      { q: "Klant", titel: "Klanten verwachten digitale snelheid", p: "De lat van fintechs ligt hoog, ook voor gevestigde partijen." },
+      {
+        q: "Compliance",
+        titel: "Elke innovatie strandt op compliance",
+        p: "Goede ideeën sneuvelen in de beheersings- en toezichtsvereisten.",
+      },
+      {
+        q: "Legacy",
+        titel: "Kernsystemen zijn stabiel maar star",
+        p: "Wat betrouwbaar draait, is lastig te vernieuwen zonder risico.",
+      },
+      {
+        q: "Klant",
+        titel: "Klanten verwachten digitale snelheid",
+        p: "De lat van fintechs ligt hoog, ook voor gevestigde partijen.",
+      },
     ],
     solutions: [
       {
         kicker: "Mendix",
         titel: "Kernprocessen digitaliseren, beheerst en snel",
         p: "We bouwen wendbare applicaties bovenop je bestaande landschap, met beheersing en herleidbaarheid ingebouwd vanaf het ontwerp.",
-        punten: ["Digitale klant- en aanvraagprocessen", "Herleidbaarheid en controle by design", "Integraties met kernbanksystemen"],
+        punten: [
+          "Digitale klant- en aanvraagprocessen",
+          "Herleidbaarheid en controle by design",
+          "Integraties met kernbanksystemen",
+        ],
         ph: "[ product shot · klantproces ]",
       },
       SOL_AI_STRATEGIE,
@@ -192,7 +242,8 @@ export const SECTOREN: Record<string, SectorDetail> = {
     ],
     caseTitle: "Financial: compliant én snel",
     caseSector: "Banken · Financial",
-    caseQuote: "“Voor het eerst gaan snelheid en compliance hand in hand. We leveren wendbaar, en de toezichthouder is tevreden.”",
+    caseQuote:
+      "“Voor het eerst gaan snelheid en compliance hand in hand. We leveren wendbaar, en de toezichthouder is tevreden.”",
     caseNaam: "Mark de Wit",
     caseRol: "Hoofd Digitalisering",
     caseImage: "/assets/photos/klantgesprek-tafel.webp",
@@ -219,16 +270,32 @@ export const SECTOREN: Record<string, SectorDetail> = {
     ],
     challengesIntro: "De vragen waarmee zorgorganisaties bij ons komen.",
     challenges: [
-      { q: "Registratielast", titel: "Onze mensen registreren meer dan ze zorgen", p: "Kostbare tijd verdwijnt in overtypen en dubbele vastlegging." },
-      { q: "Koppelingen", titel: "Systemen praten niet met elkaar", p: "Informatie staat versnipperd, terwijl zorg juist samenhang vraagt." },
-      { q: "Veiligheid", titel: "Hoe borgen we privacy en veiligheid?", p: "Patiëntgegevens vragen om de hoogste zorgvuldigheid, altijd." },
+      {
+        q: "Registratielast",
+        titel: "Onze mensen registreren meer dan ze zorgen",
+        p: "Kostbare tijd verdwijnt in overtypen en dubbele vastlegging.",
+      },
+      {
+        q: "Koppelingen",
+        titel: "Systemen praten niet met elkaar",
+        p: "Informatie staat versnipperd, terwijl zorg juist samenhang vraagt.",
+      },
+      {
+        q: "Veiligheid",
+        titel: "Hoe borgen we privacy en veiligheid?",
+        p: "Patiëntgegevens vragen om de hoogste zorgvuldigheid, altijd.",
+      },
     ],
     solutions: [
       {
         kicker: "Mendix",
         titel: "Processen rond het echte werk van de zorgprofessional",
         p: "We bouwen veilige applicaties die aansluiten op je EPD en registratielast wegnemen, ontworpen mét de mensen die ermee werken.",
-        punten: ["Koppelingen met EPD en zorgsystemen", "Minder dubbele registratie", "Gebouwd rond het werkproces, niet andersom"],
+        punten: [
+          "Koppelingen met EPD en zorgsystemen",
+          "Minder dubbele registratie",
+          "Gebouwd rond het werkproces, niet andersom",
+        ],
         ph: "[ product shot · zorgapplicatie ]",
       },
       SOL_AI_STRATEGIE,
@@ -241,7 +308,8 @@ export const SECTOREN: Record<string, SectorDetail> = {
     ],
     caseTitle: "Zorginstelling: minder registreren, meer zorgen",
     caseSector: "Zorg · Instelling",
-    caseQuote: "“Onze mensen zijn weer bezig met zorg in plaats van formulieren. Het systeem werkt eindelijk mee.”",
+    caseQuote:
+      "“Onze mensen zijn weer bezig met zorg in plaats van formulieren. Het systeem werkt eindelijk mee.”",
     caseNaam: "Anouk Prins",
     caseRol: "Manager Zorg & Innovatie",
     caseImage: "/assets/photos/overleg-lachend.webp",
@@ -268,16 +336,32 @@ export const SECTOREN: Record<string, SectorDetail> = {
     ],
     challengesIntro: "De vragen waarmee productiebedrijven bij ons komen.",
     challenges: [
-      { q: "Data", titel: "Onze machines produceren data die niemand gebruikt", p: "De potentie ligt op de shopfloor, maar bereikt de besluitvorming niet." },
-      { q: "Planning", titel: "Planning en realiteit lopen uiteen", p: "Verstoringen worden te laat zichtbaar om nog bij te sturen." },
-      { q: "Kwaliteit", titel: "Kwaliteitsdata zit in losse systemen", p: "Zonder samenhang blijft continu verbeteren lastig." },
+      {
+        q: "Data",
+        titel: "Onze machines produceren data die niemand gebruikt",
+        p: "De potentie ligt op de shopfloor, maar bereikt de besluitvorming niet.",
+      },
+      {
+        q: "Planning",
+        titel: "Planning en realiteit lopen uiteen",
+        p: "Verstoringen worden te laat zichtbaar om nog bij te sturen.",
+      },
+      {
+        q: "Kwaliteit",
+        titel: "Kwaliteitsdata zit in losse systemen",
+        p: "Zonder samenhang blijft continu verbeteren lastig.",
+      },
     ],
     solutions: [
       {
         kicker: "Mendix",
         titel: "Van shopfloor-data naar sturende applicaties",
         p: "We verbinden productie, planning en kwaliteit in applicaties die realtime meebewegen met je operatie, gebouwd op je bestaande machinedata.",
-        punten: ["Productie- en planningsinzicht in één beeld", "Koppelingen met machines en MES/ERP", "Kwaliteit sturen op realtime data"],
+        punten: [
+          "Productie- en planningsinzicht in één beeld",
+          "Koppelingen met machines en MES/ERP",
+          "Kwaliteit sturen op realtime data",
+        ],
         ph: "[ product shot · productiedashboard ]",
       },
       SOL_AI_STRATEGIE,
@@ -290,7 +374,8 @@ export const SECTOREN: Record<string, SectorDetail> = {
     ],
     caseTitle: "Producent: sturen op realtime data",
     caseSector: "Manufacturing · Producent",
-    caseQuote: "“We zien nu direct wat er op de lijn gebeurt en sturen bij vóór het misgaat. De omsteltijden zijn flink korter.”",
+    caseQuote:
+      "“We zien nu direct wat er op de lijn gebeurt en sturen bij vóór het misgaat. De omsteltijden zijn flink korter.”",
     caseNaam: "Bram Kok",
     caseRol: "Operations Director",
     caseImage: "/assets/photos/team-overleg-scherm.webp",

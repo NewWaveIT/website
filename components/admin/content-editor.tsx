@@ -31,7 +31,9 @@ function slugify(s: string): string {
  * → sectie "Hero", subveld "Kicker"). Velden zonder streepje komen in "Algemeen".
  * Volgorde blijft behouden; gebruikt voor de lange pagina-formulieren.
  */
-function groupFields(fields: FieldDef[]): { heading: string; fields: { f: FieldDef; sub: string }[] }[] {
+function groupFields(
+  fields: FieldDef[],
+): { heading: string; fields: { f: FieldDef; sub: string }[] }[] {
   const groups: { heading: string; fields: { f: FieldDef; sub: string }[] }[] = [];
   const index = new Map<string, number>();
   for (const f of fields) {
@@ -43,7 +45,7 @@ function groupFields(fields: FieldDef[]): { heading: string; fields: { f: FieldD
       index.set(heading, groups.length);
       groups.push({ heading, fields: [] });
     }
-    groups[index.get(heading)!].fields.push({ f, sub });
+    groups[index.get(heading)!]?.fields.push({ f, sub });
   }
   return groups;
 }
@@ -73,14 +75,27 @@ function DeleteButton() {
               <button type="button" className="btn btn-outline" onClick={() => setOpen(false)}>
                 Annuleren
               </button>
-              <button type="submit" className="btn btn-danger" formAction={deleteContent} formNoValidate>
+              <button
+                type="submit"
+                className="btn btn-danger"
+                formAction={deleteContent}
+                formNoValidate
+              >
                 Definitief verwijderen
               </button>
             </>
           }
         >
-          <p style={{ margin: 0, fontSize: "var(--text-sm)", color: "var(--text-body)", lineHeight: 1.6 }}>
-            Weet je zeker dat je dit item definitief wilt verwijderen? Dit kan niet ongedaan worden gemaakt.
+          <p
+            style={{
+              margin: 0,
+              fontSize: "var(--text-sm)",
+              color: "var(--text-body)",
+              lineHeight: 1.6,
+            }}
+          >
+            Weet je zeker dat je dit item definitief wilt verwijderen? Dit kan niet ongedaan worden
+            gemaakt.
           </p>
         </Modal>
       )}
@@ -128,8 +143,7 @@ export function ContentEditor({
           : undefined;
 
   const data = (row?.data ?? {}) as Record<string, unknown>;
-  const fields =
-    isPaginas ? (PAGE_FIELDS[slug] ?? FIELD_SCHEMAS.paginas) : FIELD_SCHEMAS[type];
+  const fields = isPaginas ? (PAGE_FIELDS[slug] ?? FIELD_SCHEMAS.paginas) : FIELD_SCHEMAS[type];
   const sideFields = fields.filter((f) => f.panel === "side");
   const mainFields = fields.filter((f) => f.panel !== "side");
   const rest = extraData(fields, data);
@@ -142,7 +156,10 @@ export function ContentEditor({
   const initial = (f: FieldDef): string => {
     const v = data[f.key];
     if (typeof v === "string" && v) return v;
-    if (isPaginas && PAGE_DEFAULTS[slug]?.[f.key]) return PAGE_DEFAULTS[slug][f.key];
+    if (isPaginas) {
+      const pd = PAGE_DEFAULTS[slug]?.[f.key];
+      if (pd) return pd;
+    }
     if (isNew && f.defaultToday) return today;
     return "";
   };
@@ -154,11 +171,30 @@ export function ContentEditor({
     ) : f.type === "image" ? (
       <ImageField key={f.key} name={`f_${f.key}`} label={f.label} defaultValue={initial(f)} />
     ) : f.type === "icon" ? (
-      <IconField key={f.key} name={`f_${f.key}`} label={f.label} options={f.options ?? []} defaultValue={initial(f)} />
+      <IconField
+        key={f.key}
+        name={`f_${f.key}`}
+        label={f.label}
+        options={f.options ?? []}
+        defaultValue={initial(f)}
+      />
     ) : f.type === "select" ? (
-      <SelectField key={f.key} name={`f_${f.key}`} label={f.label} options={f.options ?? []} defaultValue={initial(f)} help={f.help} />
+      <SelectField
+        key={f.key}
+        name={`f_${f.key}`}
+        label={f.label}
+        options={f.options ?? []}
+        defaultValue={initial(f)}
+        help={f.help}
+      />
     ) : f.type === "author" ? (
-      <AuthorField key={f.key} name={`f_${f.key}`} label={f.label} options={teamleden} defaultValue={initial(f)} />
+      <AuthorField
+        key={f.key}
+        name={`f_${f.key}`}
+        label={f.label}
+        options={teamleden}
+        defaultValue={initial(f)}
+      />
     ) : f.type === "proposities" ? (
       <PropositiesField
         key={f.key}
@@ -169,9 +205,22 @@ export function ContentEditor({
         help={f.help}
       />
     ) : f.type === "richtext" ? (
-      <RichTextEditor key={f.key} name={`f_${f.key}`} label={f.label} defaultValue={initial(f)} help={f.help} />
+      <RichTextEditor
+        key={f.key}
+        name={`f_${f.key}`}
+        label={f.label}
+        defaultValue={initial(f)}
+        help={f.help}
+      />
     ) : f.type === "richtext-lite" ? (
-      <RichTextEditor key={f.key} name={`f_${f.key}`} label={f.label} defaultValue={initial(f)} help={f.help} variant="lite" />
+      <RichTextEditor
+        key={f.key}
+        name={`f_${f.key}`}
+        label={f.label}
+        defaultValue={initial(f)}
+        help={f.help}
+        variant="lite"
+      />
     ) : (
       <div className="fld" key={f.key}>
         <label htmlFor={`ce-${f.key}`}>{f.label}</label>
@@ -185,7 +234,12 @@ export function ContentEditor({
             spellCheck={f.type === "markdown" ? false : undefined}
             style={
               f.type === "markdown"
-                ? { minHeight: 220, fontFamily: "var(--font-mono)", fontSize: "var(--text-xs)", lineHeight: 1.7 }
+                ? {
+                    minHeight: 220,
+                    fontFamily: "var(--font-mono)",
+                    fontSize: "var(--text-xs)",
+                    lineHeight: 1.7,
+                  }
                 : undefined
             }
           />
@@ -199,7 +253,11 @@ export function ContentEditor({
             required={f.required}
           />
         )}
-        {f.help && <p className="t-sub" style={{ marginTop: 6 }}>{f.help}</p>}
+        {f.help && (
+          <p className="t-sub" style={{ marginTop: 6 }}>
+            {f.help}
+          </p>
+        )}
       </div>
     );
 
@@ -208,8 +266,12 @@ export function ContentEditor({
       <div className="crumb">Content · {label}</div>
       <div className="page-head">
         <div>
-          <h1>{row ? "Bewerk" : "Nieuw"} {label.toLowerCase()}</h1>
-          <p className="sub">Links pas je de inhoud aan; rechts staan de instellingen en publicatie.</p>
+          <h1>
+            {row ? "Bewerk" : "Nieuw"} {label.toLowerCase()}
+          </h1>
+          <p className="sub">
+            Links pas je de inhoud aan; rechts staan de instellingen en publicatie.
+          </p>
         </div>
       </div>
 
@@ -255,7 +317,13 @@ export function ContentEditor({
 
               {extraInitial && (
                 <details style={{ marginTop: "var(--space-2)" }}>
-                  <summary style={{ cursor: "pointer", fontSize: "var(--text-sm)", color: "var(--text-muted)" }}>
+                  <summary
+                    style={{
+                      cursor: "pointer",
+                      fontSize: "var(--text-sm)",
+                      color: "var(--text-muted)",
+                    }}
+                  >
                     Geavanceerd — overige velden (JSON)
                   </summary>
                   <div className="fld" style={{ marginTop: "var(--space-3)", marginBottom: 0 }}>
@@ -264,7 +332,12 @@ export function ContentEditor({
                       defaultValue={extraInitial}
                       spellCheck={false}
                       placeholder="{ }"
-                      style={{ minHeight: 140, fontFamily: "var(--font-mono)", fontSize: "var(--text-xs)", lineHeight: 1.6 }}
+                      style={{
+                        minHeight: 140,
+                        fontFamily: "var(--font-mono)",
+                        fontSize: "var(--text-xs)",
+                        lineHeight: 1.6,
+                      }}
                     />
                     <p className="t-sub" style={{ marginTop: 6 }}>
                       Sleutels zonder eigen veld. Moet geldige JSON zijn.
@@ -286,7 +359,12 @@ export function ContentEditor({
                   Annuleren
                 </Link>
                 {row && viewPath && (
-                  <a href={viewPath} target="_blank" rel="noopener noreferrer" className="btn btn-outline">
+                  <a
+                    href={viewPath}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn btn-outline"
+                  >
                     <ExternalLink /> Bekijk
                   </a>
                 )}
@@ -299,15 +377,25 @@ export function ContentEditor({
               <div className="fld">
                 <label>Status</label>
                 <div className="seg" role="group" aria-label="Status">
-                  <button type="button" className={status === "concept" ? "on" : ""} onClick={() => setStatus("concept")}>
+                  <button
+                    type="button"
+                    className={status === "concept" ? "on" : ""}
+                    onClick={() => setStatus("concept")}
+                  >
                     Concept
                   </button>
-                  <button type="button" className={status === "live" ? "on live" : ""} onClick={() => setStatus("live")}>
+                  <button
+                    type="button"
+                    className={status === "live" ? "on live" : ""}
+                    onClick={() => setStatus("live")}
+                  >
                     Live
                   </button>
                 </div>
                 <p className="t-sub" style={{ marginTop: 8 }}>
-                  {status === "live" ? "Zichtbaar op de website." : "Nog niet zichtbaar op de website."}
+                  {status === "live"
+                    ? "Zichtbaar op de website."
+                    : "Nog niet zichtbaar op de website."}
                 </p>
               </div>
 
@@ -323,13 +411,17 @@ export function ContentEditor({
                     pattern="[a-z0-9\-]+"
                     required
                   />
-                  <p className="t-sub" style={{ marginTop: 6 }}>Wordt automatisch gemaakt van de titel.</p>
+                  <p className="t-sub" style={{ marginTop: 6 }}>
+                    Wordt automatisch gemaakt van de titel.
+                  </p>
                 </div>
               ) : !isPaginas ? (
                 <div className="fld" style={{ marginBottom: showOrder ? undefined : 0 }}>
                   <label htmlFor="ce-slug">Webadres</label>
                   <div className="ce-perma">
-                    <code>{VIEW_BASE[type] ?? ""}/{slug}</code>
+                    <code>
+                      {VIEW_BASE[type] ?? ""}/{slug}
+                    </code>
                   </div>
                 </div>
               ) : null}
@@ -337,8 +429,15 @@ export function ContentEditor({
               {showOrder && (
                 <div className="fld" style={{ marginBottom: 0 }}>
                   <label htmlFor="ce-volgorde">Volgorde</label>
-                  <input id="ce-volgorde" name="volgorde" type="number" defaultValue={row?.volgorde ?? 0} />
-                  <p className="t-sub" style={{ marginTop: 6 }}>Lager = hoger in lijsten.</p>
+                  <input
+                    id="ce-volgorde"
+                    name="volgorde"
+                    type="number"
+                    defaultValue={row?.volgorde ?? 0}
+                  />
+                  <p className="t-sub" style={{ marginTop: 6 }}>
+                    Lager = hoger in lijsten.
+                  </p>
                 </div>
               )}
             </div>

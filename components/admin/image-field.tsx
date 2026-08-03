@@ -48,11 +48,22 @@ export function ImageControl({
         />
       ) : null}
       <div style={{ display: "flex", gap: 10, alignItems: "center", flexWrap: "wrap" }}>
-        <button type="button" className="btn btn-outline" disabled={busy} onClick={() => fileRef.current?.click()}>
+        <button
+          type="button"
+          className="btn btn-outline"
+          disabled={busy}
+          onClick={() => fileRef.current?.click()}
+        >
           <Upload /> {value ? "Vervang afbeelding" : "Afbeelding uploaden"}
         </button>
         {busy && <span className="t-sub">Uploaden…</span>}
-        <input ref={fileRef} type="file" accept="image/*" onChange={onFile} style={{ display: "none" }} />
+        <input
+          ref={fileRef}
+          type="file"
+          accept="image/*"
+          onChange={onFile}
+          style={{ display: "none" }}
+        />
       </div>
       <input
         type="text"
