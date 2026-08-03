@@ -11,10 +11,8 @@ import {
   Linkedin,
 } from "lucide-react";
 import { ContactForm } from "@/components/contact/contact-form";
-import { MobileContact } from "@/components/mobile/mobile-contact";
 import { getPagina } from "@/lib/paginas-data";
 import "./contact.css";
-import "./mobile.css";
 
 export const metadata: Metadata = {
   title: "Plan een strategiegesprek",
@@ -28,9 +26,7 @@ export const revalidate = 300;
 export default async function ContactPage() {
   const t = await getPagina("contact");
   return (
-    <>
-      <MobileContact contact={t} />
-      <div className="only-desktop">
+    <div className="p-contact">
       <section className="chero">
         <div className="wrap-wide">
           <div className="crumbs">
@@ -164,7 +160,6 @@ export default async function ContactPage() {
           </Link>
         </div>
       </section>
-      </div>
-    </>
+    </div>
   );
 }
