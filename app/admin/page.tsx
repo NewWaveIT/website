@@ -30,7 +30,7 @@ export default async function AdminDashboard() {
       <div className="page-head">
         <div>
           <h1>Goedendag{naam ? `, ${naam}` : ""}</h1>
-          <p className="sub">Dit staat er open sinds je laatste bezoek.</p>
+          <p className="sub">De openstaande aanvragen en sollicitaties in één oogopslag.</p>
         </div>
         <SeedButton />
       </div>

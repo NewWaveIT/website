@@ -2,7 +2,7 @@
 
 import { useEffect, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
-import { X, Search, Calendar, AlertTriangle } from "lucide-react";
+import { X, Search, Calendar, AlertTriangle, Check } from "lucide-react";
 import { updateSollicitatie, getCvUrl } from "@/app/admin/sollicitaties/actions";
 import { SOL_STATUSSEN, STATUS_LABEL, type Sollicitatie } from "@/lib/cms/inzendingen-types";
 import { cn } from "@/lib/utils";
@@ -24,18 +24,34 @@ export function SollicitatiesBoard({ sols }: { sols: Sollicitatie[] }) {
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [q, setQ] = useState("");
   const [err, setErr] = useState<string | null>(null);
+  const [okMsg, setOkMsg] = useState<string | null>(null);
   const [, startTransition] = useTransition();
   const router = useRouter();
 
   const selected = items.find((s) => s.id === selectedId) ?? null;
   const query = q.toLowerCase();
 
-  // Foutmelding automatisch laten verdwijnen.
+  // Meldingen automatisch laten verdwijnen.
   useEffect(() => {
     if (!err) return;
     const t = setTimeout(() => setErr(null), 4000);
     return () => clearTimeout(t);
   }, [err]);
+  useEffect(() => {
+    if (!okMsg) return;
+    const t = setTimeout(() => setOkMsg(null), 1800);
+    return () => clearTimeout(t);
+  }, [okMsg]);
+
+  // Sluit de detail-drawer met Escape.
+  useEffect(() => {
+    if (!selectedId) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setSelectedId(null);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [selectedId]);
 
   async function openCv(path: string) {
     // Open synchroon een tab (voorkomt popup-blokkade) en vul 'm daarna met de
@@ -60,6 +76,7 @@ export function SollicitatiesBoard({ sols }: { sols: Sollicitatie[] }) {
         setErr("Kon de wijziging niet opslaan. Probeer het opnieuw.");
         return;
       }
+      setOkMsg("Opgeslagen.");
       router.refresh();
     });
   }
@@ -69,6 +86,11 @@ export function SollicitatiesBoard({ sols }: { sols: Sollicitatie[] }) {
       {err && (
         <div className="toast err" role="alert">
           <AlertTriangle /> {err}
+        </div>
+      )}
+      {okMsg && (
+        <div className="toast ok" role="status">
+          <Check /> {okMsg}
         </div>
       )}
       <div className="toolbar">
