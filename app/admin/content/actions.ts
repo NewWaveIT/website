@@ -31,6 +31,16 @@ const LIST_PATH: Record<ContentType, string> = {
   proposities: "/admin/proposities",
 };
 
+/** Publieke overzichtspagina's waar de volgorde zichtbaar is (voor revalidatie na sorteren). */
+const PUBLIC_INDEX: Partial<Record<ContentType, string>> = {
+  cases: "/klantverhalen",
+  diensten: "/diensten",
+  sectoren: "/sectoren",
+  vacatures: "/werken-bij",
+  teamleden: "/over-ons",
+  proposities: "/sectoren",
+};
+
 function isType(v: string): v is ContentType {
   return v in CONTENT_TABLE;
 }
@@ -237,6 +247,24 @@ export async function uploadImage(
 
   const { data } = supabase.storage.from("content").getPublicUrl(path);
   return { url: data.publicUrl, width, height };
+}
+
+/** Sla een nieuwe handmatige volgorde op: elk id krijgt zijn positie als `volgorde`. */
+export async function reorderContent(type: string, orderedIds: string[]): Promise<{ ok: boolean }> {
+  await requireAdmin();
+  if (!isType(type) || orderedIds.length === 0) return { ok: false };
+
+  const supabase = await createClient();
+  const table = CONTENT_TABLE[type];
+  for (let i = 0; i < orderedIds.length; i++) {
+    const { error } = await supabase.from(table).update({ volgorde: i }).eq("id", orderedIds[i]);
+    if (error) return { ok: false };
+  }
+
+  revalidatePath(LIST_PATH[type]);
+  const pub = PUBLIC_INDEX[type];
+  if (pub) revalidatePath(pub);
+  return { ok: true };
 }
 
 export async function deleteContent(formData: FormData): Promise<void> {

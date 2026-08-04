@@ -12,6 +12,7 @@ export default async function CasesPage() {
       titel="Cases"
       sub="Klantverhalen op de website."
       rows={rows}
+      facets={[{ key: "sector", label: "sectoren" }]}
     />
   );
 }

@@ -1373,6 +1373,36 @@
   }
 }
 
+/* Handmatig sorteren (drag-and-drop) in contentlijsten */
+.cms .reorder-hint {
+  font-size: var(--text-xs);
+  color: var(--text-subtle);
+  margin: 0 0 var(--space-3);
+}
+.cms .t-grip-cell {
+  width: 36px;
+  text-align: center;
+  color: var(--text-subtle);
+  vertical-align: middle;
+}
+.cms tr[draggable="true"] {
+  cursor: grab;
+}
+.cms tr[draggable="true"]:active {
+  cursor: grabbing;
+}
+.cms .t-grip {
+  width: 16px;
+  height: 16px;
+  vertical-align: middle;
+}
+.cms tr.dragging {
+  opacity: 0.45;
+}
+.cms tr.drop-target td {
+  box-shadow: inset 0 2px 0 var(--color-primary);
+}
+
 @media (max-width: 1024px) {
   .cms .kpis {
     grid-template-columns: repeat(2, 1fr);

@@ -30,7 +30,12 @@ export function AdminContentList({
           <Plus /> Nieuw
         </Link>
       </div>
-      <ContentListClient type={type} rows={rows} facets={facets} />
+      <ContentListClient
+        type={type}
+        rows={rows}
+        facets={facets}
+        orderable={type !== "artikelen" && type !== "paginas"}
+      />
     </>
   );
 }
