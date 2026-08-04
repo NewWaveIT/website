@@ -231,3 +231,12 @@
     display: none;
   }
 }
+
+/* Open sollicitatie */
+.p-werken .open-soll {
+  background: var(--eggshell);
+}
+.p-werken .open-soll-wrap {
+  max-width: 560px;
+  margin: 0 auto;
+}

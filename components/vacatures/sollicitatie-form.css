@@ -1,0 +1,124 @@
+/* Sollicitatieformulier — pagina-onafhankelijk, gescoped onder .sol-form / .sol-done
+   zodat het op elke pagina (vacaturedetail, werken-bij) consistent oogt. */
+
+.sol-form,
+.sol-done {
+  background: var(--white);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+}
+.sol-form h3 {
+  font-size: var(--text-lg);
+  font-weight: var(--fw-extrabold);
+  margin: 0 0 var(--space-2);
+}
+.sol-form .sol-sub {
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+  line-height: var(--leading-relaxed);
+  margin: 0 0 var(--space-5);
+}
+.sol-form .field {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  margin-bottom: var(--space-4);
+}
+.sol-form .field label {
+  font-size: var(--text-sm);
+  font-weight: var(--fw-semibold);
+  color: var(--text-strong);
+}
+.sol-form .field input,
+.sol-form .field textarea {
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  color: var(--text-body);
+  background: var(--paper);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-md);
+  padding: 11px 13px;
+  outline: none;
+  transition:
+    border-color 140ms ease,
+    box-shadow 140ms ease;
+}
+.sol-form .field textarea {
+  min-height: 110px;
+  resize: vertical;
+}
+.sol-form .field input:focus,
+.sol-form .field textarea:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(241, 88, 34, 0.15);
+}
+.sol-form .field input[type="file"] {
+  padding: 9px 12px;
+  font-size: var(--text-sm);
+  cursor: pointer;
+}
+.sol-form .field input[aria-invalid="true"],
+.sol-form .field textarea[aria-invalid="true"] {
+  border-color: var(--danger-500);
+}
+.sol-form .field input[aria-invalid="true"]:focus,
+.sol-form .field textarea[aria-invalid="true"]:focus {
+  border-color: var(--danger-500);
+  box-shadow: 0 0 0 3px rgba(196, 57, 42, 0.15);
+}
+.sol-form .field-err {
+  font-size: var(--text-xs);
+  color: var(--danger-500);
+  margin: 0;
+}
+.sol-form .btn {
+  width: 100%;
+  justify-content: center;
+  margin-top: var(--space-2);
+}
+.sol-form .form-status {
+  font-size: var(--text-sm);
+  border-radius: var(--radius-md);
+  padding: 12px 14px;
+  margin: var(--space-4) 0 0;
+}
+.sol-form .form-status.err {
+  background: var(--danger-100);
+  color: var(--danger-500);
+}
+.sol-form .sol-privacy {
+  font-size: var(--text-xs);
+  color: var(--text-subtle);
+  text-align: center;
+  margin: var(--space-4) 0 0;
+}
+.sol-done {
+  text-align: center;
+}
+.sol-done .sol-done-ic {
+  width: 48px;
+  height: 48px;
+  margin: 0 auto var(--space-4);
+  border-radius: 50%;
+  background: var(--success-100);
+  color: var(--success-500);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.sol-done .sol-done-ic .lucide {
+  width: 24px;
+  height: 24px;
+}
+.sol-done h3 {
+  font-size: var(--text-lg);
+  font-weight: var(--fw-extrabold);
+  margin: 0 0 var(--space-2);
+}
+.sol-done p {
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+  line-height: var(--leading-relaxed);
+  margin: 0;
+}

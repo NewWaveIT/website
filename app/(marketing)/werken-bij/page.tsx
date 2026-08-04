@@ -6,6 +6,7 @@ import { getVacatures } from "@/lib/vacatures-data";
 import { getPagina } from "@/lib/paginas-data";
 import { AWARD } from "@/lib/award";
 import { SlotCta } from "@/components/layout/slot-cta";
+import { SollicitatieForm } from "@/components/vacatures/sollicitatie-form";
 import "./werken-bij.css";
 
 export const metadata: Metadata = {
@@ -156,12 +157,25 @@ export default async function WerkenBijPage() {
               marginTop: "var(--space-6)",
             }}
           >
-            Staat jouw rol er niet tussen? Stuur een open sollicitatie naar{" "}
-            <a href="mailto:hello@thenewwaveit.com" style={{ color: "var(--orange-400)" }}>
-              hello@thenewwaveit.com
+            Staat jouw rol er niet tussen?{" "}
+            <a href="#open-sollicitatie" style={{ color: "var(--orange-400)" }}>
+              Stuur hieronder een open sollicitatie
             </a>{" "}
-            of bel Mitchel: 06–10751254.
+            — of bel Mitchel: 06–10751254.
           </p>
+        </div>
+      </section>
+
+      <section className="block open-soll" id="open-sollicitatie">
+        <div className="wrap-wide">
+          <div className="open-soll-wrap">
+            <SollicitatieForm
+              vacatureSlug=""
+              vacatureTitel="Open sollicitatie"
+              heading="Open sollicitatie"
+              intro="Geen passende vacature? Laat je gegevens achter — we kijken graag of er een match is."
+            />
+          </div>
         </div>
       </section>
 

@@ -1,13 +1,13 @@
 "use client";
 
-import { useEffect } from "react";
-import { useActionState } from "react";
+import { useActionState, useEffect } from "react";
 import { useFormStatus } from "react-dom";
 import { ArrowRight, Check } from "lucide-react";
 import {
   submitSollicitatie,
   type SollicitatieState,
 } from "@/app/(marketing)/vacatures/[slug]/actions";
+import "./sollicitatie-form.css";
 
 const initial: SollicitatieState = { ok: false, message: "" };
 
@@ -23,9 +23,13 @@ function SubmitButton() {
 export function SollicitatieForm({
   vacatureSlug,
   vacatureTitel,
+  heading = "Solliciteer op deze rol",
+  intro = "Laat je gegevens achter — een cv of LinkedIn is genoeg, geen brief nodig.",
 }: {
   vacatureSlug: string;
   vacatureTitel: string;
+  heading?: string;
+  intro?: string;
 }) {
   const [state, formAction] = useActionState(submitSollicitatie, initial);
   const err = (k: string) => state.errors?.[k];
@@ -53,10 +57,8 @@ export function SollicitatieForm({
 
   return (
     <form className="sol-form" action={formAction} noValidate>
-      <h3>Solliciteer op deze rol</h3>
-      <p className="sol-sub">
-        Laat je gegevens achter — een cv of LinkedIn is genoeg, geen brief nodig.
-      </p>
+      <h3>{heading}</h3>
+      <p className="sol-sub">{intro}</p>
 
       <input type="hidden" name="vacature_slug" value={vacatureSlug} />
       <input type="hidden" name="vacature_titel" value={vacatureTitel} />
