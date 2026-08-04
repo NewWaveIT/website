@@ -22,6 +22,8 @@ export interface Sollicitatie {
   email: string;
   telefoon: string | null;
   motivatie: string | null;
+  motivatie_url: string | null;
+  link_url: string | null;
   cv_url: string | null;
   status: string; // nieuw | screening | gesprek | afgerond
   interne_notitie: string | null;

@@ -1,7 +1,9 @@
 "use server";
 
 import { createClient } from "@/lib/supabase/server";
-import { sendInterneNotificatie } from "@/lib/email";
+import { sendInterneNotificatie, sendSollicitatieBevestiging } from "@/lib/email";
+
+type DbClient = Awaited<ReturnType<typeof createClient>>;
 
 export interface SollicitatieState {
   ok: boolean;
@@ -10,17 +12,53 @@ export interface SollicitatieState {
   errors?: Record<string, string>;
 }
 
-const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-const CV_TYPES = [
+const DOC_TYPES = [
   "application/pdf",
   "application/msword",
   "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
 ];
-const MAX_CV = 8 * 1024 * 1024; // 8 MB
+const MAX_DOC = 8 * 1024 * 1024; // 8 MB
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 function str(formData: FormData, key: string): string {
   const v = formData.get(key);
   return typeof v === "string" ? v.trim() : "";
+}
+
+/** Valideert een optioneel bijgevoegd document; zet een foutmelding of geeft het bestand terug. */
+function pickDoc(formData: FormData, key: string, errors: Record<string, string>): File | null {
+  const f = formData.get(key);
+  if (!(f instanceof File) || f.size === 0) return null;
+  if (!DOC_TYPES.includes(f.type)) {
+    errors[key] = "Upload een pdf of Word-document.";
+    return null;
+  }
+  if (f.size > MAX_DOC) {
+    errors[key] = "Bestand is te groot (max. 8 MB).";
+    return null;
+  }
+  return f;
+}
+
+/** Upload een document naar de privébucket 'sollicitaties'; geeft het pad terug (of null bij fout). */
+async function uploadDoc(
+  supabase: DbClient,
+  file: File,
+  vacatureSlug: string,
+  soort: string,
+): Promise<string | null> {
+  const ext =
+    (file.name.split(".").pop() ?? "pdf").toLowerCase().replace(/[^a-z0-9]/g, "") || "pdf";
+  const path = `${vacatureSlug || "open"}/${soort}-${crypto.randomUUID()}.${ext}`;
+  try {
+    const buffer = Buffer.from(await file.arrayBuffer());
+    const { error } = await supabase.storage
+      .from("sollicitaties")
+      .upload(path, buffer, { contentType: file.type, upsert: false });
+    return error ? null : path;
+  } catch {
+    return null;
+  }
 }
 
 export async function submitSollicitatie(
@@ -38,7 +76,7 @@ export async function submitSollicitatie(
   const email = str(formData, "email");
   const telefoon = str(formData, "telefoon");
   const motivatie = str(formData, "motivatie");
-  const cv = formData.get("cv");
+  let link = str(formData, "link");
 
   // Validatie — verzamel álle fouten tegelijk.
   const errors: Record<string, string> = {};
@@ -48,13 +86,12 @@ export async function submitSollicitatie(
   else if (email.length > 320) errors.email = "E-mailadres is te lang.";
   if (telefoon.length > 40) errors.telefoon = "Telefoonnummer is te lang.";
   if (motivatie.length > 5000) errors.motivatie = "Motivatie is te lang (max. 5000 tekens).";
+  if (link.length > 500) errors.link = "De link is te lang.";
+  // Normaliseer: zonder schema toch een werkende URL maken.
+  if (link && !/^https?:\/\//i.test(link)) link = `https://${link}`;
 
-  let cvFile: File | null = null;
-  if (cv instanceof File && cv.size > 0) {
-    if (!CV_TYPES.includes(cv.type)) errors.cv = "Upload een pdf of Word-document.";
-    else if (cv.size > MAX_CV) errors.cv = "Bestand is te groot (max. 8 MB).";
-    else cvFile = cv;
-  }
+  const cvFile = pickDoc(formData, "cv", errors);
+  const motivatieFile = pickDoc(formData, "motivatie_bestand", errors);
 
   if (Object.keys(errors).length > 0) {
     return { ok: false, message: "Controleer de gemarkeerde velden.", errors };
@@ -62,32 +99,22 @@ export async function submitSollicitatie(
 
   const supabase = await createClient();
 
-  // CV uploaden naar de privébucket (pad bewaren, geen publieke URL).
+  const uploadFout = {
+    ok: false as const,
+    message:
+      "Een bestand kon niet worden geüpload. Probeer het opnieuw of mail people@thenewwaveit.com.",
+  };
+
   let cvPath: string | null = null;
   if (cvFile) {
-    const ext =
-      (cvFile.name.split(".").pop() ?? "pdf").toLowerCase().replace(/[^a-z0-9]/g, "") || "pdf";
-    const path = `${vacatureSlug || "open"}/${crypto.randomUUID()}.${ext}`;
-    try {
-      const buffer = Buffer.from(await cvFile.arrayBuffer());
-      const { error: upErr } = await supabase.storage
-        .from("sollicitaties")
-        .upload(path, buffer, { contentType: cvFile.type, upsert: false });
-      if (upErr) {
-        return {
-          ok: false,
-          message:
-            "Het cv kon niet worden geüpload. Probeer het opnieuw of mail people@thenewwaveit.com.",
-        };
-      }
-      cvPath = path;
-    } catch {
-      return {
-        ok: false,
-        message:
-          "Het cv kon niet worden geüpload. Probeer het opnieuw of mail people@thenewwaveit.com.",
-      };
-    }
+    cvPath = await uploadDoc(supabase, cvFile, vacatureSlug, "cv");
+    if (!cvPath) return uploadFout;
+  }
+
+  let motivatiePath: string | null = null;
+  if (motivatieFile) {
+    motivatiePath = await uploadDoc(supabase, motivatieFile, vacatureSlug, "motivatie");
+    if (!motivatiePath) return uploadFout;
   }
 
   try {
@@ -97,6 +124,8 @@ export async function submitSollicitatie(
       email,
       telefoon: telefoon || null,
       motivatie: motivatie || null,
+      motivatie_url: motivatiePath,
+      link_url: link || null,
       cv_url: cvPath,
     });
     if (error) {
@@ -124,13 +153,23 @@ export async function submitSollicitatie(
       { label: "Telefoon", value: telefoon },
       { label: "Vacature", value: vacatureTitel || vacatureSlug || "Open sollicitatie" },
       { label: "Motivatie", value: motivatie },
+      { label: "Motivatie-bestand", value: motivatiePath ? "Bijgevoegd — open via de admin" : "" },
+      { label: "LinkedIn / portfolio", value: link },
       { label: "CV", value: cvPath ? "Bijgevoegd — open via de admin" : "Niet bijgevoegd" },
     ],
     adminPath: "/admin/sollicitaties",
   });
 
+  // Bevestiging naar de sollicitant zelf (fail-safe).
+  await sendSollicitatieBevestiging({
+    to: email,
+    naam,
+    vacatureTitel: vacatureTitel || "Open sollicitatie",
+  });
+
   return {
     ok: true,
-    message: "Bedankt voor je sollicitatie! We reageren binnen twee werkdagen.",
+    message:
+      "Bedankt — je sollicitatie staat bij ons binnen. Je ontvangt zo een bevestiging per mail, en je hoort binnen twee werkdagen van ons, meestal van Mitchel zelf.",
   };
 }

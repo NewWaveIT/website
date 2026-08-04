@@ -12,7 +12,13 @@ import {
 } from "lucide-react";
 import { ContactForm } from "@/components/contact/contact-form";
 import { getPagina } from "@/lib/paginas-data";
+import { getContactpersoon } from "@/lib/team-data";
 import "./contact.css";
+
+/** Alleen cijfers/+ voor een tel:-URI. */
+function telHref(t: string): string {
+  return `tel:${t.replace(/[^\d+]/g, "")}`;
+}
 
 export const metadata: Metadata = {
   title: "Plan een strategiegesprek",
@@ -25,6 +31,14 @@ export const revalidate = 300;
 
 export default async function ContactPage() {
   const t = await getPagina("contact");
+
+  // Sales-contactpersoon (dynamisch), met terugval op een standaard.
+  const sales = await getContactpersoon("sales");
+  const salesNaam = sales?.naam || "Koen Wijsman";
+  const salesFoto = sales?.foto || "/assets/photos/portret-blauw.webp";
+  const salesTel = sales?.telefoon || "06–10751254";
+  const salesLinkedin = sales?.linkedin || "https://www.linkedin.com/company/the-new-wave-it";
+
   return (
     <div className="p-contact">
       <section className="chero">
@@ -118,21 +132,17 @@ export default async function ContactPage() {
             <div className="expert">
               <Image
                 className="avatar"
-                src="/assets/photos/portret-blauw.webp"
-                alt="Koen Wijsman, CEO van The New Wave IT"
+                src={salesFoto}
+                alt={`${salesNaam}, contactpersoon bij The New Wave IT`}
                 width={76}
                 height={76}
               />
               <div>
                 <div className="role">Je spreekt met o.a.</div>
-                <h4>Koen Wijsman</h4>
+                <h4>{salesNaam}</h4>
                 <div className="links">
-                  <a href="tel:+31610751254">06–10751254</a>
-                  <a
-                    href="https://www.linkedin.com/company/the-new-wave-it"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
+                  <a href={telHref(salesTel)}>{salesTel}</a>
+                  <a href={salesLinkedin} target="_blank" rel="noopener noreferrer">
                     LinkedIn
                   </a>
                 </div>

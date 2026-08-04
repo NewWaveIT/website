@@ -74,6 +74,62 @@ export async function sendInterneNotificatie(args: NotificatieArgs): Promise<voi
   <div style="max-width:560px;margin:12px auto 0;color:#8b7b64;font-size:12px;text-align:center;">Automatische melding vanaf de website.</div>
   </body></html>`;
 
+  await verstuur({ from, to, subject: args.subject, html });
+}
+
+/**
+ * Warme bevestigingsmail naar de sollicitant zelf. Fail-safe zoals hierboven:
+ * gooit nooit en slaat over zonder RESEND_API_KEY.
+ */
+export async function sendSollicitatieBevestiging(args: {
+  to: string;
+  naam: string;
+  vacatureTitel: string;
+}): Promise<void> {
+  const key = process.env.RESEND_API_KEY;
+  const from = process.env.MAIL_FROM || "The New Wave IT <notificaties@thenewwaveit.com>";
+  if (!key) {
+    console.warn(`[email] RESEND_API_KEY ontbreekt — bevestiging overgeslagen voor ${args.to}`);
+    return;
+  }
+
+  const voornaam = args.naam.split(" ")[0] || args.naam;
+  const rol =
+    args.vacatureTitel && args.vacatureTitel !== "Open sollicitatie" ? args.vacatureTitel : null;
+
+  const html = `<!doctype html><html><body style="margin:0;background:#f4f1ea;padding:24px;font-family:'Helvetica Neue',Arial,sans-serif;">
+  <div style="max-width:520px;margin:0 auto;background:#fff;border:1px solid #e0d8c9;border-radius:14px;overflow:hidden;">
+    <div style="background:#2e251a;padding:22px 28px;border-bottom:3px solid #f15822;">
+      <div style="color:#fff;font-size:20px;font-weight:800;">Je sollicitatie is binnen 🎉</div>
+    </div>
+    <div style="padding:26px 28px;color:#3c3122;font-size:15px;line-height:1.65;">
+      <p style="margin:0 0 14px;">Hoi ${escapeHtml(voornaam)},</p>
+      <p style="margin:0 0 14px;">Bedankt voor je sollicitatie${
+        rol ? ` op <strong>${escapeHtml(rol)}</strong>` : ""
+      }! We hebben 'm goed ontvangen en lezen elke sollicitatie zelf — geen bots.</p>
+      <p style="margin:0 0 14px;">Je hoort binnen twee werkdagen van ons, meestal van Mitchel. Heb je in de tussentijd een vraag? Mail gerust naar <a href="mailto:people@thenewwaveit.com" style="color:#c2410c;">people@thenewwaveit.com</a> of bel 06–10751254.</p>
+      <p style="margin:18px 0 0;">Tot snel,<br/>Team The New Wave IT</p>
+    </div>
+  </div>
+  </body></html>`;
+
+  await verstuur({
+    from,
+    to: args.to,
+    subject: rol ? `Je sollicitatie op ${rol} is binnen` : "Je sollicitatie is binnen",
+    html,
+  });
+}
+
+/** Gedeelde, fail-safe verzendhelper. */
+async function verstuur(payload: {
+  from: string;
+  to: string;
+  subject: string;
+  html: string;
+}): Promise<void> {
+  const key = process.env.RESEND_API_KEY;
+  if (!key) return;
   try {
     const res = await fetch(RESEND_ENDPOINT, {
       method: "POST",
@@ -81,7 +137,7 @@ export async function sendInterneNotificatie(args: NotificatieArgs): Promise<voi
         Authorization: `Bearer ${key}`,
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ from, to, subject: args.subject, html }),
+      body: JSON.stringify(payload),
     });
     if (!res.ok) {
       console.error(`[email] Resend gaf ${res.status}: ${await res.text()}`);

@@ -83,7 +83,15 @@ export function buildSeed(): Record<ContentType, SeedRow[]> {
       titel: t.naam,
       status: "live",
       volgorde: i,
-      data: { rol: t.rol, foto: t.foto, bio: t.bio },
+      data: {
+        rol: t.rol,
+        foto: t.foto,
+        bio: t.bio,
+        contactrol: t.contactrol ?? "",
+        telefoon: t.telefoon ?? "",
+        email: t.email ?? "",
+        linkedin: t.linkedin ?? "",
+      },
     })),
 
     proposities: PROPOSITIES.map((p, i) => ({

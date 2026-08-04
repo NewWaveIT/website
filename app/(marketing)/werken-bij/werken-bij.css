@@ -240,3 +240,11 @@
   max-width: 560px;
   margin: 0 auto;
 }
+.p-werken .open-soll-note {
+  text-align: center;
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+  line-height: var(--leading-relaxed);
+  max-width: 520px;
+  margin: var(--space-5) auto 0;
+}

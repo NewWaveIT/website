@@ -175,6 +175,10 @@ export default async function WerkenBijPage() {
               heading="Open sollicitatie"
               intro="Geen passende vacature? Laat je gegevens achter — we kijken graag of er een match is."
             />
+            <p className="open-soll-note">
+              Na je sollicitatie neemt Mitchel binnen twee werkdagen contact op — een echt mens,
+              geen automatische afwijzing.
+            </p>
           </div>
         </div>
       </section>

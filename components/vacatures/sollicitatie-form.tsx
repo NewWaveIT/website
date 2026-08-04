@@ -23,8 +23,8 @@ function SubmitButton() {
 export function SollicitatieForm({
   vacatureSlug,
   vacatureTitel,
-  heading = "Solliciteer op deze rol",
-  intro = "Laat je gegevens achter — een cv of LinkedIn is genoeg, geen brief nodig.",
+  heading = "Solliciteren? Zo gepiept.",
+  intro = "Naam en e-mail is genoeg om te beginnen. Voeg toe wat je makkelijk bij de hand hebt — geen motivatiebrief nodig. We lezen elke sollicitatie zelf.",
 }: {
   vacatureSlug: string;
   vacatureTitel: string;
@@ -140,20 +140,47 @@ export function SollicitatieForm({
         <textarea
           id="s-mot"
           name="motivatie"
-          placeholder="Vertel kort waarom deze rol je aanspreekt. Een LinkedIn- of portfolio-link mag ook."
+          placeholder="Een paar zinnen waarom deze rol je aanspreekt is genoeg. Wat je écht leuk lijkt, hoe je bij ons terechtkwam — zeg het op je eigen manier."
           aria-invalid={err("motivatie") ? true : undefined}
-          aria-describedby={err("motivatie") ? "serr-mot" : undefined}
+          aria-describedby={err("motivatie") ? "serr-mot" : "s-mot-help"}
         />
-        {err("motivatie") && (
+        {err("motivatie") ? (
           <p className="field-err" id="serr-mot">
             {err("motivatie")}
+          </p>
+        ) : (
+          <p className="field-help" id="s-mot-help">
+            Liever niet typen? Upload je motivatie hieronder als bestand — allebei mag, geen van
+            beide moet.
+          </p>
+        )}
+      </div>
+
+      <div className="field">
+        <label htmlFor="s-mot-file">
+          Motivatie als bestand{" "}
+          <span style={{ fontWeight: "var(--fw-regular)", color: "var(--text-subtle)" }}>
+            (optioneel · pdf of Word)
+          </span>
+        </label>
+        <input
+          id="s-mot-file"
+          name="motivatie_bestand"
+          type="file"
+          accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+          aria-invalid={err("motivatie_bestand") ? true : undefined}
+          aria-describedby={err("motivatie_bestand") ? "serr-motfile" : undefined}
+        />
+        {err("motivatie_bestand") && (
+          <p className="field-err" id="serr-motfile">
+            {err("motivatie_bestand")}
           </p>
         )}
       </div>
 
       <div className="field">
         <label htmlFor="s-cv">
-          Cv{" "}
+          Je cv{" "}
           <span style={{ fontWeight: "var(--fw-regular)", color: "var(--text-subtle)" }}>
             (optioneel · pdf of Word, max. 8 MB)
           </span>
@@ -169,6 +196,33 @@ export function SollicitatieForm({
         {err("cv") && (
           <p className="field-err" id="serr-cv">
             {err("cv")}
+          </p>
+        )}
+      </div>
+
+      <div className="field">
+        <label htmlFor="s-link">
+          LinkedIn of portfolio{" "}
+          <span style={{ fontWeight: "var(--fw-regular)", color: "var(--text-subtle)" }}>
+            (optioneel)
+          </span>
+        </label>
+        <input
+          id="s-link"
+          name="link"
+          type="url"
+          inputMode="url"
+          placeholder="linkedin.com/in/jouwnaam"
+          aria-invalid={err("link") ? true : undefined}
+          aria-describedby={err("link") ? "serr-link" : "s-link-help"}
+        />
+        {err("link") ? (
+          <p className="field-err" id="serr-link">
+            {err("link")}
+          </p>
+        ) : (
+          <p className="field-help" id="s-link-help">
+            Geen cv bij de hand? Je LinkedIn of portfolio is net zo goed.
           </p>
         )}
       </div>

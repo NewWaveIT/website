@@ -419,6 +419,29 @@ export const FIELD_SCHEMAS: Record<ContentType, FieldDef[]> = {
   teamleden: [
     { key: "rol", label: "Rol", type: "text", placeholder: "CEO & founder", panel: "side" },
     { key: "foto", label: "Foto", type: "image", panel: "side" },
+    {
+      key: "contactrol",
+      label: "Contactrol",
+      type: "select",
+      options: ["Geen", "Sales", "Recruitment", "Sales & recruitment"],
+      help: "Toont dit teamlid als contactpersoon op de contactpagina (sales) en/of de vacatures (recruitment).",
+      panel: "side",
+    },
+    {
+      key: "telefoon",
+      label: "Telefoon (contact)",
+      type: "text",
+      placeholder: "06–10751254",
+      panel: "side",
+    },
+    {
+      key: "email",
+      label: "E-mail (contact)",
+      type: "text",
+      placeholder: "naam@thenewwaveit.com",
+      panel: "side",
+    },
+    { key: "linkedin", label: "LinkedIn-URL", type: "text", panel: "side" },
     { key: "bio", label: "Bio", type: "textarea", help: "Titel = de naam van het teamlid." },
   ],
   proposities: [

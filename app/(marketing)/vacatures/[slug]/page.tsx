@@ -4,9 +4,15 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 import { Check, ArrowRight, Phone } from "lucide-react";
 import { getVacatures, getVacatureBySlug } from "@/lib/vacatures-data";
+import { getContactpersoon } from "@/lib/team-data";
 import { stripHtml } from "@/lib/cms/sanitize";
 import { SollicitatieForm } from "@/components/vacatures/sollicitatie-form";
 import "./vacature.css";
+
+/** Alleen cijfers/+ voor een tel:-URI. */
+function telHref(t: string): string {
+  return `tel:${t.replace(/[^\d+]/g, "")}`;
+}
 
 export const revalidate = 300;
 
@@ -58,6 +64,15 @@ export default async function VacaturePage({ params }: { params: Promise<{ slug:
   if (!v) notFound();
 
   const andere = (await getVacatures()).filter((x) => x.slug !== slug);
+
+  // Recruitment-contactpersoon (dynamisch), met terugval op een standaard.
+  const rec = await getContactpersoon("recruitment");
+  const recNaam = rec?.naam || "Mitchel Wallaart";
+  const recVoornaam = recNaam.split(" ")[0] || recNaam;
+  const recFoto = rec?.foto || "/assets/photos/portret-3.webp";
+  const recTel = rec?.telefoon || "06–10751254";
+  const recMail = rec?.email || "hello@thenewwaveit.com";
+
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "JobPosting",
@@ -102,6 +117,9 @@ export default async function VacaturePage({ params }: { params: Promise<{ slug:
               Ontdek werken bij
             </Link>
           </div>
+          <p className="hero-note">
+            Binnen twee werkdagen reactie — meestal van Mitchel zelf. Geen motivatiebrief nodig.
+          </p>
         </div>
       </section>
 
@@ -124,18 +142,13 @@ export default async function VacaturePage({ params }: { params: Promise<{ slug:
           <aside className="vac-aside" id="solliciteer">
             <div className="apply-card">
               <div className="rec">
-                <Image
-                  src="/assets/photos/portret-3.webp"
-                  alt="Mitchel Wallaart, recruiter"
-                  width={64}
-                  height={64}
-                />
+                <Image src={recFoto} alt={`${recNaam}, recruiter`} width={64} height={64} />
                 <div>
                   <div className="role">Recruiter</div>
-                  <h4>Mitchel Wallaart</h4>
+                  <h4>{recNaam}</h4>
                   <div className="contact">
-                    <a href="tel:+31610751254">06–10751254</a>
-                    <a href="mailto:hello@thenewwaveit.com">Mail</a>
+                    <a href={telHref(recTel)}>{recTel}</a>
+                    <a href={`mailto:${recMail}`}>Mail</a>
                   </div>
                 </div>
               </div>
@@ -220,9 +233,9 @@ export default async function VacaturePage({ params }: { params: Promise<{ slug:
 
       <section className="cta">
         <div className="wrap-wide">
-          <h2>Twijfel je nog? Bel gewoon even met Mitchel.</h2>
-          <a href="tel:+31610751254" className="btn btn-on">
-            06–10751254 <Phone />
+          <h2>Twijfel je nog? Bel gewoon even met {recVoornaam}.</h2>
+          <a href={telHref(recTel)} className="btn btn-on">
+            {recTel} <Phone />
           </a>
         </div>
       </section>

@@ -206,6 +206,30 @@ export function SollicitatiesBoard({ sols }: { sols: Sollicitatie[] }) {
                     <div className="ro">{selected.motivatie}</div>
                   </div>
                 )}
+                {selected.motivatie_url && (
+                  <div className="fld">
+                    <label>Motivatie (bestand)</label>
+                    <div className="ro">
+                      <button
+                        type="button"
+                        className="linklike"
+                        onClick={() => openCv(selected.motivatie_url as string)}
+                      >
+                        Motivatie openen
+                      </button>
+                    </div>
+                  </div>
+                )}
+                {selected.link_url && (
+                  <div className="fld">
+                    <label>LinkedIn / portfolio</label>
+                    <div className="ro">
+                      <a href={selected.link_url} target="_blank" rel="noopener noreferrer">
+                        {selected.link_url}
+                      </a>
+                    </div>
+                  </div>
+                )}
                 <div className="fld">
                   <label>Interne notitie</label>
                   <textarea

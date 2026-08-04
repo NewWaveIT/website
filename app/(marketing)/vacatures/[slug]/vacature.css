@@ -60,6 +60,11 @@
   gap: var(--space-5);
   flex-wrap: wrap;
 }
+.p-vacature .shero .hero-note {
+  font-size: var(--text-sm);
+  color: var(--text-on-dark-muted);
+  margin: var(--space-5) 0 0;
+}
 
 .p-vacature .vac-grid {
   display: grid;
