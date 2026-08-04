@@ -1,6 +1,7 @@
 "use server";
 
 import { createClient } from "@/lib/supabase/server";
+import { sendInterneNotificatie } from "@/lib/email";
 
 export interface ContactState {
   ok: boolean;
@@ -76,6 +77,21 @@ export async function submitContact(
         "Er ging iets mis bij het versturen. Probeer het later opnieuw of mail hello@thenewwaveit.com.",
     };
   }
+
+  // Interne notificatie (fail-safe: breekt de aanvraag nooit).
+  await sendInterneNotificatie({
+    subject: `Nieuwe aanvraag: ${naam}${bedrijf ? ` — ${bedrijf}` : ""}`,
+    heading: "Nieuwe aanvraag",
+    rows: [
+      { label: "Naam", value: naam },
+      { label: "E-mail", value: email },
+      { label: "Organisatie", value: bedrijf },
+      { label: "Onderwerp", value: onderwerpLabel },
+      { label: "Type", value: type },
+      { label: "Bericht", value: toelichting },
+    ],
+    adminPath: "/admin/aanvragen",
+  });
 
   return {
     ok: true,

@@ -266,6 +266,129 @@
   color: var(--orange-400);
 }
 
+/* Sollicitatieformulier (in de aside) */
+.p-vacature .sol-form,
+.p-vacature .sol-done {
+  background: var(--white);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+}
+.p-vacature .sol-form h3 {
+  font-size: var(--text-lg);
+  font-weight: var(--fw-extrabold);
+  margin: 0 0 var(--space-2);
+}
+.p-vacature .sol-sub {
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+  line-height: var(--leading-relaxed);
+  margin: 0 0 var(--space-5);
+}
+.p-vacature .field {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  margin-bottom: var(--space-4);
+}
+.p-vacature .field label {
+  font-size: var(--text-sm);
+  font-weight: var(--fw-semibold);
+  color: var(--text-strong);
+}
+.p-vacature .field input,
+.p-vacature .field textarea {
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  color: var(--text-body);
+  background: var(--paper);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-md);
+  padding: 11px 13px;
+  outline: none;
+  transition:
+    border-color 140ms ease,
+    box-shadow 140ms ease;
+}
+.p-vacature .field textarea {
+  min-height: 110px;
+  resize: vertical;
+}
+.p-vacature .field input:focus,
+.p-vacature .field textarea:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(241, 88, 34, 0.15);
+}
+.p-vacature .field input[type="file"] {
+  padding: 9px 12px;
+  font-size: var(--text-sm);
+  cursor: pointer;
+}
+.p-vacature .field input[aria-invalid="true"],
+.p-vacature .field textarea[aria-invalid="true"] {
+  border-color: var(--danger-500);
+}
+.p-vacature .field input[aria-invalid="true"]:focus,
+.p-vacature .field textarea[aria-invalid="true"]:focus {
+  border-color: var(--danger-500);
+  box-shadow: 0 0 0 3px rgba(196, 57, 42, 0.15);
+}
+.p-vacature .field-err {
+  font-size: var(--text-xs);
+  color: var(--danger-500);
+  margin: 0;
+}
+.p-vacature .sol-form .btn {
+  width: 100%;
+  justify-content: center;
+  margin-top: var(--space-2);
+}
+.p-vacature .form-status {
+  font-size: var(--text-sm);
+  border-radius: var(--radius-md);
+  padding: 12px 14px;
+  margin: var(--space-4) 0 0;
+}
+.p-vacature .form-status.err {
+  background: var(--danger-100);
+  color: var(--danger-500);
+}
+.p-vacature .sol-privacy {
+  font-size: var(--text-xs);
+  color: var(--text-subtle);
+  text-align: center;
+  margin: var(--space-4) 0 0;
+}
+.p-vacature .sol-done {
+  text-align: center;
+}
+.p-vacature .sol-done-ic {
+  width: 48px;
+  height: 48px;
+  margin: 0 auto var(--space-4);
+  border-radius: 50%;
+  background: var(--success-100);
+  color: var(--success-500);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.p-vacature .sol-done-ic .lucide {
+  width: 24px;
+  height: 24px;
+}
+.p-vacature .sol-done h3 {
+  font-size: var(--text-lg);
+  font-weight: var(--fw-extrabold);
+  margin: 0 0 var(--space-2);
+}
+.p-vacature .sol-done p {
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+  line-height: var(--leading-relaxed);
+  margin: 0;
+}
+
 @media (max-width: 1024px) {
   .p-vacature .vac-grid {
     grid-template-columns: 1fr;

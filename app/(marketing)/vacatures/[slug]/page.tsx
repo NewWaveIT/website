@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import { Check, ArrowRight, Phone } from "lucide-react";
 import { getVacatures, getVacatureBySlug } from "@/lib/vacatures-data";
 import { stripHtml } from "@/lib/cms/sanitize";
+import { SollicitatieForm } from "@/components/vacatures/sollicitatie-form";
 import "./vacature.css";
 
 export const revalidate = 300;
@@ -138,13 +139,11 @@ export default async function VacaturePage({ params }: { params: Promise<{ slug:
                   </div>
                 </div>
               </div>
-              <a href="mailto:hello@thenewwaveit.com" className="btn btn-primary">
-                Solliciteer direct <ArrowRight />
-              </a>
               <p className="note">
-                Binnen twee werkdagen reactie. Geen brief nodig, je cv of LinkedIn is genoeg.
+                Vragen vooraf? Bel of mail Mitchel gerust. Binnen twee werkdagen reactie.
               </p>
             </div>
+            <SollicitatieForm vacatureSlug={slug} vacatureTitel={v.functietitel} />
             <div className="facts">
               <dl>
                 <div className="frow">

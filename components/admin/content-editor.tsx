@@ -165,7 +165,10 @@ export function ContentEditor({
 
   // Bevestig het weggaan via de Annuleren-link bij niet-opgeslagen wijzigingen.
   const onCancel = (e: React.MouseEvent) => {
-    if (dirty && !window.confirm("Je hebt niet-opgeslagen wijzigingen. Weet je zeker dat je wilt weggaan?")) {
+    if (
+      dirty &&
+      !window.confirm("Je hebt niet-opgeslagen wijzigingen. Weet je zeker dat je wilt weggaan?")
+    ) {
       e.preventDefault();
     }
   };

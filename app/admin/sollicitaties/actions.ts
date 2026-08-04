@@ -17,3 +17,14 @@ export async function updateSollicitatie(
   revalidatePath("/admin");
   return { ok: true };
 }
+
+/** Tijdelijke (5 min) signed URL voor een cv in de privébucket 'sollicitaties'. */
+export async function getCvUrl(path: string): Promise<{ url?: string; error?: string }> {
+  const user = await getCurrentUser();
+  if (!user) return { error: "Niet ingelogd." };
+  if (!path) return { error: "Geen cv beschikbaar." };
+  const supabase = await createClient();
+  const { data, error } = await supabase.storage.from("sollicitaties").createSignedUrl(path, 300);
+  if (error || !data?.signedUrl) return { error: "Kon het cv niet openen." };
+  return { url: data.signedUrl };
+}

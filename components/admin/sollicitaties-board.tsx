@@ -3,7 +3,7 @@
 import { useEffect, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { X, Search, Calendar, AlertTriangle } from "lucide-react";
-import { updateSollicitatie } from "@/app/admin/sollicitaties/actions";
+import { updateSollicitatie, getCvUrl } from "@/app/admin/sollicitaties/actions";
 import { SOL_STATUSSEN, STATUS_LABEL, type Sollicitatie } from "@/lib/cms/inzendingen-types";
 import { cn } from "@/lib/utils";
 
@@ -36,6 +36,19 @@ export function SollicitatiesBoard({ sols }: { sols: Sollicitatie[] }) {
     const t = setTimeout(() => setErr(null), 4000);
     return () => clearTimeout(t);
   }, [err]);
+
+  async function openCv(path: string) {
+    // Open synchroon een tab (voorkomt popup-blokkade) en vul 'm daarna met de
+    // tijdelijke signed URL.
+    const tab = window.open("", "_blank");
+    const res = await getCvUrl(path);
+    if (res.url && tab) {
+      tab.location.href = res.url;
+    } else {
+      tab?.close();
+      setErr(res.error || "Kon het cv niet openen.");
+    }
+  }
 
   function patch(id: string, p: Partial<Sollicitatie>) {
     const vorige = items;
@@ -146,9 +159,13 @@ export function SollicitatiesBoard({ sols }: { sols: Sollicitatie[] }) {
                     <label>CV</label>
                     <div className="ro">
                       {selected.cv_url ? (
-                        <a href={selected.cv_url} target="_blank" rel="noopener noreferrer">
+                        <button
+                          type="button"
+                          className="linklike"
+                          onClick={() => openCv(selected.cv_url as string)}
+                        >
                           CV openen
-                        </a>
+                        </button>
                       ) : (
                         "—"
                       )}
