@@ -223,6 +223,22 @@
   background: var(--danger-100);
   color: var(--danger-500);
 }
+.field input[aria-invalid="true"],
+.field select[aria-invalid="true"],
+.field textarea[aria-invalid="true"] {
+  border-color: var(--danger-500);
+}
+.field input[aria-invalid="true"]:focus,
+.field select[aria-invalid="true"]:focus,
+.field textarea[aria-invalid="true"]:focus {
+  border-color: var(--danger-500);
+  box-shadow: 0 0 0 3px rgba(196, 57, 42, 0.15);
+}
+.field-err {
+  font-size: var(--text-xs);
+  color: var(--danger-500);
+  margin: 0;
+}
 
 .aside {
   display: flex;

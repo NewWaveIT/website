@@ -136,7 +136,7 @@ export async function saveContent(_prev: SaveState, formData: FormData): Promise
 
   revalidatePath(LIST_PATH[type]);
   revalidatePublic(type, slug);
-  redirect(LIST_PATH[type]);
+  redirect(`${LIST_PATH[type]}?ok=${bestaat ? "bijgewerkt" : "aangemaakt"}`);
 }
 
 /** Ververs de publieke routes die (via fase C) live uit Supabase lezen. */
@@ -267,5 +267,5 @@ export async function deleteContent(formData: FormData): Promise<void> {
   if (type === "artikelen") revalidatePath("/inzichten");
   if (type === "cases") revalidatePath("/klantverhalen");
   if (type === "vacatures") revalidatePath("/werken-bij");
-  redirect(LIST_PATH[type]);
+  redirect(`${LIST_PATH[type]}?ok=verwijderd`);
 }

@@ -1,8 +1,8 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
-import { Search, X } from "lucide-react";
+import { Search, X, Check } from "lucide-react";
 import type { ContentRow, ContentType } from "@/lib/cms/content";
 
 export type Facet = { key: string; label: string };
@@ -37,6 +37,30 @@ export function ContentListClient({
   const [q, setQ] = useState("");
   const [statusF, setStatusF] = useState<"all" | "live" | "concept">("all");
   const [facetVal, setFacetVal] = useState<Record<string, string>>({});
+
+  // Bevestigings-toast na opslaan/verwijderen: de action redirect hierheen met
+  // ?ok=… — we lezen 'm eenmalig, tonen 'm en halen 'm uit de URL.
+  const [toast, setToast] = useState<string | null>(null);
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const ok = params.get("ok");
+    if (!ok) return;
+    setToast(
+      ok === "aangemaakt"
+        ? "Item aangemaakt."
+        : ok === "verwijderd"
+          ? "Item verwijderd."
+          : "Wijzigingen opgeslagen.",
+    );
+    params.delete("ok");
+    const qs = params.toString();
+    window.history.replaceState(null, "", window.location.pathname + (qs ? `?${qs}` : ""));
+  }, []);
+  useEffect(() => {
+    if (!toast) return;
+    const t = setTimeout(() => setToast(null), 2600);
+    return () => clearTimeout(t);
+  }, [toast]);
 
   // Alleen facetten tonen die daadwerkelijk waarden hebben in de rijen.
   const facetOptions = useMemo(
@@ -74,6 +98,11 @@ export function ContentListClient({
 
   return (
     <>
+      {toast && (
+        <div className="toast ok" role="status">
+          <Check /> {toast}
+        </div>
+      )}
       <div className="toolbar">
         <div className="search">
           <Search />

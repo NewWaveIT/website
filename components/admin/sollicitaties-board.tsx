@@ -1,8 +1,8 @@
 "use client";
 
-import { useState, useTransition } from "react";
+import { useEffect, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
-import { X, Search, Calendar } from "lucide-react";
+import { X, Search, Calendar, AlertTriangle } from "lucide-react";
 import { updateSollicitatie } from "@/app/admin/sollicitaties/actions";
 import { SOL_STATUSSEN, STATUS_LABEL, type Sollicitatie } from "@/lib/cms/inzendingen-types";
 import { cn } from "@/lib/utils";
@@ -23,22 +23,41 @@ export function SollicitatiesBoard({ sols }: { sols: Sollicitatie[] }) {
   const [items, setItems] = useState(sols);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [q, setQ] = useState("");
+  const [err, setErr] = useState<string | null>(null);
   const [, startTransition] = useTransition();
   const router = useRouter();
 
   const selected = items.find((s) => s.id === selectedId) ?? null;
   const query = q.toLowerCase();
 
+  // Foutmelding automatisch laten verdwijnen.
+  useEffect(() => {
+    if (!err) return;
+    const t = setTimeout(() => setErr(null), 4000);
+    return () => clearTimeout(t);
+  }, [err]);
+
   function patch(id: string, p: Partial<Sollicitatie>) {
+    const vorige = items;
     setItems((prev) => prev.map((s) => (s.id === id ? { ...s, ...p } : s)));
     startTransition(async () => {
-      await updateSollicitatie(id, p as never);
+      const res = await updateSollicitatie(id, p as never);
+      if (!res?.ok) {
+        setItems(vorige); // draai de optimistische wijziging terug
+        setErr("Kon de wijziging niet opslaan. Probeer het opnieuw.");
+        return;
+      }
       router.refresh();
     });
   }
 
   return (
     <>
+      {err && (
+        <div className="toast err" role="alert">
+          <AlertTriangle /> {err}
+        </div>
+      )}
       <div className="toolbar">
         <div className="search">
           <Search />

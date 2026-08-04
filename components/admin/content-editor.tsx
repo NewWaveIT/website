@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState, useState } from "react";
+import { useActionState, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { Trash2, ExternalLink } from "lucide-react";
 import { saveContent, deleteContent, type SaveState } from "@/app/admin/content/actions";
@@ -119,6 +119,9 @@ export function ContentEditor({
   proposities?: PropositieOptie[];
 }) {
   const [state, formAction, pending] = useActionState<SaveState, FormData>(saveContent, {});
+  const [dirty, setDirty] = useState(false);
+  const submitting = useRef(false);
+  const errRef = useRef<HTMLDivElement>(null);
   const [status, setStatus] = useState(row?.status === "live" ? "live" : "concept");
   const [titel, setTitel] = useState(row?.titel ?? "");
   const [slug, setSlug] = useState(row?.slug ?? "");
@@ -131,6 +134,40 @@ export function ContentEditor({
   const onTitel = (v: string) => {
     setTitel(v);
     if (isNew) setSlug(slugify(v));
+  };
+
+  // Waarschuw bij het verlaten van de pagina met niet-opgeslagen wijzigingen
+  // (herladen, tabblad sluiten, browser-terug). Slaat over tijdens het opslaan zelf.
+  useEffect(() => {
+    if (!dirty) return;
+    const handler = (e: BeforeUnloadEvent) => {
+      if (submitting.current) return;
+      e.preventDefault();
+      e.returnValue = "";
+    };
+    window.addEventListener("beforeunload", handler);
+    return () => window.removeEventListener("beforeunload", handler);
+  }, [dirty]);
+
+  // Na een mislukte opslagpoging keert de action terug zonder te navigeren:
+  // reset de opslag-vlag zodat de waarschuwing weer actief is.
+  useEffect(() => {
+    if (!pending) submitting.current = false;
+  }, [pending]);
+
+  // Bij een validatiefout: breng de foutmelding in beeld en geef 'm focus.
+  useEffect(() => {
+    if (state.error && errRef.current) {
+      errRef.current.scrollIntoView({ behavior: "smooth", block: "center" });
+      errRef.current.focus();
+    }
+  }, [state.error]);
+
+  // Bevestig het weggaan via de Annuleren-link bij niet-opgeslagen wijzigingen.
+  const onCancel = (e: React.MouseEvent) => {
+    if (dirty && !window.confirm("Je hebt niet-opgeslagen wijzigingen. Weet je zeker dat je wilt weggaan?")) {
+      e.preventDefault();
+    }
   };
 
   const viewPath =
@@ -275,7 +312,13 @@ export function ContentEditor({
         </div>
       </div>
 
-      <form action={formAction}>
+      <form
+        action={formAction}
+        onChange={() => setDirty(true)}
+        onSubmit={() => {
+          submitting.current = true;
+        }}
+      >
         <input type="hidden" name="type" value={type} />
         <input type="hidden" name="id" value={row?.id ?? "new"} />
         <input type="hidden" name="status" value={status} />
@@ -283,7 +326,13 @@ export function ContentEditor({
         {!showOrder && <input type="hidden" name="volgorde" value={row?.volgorde ?? 0} />}
 
         {state.error && (
-          <div className="err" style={{ marginBottom: "var(--space-5)" }}>
+          <div
+            className="err"
+            role="alert"
+            tabIndex={-1}
+            ref={errRef}
+            style={{ marginBottom: "var(--space-5)", outline: "none" }}
+          >
             {state.error}
           </div>
         )}
@@ -355,7 +404,7 @@ export function ContentEditor({
                 {pending ? "Opslaan…" : "Opslaan"}
               </button>
               <div className="ce-actions-row">
-                <Link href={listPath} className="btn btn-outline">
+                <Link href={listPath} className="btn btn-outline" onClick={onCancel}>
                   Annuleren
                 </Link>
                 {row && viewPath && (

@@ -771,6 +771,13 @@ footer.site-footer {
   border-color: var(--orange-400);
   box-shadow: 0 0 0 3px rgba(241, 88, 34, 0.15);
 }
+.lead-form input[type="email"][aria-invalid="true"] {
+  border-color: var(--danger-500);
+}
+.lead-form input[type="email"][aria-invalid="true"]:focus {
+  border-color: var(--danger-500);
+  box-shadow: 0 0 0 3px rgba(196, 57, 42, 0.25);
+}
 .lead-form .hp {
   position: absolute;
   left: -9999px;

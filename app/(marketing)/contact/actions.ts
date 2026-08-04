@@ -5,6 +5,8 @@ import { createClient } from "@/lib/supabase/server";
 export interface ContactState {
   ok: boolean;
   message: string;
+  /** Per-veld foutmeldingen (key = veldnaam), zodat het formulier ze bij het juiste veld toont. */
+  errors?: Record<string, string>;
 }
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -32,11 +34,17 @@ export async function submitContact(
   const onderwerpen = formData.getAll("onderwerp").filter(Boolean).join(", ");
   const type = str(formData, "type") || "strategiegesprek";
 
-  // Validatie
-  if (naam.length < 2) return { ok: false, message: "Vul je naam in." };
-  if (!EMAIL_RE.test(email)) return { ok: false, message: "Vul een geldig e-mailadres in." };
-  if (naam.length > 200 || email.length > 320 || toelichting.length > 5000)
-    return { ok: false, message: "Een van de velden is te lang." };
+  // Validatie — verzamel álle fouten tegelijk, zodat de bezoeker in één keer
+  // ziet wat er nog mist of niet klopt (i.p.v. veld voor veld).
+  const errors: Record<string, string> = {};
+  if (naam.length < 2) errors.naam = "Vul je naam in.";
+  else if (naam.length > 200) errors.naam = "Naam is te lang (max. 200 tekens).";
+  if (!EMAIL_RE.test(email)) errors.email = "Vul een geldig e-mailadres in.";
+  else if (email.length > 320) errors.email = "E-mailadres is te lang.";
+  if (toelichting.length > 5000) errors.toelichting = "Toelichting is te lang (max. 5000 tekens).";
+  if (Object.keys(errors).length > 0) {
+    return { ok: false, message: "Controleer de gemarkeerde velden.", errors };
+  }
 
   const onderwerpLabel = [rol, sector, onderwerpen].filter(Boolean).join(" · ");
   const bericht =

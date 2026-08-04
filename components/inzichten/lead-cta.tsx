@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState } from "react";
+import { useActionState, useEffect, useRef } from "react";
 import { subscribeLead, type LeadState } from "@/app/(marketing)/inzichten/actions";
 
 const INIT: LeadState = { ok: false, message: "" };
@@ -17,6 +17,13 @@ export function LeadCta({
   tekst?: string;
 }) {
   const [state, action, pending] = useActionState<LeadState, FormData>(subscribeLead, INIT);
+  const inputRef = useRef<HTMLInputElement>(null);
+  const invalid = !state.ok && !!state.message;
+
+  // Bij een fout: zet focus terug op het e-mailveld.
+  useEffect(() => {
+    if (invalid) inputRef.current?.focus();
+  }, [state, invalid]);
 
   return (
     <section className="lead-cta">
@@ -29,7 +36,7 @@ export function LeadCta({
           </p>
         ) : (
           <>
-            <form action={action} className="lead-form">
+            <form action={action} className="lead-form" noValidate>
               <input
                 type="text"
                 name="website"
@@ -39,18 +46,21 @@ export function LeadCta({
                 className="hp"
               />
               <input
+                ref={inputRef}
                 type="email"
                 name="email"
                 required
                 placeholder="naam@organisatie.nl"
                 aria-label="E-mailadres"
+                aria-invalid={invalid ? true : undefined}
+                aria-describedby={invalid ? "lead-err" : undefined}
               />
               <button type="submit" className="btn btn-primary" disabled={pending}>
                 {pending ? "Versturen…" : "Aanmelden"}
               </button>
             </form>
             {state.message && (
-              <p className="lead-err" role="alert">
+              <p className="lead-err" id="lead-err" role="alert">
                 {state.message}
               </p>
             )}

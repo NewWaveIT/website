@@ -1,8 +1,8 @@
 "use client";
 
-import { useState, useTransition } from "react";
+import { useEffect, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
-import { X, Mail } from "lucide-react";
+import { X, Mail, AlertTriangle } from "lucide-react";
 import { updateLead } from "@/app/admin/aanvragen/actions";
 import { LEAD_STATUSSEN, STATUS_LABEL, type Lead } from "@/lib/cms/inzendingen-types";
 import { cn } from "@/lib/utils";
@@ -26,21 +26,40 @@ function fmt(iso: string) {
 export function AanvragenBoard({ leads }: { leads: Lead[] }) {
   const [items, setItems] = useState(leads);
   const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [err, setErr] = useState<string | null>(null);
   const [, startTransition] = useTransition();
   const router = useRouter();
 
   const selected = items.find((l) => l.id === selectedId) ?? null;
 
+  // Foutmelding automatisch laten verdwijnen.
+  useEffect(() => {
+    if (!err) return;
+    const t = setTimeout(() => setErr(null), 4000);
+    return () => clearTimeout(t);
+  }, [err]);
+
   function patch(id: string, p: Partial<Lead>) {
+    const vorige = items;
     setItems((prev) => prev.map((l) => (l.id === id ? { ...l, ...p } : l)));
     startTransition(async () => {
-      await updateLead(id, p as never);
+      const res = await updateLead(id, p as never);
+      if (!res?.ok) {
+        setItems(vorige); // draai de optimistische wijziging terug
+        setErr("Kon de wijziging niet opslaan. Probeer het opnieuw.");
+        return;
+      }
       router.refresh();
     });
   }
 
   return (
     <>
+      {err && (
+        <div className="toast err" role="alert">
+          <AlertTriangle /> {err}
+        </div>
+      )}
       <div className="pipe">
         {LEAD_STATUSSEN.map((st, i) => {
           const cards = items.filter((l) => l.status === st);

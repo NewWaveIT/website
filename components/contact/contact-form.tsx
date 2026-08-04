@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from "react";
 import { useActionState } from "react";
 import { useFormStatus } from "react-dom";
 import { ArrowRight } from "lucide-react";
@@ -21,6 +22,16 @@ function SubmitButton() {
 
 export function ContactForm({ type = "strategiegesprek" }: { type?: string }) {
   const [state, formAction] = useActionState(submitContact, initial);
+  const err = (k: string) => state.errors?.[k];
+
+  // Bij validatiefouten: zet focus op het eerste gemarkeerde veld.
+  useEffect(() => {
+    if (state.errors && Object.keys(state.errors).length > 0) {
+      const first = document.querySelector<HTMLElement>('.form-card [aria-invalid="true"]');
+      first?.focus();
+      first?.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+  }, [state]);
 
   if (state.ok) {
     return (
@@ -34,7 +45,7 @@ export function ContactForm({ type = "strategiegesprek" }: { type?: string }) {
   }
 
   return (
-    <form className="form-card" action={formAction}>
+    <form className="form-card" action={formAction} noValidate>
       <h2>Plan een strategiegesprek</h2>
       <p className="sub">
         Vertel kort waar je vraagstuk over gaat, we reageren binnen één werkdag met een voorstel
@@ -55,11 +66,37 @@ export function ContactForm({ type = "strategiegesprek" }: { type?: string }) {
       <div className="frow2">
         <div className="field">
           <label htmlFor="f-naam">Naam</label>
-          <input id="f-naam" name="naam" type="text" placeholder="Jouw naam" required />
+          <input
+            id="f-naam"
+            name="naam"
+            type="text"
+            placeholder="Jouw naam"
+            required
+            aria-invalid={err("naam") ? true : undefined}
+            aria-describedby={err("naam") ? "err-naam" : undefined}
+          />
+          {err("naam") && (
+            <p className="field-err" id="err-naam">
+              {err("naam")}
+            </p>
+          )}
         </div>
         <div className="field">
           <label htmlFor="f-mail">Zakelijk e-mailadres</label>
-          <input id="f-mail" name="email" type="email" placeholder="naam@organisatie.nl" required />
+          <input
+            id="f-mail"
+            name="email"
+            type="email"
+            placeholder="naam@organisatie.nl"
+            required
+            aria-invalid={err("email") ? true : undefined}
+            aria-describedby={err("email") ? "err-mail" : undefined}
+          />
+          {err("email") && (
+            <p className="field-err" id="err-mail">
+              {err("email")}
+            </p>
+          )}
         </div>
       </div>
 
@@ -109,7 +146,14 @@ export function ContactForm({ type = "strategiegesprek" }: { type?: string }) {
           id="f-msg"
           name="toelichting"
           placeholder="Wat speelt er? Een paar zinnen is genoeg."
+          aria-invalid={err("toelichting") ? true : undefined}
+          aria-describedby={err("toelichting") ? "err-msg" : undefined}
         />
+        {err("toelichting") && (
+          <p className="field-err" id="err-msg">
+            {err("toelichting")}
+          </p>
+        )}
       </div>
 
       <SubmitButton />
