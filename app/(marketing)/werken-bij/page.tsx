@@ -7,6 +7,7 @@ import { getPagina } from "@/lib/paginas-data";
 import { AWARD } from "@/lib/award";
 import { SlotCta } from "@/components/layout/slot-cta";
 import { SollicitatieForm } from "@/components/vacatures/sollicitatie-form";
+import { getContactpersoon } from "@/lib/team-data";
 import "./werken-bij.css";
 
 export const metadata: Metadata = {
@@ -21,6 +22,12 @@ export const revalidate = 300;
 export default async function WerkenBijPage() {
   const vacatures = await getVacatures();
   const t = await getPagina("werken-bij");
+
+  // Recruitment-contactpersoon (dynamisch), met terugval op een standaard.
+  const rec = await getContactpersoon("recruitment");
+  const recVoornaam = (rec?.naam || "Mitchel Wallaart").split(" ")[0] || "Mitchel";
+  const recTel = rec?.telefoon || "06–10751254";
+
   return (
     <div className="p-werken">
       <section className="shero">
@@ -161,7 +168,7 @@ export default async function WerkenBijPage() {
             <a href="#open-sollicitatie" style={{ color: "var(--orange-400)" }}>
               Stuur hieronder een open sollicitatie
             </a>{" "}
-            — of bel Mitchel: 06–10751254.
+            — of bel {recVoornaam}: {recTel}.
           </p>
         </div>
       </section>
@@ -176,8 +183,8 @@ export default async function WerkenBijPage() {
               intro="Geen passende vacature? Laat je gegevens achter — we kijken graag of er een match is."
             />
             <p className="open-soll-note">
-              Na je sollicitatie neemt Mitchel binnen twee werkdagen contact op — een echt mens,
-              geen automatische afwijzing.
+              Na je sollicitatie neemt {recVoornaam} binnen twee werkdagen contact op — een echt
+              mens, geen automatische afwijzing.
             </p>
           </div>
         </div>

@@ -85,6 +85,7 @@ export async function sendSollicitatieBevestiging(args: {
   to: string;
   naam: string;
   vacatureTitel: string;
+  contactVoornaam?: string;
 }): Promise<void> {
   const key = process.env.RESEND_API_KEY;
   const from = process.env.MAIL_FROM || "The New Wave IT <notificaties@thenewwaveit.com>";
@@ -107,7 +108,9 @@ export async function sendSollicitatieBevestiging(args: {
       <p style="margin:0 0 14px;">Bedankt voor je sollicitatie${
         rol ? ` op <strong>${escapeHtml(rol)}</strong>` : ""
       }! We hebben 'm goed ontvangen en lezen elke sollicitatie zelf — geen bots.</p>
-      <p style="margin:0 0 14px;">Je hoort binnen twee werkdagen van ons, meestal van Mitchel. Heb je in de tussentijd een vraag? Mail gerust naar <a href="mailto:people@thenewwaveit.com" style="color:#c2410c;">people@thenewwaveit.com</a> of bel 06–10751254.</p>
+      <p style="margin:0 0 14px;">Je hoort binnen twee werkdagen van ons, meestal van ${escapeHtml(
+        args.contactVoornaam || "Mitchel",
+      )}. Heb je in de tussentijd een vraag? Mail gerust naar <a href="mailto:people@thenewwaveit.com" style="color:#c2410c;">people@thenewwaveit.com</a> of bel 06–10751254.</p>
       <p style="margin:18px 0 0;">Tot snel,<br/>Team The New Wave IT</p>
     </div>
   </div>

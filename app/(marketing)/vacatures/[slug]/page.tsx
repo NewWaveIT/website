@@ -20,7 +20,7 @@ const PROCES = [
   {
     num: "01",
     titel: "Kennismaken",
-    p: "Videocall of koffie met Mitchel. Geen assessment, wél een goed gesprek over jouw ambitie.",
+    p: "Videocall of koffie met {recruiter}. Geen assessment, wél een goed gesprek over jouw ambitie.",
   },
   {
     num: "02",
@@ -118,7 +118,8 @@ export default async function VacaturePage({ params }: { params: Promise<{ slug:
             </Link>
           </div>
           <p className="hero-note">
-            Binnen twee werkdagen reactie — meestal van Mitchel zelf. Geen motivatiebrief nodig.
+            Binnen twee werkdagen reactie — meestal van {recVoornaam} zelf. Geen motivatiebrief
+            nodig.
           </p>
         </div>
       </section>
@@ -153,7 +154,7 @@ export default async function VacaturePage({ params }: { params: Promise<{ slug:
                 </div>
               </div>
               <p className="note">
-                Vragen vooraf? Bel of mail Mitchel gerust. Binnen twee werkdagen reactie.
+                Vragen vooraf? Bel of mail {recVoornaam} gerust. Binnen twee werkdagen reactie.
               </p>
             </div>
             <SollicitatieForm vacatureSlug={slug} vacatureTitel={v.functietitel} />
@@ -196,7 +197,7 @@ export default async function VacaturePage({ params }: { params: Promise<{ slug:
               <div className="step" key={s.num}>
                 <div className="num">{s.num}</div>
                 <h3>{s.titel}</h3>
-                <p>{s.p}</p>
+                <p>{s.p.replace("{recruiter}", recVoornaam)}</p>
               </div>
             ))}
           </div>

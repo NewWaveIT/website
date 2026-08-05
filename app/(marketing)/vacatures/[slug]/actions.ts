@@ -2,6 +2,7 @@
 
 import { createClient } from "@/lib/supabase/server";
 import { sendInterneNotificatie, sendSollicitatieBevestiging } from "@/lib/email";
+import { getContactpersoon } from "@/lib/team-data";
 
 type DbClient = Awaited<ReturnType<typeof createClient>>;
 
@@ -160,16 +161,20 @@ export async function submitSollicitatie(
     adminPath: "/admin/sollicitaties",
   });
 
+  // Recruitment-contactpersoon (dynamisch), voor een persoonlijke ondertekening.
+  const rec = await getContactpersoon("recruitment");
+  const recVoornaam = (rec?.naam || "Mitchel Wallaart").split(" ")[0] || "Mitchel";
+
   // Bevestiging naar de sollicitant zelf (fail-safe).
   await sendSollicitatieBevestiging({
     to: email,
     naam,
     vacatureTitel: vacatureTitel || "Open sollicitatie",
+    contactVoornaam: recVoornaam,
   });
 
   return {
     ok: true,
-    message:
-      "Bedankt — je sollicitatie staat bij ons binnen. Je ontvangt zo een bevestiging per mail, en je hoort binnen twee werkdagen van ons, meestal van Mitchel zelf.",
+    message: `Bedankt — je sollicitatie staat bij ons binnen. Je ontvangt zo een bevestiging per mail, en je hoort binnen twee werkdagen van ons, meestal van ${recVoornaam} zelf.`,
   };
 }
