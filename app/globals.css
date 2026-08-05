@@ -556,7 +556,7 @@ footer.site-footer {
   padding-bottom: var(--space-8);
   border-bottom: 1px solid var(--border-dark);
 }
-.foot-top h5 {
+.foot-top h2 {
   font-family: var(--font-mono);
   text-transform: uppercase;
   letter-spacing: var(--tracking-kicker);

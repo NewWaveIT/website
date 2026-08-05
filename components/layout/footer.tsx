@@ -21,7 +21,7 @@ export function Footer() {
             </p>
           </div>
           <div>
-            <h5>Sectoren</h5>
+            <h2>Sectoren</h2>
             {FOOTER_SECTOREN.map((link) => (
               <Link key={link.href} href={link.href}>
                 {link.label}
@@ -29,7 +29,7 @@ export function Footer() {
             ))}
           </div>
           <div>
-            <h5>Bedrijf</h5>
+            <h2>Bedrijf</h2>
             {FOOTER_BEDRIJF.map((link) => (
               <Link key={link.href} href={link.href}>
                 {link.label}
@@ -37,7 +37,7 @@ export function Footer() {
             ))}
           </div>
           <div>
-            <h5>Contact</h5>
+            <h2>Contact</h2>
             <a href="mailto:hello@thenewwaveit.com">hello@thenewwaveit.com</a>
             <a
               href="https://www.linkedin.com/company/the-new-wave-it"

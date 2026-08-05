@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { preload } from "react-dom";
 import Link from "next/link";
 import Image from "next/image";
 import {
@@ -41,6 +42,9 @@ const jsonLd = {
 export const revalidate = 300;
 
 export default async function HomePage() {
+  // De hero-achtergrond is een CSS-background (niet vindbaar in de HTML). Vroeg
+  // preloaden helpt de LCP: de browser start de download meteen i.p.v. na de CSS.
+  preload("/assets/brand/wave-badge-espresso.webp", { as: "image", fetchPriority: "high" });
   const t = await getPagina("home");
   const cases = (await getKlantverhalen()).map((k) => ({
     slug: k.slug,
