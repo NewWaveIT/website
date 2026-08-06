@@ -222,7 +222,7 @@ function aiLayerHtml(s: Scene): string {
   const smallArrow = `<div style="display:flex;align-items:center;width:30px;height:56px;"><div style="flex:1;height:1.5px;background:#6B5B42;"></div><div style="width:0;height:0;border-top:4px solid transparent;border-bottom:4px solid transparent;border-left:6px solid #6B5B42;"></div></div>`;
 
   return `
-  <div style="flex-shrink:0;position:relative;background:#1F1810;border-top:1px solid #382C1F;padding:14px 22px 18px;overflow:hidden;">
+  <div data-ailayer="1" style="flex-shrink:0;position:relative;background:#1F1810;border-top:1px solid #382C1F;padding:14px 22px 18px;overflow:hidden;">
     <div style="position:relative;z-index:2;display:flex;align-items:center;gap:9px;margin-bottom:14px;background:#1F1810;">
       <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#F15822;white-space:nowrap;">AI-uitbreiding</span>
       <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#7E6E52;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">op ${s.aiHook}</span>
@@ -285,7 +285,7 @@ function rightHtml(s: Scene): string {
         <span style="font-family:'Courier New',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#9A8B73;white-space:nowrap;">Run locally</span>
       </div>
     </div>
-    <div style="position:relative;flex:1;background:#241C13;background-image:radial-gradient(#372B1D 1px,transparent 1px);background-size:18px 18px;overflow:hidden;">
+    <div data-canvas="1" style="position:relative;flex:1;background:#241C13;background-image:radial-gradient(#372B1D 1px,transparent 1px);background-size:18px 18px;overflow:hidden;">
       <div style="position:absolute;left:22px;top:16px;display:flex;align-items:center;gap:8px;padding:6px 12px;background:#2B2116;border:1px solid #3E3122;border-radius:4px;z-index:2;"><span style="width:7px;height:7px;border-radius:2px;background:#F15822;"></span><span style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.1em;color:#AC9D85;white-space:nowrap;">${s.flow}</span></div>
       <div data-flow="1" style="position:absolute;left:22px;top:62%;transform-origin:left center;transform:translateY(-50%) scale(.62);display:flex;flex-direction:column;align-items:flex-start;width:max-content;">
         <div style="display:flex;align-items:center;">${nodesHtml(s)}</div>
@@ -317,7 +317,7 @@ function leftHtml(s: Scene): string {
     <div role="img" aria-label="${s.sector}" style="position:absolute;inset:0;background-image:url(/assets/sectoren/${PHOTO[s.photo]}.webp);background-size:cover;background-position:center;filter:grayscale(.55) contrast(1.05) brightness(.62);animation:hsPhotoIn 1.6s cubic-bezier(.16,.8,.24,1) both;"></div>
     <div style="position:absolute;inset:0;background:#2E251A;mix-blend-mode:color;opacity:.45;"></div>
     <div style="position:absolute;inset:0;background:linear-gradient(100deg,rgba(46,37,26,.92) 0%,rgba(46,37,26,.72) 45%,rgba(46,37,26,.55) 100%);"></div>
-    <div class="hs-copy" style="position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;padding:26px 56px 26px 48px;box-sizing:border-box;">
+    <div class="hs-copy" data-copy="1" style="position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;padding:26px 56px 26px 48px;box-sizing:border-box;">
       <div style="display:flex;flex-wrap:wrap;align-items:baseline;gap:0 9px;font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.16em;text-transform:uppercase;margin-bottom:clamp(14px,2.6vh,26px);">
         <span style="color:#F15822;">Business-specialist in</span>${kicker}
       </div>
@@ -331,7 +331,7 @@ function leftHtml(s: Scene): string {
         </a>
       </div>
     </div>
-    <div class="hs-realrow hs-anim-row" style="position:absolute;left:48px;bottom:34px;right:56px;display:flex;align-items:baseline;gap:14px;animation-duration:.8s;">
+    <div class="hs-realrow hs-anim-row" data-caption="1" style="position:absolute;left:48px;bottom:34px;right:56px;display:flex;align-items:baseline;gap:14px;animation-duration:.8s;">
       <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#F15822;white-space:nowrap;">${s.sector}</span>
       <span style="font-size:15px;color:#AC9D85;">${s.real}</span>
     </div>
@@ -340,8 +340,8 @@ function leftHtml(s: Scene): string {
 
 function contentHtml(s: Scene): string {
   return `
-  <div class="hs-left" style="position:absolute;left:0;top:0;width:62%;height:100%;overflow:hidden;background:#2E251A;">${leftHtml(s)}</div>
-  <div class="hs-right" style="position:absolute;right:0;top:0;width:38%;height:100%;background:#241C13;overflow:hidden;">${rightHtml(s)}</div>`;
+  <div class="hs-left" data-left="1" style="position:absolute;left:0;top:0;width:62%;height:100%;overflow:hidden;background:#2E251A;">${leftHtml(s)}</div>
+  <div class="hs-right" data-right="1" style="position:absolute;right:0;top:0;width:38%;height:100%;background:#241C13;overflow:hidden;">${rightHtml(s)}</div>`;
 }
 
 export function HeroSplit() {
@@ -385,9 +385,23 @@ export function HeroSplit() {
   }, []);
 
   // Schaal de microflow zodat 'ie past, na elke scene-wissel en bij resize.
+  // Een ResizeObserver op het (zwevende) systeempaneel houdt de flow passend als
+  // dat paneel op tablet/telefoon van formaat verandert.
   useEffect(() => {
     const raf = requestAnimationFrame(fitFlow);
-    return () => cancelAnimationFrame(raf);
+    const root = contentRef.current;
+    let ro: ResizeObserver | undefined;
+    if (root && typeof ResizeObserver !== "undefined") {
+      ro = new ResizeObserver(() => fitFlow());
+      const right = root.querySelector("[data-right]");
+      const flowParent = root.querySelector<HTMLElement>('[data-flow="1"]')?.parentElement;
+      if (right) ro.observe(right);
+      if (flowParent) ro.observe(flowParent);
+    }
+    return () => {
+      cancelAnimationFrame(raf);
+      ro?.disconnect();
+    };
   }, [i, fitFlow]);
   useEffect(() => {
     window.addEventListener("resize", fitFlow);
@@ -406,6 +420,7 @@ export function HeroSplit() {
     >
       <div
         className="hs-split"
+        data-hero="1"
         style={{ position: "relative", minHeight: 520, background: "#2E251A", overflow: "hidden" }}
       >
         <div key={i} ref={contentRef} dangerouslySetInnerHTML={{ __html: contentHtml(s) }} />
@@ -413,6 +428,7 @@ export function HeroSplit() {
         {/* Oranje naad + golfsweep over de scheiding */}
         <div
           className="hs-seam"
+          data-divider="1"
           style={{
             position: "absolute",
             left: "62%",
@@ -447,6 +463,7 @@ export function HeroSplit() {
         {/* Voortgangsstreepjes per sector */}
         <div
           className="hs-ticks"
+          data-ticks="1"
           style={{ position: "absolute", left: 48, top: 34, display: "flex", gap: 7, zIndex: 3 }}
         >
           {SCENES.map((sc, n) => (
