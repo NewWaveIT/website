@@ -1,0 +1,78 @@
+# CLAUDE.md
+
+Context voor AI-agents (Claude Code) die aan deze codebase werken. De canonieke
+conventies staan in **[`CONTRIBUTING.md`](CONTRIBUTING.md)** — lees die eerst. Dit
+bestand vult aan met een snelle map, de werkwijze en de valkuilen die je hier niet
+uit de code afleidt.
+
+## Snel oriënteren
+
+| Wat                     | Waar                                                                                                            |
+| ----------------------- | --------------------------------------------------------------------------------------------------------------- |
+| Publieke pagina         | `app/(marketing)/<pagina>/page.tsx` + eigen `<pagina>.css` (regels gescoped onder `.p-<pagina>` of `.home`)     |
+| Admin/CMS               | `app/admin/` — achter Supabase-auth; editor is schemagedreven                                                   |
+| Contentschema (8 typen) | `lib/cms/schema.ts` (`FIELD_SCHEMAS`) — nieuw veld = hier toevoegen                                             |
+| Publieke datalaag       | `lib/<type>-data.ts` → `getPublishedContent(type)` (`status='live'`) met fallback op de seed in `lib/<type>.ts` |
+| Server actions          | co-located `actions.ts` (o.a. contact, vacatures, admin/*)                                                      |
+| Designtokens            | `app/globals.css` `:root` — kleuren, spacing, type                                                              |
+| E-mail                  | `lib/email.ts` (Resend, fail-safe, 4 huisstijltemplates)                                                        |
+| Migraties               | `supabase/migrations/` (chronologisch geprefixt)                                                                |
+
+## Werkwijze bij elke wijziging
+
+- **Vóór commit altijd:** `npx tsc --noEmit`, `npx eslint .`, `npm run format:check`.
+  Dit is exact de CI-gate _"Typecheck · Lint · Format · Build"_ — rood daar blokkeert de PR.
+- Commit met een heldere NL-boodschap. **Push alleen als de gebruiker erom vraagt.**
+- **Hergebruik bestaande patronen, tokens en CSS exact.** Introduceer geen nieuwe kleur,
+  stijl of component-variant als er al één bestaat — consistentie boven creativiteit.
+
+## Kernpatronen
+
+- **Alleen designtokens voor kleur.** Nooit hex hardcoden; gebruik de CSS-vars uit
+  `globals.css`. AA-veilig oranje voor tekst is `--orange-text` (#c2410c), **niet**
+  `orange-600`. Witte tekst op flame (`#f15822`) haalt bewust geen AA — dat is een
+  brandkeuze, niet per ongeluk.
+- **Page-CSS-scoping.** Elke marketingpagina importeert een eigen `.css` met regels
+  onder een pagina-rootclass. Gedeelde component-CSS staat onder de eigen componentclass
+  en wordt door de component zelf geïmporteerd (bv. `components/vacatures/sollicitatie-form.css`).
+- **Formulieren.** Server action + `useActionState`; validatie verzamelt **álle** fouten
+  tegelijk → `{ ok, message, errors }`. De client toont `aria-invalid` + `.field-err` en
+  zet focus op het eerste foute veld. Honeypot-veld heet `website`; `noValidate` op het
+  `<form>`. Alles fail-safe.
+- **CMS.** Editor genereert velden uit `FIELD_SCHEMAS` (`panel:"side"` = instellingenrail).
+  Publieke pagina's lezen live-rijen met fallback op de seed; `saveContent` revalideert de
+  publieke paden.
+- **Auth/RLS.** Middleware redirect ongeauthenticeerde `/admin` → login; `requireAdmin()`
+  (`lib/dal.ts`) in élke admin-action en -pagina. Anon mag alleen `insert` op de
+  formuliertabellen; de service-role-client (`lib/supabase/admin.ts`) is uitsluitend voor
+  gebruikersbeheer.
+- **E-mail.** `lib/email.ts` gooit nooit en slaat over zonder `RESEND_API_KEY`; aanroepen
+  gebeuren ná een geslaagde DB-insert, zodat een mailfout een inzending nooit breekt.
+- **Dynamische contactpersonen.** Teamleden hebben een `contactrol` (Sales/Recruitment);
+  `getContactpersoon(rol)` levert de juiste persoon voor contact- en vacaturepagina's.
+- **Afbeeldingen.** Uitsluitend WebP in `public/assets/` (geen PNG-foto's meer).
+
+## Omgeving & valkuilen
+
+- **OS: Windows + PowerShell.** Draai de dev-server via de browser-preview-tools op poort
+  3000, niet via een losse shell.
+- **Lint = ESLint flat config** (`eslint.config.mjs`) met `ignores` voor gegenereerde
+  bestanden (`.next`, `next-env.d.ts`, …). Ga **niet** terug naar `next lint` (deprecated,
+  breekt CI).
+- **Supabase-MCP kan naar een ánder project/organisatie wijzen.** Controleer met
+  `list_projects`; de TNW-database is niet altijd via MCP bereikbaar. Verifieer DB-zaken via
+  de Supabase SQL Editor of een echte formuliertest op de live/preview-site.
+- **Nieuwe kolom/bucket = migratie** in `supabase/migrations/` **én** draaien
+  (`supabase db push` of SQL Editor). Publieke pagina's lezen alleen `status='live'`.
+- **De admin zit achter Supabase-auth** — lokaal zonder geldige key niet in te loggen; test
+  admin-flows op staging/preview.
+- **Datums** krijgen altijd `{ timeZone: "Europe/Amsterdam" }` (anders hydration-mismatch).
+
+## Deploy-randvoorwaarden (env in Vercel)
+
+- `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY`
+- `NEXT_PUBLIC_SITE_URL` = `https://www.thenewwaveit.com` (mails gebruiken dit voor logo + links)
+- `RESEND_API_KEY` (+ geverifieerd domein), `MAIL_FROM` (notificaties@), `MAIL_FROM_PUBLIC`
+  (hello@), `NOTIFY_EMAIL` (people@)
+- **Signup uit** in Supabase Auth: elke ingelogde gebruiker is volledig admin — gebruikers
+  alleen aanmaken via `/admin/gebruikers`.
