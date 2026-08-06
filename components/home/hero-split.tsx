@@ -421,7 +421,7 @@ export function HeroSplit() {
       <div
         className="hs-split"
         data-hero="1"
-        style={{ position: "relative", minHeight: 520, background: "#2E251A", overflow: "hidden" }}
+        style={{ position: "relative", background: "#2E251A", overflow: "hidden" }}
       >
         <div key={i} ref={contentRef} dangerouslySetInnerHTML={{ __html: contentHtml(s) }} />
 

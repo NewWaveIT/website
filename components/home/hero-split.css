@@ -55,6 +55,12 @@
   animation: hsRowIn 0.5s cubic-bezier(0.16, 0.8, 0.24, 1) both;
 }
 
+/* Schermvullend: de hero vult de resterende viewport onder de sticky header
+   (76px nav + ~30px golf ≈ 106px), met minstens 520px op korte schermen. */
+.hs [data-hero] {
+  min-height: max(520px, calc(100dvh - 106px));
+}
+
 /* Laptop: krappere split 66 / 34 met smallere marges. */
 @media (max-width: 1280px) {
   .hs [data-left] {
