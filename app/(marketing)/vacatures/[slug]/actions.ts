@@ -1,7 +1,7 @@
 "use server";
 
 import { createClient } from "@/lib/supabase/server";
-import { sendInterneNotificatie, sendSollicitatieBevestiging } from "@/lib/email";
+import { sendSollicitatieNotificatie, sendSollicitatieBevestiging } from "@/lib/email";
 import { getContactpersoon } from "@/lib/team-data";
 
 type DbClient = Awaited<ReturnType<typeof createClient>>;
@@ -144,35 +144,41 @@ export async function submitSollicitatie(
     };
   }
 
+  const vacatureNaam = vacatureTitel || vacatureSlug || "Open sollicitatie";
+  const bijlagen = [cvPath ? "cv" : null, motivatiePath ? "motivatiebrief" : null].filter(Boolean);
+  const cvStatus = bijlagen.length
+    ? `Bijgevoegd: ${bijlagen.join(" + ")}`
+    : link
+      ? "Link meegestuurd"
+      : "Niet bijgevoegd";
+  let motivatieTekst =
+    motivatie || (motivatiePath ? "Motivatie als bestand bijgevoegd — zie de admin." : "");
+  if (link) motivatieTekst += `${motivatieTekst ? "\n\n" : ""}Link: ${link}`;
+  if (!motivatieTekst) motivatieTekst = "—";
+
   // Interne notificatie (fail-safe: breekt de sollicitatie nooit).
-  await sendInterneNotificatie({
-    subject: `Nieuwe sollicitatie: ${naam}${vacatureTitel ? ` — ${vacatureTitel}` : ""}`,
-    heading: "Nieuwe sollicitatie",
-    rows: [
-      { label: "Naam", value: naam },
-      { label: "E-mail", value: email },
-      { label: "Telefoon", value: telefoon },
-      { label: "Vacature", value: vacatureTitel || vacatureSlug || "Open sollicitatie" },
-      { label: "Motivatie", value: motivatie },
-      { label: "Motivatie-bestand", value: motivatiePath ? "Bijgevoegd — open via de admin" : "" },
-      { label: "LinkedIn / portfolio", value: link },
-      { label: "CV", value: cvPath ? "Bijgevoegd — open via de admin" : "Niet bijgevoegd" },
-    ],
-    adminPath: "/admin/sollicitaties",
+  await sendSollicitatieNotificatie({
+    naam,
+    email,
+    telefoon,
+    vacature: vacatureNaam,
+    cvStatus,
+    motivatie: motivatieTekst,
   });
 
-  // Recruitment-contactpersoon (dynamisch), voor een persoonlijke ondertekening.
+  // Recruitment-contactpersoon (dynamisch): reply-to op de bevestiging + ondertekening.
   const rec = await getContactpersoon("recruitment");
-  const recVoornaam = (rec?.naam || "Mitchel Wallaart").split(" ")[0] || "Mitchel";
 
   // Bevestiging naar de sollicitant zelf (fail-safe).
   await sendSollicitatieBevestiging({
     to: email,
-    naam,
-    vacatureTitel: vacatureTitel || "Open sollicitatie",
-    contactVoornaam: recVoornaam,
+    voornaam: naam.split(" ")[0] || naam,
+    vacature: vacatureNaam,
+    cvStatus,
+    replyTo: rec?.email || undefined,
   });
 
+  const recVoornaam = (rec?.naam || "Mitchel Wallaart").split(" ")[0] || "Mitchel";
   return {
     ok: true,
     message: `Bedankt — je sollicitatie staat bij ons binnen. Je ontvangt zo een bevestiging per mail, en je hoort binnen twee werkdagen van ons, meestal van ${recVoornaam} zelf.`,
