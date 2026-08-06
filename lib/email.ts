@@ -247,7 +247,7 @@ ${GOLFBALK}
   <div style="height:16px;line-height:16px;font-size:0;">&nbsp;</div>
   Bedankt voor je sollicitatie op <strong style="color:#2E251A;">${escapeHtml(a.vacature)}</strong>. We hebben alles goed ontvangen.
   <div style="height:16px;line-height:16px;font-size:0;">&nbsp;</div>
-  Een van ons leest je verhaal persoonlijk. Geen algoritme, geen standaardafwijzing: je hoort <strong style="color:#2E251A;">binnen vijf werkdagen</strong> van ons, ook als het deze keer geen match is.
+  We nemen 'm zorgvuldig door en je hoort <strong style="color:#2E251A;">binnen vijf werkdagen</strong> van ons — ook als het deze keer geen match is.
 </td></tr>
 <tr><td style="padding:28px 36px 0 36px;">
   <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="width:100%;border-collapse:collapse;background:#F4F1EA;">
@@ -341,9 +341,9 @@ ${GOLFBALK}
 <tr><td style="padding:36px 36px 4px 36px;font-family:Arial,Helvetica,sans-serif;font-size:16px;color:#4E4030;mso-line-height-rule:exactly;line-height:27px;">
   Hoi ${escapeHtml(a.voornaam)},
   <div style="height:16px;line-height:16px;font-size:0;">&nbsp;</div>
-  Bedankt voor je bericht. We hebben je aanvraag over <strong style="color:#2E251A;">${escapeHtml(onderwerp)}</strong> ontvangen en leggen hem direct bij de juiste collega neer.
+  Bedankt voor je bericht. We hebben je aanvraag over <strong style="color:#2E251A;">${escapeHtml(onderwerp)}</strong> ontvangen en leggen 'm bij de juiste collega neer.
   <div style="height:16px;line-height:16px;font-size:0;">&nbsp;</div>
-  Je hoort <strong style="color:#2E251A;">binnen één werkdag</strong> van ons — geen offerteformulier, gewoon een gesprek over wat er speelt.
+  Je hoort <strong style="color:#2E251A;">binnen één werkdag</strong> van ons.
 </td></tr>
 <tr><td style="padding:28px 36px 0 36px;">
   <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="width:100%;border-collapse:collapse;background:#F4F1EA;">
