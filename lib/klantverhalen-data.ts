@@ -1,5 +1,5 @@
 import "server-only";
-import { getPublishedContent, type ContentRow } from "@/lib/cms/content";
+import { getPublishedContent, fotoWebp, type ContentRow } from "@/lib/cms/content";
 import { sanitizeLite } from "@/lib/cms/sanitize";
 import { KLANTVERHALEN, KLANTVERHAAL_MAP, type Klantverhaal, type KPI } from "@/lib/klantverhalen";
 
@@ -30,7 +30,7 @@ function mapRow(row: ContentRow): Klantverhaal {
     metric: s("metric"),
     cardTitel: s("cardTitel") || row.titel,
     org: s("org"),
-    image: s("image") || "/assets/photos/team-presentatie-breed.webp",
+    image: fotoWebp(s("image")) || "/assets/photos/team-presentatie-breed.webp",
     tag: s("tag") || s("sector"),
     h1: s("h1") || row.titel,
     intro: s("intro"),

@@ -1,5 +1,5 @@
 import "server-only";
-import { getPublishedContent, type ContentRow } from "@/lib/cms/content";
+import { getPublishedContent, fotoWebp, type ContentRow } from "@/lib/cms/content";
 import { ARTIKELEN, ARTIKEL_MAP, type Artikel } from "@/lib/inzichten";
 import { getTeamleden } from "@/lib/team-data";
 import { sanitizeFull } from "@/lib/cms/sanitize";
@@ -35,7 +35,7 @@ function fmtDatum(d: string): string {
 function mapRow(row: ContentRow, resolve: AuthorResolver): Artikel {
   const d = row.data as Record<string, unknown>;
   const str = (k: string) => (typeof d[k] === "string" ? (d[k] as string) : "");
-  const inhoud = str("inhoud");
+  const inhoud = fotoWebp(str("inhoud"));
   const isHtml = /<[a-z][\s\S]*>/i.test(inhoud);
   const discipline = str("discipline") || "Algemeen";
   const sector = str("sector") || "Algemeen";
@@ -55,8 +55,8 @@ function mapRow(row: ContentRow, resolve: AuthorResolver): Artikel {
     datum: fmtDatum(str("datum")),
     leestijd: str("leestijd"),
     auteur: auteur.naam,
-    auteurFoto: auteur.foto,
-    image: str("cover") || "/assets/photos/team-presentatie-breed.webp",
+    auteurFoto: fotoWebp(auteur.foto),
+    image: fotoWebp(str("cover")) || "/assets/photos/team-presentatie-breed.webp",
     intro: str("samenvatting"),
     inhoudHtml: isHtml ? sanitizeFull(inhoud) : undefined,
     body:

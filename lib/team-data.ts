@@ -1,5 +1,5 @@
 import "server-only";
-import { getPublishedContent, type ContentRow } from "@/lib/cms/content";
+import { getPublishedContent, fotoWebp, type ContentRow } from "@/lib/cms/content";
 import { TEAMLEDEN, type Teamlid } from "@/lib/team";
 
 function mapRow(row: ContentRow): Teamlid {
@@ -9,7 +9,7 @@ function mapRow(row: ContentRow): Teamlid {
     slug: row.slug,
     naam: row.titel,
     rol: s("rol"),
-    foto: s("foto") || "/assets/photos/portret-blauw.webp",
+    foto: fotoWebp(s("foto")) || "/assets/photos/portret-blauw.webp",
     bio: s("bio"),
     contactrol: s("contactrol"),
     telefoon: s("telefoon"),

@@ -33,6 +33,16 @@ export interface ContentRow<T = Record<string, unknown>> {
   bewerkt_door: string | null;
 }
 
+/**
+ * Normaliseert oude .png-verwijzingen naar foto's naar hun .webp-tweeling.
+ * De .png-originelen in /assets/photos zijn verwijderd (alles is WebP); bestaande
+ * CMS-content kan nog naar .png wijzen. Werkt op een kaal pad én op HTML (richtext).
+ * Laat storage-URL's en logo's ongemoeid.
+ */
+export function fotoWebp(s: string | null | undefined): string {
+  return (s ?? "").replace(/(\/assets\/photos\/[^\s"')]+)\.png/gi, "$1.webp");
+}
+
 async function count(table: string, onlyOpen?: string): Promise<number> {
   try {
     const supabase = await createClient();
