@@ -64,11 +64,11 @@
   --text-strong: var(--ink-900);
   --text-body: var(--ink-800);
   --text-muted: var(--ink-600);
-  --text-subtle: var(--ink-500);
+  --text-subtle: #7a6a54; /* AA op licht (≥4.6:1); donkerder dan ink-500 */
   --text-on-primary: var(--white);
   --text-on-dark: var(--eggshell);
   --text-on-dark-muted: var(--ink-300);
-  --text-link: var(--orange-600);
+  --text-link: var(--orange-text); /* AA-veilig oranje (#c2410c, 5.18:1 op wit) */
   --text-link-hover: var(--orange-700);
 
   --surface-page: var(--paper);
@@ -587,8 +587,15 @@ footer.site-footer {
   align-items: center;
   padding-top: var(--space-5);
   font-size: var(--text-xs);
-  color: var(--ink-500);
+  color: var(--ink-400); /* AA op donker (≥5.6:1) */
   font-family: var(--font-mono);
+}
+/* Op de donkere footer heeft de linktekst een lichtere oranje nodig voor AA. */
+.foot-bottom a {
+  color: var(--orange-400);
+}
+.foot-bottom a:hover {
+  color: var(--orange-300);
 }
 
 /* CTA band */
@@ -613,7 +620,7 @@ footer.site-footer {
 }
 .cta .btn-on {
   background: var(--white);
-  color: var(--color-primary);
+  color: var(--orange-text); /* AA-veilig oranje op wit (5.18:1) */
   border-color: var(--white);
   font-size: var(--text-md);
   padding: 15px 30px;

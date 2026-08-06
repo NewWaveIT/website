@@ -129,5 +129,8 @@ beveiligd met Supabase Auth via `middleware.ts`.
 - [x] Contact met Supabase-server action
 - [x] Geanimeerde hero-vignettes (sector-hero) + SEO (sitemap/robots/JSON-LD)
 - [x] Logos/brand-assets gecomprimeerd geplaatst
-- [x] 12 teamfoto's geplaatst + gecomprimeerd in `public/assets/photos/`
-- [ ] CMS/admin: content beheren + inzendingen bekijken
+- [x] Teamfoto's als geoptimaliseerde WebP in `public/assets/photos/`
+- [x] CMS/admin: content beheren (8 typen) + inzendingen als kanban
+- [x] Sollicitatieformulier (cv/motivatie-upload) → privébucket + admin
+- [x] Transactionele mail in huisstijl via Resend (notificatie + bevestiging)
+- [x] Dynamische contactpersonen (contactrol sales/recruitment op teamleden)
