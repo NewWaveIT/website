@@ -1,0 +1,89 @@
+/* Hero split-animatie — geport uit het Claude Design-project
+   (ui_kits/website/Hero Split Animatie.dc.html). Links een sectorfoto +
+   merkboodschap, rechts een gestileerde Mendix-microflow die door vijf sectoren
+   cyclet. Structuur staat grotendeels inline in hero-split.tsx (trouw aan het
+   design); hier alleen keyframes, responsive gedrag en reduced-motion. */
+
+@keyframes hsRowIn {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes hsPhotoIn {
+  from {
+    opacity: 0;
+    transform: scale(1.08);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+@keyframes hsSweep {
+  0% {
+    transform: translateX(-160%) skewX(-12deg);
+  }
+  100% {
+    transform: translateX(1240%) skewX(-12deg);
+  }
+}
+@keyframes hsBar {
+  from {
+    width: 0%;
+  }
+  to {
+    width: 72%;
+  }
+}
+@keyframes hsBlink {
+  0%,
+  45% {
+    opacity: 0;
+  }
+  50%,
+  100% {
+    opacity: 1;
+  }
+}
+
+.hs-anim-row {
+  animation: hsRowIn 0.5s cubic-bezier(0.16, 0.8, 0.24, 1) both;
+}
+
+/* Onder de desktopbreedte (zelfde grens als de site-nav): het rechter
+   systeempaneel is te dicht voor kleine schermen — verberg het en laat de
+   fotokolom de volle breedte vullen. */
+@media (max-width: 1040px) {
+  .hs-split {
+    min-height: 460px !important;
+  }
+  .hs-left {
+    width: 100% !important;
+  }
+  .hs-right,
+  .hs-seam,
+  .hs-sweep {
+    display: none !important;
+  }
+}
+@media (max-width: 640px) {
+  .hs-copy {
+    padding: 24px 22px !important;
+  }
+  .hs-realrow {
+    left: 22px !important;
+    right: 22px !important;
+  }
+}
+
+/* Toegankelijkheid: geen bewegende beelden voor wie dat uitzet. */
+@media (prefers-reduced-motion: reduce) {
+  .hs * {
+    animation: none !important;
+  }
+}

@@ -2,16 +2,8 @@ import type { Metadata } from "next";
 import { preload } from "react-dom";
 import Link from "next/link";
 import Image from "next/image";
-import {
-  ArrowRight,
-  Phone,
-  Award,
-  Building2,
-  Truck,
-  Landmark,
-  HeartPulse,
-  Factory,
-} from "lucide-react";
+import { ArrowRight, Award } from "lucide-react";
+import { HeroSplit } from "@/components/home/hero-split";
 import { HomeInteractions } from "@/components/home/home-interactions";
 import { SectorSplit } from "@/components/sector-split";
 import { ClientLogos, AWARD } from "@/components/home/client-logos";
@@ -65,49 +57,7 @@ export default async function HomePage() {
       />
 
       {/* Hero */}
-      <section className="hero">
-        <div className="hero-bg" />
-        <canvas className="hero-wave" aria-hidden="true" />
-        <div className="wrap-wide">
-          <div className="hero-inner">
-            <div className="kicker on-dark">{t.heroKicker}</div>
-            <h1>
-              {t.heroTitleStart}
-              <span className="accent">{t.heroAccent}</span>.
-            </h1>
-            <p className="lead">{t.heroLead}</p>
-            <div className="hero-actions">
-              <Link href="/contact" className="btn btn-primary">
-                {t.heroCtaPrimair} <ArrowRight />
-              </Link>
-              <a href="tel:+31610751254" className="play">
-                <span className="circle">
-                  <Phone />
-                </span>{" "}
-                Bel 06–10751254
-              </a>
-            </div>
-            <div className="sector-chips">
-              <span className="lab">Kies jouw sector</span>
-              <Link href="/sectoren/publieke-sector" className="chip">
-                <Building2 /> Publieke sector
-              </Link>
-              <Link href="/sectoren/mobiliteit" className="chip">
-                <Truck /> Mobiliteit
-              </Link>
-              <Link href="/sectoren/banken" className="chip">
-                <Landmark /> Banken
-              </Link>
-              <Link href="/sectoren/zorg" className="chip">
-                <HeartPulse /> Zorg
-              </Link>
-              <Link href="/sectoren/manufacturing" className="chip">
-                <Factory /> Manufacturing
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
+      <HeroSplit />
 
       {/* Klantenband */}
       <div className="proof">
