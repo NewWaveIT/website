@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import "./hero-split.css";
 
 /* Hero split-animatie — geport uit ui_kits/website/Hero Split Animatie.dc.html.
@@ -313,7 +313,6 @@ function leftHtml(s: Scene): string {
   }).join("");
 
   return `
-  <div style="position:absolute;inset:0;overflow:hidden;background:#2E251A;">
     <div role="img" aria-label="${s.sector}" style="position:absolute;inset:0;background-image:url(/assets/sectoren/${PHOTO[s.photo]}.webp);background-size:cover;background-position:center;filter:grayscale(.55) contrast(1.05) brightness(.62);animation:hsPhotoIn 1.6s cubic-bezier(.16,.8,.24,1) both;"></div>
     <div style="position:absolute;inset:0;background:#2E251A;mix-blend-mode:color;opacity:.45;"></div>
     <div style="position:absolute;inset:0;background:linear-gradient(100deg,rgba(46,37,26,.92) 0%,rgba(46,37,26,.72) 45%,rgba(46,37,26,.55) 100%);"></div>
@@ -334,8 +333,7 @@ function leftHtml(s: Scene): string {
     <div class="hs-realrow hs-anim-row" data-caption="1" style="position:absolute;left:48px;bottom:34px;right:56px;display:flex;align-items:baseline;gap:14px;animation-duration:.8s;">
       <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#F15822;white-space:nowrap;">${s.sector}</span>
       <span style="font-size:15px;color:#AC9D85;">${s.real}</span>
-    </div>
-  </div>`;
+    </div>`;
 }
 
 function contentHtml(s: Scene): string {
@@ -388,7 +386,10 @@ export function HeroSplit() {
   // Een ResizeObserver op het (zwevende) systeempaneel houdt de flow passend als
   // dat paneel op tablet/telefoon van formaat verandert.
   useEffect(() => {
+    // Paint-onafhankelijk (setTimeout i.p.v. alleen rAF), zodat de fit ook draait
+    // wanneer de pagina niet actief compositeert.
     const raf = requestAnimationFrame(fitFlow);
+    const t = window.setTimeout(fitFlow, 60);
     const root = contentRef.current;
     let ro: ResizeObserver | undefined;
     if (root && typeof ResizeObserver !== "undefined") {
@@ -400,6 +401,7 @@ export function HeroSplit() {
     }
     return () => {
       cancelAnimationFrame(raf);
+      clearTimeout(t);
       ro?.disconnect();
     };
   }, [i, fitFlow]);
@@ -408,7 +410,9 @@ export function HeroSplit() {
     return () => window.removeEventListener("resize", fitFlow);
   }, [fitFlow]);
 
-  const s = SCENES[i]!;
+  // Memoïseer per scene: bij een sweep-re-render blijft de HTML (en dus de door
+  // fitFlow gezette schaal/branch-positie) staan; alleen een scene-wissel her-injecteert.
+  const html = useMemo(() => contentHtml(SCENES[i]!), [i]);
 
   return (
     <section
@@ -423,7 +427,7 @@ export function HeroSplit() {
         data-hero="1"
         style={{ position: "relative", background: "#2E251A", overflow: "hidden" }}
       >
-        <div key={i} ref={contentRef} dangerouslySetInnerHTML={{ __html: contentHtml(s) }} />
+        <div key={i} ref={contentRef} dangerouslySetInnerHTML={{ __html: html }} />
 
         {/* Oranje naad + golfsweep over de scheiding */}
         <div

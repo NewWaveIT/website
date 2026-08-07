@@ -95,11 +95,14 @@
     position: relative !important;
     width: 100% !important;
     height: auto !important;
+    /* Gewoon block dat met de copy meegroeit (copy/caption zijn directe kinderen);
+       de padding-bottom reserveert onderaan de ruimte voor het zwevende venster,
+       zodat de caption er nooit in valt. */
     min-height: 720px !important;
     box-sizing: border-box !important;
-    padding-bottom: 334px !important;
-    display: flex !important;
-    flex-direction: column !important;
+    display: block !important;
+    overflow: visible !important;
+    padding-bottom: 360px !important;
   }
   .hs [data-divider] {
     display: none !important;
@@ -133,8 +136,8 @@
   .hs [data-caption] {
     position: relative !important;
     inset: auto !important;
-    margin: auto 36px 18px 36px !important;
-    padding-top: 20px !important;
+    margin: 8px 36px 18px 36px !important;
+    padding-top: 0 !important;
   }
   .hs [data-ticks] {
     left: 36px !important;
@@ -146,7 +149,7 @@
 @media (max-width: 680px) {
   .hs [data-left] {
     min-height: 680px !important;
-    padding-bottom: 326px !important;
+    padding-bottom: 344px !important;
   }
   .hs [data-copy] {
     padding: 76px 24px 20px 24px !important;
@@ -165,7 +168,7 @@
     height: 290px !important;
   }
   .hs [data-caption] {
-    margin: auto 24px 18px 24px !important;
+    margin: 8px 24px 18px 24px !important;
     flex-wrap: wrap !important;
     gap: 4px 12px !important;
   }
