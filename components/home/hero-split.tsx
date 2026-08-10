@@ -1,13 +1,14 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import "./hero-split.css";
 
-/* Hero split-animatie — geport uit ui_kits/website/Hero Split Animatie.dc.html.
-   Links: sectorfoto + merkboodschap. Rechts: gestileerde Mendix-microflow met
-   AI-laag en statusbalk. Cyclet door vijf sectoren met een oranje golfsweep.
-   De structuur wordt per scene als HTML geïnjecteerd (trouw aan het inline-
-   design); de React-laag beheert de scene-index, de sweep en de fit-to-scale. */
+/* Hero split-animatie — geport uit ui_kits/website/Hero Split Animatie.dc.html
+   + Hero Schermformaten.dc.html. Full-bleed sectorfoto met een zwevend
+   "systeem"-venster (Mendix-microflow + compacte AI-regel) rechtsonder, dat
+   door vijf sectoren cyclet met een oranje golfsweep. De structuur wordt per
+   scene als HTML geïnjecteerd (trouw aan het inline-design); de React-laag
+   beheert de scene-index, de sweep en de fit-to-scale. */
 
 interface Scene {
   key: string;
@@ -23,7 +24,6 @@ interface Scene {
   ja: string;
   nee: string;
   aiHook: string;
-  ai: [string, string, string];
 }
 
 const PHOTO: Record<string, string> = {
@@ -49,7 +49,6 @@ const SCENES: Scene[] = [
     ja: "Commit  Overdracht",
     nee: "Show  Herstelactie",
     aiHook: "Commit Overdracht",
-    ai: ["Nieuw dossier", "Samenvatting", "Zorgdossier-tool"],
   },
   {
     key: "publiek",
@@ -65,7 +64,6 @@ const SCENES: Scene[] = [
     ja: "Change  Besluit",
     nee: "Create  Hersteltaak",
     aiHook: "Generate Besluitbrief",
-    ai: ["Aanvraag binnen", "Concept-besluit", "Regelgeving-tool"],
   },
   {
     key: "mobiliteit",
@@ -81,7 +79,6 @@ const SCENES: Scene[] = [
     ja: "Call  PlanRit",
     nee: "Create  Keuring",
     aiHook: "Call PlanRit",
-    ai: ["Melding monteur", "Ritvoorstel", "Planning-tool"],
   },
   {
     key: "manufacturing",
@@ -97,7 +94,6 @@ const SCENES: Scene[] = [
     ja: "Commit  Voorraad",
     nee: "Create  Afkeur",
     aiHook: "Kwaliteitscheck",
-    ai: ["Sensordata", "Storingsanalyse", "Onderhoud-tool"],
   },
   {
     key: "banken",
@@ -113,25 +109,24 @@ const SCENES: Scene[] = [
     ja: "Send  Offerte",
     nee: "Send  Afwijzing",
     aiHook: "Call RisicotoetsAPI",
-    ai: ["Klantvraag", "Risicoduiding", "Kredietdossier-tool"],
   },
 ];
 
 const KICKER = ["Publieke sector", "Mobiliteit", "Banken", "Zorg", "Manufacturing"];
-const CYCLE_MS = 5200;
+const CYCLE_MS = 6000;
 
 /* ---- HTML-bouwstenen (trouw aan het design) ---- */
 
-const arrow = (w = "40px", label = "") => `
-  <div style="position:relative;display:flex;align-items:center;width:${w};">
-    <div style="flex:1;height:1.5px;background:#6B5B42;"></div>
-    <div style="width:0;height:0;border-top:5px solid transparent;border-bottom:5px solid transparent;border-left:7px solid #6B5B42;"></div>
-    ${label ? `<span style="position:absolute;bottom:100%;left:50%;transform:translateX(-50%);margin-bottom:5px;font-family:'IBM Plex Mono',monospace;font-size:11px;color:#8B7B64;">${label}</span>` : ""}
+const arrow = (w = "28px", label = "") => `
+  <div data-conn="1" style="position:relative;display:flex;align-items:center;width:${w};">
+    <div data-connline="1" style="flex:1;height:1.5px;background:#6B5B42;"></div>
+    <div data-arrow="1" style="width:0;height:0;border-top:5px solid transparent;border-bottom:5px solid transparent;border-left:7px solid #6B5B42;"></div>
+    ${label ? `<span data-connlabel="1" style="position:absolute;bottom:100%;left:50%;transform:translateX(-50%);margin-bottom:5px;font-family:'IBM Plex Mono',monospace;font-size:11px;color:#8B7B64;">${label}</span>` : ""}
   </div>`;
 
 function nodesHtml(s: Scene): string {
   const pill = (label: string) => `
-    <div style="box-sizing:border-box;display:flex;align-items:center;gap:10px;height:48px;padding:0 20px 0 14px;background:#302518;border:1px solid #4E3F2C;border-radius:5px;box-shadow:0 1px 0 rgba(0,0,0,.25),inset 0 1px 0 rgba(255,253,249,.04);">
+    <div style="box-sizing:border-box;display:flex;align-items:center;gap:10px;height:48px;padding:0 15px 0 11px;background:#302518;border:1px solid #4E3F2C;border-radius:5px;box-shadow:0 1px 0 rgba(0,0,0,.25),inset 0 1px 0 rgba(255,253,249,.04);">
       <div style="width:20px;height:20px;flex-shrink:0;border-radius:4px;background:#F15822;opacity:.9;"></div>
       <span style="font-size:15px;line-height:1.15;white-space:nowrap;color:#F4F1EA;">${label}</span>
     </div>`;
@@ -140,13 +135,13 @@ function nodesHtml(s: Scene): string {
   const end = `<div style="width:30px;height:30px;box-sizing:border-box;border-radius:50%;background:#241C13;border:4px solid #4C8C62;"></div>`;
 
   const box = (inner: string, sub = "") => `
-    <div style="position:relative;display:flex;align-items:center;justify-content:center;height:70px;">
+    <div data-nodebox="1" style="position:relative;display:flex;align-items:center;justify-content:center;height:70px;">
       ${inner}
-      ${sub ? `<span style="position:absolute;bottom:100%;left:50%;transform:translateX(-50%);margin-bottom:4px;font-size:13px;line-height:1.2;white-space:nowrap;color:#C9BCA8;">${sub}</span>` : ""}
+      ${sub ? `<span data-sublabel="1" style="position:absolute;bottom:100%;left:50%;transform:translateX(-50%);margin-bottom:4px;font-size:13px;line-height:1.2;white-space:nowrap;color:#C9BCA8;">${sub}</span>` : ""}
     </div>`;
 
-  const cell = (inner: string, delay: number, conn = "") => `
-    <div class="hs-anim-row" style="display:flex;align-items:center;animation-delay:${delay.toFixed(2)}s;">${inner}${conn}</div>`;
+  const cell = (inner: string, delay: number) => `
+    <div data-nodeitem="1" class="hs-anim-row" style="display:flex;align-items:center;animation-delay:${delay.toFixed(2)}s;">${inner}</div>`;
 
   let d = 0.35;
   const step = () => {
@@ -158,7 +153,7 @@ function nodesHtml(s: Scene): string {
   return (
     cell(box(start) + arrow(), step()) +
     cell(box(pill(s.act)) + arrow(), step()) +
-    cell(box(diamond, s.decision) + arrow("40px", "ja"), step()) +
+    cell(box(diamond, s.decision) + arrow("28px", "ja"), step()) +
     cell(box(pill(s.ja)) + arrow(), step()) +
     cell(box(end), step())
   );
@@ -167,135 +162,66 @@ function nodesHtml(s: Scene): string {
 function branchHtml(s: Scene): string {
   return `
   <div data-branch="1" class="hs-anim-row" style="position:relative;display:flex;align-items:center;margin-top:42px;animation-delay:1.05s;">
-    <div style="position:absolute;left:0;bottom:100%;width:1.5px;height:38px;background:#6B5B42;"></div>
-    <span style="position:absolute;left:7px;bottom:100%;margin-bottom:7px;font-family:'IBM Plex Mono',monospace;font-size:12px;color:#8B7B64;">nee</span>
-    ${arrow("34px")}
-    <div style="box-sizing:border-box;display:flex;align-items:center;gap:11px;height:48px;padding:0 20px 0 14px;background:#302518;border:1px solid #4E3F2C;border-radius:5px;box-shadow:0 1px 0 rgba(0,0,0,.25);">
+    <div data-drop="1" style="position:absolute;left:0;bottom:100%;width:1.5px;height:38px;background:#6B5B42;"></div>
+    <div data-jog="1" style="position:absolute;left:0;bottom:100%;margin-bottom:38px;width:0px;height:1.5px;background:#6B5B42;"></div>
+    <span data-blabel="1" style="position:absolute;left:7px;bottom:100%;margin-bottom:7px;font-family:'IBM Plex Mono',monospace;font-size:12px;color:#8B7B64;">nee</span>
+    ${arrow("26px")}
+    <div style="box-sizing:border-box;display:flex;align-items:center;gap:11px;height:48px;padding:0 15px 0 11px;background:#302518;border:1px solid #4E3F2C;border-radius:5px;box-shadow:0 1px 0 rgba(0,0,0,.25);">
       <div style="width:20px;height:20px;flex-shrink:0;border-radius:4px;background:#C4553A;opacity:.9;"></div>
       <span style="font-size:15px;line-height:1.15;white-space:nowrap;color:#F4F1EA;">${s.nee}</span>
     </div>
-    ${arrow("34px")}
+    ${arrow("26px")}
     <div style="width:30px;height:30px;box-sizing:border-box;border-radius:50%;border:4px solid #C4553A;background:#241C13;"></div>
   </div>`;
 }
 
-const svg = (inner: string, stroke: string) =>
-  `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="${stroke}" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">${inner}</svg>`;
-
+/* Compacte AI-regel: bliksem → AI Agent → hook, met status 'actief'. */
 function aiLayerHtml(s: Scene): string {
-  const tools: [string, string, string][] = [
-    [
-      "GPT-4o",
-      "Chat Model",
-      svg(
-        '<path d="M12 3a4 4 0 0 1 4 4v1a4 4 0 0 1 0 8v1a4 4 0 0 1-8 0v-1a4 4 0 0 1 0-8V7a4 4 0 0 1 4-4z"/>',
-        "#6FB98A",
-      ),
-    ],
-    [
-      "Buffer",
-      "Memory",
-      svg(
-        '<path d="M4 7c0-1.7 3.6-3 8-3s8 1.3 8 3-3.6 3-8 3-8-1.3-8-3zM4 7v10c0 1.7 3.6 3 8 3s8-1.3 8-3V7"/>',
-        "#8B7B64",
-      ),
-    ],
-    [
-      s.ai[2],
-      "Tool",
-      svg(
-        '<path d="M14.7 6.3a4 4 0 0 1-5.4 5.4L4 17v3h3l5.3-5.3a4 4 0 0 0 5.4-5.4l-2.4 2.4-2.1-2.1z"/>',
-        "#F15822",
-      ),
-    ],
-  ];
-  const port = (b: string, m: string, icon: string, delay: number) => `
-    <div class="hs-anim-row" style="display:flex;flex-direction:column;align-items:center;width:104px;animation-delay:${delay.toFixed(2)}s;">
-      <div style="width:1.5px;height:14px;background:repeating-linear-gradient(180deg,#5A4B36 0 4px,transparent 4px 7px);"></div>
-      <div style="display:flex;align-items:center;justify-content:center;gap:8px;width:104px;height:40px;box-sizing:border-box;padding:0 10px;border-radius:8px;background:#251C13;border:1px dashed #4E3F2C;">
-        <span style="display:flex;width:16px;height:16px;align-items:center;justify-content:center;">${icon}</span>
-        <span style="font-size:11px;line-height:1.2;white-space:nowrap;color:#C9BCA8;">${b}</span>
-      </div>
-      <span style="margin-top:6px;font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:#6E6046;white-space:nowrap;">${m}</span>
-    </div>`;
-
-  const smallArrow = `<div style="display:flex;align-items:center;width:30px;height:56px;"><div style="flex:1;height:1.5px;background:#6B5B42;"></div><div style="width:0;height:0;border-top:4px solid transparent;border-bottom:4px solid transparent;border-left:6px solid #6B5B42;"></div></div>`;
-
   return `
-  <div data-ailayer="1" style="flex-shrink:0;position:relative;background:#1F1810;border-top:1px solid #382C1F;padding:14px 22px 18px;overflow:hidden;">
-    <div style="position:relative;z-index:2;display:flex;align-items:center;gap:9px;margin-bottom:14px;background:#1F1810;">
-      <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#F15822;white-space:nowrap;">AI-uitbreiding</span>
-      <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#7E6E52;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">op ${s.aiHook}</span>
-      <span style="flex:1;height:1px;background:#332818;"></span>
-      <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#4E9E6E;white-space:nowrap;">actief</span>
+  <div data-ailayer="1" style="flex-shrink:0;display:flex;align-items:center;gap:12px;background:#1F1810;border-top:1px solid #382C1F;padding:14px 22px;overflow:hidden;">
+    <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#F15822;white-space:nowrap;">AI</span>
+    <div class="hs-anim-row" style="display:flex;align-items:center;gap:9px;min-width:0;animation-delay:.3s;">
+      <span style="display:flex;align-items:center;justify-content:center;width:30px;height:30px;flex-shrink:0;background:#2B2116;border:1px solid #4E3F2C;border-radius:15px 6px 6px 15px;">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#6FB98A" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h9l-1 8 10-12h-9z"></path></svg>
+      </span>
+      <span style="width:14px;height:1.5px;background:#6B5B42;flex-shrink:0;"></span>
+      <span style="display:flex;align-items:center;gap:8px;height:30px;padding:0 12px;flex-shrink:0;background:#2B2116;border:1px solid #7A4526;border-radius:6px;box-shadow:0 0 0 3px rgba(241,88,34,.08);">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#F15822" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v3"></path><rect x="4" y="6" width="16" height="12" rx="3"></rect><path d="M9 11v2M15 11v2"></path></svg>
+        <span style="font-size:12px;font-weight:600;color:#F4F1EA;white-space:nowrap;">AI Agent</span>
+      </span>
+      <span style="width:14px;height:1.5px;background:#6B5B42;flex-shrink:0;"></span>
+      <span style="font-size:12px;color:#AC9D85;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${s.aiHook}</span>
     </div>
-    <div style="position:absolute;left:44px;top:34px;width:1.5px;height:18px;background:repeating-linear-gradient(180deg,#6B5B42 0 5px,transparent 5px 9px);"></div>
-    <div style="position:relative;transform-origin:left top;transform:scale(.74);width:max-content;">
-      <div style="display:flex;align-items:flex-start;">
-        <div class="hs-anim-row" style="display:flex;flex-direction:column;align-items:center;width:56px;animation-delay:.2s;">
-          <div style="position:relative;display:flex;align-items:center;justify-content:center;width:56px;height:56px;box-sizing:border-box;background:#2B2116;border:1px solid #4E3F2C;border-radius:26px 8px 8px 26px;">
-            ${svg('<path d="M13 2 3 14h9l-1 8 10-12h-9z"/>', "#6FB98A").replace('width="15" height="15"', 'width="20" height="20"').replace("1.7", "1.8")}
-            <span style="position:absolute;right:-4px;top:50%;margin-top:-4px;width:8px;height:8px;border-radius:50%;background:#6B5B42;"></span>
-          </div>
-          <span style="margin-top:8px;font-size:11px;line-height:1.25;white-space:nowrap;color:#AC9D85;">${s.ai[0]}</span>
-        </div>
-        ${smallArrow}
-        <div class="hs-anim-row" style="display:flex;flex-direction:column;align-items:flex-start;animation-delay:.34s;">
-          <div style="position:relative;display:flex;align-items:center;gap:11px;width:168px;height:56px;box-sizing:border-box;padding:0 14px;background:#2B2116;border:1px solid #7A4526;border-radius:8px;box-shadow:0 0 0 3px rgba(241,88,34,.09);">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#F15822" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v3"/><rect x="4" y="6" width="16" height="12" rx="3"/><path d="M9 11v2M15 11v2"/><path d="M2 12v3M22 12v3"/></svg>
-            <span style="display:flex;flex-direction:column;gap:2px;">
-              <span style="font-size:13px;font-weight:600;line-height:1.15;color:#F4F1EA;white-space:nowrap;">AI Agent</span>
-              <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;line-height:1.15;color:#8B7B64;white-space:nowrap;">Tools Agent</span>
-            </span>
-            <span style="position:absolute;left:-4px;top:50%;margin-top:-4px;width:8px;height:8px;border-radius:50%;background:#6B5B42;"></span>
-            <span style="position:absolute;right:-4px;top:50%;margin-top:-4px;width:8px;height:8px;border-radius:50%;background:#6B5B42;"></span>
-            <span style="position:absolute;left:26px;bottom:-5px;width:9px;height:9px;background:#3B2E1F;border:1.5px solid #8B7B64;transform:rotate(45deg);"></span>
-            <span style="position:absolute;left:78px;bottom:-5px;width:9px;height:9px;background:#3B2E1F;border:1.5px solid #8B7B64;transform:rotate(45deg);"></span>
-            <span style="position:absolute;left:130px;bottom:-5px;width:9px;height:9px;background:#3B2E1F;border:1.5px solid #8B7B64;transform:rotate(45deg);"></span>
-          </div>
-        </div>
-        ${smallArrow}
-        <div class="hs-anim-row" style="display:flex;flex-direction:column;align-items:center;width:56px;animation-delay:.48s;">
-          <div style="position:relative;display:flex;align-items:center;justify-content:center;width:56px;height:56px;box-sizing:border-box;background:#2B2116;border:1px solid #4E3F2C;border-radius:8px;">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#F15822" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 14 4 9l5-5"/><path d="M4 9h11a5 5 0 0 1 0 10H9"/></svg>
-            <span style="position:absolute;left:-4px;top:50%;margin-top:-4px;width:8px;height:8px;border-radius:50%;background:#6B5B42;"></span>
-          </div>
-          <span style="margin-top:8px;font-size:11px;line-height:1.25;white-space:nowrap;color:#AC9D85;">Terug in flow</span>
-        </div>
-      </div>
-      <div style="display:flex;gap:10px;margin-left:34px;margin-top:14px;">
-        ${tools.map((t, k) => port(t[0], t[1], t[2], 0.55 + k * 0.14)).join("")}
-      </div>
-    </div>
+    <span style="margin-left:auto;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#4E9E6E;white-space:nowrap;">actief</span>
   </div>`;
 }
 
 function rightHtml(s: Scene): string {
   return `
   <div style="position:absolute;inset:0;display:flex;flex-direction:column;">
-    <div style="display:flex;align-items:center;gap:16px;padding:0 28px;height:48px;background:#1C160F;border-bottom:1px solid #382C1F;flex-shrink:0;">
+    <div style="display:flex;align-items:center;gap:14px;padding:0 22px;height:40px;background:#1C160F;border-bottom:1px solid #382C1F;flex-shrink:0;">
       <div style="display:flex;gap:6px;">
-        <div style="width:8px;height:8px;background:#463A2A;border-radius:2px;"></div>
-        <div style="width:8px;height:8px;background:#463A2A;border-radius:2px;"></div>
-        <div style="width:8px;height:8px;background:#F15822;border-radius:2px;"></div>
+        <div style="width:7px;height:7px;background:#463A2A;border-radius:2px;"></div>
+        <div style="width:7px;height:7px;background:#463A2A;border-radius:2px;"></div>
+        <div style="width:7px;height:7px;background:#F15822;border-radius:2px;"></div>
       </div>
-      <div style="font-family:'Courier New',monospace;font-size:12px;letter-spacing:.1em;color:#9A8B73;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${s.crumb}</div>
+      <div style="font-family:'Courier New',monospace;font-size:11px;letter-spacing:.08em;color:#9A8B73;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${s.crumb}</div>
       <div style="margin-left:auto;display:flex;align-items:center;gap:7px;">
         <div style="width:6px;height:6px;background:#F15822;border-radius:50%;animation:hsBlink 1.1s steps(1,end) infinite;"></div>
-        <span style="font-family:'Courier New',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#9A8B73;white-space:nowrap;">Run locally</span>
+        <span style="font-family:'Courier New',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#9A8B73;white-space:nowrap;">Run locally</span>
       </div>
     </div>
     <div data-canvas="1" style="position:relative;flex:1;background:#241C13;background-image:radial-gradient(#372B1D 1px,transparent 1px);background-size:18px 18px;overflow:hidden;">
       <div style="position:absolute;left:22px;top:16px;display:flex;align-items:center;gap:8px;padding:6px 12px;background:#2B2116;border:1px solid #3E3122;border-radius:4px;z-index:2;"><span style="width:7px;height:7px;border-radius:2px;background:#F15822;"></span><span style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.1em;color:#AC9D85;white-space:nowrap;">${s.flow}</span></div>
-      <div data-flow="1" style="position:absolute;left:22px;top:62%;transform-origin:left center;transform:translateY(-50%) scale(.62);display:flex;flex-direction:column;align-items:flex-start;width:max-content;">
-        <div style="display:flex;align-items:center;">${nodesHtml(s)}</div>
+      <div data-flow="1" style="position:absolute;left:24px;top:56%;transform-origin:left center;transform:translateY(-50%) scale(.62);display:flex;flex-direction:column;align-items:flex-start;width:max-content;">
+        <div data-mainrow="1" style="display:flex;align-items:center;">${nodesHtml(s)}</div>
         ${branchHtml(s)}
       </div>
     </div>
     ${aiLayerHtml(s)}
-    <div style="flex-shrink:0;background:#1C160F;border-top:1px solid #382C1F;padding:18px 28px;display:flex;align-items:center;justify-content:space-between;gap:16px;">
-      <span style="font-family:'Courier New',monospace;font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:#9A8B73;">${s.metric}</span>
-      <span style="font-size:28px;font-weight:bold;color:#FFFDF9;letter-spacing:-.6px;">${s.val}</span>
+    <div style="flex-shrink:0;background:#1C160F;border-top:1px solid #382C1F;padding:13px 22px;display:flex;align-items:center;justify-content:space-between;gap:16px;">
+      <span style="font-family:'Courier New',monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#9A8B73;">${s.metric}</span>
+      <span style="font-size:22px;font-weight:bold;color:#FFFDF9;letter-spacing:-.5px;">${s.val}</span>
     </div>
     <div style="flex-shrink:0;height:3px;background:#382C1F;overflow:hidden;">
       <div style="height:3px;background:#F15822;animation:hsBar 1.9s cubic-bezier(.16,.8,.24,1) both;animation-delay:.5s;width:72%;"></div>
@@ -313,27 +239,28 @@ function leftHtml(s: Scene): string {
   }).join("");
 
   return `
-    <div role="img" aria-label="${s.sector}" style="position:absolute;inset:0;background-image:url(/assets/sectoren/${PHOTO[s.photo]}.webp);background-size:cover;background-position:center;filter:grayscale(.55) contrast(1.05) brightness(.62);animation:hsPhotoIn 1.6s cubic-bezier(.16,.8,.24,1) both;"></div>
-    <div style="position:absolute;inset:0;background:#2E251A;mix-blend-mode:color;opacity:.45;"></div>
-    <div style="position:absolute;inset:0;background:linear-gradient(100deg,rgba(46,37,26,.92) 0%,rgba(46,37,26,.72) 45%,rgba(46,37,26,.55) 100%);"></div>
-    <div class="hs-copy" data-copy="1" style="position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;padding:26px 56px 26px 48px;box-sizing:border-box;">
-      <div style="display:flex;flex-wrap:wrap;align-items:baseline;gap:0 9px;font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.16em;text-transform:uppercase;margin-bottom:clamp(14px,2.6vh,26px);">
-        <span style="color:#F15822;">Business-specialist in</span>${kicker}
-      </div>
-      <h1 style="font-family:var(--font-display-expanded),'Archivo',Arial,sans-serif;font-weight:900;font-size:clamp(28px,3vw,48px);line-height:1.06;letter-spacing:-1px;color:#FFFDF9;margin:0 0 clamp(14px,2.4vh,24px);text-wrap:balance;">Wij maken van business en IT <span style="color:#F15822;border-bottom:3px solid #F15822;">één beweging</span>.</h1>
-      <p style="font-size:clamp(15px,1.15vw,17px);line-height:1.6;color:#C9BCA8;margin:0 0 clamp(20px,3.4vh,34px);max-width:46ch;text-wrap:pretty;">The New Wave IT combineert diepgaande sectorkennis met Mendix, AI en strategie. Zo vertalen we jouw ambitie naar oplossingen die werken voor de mensen die ermee moeten werken.</p>
-      <div style="display:flex;flex-wrap:wrap;gap:18px 26px;align-items:center;">
-        <a href="/contact" style="background:#F15822;color:#FFFFFF;text-decoration:none;font-size:15px;font-weight:600;padding:15px 28px;white-space:nowrap;">Plan een strategiegesprek &nbsp;&rarr;</a>
-        <a href="tel:+31610751254" style="display:flex;align-items:center;gap:14px;color:#FFFDF9;text-decoration:none;font-size:15px;font-weight:600;white-space:nowrap;">
-          <span style="display:flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:50%;border:1px solid #6B5B47;flex-shrink:0;">${PHONE_SVG}</span>
-          Bel 06&ndash;10751254
-        </a>
-      </div>
+  <img src="/assets/sectoren/${PHOTO[s.photo]}.webp" alt="" fetchpriority="high" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;filter:grayscale(.55) contrast(1.05) brightness(.62);transition:filter .9s ease;">
+  <div style="position:absolute;inset:0;background:#2E251A;mix-blend-mode:color;opacity:.45;"></div>
+  <div style="position:absolute;inset:0;background:linear-gradient(100deg,rgba(46,37,26,.94) 0%,rgba(46,37,26,.86) 34%,rgba(46,37,26,.52) 68%,rgba(46,37,26,.34) 100%);"></div>
+  <div style="position:absolute;inset:0;background:linear-gradient(0deg,rgba(36,28,19,.72) 0%,rgba(36,28,19,0) 42%);"></div>
+  <div class="hs-copy" data-copy="1" style="position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;padding:26px 56px 26px 48px;box-sizing:border-box;">
+    <div style="display:flex;flex-wrap:wrap;align-items:baseline;gap:0 9px;font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.16em;text-transform:uppercase;margin-bottom:clamp(14px,2.6vh,26px);">
+      <span style="color:#F15822;">Business-specialist in</span>${kicker}
     </div>
-    <div class="hs-realrow hs-anim-row" data-caption="1" style="position:absolute;left:48px;bottom:34px;right:56px;display:flex;align-items:baseline;gap:14px;animation-duration:.8s;">
-      <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#F15822;white-space:nowrap;">${s.sector}</span>
-      <span style="font-size:15px;color:#AC9D85;">${s.real}</span>
-    </div>`;
+    <h1 style="font-family:var(--font-display-expanded),'Archivo',Arial,sans-serif;font-weight:900;font-size:clamp(28px,3vw,48px);line-height:1.06;letter-spacing:-1px;color:#FFFDF9;margin:0 0 clamp(14px,2.4vh,24px);text-wrap:balance;">Wij maken van business en IT <span style="color:#F15822;border-bottom:3px solid #F15822;">één beweging</span>.</h1>
+    <p style="font-size:clamp(15px,1.15vw,17px);line-height:1.6;color:#C9BCA8;margin:0 0 clamp(20px,3.4vh,34px);max-width:46ch;text-wrap:pretty;">The New Wave IT combineert diepgaande sectorkennis met Mendix, AI en strategie. Zo vertalen we jouw ambitie naar oplossingen die werken voor de mensen die ermee moeten werken.</p>
+    <div style="display:flex;flex-wrap:wrap;gap:18px 26px;align-items:center;">
+      <a href="/contact" style="background:#F15822;color:#FFFFFF;text-decoration:none;font-size:15px;font-weight:600;padding:15px 28px;white-space:nowrap;">Plan een strategiegesprek &nbsp;&rarr;</a>
+      <a href="tel:+31610751254" style="display:flex;align-items:center;gap:14px;color:#FFFDF9;text-decoration:none;font-size:15px;font-weight:600;white-space:nowrap;">
+        <span style="display:flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:50%;border:1px solid #6B5B47;flex-shrink:0;">${PHONE_SVG}</span>
+        Bel 06&ndash;10751254
+      </a>
+    </div>
+  </div>
+  <div class="hs-realrow hs-anim-row" data-caption="1" style="position:absolute;left:48px;bottom:34px;right:56px;display:flex;align-items:baseline;gap:14px;animation-duration:.8s;">
+    <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#F15822;white-space:nowrap;">${s.sector}</span>
+    <span style="font-size:15px;color:#AC9D85;">${s.real}</span>
+  </div>`;
 }
 
 function contentHtml(s: Scene): string {
@@ -354,9 +281,9 @@ export function HeroSplit() {
     if (!c || !c.parentElement) return;
     const avail = c.parentElement.clientWidth - 44;
     const w = c.scrollWidth || 1;
-    const availH = c.parentElement.clientHeight - 52;
+    const availH = c.parentElement.clientHeight - 44;
     const h = c.scrollHeight || 1;
-    const sc = Math.max(0.42, Math.min(0.82, avail / w, availH / h));
+    const sc = Math.max(0.48, Math.min(0.98, avail / w, availH / h));
     c.style.transform = `translateY(-50%) scale(${sc})`;
     const d = c.querySelector<HTMLElement>("[data-diamond]");
     const rows = c.querySelectorAll<HTMLElement>("[data-branch]");
@@ -386,10 +313,8 @@ export function HeroSplit() {
   // Een ResizeObserver op het (zwevende) systeempaneel houdt de flow passend als
   // dat paneel op tablet/telefoon van formaat verandert.
   useEffect(() => {
-    // Paint-onafhankelijk (setTimeout i.p.v. alleen rAF), zodat de fit ook draait
-    // wanneer de pagina niet actief compositeert.
     const raf = requestAnimationFrame(fitFlow);
-    const t = window.setTimeout(fitFlow, 60);
+    const fallback = window.setTimeout(fitFlow, 80);
     const root = contentRef.current;
     let ro: ResizeObserver | undefined;
     if (root && typeof ResizeObserver !== "undefined") {
@@ -401,7 +326,7 @@ export function HeroSplit() {
     }
     return () => {
       cancelAnimationFrame(raf);
-      clearTimeout(t);
+      clearTimeout(fallback);
       ro?.disconnect();
     };
   }, [i, fitFlow]);
@@ -410,9 +335,7 @@ export function HeroSplit() {
     return () => window.removeEventListener("resize", fitFlow);
   }, [fitFlow]);
 
-  // Memoïseer per scene: bij een sweep-re-render blijft de HTML (en dus de door
-  // fitFlow gezette schaal/branch-positie) staan; alleen een scene-wissel her-injecteert.
-  const html = useMemo(() => contentHtml(SCENES[i]!), [i]);
+  const s = SCENES[i]!;
 
   return (
     <section
@@ -427,24 +350,9 @@ export function HeroSplit() {
         data-hero="1"
         style={{ position: "relative", background: "#2E251A", overflow: "hidden" }}
       >
-        <div key={i} ref={contentRef} dangerouslySetInnerHTML={{ __html: html }} />
+        <div key={i} ref={contentRef} dangerouslySetInnerHTML={{ __html: contentHtml(s) }} />
 
-        {/* Oranje naad + golfsweep over de scheiding */}
-        <div
-          className="hs-seam"
-          data-divider="1"
-          style={{
-            position: "absolute",
-            left: "62%",
-            top: 0,
-            width: 3,
-            height: "100%",
-            marginLeft: -1.5,
-            background: "#F15822",
-            pointerEvents: "none",
-            zIndex: 2,
-          }}
-        />
+        {/* Oranje golfsweep over de foto bij elke scene-wissel */}
         <div
           key={`sw${sweep}`}
           className="hs-sweep"

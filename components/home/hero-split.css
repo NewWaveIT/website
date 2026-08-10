@@ -1,8 +1,9 @@
 /* Hero split-animatie — geport uit het Claude Design-project
    (ui_kits/website/Hero Split Animatie.dc.html + Hero Schermformaten.dc.html).
-   Links een sectorfoto + merkboodschap, rechts een gestileerde Mendix-microflow
-   die door vijf sectoren cyclet. Structuur staat grotendeels inline in
-   hero-split.tsx (trouw aan het design); hier keyframes + de schermformaten. */
+   Full-bleed sectorfoto met een zwevend "systeem"-venster (Mendix-microflow +
+   compacte AI-regel) rechtsonder, cyclend door vijf sectoren met een oranje
+   sweep. Structuur staat grotendeels inline in hero-split.tsx (trouw aan het
+   design); hier keyframes + de schermformaten. */
 
 @keyframes hsRowIn {
   from {
@@ -12,16 +13,6 @@
   to {
     opacity: 1;
     transform: translateY(0);
-  }
-}
-@keyframes hsPhotoIn {
-  from {
-    opacity: 0;
-    transform: scale(1.08);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
   }
 }
 @keyframes hsSweep {
@@ -61,30 +52,45 @@
   min-height: max(520px, calc(100dvh - 106px));
 }
 
-/* Laptop: krappere split 66 / 34 met smallere marges. */
-@media (max-width: 1280px) {
+/* Desktop: foto full-bleed, systeem als zwevend venster rechtsonder. */
+@media (min-width: 1041px) {
   .hs [data-left] {
-    width: 66% !important;
-  }
-  .hs [data-right] {
-    width: 34% !important;
-  }
-  .hs [data-divider] {
-    left: 66% !important;
+    width: 100% !important;
   }
   .hs [data-copy] {
-    padding: 26px 40px 26px 36px !important;
+    padding: 26px clamp(560px, 49%, 700px) 26px 48px !important;
   }
   .hs [data-caption] {
+    right: clamp(560px, 49%, 700px) !important;
+  }
+  .hs [data-right] {
+    top: auto !important;
+    right: 44px !important;
+    bottom: 44px !important;
+    width: min(610px, 46%) !important;
+    height: min(390px, calc(100% - 88px)) !important;
+    border: 1px solid #4a3c2a !important;
+    border-radius: 10px !important;
+    box-shadow: 0 30px 70px rgba(20, 15, 10, 0.55) !important;
+    z-index: 3 !important;
+  }
+}
+
+/* Laptop: iets krappere marges voor het venster. */
+@media (max-width: 1280px) and (min-width: 1041px) {
+  .hs [data-copy] {
+    padding: 26px clamp(500px, 50%, 600px) 26px 36px !important;
+  }
+  .hs [data-caption] {
+    right: clamp(500px, 50%, 600px) !important;
     left: 36px !important;
-    right: 40px !important;
   }
   .hs [data-ticks] {
     left: 36px !important;
   }
 }
 
-/* Tablet en kleiner: microflow als zwevend venster over de foto; AI-laag weg. */
+/* Tablet en kleiner: venster onder de tekst, over de volle breedte. */
 @media (max-width: 1040px) {
   .hs [data-hero] {
     min-height: 0 !important;
@@ -95,40 +101,35 @@
     position: relative !important;
     width: 100% !important;
     height: auto !important;
-    /* Gewoon block dat met de copy meegroeit (copy/caption zijn directe kinderen);
-       de padding-bottom reserveert onderaan de ruimte voor het zwevende venster,
-       zodat de caption er nooit in valt. */
-    min-height: 720px !important;
+    min-height: 660px !important;
     box-sizing: border-box !important;
-    display: block !important;
-    overflow: visible !important;
-    padding-bottom: 360px !important;
-  }
-  .hs [data-divider] {
-    display: none !important;
+    padding-bottom: 472px !important;
+    display: flex !important;
+    flex-direction: column !important;
   }
   .hs [data-copy] {
     position: relative !important;
     inset: auto !important;
     justify-content: flex-start !important;
-    padding: 84px 40px 24px 36px !important;
+    padding: 72px 36px 24px 36px !important;
+  }
+  .hs [data-copy] h1 {
+    font-size: clamp(30px, 4.6vw, 40px) !important;
   }
   .hs [data-copy] p {
-    max-width: 52ch !important;
+    max-width: 54ch !important;
   }
   .hs [data-right] {
     top: auto !important;
+    left: 28px !important;
     right: 28px !important;
     bottom: 28px !important;
-    width: min(440px, calc(100% - 56px)) !important;
-    height: 290px !important;
+    width: auto !important;
+    height: 430px !important;
     border: 1px solid #4a3c2a !important;
     border-radius: 8px !important;
     box-shadow: 0 24px 60px rgba(28, 22, 15, 0.55) !important;
     z-index: 3 !important;
-  }
-  .hs [data-ailayer] {
-    display: none !important;
   }
   .hs [data-canvas] {
     min-height: 150px !important;
@@ -136,8 +137,8 @@
   .hs [data-caption] {
     position: relative !important;
     inset: auto !important;
-    margin: 8px 36px 18px 36px !important;
-    padding-top: 0 !important;
+    margin: auto 36px 18px 36px !important;
+    padding-top: 20px !important;
   }
   .hs [data-ticks] {
     left: 36px !important;
@@ -145,11 +146,12 @@
   }
 }
 
-/* Telefoon: compacter venster, kleinere koppen. */
+/* Telefoon: hoger venster, en de microflow kantelt naar een verticale
+   opstelling (elke node onder de vorige) — anders past hij niet. */
 @media (max-width: 680px) {
   .hs [data-left] {
-    min-height: 680px !important;
-    padding-bottom: 344px !important;
+    min-height: 840px !important;
+    padding-bottom: 560px !important;
   }
   .hs [data-copy] {
     padding: 76px 24px 20px 24px !important;
@@ -165,10 +167,65 @@
     left: 20px !important;
     bottom: 20px !important;
     width: auto !important;
-    height: 290px !important;
+    height: 520px !important;
+  }
+  .hs [data-mainrow] {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+  }
+  .hs [data-nodeitem] {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+  }
+  .hs [data-nodebox] {
+    height: 56px !important;
+  }
+  .hs [data-conn] {
+    width: 1.5px !important;
+    height: 18px !important;
+    flex-direction: column !important;
+    margin-left: 14px !important;
+  }
+  .hs [data-connline] {
+    width: 1.5px !important;
+    height: auto !important;
+  }
+  .hs [data-arrow] {
+    border-left: 5px solid transparent !important;
+    border-right: 5px solid transparent !important;
+    border-top: 7px solid #6b5b42 !important;
+    border-bottom: 0 !important;
+  }
+  .hs [data-connlabel] {
+    bottom: auto !important;
+    top: 50% !important;
+    left: 100% !important;
+    transform: translateY(-50%) !important;
+    margin: 0 0 0 9px !important;
+  }
+  .hs [data-sublabel] {
+    bottom: auto !important;
+    top: 50% !important;
+    left: 100% !important;
+    transform: translateY(-50%) !important;
+    margin: 0 0 0 14px !important;
+  }
+  .hs [data-branch] {
+    margin-left: 14px !important;
+    margin-top: 20px !important;
+  }
+  .hs [data-jog] {
+    display: none !important;
+  }
+  .hs [data-drop] {
+    height: 20px !important;
+  }
+  .hs [data-blabel] {
+    left: 10px !important;
+    margin-bottom: 3px !important;
   }
   .hs [data-caption] {
-    margin: 8px 24px 18px 24px !important;
+    margin: auto 24px 18px 24px !important;
     flex-wrap: wrap !important;
     gap: 4px 12px !important;
   }
