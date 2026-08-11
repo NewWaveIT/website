@@ -212,8 +212,8 @@ function rightHtml(s: Scene): string {
       </div>
     </div>
     <div data-canvas="1" style="position:relative;flex:1;background:#241C13;background-image:radial-gradient(#372B1D 1px,transparent 1px);background-size:18px 18px;overflow:hidden;">
-      <div style="position:absolute;left:22px;top:16px;display:flex;align-items:center;gap:8px;padding:6px 12px;background:#2B2116;border:1px solid #3E3122;border-radius:4px;z-index:2;"><span style="width:7px;height:7px;border-radius:2px;background:#F15822;"></span><span style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.1em;color:#AC9D85;white-space:nowrap;">${s.flow}</span></div>
-      <div data-flow="1" style="position:absolute;left:24px;top:56%;transform-origin:left center;transform:translateY(-50%) scale(.62);display:flex;flex-direction:column;align-items:flex-start;width:max-content;">
+      <div data-flowbadge="1" style="position:absolute;left:22px;top:16px;display:flex;align-items:center;gap:8px;padding:6px 12px;background:#2B2116;border:1px solid #3E3122;border-radius:4px;z-index:2;"><span style="width:7px;height:7px;border-radius:2px;background:#F15822;"></span><span style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.1em;color:#AC9D85;white-space:nowrap;">${s.flow}</span></div>
+      <div data-flow="1" style="position:absolute;left:24px;top:50%;transform-origin:left center;transform:translateY(-50%) scale(.62);display:flex;flex-direction:column;align-items:flex-start;width:max-content;">
         <div data-mainrow="1" style="display:flex;align-items:center;">${nodesHtml(s)}</div>
         ${branchHtml(s)}
       </div>
@@ -278,13 +278,27 @@ export function HeroSplit() {
     const root = contentRef.current;
     if (!root) return;
     const c = root.querySelector<HTMLElement>('[data-flow="1"]');
-    if (!c || !c.parentElement) return;
-    const avail = c.parentElement.clientWidth - 44;
+    const canvasEl = c?.parentElement;
+    if (!c || !canvasEl) return;
+
+    // Reserveer de zone van het "ACT_..."-badge linksboven (gemeten, niet
+    // geraden) zodat de microflow daaronder centreert en er nooit overheen
+    // schuift — op geen enkele venstergrootte.
+    const badge = canvasEl.querySelector<HTMLElement>('[data-flowbadge="1"]');
+    const canvasRect = canvasEl.getBoundingClientRect();
+    const topSafe = badge ? badge.getBoundingClientRect().bottom - canvasRect.top + 10 : 48;
+    const bottomSafe = 14;
+    const sideMargin = 22;
+
+    const avail = canvasEl.clientWidth - sideMargin * 2;
+    const availH = Math.max(40, canvasEl.clientHeight - topSafe - bottomSafe);
     const w = c.scrollWidth || 1;
-    const availH = c.parentElement.clientHeight - 44;
     const h = c.scrollHeight || 1;
-    const sc = Math.max(0.48, Math.min(0.98, avail / w, availH / h));
+    const sc = Math.max(0.42, Math.min(0.98, avail / w, availH / h));
+
+    c.style.top = `${topSafe + availH / 2}px`;
     c.style.transform = `translateY(-50%) scale(${sc})`;
+
     const d = c.querySelector<HTMLElement>("[data-diamond]");
     const rows = c.querySelectorAll<HTMLElement>("[data-branch]");
     if (!d || !rows.length) return;
@@ -315,6 +329,10 @@ export function HeroSplit() {
   useEffect(() => {
     const raf = requestAnimationFrame(fitFlow);
     const fallback = window.setTimeout(fitFlow, 80);
+    // Herbereken zodra webfonts geladen zijn: een late fontwissel kan de
+    // tekstbreedte net genoeg laten verschuiven om de nee-branch onder de
+    // beslissingsruit te laten verspringen.
+    document.fonts?.ready?.then(fitFlow).catch(() => {});
     const root = contentRef.current;
     let ro: ResizeObserver | undefined;
     if (root && typeof ResizeObserver !== "undefined") {
