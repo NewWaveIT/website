@@ -121,7 +121,7 @@ const arrow = (w = "28px", label = "") => `
   <div data-conn="1" style="position:relative;display:flex;align-items:center;width:${w};">
     <div data-connline="1" style="flex:1;height:1.5px;background:#6B5B42;"></div>
     <div data-arrow="1" style="width:0;height:0;border-top:5px solid transparent;border-bottom:5px solid transparent;border-left:7px solid #6B5B42;"></div>
-    ${label ? `<span data-connlabel="1" style="position:absolute;bottom:100%;left:50%;transform:translateX(-50%);margin-bottom:5px;font-family:'IBM Plex Mono',monospace;font-size:11px;color:#8B7B64;">${label}</span>` : ""}
+    ${label ? `<span data-connlabel="1" style="position:absolute;bottom:100%;left:50%;transform:translateX(-50%);margin-bottom:9px;font-family:'IBM Plex Mono',monospace;font-size:11px;color:#8B7B64;">${label}</span>` : ""}
   </div>`;
 
 function nodesHtml(s: Scene): string {
@@ -137,7 +137,7 @@ function nodesHtml(s: Scene): string {
   const box = (inner: string, sub = "") => `
     <div data-nodebox="1" style="position:relative;display:flex;align-items:center;justify-content:center;height:70px;">
       ${inner}
-      ${sub ? `<span data-sublabel="1" style="position:absolute;bottom:100%;left:50%;transform:translateX(-50%);margin-bottom:4px;font-size:13px;line-height:1.2;white-space:nowrap;color:#C9BCA8;">${sub}</span>` : ""}
+      ${sub ? `<span data-sublabel="1" style="position:absolute;bottom:100%;left:50%;transform:translateX(-50%);margin-bottom:9px;font-size:13px;line-height:1.2;white-space:nowrap;color:#C9BCA8;">${sub}</span>` : ""}
     </div>`;
 
   const cell = (inner: string, delay: number) => `
@@ -162,9 +162,9 @@ function nodesHtml(s: Scene): string {
 function branchHtml(s: Scene): string {
   return `
   <div data-branch="1" class="hs-anim-row" style="position:relative;display:flex;align-items:center;margin-top:42px;animation-delay:1.05s;">
-    <div data-drop="1" style="position:absolute;left:0;bottom:100%;width:1.5px;height:38px;background:#6B5B42;"></div>
-    <div data-jog="1" style="position:absolute;left:0;bottom:100%;margin-bottom:38px;width:0px;height:1.5px;background:#6B5B42;"></div>
-    <span data-blabel="1" style="position:absolute;left:7px;bottom:100%;margin-bottom:7px;font-family:'IBM Plex Mono',monospace;font-size:12px;color:#8B7B64;">nee</span>
+    <div data-drop="1" style="position:absolute;left:0;bottom:100%;width:1.5px;height:40px;background:#6B5B42;"></div>
+    <div data-jog="1" style="position:absolute;left:0;bottom:100%;margin-bottom:40px;width:0px;height:1.5px;background:#6B5B42;"></div>
+    <span data-blabel="1" style="position:absolute;left:10px;bottom:100%;margin-bottom:10px;font-family:'IBM Plex Mono',monospace;font-size:12px;color:#8B7B64;">nee</span>
     ${arrow("26px")}
     <div style="box-sizing:border-box;display:flex;align-items:center;gap:11px;height:48px;padding:0 15px 0 11px;background:#302518;border:1px solid #4E3F2C;border-radius:5px;box-shadow:0 1px 0 rgba(0,0,0,.25);">
       <div style="width:20px;height:20px;flex-shrink:0;border-radius:4px;background:#C4553A;opacity:.9;"></div>
