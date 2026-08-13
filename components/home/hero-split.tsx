@@ -285,19 +285,46 @@ export function HeroSplit() {
     // geraden) zodat de microflow daaronder centreert en er nooit overheen
     // schuift — op geen enkele venstergrootte.
     const badge = canvasEl.querySelector<HTMLElement>('[data-flowbadge="1"]');
-    const canvasRect = canvasEl.getBoundingClientRect();
-    const topSafe = badge ? badge.getBoundingClientRect().bottom - canvasRect.top + 10 : 48;
     const bottomSafe = 14;
     const sideMargin = 22;
+    const baseGap = 14; // volstaat als het label horizontaal geen badge raakt
+    const overlapGap = 26; // extra ademruimte als een label wél in de x-range van het badge valt
 
-    const avail = canvasEl.clientWidth - sideMargin * 2;
-    const availH = Math.max(40, canvasEl.clientHeight - topSafe - bottomSafe);
-    const w = c.scrollWidth || 1;
-    const h = c.scrollHeight || 1;
-    const sc = Math.max(0.42, Math.min(0.98, avail / w, availH / h));
+    const place = (topSafe: number) => {
+      const avail = canvasEl.clientWidth - sideMargin * 2;
+      const availH = Math.max(40, canvasEl.clientHeight - topSafe - bottomSafe);
+      const w = c.scrollWidth || 1;
+      const h = c.scrollHeight || 1;
+      const scale = Math.max(0.42, Math.min(0.98, avail / w, availH / h));
+      c.style.top = `${topSafe + availH / 2}px`;
+      c.style.transform = `translateY(-50%) scale(${scale})`;
+      return scale;
+    };
 
-    c.style.top = `${topSafe + availH / 2}px`;
-    c.style.transform = `translateY(-50%) scale(${sc})`;
+    const canvasRect = canvasEl.getBoundingClientRect();
+    let topSafe = badge ? badge.getBoundingClientRect().bottom - canvasRect.top + baseGap : 48;
+    let sc = place(topSafe);
+
+    // Tweede pas: bij een brede badge-tekst (langere sectornaam) kán een label
+    // dat boven zijn node uitsteekt er (horizontaal) mee overlappen. Meet elk
+    // label na positioneren; overlapt het de x-range van het badge, dan is
+    // een ruimere marge nodig om overtuigend gescheiden te ogen. Werkt voor
+    // élke combinatie van badge- en labeltekstlengte.
+    if (badge) {
+      const bRect = badge.getBoundingClientRect();
+      const labels = c.querySelectorAll<HTMLElement>("[data-sublabel], [data-connlabel]");
+      let deficit = 0;
+      labels.forEach((l) => {
+        const r = l.getBoundingClientRect();
+        const overlapsX = r.right > bRect.left && r.left < bRect.right;
+        const requiredTop = bRect.bottom + (overlapsX ? overlapGap : baseGap);
+        if (r.top < requiredTop) deficit = Math.max(deficit, requiredTop - r.top);
+      });
+      if (deficit > 0) {
+        topSafe += deficit;
+        sc = place(topSafe);
+      }
+    }
 
     const d = c.querySelector<HTMLElement>("[data-diamond]");
     const rows = c.querySelectorAll<HTMLElement>("[data-branch]");
