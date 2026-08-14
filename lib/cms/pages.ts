@@ -69,6 +69,8 @@ export const PAGE_FIELDS: Record<string, FieldDef[]> = {
     { key: "waarde2Tekst", label: "Waarde 2 — tekst", type: "textarea" },
     { key: "waarde3Titel", label: "Waarde 3 — titel", type: "text" },
     { key: "waarde3Tekst", label: "Waarde 3 — tekst", type: "textarea" },
+    { key: "waarde4Titel", label: "Waarde 4 — titel", type: "text" },
+    { key: "waarde4Tekst", label: "Waarde 4 — tekst", type: "textarea" },
   ],
   contact: [
     { key: "heroTitleStart", label: "Hero — titel (begin)", type: "text" },
@@ -229,8 +231,7 @@ export const PAGE_DEFAULTS: Record<string, Record<string, string>> = {
     heroAccent: "vooruitgang",
     heroLead:
       "Wij geloven dat succesvolle verandering begint bij mensen. Daarom verzorgen wij alle randvoorwaarden voor onze Wavers, en helpen zij onze partners maximaal digitaal versnellen. Zo staat jouw organisatie klaar voor de dag van overmorgen.",
-    missieTitel:
-      "Wij geloven dat de mens de centrale factor is in het behalen van business doelstellingen.",
+    missieTitel: "Maximale digitale impact, met de mens als maat.",
     missieP1:
       "The New Wave IT is opgericht vanuit één overtuiging: technologie is het middel, de mens is de maat. Wij zijn geen anonieme delivery-machine. Je werkt met mensen die je vraagstuk écht doorgronden, van de eerste sessie tot livegang en daarna.",
     missieP2:
@@ -247,13 +248,16 @@ export const PAGE_DEFAULTS: Record<string, Record<string, string>> = {
     waardenTitel: "Vier overtuigingen die je terugziet in ons werk",
     waarde1Titel: "Mens centraal",
     waarde1Tekst:
-      "De mens is de centrale factor in het behalen van business doelstellingen, niet de technologie zelf.",
+      "De mens is de centrale factor in het behalen van business doelstellingen, niet de technologie zelf. Beloning is bij ons gelijk en transparant voor iedereen met dezelfde ervaring, ongeacht gender of achtergrond.",
     waarde2Titel: "Pragmatisch",
     waarde2Tekst:
-      "Direct tastbare waarde: we kiezen wat jouw vraagstuk oplost, niet wat toevallig in de mode is.",
+      "We rekenen elke oplossing door op wat jouw vraagstuk daadwerkelijk oplost, en zeggen net zo makkelijk nee tegen een hype die dat niet doet.",
     waarde3Titel: "Autoriteit door bewijs",
     waarde3Tekst:
       "Bewezen frameworks (App Factory, OGSM, 3-Horizonsmodel) en concrete resultaten, geen losse claims.",
+    waarde4Titel: "Duurzaam ondernemen",
+    waarde4Tekst:
+      "Ondernemen en maatschappelijke bijdrage horen bij elkaar. In 2030 is ons businessmodel 100% CO2-neutraal.",
   },
   contact: {
     heroTitleStart: "Waar kunnen we je ",
@@ -362,6 +366,6 @@ export const PAGE_DEFAULTS: Record<string, Record<string, string>> = {
     cultuur2: "Wavetime en Company week als vaste cultuurrituelen",
     cultuur3:
       "Werken met bewezen frameworks (App Factory, OGSM, Strategy & App in a Day) in plaats van losse projecten",
-    cultuur4: "#4 · Computable Werkgevers Awards 2025",
+    cultuur4: "Gelijke, transparante beloning bij gelijke ervaring, ongeacht gender of achtergrond",
   },
 };
