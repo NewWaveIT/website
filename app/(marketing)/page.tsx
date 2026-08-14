@@ -79,8 +79,8 @@ export default async function HomePage() {
             <div className="kicker">Hoe wij het doen</div>
             <h2>Technologie als middel: drie manieren waarop we versnellen</h2>
             <p>
-              Onze sectorkennis wordt tastbaar via drie disciplines. We kiezen wat jouw vraagstuk
-              oplost, niet wat toevallig in de mode is.
+              Technologie als middel: drie manieren waarop we versnellen. We kiezen wat jouw
+              vraagstuk oplost, niet wat toevallig in de mode is.
             </p>
           </div>
           <div className="tabs" role="tablist">
@@ -99,12 +99,13 @@ export default async function HomePage() {
             <div>
               <h3>Mendix-applicaties op maat</h3>
               <p>
-                Op maat gemaakte low-code applicaties die jouw specifieke uitdaging oplossen, een
-                factor 6 tot 10 sneller dan traditionele bouw. Slim, efficiënt en toekomstbestendig.
+                Op maat gemaakte low-code applicaties, gebouwd in weken in plaats van maanden. Vaak
+                staat er binnen een week een eerste werkende versie, en binnen drie maanden een live
+                applicatie.
               </p>
               <ul>
-                <li>Van proof-of-concept tot productie in weken</li>
-                <li>Schaalbare architectuur die met je meegroeit</li>
+                <li>Vaak een eerste werkende versie binnen een week</li>
+                <li>Live binnen enkele maanden, niet binnen een jaar</li>
                 <li>Kennisoverdracht zodat je team zelf verder kan</li>
               </ul>
               <div
@@ -145,12 +146,13 @@ export default async function HomePage() {
             <div>
               <h3>AI die processen echt verbetert</h3>
               <p>
-                Strategische inzet van AI binnen je bestaande IT-landschap. Geen hype, wél
-                oplossingen die processen verbeteren en de mens centraal stellen.
+                Strategische inzet van AI binnen je bestaande IT-landschap. Doorgaans binnen acht
+                weken een werkend, geautomatiseerd proces. Geen hype, wel resultaat dat de mens
+                centraal stelt.
               </p>
               <ul>
                 <li>AI-scan van je processen en datalandschap</li>
-                <li>Praktische pilots met meetbaar resultaat</li>
+                <li>Doorgaans een werkend proces binnen 8 weken</li>
                 <li>Verantwoorde, uitlegbare inzet van AI</li>
               </ul>
               <div
@@ -191,11 +193,12 @@ export default async function HomePage() {
             <div>
               <h3>Business en IT, verbonden</h3>
               <p>
-                Wij ontwikkelen jouw strategie en vertalen die direct naar praktische resultaten in
-                de operatie. Zo werk je efficiënter en ben je klaar voor de toekomst.
+                Wij ontwikkelen je strategie niet los van de uitvoering. In één dag met je directie
+                leveren we een scherpe roadmap én een eerste werkende app: Strategy &amp; App in a
+                Day. Zo weet je dezelfde dag nog of de koers klopt.
               </p>
               <ul>
-                <li>Heldere roadmap van ambitie naar uitvoering</li>
+                <li>Strategie en app opgeleverd in één dag</li>
                 <li>Architectuur- en portfoliokeuzes die standhouden</li>
                 <li>Begeleiding bij de verandering, niet alleen het plan</li>
               </ul>
@@ -208,7 +211,7 @@ export default async function HomePage() {
                 }}
               >
                 <Link href="/contact" className="btn btn-outline">
-                  Plan een strategiegesprek
+                  Plan een Strategy &amp; App in a Day
                 </Link>
                 <Link
                   href="/diensten/strategie"
@@ -250,7 +253,7 @@ export default async function HomePage() {
                 image: "/assets/sectoren/foto-publieke-sector.webp",
                 hook: "“Onze doorlooptijden groeien sneller dan onze formatie.”",
                 chal: "Digitale dienstverlening die burgers vertrouwen: sneller vergunnen, minder papier, volledig aantoonbaar.",
-                kpi: "-40% doorlooptijd",
+                kpi: "Sneller vergunnen",
               },
               {
                 naam: "Mobiliteit & logistiek",
@@ -415,7 +418,7 @@ export default async function HomePage() {
           <div className="cards3">
             <article className="post">
               <Link
-                href="/inzichten/vergunningverlening-in-weken"
+                href="/inzichten/novi-ai-collega-overheid"
                 className="cover"
                 style={{
                   backgroundImage: "url('/assets/photos/klantgesprek-tafel.webp')",
@@ -425,19 +428,20 @@ export default async function HomePage() {
                 <span className="cat">Publieke sector</span>
               </Link>
               <div className="pbody">
-                <div className="meta">Leestijd 4 min · 15 maart 2026</div>
-                <h3>Vergunningverlening in weken, niet maanden</h3>
+                <div className="meta">Leestijd 4 min · 24 juni 2025</div>
+                <h3>Novi: de AI-collega die overheidsteams grip geeft op digitalisering</h3>
                 <p>
-                  Hoe gemeenten met low-code de doorlooptijd van aanvragen structureel verkorten.
+                  Hoe een zelflerende AI-assistent nieuwe medewerkers sneller inwerkt en 24/7
+                  antwoord geeft op IT-vragen.
                 </p>
-                <Link href="/inzichten/vergunningverlening-in-weken" className="more">
+                <Link href="/inzichten/novi-ai-collega-overheid" className="more">
                   Lees meer <ArrowRight />
                 </Link>
               </div>
             </article>
             <article className="post">
               <Link
-                href="/inzichten/ai-in-de-zorg"
+                href="/inzichten/security-mendix-in-de-zorg"
                 className="cover"
                 style={{
                   backgroundImage: "url('/assets/photos/overleg-lachend.webp')",
@@ -447,19 +451,20 @@ export default async function HomePage() {
                 <span className="cat">Zorg</span>
               </Link>
               <div className="pbody">
-                <div className="meta">Leestijd 5 min · 10 maart 2026</div>
-                <h3>AI in de zorg: 5 toepassingen die tijd teruggeven</h3>
+                <div className="meta">Leestijd 4 min · 16 mei 2025</div>
+                <h3>Security &amp; Mendix in de zorg: bewustwording, geen blok aan het been</h3>
                 <p>
-                  Concrete voorbeelden van AI die zorgprofessionals ontlast, verantwoord ingezet.
+                  Waarom security in Mendix-applicaties een mindset moet zijn, van developer tot
+                  zorgverlener.
                 </p>
-                <Link href="/inzichten/ai-in-de-zorg" className="more">
+                <Link href="/inzichten/security-mendix-in-de-zorg" className="more">
                   Lees meer <ArrowRight />
                 </Link>
               </div>
             </article>
             <article className="post">
               <Link
-                href="/inzichten/compliant-en-snel"
+                href="/inzichten/van-0-naar-100-apps-in-een-bank"
                 className="cover"
                 style={{
                   backgroundImage: "url('/assets/photos/overleg-laptop.webp')",
@@ -469,12 +474,13 @@ export default async function HomePage() {
                 <span className="cat">Banken</span>
               </Link>
               <div className="pbody">
-                <div className="meta">Leestijd 6 min · 5 maart 2026</div>
-                <h3>Compliant én snel: de valse tegenstelling</h3>
+                <div className="meta">Leestijd 8 min · 10 april 2026</div>
+                <h3>Van 0 naar 100 apps in een bank: de 5 fases die wél werken</h3>
                 <p>
-                  Waarom veiligheid en snelheid elkaar niet hoeven uit te sluiten in financiële IT.
+                  Waarom schalen in een bank sneller complex wordt dan elders, en welke keuzes het
+                  verschil maken.
                 </p>
-                <Link href="/inzichten/compliant-en-snel" className="more">
+                <Link href="/inzichten/van-0-naar-100-apps-in-een-bank" className="more">
                   Lees meer <ArrowRight />
                 </Link>
               </div>

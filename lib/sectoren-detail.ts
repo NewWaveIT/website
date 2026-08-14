@@ -32,12 +32,20 @@ export interface SectorDetail {
   challenges: Challenge[];
   solutions: SolutionRow[];
   outcomes: KPI[];
-  caseTitle: string;
-  caseSector: string;
-  caseQuote: string;
-  caseNaam: string;
-  caseRol: string;
-  caseImage: string;
+  /** Optioneel: alleen invullen als er een écht, gepubliceerd klantverhaal voor
+   *  deze sector bestaat. Geen fictieve quotes/namen — leeg = sectie verborgen. */
+  caseTitle?: string;
+  caseSector?: string;
+  caseQuote?: string;
+  caseNaam?: string;
+  caseRol?: string;
+  caseImage?: string;
+  /** Slug van het bijbehorende /klantverhalen/[slug]. */
+  caseHref?: string;
+  /** Alternatief voor de klantverhaal-sectie zolang er nog geen goedgekeurde case is:
+   *  een concrete werkwijze-alinea (geen klantbewijs, geen verzonnen cijfers). Wordt
+   *  alleen getoond als caseTitle leeg is. */
+  waarborg?: string;
   insightsTitle: string;
   insights: Insight[];
   ctaTitle: string;
@@ -108,13 +116,6 @@ export const SECTOREN: Record<string, SectorDetail> = {
       { n: "+35%", l: "Hogere burgertevredenheid" },
       { n: "100%", l: "Auditproof opgeleverd" },
     ],
-    caseTitle: "COA: sneller en aantoonbaar",
-    caseSector: "Publieke sector · COA",
-    caseQuote:
-      "“Efficiënte en betrouwbare IT-oplossingen. The New Wave IT denkt echt mee met onze uitdagingen.”",
-    caseNaam: "Peter van Dam",
-    caseRol: "IT Manager, COA",
-    caseImage: "/assets/photos/overleg-laptop.webp",
     insightsTitle: "Kennis die je beleid vooruit denkt",
     insights: [
       { meta: "4 min · 15 mrt 2026", titel: "Vergunningverlening in weken, niet maanden" },
@@ -174,13 +175,14 @@ export const SECTOREN: Record<string, SectorDetail> = {
       { n: "-30%", l: "Minder verstoringsimpact" },
       { n: "100%", l: "Gebouwd binnen je kaders" },
     ],
-    caseTitle: "Vervoerder: sneller schakelen bij verstoringen",
-    caseSector: "Mobiliteit · Vervoerder",
+    caseTitle: "Twee schakels in de keten: hoe Moove installaties en ritregistratie automatiseerde",
+    caseSector: "Mobiliteit · Moove Connected Mobility",
     caseQuote:
-      "“We zien nu in één beeld wat er speelt en kunnen direct bijsturen. Dat scheelt reizigers uren.”",
-    caseNaam: "Ilse Vermeer",
-    caseRol: "Manager Operatie",
-    caseImage: "/assets/photos/team-presentatie-breed.webp",
+      "“Samenwerken met The New Wave IT voelt alsof je samenwerkt met goed ingewerkte en enthousiaste collega's. De samenwerking verliep direct soepel.”",
+    caseNaam: "Nina Klooster",
+    caseRol: "Product Manager, Moove",
+    caseImage: "/assets/photos/team-overleg-scherm.webp",
+    caseHref: "/klantverhalen/moove",
     insightsTitle: "Kennis voor mobiliteit en logistiek",
     insights: [
       { meta: "5 min · 12 mrt 2026", titel: "Van sensordata naar sturende systemen" },
@@ -240,16 +242,14 @@ export const SECTOREN: Record<string, SectorDetail> = {
       { n: "-50%", l: "Kortere doorlooptijd processen" },
       { n: "100%", l: "Binnen toezichtkaders" },
     ],
-    caseTitle: "Financial: compliant én snel",
-    caseSector: "Banken · Financial",
-    caseQuote:
-      "“Voor het eerst gaan snelheid en compliance hand in hand. We leveren wendbaar, en de toezichthouder is tevreden.”",
-    caseNaam: "Mark de Wit",
-    caseRol: "Hoofd Digitalisering",
-    caseImage: "/assets/photos/klantgesprek-tafel.webp",
+    waarborg:
+      "Geen klantlogo's op deze pagina, wel een concrete werkwijze. Wij leggen voor je eerste initiatief samen vast welke prioriteitscriteria gelden (waarde, risico, beheerlast, herbruikbaarheid) en wie waarover beslist, zodat 4-ogenprincipe en auditability vanaf dag één ingebouwd zijn, niet achteraf.",
     insightsTitle: "Kennis voor banken en financials",
     insights: [
-      { meta: "6 min · 5 mrt 2026", titel: "Compliant én snel: de valse tegenstelling" },
+      {
+        meta: "8 min · 10 apr 2026",
+        titel: "Van 0 naar 100 apps in een bank: de 5 fases die wél werken",
+      },
       { meta: "5 min · 22 feb 2026", titel: "Kernsystemen vernieuwen zonder risico" },
       { meta: "4 min · 10 feb 2026", titel: "Herleidbaarheid by design in low-code" },
     ],
@@ -306,16 +306,14 @@ export const SECTOREN: Record<string, SectorDetail> = {
       { n: "+ tijd", l: "Meer tijd voor de patiënt" },
       { n: "100%", l: "Veilig en compliant" },
     ],
-    caseTitle: "Zorginstelling: minder registreren, meer zorgen",
-    caseSector: "Zorg · Instelling",
-    caseQuote:
-      "“Onze mensen zijn weer bezig met zorg in plaats van formulieren. Het systeem werkt eindelijk mee.”",
-    caseNaam: "Anouk Prins",
-    caseRol: "Manager Zorg & Innovatie",
-    caseImage: "/assets/photos/overleg-lachend.webp",
+    waarborg:
+      "Elk traject start met dezelfde Security by Design-basis die we ook bij bestaande klanten toepassen: toegangsrollen correct instellen, data-afscherming, en concrete NEN 7510/AVG-maatregelen zoals logging en pseudonimisering, vastgelegd vóór de bouw begint, niet als checklist achteraf.",
     insightsTitle: "Kennis voor de zorg",
     insights: [
-      { meta: "5 min · 10 mrt 2026", titel: "AI in de zorg: 5 toepassingen die tijd teruggeven" },
+      {
+        meta: "4 min · 16 mei 2025",
+        titel: "Security & Mendix in de zorg: hoe bouw je bewustwording, geen blok aan het been",
+      },
       { meta: "6 min · 25 feb 2026", titel: "Registratielast wegnemen zonder concessies" },
       { meta: "4 min · 12 feb 2026", titel: "Veilig koppelen aan het EPD" },
     ],
@@ -372,13 +370,8 @@ export const SECTOREN: Record<string, SectorDetail> = {
       { n: "Realtime", l: "Inzicht van shopfloor tot boardroom" },
       { n: "100%", l: "Gebouwd binnen je kaders" },
     ],
-    caseTitle: "Producent: sturen op realtime data",
-    caseSector: "Manufacturing · Producent",
-    caseQuote:
-      "“We zien nu direct wat er op de lijn gebeurt en sturen bij vóór het misgaat. De omsteltijden zijn flink korter.”",
-    caseNaam: "Bram Kok",
-    caseRol: "Operations Director",
-    caseImage: "/assets/photos/team-overleg-scherm.webp",
+    waarborg:
+      "We beginnen altijd met een technische scan van je bestaande ERP/LIMS-landschap voordat we iets bouwen, zodat we weten welke koppelingen en knelpunten er écht zijn, in plaats van een generieke oplossing aan te bieden.",
     insightsTitle: "Kennis voor manufacturing",
     insights: [
       { meta: "5 min · 8 mrt 2026", titel: "Van machinedata naar sturende systemen" },

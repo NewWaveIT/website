@@ -248,6 +248,23 @@
   color: var(--text-strong);
 }
 
+.p-sector .waarborg-card {
+  background: var(--white);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-lg);
+  padding: var(--space-8);
+  max-width: 760px;
+}
+.p-sector .waarborg-card p {
+  font-family: var(--font-display);
+  font-weight: var(--fw-semibold);
+  font-size: var(--text-lg);
+  line-height: var(--leading-snug);
+  color: var(--text-strong);
+  margin: 0;
+}
+
 .p-sector .cards3 {
   display: grid;
   grid-template-columns: repeat(3, 1fr);

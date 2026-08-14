@@ -69,8 +69,6 @@ export const PAGE_FIELDS: Record<string, FieldDef[]> = {
     { key: "waarde2Tekst", label: "Waarde 2 — tekst", type: "textarea" },
     { key: "waarde3Titel", label: "Waarde 3 — titel", type: "text" },
     { key: "waarde3Tekst", label: "Waarde 3 — tekst", type: "textarea" },
-    { key: "waarde4Titel", label: "Waarde 4 — titel", type: "text" },
-    { key: "waarde4Tekst", label: "Waarde 4 — tekst", type: "textarea" },
   ],
   contact: [
     { key: "heroTitleStart", label: "Hero — titel (begin)", type: "text" },
@@ -202,7 +200,7 @@ export const PAGE_DEFAULTS: Record<string, Record<string, string>> = {
     mensenKicker: "De mens centraal",
     mensenTitel: "Je werkt met mensen, niet met een leverancier.",
     mensenP1:
-      "Geen anonieme delivery-machine: bij ons ken je de mensen die jouw vraagstuk oplossen. Gepassioneerde consultants en engineers die naast je team staan, van eerste sessie tot livegang en daarna.",
+      "Geen anonieme delivery-machine: bij ons ken je de mensen die jouw vraagstuk oplossen. Gepassioneerde consultants en engineers die naast je team staan, van eerste sessie tot livegang en daarna. Van wekelijkse Wavetime-sessies tot onze jaarlijkse Company week, we investeren structureel in hoe we sámen werken, niet alleen in wat we opleveren.",
     mensenP2:
       "Ons doel? Dat jouw mensen er beter van worden. Technologie is het middel, de mens is de maat.",
     joinusKicker: "Werken bij The New Wave IT",
@@ -231,33 +229,31 @@ export const PAGE_DEFAULTS: Record<string, Record<string, string>> = {
     heroAccent: "vooruitgang",
     heroLead:
       "Wij geloven dat succesvolle verandering begint bij mensen. Daarom verzorgen wij alle randvoorwaarden voor onze Wavers, en helpen zij onze partners maximaal digitaal versnellen. Zo staat jouw organisatie klaar voor de dag van overmorgen.",
-    missieTitel: "Maximale digitale impact, met de mens als maat.",
+    missieTitel:
+      "Wij geloven dat de mens de centrale factor is in het behalen van business doelstellingen.",
     missieP1:
-      "Onze missie is bedrijven te helpen maximale digitale impact te realiseren door technologie én mens centraal te stellen. Met innovatieve low-code- en AI-oplossingen versnellen wij digitale transformatie en dragen we bij aan een duurzame toekomst.",
+      "The New Wave IT is opgericht vanuit één overtuiging: technologie is het middel, de mens is de maat. Wij zijn geen anonieme delivery-machine. Je werkt met mensen die je vraagstuk écht doorgronden, van de eerste sessie tot livegang en daarna.",
     missieP2:
       "Dat doen we door op elk project de mensen te kiezen van wie de ervaring, skills en ambitie het beste passen bij jouw vraagstuk. Ons doel? Dat elk mens werk doet dat aansluit bij zijn of haar persoonlijke doelen en drijfveren.",
     teamTitel: "Ontmoet de Wavers.",
     teamP1:
       "Geen anonieme delivery-machine: je kent de mensen die jouw vraagstuk oplossen. Senior consultants en engineers die de taal van de boardroom én de werkvloer spreken, betrokken als partner.",
     teamP2:
-      "Van strategische sessies tot livegang en beheer: hetzelfde team blijft aan boord. Zo houden we vaart, kwaliteit en verantwoordelijkheid bij elkaar.",
+      "Van strategische sessies tot livegang en beheer: hetzelfde team blijft aan boord. Zo houden we vaart, kwaliteit en verantwoordelijkheid bij elkaar. Wekelijkse Wavetime-sessies en een jaarlijkse Company week: structurele investering in hoe we sámen werken.",
     ctaTitel: "Benieuwd wat onze mensen voor jouw doelen kunnen betekenen?",
     heroLeadMobiel:
       "Succesvolle verandering begint bij mensen. Wij verzorgen de randvoorwaarden voor onze Wavers, zij helpen onze partners maximaal digitaal versnellen.",
     waardenKicker: "Waar wij voor staan",
     waardenTitel: "Vier overtuigingen die je terugziet in ons werk",
-    waarde1Titel: "De mens 100% centraal",
+    waarde1Titel: "Mens centraal",
     waarde1Tekst:
-      "Technologie is het middel. We bouwen oplossingen rond de mensen die ermee moeten werken, bij jou en bij ons.",
-    waarde2Titel: "Gelijk speelveld",
+      "De mens is de centrale factor in het behalen van business doelstellingen, niet de technologie zelf.",
+    waarde2Titel: "Pragmatisch",
     waarde2Tekst:
-      "Beloning is bij ons gelijk en transparant voor iedereen met dezelfde ervaring, ongeacht gender of achtergrond.",
-    waarde3Titel: "Verschillen versterken",
+      "Direct tastbare waarde: we kiezen wat jouw vraagstuk oplost, niet wat toevallig in de mode is.",
+    waarde3Titel: "Autoriteit door bewijs",
     waarde3Tekst:
-      "Elk mens is gelijk. We geloven dat diverse teams tot betere oplossingen komen, voor onze partners en elkaar.",
-    waarde4Titel: "Duurzaam ondernemen",
-    waarde4Tekst:
-      "Ondernemen en maatschappelijke bijdrage horen bij elkaar. In 2030 is ons businessmodel 100% CO2-neutraal.",
+      "Bewezen frameworks (App Factory, OGSM, 3-Horizonsmodel) en concrete resultaten, geen losse claims.",
   },
   contact: {
     heroTitleStart: "Waar kunnen we je ",
@@ -282,7 +278,7 @@ export const PAGE_DEFAULTS: Record<string, Record<string, string>> = {
     heroAccent: "één doel",
     heroTitleEnd: ": jouw resultaat.",
     heroLead:
-      "Wij combineren Mendix, AI en digitale strategie tot oplossingen die werken voor de mensen die ermee moeten werken. Altijd vanuit jouw sectorvraagstuk, nooit vanuit de technologie.",
+      "Mendix, AI en strategie zijn geen doel op zich. Het zijn drie manieren om hetzelfde te bereiken: business en IT dichter bij elkaar brengen. We kiezen per vraagstuk wat werkt, van een losse Mendix-applicatie tot een volledige Strategy & App in a Day met je directie.",
     heroLeadMobiel:
       "Mendix, AI en digitale strategie, altijd vanuit jouw sectorvraagstuk, nooit vanuit de technologie.",
     samenKicker: "Sterker samen",
@@ -308,7 +304,7 @@ export const PAGE_DEFAULTS: Record<string, Record<string, string>> = {
     heroTitleStart: "Wij spreken de taal van ",
     heroAccent: "jouw sector",
     heroLead:
-      "Geen generieke IT-dienstverlener, maar een business-specialist in vijf markten. We kennen de processen, de wetgeving en de systemen, zodat we bij het eerste gesprek al de diepte in kunnen.",
+      "Wij kiezen bewust voor vijf sectoren in plaats van generiek IT-advies: publieke sector, mobiliteit, banken, zorg en manufacturing. In elke sector kennen we de regels, de systemen en de druk waaronder jouw organisatie werkt. Daardoor leveren we sneller iets dat écht past, in plaats van een generieke oplossing die overal een beetje werkt.",
     heroLeadMobiel:
       "Business-specialist in vijf markten. We kennen de processen, de wetgeving en de systemen, zodat het eerste gesprek meteen de diepte in kan.",
     werkwijzeKicker: "Waarom sectorfocus",
@@ -361,10 +357,11 @@ export const PAGE_DEFAULTS: Record<string, Record<string, string>> = {
     cultuurKicker: "Onze cultuur",
     cultuurTitel: "Ondernemende mensen, gelijk speelveld.",
     cultuurP:
-      "Wij geloven dat de ondernemende mens zorgt voor vooruitgang en succesvolle verandering. Dat vraagt om een omgeving waarin iedereen gelijk is en verschillen versterken.",
-    cultuur1: "Gelijke, transparante beloning bij gelijke ervaring, ongeacht gender of achtergrond",
-    cultuur2: "Projecten gekozen op jouw ervaring, skills én ambitie",
-    cultuur3: "Zeggenschap: meebeslissen over strategie en investeringen",
-    cultuur4: "Maatschappelijke impact: duurzaamheid, gendergelijkheid en arbeidsparticipatie",
+      "Je werkt hier niet vóór ons, je werkt mét ons. Gepassioneerde consultants en engineers die naast klantteams staan en zelf ruimte krijgen om te groeien naar expertrollen.",
+    cultuur1: "Persoonlijk groeipad, geen vaste carrièreladder",
+    cultuur2: "Wavetime en Company week als vaste cultuurrituelen",
+    cultuur3:
+      "Werken met bewezen frameworks (App Factory, OGSM, Strategy & App in a Day) in plaats van losse projecten",
+    cultuur4: "#4 · Computable Werkgevers Awards 2025",
   },
 };

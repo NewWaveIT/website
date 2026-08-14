@@ -93,7 +93,7 @@ export default async function DienstPage({ params }: { params: Promise<{ slug: s
           <a href="#diensten">{d.naam}-diensten</a>
           <a href="#aanpak">Aanpak</a>
           <a href="#waarom">Waarom wij</a>
-          <a href="#klantverhaal">Klantverhalen</a>
+          {d.caseTitle && <a href="#klantverhaal">Klantverhalen</a>}
         </div>
       </nav>
 
@@ -284,44 +284,46 @@ export default async function DienstPage({ params }: { params: Promise<{ slug: s
         </div>
       </section>
 
-      <section className="block featured" id="klantverhaal">
-        <div className="wrap-wide">
-          <div className="sec-head">
-            <div className="kicker">Klantverhaal</div>
-            <h2
-              style={{
-                fontSize: "var(--text-3xl)",
-                fontWeight: "var(--fw-extrabold)",
-                margin: "var(--space-4) 0 0",
-              }}
-            >
-              {d.caseTitle}
-            </h2>
-          </div>
-          <div className="case-mini">
-            <div className="media" style={{ backgroundImage: `url('${d.caseImage}')` }}>
-              <button type="button" className="playbig" aria-label="Bekijk video">
-                <Play />
-              </button>
+      {d.caseTitle && (
+        <section className="block featured" id="klantverhaal">
+          <div className="wrap-wide">
+            <div className="sec-head">
+              <div className="kicker">Klantverhaal</div>
+              <h2
+                style={{
+                  fontSize: "var(--text-3xl)",
+                  fontWeight: "var(--fw-extrabold)",
+                  margin: "var(--space-4) 0 0",
+                }}
+              >
+                {d.caseTitle}
+              </h2>
             </div>
-            <div className="body">
-              <div className="kicker">{d.caseSector}</div>
-              <blockquote>{d.caseQuote}</blockquote>
-              <div className="who">
-                <strong>{d.caseNaam}</strong>, {d.caseRol}
-                <br />
-                <Link
-                  href="/klantverhalen/coa"
-                  className="more"
-                  style={{ display: "inline-block", marginTop: 14 }}
-                >
-                  Lees het volledige verhaal →
-                </Link>
+            <div className="case-mini">
+              <div className="media" style={{ backgroundImage: `url('${d.caseImage}')` }}>
+                <button type="button" className="playbig" aria-label="Bekijk video">
+                  <Play />
+                </button>
+              </div>
+              <div className="body">
+                <div className="kicker">{d.caseSector}</div>
+                <blockquote>{d.caseQuote}</blockquote>
+                <div className="who">
+                  <strong>{d.caseNaam}</strong>, {d.caseRol}
+                  <br />
+                  <Link
+                    href={d.caseHref ?? "/klantverhalen"}
+                    className="more"
+                    style={{ display: "inline-block", marginTop: 14 }}
+                  >
+                    Lees het volledige verhaal →
+                  </Link>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       <section className="block">
         <div className="wrap-wide">

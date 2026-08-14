@@ -312,6 +312,10 @@
   overflow: hidden;
   flex: none;
   background: var(--ink-100);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ink-300);
 }
 .cms .authortile:hover {
   border-color: var(--border-strong);

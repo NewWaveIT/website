@@ -233,44 +233,68 @@ export default async function SectorPage({ params }: { params: Promise<{ slug: s
         </div>
       </section>
 
-      <section className="block featured">
-        <div className="wrap-wide">
-          <div className="sec-head">
-            <div className="kicker">Klantverhaal</div>
-            <h2
-              style={{
-                fontSize: "var(--text-3xl)",
-                fontWeight: "var(--fw-extrabold)",
-                margin: "var(--space-4) 0 0",
-              }}
-            >
-              {s.caseTitle}
-            </h2>
-          </div>
-          <div className="case-mini">
-            <div className="media" style={{ backgroundImage: `url('${s.caseImage}')` }}>
-              <button type="button" className="playbig" aria-label="Bekijk video">
-                <Play />
-              </button>
+      {!s.caseTitle && s.waarborg && (
+        <section className="block featured">
+          <div className="wrap-wide">
+            <div className="sec-head">
+              <div className="kicker">Onze werkwijze</div>
+              <h2
+                style={{
+                  fontSize: "var(--text-3xl)",
+                  fontWeight: "var(--fw-extrabold)",
+                  margin: "var(--space-4) 0 0",
+                }}
+              >
+                Nog geen klantverhaal in {s.naam.toLowerCase()}, wel een concrete werkwijze
+              </h2>
             </div>
-            <div className="body">
-              <div className="kicker">{s.caseSector}</div>
-              <blockquote>{s.caseQuote}</blockquote>
-              <div className="who">
-                <strong>{s.caseNaam}</strong>, {s.caseRol}
-                <br />
-                <Link
-                  href="/klantverhalen/coa"
-                  className="more"
-                  style={{ display: "inline-block", marginTop: 14 }}
-                >
-                  Lees het volledige verhaal →
-                </Link>
+            <div className="waarborg-card">
+              <p>{s.waarborg}</p>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {s.caseTitle && (
+        <section className="block featured">
+          <div className="wrap-wide">
+            <div className="sec-head">
+              <div className="kicker">Klantverhaal</div>
+              <h2
+                style={{
+                  fontSize: "var(--text-3xl)",
+                  fontWeight: "var(--fw-extrabold)",
+                  margin: "var(--space-4) 0 0",
+                }}
+              >
+                {s.caseTitle}
+              </h2>
+            </div>
+            <div className="case-mini">
+              <div className="media" style={{ backgroundImage: `url('${s.caseImage}')` }}>
+                <button type="button" className="playbig" aria-label="Bekijk video">
+                  <Play />
+                </button>
+              </div>
+              <div className="body">
+                <div className="kicker">{s.caseSector}</div>
+                <blockquote>{s.caseQuote}</blockquote>
+                <div className="who">
+                  <strong>{s.caseNaam}</strong>, {s.caseRol}
+                  <br />
+                  <Link
+                    href={s.caseHref ?? "/klantverhalen"}
+                    className="more"
+                    style={{ display: "inline-block", marginTop: 14 }}
+                  >
+                    Lees het volledige verhaal →
+                  </Link>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       <section className="block">
         <div className="wrap-wide">

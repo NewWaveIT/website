@@ -2,11 +2,12 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import { UserRound } from "lucide-react";
 
 export interface TeamOptie {
   slug: string;
   naam: string;
-  foto: string;
+  foto?: string;
 }
 
 export function AuthorField({
@@ -41,7 +42,11 @@ export function AuthorField({
                 onClick={() => setValue(active ? "" : o.slug)}
               >
                 <span className="av">
-                  <Image src={o.foto} alt="" fill sizes="44px" style={{ objectFit: "cover" }} />
+                  {o.foto ? (
+                    <Image src={o.foto} alt="" fill sizes="44px" style={{ objectFit: "cover" }} />
+                  ) : (
+                    <UserRound size={18} />
+                  )}
                 </span>
                 <span className="nm">{o.naam}</span>
               </button>

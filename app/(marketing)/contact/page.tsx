@@ -150,8 +150,12 @@ export default async function ContactPage() {
             </div>
             <div className="direct">
               <h3>Bezoekadres</h3>
-              <a href="#">
-                <MapPin /> Utrecht — koffie staat klaar
+              <a
+                href="https://maps.google.com/?q=Ganzenmarkt+6+Utrecht"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <MapPin /> Ganzenmarkt 6, Utrecht — koffie staat klaar
               </a>
               <a
                 href="https://www.linkedin.com/company/the-new-wave-it"

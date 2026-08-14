@@ -88,9 +88,24 @@ export default async function CasePage({ params }: { params: Promise<{ slug: str
             <div dangerouslySetInnerHTML={{ __html: k.challenge }} />
             <p className="pull">{k.pull}</p>
             <h2>De aanpak</h2>
-            {k.aanpak.map((p, i) => (
-              <p key={i}>{p}</p>
-            ))}
+            {k.secties && k.secties.length > 0
+              ? k.secties.map((sec, i) => (
+                  <div className="sectie" key={i}>
+                    <h3>
+                      <span className="num">{String(i + 1).padStart(2, "0")}</span>
+                      {sec.titel}
+                    </h3>
+                    <p>{sec.tekst}</p>
+                    {sec.resultaten.length > 0 && (
+                      <ul>
+                        {sec.resultaten.map((r, j) => (
+                          <li key={j}>{r}</li>
+                        ))}
+                      </ul>
+                    )}
+                  </div>
+                ))
+              : k.aanpak.map((p, i) => <p key={i}>{p}</p>)}
             <h2>Het resultaat</h2>
             <div dangerouslySetInnerHTML={{ __html: k.resultaat }} />
           </div>
@@ -133,34 +148,36 @@ export default async function CasePage({ params }: { params: Promise<{ slug: str
         </div>
       </section>
 
-      <section className="block">
-        <div className="wrap-wide">
-          <div className="eyebrow-row">
-            <div>
-              <div className="kicker">Meer klantverhalen</div>
-              <h2>Resultaten in andere sectoren</h2>
-            </div>
-            <Link href="/klantverhalen" className="btn btn-outline btn-sm">
-              Alle verhalen <ArrowRight />
-            </Link>
-          </div>
-          <div className="cards3">
-            {meer.map((m) => (
-              <Link href={`/klantverhalen/${m.slug}`} className="post" key={m.slug}>
-                <div className="cover" style={{ backgroundImage: `url('${m.image}')` }}>
-                  <span className="cat">{m.sector}</span>
-                </div>
-                <div className="pbody">
-                  <h3>{m.cardTitel}</h3>
-                  <span className="more">
-                    Lees het verhaal <ArrowRight />
-                  </span>
-                </div>
+      {meer.length > 0 && (
+        <section className="block">
+          <div className="wrap-wide">
+            <div className="eyebrow-row">
+              <div>
+                <div className="kicker">Meer klantverhalen</div>
+                <h2>Resultaten in andere sectoren</h2>
+              </div>
+              <Link href="/klantverhalen" className="btn btn-outline btn-sm">
+                Alle verhalen <ArrowRight />
               </Link>
-            ))}
+            </div>
+            <div className="cards3">
+              {meer.map((m) => (
+                <Link href={`/klantverhalen/${m.slug}`} className="post" key={m.slug}>
+                  <div className="cover" style={{ backgroundImage: `url('${m.image}')` }}>
+                    <span className="cat">{m.sector}</span>
+                  </div>
+                  <div className="pbody">
+                    <h3>{m.cardTitel}</h3>
+                    <span className="more">
+                      Lees het verhaal <ArrowRight />
+                    </span>
+                  </div>
+                </Link>
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       <section className="cta">
         <div className="wrap-wide">

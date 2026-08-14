@@ -4,7 +4,9 @@ export interface Teamlid {
   slug: string;
   naam: string;
   rol: string;
-  foto: string;
+  /** Optioneel: alleen invullen als er een echte, goedgekeurde profielfoto is.
+   *  Leeg = de teamcarousel toont een neutraal avatar-icoon. */
+  foto?: string;
   bio: string;
   /** Contactrol: "Sales", "Recruitment", "Sales & recruitment" of leeg. Bepaalt
    *  welk teamlid als contactpersoon op de contact- resp. vacaturepagina toont. */
@@ -37,17 +39,45 @@ export const TEAMLEDEN: Teamlid[] = [
     email: "hello@thenewwaveit.com",
   },
   {
-    slug: "sanne-willems",
-    naam: "Sanne Willems",
-    rol: "AI Engineer",
-    foto: "/assets/photos/portret-bordeaux.webp",
-    bio: "Brengt AI van experiment naar geborgd, uitlegbaar proces.",
+    slug: "jeroen-plooij",
+    naam: "Jeroen Plooij",
+    rol: "Mendix Consultant",
+    bio: "",
   },
   {
-    slug: "jesse-de-boer",
-    naam: "Jesse de Boer",
-    rol: "Lead Mendix Consultant",
-    foto: "/assets/photos/portret-duimen.webp",
-    bio: "Bouwt bedrijfskritische low-code applicaties en coacht teams.",
+    slug: "sonny-van-rein",
+    naam: "Sonny van Rein",
+    rol: "Mendix Consultant",
+    bio: "",
+  },
+  {
+    slug: "aclan-aksoy",
+    naam: "Aclan Aksoy",
+    rol: "Mendix Consultant",
+    bio: "",
+  },
+  {
+    slug: "thijs-van-den-bosch",
+    naam: "Thijs van den Bosch",
+    rol: "Mendix Consultant",
+    bio: "",
+  },
+  {
+    slug: "remco-den-hartog",
+    naam: "Remco den Hartog",
+    rol: "Mendix Consultant",
+    bio: "",
+  },
+  {
+    slug: "furkan-karacaer",
+    naam: "Furkan Karacaer",
+    rol: "Mendix Consultant",
+    bio: "",
+  },
+  {
+    slug: "naufal-el-amrani",
+    naam: "Naufal el Amrani",
+    rol: "Marketing stagiair",
+    bio: "",
   },
 ];

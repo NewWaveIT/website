@@ -2,7 +2,7 @@
 
 import { useRef } from "react";
 import Image from "next/image";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, UserRound } from "lucide-react";
 import type { Teamlid } from "@/lib/team";
 
 export function TeamCarousel({ team }: { team: Teamlid[] }) {
@@ -30,13 +30,19 @@ export function TeamCarousel({ team }: { team: Teamlid[] }) {
         {team.map((m) => (
           <div className="tcard" key={m.slug}>
             <div className="pf">
-              <Image
-                src={m.foto}
-                alt={m.naam}
-                fill
-                sizes="300px"
-                style={{ objectPosition: "top" }}
-              />
+              {m.foto ? (
+                <Image
+                  src={m.foto}
+                  alt={m.naam}
+                  fill
+                  sizes="300px"
+                  style={{ objectPosition: "top" }}
+                />
+              ) : (
+                <div className="pf-fallback" aria-hidden="true">
+                  <UserRound />
+                </div>
+              )}
             </div>
             <div className="nm">{m.naam}</div>
             <div className="rl">{m.rol}</div>

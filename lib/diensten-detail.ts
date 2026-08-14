@@ -60,12 +60,16 @@ export interface DienstDetail {
   experts: Expert[];
   partners: string[];
   outcomes: KPI[];
-  caseTitle: string;
-  caseSector: string;
-  caseQuote: string;
-  caseNaam: string;
-  caseRol: string;
-  caseImage: string;
+  /** Optioneel: alleen invullen als er een écht, gepubliceerd klantverhaal voor
+   *  deze dienst bestaat. Geen fictieve quotes/namen — leeg = sectie verborgen. */
+  caseTitle?: string;
+  caseSector?: string;
+  caseQuote?: string;
+  caseNaam?: string;
+  caseRol?: string;
+  caseImage?: string;
+  /** Slug van het bijbehorende /klantverhalen/[slug]. */
+  caseHref?: string;
   insightsTitle: string;
   insights: Insight[];
   ctaTitle: string;
@@ -79,11 +83,11 @@ export const DIENSTEN: Record<string, DienstDetail> = {
     badgeLabel: "Mendix Premium Partner",
     h1: "Op maat gebouwd, 6–10× sneller live.",
     intro:
-      "Op maat gemaakte low-code applicaties die jouw specifieke uitdaging oplossen, van proof-of-concept tot productie in weken, niet maanden. Schaalbaar, beheerbaar en gebouwd rond je mensen.",
+      "Op maat gemaakte low-code applicaties die jouw specifieke uitdaging oplossen. Vaak staat er binnen een week een eerste werkende versie, en binnen enkele maanden een live applicatie. Schaalbaar, beheerbaar en gebouwd rond je mensen.",
     ctaSecondary: "Bekijk cases",
     kpis: [
       { n: "6–10×", l: "Sneller dan traditionele bouw" },
-      { n: "< 12", l: "Weken van start tot eerste release" },
+      { n: "1 week", l: "Vaak een eerste werkende versie" },
       { n: "100%", l: "Overdraagbaar aan je eigen team" },
     ],
     vraagstukken: [
@@ -128,7 +132,7 @@ export const DIENSTEN: Record<string, DienstDetail> = {
       {
         num: "02",
         titel: "Bouwen",
-        p: "Van proof-of-concept naar productie in weken, niet maanden.",
+        p: "Vaak van proof-of-concept naar productie in enkele maanden, niet in een jaar.",
         items: [
           {
             summary: "Van PoC naar productie",
@@ -195,7 +199,7 @@ export const DIENSTEN: Record<string, DienstDetail> = {
       },
       {
         titel: "6–10× sneller live",
-        p: "Geen maandenlange trajecten: werkende software vanaf sprint één, productie in weken.",
+        p: "Vaak geen jarenlange trajecten: werkende software vanaf sprint één, doorgaans live binnen enkele maanden.",
       },
       {
         titel: "Kennis blijft bij jou",
@@ -210,13 +214,7 @@ export const DIENSTEN: Record<string, DienstDetail> = {
       "Werk met een expert, onze leads denken vrijblijvend mee over jouw applicatielandschap.",
     experts: [
       {
-        img: "/assets/photos/portret-bordeaux.webp",
-        role: "Practice Lead Mendix",
-        naam: "Jesse de Boer",
-        tel: "+31610751254",
-      },
-      {
-        img: "/assets/photos/portret-3.webp",
+        img: "/assets/photos/portret-blauw.webp",
         role: "CEO · Strategie & Sales",
         naam: "Koen Wijsman",
         tel: "+31610751254",
@@ -229,13 +227,14 @@ export const DIENSTEN: Record<string, DienstDetail> = {
       { n: "100%", l: "Gebouwd binnen je kaders" },
       { n: "1", l: "Team van business tot bouw" },
     ],
-    caseTitle: "COA: sneller en aantoonbaar",
-    caseSector: "Publieke sector · COA",
+    caseTitle: "Twee schakels in de keten: hoe Moove installaties en ritregistratie automatiseerde",
+    caseSector: "Mobiliteit · Moove Connected Mobility",
     caseQuote:
-      "“Efficiënte en betrouwbare IT-oplossingen. The New Wave IT denkt echt mee met onze uitdagingen.”",
-    caseNaam: "Peter van Dam",
-    caseRol: "IT Manager, COA",
-    caseImage: "/assets/photos/team-presentatie-breed.webp",
+      "“Samenwerken met The New Wave IT voelt alsof je samenwerkt met goed ingewerkte en enthousiaste collega's. De samenwerking verliep direct soepel.”",
+    caseNaam: "Nina Klooster",
+    caseRol: "Product Manager, Moove",
+    caseImage: "/assets/photos/team-overleg-scherm.webp",
+    caseHref: "/klantverhalen/moove",
     insightsTitle: "Kennis over bouwen met low-code",
     insights: [
       {
@@ -264,7 +263,7 @@ export const DIENSTEN: Record<string, DienstDetail> = {
     ctaSecondary: "Doe de AI-scan",
     kpis: [
       { n: "-40%", l: "Minder repetitief werk" },
-      { n: "< 6", l: "Weken tot eerste werkende pilot" },
+      { n: "8 weken", l: "Doorgaans tot werkend proces" },
       { n: "100%", l: "Uitlegbaar en controleerbaar" },
     ],
     vraagstukken: [
@@ -375,7 +374,7 @@ export const DIENSTEN: Record<string, DienstDetail> = {
         p: "We starten bij jouw sectorvraagstuk en rekenen elke use-case door op businesswaarde, met een eerlijk nee waar AI niet past.",
       },
       {
-        titel: "Werkende pilots binnen zes weken",
+        titel: "Doorgaans een werkend proces binnen 8 weken",
         p: "Geen rapporten die in een la verdwijnen: we bouwen in je eigen omgeving en schalen wat bewezen werkt.",
       },
       {
@@ -395,12 +394,6 @@ export const DIENSTEN: Record<string, DienstDetail> = {
         naam: "Koen Wijsman",
         tel: "+31610751254",
       },
-      {
-        img: "/assets/photos/portret-bordeaux.webp",
-        role: "Lead Data & Fundament",
-        naam: "Sanne Willems",
-        tel: "+31610751255",
-      },
     ],
     partners: ["Mendix", "Microsoft Azure", "OpenAI", "Databricks"],
     outcomes: [
@@ -409,13 +402,6 @@ export const DIENSTEN: Record<string, DienstDetail> = {
       { n: "100%", l: "Uitlegbare besluiten" },
       { n: "0", l: "Black boxes in productie" },
     ],
-    caseTitle: "Uitvoeringsorganisatie: triage met AI",
-    caseSector: "Publieke sector · Uitvoering",
-    caseQuote:
-      "“AI sorteert nu voor, onze mensen beslissen. De doorlooptijd is gehalveerd en elk besluit blijft uitlegbaar.”",
-    caseNaam: "Fatima el Idrissi",
-    caseRol: "Directeur Uitvoering",
-    caseImage: "/assets/photos/team-overleg-scherm.webp",
     insightsTitle: "Kennis over verantwoorde AI",
     insights: [
       {
@@ -530,6 +516,17 @@ export const DIENSTEN: Record<string, DienstDetail> = {
     ],
     aanpak: [
       {
+        kicker: "Strategy & App in a Day",
+        titel: "Eén dag, een scherpe roadmap én een werkende app",
+        p: "Met je directie brengen we in één intensieve dag strategische keuzes scherp (OGSM) én leveren we een eerste werkende app op als tastbaar resultaat. Zo weet je dezelfde dag nog of de koers klopt.",
+        punten: [
+          "Strategische keuzes scherp met OGSM",
+          "Direct een eerste werkende app als bewijs",
+          "Dezelfde dag nog weten of de koers klopt",
+        ],
+        ph: "[ foto · Strategy & App in a Day ]",
+      },
+      {
         kicker: "Richten",
         titel: "Een roadmap die keuzes maakt",
         p: "We vertalen je bedrijfsdoelen naar een geprioriteerde digitale agenda, met heldere mijlpalen, eigenaren en een eerlijke volgorde.",
@@ -578,12 +575,6 @@ export const DIENSTEN: Record<string, DienstDetail> = {
         naam: "Koen Wijsman",
         tel: "+31610751254",
       },
-      {
-        img: "/assets/photos/portret-3.webp",
-        role: "Lead Business Consulting",
-        naam: "Sanne Willems",
-        tel: "+31610751255",
-      },
     ],
     partners: ["Mendix", "Microsoft Azure", "OpenAI", "Databricks"],
     outcomes: [
@@ -592,13 +583,6 @@ export const DIENSTEN: Record<string, DienstDetail> = {
       { n: "4×", l: "Per jaar meetbaar bijgestuurd" },
       { n: "1", l: "Taal voor business en IT" },
     ],
-    caseTitle: "Familiebedrijf: van ambitie naar agenda",
-    caseSector: "Manufacturing · Familiebedrijf",
-    caseQuote:
-      "“Voor het eerst hebben business en IT hetzelfde plan. En het werkt, want elk kwartaal staat er iets nieuws in productie.”",
-    caseNaam: "Willem Hartog",
-    caseRol: "Algemeen directeur, familiebedrijf",
-    caseImage: "/assets/photos/klantgesprek-tafel.webp",
     insightsTitle: "Kennis die je koers vooruit denkt",
     insights: [
       {

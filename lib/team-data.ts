@@ -9,7 +9,7 @@ function mapRow(row: ContentRow): Teamlid {
     slug: row.slug,
     naam: row.titel,
     rol: s("rol"),
-    foto: fotoWebp(s("foto")) || "/assets/photos/portret-blauw.webp",
+    foto: fotoWebp(s("foto")) || undefined,
     bio: s("bio"),
     contactrol: s("contactrol"),
     telefoon: s("telefoon"),

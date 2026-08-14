@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
-import { Users, Scale, Sparkles, Leaf, MapPin, Award, Mail } from "lucide-react";
+import { Users, Target, MapPin, Award, Mail } from "lucide-react";
 import { getPagina } from "@/lib/paginas-data";
 import { getTeamleden } from "@/lib/team-data";
 import { AWARD } from "@/lib/award";
@@ -16,7 +16,7 @@ export const metadata: Metadata = {
   alternates: { canonical: "/over-ons" },
 };
 
-const WAARDE_ICONS = [Users, Scale, Sparkles, Leaf];
+const WAARDE_ICONS = [Users, Target, Award];
 
 const jsonLd = {
   "@context": "https://schema.org",
