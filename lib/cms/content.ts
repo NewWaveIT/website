@@ -43,12 +43,16 @@ export function fotoWebp(s: string | null | undefined): string {
   return (s ?? "").replace(/(\/assets\/photos\/[^\s"')]+)\.png/gi, "$1.webp");
 }
 
+/** Databases die niet reageren mogen een pagina niet lamleggen: elke query
+ *  krijgt een harde timeout, zodat we snel terugvallen op de statische content. */
+const QUERY_TIMEOUT_MS = 3000;
+
 async function count(table: string, onlyOpen?: string): Promise<number> {
   try {
     const supabase = await createClient();
     let q = supabase.from(table).select("*", { count: "exact", head: true });
     if (onlyOpen) q = q.neq("status", onlyOpen);
-    const { count: c } = await q;
+    const { count: c } = await q.abortSignal(AbortSignal.timeout(QUERY_TIMEOUT_MS));
     return c ?? 0;
   } catch {
     return 0;
@@ -103,7 +107,8 @@ export async function listContent<T = Record<string, unknown>>(
       .from(CONTENT_TABLE[type])
       .select("*")
       .order("volgorde", { ascending: true })
-      .order("bijgewerkt_op", { ascending: false });
+      .order("bijgewerkt_op", { ascending: false })
+      .abortSignal(AbortSignal.timeout(QUERY_TIMEOUT_MS));
     return (data as ContentRow<T>[]) ?? [];
   } catch {
     return [];
@@ -120,6 +125,7 @@ export async function getContentBySlug<T = Record<string, unknown>>(
       .from(CONTENT_TABLE[type])
       .select("*")
       .eq("slug", slug)
+      .abortSignal(AbortSignal.timeout(QUERY_TIMEOUT_MS))
       .maybeSingle();
     return (data as ContentRow<T>) ?? null;
   } catch {
@@ -137,6 +143,7 @@ export async function getContentById<T = Record<string, unknown>>(
       .from(CONTENT_TABLE[type])
       .select("*")
       .eq("id", id)
+      .abortSignal(AbortSignal.timeout(QUERY_TIMEOUT_MS))
       .maybeSingle();
     return (data as ContentRow<T>) ?? null;
   } catch {
@@ -154,7 +161,8 @@ export async function getPublishedContent<T = Record<string, unknown>>(
       .from(CONTENT_TABLE[type])
       .select("*")
       .eq("status", "live")
-      .order("volgorde", { ascending: true });
+      .order("volgorde", { ascending: true })
+      .abortSignal(AbortSignal.timeout(QUERY_TIMEOUT_MS));
     return (data as ContentRow<T>[]) ?? [];
   } catch {
     return [];
