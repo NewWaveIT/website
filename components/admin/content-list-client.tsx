@@ -55,6 +55,9 @@ export function ContentListClient({
     const params = new URLSearchParams(window.location.search);
     const ok = params.get("ok");
     if (!ok) return;
+    // Leest de ?ok=…-query (extern systeem: de URL na een server-redirect) —
+    // kan niet tijdens render.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setToast(
       ok === "aangemaakt"
         ? "Item aangemaakt."

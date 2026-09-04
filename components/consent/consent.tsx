@@ -19,6 +19,9 @@ export function Consent() {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    // Mount-detectie + localStorage-lezen: synchroniseert met een extern
+    // systeem dat tijdens SSR niet bestaat (anders hydration-mismatch).
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setMounted(true);
     try {
       const v = localStorage.getItem(KEY);

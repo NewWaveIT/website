@@ -73,6 +73,10 @@ export default function GlobalError({
             <button
               type="button"
               onClick={() => {
+                // global-error.tsx vervangt de hele root-layout (incl. providers),
+                // dus next/navigation is hier niet betrouwbaar beschikbaar — een
+                // harde navigatie is de door Next.js aanbevolen aanpak.
+                // eslint-disable-next-line @next/next/no-location-assign-relative-destination
                 window.location.href = "/";
               }}
               style={{
