@@ -3,7 +3,7 @@
 Marketingwebsite van The New Wave IT. Gebouwd op de huisstijl uit het Claude
 Design-project (sector-gedreven positionering, autoriteit en lead-gen).
 
-**Stack:** Next.js 15 (App Router) · React 19 · TypeScript (strict) ·
+**Stack:** Next.js 16 (App Router) · React 19 · TypeScript (strict) ·
 Tailwind CSS 4 · Supabase · Vercel.
 
 ## Lokaal draaien
@@ -109,13 +109,15 @@ beveiligd met Supabase Auth via `middleware.ts`.
 
 ## Scripts
 
-| Script              | Doel             |
-| ------------------- | ---------------- |
-| `npm run dev`       | Ontwikkelserver  |
-| `npm run build`     | Productiebuild   |
-| `npm run start`     | Productieserver  |
-| `npm run lint`      | ESLint           |
-| `npm run typecheck` | TypeScript-check |
+| Script              | Doel                            |
+| ------------------- | ------------------------------- |
+| `npm run dev`       | Ontwikkelserver                 |
+| `npm run build`     | Productiebuild                  |
+| `npm run start`     | Productieserver                 |
+| `npm run lint`      | ESLint                          |
+| `npm run typecheck` | TypeScript-check                |
+| `npm run test:unit` | Vitest-unittests (lib, actions) |
+| `npm run test:e2e`  | Playwright-smoketests           |
 
 ## Status
 

@@ -17,11 +17,17 @@ uit de code afleidt.
 | Designtokens            | `app/globals.css` `:root` — kleuren, spacing, type                                                              |
 | E-mail                  | `lib/email.ts` (Resend, fail-safe, 4 huisstijltemplates)                                                        |
 | Migraties               | `supabase/migrations/` (chronologisch geprefixt)                                                                |
+| Unit tests              | `tests/unit/` (Vitest) — pure logica: sanitize, formuliervalidatie                                              |
 
 ## Werkwijze bij elke wijziging
 
-- **Vóór commit altijd:** `npx tsc --noEmit`, `npx eslint .`, `npm run format:check`.
-  Dit is exact de CI-gate _"Typecheck · Lint · Format · Build"_ — rood daar blokkeert de PR.
+- **Pre-commit hook (Husky + lint-staged) draait automatisch:** ESLint + Prettier op
+  staged bestanden, daarna `npm run typecheck`. Dit dekt de CI-gate
+  _"Typecheck · Lint · Format · Build"_ lokaal af — rood daar blokkeert de PR.
+  Los daarvan blijft `npm run typecheck && npm run lint && npm run format:check`
+  het handmatige/CI-referentiecommando.
+- **CI draait daarnaast:** `npm run test:unit` (Vitest), de Playwright-e2e-smoketests,
+  CodeQL (security-scanning) en Dependabot (wekelijkse dependency-updates).
 - Commit met een heldere NL-boodschap. **Push alleen als de gebruiker erom vraagt.**
 - **Hergebruik bestaande patronen, tokens en CSS exact.** Introduceer geen nieuwe kleur,
   stijl of component-variant als er al één bestaat — consistentie boven creativiteit.

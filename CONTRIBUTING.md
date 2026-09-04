@@ -6,7 +6,7 @@ afspraken zodat de codebase consistent blijft.
 
 ## Stack
 
-- **Next.js 15** (App Router, React Server Components) + **React 19**
+- **Next.js 16** (App Router, React Server Components) + **React 19**
 - **TypeScript** in `strict`-modus (incl. `noUncheckedIndexedAccess`)
 - **Tailwind CSS 4** + `app/globals.css` voor het designsysteem
 - **Supabase** (Postgres + Storage) als CMS-backend, met ingebouwde fallback-content
@@ -21,11 +21,16 @@ npm run typecheck    # tsc --noEmit
 npm run lint         # ESLint, faalt bij >0 warnings
 npm run format       # Prettier: schrijf formattering
 npm run format:check # Prettier: alleen controleren (zoals CI doet)
+npm run test:unit    # Vitest: unittests voor pure logica (sanitize, formuliervalidatie)
 npm run test:e2e     # Playwright-smoketests (bouwt + start op poort 3100)
 ```
 
-Vóór een commit lokaal: `npm run typecheck && npm run lint && npm run format:check && npm run build`.
-CI draait exact deze checks plus de Playwright-smoketests op elke PR en push naar `main`.
+Een Husky pre-commit hook draait automatisch ESLint + Prettier op staged bestanden en
+daarna `npm run typecheck`, zodat een rode CI-run lokaal al wordt opgevangen. Handmatig
+(of als referentie voor wat CI doet): `npm run typecheck && npm run lint && npm run
+format:check && npm run test:unit && npm run build`. CI draait exact deze checks plus de
+Playwright-smoketests op elke PR en push naar `main`, plus CodeQL (security-scanning) en
+Dependabot (wekelijkse dependency-updates).
 
 ## Projectstructuur
 
@@ -37,6 +42,7 @@ components/          Herbruikbare UI, gegroepeerd per domein (home/, layout/, ad
 lib/                 Datalagen (*-data.ts), CMS-schema (cms/), helpers.
 supabase/migrations/ SQL-migraties (chronologisch geprefixt).
 tests/e2e/           Playwright-smoketests.
+tests/unit/          Vitest-unittests (pure logica, geen browser/server nodig).
 ```
 
 ## Conventies
@@ -71,5 +77,7 @@ tests/e2e/           Playwright-smoketests.
 ## Git & CI
 
 - Werk op een feature-branch; open een PR naar `main`.
-- CI moet groen zijn (typecheck, lint, format, build, e2e) voor merge.
+- CI moet groen zijn (typecheck, lint, format, unit-tests, build, e2e) voor merge.
+- CodeQL scant elke PR/push naar `main` plus wekelijks op security-issues.
+- Dependabot opent wekelijks PR's voor npm- en GitHub Actions-dependencies.
 - Deploy gebeurt via `git push` (Vercel bouwt automatisch).
