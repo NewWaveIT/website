@@ -31,25 +31,15 @@
     width: 72%;
   }
 }
-@keyframes hsBlink {
-  0%,
-  45% {
-    opacity: 0;
-  }
-  50%,
-  100% {
-    opacity: 1;
-  }
-}
 
 .hs-anim-row {
   animation: hsRowIn 0.5s cubic-bezier(0.16, 0.8, 0.24, 1) both;
 }
 
 /* Schermvullend: de hero vult de resterende viewport onder de sticky header
-   (76px nav + ~30px golf ≈ 106px), met minstens 520px op korte schermen. */
+   (76px nav), met minstens 520px op korte schermen. */
 .hs [data-hero] {
-  min-height: max(520px, calc(100dvh - 106px));
+  min-height: max(520px, calc(100dvh - 76px));
 }
 
 /* Desktop: foto full-bleed, systeem als zwevend venster rechtsonder. */

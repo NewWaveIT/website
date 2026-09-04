@@ -113,7 +113,7 @@ const SCENES: Scene[] = [
 ];
 
 const KICKER = ["Publieke sector", "Mobiliteit", "Banken", "Zorg", "Manufacturing"];
-const CYCLE_MS = 6000;
+const CYCLE_MS = 9000;
 
 /* ---- HTML-bouwstenen (trouw aan het design) ---- */
 
@@ -207,7 +207,7 @@ function rightHtml(s: Scene): string {
       </div>
       <div style="font-family:'Courier New',monospace;font-size:11px;letter-spacing:.08em;color:#9A8B73;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${s.crumb}</div>
       <div style="margin-left:auto;display:flex;align-items:center;gap:7px;">
-        <div style="width:6px;height:6px;background:#F15822;border-radius:50%;animation:hsBlink 1.1s steps(1,end) infinite;"></div>
+        <div style="width:6px;height:6px;background:#F15822;border-radius:50%;"></div>
         <span style="font-family:'Courier New',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#9A8B73;white-space:nowrap;">Run locally</span>
       </div>
     </div>
@@ -411,8 +411,8 @@ export function HeroSplit() {
               width: "9%",
               height: "116%",
               background:
-                "linear-gradient(90deg,rgba(241,88,34,0) 0%,rgba(241,88,34,.5) 40%,#F15822 100%)",
-              animation: "hsSweep 1.05s cubic-bezier(.55,0,.4,1) both",
+                "linear-gradient(90deg,rgba(241,88,34,0) 0%,rgba(241,88,34,.28) 45%,rgba(241,88,34,.6) 100%)",
+              animation: "hsSweep 1.6s cubic-bezier(.45,0,.35,1) both",
             }}
           />
         </div>

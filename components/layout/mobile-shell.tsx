@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
@@ -16,15 +16,16 @@ const MENU_LINKS = [
 export function MobileShell() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
-  const baseRef = useRef<SVGPathElement>(null);
-  const fillRef = useRef<SVGPathElement>(null);
+  const [prevPathname, setPrevPathname] = useState(pathname);
+
+  // Sluit menu bij navigatie. State aanpassen tijdens render (i.p.v. in een
+  // effect) voorkomt een extra render-cyclus na elke navigatie.
+  if (pathname !== prevPathname) {
+    setPrevPathname(pathname);
+    setOpen(false);
+  }
 
   const isActive = (href: string) => (href === "/" ? pathname === "/" : pathname.startsWith(href));
-
-  // Sluit menu bij navigatie
-  useEffect(() => {
-    setOpen(false);
-  }, [pathname]);
 
   // Body-scroll blokkeren bij open menu + Esc sluit
   useEffect(() => {
@@ -40,37 +41,18 @@ export function MobileShell() {
     };
   }, [open]);
 
-  // Scroll-voortgangsgolf + sticky CTA
+  // Sticky CTA: toont de knop na 420px scroll, verbergt 'm zodra de echte
+  // CTA in beeld komt.
   useEffect(() => {
-    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const W = 390,
-      MID = 8,
-      AMP = 4;
-    const wavePath = (len: number, phase: number) => {
-      if (len <= 0) return `M0,${MID}`;
-      let d = "";
-      for (let x = 0; x <= len; x += 5) {
-        const y = MID + AMP * Math.sin(x * 0.04 - phase);
-        d += (x === 0 ? "M" : "L") + x.toFixed(1) + "," + y.toFixed(1);
-      }
-      return d;
-    };
     const sticky = document.querySelector<HTMLElement>(".stickycta");
+    if (!sticky) return;
     let ticking = false;
     const draw = () => {
       ticking = false;
-      const h = document.documentElement;
-      const max = h.scrollHeight - h.clientHeight;
-      const p = max > 0 ? Math.min(1, Math.max(0, window.scrollY / max)) : 0;
-      const phase = reduced ? 0 : window.scrollY * 0.06;
-      baseRef.current?.setAttribute("d", wavePath(W, phase));
-      fillRef.current?.setAttribute("d", wavePath(W * p, phase));
-      if (sticky) {
-        const cta = document.querySelector<HTMLElement>(".cta");
-        const past = window.scrollY > 420;
-        const nearCta = cta ? cta.getBoundingClientRect().top < window.innerHeight : false;
-        sticky.classList.toggle("show", past && !nearCta);
-      }
+      const cta = document.querySelector<HTMLElement>(".cta");
+      const past = window.scrollY > 420;
+      const nearCta = cta ? cta.getBoundingClientRect().top < window.innerHeight : false;
+      sticky.classList.toggle("show", past && !nearCta);
     };
     const onScroll = () => {
       if (!ticking) {
@@ -107,13 +89,6 @@ export function MobileShell() {
           </button>
         </div>
       </header>
-
-      <div className="scrollwave" aria-hidden="true">
-        <svg viewBox="0 0 390 16" preserveAspectRatio="none">
-          <path ref={baseRef} className="sw-base" d="" />
-          <path ref={fillRef} className="sw-fill" d="" />
-        </svg>
-      </div>
 
       <div className={cn("m-menu", open && "open")} id="m-menu" aria-hidden={!open} inert={!open}>
         <div className="mtop">
