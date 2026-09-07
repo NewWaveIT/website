@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import { notFound } from "next/navigation";
-import { Boxes, BrainCircuit, Route, Check, Plus, Play, ArrowRight } from "lucide-react";
+import { Boxes, BrainCircuit, Route, Check, Plus, ArrowRight } from "lucide-react";
 import { getDienstBySlug, getDienstSlugs } from "@/lib/diensten-detail-data";
 import { stripHtml } from "@/lib/cms/sanitize";
 import { getArtikelenVoorDienst } from "@/lib/inzichten-data";
@@ -347,11 +347,7 @@ export default async function DienstPage({ params }: { params: Promise<{ slug: s
               </h2>
             </div>
             <div className="case-mini">
-              <div className="media" style={{ backgroundImage: `url('${d.caseImage}')` }}>
-                <button type="button" className="playbig" aria-label="Bekijk video">
-                  <Play />
-                </button>
-              </div>
+              <div className="media" style={{ backgroundImage: `url('${d.caseImage}')` }} />
               <div className="body">
                 <div className="kicker">{d.caseSector}</div>
                 <blockquote>{d.caseQuote}</blockquote>

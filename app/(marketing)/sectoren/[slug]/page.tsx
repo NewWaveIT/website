@@ -9,7 +9,6 @@ import {
   HeartPulse,
   Factory,
   Check,
-  Play,
   ArrowRight,
 } from "lucide-react";
 import { getSectorBySlug, getSectorSlugs } from "@/lib/sectoren-detail-data";
@@ -277,11 +276,7 @@ export default async function SectorPage({ params }: { params: Promise<{ slug: s
               </h2>
             </div>
             <div className="case-mini">
-              <div className="media" style={{ backgroundImage: `url('${s.caseImage}')` }}>
-                <button type="button" className="playbig" aria-label="Bekijk video">
-                  <Play />
-                </button>
-              </div>
+              <div className="media" style={{ backgroundImage: `url('${s.caseImage}')` }} />
               <div className="body">
                 <div className="kicker">{s.caseSector}</div>
                 <blockquote>{s.caseQuote}</blockquote>

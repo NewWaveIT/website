@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { Building2, Play, ArrowRight } from "lucide-react";
+import { Building2, ArrowRight } from "lucide-react";
 import { getKlantverhalen, getKlantverhaalBySlug } from "@/lib/klantverhalen-data";
 import type { Stap } from "@/lib/klantverhalen";
 import "./case.css";
@@ -78,12 +78,7 @@ export default async function CasePage({ params }: { params: Promise<{ slug: str
           </span>
           <h1>{k.h1}</h1>
           <p>{k.intro}</p>
-          <div className="video" style={{ backgroundImage: `url('${k.image}')` }}>
-            <button type="button" className="playbig" aria-label="Bekijk klantvideo">
-              <Play />
-            </button>
-            <span className="cap">[ klantvideo · {k.quoteNaam} over de samenwerking ]</span>
-          </div>
+          <div className="video" style={{ backgroundImage: `url('${k.image}')` }} />
         </div>
       </section>
 

@@ -178,7 +178,7 @@ export const SECTOREN: Record<string, SectorDetail> = {
     caseTitle: "Twee schakels in de keten: hoe Moove installaties en ritregistratie automatiseerde",
     caseSector: "Mobiliteit · Moove Connected Mobility",
     caseQuote:
-      "“Samenwerken met The New Wave IT voelt alsof je samenwerkt met goed ingewerkte en enthousiaste collega's. De samenwerking verliep direct soepel.”",
+      "“Samenwerken met The New Wave IT voelt alsof je samenwerkt met goed ingewerkte en enthousiaste collega's.”",
     caseNaam: "Nina Klooster",
     caseRol: "Product Manager, Moove",
     caseImage: "/assets/photos/team-brainstorm-glaswand.webp",

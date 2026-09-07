@@ -123,12 +123,6 @@ export const FIELD_SCHEMAS: Record<ContentType, FieldDef[]> = {
     { key: "quoteNaam", label: "Quote — naam", type: "text" },
     { key: "quoteRol", label: "Quote — rol", type: "text" },
     {
-      key: "aanpak",
-      label: "De aanpak (alinea's)",
-      type: "list",
-      help: "Elke regel is een alinea.",
-    },
-    {
       key: "impact",
       label: "Impact-cijfers",
       type: "items",

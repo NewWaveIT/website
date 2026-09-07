@@ -65,35 +65,6 @@
   justify-content: center;
   margin-top: var(--space-6);
 }
-.p-case .video .playbig {
-  width: 92px;
-  height: 92px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.94);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: var(--shadow-xl);
-  cursor: pointer;
-  border: none;
-  transition: transform 140ms;
-}
-.p-case .video .playbig:hover {
-  transform: scale(1.05);
-}
-.p-case .video .playbig .lucide {
-  width: 34px;
-  height: 34px;
-  color: var(--orange-text);
-}
-.p-case .video .cap {
-  position: absolute;
-  bottom: 18px;
-  left: 18px;
-  font-family: var(--font-mono);
-  font-size: 11px;
-  color: var(--text-on-dark-muted);
-}
 
 .p-case .impact {
   background: var(--ink-950);

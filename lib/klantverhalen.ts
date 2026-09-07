@@ -252,7 +252,7 @@ export const KLANTVERHALEN: Klantverhaal[] = [
       team: "Plan-build-run",
     },
     quote:
-      "“Samenwerken met The New Wave IT voelt alsof je samenwerkt met goed ingewerkte en enthousiaste collega's. De samenwerking verliep direct soepel, we hebben efficiënt gewerkt en hebben in de gestelde termijn twee prachtige applicaties opgeleverd die daadwerkelijk gebruikt worden.”",
+      "“Samenwerken met The New Wave IT voelt alsof je samenwerkt met goed ingewerkte en enthousiaste collega's.”",
     quoteNaam: "Nina Klooster",
     quoteRol: "Product Manager, Moove",
   },

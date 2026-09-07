@@ -1,15 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
-import {
-  Play,
-  ArrowRight,
-  Building2,
-  TrainFront,
-  Banknote,
-  HeartPulse,
-  Factory,
-} from "lucide-react";
+import { ArrowRight, Building2, TrainFront, Banknote, HeartPulse, Factory } from "lucide-react";
 import { getKlantverhalen } from "@/lib/klantverhalen-data";
 import { SectorHeroAnim } from "@/components/sector-hero-anim";
 import "./klantverhalen.css";
@@ -139,9 +131,6 @@ export default async function KlantverhalenPage() {
                   sizes="(max-width: 980px) 100vw, 45vw"
                   style={{ objectFit: "cover" }}
                 />
-                <button type="button" className="playbig" aria-label="Bekijk video">
-                  <Play />
-                </button>
               </div>
               <div className="body">
                 <div className="kicker">{featured.tag}</div>

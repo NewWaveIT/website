@@ -215,22 +215,6 @@
   align-items: center;
   justify-content: center;
 }
-.p-sector .case-mini .media .playbig {
-  width: 72px;
-  height: 72px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.92);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: var(--shadow-lg);
-  border: none;
-}
-.p-sector .case-mini .media .playbig .lucide {
-  width: 26px;
-  height: 26px;
-  color: var(--orange-text);
-}
 .p-sector .case-mini .body {
   background: var(--white);
   padding: var(--space-8);
