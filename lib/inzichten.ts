@@ -104,7 +104,7 @@ export const ARTIKELEN: Artikel[] = [
     leestijd: "5 min",
     titel: "Registratielast in de zorg: drie processen die morgen slimmer kunnen",
     auteur: "The New Wave IT",
-    image: "/assets/photos/team-presentatie-breed.webp",
+    image: "/assets/photos/team-presentatie-klant.webp",
     intro:
       "Zorgprofessionals registreren te veel en zorgen te weinig. Drie processen waar snelle winst zit.",
     body: [
@@ -121,7 +121,7 @@ export const ARTIKELEN: Artikel[] = [
     leestijd: "4 min",
     titel: "Novi: de AI-collega die overheidsteams grip geeft op digitalisering",
     auteur: "The New Wave IT",
-    image: "/assets/photos/klantgesprek-tafel.webp",
+    image: "/assets/photos/project-parkeergarage-rotterdam.webp",
     intro:
       "Hoe een zelflerende AI-assistent nieuwe medewerkers sneller inwerkt en 24/7 antwoord geeft op IT-vragen bij (semi)overheidsorganisaties.",
     body: [
@@ -139,7 +139,7 @@ export const ARTIKELEN: Artikel[] = [
     leestijd: "4 min",
     titel: "Security & Mendix in de zorg: hoe bouw je bewustwording, geen blok aan het been",
     auteur: "The New Wave IT",
-    image: "/assets/photos/overleg-lachend.webp",
+    image: "/assets/photos/team-overleg-flipover.webp",
     intro:
       "Waarom security in Mendix-applicaties een mindset moet zijn, van developer tot zorgverlener, en hoe je dat organiseert zonder de innovatie te vertragen.",
     body: [

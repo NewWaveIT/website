@@ -366,12 +366,12 @@
 }
 .fcase .body blockquote {
   font-family: var(--font-display);
-  font-weight: var(--fw-bold);
-  font-size: var(--text-xl);
-  line-height: var(--leading-snug);
+  font-weight: var(--fw-semibold);
+  font-size: var(--text-lg);
+  line-height: var(--leading-normal);
   color: var(--text-strong);
   margin: var(--space-4) 0 var(--space-6);
-  letter-spacing: var(--tracking-tight);
+  text-wrap: pretty;
 }
 .fcase .metrics {
   display: flex;

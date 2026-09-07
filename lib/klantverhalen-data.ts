@@ -3,16 +3,6 @@ import { getPublishedContent, fotoWebp, type ContentRow } from "@/lib/cms/conten
 import { sanitizeLite } from "@/lib/cms/sanitize";
 import { KLANTVERHALEN, KLANTVERHAAL_MAP, type Klantverhaal, type KPI } from "@/lib/klantverhalen";
 
-function paragraphs(v: unknown): string[] {
-  if (Array.isArray(v)) return v.filter((x): x is string => typeof x === "string");
-  if (typeof v === "string")
-    return v
-      .split(/\n\s*\n/)
-      .map((p) => p.trim())
-      .filter(Boolean);
-  return [];
-}
-
 function impactList(v: unknown): KPI[] {
   if (!Array.isArray(v)) return [];
   return v
@@ -37,7 +27,6 @@ function mapRow(row: ContentRow): Klantverhaal {
     impact: impactList(d.impact),
     challenge: sanitizeLite(s("challenge")),
     pull: s("pull"),
-    aanpak: paragraphs(d.aanpak),
     resultaat: sanitizeLite(s("resultaat")),
     aside: {
       sector: String(aside.sector ?? s("sector")),

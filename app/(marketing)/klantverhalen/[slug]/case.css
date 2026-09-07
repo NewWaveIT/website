@@ -183,6 +183,114 @@
   line-height: var(--leading-relaxed);
   margin: 0 0 var(--space-2);
 }
+.p-case .article .prose .subkop {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: var(--tracking-kicker);
+  text-transform: uppercase;
+  color: var(--text-subtle);
+  font-weight: var(--fw-medium);
+  margin: var(--space-5) 0 var(--space-2);
+}
+
+/* Keten-overzicht: procesdiagram bovenaan "De aanpak" */
+.p-case .article .prose .keten {
+  margin: 0 0 var(--space-7);
+  padding: var(--space-6);
+  background: var(--eggshell);
+  border-radius: var(--radius-lg);
+}
+.p-case .article .prose .keten h2 {
+  margin-top: 0;
+}
+.p-case .keten-synthese {
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+  font-style: italic;
+  margin: 0;
+}
+
+/* Stappen-flow: klein procesdiagram (keten of per sectie) */
+.p-case .stappen-flow {
+  display: flex;
+  align-items: stretch;
+  gap: var(--space-5);
+  flex-wrap: wrap;
+  margin: var(--space-5) 0;
+}
+.p-case .stap {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1 1 160px;
+  padding: var(--space-4);
+  background: var(--white);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+}
+.p-case .stappen-flow--klein .stap {
+  background: var(--eggshell);
+}
+.p-case .stap-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: var(--tracking-kicker);
+  text-transform: uppercase;
+  color: var(--orange-text);
+}
+.p-case .stap-titel {
+  font-weight: var(--fw-bold);
+  color: var(--text-strong);
+  font-size: var(--text-md);
+}
+.p-case .stap-tekst {
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+}
+.p-case .stap-arrow {
+  display: none;
+}
+@media (min-width: 700px) {
+  .p-case .stap-arrow {
+    display: block;
+    position: absolute;
+    top: 50%;
+    right: calc(-1 * var(--space-5) / 2 - 9px);
+    transform: translateY(-50%);
+    width: 18px;
+    height: 18px;
+    color: var(--ink-300);
+  }
+  .p-case .stap:last-child .stap-arrow {
+    display: none;
+  }
+}
+
+/* Resultaatkaarten: titel + toelichting i.p.v. een kale bullet */
+.p-case .resultaat-kaarten {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-4);
+  margin: var(--space-3) 0 var(--space-5);
+}
+.p-case .resultaat-kaart {
+  padding: var(--space-5);
+  background: var(--eggshell);
+  border-radius: var(--radius-md);
+}
+.p-case .resultaat-kaart h5 {
+  font-size: var(--text-sm);
+  font-weight: var(--fw-bold);
+  color: var(--text-strong);
+  margin: 0 0 6px;
+}
+.p-case .resultaat-kaart p {
+  font-size: var(--text-sm);
+  color: var(--text-body);
+  line-height: var(--leading-relaxed);
+  margin: 0;
+}
 .p-case .article aside {
   position: sticky;
   top: 100px;
@@ -249,13 +357,13 @@
 }
 .p-case .qblock blockquote {
   font-family: var(--font-display);
-  font-weight: var(--fw-bold);
-  font-size: var(--text-2xl);
-  line-height: var(--leading-snug);
+  font-weight: var(--fw-semibold);
+  font-size: var(--text-lg);
+  line-height: var(--leading-normal);
   color: var(--text-strong);
   margin: 0 0 var(--space-4);
-  letter-spacing: var(--tracking-tight);
-  max-width: 24ch;
+  max-width: 52ch;
+  text-wrap: pretty;
 }
 .p-case .qblock .who {
   font-size: var(--text-sm);
@@ -338,6 +446,9 @@
     align-items: flex-start;
   }
   .p-case .cards3 {
+    grid-template-columns: 1fr;
+  }
+  .p-case .resultaat-kaarten {
     grid-template-columns: 1fr;
   }
   .p-case .chero h1 {

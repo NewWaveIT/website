@@ -3,9 +3,26 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Building2, Play, ArrowRight } from "lucide-react";
 import { getKlantverhalen, getKlantverhaalBySlug } from "@/lib/klantverhalen-data";
+import type { Stap } from "@/lib/klantverhalen";
 import "./case.css";
 
 export const revalidate = 300;
+
+/** Klein procesdiagram (bv. "de keten in drie stappen" of een sectie-flow). */
+function StappenFlow({ stappen, klein = false }: { stappen: Stap[]; klein?: boolean }) {
+  return (
+    <div className={`stappen-flow${klein ? " stappen-flow--klein" : ""}`}>
+      {stappen.map((st, i) => (
+        <div className="stap" key={i}>
+          <span className="stap-label">{st.label}</span>
+          <span className="stap-titel">{st.titel}</span>
+          {st.tekst && <span className="stap-tekst">{st.tekst}</span>}
+          {i < stappen.length - 1 && <ArrowRight className="stap-arrow" aria-hidden="true" />}
+        </div>
+      ))}
+    </div>
+  );
+}
 
 export async function generateStaticParams() {
   return (await getKlantverhalen()).map((k) => ({ slug: k.slug }));
@@ -87,27 +104,67 @@ export default async function CasePage({ params }: { params: Promise<{ slug: str
             <h2>De uitdaging</h2>
             <div dangerouslySetInnerHTML={{ __html: k.challenge }} />
             <p className="pull">{k.pull}</p>
+
+            {k.ketenStappen && k.ketenStappen.length > 0 && (
+              <div className="keten">
+                {k.ketenTitel && <h2>{k.ketenTitel}</h2>}
+                <StappenFlow stappen={k.ketenStappen} />
+                {k.ketenSynthese && <p className="keten-synthese">{k.ketenSynthese}</p>}
+              </div>
+            )}
+
             <h2>De aanpak</h2>
-            {k.secties && k.secties.length > 0
-              ? k.secties.map((sec, i) => (
-                  <div className="sectie" key={i}>
-                    <h3>
-                      <span className="num">{String(i + 1).padStart(2, "0")}</span>
-                      {sec.titel}
-                    </h3>
-                    <p>{sec.tekst}</p>
-                    {sec.resultaten.length > 0 && (
-                      <ul>
-                        {sec.resultaten.map((r, j) => (
-                          <li key={j}>{r}</li>
-                        ))}
-                      </ul>
-                    )}
-                  </div>
-                ))
-              : k.aanpak.map((p, i) => <p key={i}>{p}</p>)}
+            {k.secties?.map((sec, i) => (
+              <div className="sectie" key={i}>
+                <h3>
+                  <span className="num">{String(i + 1).padStart(2, "0")}</span>
+                  {sec.titel}
+                </h3>
+                <h4 className="subkop">Situatie &amp; uitdaging</h4>
+                <p>{sec.situatie}</p>
+                <h4 className="subkop">Onze aanpak</h4>
+                <p>{sec.aanpak}</p>
+                {sec.stappen && sec.stappen.length > 0 && (
+                  <StappenFlow stappen={sec.stappen} klein />
+                )}
+                {sec.functionaliteiten && sec.functionaliteiten.length > 0 && (
+                  <>
+                    <h4 className="subkop">De functionaliteiten</h4>
+                    <ul>
+                      {sec.functionaliteiten.map((f, j) => (
+                        <li key={j}>{f}</li>
+                      ))}
+                    </ul>
+                  </>
+                )}
+                {sec.resultaten.length > 0 && (
+                  <>
+                    <h4 className="subkop">Resultaat</h4>
+                    <div className="resultaat-kaarten">
+                      {sec.resultaten.map((r, j) => (
+                        <div className="resultaat-kaart" key={j}>
+                          <h5>{r.titel}</h5>
+                          <p>{r.tekst}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </>
+                )}
+              </div>
+            ))}
+
             <h2>Het resultaat</h2>
             <div dangerouslySetInnerHTML={{ __html: k.resultaat }} />
+            {k.eindresultaten && k.eindresultaten.length > 0 && (
+              <div className="resultaat-kaarten resultaat-kaarten--eind">
+                {k.eindresultaten.map((r, i) => (
+                  <div className="resultaat-kaart" key={i}>
+                    <h5>{r.titel}</h5>
+                    <p>{r.tekst}</p>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
           <aside>
             <div className="aside-card">
