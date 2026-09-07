@@ -24,7 +24,7 @@ export interface AanpakRow {
   titel: string;
   p: string;
   punten: string[];
-  ph: string;
+  img: string;
 }
 export interface WaaromItem {
   titel: string;
@@ -178,7 +178,7 @@ export const DIENSTEN: Record<string, DienstDetail> = {
           "Koppelingen met je bestaande landschap",
           "Enterprise-grade security en beheer",
         ],
-        ph: "[ product shot · Mendix app ]",
+        img: "/assets/photos/team-presentatie-scherm.webp",
       },
       {
         kicker: "Borgen",
@@ -189,7 +189,7 @@ export const DIENSTEN: Record<string, DienstDetail> = {
           "Beheer en doorontwikkeling naar keuze",
           "Architectuur die meegroeit",
         ],
-        ph: "[ foto · teamoverdracht ]",
+        img: "/assets/photos/team-overleg-cafe.webp",
       },
     ],
     waarom: [
@@ -354,7 +354,7 @@ export const DIENSTEN: Record<string, DienstDetail> = {
           "Geprioriteerde use-cases met businesscase",
           "Heldere randvoorwaarden (AVG, AI Act)",
         ],
-        ph: "[ foto · werksessie AI-scan ]",
+        img: "/assets/photos/team-brainstorm-postits.webp",
       },
       {
         kicker: "Bouwen",
@@ -365,7 +365,7 @@ export const DIENSTEN: Record<string, DienstDetail> = {
           "Uitlegbare besluitondersteuning",
           "Van pilot naar geborgde productie",
         ],
-        ph: "[ product shot · AI-dashboard ]",
+        img: "/assets/photos/team-overleg-flipover.webp",
       },
     ],
     waarom: [
@@ -524,7 +524,7 @@ export const DIENSTEN: Record<string, DienstDetail> = {
           "Direct een eerste werkende app als bewijs",
           "Dezelfde dag nog weten of de koers klopt",
         ],
-        ph: "[ foto · Strategy & App in a Day ]",
+        img: "/assets/photos/team-presentatie-klant.webp",
       },
       {
         kicker: "Richten",
@@ -535,7 +535,7 @@ export const DIENSTEN: Record<string, DienstDetail> = {
           "Prioritering op waarde en haalbaarheid",
           "Gedragen door directie én werkvloer",
         ],
-        ph: "[ foto · strategiesessie ]",
+        img: "/assets/photos/team-presentatie-applaus.webp",
       },
       {
         kicker: "Uitvoeren",
@@ -546,7 +546,7 @@ export const DIENSTEN: Record<string, DienstDetail> = {
           "Bijsturen op resultaat, niet op rapporten",
           "Kennisoverdracht aan je eigen organisatie",
         ],
-        ph: "[ product shot · roadmap-overzicht ]",
+        img: "/assets/photos/team-overleg-scherm.webp",
       },
     ],
     waarom: [

@@ -14,7 +14,7 @@ export interface SolutionRow {
   titel: string;
   p: string;
   punten: string[];
-  ph: string;
+  img: string;
 }
 export interface Insight {
   meta: string;
@@ -62,7 +62,7 @@ const SOL_AI_STRATEGIE: SolutionRow = {
     "Uitlegbare, controleerbare besluitondersteuning",
     "Roadmap van ambitie naar uitvoering",
   ],
-  ph: "[ foto · team aan het werk ]",
+  img: "/assets/photos/team-overleg-flipover.webp",
 };
 
 export const SECTOREN: Record<string, SectorDetail> = {
@@ -106,7 +106,7 @@ export const SECTOREN: Record<string, SectorDetail> = {
           "Koppelingen met kernregistraties",
           "Realtime statusinzicht voor burger én ambtenaar",
         ],
-        ph: "[ product shot · zaaksysteem ]",
+        img: "/assets/photos/overleg-laptop.webp",
       },
       SOL_AI_STRATEGIE,
     ],
@@ -165,7 +165,7 @@ export const SECTOREN: Record<string, SectorDetail> = {
           "Koppelingen met sensoren en kernsystemen",
           "Realtime reizigers- en operationele informatie",
         ],
-        ph: "[ product shot · operationeel dashboard ]",
+        img: "/assets/photos/klantgesprek-tafel.webp",
       },
       SOL_AI_STRATEGIE,
     ],
@@ -232,7 +232,7 @@ export const SECTOREN: Record<string, SectorDetail> = {
           "Herleidbaarheid en controle by design",
           "Integraties met kernbanksystemen",
         ],
-        ph: "[ product shot · klantproces ]",
+        img: "/assets/photos/team-presentatie-scherm.webp",
       },
       SOL_AI_STRATEGIE,
     ],
@@ -296,7 +296,7 @@ export const SECTOREN: Record<string, SectorDetail> = {
           "Minder dubbele registratie",
           "Gebouwd rond het werkproces, niet andersom",
         ],
-        ph: "[ product shot · zorgapplicatie ]",
+        img: "/assets/photos/team-presentatie-klant.webp",
       },
       SOL_AI_STRATEGIE,
     ],
@@ -360,7 +360,7 @@ export const SECTOREN: Record<string, SectorDetail> = {
           "Koppelingen met machines en MES/ERP",
           "Kwaliteit sturen op realtime data",
         ],
-        ph: "[ product shot · productiedashboard ]",
+        img: "/assets/photos/project-parkeergarage-rotterdam.webp",
       },
       SOL_AI_STRATEGIE,
     ],

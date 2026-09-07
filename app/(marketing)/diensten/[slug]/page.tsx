@@ -187,7 +187,13 @@ export default async function DienstPage({ params }: { params: Promise<{ slug: s
                 </ul>
               </div>
               <div className="ph">
-                <span className="lbl">{row.ph}</span>
+                <Image
+                  src={row.img}
+                  alt=""
+                  fill
+                  sizes="(max-width: 900px) 100vw, 50vw"
+                  style={{ objectFit: "cover" }}
+                />
               </div>
             </div>
           ))}

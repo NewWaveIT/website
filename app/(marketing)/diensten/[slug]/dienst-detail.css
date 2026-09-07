@@ -252,7 +252,12 @@
   flex: none;
 }
 .p-dienst .sol-row .ph {
+  position: relative;
+  width: 100%;
   min-height: 320px;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-default);
+  overflow: hidden;
 }
 
 .p-dienst .why {

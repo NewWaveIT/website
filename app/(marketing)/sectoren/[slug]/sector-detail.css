@@ -163,7 +163,12 @@
   flex: none;
 }
 .p-sector .sol-row .ph {
+  position: relative;
+  width: 100%;
   min-height: 320px;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-default);
+  overflow: hidden;
 }
 
 .p-sector .outcomes {
