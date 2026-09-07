@@ -157,7 +157,7 @@ export const ARTIKELEN: Artikel[] = [
     leestijd: "8 min",
     titel: "Van 0 naar 100 apps in een bank: de 5 fases die wél werken",
     auteur: "Koen Wijsman",
-    image: "/assets/photos/overleg-laptop.webp",
+    image: "/assets/photos/team-overleg-cafe.webp",
     intro:
       "Waarom schalen in een bank sneller complex wordt dan elders, en welke keuzes bepalen of je portfolio beheersbaar blijft of ontspoort.",
     body: [
@@ -175,7 +175,7 @@ export const ARTIKELEN: Artikel[] = [
     leestijd: "4 min",
     titel: "Waarom een security-audit geen alarmsignaal is, maar goed onderhoud",
     auteur: "The New Wave IT",
-    image: "/assets/photos/team-overleg-scherm.webp",
+    image: "/assets/photos/team-brainstorm-glaswand.webp",
     intro:
       "Hoe een periodieke security- en compliancecheck bij XXImo leidde tot concrete verbeterstappen, zonder de organisatie te vertragen.",
     body: [
