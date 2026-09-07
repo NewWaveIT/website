@@ -233,7 +233,7 @@ export const DIENSTEN: Record<string, DienstDetail> = {
       "“Samenwerken met The New Wave IT voelt alsof je samenwerkt met goed ingewerkte en enthousiaste collega's. De samenwerking verliep direct soepel.”",
     caseNaam: "Nina Klooster",
     caseRol: "Product Manager, Moove",
-    caseImage: "/assets/photos/team-overleg-scherm.webp",
+    caseImage: "/assets/photos/team-brainstorm-glaswand.webp",
     caseHref: "/klantverhalen/moove",
     insightsTitle: "Kennis over bouwen met low-code",
     insights: [

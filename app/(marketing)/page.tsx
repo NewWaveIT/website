@@ -417,7 +417,7 @@ export default async function HomePage() {
                 href="/inzichten/novi-ai-collega-overheid"
                 className="cover"
                 style={{
-                  backgroundImage: "url('/assets/photos/klantgesprek-tafel.webp')",
+                  backgroundImage: "url('/assets/photos/project-parkeergarage-rotterdam.webp')",
                   backgroundPosition: "center",
                 }}
               >
@@ -440,7 +440,7 @@ export default async function HomePage() {
                 href="/inzichten/security-mendix-in-de-zorg"
                 className="cover"
                 style={{
-                  backgroundImage: "url('/assets/photos/overleg-lachend.webp')",
+                  backgroundImage: "url('/assets/photos/team-overleg-flipover.webp')",
                   backgroundPosition: "center",
                 }}
               >
@@ -463,8 +463,8 @@ export default async function HomePage() {
                 href="/inzichten/van-0-naar-100-apps-in-een-bank"
                 className="cover"
                 style={{
-                  backgroundImage: "url('/assets/photos/overleg-laptop.webp')",
-                  backgroundPosition: "center 30%",
+                  backgroundImage: "url('/assets/photos/team-overleg-cafe.webp')",
+                  backgroundPosition: "center",
                 }}
               >
                 <span className="cat">Banken</span>

@@ -102,7 +102,7 @@ export default async function WerkenBijPage() {
           <div className="grid">
             <div className="media-img">
               <Image
-                src="/assets/photos/team-presentatie-breed.webp"
+                src="/assets/photos/team-borrel.webp"
                 alt="Wavers tijdens een kennissessie"
                 fill
                 sizes="(max-width: 900px) 100vw, 45vw"

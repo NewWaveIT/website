@@ -48,7 +48,7 @@ export default async function OverOnsPage() {
 
       <section className="shero">
         <div className="badge-img">
-          <Image src="/assets/photos/overleg-lachend.webp" alt="" fill sizes="46vw" />
+          <Image src="/assets/photos/team-presentatie-applaus.webp" alt="" fill sizes="46vw" />
         </div>
         <div className="wrap-wide">
           <div className="crumbs">
@@ -101,7 +101,7 @@ export default async function OverOnsPage() {
             </div>
             <div className="media-img">
               <Image
-                src="/assets/photos/klantgesprek-tafel.webp"
+                src="/assets/photos/team-brainstorm-postits.webp"
                 alt="Wavers in gesprek met een klant"
                 fill
                 sizes="(max-width: 900px) 100vw, 45vw"
