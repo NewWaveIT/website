@@ -9,6 +9,12 @@ import { test, expect } from "@playwright/test";
 const ROUTES = [
   "/",
   "/diensten",
+  "/diensten/mendix",
+  "/diensten/ai",
+  "/diensten/strategie",
+  "/diensten/it-strategie",
+  "/diensten/foundation-starterkit",
+  "/diensten/fusion-team-startsprint",
   "/sectoren",
   "/over-ons",
   "/werken-bij",
@@ -50,4 +56,10 @@ test("Contactformulier is aanwezig en invulbaar", async ({ page }) => {
   await email.fill("test@example.com");
   await expect(naam).toHaveValue("Test Bezoeker");
   await expect(email).toHaveValue("test@example.com");
+});
+
+test("?dienst= selecteert de dienst en toont de bijbehorende vervolgvraag", async ({ page }) => {
+  await page.goto("/contact?dienst=app-in-a-day");
+  await expect(page.locator("select#f-dienst")).toHaveValue("app-in-a-day");
+  await expect(page.getByText("Welk proces heb je in gedachten?")).toBeVisible();
 });

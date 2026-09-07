@@ -1,27 +1,45 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useActionState } from "react";
 import { useFormStatus } from "react-dom";
 import { ArrowRight } from "lucide-react";
 import { submitContact, type ContactState } from "@/app/(marketing)/contact/actions";
+import { SERVICE_FAMILIES, type ServiceFamilie } from "@/lib/services";
+import { SERVICE_VRAGEN, VRAGEN_PER_SERVICE, type VraagKey } from "@/lib/services-vragen";
 
 const initial: ContactState = { ok: false, message: "" };
 
 const SECTOREN = ["Publieke sector", "Mobiliteit", "Banken", "Zorg", "Manufacturing", "Anders"];
 const ONDERWERPEN = ["Mendix / applicaties", "AI", "Digitale strategie", "Weet ik nog niet"];
 
-function SubmitButton() {
+export interface DienstOptie {
+  slug: string;
+  naam: string;
+  familie: ServiceFamilie;
+  ctaType: "datum" | "kennismaking";
+}
+
+function SubmitButton({ label }: { label: string }) {
   const { pending } = useFormStatus();
   return (
     <button type="submit" className="btn btn-primary" disabled={pending}>
-      {pending ? "Versturen…" : "Plan het gesprek"} <ArrowRight />
+      {pending ? "Versturen…" : label} <ArrowRight />
     </button>
   );
 }
 
-export function ContactForm({ type = "strategiegesprek" }: { type?: string }) {
+export function ContactForm({
+  type = "strategiegesprek",
+  diensten = [],
+  dienstPreset = "",
+}: {
+  type?: string;
+  diensten?: DienstOptie[];
+  dienstPreset?: string;
+}) {
   const [state, formAction] = useActionState(submitContact, initial);
+  const [dienst, setDienst] = useState(dienstPreset);
   const err = (k: string) => state.errors?.[k];
 
   // Bij validatiefouten: zet focus op het eerste gemarkeerde veld.
@@ -43,6 +61,11 @@ export function ContactForm({ type = "strategiegesprek" }: { type?: string }) {
       </div>
     );
   }
+
+  const gekozenDienst = diensten.find((d) => d.slug === dienst);
+  const submitLabel =
+    gekozenDienst?.ctaType === "kennismaking" ? "Plan de kennismaking" : "Plan het gesprek";
+  const vraagKeys = VRAGEN_PER_SERVICE[dienst] ?? [];
 
   return (
     <form className="form-card" action={formAction} noValidate>
@@ -111,6 +134,116 @@ export function ContactForm({ type = "strategiegesprek" }: { type?: string }) {
         </div>
       </div>
 
+      {diensten.length > 0 && (
+        <div className="frow2">
+          <div className="field">
+            <label htmlFor="f-dienst">Waar gaat het over?</label>
+            <select
+              id="f-dienst"
+              name="dienst"
+              value={dienst}
+              onChange={(e) => setDienst(e.target.value)}
+              aria-invalid={err("dienst") ? true : undefined}
+              aria-describedby={err("dienst") ? "err-dienst" : undefined}
+            >
+              <option value="">Kies een dienst</option>
+              {SERVICE_FAMILIES.map((f) => {
+                const opties = diensten.filter((d) => d.familie === f.key);
+                if (opties.length === 0) return null;
+                return (
+                  <optgroup label={f.kicker} key={f.key}>
+                    {opties.map((d) => (
+                      <option value={d.slug} key={d.slug}>
+                        {d.naam}
+                      </option>
+                    ))}
+                  </optgroup>
+                );
+              })}
+              <option value="weet-ik-niet">Weet ik nog niet</option>
+            </select>
+            {err("dienst") && (
+              <p className="field-err" id="err-dienst">
+                {err("dienst")}
+              </p>
+            )}
+          </div>
+          <div className="field">
+            <label htmlFor="f-groep">
+              Aantal deelnemers{" "}
+              <span style={{ fontWeight: "var(--fw-regular)", color: "var(--text-subtle)" }}>
+                (indicatie)
+              </span>
+            </label>
+            <input
+              id="f-groep"
+              name="groepsgrootte"
+              type="text"
+              placeholder="Bijv. 8"
+              aria-invalid={err("groepsgrootte") ? true : undefined}
+              aria-describedby={err("groepsgrootte") ? "err-groep" : undefined}
+            />
+            {err("groepsgrootte") && (
+              <p className="field-err" id="err-groep">
+                {err("groepsgrootte")}
+              </p>
+            )}
+          </div>
+        </div>
+      )}
+
+      {vraagKeys.length > 0 && (
+        <div className="vraag-groep">
+          <div className="kicker">Over deze dienst</div>
+          {vraagKeys.map((key) => {
+            const v = SERVICE_VRAGEN[key as VraagKey];
+            return (
+              <div className="field" key={v.name}>
+                {v.type === "radio" ? (
+                  <>
+                    <label id={`lbl-${v.name}`}>{v.label}</label>
+                    <div className="chips" role="group" aria-labelledby={`lbl-${v.name}`}>
+                      {v.opties?.map((o) => (
+                        <label className="chip" key={o}>
+                          <input type="radio" name={v.name} value={o} />
+                          {o}
+                        </label>
+                      ))}
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <label htmlFor={`f-${v.name}`}>{v.label}</label>
+                    {v.type === "textarea" ? (
+                      <textarea
+                        id={`f-${v.name}`}
+                        name={v.name}
+                        aria-invalid={err(v.name) ? true : undefined}
+                        aria-describedby={err(v.name) ? `err-${v.name}` : undefined}
+                      />
+                    ) : (
+                      <input
+                        id={`f-${v.name}`}
+                        name={v.name}
+                        type="text"
+                        aria-invalid={err(v.name) ? true : undefined}
+                        aria-describedby={err(v.name) ? `err-${v.name}` : undefined}
+                      />
+                    )}
+                  </>
+                )}
+                {v.help && <p className="field-help">{v.help}</p>}
+                {err(v.name) && (
+                  <p className="field-err" id={`err-${v.name}`}>
+                    {err(v.name)}
+                  </p>
+                )}
+              </div>
+            );
+          })}
+        </div>
+      )}
+
       <div className="field" role="group" aria-labelledby="lbl-sector">
         <label id="lbl-sector">In welke sector werk je?</label>
         <div className="chips">
@@ -156,7 +289,7 @@ export function ContactForm({ type = "strategiegesprek" }: { type?: string }) {
         )}
       </div>
 
-      <SubmitButton />
+      <SubmitButton label={submitLabel} />
 
       {state.message && !state.ok && (
         <p className="form-status err" role="alert">

@@ -520,6 +520,51 @@
   height: 15px;
 }
 
+/* Feitenregel onder de hero-intro (doelgroep · duur · prijs, uit de gekoppelde service) */
+.p-dienst .feiten-strip {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--text-on-dark-muted);
+  max-width: 54ch;
+  margin: calc(-1 * var(--space-5)) 0 var(--space-6);
+}
+
+/* Waarborg / volgende-stap-kader — i.p.v. een klantcase, of onder de pagina */
+.p-dienst .waarborg-card {
+  background: var(--white);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-lg);
+  padding: var(--space-8);
+  max-width: 760px;
+}
+.p-dienst .waarborg-card p {
+  font-family: var(--font-display);
+  font-weight: var(--fw-semibold);
+  font-size: var(--text-lg);
+  line-height: var(--leading-snug);
+  color: var(--text-strong);
+  margin: var(--space-3) 0 0;
+}
+.p-dienst .waarborg-card .vervolg-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-5);
+  margin-top: var(--space-5);
+}
+.p-dienst .waarborg-card .more {
+  font-size: var(--text-sm);
+  font-weight: var(--fw-semibold);
+  color: var(--orange-text);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.p-dienst .waarborg-card .more .lucide {
+  width: 15px;
+  height: 15px;
+}
+
 @media (max-width: 1024px) {
   .p-dienst .pillars {
     grid-template-columns: 1fr;

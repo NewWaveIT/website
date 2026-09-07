@@ -19,7 +19,19 @@ export const FOOTER_SECTOREN: NavLink[] = [
   { label: "Manufacturing", href: "/sectoren/manufacturing" },
 ];
 
+/** Dropdown onder "Diensten": het overzicht, de 3 richtingen, en de 3 diensten met een eigen pagina. */
+export const NAV_DIENSTEN: NavLink[] = [
+  { label: "Zo begin je", href: "/diensten" },
+  { label: "Mendix", href: "/diensten/mendix" },
+  { label: "AI", href: "/diensten/ai" },
+  { label: "Strategie", href: "/diensten/strategie" },
+  { label: "IT-strategie op low-code en AI", href: "/diensten/it-strategie" },
+  { label: "Foundation Starterkit", href: "/diensten/foundation-starterkit" },
+  { label: "Fusion Team Startsprint", href: "/diensten/fusion-team-startsprint" },
+];
+
 export const FOOTER_BEDRIJF: NavLink[] = [
+  { label: "Zo begin je", href: "/diensten" },
   { label: "Mendix", href: "/diensten/mendix" },
   { label: "AI", href: "/diensten/ai" },
   { label: "Strategie", href: "/diensten/strategie" },

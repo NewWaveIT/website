@@ -1,6 +1,6 @@
 import "server-only";
 import { getPublishedContent, type ContentRow } from "@/lib/cms/content";
-import { DIENSTEN, DIENST_SLUGS, type DienstDetail } from "@/lib/diensten-detail";
+import { DIENSTEN, DIENST_SLUGS, RICHTING_SLUGS, type DienstDetail } from "@/lib/diensten-detail";
 import { sanitizeInline } from "@/lib/cms/sanitize";
 
 function skeleton(row: ContentRow): DienstDetail {
@@ -43,7 +43,16 @@ function mapRow(row: ContentRow): DienstDetail {
   return merged;
 }
 
+/** Richting-slugs (mendix/ai/strategie) zijn nu lichte hub-pagina's onder
+ *  app/(marketing)/diensten/<richting>/page.tsx, geen dienstdetailpagina meer.
+ *  Uitfilteren hier voorkomt dat [slug]/page.tsx dezelfde paden nogmaals
+ *  genereert — ook als er nog oude cms_diensten-rijen voor die slugs bestaan. */
+function isRichtingSlug(slug: string): boolean {
+  return (RICHTING_SLUGS as readonly string[]).includes(slug);
+}
+
 export async function getDienstBySlug(slug: string): Promise<DienstDetail | null> {
+  if (isRichtingSlug(slug)) return null;
   const rows = await getPublishedContent("diensten");
   const row = rows.find((x) => x.slug === slug);
   if (row) return mapRow(row);
@@ -52,5 +61,7 @@ export async function getDienstBySlug(slug: string): Promise<DienstDetail | null
 
 export async function getDienstSlugs(): Promise<string[]> {
   const rows = await getPublishedContent("diensten");
-  return [...new Set<string>([...DIENST_SLUGS, ...rows.map((r) => r.slug)])];
+  return [...new Set<string>([...DIENST_SLUGS, ...rows.map((r) => r.slug)])].filter(
+    (s) => !isRichtingSlug(s),
+  );
 }

@@ -29,6 +29,7 @@ const LIST_PATH: Record<ContentType, string> = {
   vacatures: "/admin/vacatures",
   teamleden: "/admin/teamleden",
   proposities: "/admin/proposities",
+  services: "/admin/services",
 };
 
 /** Publieke overzichtspagina's waar de volgorde zichtbaar is (voor revalidatie na sorteren). */
@@ -39,6 +40,7 @@ const PUBLIC_INDEX: Partial<Record<ContentType, string>> = {
   vacatures: "/werken-bij",
   teamleden: "/over-ons",
   proposities: "/sectoren",
+  services: "/diensten",
 };
 
 function isType(v: string): v is ContentType {
@@ -167,6 +169,13 @@ function revalidatePublic(type: ContentType, slug: string) {
   } else if (type === "proposities") {
     // Proposities verschijnen als PMC op alle sectordetailpagina's.
     revalidatePath("/sectoren/[slug]", "page");
+  } else if (type === "services") {
+    // Services verschijnen op het overzicht, de 3 richting-hubs en het contactformulier.
+    revalidatePath("/diensten");
+    revalidatePath("/diensten/mendix");
+    revalidatePath("/diensten/ai");
+    revalidatePath("/diensten/strategie");
+    revalidatePath("/contact");
   } else if (type === "paginas" && PAGE_PATH[slug]) {
     revalidatePath(PAGE_PATH[slug]);
   } else if (type === "teamleden") {

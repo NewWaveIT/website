@@ -3,6 +3,8 @@
 import { createClient } from "@/lib/supabase/server";
 import { sendAanvraagNotificatie, sendAanvraagBevestiging } from "@/lib/email";
 import { magDoor } from "@/lib/rate-limit";
+import { getServices } from "@/lib/services-data";
+import { SERVICE_VRAGEN, VRAGEN_PER_SERVICE, type VraagKey } from "@/lib/services-vragen";
 
 export interface ContactState {
   ok: boolean;
@@ -41,7 +43,8 @@ export async function submitContact(
   const sector = str(formData, "sector");
   const toelichting = str(formData, "toelichting");
   const onderwerpen = formData.getAll("onderwerp").filter(Boolean).join(", ");
-  const type = str(formData, "type") || "strategiegesprek";
+  const dienst = str(formData, "dienst");
+  const groepsgrootte = str(formData, "groepsgrootte");
 
   // Validatie — verzamel álle fouten tegelijk, zodat de bezoeker in één keer
   // ziet wat er nog mist of niet klopt (i.p.v. veld voor veld).
@@ -51,13 +54,46 @@ export async function submitContact(
   if (!EMAIL_RE.test(email)) errors.email = "Vul een geldig e-mailadres in.";
   else if (email.length > 320) errors.email = "E-mailadres is te lang.";
   if (toelichting.length > 5000) errors.toelichting = "Toelichting is te lang (max. 5000 tekens).";
+  if (groepsgrootte.length > 100) errors.groepsgrootte = "Dat is wel erg lang voor een aantal.";
+
+  const services = await getServices();
+  let serviceNaam = "";
+  if (dienst && dienst !== "weet-ik-niet") {
+    const gekozen = services.find((s) => s.slug === dienst);
+    if (!gekozen) errors.dienst = "Kies een geldige dienst.";
+    else serviceNaam = gekozen.naam;
+  }
+
+  // Conditionele vervolgvragen per dienst — allemaal optioneel, zodat een
+  // halfingevuld formulier nooit een aanvraag blokkeert.
+  const vraagKeys = VRAGEN_PER_SERVICE[dienst] ?? [];
+  const antwoorden: { label: string; waarde: string }[] = [];
+  for (const key of vraagKeys) {
+    const v = SERVICE_VRAGEN[key as VraagKey];
+    const waarde = str(formData, v.name);
+    if (!waarde) continue;
+    if (v.maxLengte && waarde.length > v.maxLengte) {
+      errors[v.name] = `Dat is te lang (max. ${v.maxLengte} tekens).`;
+      continue;
+    }
+    if (v.type === "radio" && v.opties && !v.opties.includes(waarde)) {
+      errors[v.name] = "Kies een van de opties.";
+      continue;
+    }
+    antwoorden.push({ label: v.label, waarde });
+  }
+
   if (Object.keys(errors).length > 0) {
     return { ok: false, message: "Controleer de gemarkeerde velden.", errors };
   }
 
-  const onderwerpLabel = [rol, sector, onderwerpen].filter(Boolean).join(" · ");
+  const type = str(formData, "type") || (dienst ? "dienstaanvraag" : "strategiegesprek");
+  const onderwerpLabel = [serviceNaam, rol, groepsgrootte, sector, onderwerpen]
+    .filter(Boolean)
+    .join(" · ");
+  const antwoordenBlok = antwoorden.map((a) => `${a.label}: ${a.waarde}`).join("\n");
   const bericht =
-    toelichting ||
+    [toelichting, antwoordenBlok].filter(Boolean).join("\n\n") ||
     `Aanvraag via het contactformulier. ${onderwerpLabel || "Geen extra toelichting."}`;
 
   try {

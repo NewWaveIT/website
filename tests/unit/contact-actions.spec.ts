@@ -3,7 +3,9 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 type InsertResult = { error: { message: string } | null };
 type RpcResult = { data: boolean | null; error: { message: string } | null };
 
-const insertMock = vi.fn(async (): Promise<InsertResult> => ({ error: null }));
+const insertMock = vi.fn<(record: Record<string, unknown>) => Promise<InsertResult>>(async () => ({
+  error: null,
+}));
 const fromMock = vi.fn(() => ({ insert: insertMock }));
 const rpcMock = vi.fn(async (): Promise<RpcResult> => ({ data: true, error: null }));
 const createClientMock = vi.fn(async () => ({ from: fromMock, rpc: rpcMock }));
@@ -59,15 +61,96 @@ describe("submitContact", () => {
   it("verzamelt alle validatiefouten tegelijk", async () => {
     const result = await submitContact(
       initialState,
-      formData({ naam: "A", email: "geen-email", toelichting: "x".repeat(5001) }),
+      formData({
+        naam: "A",
+        email: "geen-email",
+        toelichting: "x".repeat(5001),
+        dienst: "onbestaande-dienst",
+      }),
     );
     expect(result.ok).toBe(false);
     expect(result.errors).toEqual({
       naam: "Vul je naam in.",
       email: "Vul een geldig e-mailadres in.",
       toelichting: "Toelichting is te lang (max. 5000 tekens).",
+      dienst: "Kies een geldige dienst.",
     });
     expect(insertMock).not.toHaveBeenCalled();
+  });
+
+  it("onbekende dienst-slug geeft een foutmelding, zonder insert", async () => {
+    const result = await submitContact(
+      initialState,
+      formData({ naam: "Jane Doe", email: "jane@example.com", dienst: "bestaat-niet" }),
+    );
+    expect(result.ok).toBe(false);
+    expect(result.errors).toEqual({ dienst: "Kies een geldige dienst." });
+    expect(insertMock).not.toHaveBeenCalled();
+  });
+
+  it("'weet-ik-niet' als dienst is altijd geldig", async () => {
+    const result = await submitContact(
+      initialState,
+      formData({ naam: "Jane Doe", email: "jane@example.com", dienst: "weet-ik-niet" }),
+    );
+    expect(result.ok).toBe(true);
+    expect(insertMock).toHaveBeenCalled();
+  });
+
+  it("een vervolgvraag-antwoord buiten de toegestane opties geeft een foutmelding", async () => {
+    const result = await submitContact(
+      initialState,
+      formData({
+        naam: "Jane Doe",
+        email: "jane@example.com",
+        dienst: "app-in-a-day",
+        mendixOmgeving: "Misschien",
+      }),
+    );
+    expect(result.ok).toBe(false);
+    expect(result.errors).toEqual({ mendixOmgeving: "Kies een van de opties." });
+    expect(insertMock).not.toHaveBeenCalled();
+  });
+
+  it("slaat een dienstaanvraag op met dienstnaam voorop en beantwoorde vervolgvragen in het bericht", async () => {
+    const result = await submitContact(
+      initialState,
+      formData({
+        naam: "Jane Doe",
+        email: "jane@example.com",
+        dienst: "app-in-a-day",
+        mendixOmgeving: "Ja",
+        procesInGedachten: "Vergunningaanvragen die nu in Excel bijgehouden worden.",
+      }),
+    );
+    expect(result.ok).toBe(true);
+    const record = insertMock.mock.calls[0]![0] as {
+      onderwerp: string;
+      bericht: string;
+      type: string;
+    };
+    expect(record.type).toBe("dienstaanvraag");
+    expect(record.onderwerp.startsWith("App in a Day")).toBe(true);
+    expect(record.bericht).toContain("Is er al een Mendix-omgeving?: Ja");
+    expect(record.bericht).toContain(
+      "Welk proces heb je in gedachten?: Vergunningaanvragen die nu in Excel bijgehouden worden.",
+    );
+  });
+
+  it("negeert vragen die niet bij de gekozen dienst horen", async () => {
+    const result = await submitContact(
+      initialState,
+      formData({
+        naam: "Jane Doe",
+        email: "jane@example.com",
+        dienst: "app-in-a-day",
+        // Hoort bij ai-agent-in-a-day, niet bij app-in-a-day — mag genegeerd worden.
+        claudeToegang: "Ja",
+      }),
+    );
+    expect(result.ok).toBe(true);
+    const record = insertMock.mock.calls[0]![0] as { bericht: string };
+    expect(record.bericht).not.toContain("Claude");
   });
 
   it("blokkeert bij te veel pogingen (rate limit), zonder insert of mails", async () => {

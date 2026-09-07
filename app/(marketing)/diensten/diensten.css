@@ -1,4 +1,4 @@
-/* Dienstenpagina — geport uit ui_kits/website/diensten.html (gescoopt onder .p-diensten) */
+/* Dienstenpagina ("Zo begin je") — .p-diensten */
 
 .p-diensten .crumbs {
   font-family: var(--font-mono);
@@ -44,112 +44,12 @@
   margin: 0;
 }
 
-.p-diensten .dienst-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: var(--space-9);
-  align-items: center;
-  padding: var(--space-8) 0;
-  border-bottom: 1px solid var(--border-default);
-}
-.p-diensten .dienst-row:last-child {
-  border-bottom: 0;
-}
-.p-diensten .dienst-row.rev .txt {
-  order: 2;
-}
-.p-diensten .dienst-row .num {
-  font-family: var(--font-mono);
-  font-size: var(--text-sm);
-  color: var(--orange-text);
-}
-.p-diensten .dienst-row h2 {
-  font-size: var(--text-3xl);
-  font-weight: var(--fw-extrabold);
-  margin: var(--space-3) 0 var(--space-4);
-}
-.p-diensten .dienst-row .txt > p {
-  font-size: var(--text-md);
-  color: var(--text-muted);
-  line-height: var(--leading-relaxed);
-  margin: 0 0 var(--space-5);
-  max-width: 52ch;
-}
-.p-diensten .dienst-row ul {
-  list-style: none;
-  padding: 0;
-  margin: 0 0 var(--space-6);
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-.p-diensten .dienst-row li {
-  display: flex;
-  gap: 10px;
-  font-size: var(--text-base);
-  color: var(--text-body);
-  align-items: flex-start;
-}
-.p-diensten .dienst-row li .lucide {
-  width: 20px;
-  height: 20px;
-  color: var(--orange-text);
-  flex: none;
-}
-.p-diensten .dienst-row .media-img {
-  position: relative;
-  width: 100%;
-  min-height: 340px;
-  border-radius: var(--radius-lg);
-  border: 1px solid var(--border-default);
-  overflow: hidden;
-}
-.p-diensten .dienst-row .media-img img {
-  object-fit: cover;
-}
-.p-diensten .dienst-row .acts {
-  display: flex;
-  gap: var(--space-5);
-  align-items: center;
-  flex-wrap: wrap;
-}
-
-.p-diensten .samen {
-  background: var(--ink-900);
-  color: var(--eggshell);
-}
-.p-diensten .samen .grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: var(--space-6);
-}
-.p-diensten .scard {
-  border: 1px solid var(--border-dark);
-  border-radius: var(--radius-lg);
-  padding: var(--space-6);
-  background: rgba(255, 255, 255, 0.03);
-}
-.p-diensten .scard .num {
-  font-family: var(--font-mono);
-  font-size: var(--text-sm);
-  color: var(--orange-400);
-}
-.p-diensten .scard h3 {
-  color: #fff;
-  font-size: var(--text-lg);
-  font-weight: var(--fw-bold);
-  margin: 10px 0;
-}
-.p-diensten .scard p {
-  font-size: var(--text-sm);
-  color: var(--text-on-dark-muted);
-  line-height: var(--leading-relaxed);
-  margin: 0;
-}
-
-.p-diensten .sect-strip {
+/* De keuzematrix is de hoofdmoot; het volwassenheidsmodel eronder is
+   secundaire oriëntatie en staat daarom op een rustiger vlak. */
+.p-diensten .fasen-blok {
   background: var(--eggshell);
 }
+
 .p-diensten .sect-strip .row {
   display: flex;
   gap: 10px;
@@ -178,53 +78,7 @@
 }
 
 @media (max-width: 900px) {
-  .p-diensten .dienst-row,
-  .p-diensten .dienst-row.rev {
-    grid-template-columns: 1fr;
-    gap: var(--space-5);
-  }
-  .p-diensten .dienst-row.rev .txt {
-    order: 0;
-  }
-  .p-diensten .dienst-row .media-img {
-    min-height: 220px;
-  }
-  .p-diensten .samen .grid {
-    grid-template-columns: 1fr;
-  }
   .p-diensten .dhero h1 {
     font-size: var(--text-3xl);
   }
-  .p-diensten .fasen-grid {
-    grid-template-columns: 1fr 1fr;
-  }
-}
-
-/* Zo werken we — 5 fasen */
-.p-diensten .fasen-grid {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: var(--space-5);
-}
-.p-diensten .fase {
-  border-top: 2px solid var(--color-primary);
-  padding-top: var(--space-4);
-}
-.p-diensten .fase .fnum {
-  font-family: var(--font-mono);
-  font-size: var(--text-sm);
-  color: var(--orange-text);
-  font-weight: var(--fw-medium);
-}
-.p-diensten .fase h3 {
-  font-size: var(--text-md);
-  font-weight: var(--fw-bold);
-  margin: 8px 0 6px;
-  line-height: var(--leading-snug);
-}
-.p-diensten .fase p {
-  font-size: var(--text-sm);
-  color: var(--text-muted);
-  line-height: var(--leading-relaxed);
-  margin: 0;
 }

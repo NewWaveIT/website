@@ -7,6 +7,7 @@ import { SECTOREN } from "@/lib/sectoren-detail";
 import { PAGE_DEFAULTS } from "@/lib/cms/pages";
 import { TEAMLEDEN } from "@/lib/team";
 import { PROPOSITIES } from "@/lib/proposities";
+import { SERVICES } from "@/lib/services";
 import type { ContentType } from "@/lib/cms/content";
 
 export interface SeedRow {
@@ -22,6 +23,9 @@ const PAGE_TITEL: Record<string, string> = {
   "over-ons": "Over ons",
   contact: "Contact",
   diensten: "Diensten (overzicht)",
+  "diensten-mendix": "Diensten — Mendix (hub)",
+  "diensten-ai": "Diensten — AI (hub)",
+  "diensten-strategie": "Diensten — Strategie (hub)",
   sectoren: "Sectoren (overzicht)",
   "werken-bij": "Werken bij",
 };
@@ -108,5 +112,10 @@ export function buildSeed(): Record<ContentType, SeedRow[]> {
         solutions: p.solutions,
       },
     })),
+
+    services: SERVICES.map((s, i) => {
+      const { slug, naam, ...data } = s;
+      return { slug, titel: naam, status: "live", volgorde: i, data };
+    }),
   };
 }

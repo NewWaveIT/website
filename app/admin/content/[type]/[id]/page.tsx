@@ -14,6 +14,7 @@ const META: Record<ContentType, { label: string; listPath: string }> = {
   vacatures: { label: "Vacature", listPath: "/admin/vacatures" },
   teamleden: { label: "Teamlid", listPath: "/admin/teamleden" },
   proposities: { label: "Propositie", listPath: "/admin/proposities" },
+  services: { label: "Service", listPath: "/admin/services" },
 };
 
 export default async function ContentEditPage({

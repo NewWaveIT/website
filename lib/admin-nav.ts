@@ -20,6 +20,7 @@ export const ADMIN_NAV: AdminNavGroup[] = [
       { href: "/admin/paginas", label: "Pagina's", icon: "file-text", countKey: "paginas" },
       { href: "/admin/cases", label: "Cases", icon: "briefcase", countKey: "cases" },
       { href: "/admin/diensten", label: "Diensten", icon: "layers", countKey: "diensten" },
+      { href: "/admin/services", label: "Services", icon: "list-checks", countKey: "services" },
       { href: "/admin/sectoren", label: "Sectoren", icon: "building-2", countKey: "sectoren" },
       {
         href: "/admin/proposities",

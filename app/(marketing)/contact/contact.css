@@ -239,6 +239,23 @@
   color: var(--danger-500);
   margin: 0;
 }
+.field-help {
+  font-size: var(--text-xs);
+  color: var(--text-subtle);
+  margin: 0;
+}
+.vraag-groep {
+  background: var(--eggshell);
+  border-radius: var(--radius-md);
+  padding: var(--space-5);
+  margin-bottom: var(--space-5);
+}
+.vraag-groep .kicker {
+  margin-bottom: var(--space-4);
+}
+.vraag-groep .field:last-child {
+  margin-bottom: 0;
+}
 
 .aside {
   display: flex;

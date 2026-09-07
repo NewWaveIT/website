@@ -3,8 +3,15 @@
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { NAV_LINKS, FOOTER_SECTOREN } from "@/lib/nav";
+import { NAV_LINKS, FOOTER_SECTOREN, NAV_DIENSTEN } from "@/lib/nav";
+import type { NavLink } from "@/lib/types";
 import { cn } from "@/lib/utils";
+
+/** Links met een dropdown-menu in de hoofdnavigatie. */
+const NAV_DROPDOWNS: Record<string, NavLink[]> = {
+  "/sectoren": FOOTER_SECTOREN,
+  "/diensten": NAV_DIENSTEN,
+};
 
 /**
  * Desktop-navigatie (≥1041px). Op ≤1040px neemt MobileShell de navigatie over,
@@ -30,14 +37,15 @@ export function Header() {
         </Link>
 
         <nav className="nav-links">
-          {NAV_LINKS.map((link) =>
-            link.href === "/sectoren" ? (
+          {NAV_LINKS.map((link) => {
+            const sub = NAV_DROPDOWNS[link.href];
+            return sub ? (
               <div className="nav-drop" key={link.href}>
                 <Link href={link.href} className={cn(isActive(link.href) && "active")}>
                   {link.label}
                 </Link>
-                <div className="nav-menu" role="menu" aria-label="Sectoren">
-                  {FOOTER_SECTOREN.map((s) => (
+                <div className="nav-menu" role="menu" aria-label={link.label}>
+                  {sub.map((s) => (
                     <Link key={s.href} href={s.href} role="menuitem">
                       {s.label}
                     </Link>
@@ -52,8 +60,8 @@ export function Header() {
               >
                 {link.label}
               </Link>
-            ),
-          )}
+            );
+          })}
         </nav>
 
         <div className="nav-cta">

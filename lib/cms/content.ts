@@ -9,7 +9,8 @@ export type ContentType =
   | "artikelen"
   | "vacatures"
   | "teamleden"
-  | "proposities";
+  | "proposities"
+  | "services";
 
 export const CONTENT_TABLE: Record<ContentType, string> = {
   paginas: "cms_paginas",
@@ -20,6 +21,7 @@ export const CONTENT_TABLE: Record<ContentType, string> = {
   vacatures: "cms_vacatures",
   teamleden: "cms_teamleden",
   proposities: "cms_proposities",
+  services: "cms_services",
 };
 
 export interface ContentRow<T = Record<string, unknown>> {
@@ -67,6 +69,7 @@ export async function getAdminCounts(): Promise<Record<string, number>> {
     diensten,
     sectoren,
     proposities,
+    services,
     artikelen,
     vacatures,
     teamleden,
@@ -78,6 +81,7 @@ export async function getAdminCounts(): Promise<Record<string, number>> {
     count("cms_diensten"),
     count("cms_sectoren"),
     count("cms_proposities"),
+    count("cms_services"),
     count("cms_artikelen"),
     count("cms_vacatures"),
     count("cms_teamleden"),
@@ -90,6 +94,7 @@ export async function getAdminCounts(): Promise<Record<string, number>> {
     diensten,
     sectoren,
     proposities,
+    services,
     artikelen,
     vacatures,
     teamleden,

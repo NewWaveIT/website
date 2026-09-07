@@ -90,9 +90,9 @@ const SECTOR_SLUG_TO_CAT: Record<string, string> = {
   manufacturing: "Manufacturing",
 };
 const DIENST_SLUG_TO_DISC: Record<string, string> = {
-  mendix: "Mendix",
-  ai: "AI",
-  strategie: "Strategie",
+  "it-strategie": "Strategie",
+  "foundation-starterkit": "Mendix",
+  "fusion-team-startsprint": "Mendix",
 };
 
 /** Gepubliceerde artikelen die aan deze sector zijn gekoppeld. */

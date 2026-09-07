@@ -1,0 +1,192 @@
+/* Servicekaart — gedeeld component, afgeleid van .pmc-card (sector-detail.css) */
+
+.svc-card {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  background: var(--white);
+  scroll-margin-top: 100px;
+  transition:
+    transform 160ms ease,
+    box-shadow 160ms ease,
+    border-color 160ms ease;
+}
+.svc-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--border-strong);
+}
+.svc-card--compact {
+  padding: var(--space-5);
+}
+.svc-top {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.svc-fase,
+.svc-richting {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-kicker);
+  color: var(--text-subtle);
+}
+.svc-fase {
+  color: var(--orange-text);
+  background: var(--orange-50);
+  border-radius: var(--radius-pill);
+  padding: 3px 9px;
+}
+.svc-card h3 {
+  font-size: var(--text-lg);
+  font-weight: var(--fw-bold);
+  margin: 0 0 8px;
+  line-height: var(--leading-snug);
+}
+.svc-card--compact h3 {
+  font-size: var(--text-md);
+}
+.svc-pitch {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: var(--fw-medium);
+  font-size: var(--text-sm);
+  color: var(--text-body);
+  line-height: var(--leading-snug);
+  margin: 0 0 var(--space-4);
+  text-wrap: pretty;
+}
+.svc-feiten {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 12px;
+  font-size: 11px;
+  color: var(--text-subtle);
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-kicker);
+  margin-bottom: 10px;
+}
+
+/* Prijs is bewust het opvallendste element: bijna geen enkele IT-dienstverlener
+   zet hem op de site, dus hij mag hier de aandacht pakken. */
+.svc-prijs {
+  border-top: 1px solid var(--border-subtle);
+  padding-top: var(--space-3);
+  margin-bottom: var(--space-4);
+}
+.svc-prijs > div + div {
+  margin-top: 2px;
+}
+.svc-prijs strong {
+  font-family: var(--font-mono);
+  font-size: var(--text-md);
+  font-weight: var(--fw-medium);
+  color: var(--text-strong);
+}
+.svc-prijs span {
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+}
+
+/* Uitklap met de diepte-inhoud (compacte kaarten in de matrix) */
+.svc-diepte {
+  border-top: 1px solid var(--border-subtle);
+  margin-bottom: var(--space-4);
+}
+.svc-diepte summary {
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  padding: 11px 0;
+  font-weight: var(--fw-semibold);
+  font-size: var(--text-sm);
+  color: var(--text-strong);
+  list-style: none;
+}
+.svc-diepte summary::-webkit-details-marker {
+  display: none;
+}
+.svc-diepte summary:hover {
+  color: var(--orange-text);
+}
+.svc-diepte summary .lucide {
+  width: 16px;
+  height: 16px;
+  color: var(--orange-text);
+  flex: none;
+  transition: transform 140ms ease;
+}
+.svc-diepte[open] summary .lucide {
+  transform: rotate(45deg);
+}
+
+.svc-doelgroep {
+  font-size: var(--text-xs);
+  color: var(--text-subtle);
+  margin: 0 0 var(--space-3);
+}
+.svc-beschrijving {
+  font-size: var(--text-sm);
+  color: var(--text-body);
+  line-height: var(--leading-relaxed);
+  margin: 0 0 var(--space-4);
+}
+.svc-res {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.svc-res li {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  font-size: var(--text-sm);
+  color: var(--text-body);
+  line-height: var(--leading-snug);
+}
+.svc-res li .lucide {
+  width: 16px;
+  height: 16px;
+  color: var(--orange-text);
+  flex: none;
+  margin-top: 1px;
+}
+.svc-stap {
+  font-size: var(--text-xs);
+  color: var(--text-subtle);
+  line-height: var(--leading-relaxed);
+  margin: 0 0 var(--space-4);
+}
+.svc-acts {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: flex-start;
+}
+.svc-card--compact .svc-acts .btn {
+  width: 100%;
+  justify-content: center;
+}
+.svc-meer {
+  font-size: var(--text-sm);
+  font-weight: var(--fw-semibold);
+  color: var(--orange-text);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.svc-meer .lucide {
+  width: 15px;
+  height: 15px;
+}
