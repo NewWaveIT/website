@@ -331,27 +331,6 @@
   padding: 8px 16px;
   border-radius: var(--radius-md);
 }
-.fcase .media .playbig {
-  width: 76px;
-  height: 76px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.92);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: var(--shadow-lg);
-  cursor: pointer;
-  border: none;
-  transition: transform 160ms;
-}
-.fcase .media .playbig:hover {
-  transform: scale(1.08);
-}
-.fcase .media .playbig .lucide {
-  width: 28px;
-  height: 28px;
-  color: var(--orange-text);
-}
 .fcase .body {
   padding: var(--space-9) var(--space-8);
   display: flex;
@@ -482,10 +461,37 @@
   align-items: center;
   animation: riseIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
+.panel .dienst-meta {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-kicker);
+  color: var(--text-subtle);
+  margin-bottom: var(--space-3);
+}
 .panel h3 {
   font-size: var(--text-2xl);
   font-weight: var(--fw-extrabold);
   margin-bottom: var(--space-4);
+}
+.panel .dienst-prijs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px var(--space-6);
+  padding: var(--space-4) 0;
+  margin-bottom: var(--space-6);
+  border-top: 1px solid var(--border-subtle);
+  border-bottom: 1px solid var(--border-subtle);
+}
+.panel .dienst-prijs strong {
+  font-family: var(--font-mono);
+  font-size: var(--text-md);
+  font-weight: var(--fw-medium);
+  color: var(--text-strong);
+}
+.panel .dienst-prijs span {
+  font-size: var(--text-xs);
+  color: var(--text-muted);
 }
 .panel p {
   font-size: var(--text-md);

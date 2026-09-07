@@ -457,7 +457,7 @@ export const PAGE_DEFAULTS: Record<string, Record<string, string>> = {
     cultuur1: "Persoonlijk groeipad, geen vaste carrièreladder",
     cultuur2: "Wavetime en Company week als vaste cultuurrituelen",
     cultuur3:
-      "Werken met bewezen frameworks (App Factory, OGSM, Strategy & App in a Day) in plaats van losse projecten",
+      "Werken met bewezen frameworks (App Factory, OGSM, App in a Day) in plaats van losse projecten",
     cultuur4: "Gelijke, transparante beloning bij gelijke ervaring, ongeacht gender of achtergrond",
   },
 };

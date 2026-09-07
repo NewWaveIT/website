@@ -10,6 +10,8 @@ import { CasesCarousel } from "@/components/home/cases-carousel";
 import { SlotCta } from "@/components/layout/slot-cta";
 import { getPagina } from "@/lib/paginas-data";
 import { getKlantverhalen } from "@/lib/klantverhalen-data";
+import { getInstapPerRichting } from "@/lib/services-data";
+import type { ServiceRichting } from "@/lib/services";
 import "./home.css";
 
 export const metadata: Metadata = {
@@ -32,8 +34,21 @@ const jsonLd = {
 
 export const revalidate = 300;
 
+/** Beeld per richting bij de dienstensectie. */
+const DIENST_FOTO: Record<ServiceRichting, string> = {
+  mendix: "/assets/photos/overleg-laptop.webp",
+  ai: "/assets/photos/team-overleg-scherm.webp",
+  strategie: "/assets/photos/klantgesprek-tafel.webp",
+};
+const DIENST_ALT: Record<ServiceRichting, string> = {
+  mendix: "Consultants werken samen aan een Mendix-applicatie",
+  ai: "Team bespreekt een AI-toepassing",
+  strategie: "Strategiesessie aan tafel",
+};
+
 export default async function HomePage() {
   const t = await getPagina("home");
+  const instap = await getInstapPerRichting();
   const cases = (await getKlantverhalen()).map((k) => ({
     slug: k.slug,
     tag: k.tag || k.sector,
@@ -68,169 +83,96 @@ export default async function HomePage() {
         </div>
       </div>
 
-      {/* Diensten */}
+      {/* Diensten — instapdienst per richting, rechtstreeks uit de catalogus */}
       <section className="block diensten" id="diensten">
         <div className="wrap-wide">
           <div className="sec-head">
             <div className="kicker">Hoe wij het doen</div>
-            <h2>Technologie als middel: drie manieren waarop we versnellen</h2>
+            <h2>Drie richtingen. Begin met wat je in één dag kunt doen.</h2>
             <p>
-              Technologie als middel: drie manieren waarop we versnellen. We kiezen wat jouw
-              vraagstuk oplost, niet wat toevallig in de mode is.
+              Mendix, AI en strategie zijn de ingangen. Elke richting begint met een concreet
+              product van één dag met een vaste prijs — daarna schaal je op wanneer het werkt.
             </p>
           </div>
           <div className="tabs" role="tablist">
-            <button className="tab" role="tab" aria-selected="true" data-tab="mendix">
-              Mendix
-            </button>
-            <button className="tab" role="tab" aria-selected="false" data-tab="ai">
-              AI
-            </button>
-            <button className="tab" role="tab" aria-selected="false" data-tab="strategie">
-              Strategie
-            </button>
+            {instap.map(({ richting, naam }, i) => (
+              <button
+                className="tab"
+                role="tab"
+                aria-selected={i === 0}
+                data-tab={richting}
+                key={richting}
+              >
+                {naam}
+              </button>
+            ))}
           </div>
 
-          <div className="panel active" data-panel="mendix">
-            <div>
-              <h3>Mendix-applicaties op maat</h3>
-              <p>
-                Op maat gemaakte low-code applicaties, gebouwd in weken in plaats van maanden. Vaak
-                staat er binnen een week een eerste werkende versie, en binnen drie maanden een live
-                applicatie.
-              </p>
-              <ul>
-                <li>Vaak een eerste werkende versie binnen een week</li>
-                <li>Live binnen enkele maanden, niet binnen een jaar</li>
-                <li>Kennisoverdracht zodat je team zelf verder kan</li>
-              </ul>
+          {instap.map(({ richting, naam, href, service: s }, i) =>
+            s ? (
               <div
-                style={{
-                  display: "flex",
-                  gap: "var(--space-6)",
-                  alignItems: "center",
-                  flexWrap: "wrap",
-                }}
+                className={`panel${i === 0 ? " active" : ""}`}
+                data-panel={richting}
+                key={richting}
               >
-                <Link href="/contact" className="btn btn-outline">
-                  Bespreek jouw applicatie
-                </Link>
-                <Link
-                  href="/diensten/mendix"
-                  style={{
-                    fontWeight: "var(--fw-semibold)",
-                    display: "inline-flex",
-                    alignItems: "center",
-                    gap: 6,
-                  }}
-                >
-                  Meer over Mendix <ArrowRight style={{ width: 15, height: 15 }} />
-                </Link>
+                <div>
+                  <div className="dienst-meta">
+                    Instap · {s.duur}
+                    {s.groepsgrootte ? ` · ${s.groepsgrootte}` : ""}
+                  </div>
+                  <h3>{s.naam}</h3>
+                  <p>{s.pitch}</p>
+                  <ul>
+                    {s.resultaten.map((r) => (
+                      <li key={r}>{r}</li>
+                    ))}
+                  </ul>
+                  <div className="dienst-prijs">
+                    {s.prijzen.map((p) => (
+                      <span key={p.label}>
+                        <strong>{p.label}</strong>
+                        {p.variant ? ` ${p.variant}` : ""}
+                      </span>
+                    ))}
+                  </div>
+                  <div
+                    style={{
+                      display: "flex",
+                      gap: "var(--space-6)",
+                      alignItems: "center",
+                      flexWrap: "wrap",
+                    }}
+                  >
+                    <Link
+                      href={`/contact?dienst=${s.slug}&type=${s.ctaType}`}
+                      className="btn btn-outline"
+                    >
+                      {s.ctaLabel}
+                    </Link>
+                    <Link
+                      href={href}
+                      style={{
+                        fontWeight: "var(--fw-semibold)",
+                        display: "inline-flex",
+                        alignItems: "center",
+                        gap: 6,
+                      }}
+                    >
+                      Alle {naam}-diensten <ArrowRight style={{ width: 15, height: 15 }} />
+                    </Link>
+                  </div>
+                </div>
+                <div className="media-img">
+                  <Image
+                    src={DIENST_FOTO[richting]}
+                    alt={DIENST_ALT[richting]}
+                    fill
+                    sizes="(max-width: 900px) 100vw, 45vw"
+                  />
+                </div>
               </div>
-            </div>
-            <div className="media-img">
-              <Image
-                src="/assets/photos/overleg-laptop.webp"
-                alt="Consultants werken samen aan een Mendix-applicatie"
-                fill
-                sizes="(max-width: 900px) 100vw, 45vw"
-              />
-            </div>
-          </div>
-
-          <div className="panel" data-panel="ai">
-            <div>
-              <h3>AI die processen echt verbetert</h3>
-              <p>
-                Strategische inzet van AI binnen je bestaande IT-landschap. Doorgaans binnen zes
-                weken een werkend, geautomatiseerd proces. Geen hype, wel resultaat dat de mens
-                centraal stelt.
-              </p>
-              <ul>
-                <li>AI-scan van je processen en datalandschap</li>
-                <li>Doorgaans een werkend proces binnen 6 weken</li>
-                <li>Verantwoorde, uitlegbare inzet van AI</li>
-              </ul>
-              <div
-                style={{
-                  display: "flex",
-                  gap: "var(--space-6)",
-                  alignItems: "center",
-                  flexWrap: "wrap",
-                }}
-              >
-                <Link href="/contact" className="btn btn-outline">
-                  Doe de AI-scan
-                </Link>
-                <Link
-                  href="/diensten/ai"
-                  style={{
-                    fontWeight: "var(--fw-semibold)",
-                    display: "inline-flex",
-                    alignItems: "center",
-                    gap: 6,
-                  }}
-                >
-                  Meer over AI <ArrowRight style={{ width: 15, height: 15 }} />
-                </Link>
-              </div>
-            </div>
-            <div className="media-img">
-              <Image
-                src="/assets/photos/team-overleg-scherm.webp"
-                alt="Team bespreekt een AI-toepassing"
-                fill
-                sizes="(max-width: 900px) 100vw, 45vw"
-              />
-            </div>
-          </div>
-
-          <div className="panel" data-panel="strategie">
-            <div>
-              <h3>Business en IT, verbonden</h3>
-              <p>
-                Wij ontwikkelen je strategie niet los van de uitvoering. In één dag met je directie
-                leveren we een scherpe roadmap én een eerste werkende app: Strategy &amp; App in a
-                Day. Zo weet je dezelfde dag nog of de koers klopt.
-              </p>
-              <ul>
-                <li>Strategie en app opgeleverd in één dag</li>
-                <li>Architectuur- en portfoliokeuzes die standhouden</li>
-                <li>Begeleiding bij de verandering, niet alleen het plan</li>
-              </ul>
-              <div
-                style={{
-                  display: "flex",
-                  gap: "var(--space-6)",
-                  alignItems: "center",
-                  flexWrap: "wrap",
-                }}
-              >
-                <Link href="/contact" className="btn btn-outline">
-                  Plan een Strategy &amp; App in a Day
-                </Link>
-                <Link
-                  href="/diensten/strategie"
-                  style={{
-                    fontWeight: "var(--fw-semibold)",
-                    display: "inline-flex",
-                    alignItems: "center",
-                    gap: 6,
-                  }}
-                >
-                  Meer over Strategie <ArrowRight style={{ width: 15, height: 15 }} />
-                </Link>
-              </div>
-            </div>
-            <div className="media-img">
-              <Image
-                src="/assets/photos/klantgesprek-tafel.webp"
-                alt="Strategiesessie aan tafel"
-                fill
-                sizes="(max-width: 900px) 100vw, 45vw"
-              />
-            </div>
-          </div>
+            ) : null,
+          )}
         </div>
       </section>
 

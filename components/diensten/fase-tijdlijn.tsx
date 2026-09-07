@@ -6,7 +6,6 @@ export interface FaseTijdlijnItem {
   nummer: number;
   titel: string;
   tekst: string;
-  services: { slug: string; naam: string }[];
 }
 
 interface FaseTijdlijnProps {
@@ -15,14 +14,17 @@ interface FaseTijdlijnProps {
   variant?: "vol" | "lite";
   /** lite: welke fasenummers bij deze richting horen. */
   actieveFases?: number[];
+  /** vol: label van de link onder de strip terug naar de keuzematrix. */
+  cta?: string;
 }
 
 /**
- * De 5-fasenlijn als "spine" van /diensten: elke fase toont de diensten die
- * daar thuishoren als klikbare chip naar de bijbehorende kaart (#svc-<slug>).
- * Op een richting-hub tonen we alleen een verkorte variant met terugverwijzing.
+ * Het volwassenheidsmodel: vijf fasen om jezelf te plaatsen. Bewust alléén
+ * positionering — welke dienst bij welke fase hoort staat als fase-badge op de
+ * kaarten in de keuzematrix. Zo zijn alle vijf de fasen gelijkwaardig, ook de
+ * fasen die (nog) geen eigen dienst hebben.
  */
-export function FaseTijdlijn({ fases, variant = "vol", actieveFases }: FaseTijdlijnProps) {
+export function FaseTijdlijn({ fases, variant = "vol", actieveFases, cta }: FaseTijdlijnProps) {
   if (variant === "lite") {
     return (
       <div className="fase-tijdlijn--lite">
@@ -45,24 +47,22 @@ export function FaseTijdlijn({ fases, variant = "vol", actieveFases }: FaseTijdl
   }
 
   return (
-    <div className="fase-tijdlijn">
-      {fases.map((f, i) => (
-        <div className="fase-item" key={f.nummer}>
-          <div className="fase-num">{`0${f.nummer}`}</div>
-          <h3>{f.titel}</h3>
-          <p>{f.tekst}</p>
-          {f.services.length > 0 && (
-            <div className="fase-chips">
-              {f.services.map((s) => (
-                <a className="fase-chip" href={`#svc-${s.slug}`} key={s.slug}>
-                  {s.naam}
-                </a>
-              ))}
-            </div>
-          )}
-          {i < fases.length - 1 && <ChevronRight className="fase-arrow" aria-hidden="true" />}
-        </div>
-      ))}
-    </div>
+    <>
+      <div className="fase-tijdlijn">
+        {fases.map((f, i) => (
+          <div className="fase-item" key={f.nummer}>
+            <div className="fase-num">{`0${f.nummer}`}</div>
+            <h3>{f.titel}</h3>
+            <p>{f.tekst}</p>
+            {i < fases.length - 1 && <ChevronRight className="fase-arrow" aria-hidden="true" />}
+          </div>
+        ))}
+      </div>
+      {cta && (
+        <a href="#kies-je-richting" className="fase-cta">
+          {cta} <ChevronRight aria-hidden="true" />
+        </a>
+      )}
+    </>
   );
 }

@@ -8,7 +8,6 @@ import type { ServiceRichting } from "@/lib/services";
 import { FaseTijdlijn } from "./fase-tijdlijn";
 import { ServiceCard } from "./service-card";
 import { CrossRef } from "./cross-ref";
-import "./niveau.css";
 import "./richting-hub.css";
 
 const BADGE: Record<ServiceRichting, { Icon: typeof Boxes; label: string }> = {
@@ -30,11 +29,12 @@ const RICHTING_NAAM: Record<ServiceRichting, string> = {
  * dat is nu de rijkere content op de 3 losse dienstdetailpagina's.
  */
 export async function RichtingHub({ richting }: { richting: ServiceRichting }) {
-  const [t, hub, fases] = await Promise.all([
+  const [t, hub, dienstenPagina] = await Promise.all([
     getPagina(`diensten-${richting}`),
     getRichtingHub(richting),
-    getFaseItems(await getPagina("diensten")),
+    getPagina("diensten"),
   ]);
+  const fases = getFaseItems(dienstenPagina);
   const { Icon, label } = BADGE[richting];
   const actieveFases = hub.tiers
     .map((tier) => tier.service.fase)
@@ -89,14 +89,14 @@ export async function RichtingHub({ richting }: { richting: ServiceRichting }) {
           </div>
           <div className="richting-ladder">
             {hub.tiers.map((tier) => (
-              <div className="niveau-rij ladder-rij" key={tier.service.slug}>
-                <div className={`niveau-stap${tier.niveau === 1 ? " niveau-stap--instap" : ""}`}>
+              <div className="ladder-stap" key={tier.service.slug}>
+                <div className={`ladder-kop${tier.niveau === 1 ? " ladder-kop--instap" : ""}`}>
                   <span className="num">{String(tier.niveau).padStart(2, "0")}</span>
-                  <h3>{tier.label}</h3>
-                  <p>{tier.kicker}</p>
+                  <span className="label">{tier.label}</span>
+                  <span className="kicker">{tier.kicker}</span>
                   {tier.niveau === 1 && <span className="begin">Begin hier</span>}
                 </div>
-                <ServiceCard service={tier.service} toonFase />
+                <ServiceCard service={tier.service} compact toonFase />
               </div>
             ))}
           </div>

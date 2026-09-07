@@ -21,7 +21,8 @@ export const revalidate = 300;
 
 export default async function DienstenPage() {
   const t = await getPagina("diensten");
-  const [matrix, fases] = await Promise.all([getDienstMatrix(), getFaseItems(t)]);
+  const matrix = await getDienstMatrix();
+  const fases = getFaseItems(t);
 
   const alleDiensten: Service[] = matrix.rijen.flatMap((r) =>
     r.layout === "kolommen" ? r.cellen.map((c) => c.service) : r.diensten,
@@ -64,7 +65,7 @@ export default async function DienstenPage() {
         </div>
       </section>
 
-      <section className="block matrix-blok">
+      <section className="block matrix-blok" id="kies-je-richting">
         <div className="wrap-wide">
           <div className="sec-head">
             <div className="kicker">{t.matrixKicker}</div>
@@ -82,7 +83,7 @@ export default async function DienstenPage() {
             <h2>{t.fasenTitel}</h2>
             <p>{t.fasenIntro}</p>
           </div>
-          <FaseTijdlijn fases={fases} variant="vol" />
+          <FaseTijdlijn fases={fases} variant="vol" cta="Welke dienst past bij jouw fase?" />
         </div>
       </section>
 
