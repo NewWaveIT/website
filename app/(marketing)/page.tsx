@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { preload } from "react-dom";
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowRight, Award } from "lucide-react";
@@ -34,9 +33,6 @@ const jsonLd = {
 export const revalidate = 300;
 
 export default async function HomePage() {
-  // De eerste hero-sectorfoto is een CSS-background (niet vindbaar in de HTML).
-  // Vroeg preloaden helpt de LCP: de browser start de download meteen i.p.v. na de CSS.
-  preload("/assets/sectoren/foto-zorg.webp", { as: "image", fetchPriority: "high" });
   const t = await getPagina("home");
   const cases = (await getKlantverhalen()).map((k) => ({
     slug: k.slug,
@@ -250,7 +246,7 @@ export default async function HomePage() {
                 naam: "Publieke sector",
                 href: "/sectoren/publieke-sector",
                 cap: "Publieke sector",
-                image: "/assets/sectoren/foto-publieke-sector.webp",
+                theme: "publiek",
                 hook: "“Onze doorlooptijden groeien sneller dan onze formatie.”",
                 chal: "Digitale dienstverlening die burgers vertrouwen: sneller vergunnen, minder papier, volledig aantoonbaar.",
                 kpi: "Sneller vergunnen",
@@ -259,7 +255,7 @@ export default async function HomePage() {
                 naam: "Mobiliteit & logistiek",
                 href: "/sectoren/mobiliteit",
                 cap: "Mobiliteit & logistiek",
-                image: "/assets/sectoren/foto-mobiliteit.webp",
+                theme: "mobiliteit",
                 hook: "“Onze assets worden slimmer, onze systemen niet.”",
                 chal: "Realtime grip op planning, assets en stromen, van de eerste kilometer tot de laatste.",
                 kpi: "Realtime inzicht",
@@ -268,7 +264,7 @@ export default async function HomePage() {
                 naam: "Banken & financials",
                 href: "/sectoren/banken",
                 cap: "Banken & financials",
-                image: "/assets/sectoren/foto-banken.webp",
+                theme: "banken",
                 hook: "“Elke innovatie strandt op compliance.”",
                 chal: "Compliant, veilig en schaalbaar, zonder in te leveren op snelheid of gebruiksgemak.",
                 kpi: "Audit-proof",
@@ -277,7 +273,7 @@ export default async function HomePage() {
                 naam: "Zorg",
                 href: "/sectoren/zorg",
                 cap: "Zorg",
-                image: "/assets/sectoren/foto-zorg.webp",
+                theme: "zorg",
                 hook: "“Onze mensen registreren meer dan ze zorgen.”",
                 chal: "Meer tijd voor de patiënt door betrouwbare, veilige processen die zorgprofessionals ontlasten.",
                 kpi: "Minder registratielast",
@@ -286,7 +282,7 @@ export default async function HomePage() {
                 naam: "Manufacturing",
                 href: "/sectoren/manufacturing",
                 cap: "Manufacturing",
-                image: "/assets/sectoren/foto-manufacturing.webp",
+                theme: "manufacturing",
                 hook: "“Onze machines produceren data die niemand gebruikt.”",
                 chal: "Productie die meebeweegt met de vraag, gestuurd op data, van shopfloor tot boardroom.",
                 kpi: "Kortere omsteltijden",

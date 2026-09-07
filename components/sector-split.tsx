@@ -2,12 +2,14 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { buildHeroSvg } from "@/lib/sector-hero-svg";
 
 export interface SectorSplitItem {
   naam: string;
   href: string;
   chal: string;
-  image: string;
+  /** Themasleutel voor de geanimeerde vignette (zie lib/sector-hero-svg.ts). */
+  theme: string;
   cap: string;
   hook?: string;
   kpi?: string;
@@ -63,7 +65,8 @@ export function SectorSplit({
             <div
               key={i}
               className={`ci${i === imgIndex ? " on" : ""}`}
-              style={{ backgroundImage: `url('${it.image}')` }}
+              aria-hidden="true"
+              dangerouslySetInnerHTML={{ __html: buildHeroSvg(it.theme) }}
             />
           ))}
           <span className="cap">{caption}</span>

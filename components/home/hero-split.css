@@ -1,9 +1,16 @@
 /* Hero split-animatie — geport uit het Claude Design-project
    (ui_kits/website/Hero Split Animatie.dc.html + Hero Schermformaten.dc.html).
-   Full-bleed sectorfoto met een zwevend "systeem"-venster (Mendix-microflow +
+   Geanimeerd sectorvignet (dezelfde illustratielaag als sector-/dienstpagina's,
+   lib/sector-hero-svg.ts) met een zwevend "systeem"-venster (Mendix-microflow +
    compacte AI-regel) rechtsonder, cyclend door vijf sectoren met een oranje
    sweep. Structuur staat grotendeels inline in hero-split.tsx (trouw aan het
    design); hier keyframes + de schermformaten. */
+
+.hs-theme-anim svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
 
 @keyframes hsRowIn {
   from {

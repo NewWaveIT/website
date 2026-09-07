@@ -1,18 +1,21 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import { buildHeroSvg } from "@/lib/sector-hero-svg";
 import "./hero-split.css";
 
 /* Hero split-animatie — geport uit ui_kits/website/Hero Split Animatie.dc.html
-   + Hero Schermformaten.dc.html. Full-bleed sectorfoto met een zwevend
-   "systeem"-venster (Mendix-microflow + compacte AI-regel) rechtsonder, dat
-   door vijf sectoren cyclet met een oranje golfsweep. De structuur wordt per
-   scene als HTML geïnjecteerd (trouw aan het inline-design); de React-laag
-   beheert de scene-index, de sweep en de fit-to-scale. */
+   + Hero Schermformaten.dc.html. Geanimeerde sectorvignet (dezelfde
+   illustratielaag als sector-/dienstpagina's, zie lib/sector-hero-svg.ts) met
+   een zwevend "systeem"-venster (Mendix-microflow + compacte AI-regel)
+   rechtsonder, dat door vijf sectoren cyclet met een oranje golfsweep. De
+   structuur wordt per scene als HTML geïnjecteerd (trouw aan het
+   inline-design); de React-laag beheert de scene-index, de sweep en de
+   fit-to-scale. */
 
 interface Scene {
   key: string;
-  photo: string;
+  theme: string;
   sector: string;
   real: string;
   crumb: string;
@@ -26,18 +29,10 @@ interface Scene {
   aiHook: string;
 }
 
-const PHOTO: Record<string, string> = {
-  zorg: "foto-zorg",
-  publiek: "foto-publieke-sector",
-  mobiliteit: "foto-mobiliteit",
-  manufacturing: "foto-manufacturing",
-  banken: "foto-banken",
-};
-
 const SCENES: Scene[] = [
   {
     key: "zorg",
-    photo: "zorg",
+    theme: "zorg",
     sector: "Zorg",
     real: "De wijkverpleegkundige legt de meting vast bij de cliënt thuis",
     crumb: "ZorgApp  ›  Overdracht  ›  ACT_OverdrachtAfronden",
@@ -52,7 +47,7 @@ const SCENES: Scene[] = [
   },
   {
     key: "publiek",
-    photo: "publiek",
+    theme: "publiek",
     sector: "Publieke sector",
     real: "Aan de balie wordt de aanvraag samen doorgenomen",
     crumb: "Zaaksysteem  ›  Behandeling  ›  ACT_BesluitVastleggen",
@@ -67,7 +62,7 @@ const SCENES: Scene[] = [
   },
   {
     key: "mobiliteit",
-    photo: "mobiliteit",
+    theme: "mobiliteit",
     sector: "Mobiliteit",
     real: "Op de terminal komen trein, truck en kraan samen",
     crumb: "FleetApp  ›  Werkorders  ›  ACT_OnderdeelBoeken",
@@ -82,7 +77,7 @@ const SCENES: Scene[] = [
   },
   {
     key: "manufacturing",
-    photo: "manufacturing",
+    theme: "manufacturing",
     sector: "Manufacturing",
     real: "Aan de lijn stuurt de operator de productie bij",
     crumb: "PlantApp  ›  Productie  ›  ACT_BatchVrijgeven",
@@ -97,7 +92,7 @@ const SCENES: Scene[] = [
   },
   {
     key: "banken",
-    photo: "banken",
+    theme: "banken",
     sector: "Banken",
     real: "In de boardroom staan de cijfers op tafel",
     crumb: "KredietApp  ›  Aanvraag  ›  ACT_DossierFiatteren",
@@ -239,9 +234,8 @@ function leftHtml(s: Scene): string {
   }).join("");
 
   return `
-  <img src="/assets/sectoren/${PHOTO[s.photo]}.webp" alt="" fetchpriority="high" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;filter:grayscale(.55) contrast(1.05) brightness(.62);transition:filter .9s ease;">
-  <div style="position:absolute;inset:0;background:#2E251A;mix-blend-mode:color;opacity:.45;"></div>
-  <div style="position:absolute;inset:0;background:linear-gradient(100deg,rgba(46,37,26,.94) 0%,rgba(46,37,26,.86) 34%,rgba(46,37,26,.52) 68%,rgba(46,37,26,.34) 100%);"></div>
+  <div class="hs-theme-anim" aria-hidden="true" style="position:absolute;inset:0;">${buildHeroSvg(s.theme)}</div>
+  <div style="position:absolute;inset:0;background:linear-gradient(100deg,rgba(46,37,26,.92) 0%,rgba(46,37,26,.80) 34%,rgba(46,37,26,.48) 68%,rgba(46,37,26,.28) 100%);"></div>
   <div style="position:absolute;inset:0;background:linear-gradient(0deg,rgba(36,28,19,.72) 0%,rgba(36,28,19,0) 42%);"></div>
   <div class="hs-copy" data-copy="1" style="position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;padding:26px 56px 26px 48px;box-sizing:border-box;">
     <div style="display:flex;flex-wrap:wrap;align-items:baseline;gap:0 9px;font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.16em;text-transform:uppercase;margin-bottom:clamp(14px,2.6vh,26px);">
