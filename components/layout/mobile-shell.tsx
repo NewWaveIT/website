@@ -118,7 +118,7 @@ export function MobileShell() {
         </nav>
         <div className="mfoot">
           <Link href="/contact" className="btn btn-primary" onClick={() => setOpen(false)}>
-            Plan een strategiegesprek <ArrowRight />
+            Plan een gesprek <ArrowRight />
           </Link>
           <span className="sub">hello@thenewwaveit.com</span>
         </div>
@@ -126,7 +126,7 @@ export function MobileShell() {
 
       <div className="stickycta">
         <Link href="/contact" className="btn btn-primary">
-          Plan een strategiegesprek <ArrowRight />
+          Plan een gesprek <ArrowRight />
         </Link>
       </div>
     </>

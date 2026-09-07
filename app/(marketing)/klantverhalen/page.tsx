@@ -4,6 +4,7 @@ import Image from "next/image";
 import { ArrowRight, Building2, TrainFront, Banknote, HeartPulse, Factory } from "lucide-react";
 import { getKlantverhalen } from "@/lib/klantverhalen-data";
 import { SectorHeroAnim } from "@/components/sector-hero-anim";
+import { SlotCta } from "@/components/layout/slot-cta";
 import "./klantverhalen.css";
 
 export const metadata: Metadata = {
@@ -194,14 +195,7 @@ export default async function KlantverhalenPage() {
         </div>
       </section>
 
-      <section className="cta">
-        <div className="wrap-wide">
-          <h2>Herken je jouw vraagstuk in deze verhalen?</h2>
-          <Link href="/contact" className="btn btn-on">
-            Plan een strategiegesprek <ArrowRight />
-          </Link>
-        </div>
-      </section>
+      <SlotCta titel="Herken je jouw vraagstuk in deze verhalen?" />
     </div>
   );
 }

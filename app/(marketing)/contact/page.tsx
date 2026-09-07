@@ -22,20 +22,14 @@ function telHref(t: string): string {
 }
 
 export const metadata: Metadata = {
-  title: "Plan een strategiegesprek",
+  title: "Plan een gesprek",
   description:
-    "Bel, mail, app of plan een vrijblijvend strategiegesprek van 45 minuten met een practice lead van The New Wave IT. Reactie binnen één werkdag.",
+    "Bel, mail, app of plan een vrijblijvend gesprek met een practice lead van The New Wave IT. Ook voor een korte vraag. Reactie binnen één werkdag.",
   alternates: { canonical: "/contact" },
 };
 
 /** Bekende waarden voor ?type= — een onbekende waarde wordt genegeerd. */
-const TYPE_OPTIES = [
-  "strategiegesprek",
-  "sectorrapport",
-  "quickscan",
-  "dienstaanvraag",
-  "kennismaking",
-];
+const TYPE_OPTIES = ["gesprek", "dienstaanvraag", "sectorrapport", "kennismaking"];
 
 // Geen `revalidate`: deze pagina leest ?dienst= en ?type= uit de queryparameters
 // en is daarmee altijd dynamisch — een statische cache zou de voorinvulling
@@ -60,7 +54,7 @@ export default async function ContactPage({
 
   // Nooit een ongefilterde queryparameter doorgeven aan een formulierveld.
   const dienstPreset = services.some((s) => s.slug === params.dienst) ? (params.dienst ?? "") : "";
-  const type = params.type && TYPE_OPTIES.includes(params.type) ? params.type : "strategiegesprek";
+  const type = params.type && TYPE_OPTIES.includes(params.type) ? params.type : "gesprek";
   const diensten = services.map((s) => ({
     slug: s.slug,
     naam: s.naam,
@@ -128,10 +122,10 @@ export default async function ContactPage({
               <span className="ic">
                 <CalendarCheck />
               </span>
-              <h3>Plan een strategiegesprek</h3>
+              <h3>Plan een gesprek</h3>
               <p>
-                45 minuten met een practice lead over jouw vraagstuk. Vrijblijvend en zonder
-                verkooppraatje.
+                20 tot 45 minuten met een practice lead, afhankelijk van je vraag. Vrijblijvend en
+                zonder verkooppraatje.
               </p>
               <span className="go">
                 Plan het gesprek <ArrowRight />

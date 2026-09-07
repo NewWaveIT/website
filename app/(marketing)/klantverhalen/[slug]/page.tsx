@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { Building2, ArrowRight } from "lucide-react";
 import { getKlantverhalen, getKlantverhaalBySlug } from "@/lib/klantverhalen-data";
 import type { Stap } from "@/lib/klantverhalen";
+import { SlotCta } from "@/components/layout/slot-cta";
 import "./case.css";
 
 export const revalidate = 300;
@@ -231,14 +232,7 @@ export default async function CasePage({ params }: { params: Promise<{ slug: str
         </section>
       )}
 
-      <section className="cta">
-        <div className="wrap-wide">
-          <h2>Herken je dit vraagstuk in jouw organisatie?</h2>
-          <Link href="/contact" className="btn btn-on">
-            Plan een strategiegesprek <ArrowRight />
-          </Link>
-        </div>
-      </section>
+      <SlotCta titel="Herken je dit vraagstuk in jouw organisatie?" />
     </div>
   );
 }

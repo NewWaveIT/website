@@ -22,7 +22,8 @@ interface ServiceCardProps {
 
 /** Eén kaart uit de dienstencatalogus. `id="svc-<slug>"` is het ankerdoel vanaf de fasenlijn. */
 export function ServiceCard({ service: s, toonFase = false, compact = false }: ServiceCardProps) {
-  const href = `/contact?dienst=${s.slug}&type=${s.ctaType}`;
+  // Geen `type` meesturen: de server leidt 'dienstaanvraag' af uit `dienst`.
+  const href = `/contact?dienst=${s.slug}`;
 
   const diepte = (
     <>

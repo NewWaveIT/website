@@ -87,7 +87,14 @@ export async function submitContact(
     return { ok: false, message: "Controleer de gemarkeerde velden.", errors };
   }
 
-  const type = str(formData, "type") || (dienst ? "dienstaanvraag" : "strategiegesprek");
+  // Een gekozen dienst maakt het een dienstaanvraag, ook als de bezoeker op de
+  // algemene contactpagina begon. Een specifiekere ingang (kennismaking,
+  // sectorrapport) blijft wel staan.
+  const gekozenType = str(formData, "type");
+  const type =
+    dienst && (!gekozenType || gekozenType === "gesprek")
+      ? "dienstaanvraag"
+      : gekozenType || "gesprek";
   const onderwerpLabel = [serviceNaam, rol, groepsgrootte, sector, onderwerpen]
     .filter(Boolean)
     .join(" · ");

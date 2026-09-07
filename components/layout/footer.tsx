@@ -46,7 +46,7 @@ export function Footer() {
             >
               LinkedIn
             </a>
-            <Link href="/contact">Plan een strategiegesprek</Link>
+            <Link href="/contact">Plan een gesprek</Link>
           </div>
         </div>
         <div className="foot-bottom">

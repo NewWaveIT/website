@@ -88,6 +88,45 @@ describe("submitContact", () => {
     expect(insertMock).not.toHaveBeenCalled();
   });
 
+  it("slaat een inzending zonder dienst op als een algemeen gesprek", async () => {
+    const result = await submitContact(
+      initialState,
+      formData({ naam: "Jane Doe", email: "jane@example.com" }),
+    );
+    expect(result.ok).toBe(true);
+    expect((insertMock.mock.calls[0]![0] as { type: string }).type).toBe("gesprek");
+  });
+
+  it("maakt er een dienstaanvraag van zodra een dienst gekozen is, ook vanaf de algemene pagina", async () => {
+    const result = await submitContact(
+      initialState,
+      // De contactpagina stuurt haar eigen type mee als hidden veld; een
+      // gekozen dienst moet daar dan alsnog boven gaan.
+      formData({
+        naam: "Jane Doe",
+        email: "jane@example.com",
+        type: "gesprek",
+        dienst: "app-in-a-day",
+      }),
+    );
+    expect(result.ok).toBe(true);
+    expect((insertMock.mock.calls[0]![0] as { type: string }).type).toBe("dienstaanvraag");
+  });
+
+  it("laat een specifiekere ingang zoals kennismaking staan", async () => {
+    const result = await submitContact(
+      initialState,
+      formData({
+        naam: "Jane Doe",
+        email: "jane@example.com",
+        type: "kennismaking",
+        dienst: "it-strategie",
+      }),
+    );
+    expect(result.ok).toBe(true);
+    expect((insertMock.mock.calls[0]![0] as { type: string }).type).toBe("kennismaking");
+  });
+
   it("'weet-ik-niet' als dienst is altijd geldig", async () => {
     const result = await submitContact(
       initialState,

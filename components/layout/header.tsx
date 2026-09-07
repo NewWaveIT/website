@@ -69,7 +69,7 @@ export function Header() {
             Werken bij
           </Link>
           <Link href="/contact" className="btn btn-primary btn-sm">
-            Plan een strategiegesprek
+            Plan een gesprek
           </Link>
         </div>
       </div>

@@ -5,13 +5,7 @@ import { ArrowRight } from "lucide-react";
  * Uniforme slot-CTA onderaan pagina's: contactformulier primair, bellen als
  * vast secundair alternatief. Eén bron zodat de CTA-taal overal gelijk is.
  */
-export function SlotCta({
-  titel,
-  knop = "Plan een strategiegesprek",
-}: {
-  titel: string;
-  knop?: string;
-}) {
+export function SlotCta({ titel, knop = "Plan een gesprek" }: { titel: string; knop?: string }) {
   return (
     <section className="cta">
       <div className="wrap-wide">

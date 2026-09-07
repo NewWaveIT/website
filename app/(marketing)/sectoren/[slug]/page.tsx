@@ -87,7 +87,7 @@ export default async function SectorPage({ params }: { params: Promise<{ slug: s
             <p dangerouslySetInnerHTML={{ __html: s.intro }} />
             <div className="hero-actions">
               <Link href="/contact" className="btn btn-primary">
-                Plan een strategiegesprek <ArrowRight />
+                Plan een gesprek <ArrowRight />
               </Link>
               <Link href="/contact?type=sectorrapport" className="btn btn-ghost-dark">
                 Download sectorrapport

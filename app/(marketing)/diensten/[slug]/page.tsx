@@ -8,6 +8,7 @@ import { stripHtml } from "@/lib/cms/sanitize";
 import { getArtikelenVoorDienst } from "@/lib/inzichten-data";
 import { getServices, getServiceBySlug } from "@/lib/services-data";
 import { SectorHeroAnim } from "@/components/sector-hero-anim";
+import { SlotCta } from "@/components/layout/slot-cta";
 import "./dienst-detail.css";
 
 export const revalidate = 300;
@@ -81,12 +82,10 @@ export default async function DienstPage({ params }: { params: Promise<{ slug: s
             )}
             <div className="hero-actions">
               <Link
-                href={
-                  service ? `/contact?dienst=${service.slug}&type=${service.ctaType}` : "/contact"
-                }
+                href={service ? `/contact?dienst=${service.slug}` : "/contact"}
                 className="btn btn-primary"
               >
-                {service?.ctaLabel ?? "Plan een strategiegesprek"} <ArrowRight />
+                {service?.ctaLabel ?? "Plan een gesprek"} <ArrowRight />
               </Link>
               <Link href="/klantverhalen" className="btn btn-ghost-dark">
                 {d.ctaSecondary}
@@ -436,9 +435,7 @@ export default async function DienstPage({ params }: { params: Promise<{ slug: s
                     <Link
                       key={v.slug}
                       href={
-                        v.detailSlug
-                          ? `/diensten/${v.detailSlug}`
-                          : `/contact?dienst=${v.slug}&type=${v.ctaType}`
+                        v.detailSlug ? `/diensten/${v.detailSlug}` : `/contact?dienst=${v.slug}`
                       }
                       className="more"
                     >
@@ -452,14 +449,7 @@ export default async function DienstPage({ params }: { params: Promise<{ slug: s
         </section>
       )}
 
-      <section className="cta">
-        <div className="wrap-wide">
-          <h2>{d.ctaTitle}</h2>
-          <Link href="/contact" className="btn btn-on">
-            Plan een strategiegesprek <ArrowRight />
-          </Link>
-        </div>
-      </section>
+      <SlotCta titel={d.ctaTitle} />
     </div>
   );
 }

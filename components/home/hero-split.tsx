@@ -244,7 +244,7 @@ function leftHtml(s: Scene): string {
     <h1 style="font-family:var(--font-display-expanded),'Archivo',Arial,sans-serif;font-weight:900;font-size:clamp(28px,3vw,48px);line-height:1.06;letter-spacing:-1px;color:#FFFDF9;margin:0 0 clamp(14px,2.4vh,24px);text-wrap:balance;">Wij maken van business en IT <span style="color:#F15822;border-bottom:3px solid #F15822;">één beweging</span>.</h1>
     <p style="font-size:clamp(15px,1.15vw,17px);line-height:1.6;color:#C9BCA8;margin:0 0 clamp(20px,3.4vh,34px);max-width:46ch;text-wrap:pretty;">The New Wave IT combineert diepgaande sectorkennis met Mendix, AI en strategie. Zo vertalen we jouw ambitie naar oplossingen die werken voor de mensen die ermee moeten werken.</p>
     <div style="display:flex;flex-wrap:wrap;gap:18px 26px;align-items:center;">
-      <a href="/contact" style="background:#F15822;color:#FFFFFF;text-decoration:none;font-size:15px;font-weight:600;padding:15px 28px;white-space:nowrap;">Plan een strategiegesprek &nbsp;&rarr;</a>
+      <a href="/contact" style="background:#F15822;color:#FFFFFF;text-decoration:none;font-size:15px;font-weight:600;padding:15px 28px;white-space:nowrap;">Plan een gesprek &nbsp;&rarr;</a>
       <a href="tel:+31610751254" style="display:flex;align-items:center;gap:14px;color:#FFFDF9;text-decoration:none;font-size:15px;font-weight:600;white-space:nowrap;">
         <span style="display:flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:50%;border:1px solid #6B5B47;flex-shrink:0;">${PHONE_SVG}</span>
         Bel 06&ndash;10751254

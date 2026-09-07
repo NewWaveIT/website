@@ -30,7 +30,7 @@ function SubmitButton({ label }: { label: string }) {
 }
 
 export function ContactForm({
-  type = "strategiegesprek",
+  type = "gesprek",
   diensten = [],
   dienstPreset = "",
 }: {
@@ -63,16 +63,24 @@ export function ContactForm({
   }
 
   const gekozenDienst = diensten.find((d) => d.slug === dienst);
-  const submitLabel =
-    gekozenDienst?.ctaType === "kennismaking" ? "Plan de kennismaking" : "Plan het gesprek";
   const vraagKeys = VRAGEN_PER_SERVICE[dienst] ?? [];
+
+  // Het label volgt waarop de bezoeker klikte in de catalogus: een dagdienst
+  // vraagt om een datum, een traject begint met een kennismaking.
+  const submitLabel =
+    gekozenDienst?.ctaType === "datum"
+      ? "Vraag een datum aan"
+      : gekozenDienst?.ctaType === "kennismaking"
+        ? "Plan de kennismaking"
+        : "Plan het gesprek";
 
   return (
     <form className="form-card" action={formAction} noValidate>
-      <h2>Plan een strategiegesprek</h2>
+      <h2>Plan een gesprek</h2>
       <p className="sub">
-        Vertel kort waar je vraagstuk over gaat, we reageren binnen één werkdag met een voorstel
-        voor datum en deelnemers.
+        {gekozenDienst
+          ? `Je vraag gaat over ${gekozenDienst.naam}. Vul je gegevens in, dan komen we binnen één werkdag met een voorstel terug.`
+          : "Vertel kort waar het over gaat — een korte vraag mag ook. Je krijgt binnen één werkdag antwoord van een echt mens."}
       </p>
 
       <input type="hidden" name="type" value={type} />

@@ -56,7 +56,7 @@ export function HomeInteractions() {
     (() => {
       if (reduced || !("IntersectionObserver" in window)) return;
       const targets = document.querySelectorAll<HTMLElement>(
-        ".sector-card, .fcase, .wcard, .post, .lead-card, .sec-head, .eyebrow-row",
+        ".sector-card, .fcase, .wcard, .post, .svc-card, .sec-head, .eyebrow-row",
       );
       targets.forEach((el) => el.classList.add("reveal"));
       const io = new IntersectionObserver(

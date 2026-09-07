@@ -143,10 +143,7 @@ export default async function HomePage() {
                       flexWrap: "wrap",
                     }}
                   >
-                    <Link
-                      href={`/contact?dienst=${s.slug}&type=${s.ctaType}`}
-                      className="btn btn-outline"
-                    >
+                    <Link href={`/contact?dienst=${s.slug}`} className="btn btn-outline">
                       {s.ctaLabel}
                     </Link>
                     <Link

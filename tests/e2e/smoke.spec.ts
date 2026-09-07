@@ -50,7 +50,9 @@ test("Contactformulier is aanwezig en invulbaar", async ({ page }) => {
   await expect(naam).toBeVisible();
   await expect(email).toBeVisible();
   await expect(toelichting).toBeVisible();
-  await expect(page.getByRole("button", { name: /verstuur|plan|verzend|contact/i })).toBeVisible();
+  await expect(
+    page.getByRole("button", { name: /verstuur|plan|verzend|vraag|contact/i }),
+  ).toBeVisible();
 
   await naam.fill("Test Bezoeker");
   await email.fill("test@example.com");
@@ -62,4 +64,12 @@ test("?dienst= selecteert de dienst en toont de bijbehorende vervolgvraag", asyn
   await page.goto("/contact?dienst=app-in-a-day");
   await expect(page.locator("select#f-dienst")).toHaveValue("app-in-a-day");
   await expect(page.getByText("Welk proces heb je in gedachten?")).toBeVisible();
+  // Een dagdienst vraagt om een datum, geen strategiegesprek.
+  await expect(page.getByRole("button", { name: /vraag een datum aan/i })).toBeVisible();
+});
+
+test("de contact-CTA is laagdrempelig, geen strategiegesprek", async ({ page }) => {
+  await page.goto("/");
+  await expect(page.getByRole("link", { name: "Plan een gesprek" }).first()).toBeVisible();
+  await expect(page.getByText(/strategiegesprek/i)).toHaveCount(0);
 });

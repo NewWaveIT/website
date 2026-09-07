@@ -10,7 +10,6 @@ export const PAGE_FIELDS: Record<string, FieldDef[]> = {
     { key: "heroTitleStart", label: "Hero — titel (begin)", type: "text" },
     { key: "heroAccent", label: "Hero — accentwoord", type: "text" },
     { key: "heroLead", label: "Hero — introtekst", type: "textarea" },
-    { key: "heroCtaPrimair", label: "Hero — knop primair", type: "text" },
     { key: "heroCtaVideo", label: "Hero — knop video", type: "text" },
     { key: "statementKicker", label: "Statement — kicker", type: "text" },
     { key: "statementTitel", label: "Statement — titel", type: "textarea" },
@@ -36,18 +35,6 @@ export const PAGE_FIELDS: Record<string, FieldDef[]> = {
     { key: "joinusKicker", label: "Word een Waver — kicker", type: "text" },
     { key: "joinusTitel", label: "Word een Waver — titel", type: "text" },
     { key: "joinusLead", label: "Word een Waver — introtekst", type: "textarea" },
-    { key: "leadgenKicker", label: "Lead-gen — kicker", type: "text" },
-    { key: "leadgenTitel", label: "Lead-gen — titel", type: "text" },
-    { key: "leadgenIntro", label: "Lead-gen — intro", type: "textarea" },
-    { key: "lead1Aud", label: "Lead-kaart 1 — doelgroep", type: "text" },
-    { key: "lead1Titel", label: "Lead-kaart 1 — titel", type: "text" },
-    { key: "lead1Tekst", label: "Lead-kaart 1 — tekst", type: "textarea" },
-    { key: "lead2Aud", label: "Lead-kaart 2 — doelgroep", type: "text" },
-    { key: "lead2Titel", label: "Lead-kaart 2 — titel", type: "text" },
-    { key: "lead2Tekst", label: "Lead-kaart 2 — tekst", type: "textarea" },
-    { key: "lead3Aud", label: "Lead-kaart 3 — doelgroep", type: "text" },
-    { key: "lead3Titel", label: "Lead-kaart 3 — titel", type: "text" },
-    { key: "lead3Tekst", label: "Lead-kaart 3 — tekst", type: "textarea" },
   ],
   "over-ons": [
     { key: "heroTitleStart", label: "Hero — titel (begin)", type: "text" },
@@ -219,14 +206,13 @@ export const PAGE_DEFAULTS: Record<string, Record<string, string>> = {
     heroAccent: "één beweging",
     heroLead:
       "The New Wave IT combineert diepgaande sectorkennis met Mendix, AI en strategie. Zo vertalen we jouw ambitie naar oplossingen die werken voor de mensen die ermee moeten werken.",
-    heroCtaPrimair: "Plan een strategiegesprek",
     heroCtaVideo: "Bekijk klantverhalen",
     statementKicker: "Plan · build · run",
     statementTitel: "Wij adviseren niet alleen. Wij bouwen, leveren en beheren.",
     statementBody:
       "Hetzelfde senior team dat jouw strategie mee vormgeeft, staat ook aan de knoppen bij bouw en beheer. Zo blijft verantwoordelijkheid op één plek en houden we vaart tot ver na livegang.",
     ctaTitel: "Klaar om samen te bouwen aan meetbare groei?",
-    ctaKnop: "Plan een strategiegesprek",
+    ctaKnop: "Plan een gesprek",
     heroKickerMobiel: "IT-consultancy voor vijf sectoren",
     heroLeadMobiel:
       "Sectorkennis × Mendix, AI en strategie. Oplossingen die werken voor de mensen die ermee werken.",
@@ -254,22 +240,6 @@ export const PAGE_DEFAULTS: Record<string, Record<string, string>> = {
     joinusTitel: "Bouw je aan onze klanten, of word je er zelf een?",
     joinusLead:
       "Dezelfde mensen die naast onze klanten staan, kiezen hier hun eigen groeipad. Een gelijk speelveld, open feedback en ruimte om te ondernemen. Misschien versterk jij straks de golf.",
-    leadgenKicker: "Zet de volgende stap",
-    leadgenTitel: "Kies het gesprek dat bij je past",
-    leadgenIntro:
-      "Of je nu strategisch verkent of concreet wilt starten: er is een passende ingang.",
-    lead1Aud: "Voor directie & C-suite",
-    lead1Titel: "Strategiegesprek",
-    lead1Tekst:
-      "Een vrijblijvend gesprek van 45 minuten over jouw sectorvraagstuk en waar technologie het verschil maakt.",
-    lead2Aud: "Voor IT & afdelingsmanagers",
-    lead2Titel: "Quick scan",
-    lead2Tekst:
-      "In één sessie brengen we samen je grootste kans in kaart, met een concreet vervolgadvies.",
-    lead3Aud: "Voor de verdieping",
-    lead3Titel: "Sectorrapport",
-    lead3Tekst:
-      "Download het rapport voor jouw markt: businessvraagstukken, benchmarks en concrete outcomes.",
   },
   "over-ons": {
     heroTitleStart: "De ondernemende mens zorgt voor ",
@@ -308,7 +278,7 @@ export const PAGE_DEFAULTS: Record<string, Record<string, string>> = {
     heroTitleStart: "Waar kunnen we je ",
     heroAccent: "mee helpen",
     heroLead:
-      "Een strategiegesprek plannen kan, maar een korte vraag stellen mag ook gewoon. Bel, mail, app of kom langs, je zit nergens aan vast.",
+      "Een gesprek plannen kan, maar een korte vraag stellen mag ook gewoon. Bel, mail, app of kom langs, je zit nergens aan vast.",
     heroLeadMobiel: "Bel, mail, app of kom langs, je zit nergens aan vast.",
     verwachtTitel: "Wat je kunt verwachten",
     verwacht1Titel: "Voorbereiding",
@@ -316,7 +286,7 @@ export const PAGE_DEFAULTS: Record<string, Record<string, string>> = {
       "We verdiepen ons vooraf in jouw sector en organisatie, zodat het gesprek meteen de diepte in kan.",
     verwacht2Titel: "Het gesprek",
     verwacht2Tekst:
-      "45 minuten met een practice lead, over jouw businessvraagstuk, niet over onze diensten.",
+      "20 tot 45 minuten met een practice lead, afhankelijk van je vraag. Over jouw businessvraagstuk, niet over onze diensten.",
     verwacht3Titel: "Concreet vervolg",
     verwacht3Tekst:
       "Binnen drie dagen een eerste analyse met mogelijke routes, geheel vrijblijvend.",
