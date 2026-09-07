@@ -2,6 +2,7 @@
 
 import { createClient } from "@/lib/supabase/server";
 import { sendAanvraagNotificatie, sendAanvraagBevestiging } from "@/lib/email";
+import { magDoor } from "@/lib/rate-limit";
 
 export interface ContactState {
   ok: boolean;
@@ -24,6 +25,13 @@ export async function submitContact(
   // Honeypot: bots vullen dit verborgen veld; mensen niet.
   if (str(formData, "website")) {
     return { ok: true, message: "Bedankt, we nemen snel contact met je op." };
+  }
+
+  if (!(await magDoor("contact", 5, 600))) {
+    return {
+      ok: false,
+      message: "Te veel pogingen. Probeer het over een paar minuten opnieuw.",
+    };
   }
 
   const naam = str(formData, "naam");

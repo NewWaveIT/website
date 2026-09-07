@@ -1,13 +1,19 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 type InsertResult = { error: { message: string } | null };
+type RpcResult = { data: boolean | null; error: { message: string } | null };
 
 const insertMock = vi.fn(async (): Promise<InsertResult> => ({ error: null }));
 const fromMock = vi.fn(() => ({ insert: insertMock }));
-const createClientMock = vi.fn(async () => ({ from: fromMock }));
+const rpcMock = vi.fn(async (): Promise<RpcResult> => ({ data: true, error: null }));
+const createClientMock = vi.fn(async () => ({ from: fromMock, rpc: rpcMock }));
 
 vi.mock("@/lib/supabase/server", () => ({
   createClient: createClientMock,
+}));
+
+vi.mock("next/headers", () => ({
+  headers: vi.fn(async () => ({ get: () => "203.0.113.1" })),
 }));
 
 const { sendAanvraagNotificatie, sendAanvraagBevestiging } = vi.hoisted(() => ({
@@ -33,6 +39,7 @@ const initialState = { ok: false, message: "" };
 beforeEach(() => {
   insertMock.mockClear();
   fromMock.mockClear();
+  rpcMock.mockClear().mockResolvedValue({ data: true, error: null });
   createClientMock.mockClear();
   sendAanvraagNotificatie.mockClear();
   sendAanvraagBevestiging.mockClear();
@@ -60,7 +67,19 @@ describe("submitContact", () => {
       email: "Vul een geldig e-mailadres in.",
       toelichting: "Toelichting is te lang (max. 5000 tekens).",
     });
-    expect(createClientMock).not.toHaveBeenCalled();
+    expect(insertMock).not.toHaveBeenCalled();
+  });
+
+  it("blokkeert bij te veel pogingen (rate limit), zonder insert of mails", async () => {
+    rpcMock.mockResolvedValueOnce({ data: false, error: null });
+    const result = await submitContact(
+      initialState,
+      formData({ naam: "Jane Doe", email: "jane@example.com" }),
+    );
+    expect(result.ok).toBe(false);
+    expect(result.message).toMatch(/te veel/i);
+    expect(insertMock).not.toHaveBeenCalled();
+    expect(sendAanvraagNotificatie).not.toHaveBeenCalled();
   });
 
   it("slaat een geldige inzending op en verstuurt beide mails", async () => {

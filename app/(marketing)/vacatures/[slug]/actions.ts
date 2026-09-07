@@ -3,6 +3,7 @@
 import { createClient } from "@/lib/supabase/server";
 import { sendSollicitatieNotificatie, sendSollicitatieBevestiging } from "@/lib/email";
 import { getContactpersoon } from "@/lib/team-data";
+import { magDoor } from "@/lib/rate-limit";
 
 type DbClient = Awaited<ReturnType<typeof createClient>>;
 
@@ -69,6 +70,13 @@ export async function submitSollicitatie(
   // Honeypot: bots vullen dit verborgen veld; mensen niet.
   if (str(formData, "website")) {
     return { ok: true, message: "Bedankt voor je sollicitatie!" };
+  }
+
+  if (!(await magDoor("sollicitatie", 3, 3600))) {
+    return {
+      ok: false,
+      message: "Te veel pogingen. Probeer het over een uur opnieuw.",
+    };
   }
 
   const vacatureSlug = str(formData, "vacature_slug");

@@ -2,18 +2,25 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 
 type UploadResult = { error: { message: string } | null };
 type InsertResult = { error: { message: string } | null };
+type RpcResult = { data: boolean | null; error: { message: string } | null };
 
 const uploadMock = vi.fn(async (): Promise<UploadResult> => ({ error: null }));
 const storageFromMock = vi.fn(() => ({ upload: uploadMock }));
 const insertMock = vi.fn(async (): Promise<InsertResult> => ({ error: null }));
 const fromMock = vi.fn(() => ({ insert: insertMock }));
+const rpcMock = vi.fn(async (): Promise<RpcResult> => ({ data: true, error: null }));
 const createClientMock = vi.fn(async () => ({
   from: fromMock,
   storage: { from: storageFromMock },
+  rpc: rpcMock,
 }));
 
 vi.mock("@/lib/supabase/server", () => ({
   createClient: createClientMock,
+}));
+
+vi.mock("next/headers", () => ({
+  headers: vi.fn(async () => ({ get: () => "203.0.113.1" })),
 }));
 
 const { sendSollicitatieNotificatie, sendSollicitatieBevestiging } = vi.hoisted(() => ({
@@ -47,6 +54,7 @@ beforeEach(() => {
   storageFromMock.mockClear();
   insertMock.mockClear();
   fromMock.mockClear();
+  rpcMock.mockClear().mockResolvedValue({ data: true, error: null });
   createClientMock.mockClear();
   sendSollicitatieNotificatie.mockClear();
   sendSollicitatieBevestiging.mockClear();
@@ -72,7 +80,15 @@ describe("submitSollicitatie", () => {
       naam: "Vul je naam in.",
       email: "Vul een geldig e-mailadres in.",
     });
-    expect(createClientMock).not.toHaveBeenCalled();
+    expect(insertMock).not.toHaveBeenCalled();
+  });
+
+  it("blokkeert bij te veel pogingen (rate limit)", async () => {
+    rpcMock.mockResolvedValueOnce({ data: false, error: null });
+    const result = await submitSollicitatie(initialState, formData(basicFields));
+    expect(result.ok).toBe(false);
+    expect(result.message).toMatch(/te veel/i);
+    expect(insertMock).not.toHaveBeenCalled();
   });
 
   it("wijst een cv met verkeerd bestandstype af", async () => {

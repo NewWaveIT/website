@@ -1,6 +1,7 @@
 "use server";
 
 import { createClient } from "@/lib/supabase/server";
+import { magDoor } from "@/lib/rate-limit";
 
 export interface LeadState {
   ok: boolean;
@@ -22,6 +23,10 @@ export async function subscribeLead(_prev: LeadState, formData: FormData): Promi
   // Honeypot: bots vullen dit verborgen veld; mensen niet.
   if (str(formData, "website")) {
     return { ok: true, message: "Bedankt! Je hoort van ons." };
+  }
+
+  if (!(await magDoor("inzichten-lead", 5, 600))) {
+    return { ok: false, message: "Te veel pogingen. Probeer het over een paar minuten opnieuw." };
   }
 
   const email = str(formData, "email");

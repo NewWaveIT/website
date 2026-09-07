@@ -45,6 +45,11 @@ uit de code afleidt.
   tegelijk → `{ ok, message, errors }`. De client toont `aria-invalid` + `.field-err` en
   zet focus op het eerste foute veld. Honeypot-veld heet `website`; `noValidate` op het
   `<form>`. Alles fail-safe.
+- **Rate-limiting.** Elke publieke server action (contact, sollicitatie, inzichten-lead)
+  roept na de honeypot-check `magDoor(actie, max, vensterSeconden)` (`lib/rate-limit.ts`)
+  aan — atomisch afgedwongen in Postgres via `check_rate_limit()` (zie
+  `supabase/migrations/20260907120000_rate-limits.sql`), niet in-memory (werkt niet
+  betrouwbaar op serverless). Fail-safe: bij een DB-storing staat de aanvraag toe.
 - **CMS.** Editor genereert velden uit `FIELD_SCHEMAS` (`panel:"side"` = instellingenrail).
   Publieke pagina's lezen live-rijen met fallback op de seed; `saveContent` revalideert de
   publieke paden.
