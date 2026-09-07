@@ -27,7 +27,9 @@ uit de code afleidt.
   Los daarvan blijft `npm run typecheck && npm run lint && npm run format:check`
   het handmatige/CI-referentiecommando.
 - **CI draait daarnaast:** `npm run test:unit` (Vitest), de Playwright-e2e-smoketests,
-  CodeQL (security-scanning) en Dependabot (wekelijkse dependency-updates).
+  Dependabot (wekelijkse dependency-updates). **Geen CodeQL:** code scanning vereist
+  GitHub Code Security, niet beschikbaar op een private repo onder een persoonlijk
+  account — de workflow is daarom verwijderd i.p.v. permanent rood te laten staan.
 - Commit met een heldere NL-boodschap. **Push alleen als de gebruiker erom vraagt.**
 - **Hergebruik bestaande patronen, tokens en CSS exact.** Introduceer geen nieuwe kleur,
   stijl of component-variant als er al één bestaat — consistentie boven creativiteit.

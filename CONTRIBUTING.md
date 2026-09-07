@@ -29,8 +29,8 @@ Een Husky pre-commit hook draait automatisch ESLint + Prettier op staged bestand
 daarna `npm run typecheck`, zodat een rode CI-run lokaal al wordt opgevangen. Handmatig
 (of als referentie voor wat CI doet): `npm run typecheck && npm run lint && npm run
 format:check && npm run test:unit && npm run build`. CI draait exact deze checks plus de
-Playwright-smoketests op elke PR en push naar `main`, plus CodeQL (security-scanning) en
-Dependabot (wekelijkse dependency-updates).
+Playwright-smoketests op elke PR en push naar `main`, plus Dependabot (wekelijkse
+dependency-updates).
 
 ## Projectstructuur
 
@@ -78,6 +78,7 @@ tests/unit/          Vitest-unittests (pure logica, geen browser/server nodig).
 
 - Werk op een feature-branch; open een PR naar `main`.
 - CI moet groen zijn (typecheck, lint, format, unit-tests, build, e2e) voor merge.
-- CodeQL scant elke PR/push naar `main` plus wekelijks op security-issues.
-- Dependabot opent wekelijks PR's voor npm- en GitHub Actions-dependencies.
+- Dependabot opent wekelijks PR's voor npm- en GitHub Actions-dependencies en meldt
+  kwetsbaarheden. Geen CodeQL: code scanning vereist GitHub Code Security, wat op een
+  private repo onder een persoonlijk account niet beschikbaar is.
 - Deploy gebeurt via `git push` (Vercel bouwt automatisch).
