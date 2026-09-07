@@ -263,7 +263,7 @@ export const DIENSTEN: Record<string, DienstDetail> = {
     ctaSecondary: "Doe de AI-scan",
     kpis: [
       { n: "-40%", l: "Minder repetitief werk" },
-      { n: "8 weken", l: "Doorgaans tot werkend proces" },
+      { n: "6 weken", l: "Doorgaans tot werkend proces" },
       { n: "100%", l: "Uitlegbaar en controleerbaar" },
     ],
     vraagstukken: [
@@ -374,7 +374,7 @@ export const DIENSTEN: Record<string, DienstDetail> = {
         p: "We starten bij jouw sectorvraagstuk en rekenen elke use-case door op businesswaarde, met een eerlijk nee waar AI niet past.",
       },
       {
-        titel: "Doorgaans een werkend proces binnen 8 weken",
+        titel: "Doorgaans een werkend proces binnen 6 weken",
         p: "Geen rapporten die in een la verdwijnen: we bouwen in je eigen omgeving en schalen wat bewezen werkt.",
       },
       {

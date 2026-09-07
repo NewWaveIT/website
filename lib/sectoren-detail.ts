@@ -74,7 +74,7 @@ export const SECTOREN: Record<string, SectorDetail> = {
     intro:
       "Van vergunningverlening tot subsidies: wij helpen overheden processen te versnellen, papierstromen te vervangen en volledig aantoonbaar te werken, veilig en binnen alle kaders.",
     kpis: [
-      { n: "-60%", l: "Doorlooptijd aanvragen" },
+      { n: "-40%", l: "Doorlooptijd aanvragen" },
       { n: "8×", l: "Sneller live dan geraamd" },
       { n: "100%", l: "Auditproof & AVG-compliant" },
     ],
@@ -111,7 +111,7 @@ export const SECTOREN: Record<string, SectorDetail> = {
       SOL_AI_STRATEGIE,
     ],
     outcomes: [
-      { n: "-60%", l: "Kortere doorlooptijd van aanvragen" },
+      { n: "-40%", l: "Kortere doorlooptijd van aanvragen" },
       { n: "6–10×", l: "Snellere oplevering met low-code" },
       { n: "+35%", l: "Hogere burgertevredenheid" },
       { n: "100%", l: "Auditproof opgeleverd" },

@@ -146,13 +146,13 @@ export default async function HomePage() {
             <div>
               <h3>AI die processen echt verbetert</h3>
               <p>
-                Strategische inzet van AI binnen je bestaande IT-landschap. Doorgaans binnen acht
+                Strategische inzet van AI binnen je bestaande IT-landschap. Doorgaans binnen zes
                 weken een werkend, geautomatiseerd proces. Geen hype, wel resultaat dat de mens
                 centraal stelt.
               </p>
               <ul>
                 <li>AI-scan van je processen en datalandschap</li>
-                <li>Doorgaans een werkend proces binnen 8 weken</li>
+                <li>Doorgaans een werkend proces binnen 6 weken</li>
                 <li>Verantwoorde, uitlegbare inzet van AI</li>
               </ul>
               <div

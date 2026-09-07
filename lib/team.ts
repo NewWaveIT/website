@@ -35,7 +35,7 @@ export const TEAMLEDEN: Teamlid[] = [
     foto: "/assets/photos/portret-3.webp",
     bio: "Zorgt dat opdrachten soepel lopen en dat nieuwe Wavers zich thuis voelen.",
     contactrol: "Recruitment",
-    telefoon: "06–10751254",
+    telefoon: "+31 6 83 17 09 76",
     email: "hello@thenewwaveit.com",
   },
   {

@@ -23,8 +23,8 @@ const LOGO = `${SITE}/assets/logos/logo-horizontal-white.png`;
 const FROM_ADMIN = process.env.MAIL_FROM || "The New Wave IT <notificaties@thenewwaveit.com>";
 const FROM_PUBLIC = process.env.MAIL_FROM_PUBLIC || "The New Wave IT <hello@thenewwaveit.com>";
 const NOTIFY = process.env.NOTIFY_EMAIL || "people@thenewwaveit.com";
-const TEL = "+31683170976";
-const TEL_DISPLAY = "+31 6 83 17 09 76";
+const TEL = "+31610751254";
+const TEL_DISPLAY = "06–10751254";
 
 function escapeHtml(s: string): string {
   return s

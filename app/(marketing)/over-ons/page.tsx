@@ -171,9 +171,6 @@ export default async function OverOnsPage() {
               <MapPin /> Ganzenmarkt 6, 3512 GD Utrecht
             </span>
             <span className="f">
-              <Award /> Mijn Rotterdam · genomineerd Computable Awards
-            </span>
-            <span className="f">
               <Mail /> hello@thenewwaveit.com
             </span>
           </div>

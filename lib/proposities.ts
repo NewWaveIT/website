@@ -51,7 +51,7 @@ export const PROPOSITIES: Propositie[] = [
     slug: "processen-automatiseren-met-ai",
     nummer: 2,
     titel: "Wij automatiseren jouw processen met AI",
-    belofte: "Binnen 8 weken een geautomatiseerd proces dat daadwerkelijk gebruikt wordt.",
+    belofte: "Binnen 6 weken een geautomatiseerd proces dat daadwerkelijk gebruikt wordt.",
     wat: [
       "Handmatig werk geautomatiseerd door AI",
       "Beslissingen ondersteund of overgenomen door AI",

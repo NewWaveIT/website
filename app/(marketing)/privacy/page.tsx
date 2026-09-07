@@ -30,10 +30,10 @@ export default function PrivacyPage() {
           <div className="prose">
             <p>
               Dit is de Privacy Policy van The New Wave IT B.V. (hierna te noemen “The New Wave IT”,
-              “wij,” “ons” of “onze”), een onderneming met adres Havixhorst 100, Alphen aan den
-              Rijn. The New Wave IT is ingeschreven bij de Kamer van Koophandel onder nummer
-              90830490. Deze Privacy Policy legt uit hoe wij gegevens verzamelen, gebruiken, delen
-              en beschermen in relatie tot onze website{" "}
+              “wij,” “ons” of “onze”), statutair gevestigd op Havixhorst 100, Alphen aan den Rijn en
+              ingeschreven bij de Kamer van Koophandel onder nummer 90830490. Ons kantoor bezoek je
+              op Ganzenmarkt 6, Utrecht. Deze Privacy Policy legt uit hoe wij gegevens verzamelen,
+              gebruiken, delen en beschermen in relatie tot onze website{" "}
               <a href="https://www.thenewwaveit.com">http://www.thenewwaveit.com</a> (de “Website”).
               Wij verzamelen deze gegevens wanneer u onze Website bezoekt met uw computer, tablet,
               telefoon of smartwatch (“Computer”). Wij verwerken persoonsgegevens op een manier

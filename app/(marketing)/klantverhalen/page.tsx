@@ -47,7 +47,7 @@ const SECTORBELOFTES: {
     icon: "building-2",
     belofte: "Digitale dienstverlening die burgers vertrouwen.",
     kpis: [
-      { n: "-60%", l: "Doorlooptijd aanvragen" },
+      { n: "-40%", l: "Doorlooptijd aanvragen" },
       { n: "8×", l: "Sneller live dan geraamd" },
       { n: "100%", l: "Auditproof & AVG-compliant" },
     ],
