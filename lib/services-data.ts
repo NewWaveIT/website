@@ -48,7 +48,7 @@ function mapRow(row: ContentRow): Service {
   const kFase = keuze(rij, "fase");
   return {
     slug: row.slug,
-    naam: row.titel || base?.naam || row.slug,
+    naam: String(d.naam ?? "") || row.titel || base?.naam || row.slug,
     familie:
       (kFamilie.gezet ? toFamilie(kFamilie.waarde) : base?.familie) ?? base?.familie ?? "doen",
     richting: kRichting.gezet ? toRichting(kRichting.waarde) : base?.richting,

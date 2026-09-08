@@ -114,8 +114,10 @@ export function buildSeed(): Record<ContentType, SeedRow[]> {
     })),
 
     services: SERVICES.map((s, i) => {
-      const { slug, naam, ...data } = s;
-      return { slug, titel: naam, status: "live", volgorde: i, data };
+      const { slug, ...data } = s;
+      // `naam` blijft in `data` staan, net als bij diensten en sectoren: de
+      // rijtitel is de admin-naam, `data.naam` de weergavenaam op de site.
+      return { slug, titel: s.naam, status: "live", volgorde: i, data };
     }),
   };
 }

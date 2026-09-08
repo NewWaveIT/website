@@ -171,14 +171,20 @@ export const getPublishedContent = cache(async function getPublishedContent<
 >(type: ContentType): Promise<ContentRow<T>[]> {
   try {
     const supabase = createPublicClient();
-    const { data } = await supabase
+    const { data, error } = await supabase
       .from(CONTENT_TABLE[type])
       .select("*")
       .eq("status", "live")
       .order("volgorde", { ascending: true })
       .abortSignal(AbortSignal.timeout(QUERY_TIMEOUT_MS));
+    // Zonder deze regel is een RLS-weigering of kapotte query niet te
+    // onderscheiden van een lege tabel: beide leveren [] op, waarna de
+    // datalaag stil terugvalt op de seed en die pagina de cache in gaat.
+    if (error) console.error(`[cms] query mislukt op ${CONTENT_TABLE[type]}:`, error.message);
     return (data as ContentRow<T>[]) ?? [];
-  } catch {
+  } catch (e) {
+    // Timeout of netwerkfout — zelfde risico, dus ook zichtbaar maken.
+    console.error(`[cms] ${CONTENT_TABLE[type]} onbereikbaar:`, (e as Error).message);
     return [];
   }
 });

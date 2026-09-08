@@ -7,7 +7,8 @@ import { requireAdmin } from "@/lib/dal";
 import { createClient } from "@/lib/supabase/server";
 import { CONTENT_TABLE, type ContentType } from "@/lib/cms/content";
 import { FIELD_SCHEMAS, isStructured } from "@/lib/cms/schema";
-import { PAGE_FIELDS, PAGE_PATH } from "@/lib/cms/pages";
+import { PAGE_FIELDS } from "@/lib/cms/pages";
+import { revalidateContent } from "@/lib/cms/revalidate";
 import { buildSeed } from "@/lib/cms/seed-data";
 import { logAudit } from "@/lib/cms/audit";
 
@@ -33,17 +34,6 @@ const LIST_PATH: Record<ContentType, string> = {
   teamleden: "/admin/teamleden",
   proposities: "/admin/proposities",
   services: "/admin/services",
-};
-
-/** Publieke overzichtspagina's waar de volgorde zichtbaar is (voor revalidatie na sorteren). */
-const PUBLIC_INDEX: Partial<Record<ContentType, string>> = {
-  cases: "/klantverhalen",
-  diensten: "/diensten",
-  sectoren: "/sectoren",
-  vacatures: "/werken-bij",
-  teamleden: "/over-ons",
-  proposities: "/sectoren",
-  services: "/diensten",
 };
 
 function isType(v: string): v is ContentType {
@@ -150,40 +140,8 @@ export async function saveContent(_prev: SaveState, formData: FormData): Promise
   });
 
   revalidatePath(LIST_PATH[type]);
-  revalidatePublic(type, slug);
+  revalidateContent(type, slug);
   redirect(`${LIST_PATH[type]}?ok=${bestaat ? "bijgewerkt" : "aangemaakt"}`);
-}
-
-/** Ververs de publieke routes die (via fase C) live uit Supabase lezen. */
-function revalidatePublic(type: ContentType, slug: string) {
-  if (type === "artikelen") {
-    revalidatePath("/inzichten");
-    revalidatePath(`/inzichten/${slug}`);
-  } else if (type === "cases") {
-    revalidatePath("/klantverhalen");
-    revalidatePath(`/klantverhalen/${slug}`);
-  } else if (type === "vacatures") {
-    revalidatePath("/werken-bij");
-    revalidatePath(`/vacatures/${slug}`);
-  } else if (type === "diensten") {
-    revalidatePath(`/diensten/${slug}`);
-  } else if (type === "sectoren") {
-    revalidatePath(`/sectoren/${slug}`);
-  } else if (type === "proposities") {
-    // Proposities verschijnen als PMC op alle sectordetailpagina's.
-    revalidatePath("/sectoren/[slug]", "page");
-  } else if (type === "services") {
-    // Services verschijnen op het overzicht, de 3 richting-hubs en het contactformulier.
-    revalidatePath("/diensten");
-    revalidatePath("/diensten/mendix");
-    revalidatePath("/diensten/ai");
-    revalidatePath("/diensten/strategie");
-    revalidatePath("/contact");
-  } else if (type === "paginas" && PAGE_PATH[slug]) {
-    revalidatePath(PAGE_PATH[slug]);
-  } else if (type === "teamleden") {
-    revalidatePath("/over-ons");
-  }
 }
 
 /**
@@ -273,8 +231,7 @@ export async function reorderContent(type: string, orderedIds: string[]): Promis
   }
 
   revalidatePath(LIST_PATH[type]);
-  const pub = PUBLIC_INDEX[type];
-  if (pub) revalidatePath(pub);
+  revalidateContent(type, "");
   return { ok: true };
 }
 
@@ -303,8 +260,6 @@ export async function deleteContent(formData: FormData): Promise<void> {
   });
 
   revalidatePath(LIST_PATH[type]);
-  if (type === "artikelen") revalidatePath("/inzichten");
-  if (type === "cases") revalidatePath("/klantverhalen");
-  if (type === "vacatures") revalidatePath("/werken-bij");
+  revalidateContent(type, (bestaand as { slug?: string } | null)?.slug ?? "");
   redirect(`${LIST_PATH[type]}?ok=verwijderd`);
 }
