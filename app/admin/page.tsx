@@ -2,6 +2,7 @@ import Link from "next/link";
 import { requireAdmin } from "@/lib/dal";
 import { getLeads, getSollicitaties, STATUS_LABEL } from "@/lib/cms/inzendingen";
 import { SeedButton } from "@/components/admin/seed-button";
+import { ControleButton } from "@/components/admin/controle-button";
 
 function Chip({ status }: { status: string }) {
   const cls = status === "nieuw" ? "nieuw" : status === "afgerond" ? "klaar" : "bezig";
@@ -32,7 +33,10 @@ export default async function AdminDashboard() {
           <h1>Goedendag{naam ? `, ${naam}` : ""}</h1>
           <p className="sub">De openstaande aanvragen en sollicitaties in één oogopslag.</p>
         </div>
-        <SeedButton />
+        <div style={{ display: "flex", gap: "var(--space-4)", alignItems: "flex-start" }}>
+          <ControleButton />
+          <SeedButton />
+        </div>
       </div>
 
       <div className="kpis">

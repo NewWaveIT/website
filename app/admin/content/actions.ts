@@ -5,11 +5,14 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { requireAdmin } from "@/lib/dal";
 import { createClient } from "@/lib/supabase/server";
-import { CONTENT_TABLE, type ContentType } from "@/lib/cms/content";
+import { CONTENT_TABLE, listContent, type ContentType } from "@/lib/cms/content";
 import { FIELD_SCHEMAS, isStructured } from "@/lib/cms/schema";
 import { PAGE_FIELDS } from "@/lib/cms/pages";
 import { revalidateContent } from "@/lib/cms/revalidate";
 import { buildSeed } from "@/lib/cms/seed-data";
+import { CONTENT_SCHEMAS } from "@/lib/cms/schemas";
+import { GEMAPTE_TYPES, rijNaarRuw } from "@/lib/cms/rij";
+import { leesRij, type VeldFout } from "@/lib/cms/merge";
 import { logAudit } from "@/lib/cms/audit";
 
 /** Bitmapformaten die sharp betrouwbaar naar WebP omzet. Bewust zonder SVG. */
@@ -262,4 +265,52 @@ export async function deleteContent(formData: FormData): Promise<void> {
   revalidatePath(LIST_PATH[type]);
   revalidateContent(type, (bestaand as { slug?: string } | null)?.slug ?? "");
   redirect(`${LIST_PATH[type]}?ok=verwijderd`);
+}
+
+export interface ControleRij {
+  slug: string;
+  titel: string;
+  status: string;
+  fouten: VeldFout[];
+}
+
+export interface ControleResultaat {
+  type: string;
+  rijen: number;
+  metFouten: ControleRij[];
+}
+
+/**
+ * Nulmeting vóór de datalaag streng wordt: haalt élke rij (live én concept)
+ * door het runtime-schema en rapporteert welke velden zouden terugvallen op de
+ * standaardcontent. Verandert niets — puur diagnose.
+ */
+export async function controleerContent(): Promise<{
+  resultaten: ControleResultaat[];
+  error?: string;
+}> {
+  await requireAdmin();
+  const resultaten: ControleResultaat[] = [];
+
+  for (const type of GEMAPTE_TYPES) {
+    const rows = await listContent(type);
+    const seeds = buildSeed()[type];
+    const metFouten: ControleRij[] = [];
+
+    for (const row of rows) {
+      const seed = seeds.find((s) => s.slug === row.slug);
+      const ruw = rijNaarRuw(type, row);
+      const { fouten } = leesRij(CONTENT_SCHEMAS[type], ruw, {
+        ...(seed?.data ?? {}),
+        slug: row.slug,
+      });
+      if (fouten.length) {
+        metFouten.push({ slug: row.slug, titel: row.titel, status: row.status, fouten });
+      }
+    }
+
+    resultaten.push({ type, rijen: rows.length, metFouten });
+  }
+
+  return { resultaten };
 }
