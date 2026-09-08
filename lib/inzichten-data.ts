@@ -2,6 +2,9 @@ import "server-only";
 import { getPublishedContent, fotoWebp, type ContentRow } from "@/lib/cms/content";
 import { ARTIKELEN, ARTIKEL_MAP, type Artikel } from "@/lib/inzichten";
 import { getTeamleden } from "@/lib/team-data";
+import { getServiceBySlug } from "@/lib/services-data";
+import { RICHTING_SLUGS } from "@/lib/diensten-detail";
+import type { ServiceRichting } from "@/lib/services";
 import { sanitizeFull } from "@/lib/cms/sanitize";
 
 type AuthorResolver = (raw: string) => { naam: string; foto?: string };
@@ -119,10 +122,11 @@ const SECTOR_SLUG_TO_CAT: Record<string, string> = {
   zorg: "Zorg",
   manufacturing: "Manufacturing",
 };
-const DIENST_SLUG_TO_DISC: Record<string, string> = {
-  "it-strategie": "Strategie",
-  "foundation-starterkit": "Mendix",
-  "fusion-team-startsprint": "Mendix",
+/** Richting → de disciplinewaarde waarop artikelen gelabeld zijn. */
+const RICHTING_TO_DISC: Record<ServiceRichting, string> = {
+  mendix: "Mendix",
+  ai: "AI",
+  strategie: "Strategie",
 };
 
 /** Gepubliceerde artikelen die aan deze sector zijn gekoppeld. */
@@ -132,10 +136,20 @@ export async function getArtikelenVoorSector(slug: string): Promise<Artikel[]> {
   return (await getArtikelen()).filter((a) => a.sector === cat);
 }
 
-/** Gepubliceerde artikelen die aan deze discipline zijn gekoppeld. */
+/**
+ * Gepubliceerde artikelen voor een richting-hub of een dienstpagina.
+ *
+ * De discipline wordt afgeleid in plaats van per slug opgezocht: een richting
+ * mapt rechtstreeks, een dienst erft de richting waar hij onder hangt. Zo krijgt
+ * elke nieuwe dienst vanzelf de juiste inzichten, in plaats van pas nadat
+ * iemand eraan denkt een handmatige lijst bij te werken.
+ */
 export async function getArtikelenVoorDienst(slug: string): Promise<Artikel[]> {
-  const disc = DIENST_SLUG_TO_DISC[slug];
-  if (!disc) return [];
+  const richting = (RICHTING_SLUGS as readonly string[]).includes(slug)
+    ? (slug as ServiceRichting)
+    : (await getServiceBySlug(slug))?.richting;
+  if (!richting) return [];
+  const disc = RICHTING_TO_DISC[richting];
   return (await getArtikelen()).filter((a) => a.discipline === disc);
 }
 

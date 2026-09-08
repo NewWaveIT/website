@@ -9,7 +9,8 @@ export async function getPagina(slug: string): Promise<Record<string, string>> {
   const row = rows.find((r) => r.slug === slug);
   const data = (row?.data ?? {}) as Record<string, unknown>;
   for (const [k, v] of Object.entries(data)) {
-    if (typeof v === "string" && v.trim()) merged[k] = v;
+    // Ook een lege string wint: dat is een bewuste keuze van de redacteur.
+    if (typeof v === "string") merged[k] = v;
   }
   return merged;
 }

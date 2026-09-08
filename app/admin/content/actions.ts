@@ -8,7 +8,7 @@ import { requireAdmin } from "@/lib/dal";
 import { createClient } from "@/lib/supabase/server";
 import { CONTENT_TABLE, listContent, type ContentType } from "@/lib/cms/content";
 import { FIELD_SCHEMAS, isStructured } from "@/lib/cms/schema";
-import { PAGE_FIELDS } from "@/lib/cms/pages";
+import { PAGE_FIELDS, PAGE_DEFAULTS } from "@/lib/cms/pages";
 import { revalidateContent } from "@/lib/cms/revalidate";
 import { buildSeed } from "@/lib/cms/seed-data";
 import { CONTENT_SCHEMAS } from "@/lib/cms/schemas";
@@ -100,7 +100,10 @@ export async function saveContent(_prev: SaveState, formData: FormData): Promise
       }
     } else if (raw === "") {
       if (f.required) return { error: `${f.label} is verplicht.` };
-      delete data[f.key];
+      // Expliciet leeg opslaan i.p.v. de sleutel verwijderen: anders is "bewust
+      // geleegd" niet te onderscheiden van "nooit ingevuld" en zet het leespad
+      // de standaardtekst terug. Wat je in de admin leegmaakt, is live ook leeg.
+      data[f.key] = "";
     } else if (f.type === "number") {
       const n = Number(raw);
       if (!Number.isNaN(n)) data[f.key] = n;
@@ -438,6 +441,49 @@ export async function synchroniseerContent(): Promise<{
 
     if (gewijzigd.length) resultaten.push({ type, rijen: gewijzigd });
   }
+
+  // Pagina's hebben geen runtime-schema (per slug een eigen veldset), maar wél
+  // hetzelfde probleem: ontbreekt een sleutel in de rij, dan komt de tekst van
+  // de site uit PAGE_DEFAULTS terwijl de admin het veld leeg toont. Sinds een
+  // leeggemaakt veld ook écht leeg blijft, moet die scheefstand eerst weg.
+  const paginaRijen: SyncRij[] = [];
+  for (const row of await listContent("paginas")) {
+    const velden = PAGE_FIELDS[row.slug];
+    const standaarden = PAGE_DEFAULTS[row.slug];
+    if (!velden || !standaarden) continue;
+
+    const huidig = (row.data ?? {}) as Record<string, unknown>;
+    const nieuw = { ...huidig };
+    const aangevuld: string[] = [];
+
+    for (const f of velden) {
+      if (f.key in huidig) continue;
+      const standaard = standaarden[f.key];
+      if (typeof standaard !== "string") continue;
+      nieuw[f.key] = standaard;
+      aangevuld.push(f.key);
+    }
+    if (!aangevuld.length) continue;
+
+    const { error } = await supabase
+      .from(CONTENT_TABLE.paginas)
+      .update({ data: nieuw })
+      .eq("id", row.id);
+    if (error) return { resultaten, error: `paginas/${row.slug}: ${error.message}` };
+
+    await logAudit({
+      gebruiker_email: user.email ?? null,
+      gebruiker_naam: gebruikerNaam(user),
+      actie: "gesynchroniseerd",
+      content_type: "paginas",
+      slug: row.slug,
+      titel: row.titel,
+    });
+
+    paginaRijen.push({ slug: row.slug, aangevuld, hersteld: [] });
+    revalidateContent("paginas", row.slug);
+  }
+  if (paginaRijen.length) resultaten.push({ type: "paginas", rijen: paginaRijen });
 
   return { resultaten };
 }

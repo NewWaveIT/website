@@ -191,16 +191,20 @@ export function ContentEditor({
 
   const [today] = useState(() => new Date().toISOString().slice(0, 10));
 
-  // Startwaarde van een veld: opgeslagen data, anders pagina-standaardtekst,
-  // anders (nieuw item) vandaag voor date-velden met defaultToday.
+  // Startwaarde van een veld: wat er is opgeslagen — ook als dat leeg is. De
+  // pagina-standaardtekst dient alleen nog als vertrekpunt voor een níeuw item;
+  // zou hij ook bij een bestaande rij invullen, dan komt een bewust leeggemaakt
+  // veld bij de volgende opslag stilletjes terug.
   const initial = (f: FieldDef): string => {
     const v = data[f.key];
-    if (typeof v === "string" && v) return v;
-    if (isPaginas) {
-      const pd = PAGE_DEFAULTS[slug]?.[f.key];
-      if (pd) return pd;
+    if (typeof v === "string") return v;
+    if (isNew) {
+      if (isPaginas) {
+        const pd = PAGE_DEFAULTS[slug]?.[f.key];
+        if (pd) return pd;
+      }
+      if (f.defaultToday) return today;
     }
-    if (isNew && f.defaultToday) return today;
     return "";
   };
 
