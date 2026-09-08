@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Archivo, IBM_Plex_Sans, IBM_Plex_Mono } from "next/font/google";
+import { SITE_URL } from "@/lib/site";
 import "./globals.css";
 
 // Display: Archivo (variabel). Archivo Black dekt ook de "expanded" headline-rol
@@ -24,8 +25,6 @@ const plexMono = IBM_Plex_Mono({
   display: "swap",
 });
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://thenewwaveit.com";
-
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
@@ -34,26 +33,27 @@ export const metadata: Metadata = {
   },
   description:
     "The New Wave IT combineert diepgaande sectorkennis met Mendix, AI en strategie. Enterprise-kwaliteit, menselijk geleverd.",
+  // Geen `url` hier: die zou elke pagina erven en dus altijd de homepage
+  // aanwijzen. De canonical per pagina dekt dit al.
   openGraph: {
     type: "website",
     locale: "nl_NL",
     siteName: "The New Wave IT",
-    url: SITE_URL,
     images: [
       {
-        url: "/assets/photos/team-presentatie-breed.webp",
+        // JPG i.p.v. de WebP-bron: LinkedIn en WhatsApp tonen WebP niet betrouwbaar.
+        url: "/assets/og/og-default.jpg",
         width: 1200,
         height: 630,
         alt: "The New Wave IT — business-specialist in Mendix, AI en strategie",
       },
     ],
   },
+  // Alleen `card` en `images`: titel en omschrijving leidt Next per pagina af uit
+  // de eigen metadata. Hardcoden zou elke pagina dezelfde card geven.
   twitter: {
     card: "summary_large_image",
-    title: "The New Wave IT · Business-specialist in Mendix, AI en strategie",
-    description:
-      "Diepgaande sectorkennis gecombineerd met Mendix, AI en strategie. Enterprise-kwaliteit, menselijk geleverd.",
-    images: ["/assets/photos/team-presentatie-breed.webp"],
+    images: ["/assets/og/og-default.jpg"],
   },
   robots: { index: true, follow: true },
 };

@@ -1,4 +1,5 @@
 import "server-only";
+import { SITE_URL } from "@/lib/site";
 
 /**
  * Transactionele mail in huisstijl (tabelgebaseerd, 600px, inline gestyled).
@@ -15,10 +16,7 @@ import "server-only";
  */
 
 const RESEND_ENDPOINT = "https://api.resend.com/emails";
-const SITE = (process.env.NEXT_PUBLIC_SITE_URL || "https://www.thenewwaveit.com").replace(
-  /\/$/,
-  "",
-);
+const SITE = SITE_URL;
 const LOGO = `${SITE}/assets/logos/logo-horizontal-white.png`;
 const FROM_ADMIN = process.env.MAIL_FROM || "The New Wave IT <notificaties@thenewwaveit.com>";
 const FROM_PUBLIC = process.env.MAIL_FROM_PUBLIC || "The New Wave IT <hello@thenewwaveit.com>";

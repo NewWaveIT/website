@@ -56,6 +56,17 @@ export function stripHtml(html: string): string {
   return sanitizeHtml(html, { allowedTags: [], allowedAttributes: {} }).replace(/\s+/g, " ").trim();
 }
 
+/**
+ * Kort platte tekst in op een woordgrens, voor meta-descriptions. Zoekmachines
+ * kappen rond de 155 tekens af; een hele intro-alinea levert een afgeknotte zin op.
+ */
+export function kort(tekst: string, max = 155): string {
+  if (tekst.length <= max) return tekst;
+  const snee = tekst.slice(0, max - 1);
+  const spatie = snee.lastIndexOf(" ");
+  return `${(spatie > max * 0.6 ? snee.slice(0, spatie) : snee).replace(/[,;:.\s]+$/, "")}…`;
+}
+
 /** Lichte opmaak (body-velden buiten artikelen): alleen inline + eenvoudige lijsten. */
 export function sanitizeLite(html: string): string {
   const clean = sanitizeHtml(html, {

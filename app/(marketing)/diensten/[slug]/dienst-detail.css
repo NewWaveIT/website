@@ -285,7 +285,7 @@
   font-size: var(--text-md);
   color: var(--orange-text);
 }
-.p-dienst .vitem h4 {
+.p-dienst .vitem h3 {
   font-size: var(--text-md);
   font-weight: var(--fw-bold);
   margin: 0 0 6px;
@@ -329,7 +329,7 @@
   letter-spacing: var(--tracking-kicker);
   color: var(--orange-text);
 }
-.p-dienst .expert h4 {
+.p-dienst .expert h3 {
   font-size: var(--text-md);
   font-weight: var(--fw-bold);
   margin: 4px 0 6px;

@@ -2,9 +2,10 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import { notFound } from "next/navigation";
-import { getArtikelen, getArtikelBySlug } from "@/lib/inzichten-data";
+import { getArtikelen, getArtikelBySlug, isoDatum } from "@/lib/inzichten-data";
 import { ArticleContent } from "@/components/article-content";
 import { LeadCta } from "@/components/inzichten/lead-cta";
+import { SITE_URL } from "@/lib/site";
 import "./article.css";
 
 export const revalidate = 300;
@@ -39,10 +40,18 @@ export default async function ArtikelPage({ params }: { params: Promise<{ slug: 
     "@type": "Article",
     headline: a.titel,
     description: a.intro,
-    image: `https://thenewwaveit.com${a.image}`,
-    datePublished: a.datum,
+    image: `${SITE_URL}${a.image}`,
+    ...(isoDatum(a.datum) ? { datePublished: isoDatum(a.datum) } : {}),
+    mainEntityOfPage: `${SITE_URL}/inzichten/${slug}`,
     author: { "@type": "Person", name: a.auteur },
-    publisher: { "@type": "Organization", name: "The New Wave IT" },
+    publisher: {
+      "@type": "Organization",
+      name: "The New Wave IT",
+      logo: {
+        "@type": "ImageObject",
+        url: `${SITE_URL}/assets/logos/logo-horizontal-espresso.png`,
+      },
+    },
     articleSection: a.cat,
   };
 

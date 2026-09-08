@@ -7,10 +7,11 @@ import { getTeamleden } from "@/lib/team-data";
 import { AWARD } from "@/lib/award";
 import { SlotCta } from "@/components/layout/slot-cta";
 import { TeamCarousel } from "@/components/team-carousel";
+import { SITE_URL } from "@/lib/site";
 import "./over-ons.css";
 
 export const metadata: Metadata = {
-  title: "Over ons — de ondernemende mens zorgt voor vooruitgang",
+  title: "Over ons — de mens als maat",
   description:
     "The New Wave IT: opgericht in 2023, kantoor in Utrecht. Wij realiseren maximale digitale impact met de mens als maat, via low-code en AI.",
   alternates: { canonical: "/over-ons" },
@@ -24,7 +25,7 @@ const jsonLd = {
   name: "The New Wave IT",
   foundingDate: "2023",
   email: "hello@thenewwaveit.com",
-  url: "https://thenewwaveit.com",
+  url: SITE_URL,
   address: {
     "@type": "PostalAddress",
     streetAddress: "Ganzenmarkt 6",

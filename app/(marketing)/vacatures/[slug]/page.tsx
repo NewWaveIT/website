@@ -5,9 +5,10 @@ import { notFound } from "next/navigation";
 import { Check, ArrowRight, Phone } from "lucide-react";
 import { getVacatures, getVacatureBySlug } from "@/lib/vacatures-data";
 import { getContactpersoon } from "@/lib/team-data";
-import { stripHtml } from "@/lib/cms/sanitize";
+import { stripHtml, kort } from "@/lib/cms/sanitize";
 import { SollicitatieForm } from "@/components/vacatures/sollicitatie-form";
 import "./vacature.css";
+import { BreadcrumbJsonLd } from "@/components/breadcrumb-jsonld";
 
 /** Alleen cijfers/+ voor een tel:-URI. */
 function telHref(t: string): string {
@@ -15,6 +16,14 @@ function telHref(t: string): string {
 }
 
 export const revalidate = 300;
+
+/** Plaatsingsdatum (ISO) → een jaar later, voor `validThrough` in de JobPosting. */
+function vacatureVervalt(gepubliceerdOp: string): string | undefined {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(gepubliceerdOp)) return undefined;
+  const d = new Date(gepubliceerdOp);
+  d.setFullYear(d.getFullYear() + 1);
+  return d.toISOString().slice(0, 10);
+}
 
 const PROCES = [
   {
@@ -53,7 +62,7 @@ export async function generateMetadata({
   if (!v) return {};
   return {
     title: `Vacature ${v.functietitel}`,
-    description: stripHtml(v.intro),
+    description: kort(stripHtml(v.intro), 155),
     alternates: { canonical: `/vacatures/${slug}` },
   };
 }
@@ -79,6 +88,9 @@ export default async function VacaturePage({ params }: { params: Promise<{ slug:
     title: v.functietitel,
     description: stripHtml(v.intro),
     datePosted: v.gepubliceerdOp,
+    // Zonder einddatum laat Google Jobs een vacature na verloop van tijd vallen;
+    // een jaar na plaatsing is ruim en voorkomt dat een open rol stil verdwijnt.
+    validThrough: vacatureVervalt(v.gepubliceerdOp),
     employmentType: v.employmentType,
     hiringOrganization: { "@type": "Organization", name: "The New Wave IT" },
     jobLocation: {
@@ -92,6 +104,14 @@ export default async function VacaturePage({ params }: { params: Promise<{ slug:
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }}
+      />
+
+      <BreadcrumbJsonLd
+        kruimels={[
+          { naam: "Home", pad: "/" },
+          { naam: "Werken bij", pad: "/werken-bij" },
+          { naam: v.functietitel },
+        ]}
       />
 
       <section className="shero">
@@ -146,7 +166,7 @@ export default async function VacaturePage({ params }: { params: Promise<{ slug:
                 <Image src={recFoto} alt={`${recNaam}, recruiter`} width={64} height={64} />
                 <div>
                   <div className="role">Recruiter</div>
-                  <h4>{recNaam}</h4>
+                  <h3>{recNaam}</h3>
                   <div className="contact">
                     <a href={telHref(recTel)}>{recTel}</a>
                     <a href={`mailto:${recMail}`}>Mail</a>

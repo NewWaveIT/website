@@ -14,10 +14,12 @@ import {
 import { getSectorBySlug, getSectorSlugs } from "@/lib/sectoren-detail-data";
 import { getPropositiesVoorSector } from "@/lib/proposities-data";
 import { SlotCta } from "@/components/layout/slot-cta";
-import { stripHtml } from "@/lib/cms/sanitize";
+import { stripHtml, kort } from "@/lib/cms/sanitize";
 import { getArtikelenVoorSector } from "@/lib/inzichten-data";
 import { SectorHeroAnim } from "@/components/sector-hero-anim";
+import { SITE_URL } from "@/lib/site";
 import "./sector-detail.css";
+import { BreadcrumbJsonLd } from "@/components/breadcrumb-jsonld";
 
 export const revalidate = 300;
 
@@ -43,7 +45,7 @@ export async function generateMetadata({
   if (!s) return {};
   return {
     title: `${s.naam} — ${s.h1}`,
-    description: stripHtml(s.intro),
+    description: kort(stripHtml(s.intro), 155),
     alternates: { canonical: `/sectoren/${slug}` },
   };
 }
@@ -63,7 +65,7 @@ export default async function SectorPage({ params }: { params: Promise<{ slug: s
     name: `The New Wave IT — ${s.naam}`,
     description: stripHtml(s.intro),
     provider: { "@type": "Organization", name: "The New Wave IT" },
-    url: `https://thenewwaveit.com/sectoren/${slug}`,
+    url: `${SITE_URL}/sectoren/${slug}`,
   };
 
   return (
@@ -71,6 +73,14 @@ export default async function SectorPage({ params }: { params: Promise<{ slug: s
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }}
+      />
+
+      <BreadcrumbJsonLd
+        kruimels={[
+          { naam: "Home", pad: "/" },
+          { naam: "Sectoren", pad: "/sectoren" },
+          { naam: s.naam },
+        ]}
       />
 
       <section className="shero">

@@ -4,10 +4,11 @@ import { SectorHeroAnim } from "@/components/sector-hero-anim";
 import { SectorSplit } from "@/components/sector-split";
 import { SlotCta } from "@/components/layout/slot-cta";
 import { getPagina } from "@/lib/paginas-data";
+import { SITE_URL } from "@/lib/site";
 import "./sectoren.css";
 
 export const metadata: Metadata = {
-  title: "Sectoren — publieke sector, mobiliteit, banken, zorg, manufacturing",
+  title: "Sectoren — vijf markten die we echt kennen",
   description:
     "Wij spreken de taal van jouw sector. Business-specialist in vijf markten: we kennen de processen, wetgeving en systemen en gaan meteen de diepte in.",
   alternates: { canonical: "/sectoren" },
@@ -68,7 +69,7 @@ const jsonLd = {
     "@type": "ListItem",
     position: i + 1,
     name: s.naam,
-    url: `https://thenewwaveit.com/sectoren/${s.slug}`,
+    url: `${SITE_URL}/sectoren/${s.slug}`,
   })),
 };
 

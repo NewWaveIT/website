@@ -4,8 +4,7 @@ import { getKlantverhalen } from "@/lib/klantverhalen-data";
 import { getVacatures } from "@/lib/vacatures-data";
 import { getDienstSlugs } from "@/lib/diensten-detail-data";
 import { getSectorSlugs } from "@/lib/sectoren-detail-data";
-
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://thenewwaveit.com";
+import { SITE_URL } from "@/lib/site";
 
 // Periodiek verversen zodat nieuwe CMS-content vanzelf in de sitemap komt.
 export const revalidate = 3600;

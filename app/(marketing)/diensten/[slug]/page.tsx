@@ -4,12 +4,14 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 import { Boxes, BrainCircuit, Route, Check, Plus, ArrowRight } from "lucide-react";
 import { getDienstBySlug, getDienstSlugs } from "@/lib/diensten-detail-data";
-import { stripHtml } from "@/lib/cms/sanitize";
+import { stripHtml, kort } from "@/lib/cms/sanitize";
 import { getArtikelenVoorDienst } from "@/lib/inzichten-data";
 import { getServices, getServiceBySlug } from "@/lib/services-data";
 import { SectorHeroAnim } from "@/components/sector-hero-anim";
 import { SlotCta } from "@/components/layout/slot-cta";
+import { SITE_URL } from "@/lib/site";
 import "./dienst-detail.css";
+import { BreadcrumbJsonLd } from "@/components/breadcrumb-jsonld";
 
 export const revalidate = 300;
 
@@ -29,7 +31,8 @@ export async function generateMetadata({
   if (!d) return {};
   return {
     title: `${d.naam} — ${d.h1}`,
-    description: stripHtml(d.intro),
+    // De intro is een volle alinea (300+ tekens); Google kapt rond de 155 af.
+    description: kort(stripHtml(d.intro), 155),
     alternates: { canonical: `/diensten/${slug}` },
   };
 }
@@ -52,7 +55,7 @@ export default async function DienstPage({ params }: { params: Promise<{ slug: s
     name: d.naam,
     description: stripHtml(d.intro),
     provider: { "@type": "Organization", name: "The New Wave IT" },
-    url: `https://thenewwaveit.com/diensten/${slug}`,
+    url: `${SITE_URL}/diensten/${slug}`,
   };
 
   return (
@@ -60,6 +63,14 @@ export default async function DienstPage({ params }: { params: Promise<{ slug: s
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }}
+      />
+
+      <BreadcrumbJsonLd
+        kruimels={[
+          { naam: "Home", pad: "/" },
+          { naam: "Diensten", pad: "/diensten" },
+          { naam: d.naam },
+        ]}
       />
 
       <section className="shero">
@@ -242,7 +253,7 @@ export default async function DienstPage({ params }: { params: Promise<{ slug: s
                     <div className="vitem" key={i}>
                       <div className="num">{String(i + 1).padStart(2, "0")}</div>
                       <div>
-                        <h4>{w.titel}</h4>
+                        <h3>{w.titel}</h3>
                         <p>{w.p}</p>
                       </div>
                     </div>
@@ -257,7 +268,7 @@ export default async function DienstPage({ params }: { params: Promise<{ slug: s
                       <Image src={e.img} alt={`Portret ${e.naam}`} width={76} height={76} />
                       <div>
                         <div className="role">{e.role}</div>
-                        <h4>{e.naam}</h4>
+                        <h3>{e.naam}</h3>
                         <div className="links">
                           <a href={`tel:${e.tel}`}>{e.tel.replace("+31", "0")}</a>
                           <a href="mailto:hello@thenewwaveit.com">Mail</a>

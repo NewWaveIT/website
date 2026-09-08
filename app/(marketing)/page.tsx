@@ -12,12 +12,13 @@ import { getPagina } from "@/lib/paginas-data";
 import { getKlantverhalen } from "@/lib/klantverhalen-data";
 import { getInstapPerRichting } from "@/lib/services-data";
 import type { ServiceRichting } from "@/lib/services";
+import { SITE_URL } from "@/lib/site";
 import "./home.css";
 
 export const metadata: Metadata = {
   title: "Business-specialist in Mendix, AI en strategie",
   description:
-    "Wij maken van business en IT één beweging. Diepgaande sectorkennis in publieke sector, mobiliteit, banken, zorg en manufacturing, gecombineerd met Mendix, AI en strategie.",
+    "Wij maken van business en IT één beweging: sectorkennis in publieke sector, mobiliteit, banken, zorg en manufacturing, met Mendix, AI en strategie.",
   alternates: { canonical: "/" },
 };
 
@@ -27,7 +28,7 @@ const jsonLd = {
   name: "The New Wave IT",
   description:
     "Business-specialist in Mendix, AI en strategie voor publieke sector, mobiliteit, banken, zorg en manufacturing.",
-  url: "https://thenewwaveit.com",
+  url: SITE_URL,
   email: "hello@thenewwaveit.com",
   sameAs: ["https://www.linkedin.com/company/the-new-wave-it"],
 };

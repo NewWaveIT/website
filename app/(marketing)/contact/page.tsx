@@ -78,8 +78,13 @@ export default async function ContactPage({
         </div>
       </section>
 
-      <section className="block" style={{ paddingBottom: 0 }}>
+      <section className="block" style={{ paddingBottom: 0 }} aria-labelledby="manieren">
         <div className="wrap-wide">
+          {/* Het ontwerp heeft hier geen zichtbare kop; zonder deze h2 springt de
+              koppenstructuur van h1 naar h3. */}
+          <h2 id="manieren" className="sr-only">
+            Manieren om contact op te nemen
+          </h2>
           <div className="opts">
             <a href="tel:+31610751254" className="opt">
               <span className="ic">

@@ -8,7 +8,9 @@ import { SlotCta } from "@/components/layout/slot-cta";
 import { getPagina } from "@/lib/paginas-data";
 import { getDienstMatrix, getFaseItems } from "@/lib/services-data";
 import type { Service } from "@/lib/services";
+import { SITE_URL } from "@/lib/site";
 import "./diensten.css";
+import { BreadcrumbJsonLd } from "@/components/breadcrumb-jsonld";
 
 export const metadata: Metadata = {
   title: "Zo begin je — negen diensten van dag tot traject",
@@ -31,12 +33,19 @@ export default async function DienstenPage() {
     "@context": "https://schema.org",
     "@type": "ItemList",
     itemListElement: alleDiensten.map((s, i) => ({
-      "@type": "Service",
+      "@type": "ListItem",
       position: i + 1,
-      name: s.naam,
+      // Diensten zonder eigen pagina krijgen hun ankerpunt op het overzicht,
+      // zodat elk item een eigen URL houdt.
       url: s.detailSlug
-        ? `https://thenewwaveit.com/diensten/${s.detailSlug}`
-        : "https://thenewwaveit.com/diensten",
+        ? `${SITE_URL}/diensten/${s.detailSlug}`
+        : `${SITE_URL}/diensten#svc-${s.slug}`,
+      item: {
+        "@type": "Service",
+        name: s.naam,
+        description: s.pitch,
+        provider: { "@type": "Organization", name: "The New Wave IT" },
+      },
     })),
   };
 
@@ -46,6 +55,8 @@ export default async function DienstenPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }}
       />
+
+      <BreadcrumbJsonLd kruimels={[{ naam: "Home", pad: "/" }, { naam: "Diensten" }]} />
 
       <section className="dhero">
         <SectorHeroAnim theme="diensten" />

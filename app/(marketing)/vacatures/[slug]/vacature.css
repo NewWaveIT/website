@@ -142,7 +142,7 @@
   letter-spacing: var(--tracking-kicker);
   color: var(--orange-text);
 }
-.p-vacature .apply-card h4 {
+.p-vacature .apply-card h3 {
   font-size: var(--text-md);
   font-weight: var(--fw-bold);
   margin: 4px 0;

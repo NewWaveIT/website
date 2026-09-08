@@ -250,7 +250,7 @@
   background: var(--eggshell);
   border-radius: var(--radius-md);
 }
-.p-case .resultaat-kaart h5 {
+.p-case .resultaat-kaart h4 {
   font-size: var(--text-sm);
   font-weight: var(--fw-bold);
   color: var(--text-strong);

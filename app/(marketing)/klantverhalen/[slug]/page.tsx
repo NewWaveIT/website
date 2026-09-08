@@ -5,6 +5,7 @@ import { Building2, ArrowRight } from "lucide-react";
 import { getKlantverhalen, getKlantverhaalBySlug } from "@/lib/klantverhalen-data";
 import type { Stap } from "@/lib/klantverhalen";
 import { SlotCta } from "@/components/layout/slot-cta";
+import { SITE_URL } from "@/lib/site";
 import "./case.css";
 
 export const revalidate = 300;
@@ -56,9 +57,17 @@ export default async function CasePage({ params }: { params: Promise<{ slug: str
     "@type": "Article",
     headline: k.h1,
     description: k.intro,
-    image: `https://thenewwaveit.com${k.image}`,
+    image: `${SITE_URL}${k.image}`,
+    mainEntityOfPage: `${SITE_URL}/klantverhalen/${slug}`,
     author: { "@type": "Organization", name: "The New Wave IT" },
-    publisher: { "@type": "Organization", name: "The New Wave IT" },
+    publisher: {
+      "@type": "Organization",
+      name: "The New Wave IT",
+      logo: {
+        "@type": "ImageObject",
+        url: `${SITE_URL}/assets/logos/logo-horizontal-espresso.png`,
+      },
+    },
   };
 
   return (
@@ -139,7 +148,7 @@ export default async function CasePage({ params }: { params: Promise<{ slug: str
                     <div className="resultaat-kaarten">
                       {sec.resultaten.map((r, j) => (
                         <div className="resultaat-kaart" key={j}>
-                          <h5>{r.titel}</h5>
+                          <h4>{r.titel}</h4>
                           <p>{r.tekst}</p>
                         </div>
                       ))}
@@ -155,7 +164,7 @@ export default async function CasePage({ params }: { params: Promise<{ slug: str
               <div className="resultaat-kaarten resultaat-kaarten--eind">
                 {k.eindresultaten.map((r, i) => (
                   <div className="resultaat-kaart" key={i}>
-                    <h5>{r.titel}</h5>
+                    <h4>{r.titel}</h4>
                     <p>{r.tekst}</p>
                   </div>
                 ))}
