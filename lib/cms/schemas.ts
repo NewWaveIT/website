@@ -109,6 +109,10 @@ const diensten = z.object({
   insightsTitle: tekst,
   insights: z.array(z.object({ cat: tekst, meta: tekst, titel: tekst })),
   ctaTitle: tekst,
+  sectoren: lijst.optional(),
+  welNietTitel: optTekst,
+  welWanneer: lijst.optional(),
+  nietWanneer: lijst.optional(),
 });
 
 const sectoren = z.object({
@@ -158,8 +162,20 @@ const services = z.object({
   volgendeStapSlugs: lijst.optional(),
   ctaLabel: tekst,
   ctaType: z.enum(["datum", "kennismaking"]),
-  detailSlug: optTekst,
   volgorde: z.number(),
+  // Diepte-inhoud voor /diensten/<slug>; optioneel, want niet elke dienst heeft die al.
+  kpis: z.array(kpi).optional(),
+  vraagstukken: z.array(vraagstuk).optional(),
+  aanpak: z.array(aanpakRij).optional(),
+  waarom: z.array(z.object({ titel: tekst, p: tekst })).optional(),
+  outcomes: z.array(kpi).optional(),
+  caseTitle: optTekst,
+  caseSector: optTekst,
+  caseQuote: optTekst,
+  caseNaam: optTekst,
+  caseRol: optTekst,
+  caseImage: optTekst,
+  caseHref: optTekst,
 });
 
 const artikelen = z.object({

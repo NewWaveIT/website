@@ -1,48 +1,35 @@
-/** Content voor de dienstdetailpagina's (/diensten/[slug]). */
+/**
+ * Content voor de drie richting-hubs: /diensten/mendix, /ai en /strategie.
+ *
+ * Let op de naamgeving: dit contenttype heet in code en database `diensten`, maar
+ * beschrijft de dríe richtingen waaronder de negen boekbare diensten hangen. Die
+ * diensten zelf staan in `lib/services.ts` en hebben hun eigen pagina onder
+ * /diensten/<dienst>. In de admin heet dit daarom "Richtingen".
+ */
 
-export interface KPI {
-  n: string;
-  l: string;
-}
-export interface Vraagstuk {
-  q: string;
-  titel: string;
-  p: string;
-}
-export interface PijlerItem {
-  summary: string;
-  p: string;
-}
-export interface Pijler {
-  num: string;
-  titel: string;
-  p: string;
-  items: PijlerItem[];
-}
-export interface AanpakRow {
-  kicker: string;
-  titel: string;
-  p: string;
-  punten: string[];
-  img: string;
-}
-export interface WaaromItem {
-  titel: string;
-  p: string;
-}
-export interface Expert {
-  img: string;
-  role: string;
-  naam: string;
-  tel: string;
-}
-export interface Insight {
-  cat: string;
-  meta: string;
-  titel: string;
-}
+import type {
+  KPI,
+  Vraagstuk,
+  Pijler,
+  AanpakRow,
+  WaaromItem,
+  Expert,
+  Insight,
+  CaseVerwijzing,
+} from "@/lib/content-blokken";
 
-export interface DienstDetail {
+export type {
+  KPI,
+  Vraagstuk,
+  PijlerItem,
+  Pijler,
+  AanpakRow,
+  WaaromItem,
+  Expert,
+  Insight,
+} from "@/lib/content-blokken";
+
+export interface DienstDetail extends CaseVerwijzing {
   slug: string;
   naam: string;
   badgeIcon: "boxes" | "brain-circuit" | "route";
@@ -60,16 +47,6 @@ export interface DienstDetail {
   experts: Expert[];
   partners: string[];
   outcomes: KPI[];
-  /** Optioneel: alleen invullen als er een écht, gepubliceerd klantverhaal voor
-   *  deze dienst bestaat. Geen fictieve quotes/namen — leeg = sectie verborgen. */
-  caseTitle?: string;
-  caseSector?: string;
-  caseQuote?: string;
-  caseNaam?: string;
-  caseRol?: string;
-  caseImage?: string;
-  /** Slug van het bijbehorende /klantverhalen/[slug]. */
-  caseHref?: string;
   /** Alternatief voor de klantverhaal-sectie zolang er nog geen goedgekeurde case is:
    *  een concrete werkwijze-alinea (geen klantbewijs, geen verzonnen cijfers). Wordt
    *  alleen getoond als caseTitle leeg is. */
@@ -83,75 +60,464 @@ export interface DienstDetail {
   insightsTitle: string;
   insights: Insight[];
   ctaTitle: string;
+  /** Sector-slugs waar deze richting het meest speelt; chips naar /sectoren/<slug>.
+   *  Leeg = de sectie is verborgen. */
+  sectoren?: string[];
+  /** "Wanneer wel, wanneer niet" — twee kolommen. Beide leeg = sectie verborgen. */
+  welNietTitel?: string;
+  welWanneer?: string[];
+  nietWanneer?: string[];
 }
 
-/** Richting-slugs die nu een lichte hub-pagina zijn (app/(marketing)/diensten/mendix
- *  e.a.) i.p.v. een dienstdetailpagina. Moeten uit zowel de seed als de CMS-slugs
- *  gefilterd blijven, anders genereert [slug]/page.tsx dezelfde paden nogmaals. */
+/** De drie richtingen. Hebben een eigen statische route
+ *  (app/(marketing)/diensten/mendix/page.tsx e.a.) die vóór [slug] gaat; een dienst
+ *  met dezelfde slug zou daardoor onbereikbaar worden, vandaar de guard in
+ *  lib/diensten-detail-data.ts. */
 export const RICHTING_SLUGS = ["mendix", "ai", "strategie"] as const;
 
 export const DIENSTEN: Record<string, DienstDetail> = {
-  "it-strategie": {
-    slug: "it-strategie",
-    naam: "IT-strategie op low-code en AI",
-    badgeIcon: "route",
-    badgeLabel: "IT-strategie",
-    h1: "Waar low-code en AI passen — en waar niet.",
+  mendix: {
+    slug: "mendix",
+    naam: "Mendix",
+    badgeIcon: "boxes",
+    badgeLabel: "Mendix Premium Partner",
+    h1: "Op maat gebouwd, 6–10× sneller live.",
     intro:
-      "Low-code groeit bij jullie harder dan de inrichting eromheen. Er komen apps bij, teams bij en vragen bij — en de architectuur, governance en het deliverymodel zijn niet meegegroeid. In twee tot drie weken brengen we in kaart waar jullie staan op business waarde, delivery en teams, en platformfundering.",
-    ctaSecondary: "Bekijk klantverhalen",
+      "Op maat gemaakte low-code applicaties die jouw specifieke uitdaging oplossen. Vaak staat er binnen een week een eerste werkende versie, en binnen enkele maanden een live applicatie. Schaalbaar, beheerbaar en gebouwd rond je mensen.",
+    ctaSecondary: "Bekijk cases",
     kpis: [
-      { n: "2–3 wkn", l: "Doorlooptijd van het traject" },
-      { n: "3 lagen", l: "Business waarde, delivery en fundering" },
-      { n: "€12.500+", l: "Investering, afhankelijk van omvang" },
+      { n: "6–10×", l: "Sneller dan traditionele bouw" },
+      { n: "1 week", l: "Vaak een eerste werkende versie" },
+      { n: "100%", l: "Overdraagbaar aan je eigen team" },
     ],
     vraagstukken: [
       {
-        q: "Groei",
-        titel: "Low-code groeit sneller dan de inrichting eromheen",
-        p: "Er komen apps bij, teams bij en vragen bij, en de architectuur, governance en het deliverymodel zijn niet meegegroeid.",
+        q: "Maatwerk",
+        titel: "Je proces past in geen enkel standaardpakket",
+        p: "Uniek proces, uniek concurrentievoordeel. Maar traditioneel maatwerk duurt te lang en kost te veel.",
       },
       {
-        q: "Keuze",
-        titel: "Onduidelijk waar low-code past en waar niet",
-        p: "Niet elk vraagstuk is een low-code-vraagstuk; de verkeerde keuze kost je jaren.",
+        q: "Legacy",
+        titel: "Een verouderde applicatie moet vervangen, zonder verstoring",
+        p: "Niemand durft het oude systeem nog aan te raken, maar het remt alles.",
       },
       {
-        q: "Deliverymodel",
-        titel: "Van één team naar een schaalbaar platform",
-        p: "Wat werkte met één team, werkt niet meer zodra meerdere teams op hetzelfde platform bouwen.",
+        q: "Snelheid",
+        titel: "De business kan niet wachten op het IT-portfolio van volgend jaar",
+        p: "Kansen hebben een houdbaarheidsdatum.",
       },
     ],
-    pijlersIntro: "",
-    pijlers: [],
-    aanpak: [
+    pijlersIntro:
+      "Van eerste schets tot beheerde productie: we ondersteunen je in elke fase van je applicatielandschap.",
+    pijlers: [
       {
-        kicker: "Analyseren",
-        titel: "Waar staat de organisatie op de drie lagen",
-        p: "We brengen in kaart waar jullie staan op business waarde, delivery en teams, en platformfundering.",
-        punten: [
-          "Interviews met business en IT",
-          "Analyse van het applicatielandschap",
-          "Twee werksessies met IT en business samen",
+        num: "01",
+        titel: "Strategie & design",
+        p: "Eerst scherp krijgen wélke applicatie waarde levert, dan pas bouwen.",
+        items: [
+          {
+            summary: "Applicatie-roadmap",
+            p: "Geprioriteerde applicatiekansen met businesscase, aansluitend op je IT-strategie.",
+          },
+          {
+            summary: "Fit-gap & architectuur",
+            p: "Past low-code hier? Eerlijk advies over Mendix versus maatwerk of standaardsoftware.",
+          },
+          {
+            summary: "UX-design",
+            p: "Ontworpen rond het echte werkproces, getest met de mensen die ermee gaan werken.",
+          },
         ],
-        img: "/assets/photos/team-gesprek-lounge.webp",
       },
       {
-        kicker: "Richten",
-        titel: "Een roadmap in gefaseerde stappen",
-        p: "Je krijgt een roadmap met heldere antwoorden op de vragen waar je nu tegenaan loopt.",
-        punten: [
-          "Waar low-code past en waar niet",
-          "Het deliverymodel dat bij de ambitie hoort",
-          "Waar AI in het landschap landt",
+        num: "02",
+        titel: "Bouwen",
+        p: "Vaak van proof-of-concept naar productie in enkele maanden, niet in een jaar.",
+        items: [
+          {
+            summary: "Van PoC naar productie",
+            p: "Werkende software vanaf sprint één, geborgd opgeleverd met documentatie.",
+          },
+          {
+            summary: "Integraties",
+            p: "Koppelingen met je kernsystemen: ERP, zaaksystemen, EPD of legacy via API's.",
+          },
+          {
+            summary: "Gemengde teams",
+            p: "Onze consultants werken samen met jouw mensen, kennis blijft binnen.",
+          },
         ],
-        img: "/assets/photos/team-strategie-flipover.webp",
+      },
+      {
+        num: "03",
+        titel: "Beheer & schaal",
+        p: "Applicaties die meegroeien en beheersbaar blijven.",
+        items: [
+          {
+            summary: "Beheer & doorontwikkeling",
+            p: "Actieve monitoring, snelle fixes en doorontwikkeling op basis van gebruik.",
+          },
+          {
+            summary: "Kwaliteit & performance",
+            p: "Code reviews, testautomatisering en performance-optimalisatie als standaard.",
+          },
+          {
+            summary: "Training & overdracht",
+            p: "We leiden je eigen makers op, tot en met Mendix-certificering.",
+          },
+        ],
+      },
+    ],
+    aanpak: [
+      {
+        kicker: "Bouwen",
+        titel: "Van eerste sprint tot productie in weken",
+        p: "We starten klein, leveren elke sprint werkende software en schalen wat werkt. Jouw eindgebruikers zitten vanaf dag één aan tafel.",
+        punten: [
+          "Proof-of-concept binnen enkele weken",
+          "Koppelingen met je bestaande landschap",
+          "Enterprise-grade security en beheer",
+        ],
+        img: "/assets/photos/team-presentatie-scherm.webp",
+      },
+      {
+        kicker: "Borgen",
+        titel: "Jouw team kan er zelf mee verder",
+        p: "Geen vendor lock-in op kennis: we documenteren, dragen over en leiden je eigen mensen op, zodat de applicatie van jou blijft.",
+        punten: [
+          "Overdracht en training van je team",
+          "Beheer en doorontwikkeling naar keuze",
+          "Architectuur die meegroeit",
+        ],
+        img: "/assets/photos/team-overleg-cafe.webp",
       },
     ],
     waarom: [
       {
         titel: "Business eerst, technologie als middel",
-        p: "We starten bij jouw sectorvraagstuk en rekenen elke keuze door op businesswaarde, met een eerlijk nee waar low-code niet past.",
+        p: "We starten bij jouw sectorvraagstuk en rekenen elke applicatie door op businesswaarde, met een eerlijk nee waar Mendix niet past.",
+      },
+      {
+        titel: "6–10× sneller live",
+        p: "Vaak geen jarenlange trajecten: werkende software vanaf sprint één, doorgaans live binnen enkele maanden.",
+      },
+      {
+        titel: "Kennis blijft bij jou",
+        p: "Gemengde teams met jouw mensen, volledige overdracht inclusief documentatie en beheer.",
+      },
+      {
+        titel: "Premium Partner-kwaliteit",
+        p: "Gecertificeerde experts en directe lijnen met Mendix zelf.",
+      },
+    ],
+    expertsHead:
+      "Werk met een expert, onze leads denken vrijblijvend mee over jouw applicatielandschap.",
+    experts: [
+      {
+        img: "/assets/photos/portret-blauw.webp",
+        role: "CEO · Strategie & Sales",
+        naam: "Koen Wijsman",
+        tel: "+31610751254",
+      },
+    ],
+    partners: ["Mendix", "Siemens", "Microsoft Azure", "AWS"],
+    outcomes: [
+      { n: "6–10×", l: "Snellere oplevering" },
+      { n: "-60%", l: "Lagere ontwikkelkosten" },
+      { n: "100%", l: "Gebouwd binnen je kaders" },
+      { n: "1", l: "Team van business tot bouw" },
+    ],
+    caseTitle: "Twee schakels in de keten: hoe Moove installaties en ritregistratie automatiseerde",
+    caseSector: "Mobiliteit · Moove Connected Mobility",
+    caseQuote:
+      "“Samenwerken met The New Wave IT voelt alsof je samenwerkt met goed ingewerkte en enthousiaste collega's. De samenwerking verliep direct soepel.”",
+    caseNaam: "Nina Klooster",
+    caseRol: "Product Manager, Moove",
+    caseImage: "/assets/photos/team-brainstorm-glaswand.webp",
+    caseHref: "/klantverhalen/moove",
+    insightsTitle: "Kennis over bouwen met low-code",
+    insights: [],
+    ctaTitle: "Welke applicatie zou jouw operatie versnellen?",
+  },
+
+  ai: {
+    slug: "ai",
+    naam: "AI",
+    badgeIcon: "brain-circuit",
+    badgeLabel: "AI",
+    h1: "AI die je mensen versterkt.",
+    intro:
+      "Strategische inzet van AI binnen je bestaande IT-landschap. Geen hype, wél oplossingen die processen aantoonbaar verbeteren, uitlegbaar zijn en de mens centraal stellen.",
+    ctaSecondary: "Doe de AI-scan",
+    kpis: [
+      { n: "-40%", l: "Minder repetitief werk" },
+      { n: "6 weken", l: "Doorgaans tot werkend proces" },
+      { n: "100%", l: "Uitlegbaar en controleerbaar" },
+    ],
+    vraagstukken: [
+      {
+        q: "Repetitief werk",
+        titel: "Je professionals verliezen uren aan lezen, sorteren en overtypen",
+        p: "Documenten, aanvragen, meldingen: werk dat slimmer kan.",
+      },
+      {
+        q: "Beslissingen",
+        titel: "Je wilt beter beslissen op data die er al is",
+        p: "De data is er, het inzicht nog niet.",
+      },
+      {
+        q: "Richting",
+        titel: "Iedereen wil ‘iets met AI’, maar wat, en waar te beginnen?",
+        p: "Zonder scherpe keuze wordt AI een dure hobby.",
+      },
+    ],
+    pijlersIntro:
+      "Van strategie tot fundament: we ondersteunen je in elke fase van je AI-reis, altijd gericht op meetbaar businessresultaat.",
+    pijlers: [
+      {
+        num: "01",
+        titel: "Strategie",
+        p: "Een heldere visie en route om AI effectief in te zetten voor jouw businessdoelen.",
+        items: [
+          {
+            summary: "AI-maturity scan",
+            p: "We meten hoe klaar je organisatie is: datakwaliteit, governance, kennis en integratie in processen.",
+          },
+          {
+            summary: "Visie & roadmap",
+            p: "Geprioriteerde use-cases met businesscase, vertaald naar een concrete agenda voor de komende kwartalen.",
+          },
+          {
+            summary: "Verantwoorde AI",
+            p: "Uitlegbaar, eerlijk en AVG- en AI Act-proof. Ethiek als ontwerpeis, niet als sausje achteraf.",
+          },
+        ],
+      },
+      {
+        num: "02",
+        titel: "Toepassing",
+        p: "AI en data inzetten voor inzicht, snelheid en betere beslissingen in het dagelijkse werk.",
+        items: [
+          {
+            summary: "Documentintelligentie",
+            p: "Classificeren, samenvatten en voorsorteren van aanvragen, meldingen en dossiers. De professional beslist.",
+          },
+          {
+            summary: "Generatieve AI",
+            p: "Van experiment naar geborgd proces: assistenten en workflows in je eigen, veilige omgeving.",
+          },
+          {
+            summary: "Besluitondersteuning",
+            p: "Uitlegbare modellen die adviseren op data die er al is, zonder black box in productie.",
+          },
+        ],
+      },
+      {
+        num: "03",
+        titel: "Fundament",
+        p: "De basis die AI betrouwbaar, beschikbaar en beheersbaar maakt, nu en straks.",
+        items: [
+          {
+            summary: "Data-engineering",
+            p: "Pipelines en integraties die data betrouwbaar en bruikbaar maken voor AI en inzicht.",
+          },
+          {
+            summary: "AI-governance",
+            p: "Beleid, rollen en controles zodat elke toepassing veilig, compliant en controleerbaar blijft.",
+          },
+          {
+            summary: "Integratie met Mendix",
+            p: "AI direct in je bedrijfsapplicaties: van slimme formulieren tot geautomatiseerde afhandeling.",
+          },
+        ],
+      },
+    ],
+    aanpak: [
+      {
+        kicker: "Verkennen",
+        titel: "De AI-scan: van hype naar businesscase",
+        p: "We doorlichten je processen en datalandschap en kiezen samen de use-cases waar AI aantoonbaar waarde toevoegt, met een eerlijk nee waar het niet past.",
+        punten: [
+          "Scan van processen en datalandschap",
+          "Geprioriteerde use-cases met businesscase",
+          "Heldere randvoorwaarden (AVG, AI Act)",
+        ],
+        img: "/assets/photos/team-brainstorm-postits.webp",
+      },
+      {
+        kicker: "Bouwen",
+        titel: "Pilots met meetbaar resultaat",
+        p: "We bouwen werkende pilots in je eigen omgeving en schalen wat bewezen werkt: verantwoord, uitlegbaar en met de professional aan het stuur.",
+        punten: [
+          "Documentclassificatie en samenvatting",
+          "Uitlegbare besluitondersteuning",
+          "Van pilot naar geborgde productie",
+        ],
+        img: "/assets/photos/team-overleg-flipover.webp",
+      },
+    ],
+    waarom: [
+      {
+        titel: "Business eerst, technologie als middel",
+        p: "We starten bij jouw sectorvraagstuk en rekenen elke use-case door op businesswaarde, met een eerlijk nee waar AI niet past.",
+      },
+      {
+        titel: "Doorgaans een werkend proces binnen 6 weken",
+        p: "Geen rapporten die in een la verdwijnen: we bouwen in je eigen omgeving en schalen wat bewezen werkt.",
+      },
+      {
+        titel: "Kennis blijft bij jou",
+        p: "We werken in gemengde teams met jouw mensen en dragen alles over, inclusief documentatie en beheer.",
+      },
+      {
+        titel: "Verantwoord en uitlegbaar",
+        p: "Elk besluit blijft controleerbaar. AVG en AI Act zijn randvoorwaarden vanaf dag één, geen verrassing achteraf.",
+      },
+    ],
+    expertsHead: "Werk direct met een expert, onze practice leads denken vrijblijvend mee.",
+    experts: [
+      {
+        img: "/assets/photos/portret-blauw.webp",
+        role: "CEO · Strategie & Sales",
+        naam: "Koen Wijsman",
+        tel: "+31610751254",
+      },
+    ],
+    partners: ["Mendix", "Microsoft Azure", "OpenAI", "Databricks"],
+    outcomes: [
+      { n: "-40%", l: "Minder repetitief werk" },
+      { n: "+3×", l: "Snellere verwerking van aanvragen" },
+      { n: "100%", l: "Uitlegbare besluiten" },
+      { n: "0", l: "Black boxes in productie" },
+    ],
+    insightsTitle: "Kennis over verantwoorde AI",
+    insights: [],
+    ctaTitle: "Waar zou AI jouw mensen kunnen versterken?",
+  },
+
+  strategie: {
+    slug: "strategie",
+    naam: "Strategie",
+    badgeIcon: "route",
+    badgeLabel: "Strategie",
+    h1: "Van ambitie naar uitvoerbare roadmap.",
+    intro:
+      "Wij verbinden business en IT in een concreet plan en blijven aan boord tot het werkt. Geen dik rapport voor in de la, maar mijlpalen die je operatie meteen merkt.",
+    ctaSecondary: "Bekijk cases",
+    kpis: [
+      { n: "45", l: "Minuten voor het eerste gesprek" },
+      { n: "< 8", l: "Weken tot een gedragen roadmap" },
+      { n: "1", l: "Plan waar business én IT achter staan" },
+    ],
+    vraagstukken: [
+      {
+        q: "Richting",
+        titel: "De ambitie is helder, de weg ernaartoe niet",
+        p: "Digitaliseren, ja. Maar wat eerst, wat later, en wat niet?",
+      },
+      {
+        q: "Verbinding",
+        titel: "Business en IT spreken elkaars taal niet",
+        p: "Projecten mislukken zelden op techniek, vaak op afstemming.",
+      },
+      {
+        q: "Executie",
+        titel: "Het vorige plan strandde in de la",
+        p: "Een strategie is pas af als de operatie hem merkt.",
+      },
+    ],
+    pijlersIntro: "Van inzicht via richting naar uitvoering: we blijven aan boord tot het werkt.",
+    pijlers: [
+      {
+        num: "01",
+        titel: "Inzicht",
+        p: "Eerst begrijpen waar je staat en waar de waarde zit.",
+        items: [
+          {
+            summary: "Digitale scan",
+            p: "Doorlichting van processen, systemen en data: waar lekt tijd en waar zit potentie?",
+          },
+          {
+            summary: "Businesscase per initiatief",
+            p: "Elk voorstel doorgerekend op kosten, baten en risico, beslisklaar voor de directie.",
+          },
+          {
+            summary: "IT-landschap analyse",
+            p: "Wat kan blijven, wat moet weg en wat mist er? Eerlijk, leveranciersonafhankelijk.",
+          },
+        ],
+      },
+      {
+        num: "02",
+        titel: "Richting",
+        p: "Van ambitie naar een geprioriteerde, gedragen roadmap.",
+        items: [
+          {
+            summary: "Visie & roadmap",
+            p: "Concreet plan met mijlpalen per kwartaal, gekoppeld aan je businessdoelen.",
+          },
+          {
+            summary: "Portfolio-prioritering",
+            p: "Welke initiatieven eerst? Prioriteren op waarde, risico en samenhang.",
+          },
+          {
+            summary: "Architectuurkeuzes",
+            p: "Richtinggevende keuzes voor platforms en integraties, AVG- en toekomstproof.",
+          },
+        ],
+      },
+      {
+        num: "03",
+        titel: "Uitvoering",
+        p: "Geen rapport voor in de la, we blijven tot het werkt.",
+        items: [
+          {
+            summary: "Transformatiebegeleiding",
+            p: "Regie op de uitvoering, met mijlpalen die je operatie meteen merkt.",
+          },
+          {
+            summary: "Verandermanagement",
+            p: "Je mensen mee in de verandering: training, communicatie en adoptie.",
+          },
+          {
+            summary: "Meetbare mijlpalen",
+            p: "Elk kwartaal aantoonbaar resultaat, bijgestuurd op wat de praktijk leert.",
+          },
+        ],
+      },
+    ],
+    aanpak: [
+      {
+        kicker: "Richten",
+        titel: "Een roadmap die keuzes maakt",
+        p: "We vertalen je bedrijfsdoelen naar een geprioriteerde digitale agenda, met heldere mijlpalen, eigenaren en een eerlijke volgorde.",
+        punten: [
+          "Van bedrijfsdoel naar digitale agenda",
+          "Prioritering op waarde en haalbaarheid",
+          "Gedragen door directie én werkvloer",
+        ],
+        img: "/assets/photos/team-presentatie-applaus.webp",
+      },
+      {
+        kicker: "Uitvoeren",
+        titel: "Begeleiding bij de verandering, niet alleen het plan",
+        p: "We blijven betrokken tijdens de uitvoering: sturen bij, meten resultaat en zorgen dat elke mijlpaal in de operatie landt.",
+        punten: [
+          "Kwartaalritme met meetbare mijlpalen",
+          "Bijsturen op resultaat, niet op rapporten",
+          "Kennisoverdracht aan je eigen organisatie",
+        ],
+        img: "/assets/photos/team-overleg-scherm.webp",
+      },
+    ],
+    waarom: [
+      {
+        titel: "Business eerst, technologie als middel",
+        p: "We starten bij jouw sectorvraagstuk, niet bij een oplossing die we willen verkopen.",
+      },
+      {
+        titel: "Geen rapport voor in de la",
+        p: "Elke aanbeveling komt met een uitvoeringsplan, en we blijven aan boord tot het werkt.",
       },
       {
         titel: "Kennis blijft bij jou",
@@ -172,201 +538,15 @@ export const DIENSTEN: Record<string, DienstDetail> = {
       },
     ],
     partners: ["Mendix", "Microsoft Azure", "OpenAI", "Databricks"],
-    outcomes: [],
-    waarborg:
-      "We hebben deze aanpak ontwikkeld voor groeiende Mendix-landschappen: eerst een assessment op de drie lagen — business waarde, delivery en teams, en platformfundering — voordat we een roadmap vaststellen. Geen quickscan met een kant-en-klaar advies, maar een traject met jullie eigen mensen aan tafel.",
-    insightsTitle: "Kennis voor CIO's en architecten",
-    insights: [
-      {
-        cat: "Strategie",
-        meta: "5 min",
-        titel: "Waarom digitale strategieën stranden in de la",
-      },
-      { cat: "Strategie", meta: "4 min", titel: "Prioriteren: de kunst van het niet doen" },
+    outcomes: [
+      { n: "< 8", l: "Weken tot gedragen roadmap" },
+      { n: "100%", l: "Mijlpalen met eigenaar en datum" },
+      { n: "4×", l: "Per jaar meetbaar bijgestuurd" },
+      { n: "1", l: "Taal voor business en IT" },
     ],
-    ctaTitle: "Klaar om van landschap naar roadmap te gaan?",
-    heroTheme: "strategie",
-    serviceSlug: "it-strategie",
-  },
-
-  "foundation-starterkit": {
-    slug: "foundation-starterkit",
-    naam: "Foundation Starterkit",
-    badgeIcon: "boxes",
-    badgeLabel: "Mendix-fundering",
-    h1: "De fundering waarmee app twee de helft kost.",
-    intro:
-      "App nummer één kost wat hij kost. App nummer twee zou de helft moeten kosten — en dat gebeurt alleen als er een gedeelde fundering onder ligt. In drie tot vier weken bouwen we die met jullie ontwikkelaars: een starter app met jullie huisstijl, inloggen en rechten geregeld, een herbruikbare koppellaag en gedeelde componenten.",
-    ctaSecondary: "Bekijk cases",
-    kpis: [
-      { n: "3–4 wkn", l: "Bouwtijd van de fundering" },
-      { n: "5", l: "Onderdelen: starter app t/m CI/CD" },
-      { n: "2+", l: "Apps nodig om de waarde te voelen" },
-    ],
-    vraagstukken: [
-      {
-        q: "Herhaling",
-        titel: "Elk team vindt het wiel opnieuw uit",
-        p: "Inloggen, huisstijl en koppelingen worden per app opnieuw gebouwd, in plaats van eenmalig goed neergezet.",
-      },
-      {
-        q: "Opschalen",
-        titel: "Van één app naar een portfolio",
-        p: "Wat werkte voor de eerste app, houdt geen stand zodra er een tweede en derde bijkomen.",
-      },
-      {
-        q: "Beheer",
-        titel: "Niemand is eigenaar van de gedeelde basis",
-        p: "Zonder een vastgelegde beheerafspraak verwatert de fundering na de eerste oplevering.",
-      },
-    ],
-    pijlersIntro: "",
-    pijlers: [],
-    aanpak: [
-      {
-        kicker: "Bouwen",
-        titel: "Een starter app met jullie huisstijl en rechten",
-        p: "We bouwen een starter app met de huisstijl erin, inloggen en rechten geregeld, en een herbruikbare integratielaag naar jullie kernsystemen.",
-        punten: [
-          "Starter app met huisstijl",
-          "Inloggen en rechten geregeld",
-          "Herbruikbare integratielaag naar kernsystemen",
-        ],
-        img: "/assets/photos/team-brainstorm-postits.webp",
-      },
-      {
-        kicker: "Overdragen",
-        titel: "Jullie ontwikkelaars kunnen zelf verder",
-        p: "We bouwen samen met jullie eigen ontwikkelaars, met gedeelde componenten, testautomatisering en een vastgelegde beheerafspraak.",
-        punten: [
-          "Gedeelde componenten en testautomatisering",
-          "Geautomatiseerd uitrollen",
-          "Vastgelegde beheerafspraak",
-        ],
-        img: "/assets/photos/team-presentatie-scherm.webp",
-      },
-    ],
-    waarom: [
-      {
-        titel: "Business eerst, technologie als middel",
-        p: "We bouwen de fundering rond de apps die je daadwerkelijk gaat maken, niet als doel op zich.",
-      },
-      {
-        titel: "Kennis blijft bij jou",
-        p: "Je eigen ontwikkelaars bouwen mee, zodat de fundering na oplevering van jou blijft.",
-      },
-    ],
-    expertsHead: "Werk direct met een expert, onze leads denken vrijblijvend mee.",
-    experts: [
-      {
-        img: "/assets/photos/portret-blauw.webp",
-        role: "CEO · Strategie & Sales",
-        naam: "Koen Wijsman",
-        tel: "+31610751254",
-      },
-    ],
-    partners: ["Mendix", "Siemens", "Microsoft Azure", "AWS"],
-    outcomes: [],
-    waarborg:
-      "We hebben deze fundering-aanpak ontwikkeld voor organisaties met meerdere Mendix-apps in productie: één starter app, één integratielaag, één set gedeelde componenten — zodat elk volgend team hiermee begint in plaats van bij nul.",
-    insightsTitle: "Kennis over bouwen met low-code",
-    insights: [
-      { cat: "Mendix", meta: "5 min", titel: "Wanneer low-code wél en niet de juiste keuze is" },
-      { cat: "Mendix", meta: "4 min", titel: "Van POC naar productie: de valkuilen" },
-    ],
-    ctaTitle: "Klaar voor een fundering die meegroeit?",
-    heroTheme: "mendix",
-    serviceSlug: "foundation-starterkit",
-  },
-
-  "fusion-team-startsprint": {
-    slug: "fusion-team-startsprint",
-    naam: "Fusion Team Startsprint",
-    badgeIcon: "boxes",
-    badgeLabel: "Mendix — Fusion Team",
-    h1: "Business en IT die samen bouwen.",
-    intro:
-      "Business en IT die samen bouwen in plaats van specificaties uitwisselen. Vier weken lang werken één van jullie businessexperts en één van onze ontwikkelaars samen aan een echte oplossing. Wij bouwen mee en leiden tegelijk op, zodat jullie medewerker het daarna zelf kan onderhouden en uitbreiden.",
-    ctaSecondary: "Bekijk cases",
-    kpis: [
-      { n: "4 wkn", l: "Duur van de startsprint" },
-      { n: "1+1", l: "Businessexpert en developer samen" },
-      { n: "1", l: "Werkende oplossing in gebruik" },
-    ],
-    vraagstukken: [
-      {
-        q: "Overdracht",
-        titel: "Specificaties gaan heen en weer, tijd gaat verloren",
-        p: "Business schrijft wensen op, IT vertaalt ze, en de vertaling klopt zelden helemaal.",
-      },
-      {
-        q: "Afhankelijkheid",
-        titel: "De business kan niets zonder IT bijstellen",
-        p: "Elke kleine aanpassing moet weer de wachtrij in.",
-      },
-      {
-        q: "Kennis",
-        titel: "Na oplevering verdwijnt de kennis met de leverancier",
-        p: "Zonder overdracht kan niemand intern de oplossing onderhouden of uitbreiden.",
-      },
-    ],
-    pijlersIntro: "",
-    pijlers: [],
-    aanpak: [
-      {
-        kicker: "Samen bouwen",
-        titel: "Eén businessexpert, één developer, één oplossing",
-        p: "Jullie businessexpert en onze ontwikkelaar werken vier weken samen aan één echte oplossing, niet los van elkaar.",
-        punten: [
-          "Co-creatie in plaats van specificaties",
-          "Een echte oplossing, geen oefencasus",
-          "Wij bouwen mee, niet ervoor",
-        ],
-        img: "/assets/photos/team-gesprek-lounge.webp",
-      },
-      {
-        kicker: "Overdragen",
-        titel: "Jullie medewerker kan het zelf",
-        p: "We leiden tegelijk op, zodat jullie medewerker de oplossing na de sprint zelfstandig kan onderhouden en uitbreiden.",
-        punten: [
-          "Training tijdens het bouwen, niet erna",
-          "Werkwijze op papier vastgelegd",
-          "Klaar voor de volgende afdeling",
-        ],
-        img: "/assets/photos/team-strategie-flipover.webp",
-      },
-    ],
-    waarom: [
-      {
-        titel: "Kennis blijft bij jou",
-        p: "Je eigen medewerker bouwt mee vanaf dag één, geen overdracht achteraf.",
-      },
-      {
-        titel: "Business eerst, technologie als middel",
-        p: "We starten bij het echte werkproces van je businessexpert, niet bij een technisch ontwerp.",
-      },
-    ],
-    expertsHead: "Werk direct met een expert, onze leads denken vrijblijvend mee.",
-    experts: [
-      {
-        img: "/assets/photos/portret-blauw.webp",
-        role: "CEO · Strategie & Sales",
-        naam: "Koen Wijsman",
-        tel: "+31610751254",
-      },
-    ],
-    partners: ["Mendix", "Siemens", "Microsoft Azure", "AWS"],
-    outcomes: [],
-    waarborg:
-      "Deze aanpak komt direct uit hoe we al werken bij bestaande klanten: één businessexpert en één ontwikkelaar aan hetzelfde bureau, dezelfde planning, dezelfde oplevering. Geen gescheiden trajecten die achteraf aan elkaar geknoopt worden.",
-    insightsTitle: "Kennis over bouwen met low-code",
-    insights: [
-      { cat: "Mendix", meta: "6 min", titel: "Legacy vervangen zonder de winkel te sluiten" },
-      { cat: "Mendix", meta: "4 min", titel: "Van POC naar productie: de valkuilen" },
-    ],
-    ctaTitle: "Klaar om business en IT samen te laten bouwen?",
-    heroTheme: "mendix",
-    serviceSlug: "fusion-team-startsprint",
+    insightsTitle: "Kennis die je koers vooruit denkt",
+    insights: [],
+    ctaTitle: "Klaar om van ambitie naar uitvoering te gaan?",
   },
 };
 

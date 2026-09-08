@@ -6,6 +6,8 @@
  * drie diensten die daarnaast een eigen, uitgebreide landingspagina hebben.
  */
 
+import type { KPI, Vraagstuk, AanpakRow, WaaromItem, CaseVerwijzing } from "@/lib/content-blokken";
+
 export type ServiceFamilie = "doen" | "richting" | "capaciteit";
 export type ServiceRichting = "mendix" | "ai" | "strategie";
 
@@ -15,7 +17,7 @@ export interface ServicePrijs {
   variant?: string;
 }
 
-export interface Service {
+export interface Service extends CaseVerwijzing {
   slug: string;
   naam: string;
   /** Groepering op het /diensten-overzicht. */
@@ -42,9 +44,18 @@ export interface Service {
   volgendeStapSlugs?: string[];
   ctaLabel: string;
   ctaType: "datum" | "kennismaking";
-  /** Slug van de eigen landingspagina onder /diensten/[slug] — alleen de drie grootste diensten. */
-  detailSlug?: string;
   volgorde: number;
+
+  /**
+   * Diepte-inhoud voor de eigen pagina onder /diensten/<slug>. Elke dienst heeft
+   * zo'n pagina, maar niet elke dienst heeft (al) deze secties — daarom is alles
+   * optioneel en verbergt een lege sectie zichzelf.
+   */
+  kpis?: KPI[];
+  vraagstukken?: Vraagstuk[];
+  aanpak?: AanpakRow[];
+  waarom?: WaaromItem[];
+  outcomes?: KPI[];
 }
 
 /**
@@ -202,7 +213,6 @@ export const SERVICES: Service[] = [
     volgendeStapSlugs: ["foundation-starterkit", "fusion-team-startsprint"],
     ctaLabel: "Plan een kennismaking (20 min)",
     ctaType: "kennismaking",
-    detailSlug: "it-strategie",
     volgorde: 5,
   },
   {
@@ -254,7 +264,6 @@ export const SERVICES: Service[] = [
     volgendeStapSlugs: ["fusion-team-startsprint"],
     ctaLabel: "Plan een kennismaking (20 min)",
     ctaType: "kennismaking",
-    detailSlug: "foundation-starterkit",
     volgorde: 7,
   },
   {
@@ -279,7 +288,6 @@ export const SERVICES: Service[] = [
     volgendeStap: "Een doorlopend fusion team, of uitbreiding naar een tweede business unit.",
     ctaLabel: "Plan een kennismaking (20 min)",
     ctaType: "kennismaking",
-    detailSlug: "fusion-team-startsprint",
     volgorde: 8,
   },
   {

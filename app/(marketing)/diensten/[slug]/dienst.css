@@ -1,0 +1,51 @@
+/* Dienstpagina — alleen wat níét gedeeld is met de richting-hub.
+   De secties eronder komen uit components/diensten/secties/secties.css. */
+
+.p-dienst .dienst-prijzen {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-5);
+  margin: 0 0 var(--space-6);
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  color: var(--text-on-dark-muted);
+}
+.p-dienst .dienst-prijzen strong {
+  font-size: var(--text-lg);
+  font-weight: var(--fw-medium);
+  color: var(--orange-400);
+}
+
+.p-dienst .dienst-intro {
+  max-width: 68ch;
+}
+.p-dienst .dienst-intro p {
+  font-size: var(--text-lg);
+  line-height: var(--leading-relaxed);
+  color: var(--text-body);
+  margin: 0 0 var(--space-5);
+  text-wrap: pretty;
+}
+.p-dienst .dienst-resultaten {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 10px;
+}
+.p-dienst .dienst-resultaten li {
+  position: relative;
+  padding-left: var(--space-5);
+  font-size: var(--text-base);
+  color: var(--text-body);
+}
+.p-dienst .dienst-resultaten li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.6em;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--color-primary);
+}

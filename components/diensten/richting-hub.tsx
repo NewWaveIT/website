@@ -4,10 +4,18 @@ import { SectorHeroAnim } from "@/components/sector-hero-anim";
 import { SlotCta } from "@/components/layout/slot-cta";
 import { getPagina } from "@/lib/paginas-data";
 import { getRichtingHub, getFaseItems } from "@/lib/services-data";
+import { getRichtingBySlug } from "@/lib/diensten-detail-data";
+import { getArtikelenVoorDienst } from "@/lib/inzichten-data";
+import { getSectoren } from "@/lib/sectoren-detail-data";
 import type { ServiceRichting } from "@/lib/services";
 import { FaseTijdlijn } from "./fase-tijdlijn";
 import { ServiceCard } from "./service-card";
 import { CrossRef } from "./cross-ref";
+import { VraagstukkenSectie, WelNietSectie } from "./secties/probleem";
+import { PijlersSectie, AanpakSectie } from "./secties/aanpak";
+import { WaaromSectie, PartnersSectie, OutcomesSectie } from "./secties/bewijs";
+import { KlantverhaalSectie, SectorkoppelingSectie, InzichtenSectie } from "./secties/verwijzingen";
+import "./secties/secties.css";
 import "./richting-hub.css";
 
 const BADGE: Record<ServiceRichting, { Icon: typeof Boxes; label: string }> = {
@@ -23,16 +31,21 @@ const RICHTING_NAAM: Record<ServiceRichting, string> = {
 };
 
 /**
- * Gedeelde body voor de 3 richting-hubpagina's (/diensten/mendix, /ai, /strategie):
- * hero, optionele lichte-instapstrip, verkorte fasenlijn, 2-3 tier-kaarten en een
- * kruisverwijzing. Bewust géén vraagstukken/pijlers/experts/klantverhaal meer —
- * dat is nu de rijkere content op de 3 losse dienstdetailpagina's.
+ * Gedeelde body voor de 3 richting-hubpagina's (/diensten/mendix, /ai, /strategie).
+ *
+ * Het aanbod staat hoog — de dienstenladder is waar iemand boekt — en de
+ * verdieping eronder. Die verdieping komt uit het contenttype `diensten`, dat
+ * de drie richtingen beschrijft; de kaarten komen uit `services`. Elke sectie
+ * verbergt zichzelf als hij leeg is.
  */
 export async function RichtingHub({ richting }: { richting: ServiceRichting }) {
-  const [t, hub, dienstenPagina] = await Promise.all([
+  const [t, hub, dienstenPagina, inhoud, artikelen, alleSectoren] = await Promise.all([
     getPagina(`diensten-${richting}`),
     getRichtingHub(richting),
     getPagina("diensten"),
+    getRichtingBySlug(richting),
+    getArtikelenVoorDienst(richting),
+    getSectoren(),
   ]);
   const fases = getFaseItems(dienstenPagina);
   const { Icon, label } = BADGE[richting];
@@ -40,8 +53,14 @@ export async function RichtingHub({ richting }: { richting: ServiceRichting }) {
     .map((tier) => tier.service.fase)
     .filter((n): n is 1 | 2 | 3 => n !== undefined);
 
+  // Sectorkoppeling: slugs uit de richting-content, namen uit de sectoren zelf.
+  const sectoren = (inhoud?.sectoren ?? [])
+    .map((slug) => alleSectoren.find((x) => x.slug === slug))
+    .filter((x): x is NonNullable<typeof x> => Boolean(x))
+    .map((x) => ({ slug: x.slug, naam: x.naam }));
+
   return (
-    <div className="p-richting">
+    <div className="p-richting dienst-secties">
       <section className="shero">
         <SectorHeroAnim theme={richting} />
         <div className="wrap-wide">
@@ -103,6 +122,45 @@ export async function RichtingHub({ richting }: { richting: ServiceRichting }) {
         </div>
       </section>
 
+      {inhoud && (
+        <>
+          <VraagstukkenSectie vraagstukken={inhoud.vraagstukken} />
+          <PijlersSectie
+            pijlers={inhoud.pijlers}
+            intro={inhoud.pijlersIntro}
+            naam={RICHTING_NAAM[richting]}
+          />
+          <AanpakSectie aanpak={inhoud.aanpak} />
+          <WelNietSectie
+            titel={inhoud.welNietTitel}
+            wel={inhoud.welWanneer}
+            niet={inhoud.nietWanneer}
+          />
+          <WaaromSectie
+            waarom={inhoud.waarom}
+            experts={inhoud.experts}
+            expertsHead={inhoud.expertsHead}
+          />
+          <PartnersSectie partners={inhoud.partners} />
+          <OutcomesSectie outcomes={inhoud.outcomes} naam={RICHTING_NAAM[richting]} />
+          <KlantverhaalSectie
+            caseTitle={inhoud.caseTitle}
+            caseSector={inhoud.caseSector}
+            caseQuote={inhoud.caseQuote}
+            caseNaam={inhoud.caseNaam}
+            caseRol={inhoud.caseRol}
+            caseImage={inhoud.caseImage}
+            caseHref={inhoud.caseHref}
+            waarborg={inhoud.waarborg}
+          />
+          <SectorkoppelingSectie sectoren={sectoren} />
+          <InzichtenSectie
+            artikelen={artikelen}
+            titel={inhoud.insightsTitle || `Kennis over ${RICHTING_NAAM[richting]}`}
+          />
+        </>
+      )}
+
       {hub.crossRefs.length > 0 && (
         <section className="block" style={{ paddingTop: 0 }}>
           <div className="wrap-wide">
@@ -110,7 +168,7 @@ export async function RichtingHub({ richting }: { richting: ServiceRichting }) {
               titel={t.crossrefTitel || "Ook relevant"}
               items={hub.crossRefs.map((s) => ({
                 label: `${s.naam} — ook relevant vanuit ${RICHTING_NAAM[richting]}`,
-                href: s.detailSlug ? `/diensten/${s.detailSlug}` : `/diensten#svc-${s.slug}`,
+                href: `/diensten/${s.slug}`,
               }))}
             />
           </div>

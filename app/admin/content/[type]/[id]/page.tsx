@@ -8,13 +8,13 @@ import { ContentEditor } from "@/components/admin/content-editor";
 const META: Record<ContentType, { label: string; listPath: string }> = {
   paginas: { label: "Pagina", listPath: "/admin/paginas" },
   cases: { label: "Case", listPath: "/admin/cases" },
-  diensten: { label: "Dienst", listPath: "/admin/diensten" },
+  diensten: { label: "Richting", listPath: "/admin/diensten" },
   sectoren: { label: "Sector", listPath: "/admin/sectoren" },
   artikelen: { label: "Artikel", listPath: "/admin/inzichten" },
   vacatures: { label: "Vacature", listPath: "/admin/vacatures" },
   teamleden: { label: "Teamlid", listPath: "/admin/teamleden" },
   proposities: { label: "Propositie", listPath: "/admin/proposities" },
-  services: { label: "Service", listPath: "/admin/services" },
+  services: { label: "Dienst", listPath: "/admin/services" },
 };
 
 export default async function ContentEditPage({

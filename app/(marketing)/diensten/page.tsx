@@ -37,9 +37,7 @@ export default async function DienstenPage() {
       position: i + 1,
       // Diensten zonder eigen pagina krijgen hun ankerpunt op het overzicht,
       // zodat elk item een eigen URL houdt.
-      url: s.detailSlug
-        ? `${SITE_URL}/diensten/${s.detailSlug}`
-        : `${SITE_URL}/diensten#svc-${s.slug}`,
+      url: s.slug ? `${SITE_URL}/diensten/${s.slug}` : `${SITE_URL}/diensten#svc-${s.slug}`,
       item: {
         "@type": "Service",
         name: s.naam,

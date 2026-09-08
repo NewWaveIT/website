@@ -1,6 +1,6 @@
 import "server-only";
 import { getPublishedContent, type ContentRow } from "@/lib/cms/content";
-import { DIENSTEN, DIENST_SLUGS, RICHTING_SLUGS, type DienstDetail } from "@/lib/diensten-detail";
+import { DIENSTEN, RICHTING_SLUGS, type DienstDetail } from "@/lib/diensten-detail";
 import { sanitizeInline } from "@/lib/cms/sanitize";
 
 function skeleton(row: ContentRow): DienstDetail {
@@ -43,25 +43,23 @@ function mapRow(row: ContentRow): DienstDetail {
   return merged;
 }
 
-/** Richting-slugs (mendix/ai/strategie) zijn nu lichte hub-pagina's onder
- *  app/(marketing)/diensten/<richting>/page.tsx, geen dienstdetailpagina meer.
- *  Uitfilteren hier voorkomt dat [slug]/page.tsx dezelfde paden nogmaals
- *  genereert — ook als er nog oude cms_diensten-rijen voor die slugs bestaan. */
-function isRichtingSlug(slug: string): boolean {
+/**
+ * Alleen de drie richtingen bestaan hier. Rijen met een andere slug — resten van
+ * het vorige ontwerp, toen dit contenttype de dienstdetailpagina's bediende —
+ * worden genegeerd in plaats van gerenderd.
+ */
+function isRichting(slug: string): boolean {
   return (RICHTING_SLUGS as readonly string[]).includes(slug);
 }
 
-export async function getDienstBySlug(slug: string): Promise<DienstDetail | null> {
-  if (isRichtingSlug(slug)) return null;
+export async function getRichtingBySlug(slug: string): Promise<DienstDetail | null> {
+  if (!isRichting(slug)) return null;
   const rows = await getPublishedContent("diensten");
   const row = rows.find((x) => x.slug === slug);
   if (row) return mapRow(row);
-  return DIENSTEN[slug] ?? null; // lib-fallback (ook als CMS andere rijen bevat)
+  return DIENSTEN[slug] ?? null; // lib-fallback, ook als het CMS andere rijen bevat
 }
 
-export async function getDienstSlugs(): Promise<string[]> {
-  const rows = await getPublishedContent("diensten");
-  return [...new Set<string>([...DIENST_SLUGS, ...rows.map((r) => r.slug)])].filter(
-    (s) => !isRichtingSlug(s),
-  );
+export async function getRichtingSlugs(): Promise<string[]> {
+  return [...RICHTING_SLUGS];
 }

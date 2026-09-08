@@ -9,8 +9,8 @@ export default async function DienstenAdminPage() {
     <AdminContentList
       type="diensten"
       crumb="Content"
-      titel="Diensten"
-      sub="Mendix, AI en strategie."
+      titel="Richtingen"
+      sub="Mendix, AI en Strategie — de hub-pagina's waaronder de diensten hangen."
       rows={rows}
     />
   );

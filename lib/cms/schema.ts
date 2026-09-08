@@ -421,6 +421,15 @@ export const FIELD_SCHEMAS: Record<ContentType, FieldDef[]> = {
       ],
     },
     { key: "ctaTitle", label: "Slot-CTA — titel", type: "text" },
+    {
+      key: "sectoren",
+      label: "Sectorkoppeling — sector-slugs",
+      type: "list",
+      help: "Bv. 'publieke-sector'. Leeg = de sectie is verborgen.",
+    },
+    { key: "welNietTitel", label: "Wanneer wel/niet — titel", type: "text" },
+    { key: "welWanneer", label: "Wanneer wel", type: "list" },
+    { key: "nietWanneer", label: "Wanneer niet", type: "list" },
   ],
   sectoren: [
     { key: "naam", label: "Naam", type: "text" },
@@ -629,13 +638,70 @@ export const FIELD_SCHEMAS: Record<ContentType, FieldDef[]> = {
       options: ["datum", "kennismaking"],
       panel: "side",
     },
+
+    // Diepte-inhoud voor de eigen pagina onder /diensten/<slug>. Alles optioneel:
+    // een lege sectie wordt niet gerenderd.
     {
-      key: "detailSlug",
-      label: "Koppeling — eigen landingspagina",
-      type: "text",
-      help: "Slug onder /diensten/[slug]. Leeg = geen eigen pagina.",
-      panel: "side",
+      key: "kpis",
+      label: "Pagina — KPI's in de hero",
+      type: "items",
+      itemLabel: "KPI",
+      of: [
+        { key: "n", label: "Cijfer", type: "text" },
+        { key: "l", label: "Toelichting", type: "text" },
+      ],
     },
+    {
+      key: "vraagstukken",
+      label: "Pagina — vraagstukken",
+      type: "items",
+      itemLabel: "Vraagstuk",
+      of: [
+        { key: "q", label: "Label", type: "text" },
+        { key: "titel", label: "Titel", type: "text" },
+        { key: "p", label: "Tekst", type: "textarea" },
+      ],
+    },
+    {
+      key: "aanpak",
+      label: "Pagina — aanpak (rijen met beeld)",
+      type: "items",
+      itemLabel: "Rij",
+      of: [
+        { key: "kicker", label: "Kicker", type: "text" },
+        { key: "titel", label: "Titel", type: "text" },
+        { key: "p", label: "Tekst", type: "textarea" },
+        { key: "punten", label: "Punten", type: "list" },
+        { key: "img", label: "Afbeelding", type: "image" },
+      ],
+    },
+    {
+      key: "waarom",
+      label: "Pagina — waarom wij",
+      type: "items",
+      itemLabel: "Reden",
+      of: [
+        { key: "titel", label: "Titel", type: "text" },
+        { key: "p", label: "Tekst", type: "textarea" },
+      ],
+    },
+    {
+      key: "outcomes",
+      label: "Pagina — resultaten",
+      type: "items",
+      itemLabel: "Resultaat",
+      of: [
+        { key: "n", label: "Cijfer", type: "text" },
+        { key: "l", label: "Toelichting", type: "text" },
+      ],
+    },
+    { key: "caseTitle", label: "Pagina — klantverhaal: titel", type: "text" },
+    { key: "caseSector", label: "Pagina — klantverhaal: sector", type: "text" },
+    { key: "caseQuote", label: "Pagina — klantverhaal: quote", type: "textarea" },
+    { key: "caseNaam", label: "Pagina — klantverhaal: naam", type: "text" },
+    { key: "caseRol", label: "Pagina — klantverhaal: rol", type: "text" },
+    { key: "caseImage", label: "Pagina — klantverhaal: afbeelding", type: "image" },
+    { key: "caseHref", label: "Pagina — klantverhaal: link", type: "text" },
   ],
 };
 

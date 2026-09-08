@@ -1,11 +1,13 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 /**
- * De routing-guard: /diensten/mendix, /ai en /strategie zijn sinds de
- * dienstencatalogus lichte hub-pagina's met hun eigen routebestand. De
- * dynamische route [slug] mag die paden daarom niet nóg eens aanleveren — ook
- * niet als er in cms_diensten nog oude rijen voor die slugs staan. Zonder deze
- * filter prerendert Next hetzelfde pad twee keer.
+ * Het contenttype `diensten` beschrijft de drie richtingen (mendix/ai/strategie)
+ * die elk een eigen statische hub-pagina hebben. De negen boekbare diensten
+ * staan in `services` en hebben hun eigen pagina onder /diensten/<dienst>.
+ *
+ * Deze test bewaakt dat de datalaag alléén de drie richtingen bedient: rijen die
+ * nog uit het vorige ontwerp stammen (toen dit type de dienstdetailpagina's
+ * voedde) mogen niet meer renderen.
  */
 
 const { state, getPublishedContent } = vi.hoisted(() => {
@@ -15,8 +17,8 @@ const { state, getPublishedContent } = vi.hoisted(() => {
 
 vi.mock("@/lib/cms/content", () => ({ getPublishedContent }));
 
-const { getDienstBySlug, getDienstSlugs } = await import("@/lib/diensten-detail-data");
-const { DIENST_SLUGS, RICHTING_SLUGS } = await import("@/lib/diensten-detail");
+const { getRichtingBySlug, getRichtingSlugs } = await import("@/lib/diensten-detail-data");
+const { RICHTING_SLUGS } = await import("@/lib/diensten-detail");
 
 function rij(slug: string, data: Record<string, unknown> = {}) {
   return {
@@ -36,53 +38,40 @@ beforeEach(() => {
   getPublishedContent.mockClear();
 });
 
-describe("getDienstSlugs", () => {
-  it("geeft de drie dienstdetailpagina's uit de seed", async () => {
-    expect((await getDienstSlugs()).sort()).toEqual([...DIENST_SLUGS].sort());
+describe("getRichtingSlugs", () => {
+  it("geeft precies de drie richtingen", async () => {
+    expect((await getRichtingSlugs()).sort()).toEqual([...RICHTING_SLUGS].sort());
   });
 
-  it("filtert de richting-slugs, ook als het CMS ze nog bevat", async () => {
-    state.rows = RICHTING_SLUGS.map((s) => rij(s));
-    const slugs = await getDienstSlugs();
-    for (const richting of RICHTING_SLUGS) {
-      expect(slugs).not.toContain(richting);
-    }
-  });
-
-  it("neemt een nieuwe CMS-slug wel mee", async () => {
-    state.rows = [rij("nieuwe-dienst")];
-    expect(await getDienstSlugs()).toContain("nieuwe-dienst");
+  it("blijft bij die drie, ook als het CMS andere rijen bevat", async () => {
+    state.rows = [rij("it-strategie"), rij("foundation-starterkit")];
+    expect(await getRichtingSlugs()).toEqual([...RICHTING_SLUGS]);
   });
 });
 
-describe("getDienstBySlug", () => {
-  it("geeft null voor een richting-slug, zodat [slug] die nooit rendert", async () => {
-    for (const richting of RICHTING_SLUGS) {
-      expect(await getDienstBySlug(richting)).toBeNull();
-      state.rows = [rij(richting, { h1: "Oude CMS-inhoud" })];
-      expect(await getDienstBySlug(richting)).toBeNull();
-      state.rows = [];
-    }
+describe("getRichtingBySlug", () => {
+  it("geeft de seed-content van een richting", async () => {
+    const r = await getRichtingBySlug("mendix");
+    expect(r?.naam).toBe("Mendix");
+    expect(r?.vraagstukken.length).toBeGreaterThan(0);
+    expect(r?.pijlers.length).toBeGreaterThan(0);
   });
 
-  it("geeft de seed-content voor een dienstdetailpagina", async () => {
-    const d = await getDienstBySlug("it-strategie");
-    expect(d?.naam).toBe("IT-strategie op low-code en AI");
-    expect(d?.serviceSlug).toBe("it-strategie");
-    expect(d?.heroTheme).toBe("strategie");
-    expect(d?.waarborg).toBeTruthy();
-  });
-
-  it("laat een CMS-rij over de seed heen winnen, per veld", async () => {
-    state.rows = [rij("it-strategie", { h1: "Nieuwe kop" })];
-    const d = await getDienstBySlug("it-strategie");
-    expect(d?.h1).toBe("Nieuwe kop");
+  it("laat een CMS-rij per veld over de seed heen winnen", async () => {
+    state.rows = [rij("mendix", { h1: "Nieuwe kop" })];
+    const r = await getRichtingBySlug("mendix");
+    expect(r?.h1).toBe("Nieuwe kop");
     // Niet aangeraakte velden blijven uit de seed komen.
-    expect(d?.vraagstukken.length).toBeGreaterThan(0);
-    expect(d?.serviceSlug).toBe("it-strategie");
+    expect(r?.vraagstukken.length).toBeGreaterThan(0);
+  });
+
+  it("geeft null voor een dienst-slug: die heeft een eigen pagina uit de catalogus", async () => {
+    expect(await getRichtingBySlug("it-strategie")).toBeNull();
+    state.rows = [rij("it-strategie", { h1: "Oude CMS-inhoud" })];
+    expect(await getRichtingBySlug("it-strategie")).toBeNull();
   });
 
   it("geeft null voor een onbekende slug", async () => {
-    expect(await getDienstBySlug("bestaat-niet")).toBeNull();
+    expect(await getRichtingBySlug("bestaat-niet")).toBeNull();
   });
 });

@@ -46,3 +46,10 @@ export async function getSectorSlugs(): Promise<string[]> {
   const rows = await getPublishedContent("sectoren");
   return [...new Set<string>([...SECTOR_SLUGS, ...rows.map((r) => r.slug)])];
 }
+
+/** Alle sectoren; gebruikt door de sectorkoppeling op de richting-hubs, die
+ *  alleen slugs opslaat en de namen hier ophaalt. */
+export async function getSectoren(): Promise<SectorDetail[]> {
+  const rows = await getPublishedContent("sectoren");
+  return rows.length ? rows.map(mapRow) : Object.values(SECTOREN);
+}

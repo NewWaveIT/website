@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next";
 import { getArtikelen } from "@/lib/inzichten-data";
 import { getKlantverhalen } from "@/lib/klantverhalen-data";
 import { getVacatures } from "@/lib/vacatures-data";
-import { getDienstSlugs } from "@/lib/diensten-detail-data";
+import { getServices } from "@/lib/services-data";
 import { getSectorSlugs } from "@/lib/sectoren-detail-data";
 import { SITE_URL } from "@/lib/site";
 
@@ -36,7 +36,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const [sectoren, diensten, vacatures, cases, artikelen] = await Promise.all([
     getSectorSlugs(),
-    getDienstSlugs(),
+    getServices(),
     getVacatures(),
     getKlantverhalen(),
     getArtikelen(),
@@ -59,7 +59,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   };
 
   push("/sectoren", sectoren, "monthly", 0.7);
-  push("/diensten", diensten, "monthly", 0.7);
+  push(
+    "/diensten",
+    diensten.map((d) => d.slug),
+    "monthly",
+    0.7,
+  );
   push(
     "/vacatures",
     vacatures.map((v) => v.slug),

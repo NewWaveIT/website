@@ -71,7 +71,6 @@ function mapRow(row: ContentRow): Service {
       d.ctaType === "kennismaking" || d.ctaType === "datum"
         ? d.ctaType
         : (base?.ctaType ?? "datum"),
-    detailSlug: d.detailSlug ? String(d.detailSlug) : base?.detailSlug,
     volgorde: Number(row.volgorde ?? base?.volgorde ?? 0),
   };
 }

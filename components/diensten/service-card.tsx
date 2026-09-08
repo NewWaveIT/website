@@ -78,11 +78,9 @@ export function ServiceCard({ service: s, toonFase = false, compact = false }: S
         <Link href={href} className="btn btn-primary btn-sm">
           {s.ctaLabel} <ArrowRight aria-hidden="true" />
         </Link>
-        {s.detailSlug && (
-          <Link href={`/diensten/${s.detailSlug}`} className="svc-meer">
-            Meer over deze dienst <ArrowRight aria-hidden="true" />
-          </Link>
-        )}
+        <Link href={`/diensten/${s.slug}`} className="svc-meer">
+          Meer over deze dienst <ArrowRight aria-hidden="true" />
+        </Link>
       </div>
     </div>
   );
