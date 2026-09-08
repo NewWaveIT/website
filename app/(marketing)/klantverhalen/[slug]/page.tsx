@@ -148,7 +148,7 @@ export default async function CasePage({ params }: { params: Promise<{ slug: str
                     <div className="resultaat-kaarten">
                       {sec.resultaten.map((r, j) => (
                         <div className="resultaat-kaart" key={j}>
-                          <h4>{r.titel}</h4>
+                          {r.titel && <h4>{r.titel}</h4>}
                           <p>{r.tekst}</p>
                         </div>
                       ))}
@@ -164,7 +164,7 @@ export default async function CasePage({ params }: { params: Promise<{ slug: str
               <div className="resultaat-kaarten resultaat-kaarten--eind">
                 {k.eindresultaten.map((r, i) => (
                   <div className="resultaat-kaart" key={i}>
-                    <h4>{r.titel}</h4>
+                    {r.titel && <h4>{r.titel}</h4>}
                     <p>{r.tekst}</p>
                   </div>
                 ))}
