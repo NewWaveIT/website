@@ -12,6 +12,7 @@ import { revalidateContent } from "@/lib/cms/revalidate";
 import { buildSeed } from "@/lib/cms/seed-data";
 import { CONTENT_SCHEMAS } from "@/lib/cms/schemas";
 import { GEMAPTE_TYPES, rijNaarRuw } from "@/lib/cms/rij";
+import { RICHTING_SLUGS } from "@/lib/diensten-detail";
 import { leesRij, type VeldFout } from "@/lib/cms/merge";
 import { logAudit } from "@/lib/cms/audit";
 
@@ -271,19 +272,28 @@ export interface ControleRij {
   slug: string;
   titel: string;
   status: string;
+  /** Velden die niet meer bij de code passen. */
   fouten: VeldFout[];
+  /** De routing kan deze rij nooit renderen. */
+  onbereikbaar?: string;
+  /** Geen tegenhanger in de code: zelf aangemaakt, dus geen vangnet bij een modelwijziging. */
+  eigen?: boolean;
 }
 
 export interface ControleResultaat {
   type: string;
   rijen: number;
-  metFouten: ControleRij[];
+  live: number;
+  concept: number;
+  /** Alleen de rijen die aandacht vragen. */
+  aandacht: ControleRij[];
 }
 
 /**
- * Nulmeting vóór de datalaag streng wordt: haalt élke rij (live én concept)
- * door het runtime-schema en rapporteert welke velden zouden terugvallen op de
- * standaardcontent. Verandert niets — puur diagnose.
+ * Inventarisatie van de CMS-inhoud tegenover wat de site werkelijk gebruikt.
+ * Verandert niets — puur diagnose. Rapporteert per rij drie soorten aandacht:
+ * velden die niet meer bij de code passen, rijen die de routing nooit rendert,
+ * en rijen zonder tegenhanger in de code (die hebben geen vangnet).
  */
 export async function controleerContent(): Promise<{
   resultaten: ControleResultaat[];
@@ -291,25 +301,48 @@ export async function controleerContent(): Promise<{
 }> {
   await requireAdmin();
   const resultaten: ControleResultaat[] = [];
+  const seedAlles = buildSeed();
 
   for (const type of GEMAPTE_TYPES) {
     const rows = await listContent(type);
-    const seeds = buildSeed()[type];
-    const metFouten: ControleRij[] = [];
+    const seeds = seedAlles[type];
+    const aandacht: ControleRij[] = [];
 
     for (const row of rows) {
-      const seed = seeds.find((s) => s.slug === row.slug);
+      const seed = seeds.find((x) => x.slug === row.slug);
       const ruw = rijNaarRuw(type, row);
       const { fouten } = leesRij(CONTENT_SCHEMAS[type], ruw, {
         ...(seed?.data ?? {}),
         slug: row.slug,
       });
-      if (fouten.length) {
-        metFouten.push({ slug: row.slug, titel: row.titel, status: row.status, fouten });
+
+      // De richting-slugs zijn sinds de dienstencatalogus lichte hub-pagina's;
+      // diensten-detail-data.ts filtert ze weg, dus deze rijen renderen nooit.
+      const onbereikbaar =
+        type === "diensten" && (RICHTING_SLUGS as readonly string[]).includes(row.slug)
+          ? "wordt door de routing weggefilterd (dit is nu een richting-hub)"
+          : undefined;
+
+      const eigen = !seed;
+      if (fouten.length || onbereikbaar || eigen) {
+        aandacht.push({
+          slug: row.slug,
+          titel: row.titel,
+          status: row.status,
+          fouten,
+          onbereikbaar,
+          eigen,
+        });
       }
     }
 
-    resultaten.push({ type, rijen: rows.length, metFouten });
+    resultaten.push({
+      type,
+      rijen: rows.length,
+      live: rows.filter((r) => r.status === "live").length,
+      concept: rows.filter((r) => r.status !== "live").length,
+      aandacht,
+    });
   }
 
   return { resultaten };

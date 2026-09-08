@@ -1,11 +1,15 @@
 "use client";
 
 import { useState } from "react";
-import { controleerContent, type ControleResultaat } from "@/app/admin/content/actions";
+import {
+  controleerContent,
+  type ControleResultaat,
+  type ControleRij,
+} from "@/app/admin/content/actions";
 
 /**
- * Diagnose: haalt elke CMS-rij door het runtime-schema en laat zien welke
- * velden niet meer bij de code passen. Verandert niets aan de content.
+ * Inventarisatie: wat staat er in het CMS tegenover wat de site gebruikt.
+ * Schrijft niets.
  */
 export function ControleButton() {
   const [busy, setBusy] = useState(false);
@@ -21,10 +25,11 @@ export function ControleButton() {
     else setResultaten(res.resultaten);
   }
 
-  const totaalFouten = resultaten?.reduce((n, r) => n + r.metFouten.length, 0) ?? 0;
+  const teZien = resultaten?.filter((r) => r.aandacht.length) ?? [];
+  const totaal = resultaten?.reduce((n, r) => n + r.rijen, 0) ?? 0;
 
   return (
-    <div>
+    <div style={{ maxWidth: 640 }}>
       <div style={{ display: "flex", alignItems: "center", gap: "var(--space-4)" }}>
         <button type="button" className="btn btn-outline" onClick={run} disabled={busy}>
           {busy ? "Bezig…" : "Controleer content"}
@@ -32,36 +37,46 @@ export function ControleButton() {
         {fout && <span style={{ fontSize: "var(--text-sm)" }}>Fout: {fout}</span>}
         {resultaten && !fout && (
           <span style={{ fontSize: "var(--text-sm)", color: "var(--text-muted)" }}>
-            {totaalFouten === 0
-              ? "Alle rijen passen bij de code."
-              : `${totaalFouten} rij(en) met velden die niet meer passen.`}
+            {totaal} rijen · {teZien.length === 0 ? "niets bijzonders" : "zie hieronder"}
           </span>
         )}
       </div>
 
-      {resultaten && totaalFouten > 0 && (
-        <ul style={{ margin: "var(--space-4) 0 0", paddingLeft: "1.1em" }}>
-          {resultaten
-            .filter((r) => r.metFouten.length)
-            .map((r) => (
-              <li key={r.type} style={{ marginBottom: "var(--space-3)" }}>
-                <strong>{r.type}</strong>{" "}
-                <span style={{ color: "var(--text-muted)" }}>
-                  ({r.metFouten.length} van {r.rijen})
-                </span>
-                <ul style={{ paddingLeft: "1.1em" }}>
-                  {r.metFouten.map((rij) => (
-                    <li key={rij.slug} style={{ fontSize: "var(--text-sm)" }}>
-                      <code>{rij.slug}</code>
-                      {rij.status !== "live" && " (concept)"} —{" "}
-                      {rij.fouten.map((f) => f.veld).join(", ")}
-                    </li>
-                  ))}
-                </ul>
-              </li>
-            ))}
-        </ul>
+      {teZien.length > 0 && (
+        <div style={{ marginTop: "var(--space-4)", fontSize: "var(--text-sm)" }}>
+          {teZien.map((r) => (
+            <div key={r.type} style={{ marginBottom: "var(--space-4)" }}>
+              <strong>{r.type}</strong>{" "}
+              <span style={{ color: "var(--text-muted)" }}>
+                — {r.rijen} rijen ({r.live} live, {r.concept} concept)
+              </span>
+              <ul style={{ margin: "6px 0 0", paddingLeft: "1.1em" }}>
+                {r.aandacht.map((rij) => (
+                  <li key={rij.slug} style={{ marginBottom: 4 }}>
+                    <Regel rij={rij} />
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
       )}
     </div>
+  );
+}
+
+function Regel({ rij }: { rij: ControleRij }) {
+  const labels: string[] = [];
+  if (rij.onbereikbaar) labels.push(rij.onbereikbaar);
+  if (rij.eigen) labels.push("geen tegenhanger in de code");
+  if (rij.fouten.length) {
+    labels.push(`velden die niet passen: ${rij.fouten.map((f) => f.veld).join(", ")}`);
+  }
+  return (
+    <>
+      <code>{rij.slug}</code>
+      {rij.status !== "live" && <span style={{ color: "var(--text-subtle)" }}> · concept</span>}
+      <span style={{ color: "var(--text-muted)" }}> — {labels.join("; ")}</span>
+    </>
   );
 }
