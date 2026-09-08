@@ -2,7 +2,7 @@ import "server-only";
 
 import { createClient } from "@/lib/supabase/server";
 
-export type AuditActie = "aangemaakt" | "bijgewerkt" | "verwijderd";
+export type AuditActie = "aangemaakt" | "bijgewerkt" | "verwijderd" | "gesynchroniseerd";
 
 export interface AuditRow {
   id: string;

@@ -1,6 +1,7 @@
 "use server";
 
 import sharp from "sharp";
+import type { z } from "zod";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { requireAdmin } from "@/lib/dal";
@@ -11,7 +12,7 @@ import { PAGE_FIELDS } from "@/lib/cms/pages";
 import { revalidateContent } from "@/lib/cms/revalidate";
 import { buildSeed } from "@/lib/cms/seed-data";
 import { CONTENT_SCHEMAS } from "@/lib/cms/schemas";
-import { GEMAPTE_TYPES, rijNaarRuw } from "@/lib/cms/rij";
+import { GEMAPTE_TYPES, isKolomveld, rijNaarRuw } from "@/lib/cms/rij";
 import { RICHTING_SLUGS } from "@/lib/diensten-detail";
 import { leesRij, type VeldFout } from "@/lib/cms/merge";
 import { logAudit } from "@/lib/cms/audit";
@@ -343,6 +344,99 @@ export async function controleerContent(): Promise<{
       concept: rows.filter((r) => r.status !== "live").length,
       aandacht,
     });
+  }
+
+  return { resultaten };
+}
+
+export interface SyncRij {
+  slug: string;
+  aangevuld: string[];
+  hersteld: string[];
+}
+
+export interface SyncResultaat {
+  type: string;
+  rijen: SyncRij[];
+}
+
+/**
+ * Brengt bestaande CMS-rijen op de huidige vorm.
+ *
+ * `seedContent()` slaat bestaande slugs over, waardoor een rij voor eeuwig de
+ * vorm houdt van het moment waarop hij is aangemaakt — de eigenlijke oorzaak
+ * van content die leeg rendert na een modelwijziging. Deze actie vult per veld
+ * aan in plaats van de rij te overschrijven, zodat redactiewerk nooit sneuvelt:
+ *
+ * - veld ontbreekt        → aanvullen uit de standaardcontent
+ * - veld aanwezig, geldig → laten staan, de redactie wint altijd
+ * - veld aanwezig, ongeldig (oude vorm) → vervangen door de standaardwaarde
+ *
+ * Rijen zonder tegenhanger in de code blijven volledig ongemoeid.
+ */
+export async function synchroniseerContent(): Promise<{
+  resultaten: SyncResultaat[];
+  error?: string;
+}> {
+  const user = await requireAdmin();
+  const supabase = await createClient();
+  const seedAlles = buildSeed();
+  const resultaten: SyncResultaat[] = [];
+
+  for (const type of GEMAPTE_TYPES) {
+    const rows = await listContent(type);
+    const seeds = seedAlles[type];
+    const schema = CONTENT_SCHEMAS[type];
+    const gewijzigd: SyncRij[] = [];
+
+    for (const row of rows) {
+      const seed = seeds.find((x) => x.slug === row.slug);
+      if (!seed) continue; // zelf aangemaakt: geen standaard om op terug te vallen
+
+      const huidig = (row.data ?? {}) as Record<string, unknown>;
+      const ruw = rijNaarRuw(type, row);
+      const nieuw = { ...huidig };
+      const aangevuld: string[] = [];
+      const hersteld: string[] = [];
+
+      for (const [veld, veldSchema] of Object.entries(schema.shape)) {
+        if (isKolomveld(type, veld)) continue;
+
+        const standaard = (seed.data as Record<string, unknown>)[veld];
+        if (standaard === undefined) continue;
+        if ((veldSchema as z.ZodType).safeParse(standaard).success === false) continue;
+
+        if (!(veld in huidig)) {
+          nieuw[veld] = standaard;
+          aangevuld.push(veld);
+        } else if ((veldSchema as z.ZodType).safeParse(ruw[veld]).success === false) {
+          nieuw[veld] = standaard;
+          hersteld.push(veld);
+        }
+      }
+
+      if (!aangevuld.length && !hersteld.length) continue;
+
+      const { error } = await supabase
+        .from(CONTENT_TABLE[type])
+        .update({ data: nieuw })
+        .eq("id", row.id);
+      if (error) return { resultaten, error: `${type}/${row.slug}: ${error.message}` };
+
+      await logAudit({
+        gebruiker_email: user.email ?? null,
+        gebruiker_naam: gebruikerNaam(user),
+        actie: "gesynchroniseerd",
+        content_type: type,
+        slug: row.slug,
+        titel: row.titel,
+      });
+
+      gewijzigd.push({ slug: row.slug, aangevuld, hersteld });
+      revalidateContent(type, row.slug);
+    }
+
+    if (gewijzigd.length) resultaten.push({ type, rijen: gewijzigd });
   }
 
   return { resultaten };

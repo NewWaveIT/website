@@ -26,6 +26,7 @@ const ACTIE_CLASS: Record<AuditActie, string> = {
   aangemaakt: "live",
   bijgewerkt: "concept",
   verwijderd: "nieuw",
+  gesynchroniseerd: "concept",
 };
 
 function fmt(iso: string): string {

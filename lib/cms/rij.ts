@@ -43,6 +43,25 @@ const BOUWERS: Record<GemapteType, Bouwer> = {
   proposities: (row) => ({ ...(row.data as object), slug: row.slug, titel: row.titel }),
 };
 
+/**
+ * Velden die uit een kolom komen en dus nooit in `data` thuishoren. Zonder deze
+ * lijst zou synchronisatie ze als "ontbrekend veld" in de JSON schrijven en
+ * ontstaat er een tweede, stille bron van waarheid naast de kolom.
+ */
+const KOLOMVELDEN: Record<GemapteType, string[]> = {
+  cases: ["slug"],
+  diensten: ["slug"],
+  sectoren: ["slug"],
+  services: ["slug", "volgorde"],
+  vacatures: ["slug"],
+  teamleden: ["slug", "naam"],
+  proposities: ["slug", "titel"],
+};
+
+export function isKolomveld(type: GemapteType, veld: string): boolean {
+  return KOLOMVELDEN[type].includes(veld);
+}
+
 export const GEMAPTE_TYPES = Object.keys(BOUWERS) as GemapteType[];
 
 export function isGemapteType(t: string): t is GemapteType {
