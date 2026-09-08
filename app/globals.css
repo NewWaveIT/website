@@ -667,11 +667,11 @@ footer.site-footer {
 .cta .cta-tel {
   color: var(--white);
   font-weight: var(--fw-semibold);
-  opacity: 0.9;
+  /* Geen opacity: wit op flame is de bewuste brandkeuze, maar 90% wit maakt het
+     contrast onnodig nog lager (2,7:1 i.p.v. 3,1:1). */
   white-space: nowrap;
 }
 .cta .cta-tel:hover {
-  opacity: 1;
   text-decoration: underline;
 }
 

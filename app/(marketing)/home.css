@@ -273,21 +273,33 @@
 }
 .fcase-dots {
   display: flex;
-  gap: 8px;
+  gap: 2px;
 }
+/* Het klikvlak is 24x24 (WCAG 2.5.8); de stip zelf blijft visueel 9px via het
+   ::before-element, zodat het ontwerp niet verandert. */
 .fcase-dots button {
+  width: 24px;
+  height: 24px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  cursor: pointer;
+}
+.fcase-dots button::before {
+  content: "";
   width: 9px;
   height: 9px;
   border-radius: 50%;
-  border: 0;
-  padding: 0;
-  background: var(--ink-200);
-  cursor: pointer;
+  /* --ink-200 haalde maar 1,25:1 tegen eggshell. */
+  background: var(--border-strong);
   transition:
     background 140ms ease,
     transform 140ms ease;
 }
-.fcase-dots button.on {
+.fcase-dots button.on::before {
   background: var(--color-primary);
   transform: scale(1.25);
 }
