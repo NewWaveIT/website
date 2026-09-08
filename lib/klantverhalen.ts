@@ -75,7 +75,7 @@ export const KLANTVERHALEN: Klantverhaal[] = [
       { n: "30 min", l: "Sneller per voertuig on-boarding" },
       { n: "2 mnd", l: "Van scratch naar werkende applicatie" },
       { n: "2", l: "Mendix-apps, dagelijks in gebruik" },
-      { n: "100%", l: "Auditproof met volledige logging" },
+      { n: "Auditproof", l: "Met volledige logging" },
     ],
     challenge:
       "Moove had een bestaand Mendix-platform. De uitdaging was niet het platform zelf, maar de ontbrekende schakels: een betrouwbare verwerking van voertuiginstallaties en een moderne manier om handmatige ritregistratie te vervangen. Installaties van voertuigen werden verwerkt via meerdere losse systemen — foutgevoelig, arbeidsintensief en moeilijk te auditen. Tegelijk deden chauffeurs ritregistratie zoals dat twintig jaar geleden ook ging: handmatig in een notitieboekje of via generieke tools. GPS maakt dat notitieboekje overbodig: Geotab registreert elke rit automatisch. Maar de stap van rijdata naar een compliant rittenrapport dat een chauffeur zelf beheert, ontbrak nog — en daarvoor moesten installaties eerst correct en gestandaardiseerd verwerkt zijn in MyGeotab.",

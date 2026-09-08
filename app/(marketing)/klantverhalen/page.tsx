@@ -40,9 +40,9 @@ const SECTORBELOFTES: {
     icon: "building-2",
     belofte: "Digitale dienstverlening die burgers vertrouwen.",
     kpis: [
-      { n: "-40%", l: "Doorlooptijd aanvragen" },
-      { n: "8×", l: "Sneller live dan geraamd" },
-      { n: "100%", l: "Auditproof & AVG-compliant" },
+      { n: "Korter", l: "Doorlooptijd van aanvragen" },
+      { n: "Sneller", l: "Live dan met traditionele bouw" },
+      { n: "Auditproof", l: "En AVG-compliant opgeleverd" },
     ],
   },
   {
@@ -73,7 +73,7 @@ const SECTORBELOFTES: {
     icon: "heart-pulse",
     belofte: "Meer tijd voor de patiënt, minder registratielast.",
     kpis: [
-      { n: "-40%", l: "Minder registratielast" },
+      { n: "Minder", l: "Registratielast" },
       { n: "6–10×", l: "Sneller live met low-code" },
       { n: "100%", l: "Veilig en gekoppeld aan je EPD" },
     ],

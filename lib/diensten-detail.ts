@@ -223,7 +223,7 @@ export const DIENSTEN: Record<string, DienstDetail> = {
     partners: ["Mendix", "Siemens", "Microsoft Azure", "AWS"],
     outcomes: [
       { n: "6–10×", l: "Snellere oplevering" },
-      { n: "-60%", l: "Lagere ontwikkelkosten" },
+      { n: "Lager", l: "Ontwikkelkosten dan traditionele bouw" },
       { n: "100%", l: "Gebouwd binnen je kaders" },
       { n: "1", l: "Team van business tot bouw" },
     ],
@@ -250,7 +250,7 @@ export const DIENSTEN: Record<string, DienstDetail> = {
       "Strategische inzet van AI binnen je bestaande IT-landschap. Geen hype, wél oplossingen die processen aantoonbaar verbeteren, uitlegbaar zijn en de mens centraal stellen.",
     ctaSecondary: "Doe de AI-scan",
     kpis: [
-      { n: "-40%", l: "Minder repetitief werk" },
+      { n: "Minder", l: "Repetitief werk" },
       { n: "6 weken", l: "Doorgaans tot werkend proces" },
       { n: "100%", l: "Uitlegbaar en controleerbaar" },
     ],
@@ -385,8 +385,8 @@ export const DIENSTEN: Record<string, DienstDetail> = {
     ],
     partners: ["Mendix", "Microsoft Azure", "OpenAI", "Databricks"],
     outcomes: [
-      { n: "-40%", l: "Minder repetitief werk" },
-      { n: "+3×", l: "Snellere verwerking van aanvragen" },
+      { n: "Minder", l: "Repetitief werk" },
+      { n: "Sneller", l: "Verwerking van aanvragen" },
       { n: "100%", l: "Uitlegbare besluiten" },
       { n: "0", l: "Black boxes in productie" },
     ],

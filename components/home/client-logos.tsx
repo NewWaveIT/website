@@ -28,6 +28,7 @@ export const CLIENTS: Client[] = [
   // Moove is opgegaan in Netradyne (zelfde logo) — voorlopig wordmark.
   { naam: "Moove Connected Mobility" }, // moove.svg
   { naam: "De Derde Linden Groep" }, // derde-linden-groep.svg
+  { naam: "De Pizzabakkers" }, // pizzabakkers.svg
 ];
 
 export { AWARD } from "@/lib/award";

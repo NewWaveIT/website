@@ -1,4 +1,12 @@
-/** Vacatures voor /werken-bij en /vacatures/[slug]. */
+/**
+ * Vacatures voor /werken-bij en /vacatures/[slug].
+ *
+ * De teksten komen letterlijk uit de vacature-PDF's op thenewwaveit.com/join-us/
+ * (Medior en Senior Mendix consultant, 2025). Niet aanvullen met verzonnen
+ * arbeidsvoorwaarden of salarisbedragen: wat hier staat is een toezegging aan
+ * een sollicitant. De open sollicitatie is geen vacature maar het formulier
+ * onderaan /werken-bij.
+ */
 
 export interface VacatureSectie {
   titel: string;
@@ -18,151 +26,112 @@ export interface Vacature {
   gepubliceerdOp: string;
 }
 
+/** Gedeelde blokken: beide vacatures hebben in de PDF identieke tekst. */
+const ROL_ITEMS = [
+  "Het uitbouwen van AI-capabilities in Mendix-omgevingen",
+  "Het bouwen van klantrelaties door intensieve partnerships te ontwikkelen",
+  "Coaching van junior en medior collega's",
+  "Het leveren van strategisch advies aan klanten en hen meenemen in digitale transformaties",
+  "Het ontwikkelen van innovatieve oplossingen die onze partners helpen groeien",
+];
+
+const PROFIEL_STAART = [
+  "Advanced of Expert Mendix-certificering",
+  "Kennis van of affiniteit met AI",
+  "HBO- of WO-werk- en denkniveau",
+  "Ervaring met Scrum/Agile werken",
+  "Enthousiast om onze kernwaarden (Idealistisch, Jij op 1, Synergie, Transparantie, Groei & Vooruitgang) uit te dragen",
+  "Initiatiefrijk en gemotiveerd om zowel de organisatie als jezelf continu te verbeteren",
+];
+
+const PROCES = [
+  "Een eerste gesprek waarin we jouw ambitie en ervaring bespreken",
+  "Een technisch assessment/gesprek",
+  "Een gesprek voor culturele fit",
+  "Een voorstel dat past bij jouw wensen",
+];
+
+const INTRO =
+  "Als Mendix Consultant ontwerp en implementeer jij slimme IT-oplossingen die bedrijven helpen hun grootste uitdagingen aan te gaan. Bij ons krijg je de vrijheid om jouw expertise en ambitie te combineren met onze visie op strategische IT-partnerships. Van het ontwikkelen van AI-capabilities tot het leiden van projecten bij klanten: jouw bijdrage is essentieel voor ons gezamenlijke succes.";
+
+function aanbod(salarisregel: string): string[] {
+  return [
+    salarisregel,
+    "Een jaarcontract met uitzicht op een vast dienstverband",
+    "Onbeperkt vakantiedagen",
+    "Jouw persoonlijke groeipad en opleidingen op maat",
+    "Uitdagende projecten bij toonaangevende klanten",
+    "Mobiliteitsopties zoals een OV-chipkaart",
+    "Een pensioenregeling",
+    "Een organisatie waar jij écht invloed hebt op strategie en richting",
+    "Een mensgerichte ervaring waarin jouw welzijn en groei centraal staan",
+    "Een innovatieve omgeving waar jouw creativiteit en ondernemerschap wordt gestimuleerd",
+  ];
+}
+
 export const VACATURES: Vacature[] = [
   {
-    slug: "lead-mendix-consultant",
-    functietitel: "Lead Mendix Consultant",
-    discipline: "Mendix · Senior",
+    slug: "medior-mendix-consultant",
+    functietitel: "Medior Mendix Consultant",
+    discipline: "Mendix · Medior",
     locatie: "Utrecht / hybride",
-    tags: ["Mendix", "Senior", "Utrecht / hybride", "32–40 uur"],
-    intro:
-      "Jij bouwt niet alleen applicaties, je bouwt vertrouwen. Als lead ben je het technisch geweten van je team én de sparringpartner van de klant, in sectoren waar jouw werk er echt toe doet.",
+    tags: ["Mendix", "Medior", "Utrecht / hybride"],
+    intro: INTRO,
     secties: [
+      { titel: "Waarom begin jij met enthousiasme je werkdag?", items: ROL_ITEMS },
       {
-        titel: "Wat ga je doen?",
+        titel: "Wie ben jij?",
         items: [
-          "Technisch leiderschap over één of twee opdrachtteams",
-          "Architectuurkeuzes en code reviews die het verschil maken",
-          "Sparringpartner van product owners en IT-management bij de klant",
-          "Bijdragen aan onze Mendix-practice: standaarden, templates, kennissessies",
+          "Minimaal 2,5 jaar ervaring als Mendix Consultant of een bewezen snelle leercurve",
+          ...PROFIEL_STAART,
         ],
       },
-      {
-        titel: "Wat breng je mee?",
-        items: [
-          "5+ jaar Mendix-ervaring, Expert-certificering of de ambitie die snel te halen",
-          "Ervaring met complexe integraties en enterprise-architectuur",
-          "Je coacht van nature en geeft (en vraagt) open feedback",
-          "Nederlands vloeiend, Engels professioneel",
-        ],
-      },
-      {
-        titel: "Wat bieden we?",
-        items: [
-          "Salaris tussen €5.500 en €7.000, transparant en gelijk bij gelijke ervaring",
-          "Zeggenschap: je beslist mee over strategie en investeringen",
-          "Persoonlijk groeipad, 360°-feedback en de jaarlijkse learning week",
-          "Elektrische auto van de zaak, hybride werken vanuit Utrecht",
-        ],
-      },
+      { titel: "Wat bieden wij jou?", items: aanbod("Een uitstekend salaris") },
+      { titel: "Het sollicitatieproces", items: PROCES },
     ],
     facts: {
       team: "Mendix",
-      niveau: "Senior / Lead",
-      locatie: "Utrecht / hybride",
-      uren: "32–40 per week",
-      salaris: "€5.500–€7.000",
-    },
-    employmentType: "FULL_TIME",
-    gepubliceerdOp: "2026-05-01",
-  },
-  {
-    slug: "ai-engineer",
-    functietitel: "AI Engineer",
-    discipline: "AI · Medior",
-    locatie: "Utrecht / hybride",
-    tags: ["AI", "Medior", "Utrecht / hybride", "32–40 uur"],
-    intro:
-      "Jij brengt AI van experiment naar geborgd proces. Verantwoord, uitlegbaar en met de professional aan het stuur, in sectoren waar betrouwbaarheid telt.",
-    secties: [
-      {
-        titel: "Wat ga je doen?",
-        items: [
-          "Werkende AI-pilots bouwen in de omgeving van onze partners",
-          "Documentintelligentie, generatieve AI en besluitondersteuning realiseren",
-          "AI integreren met Mendix-applicaties en bestaande datalandschappen",
-          "Meebouwen aan onze AI-practice: patronen, governance en kennisdeling",
-        ],
-      },
-      {
-        titel: "Wat breng je mee?",
-        items: [
-          "3+ jaar ervaring met machine learning of applied AI",
-          "Sterk in Python en het geborgd naar productie brengen van modellen",
-          "Oog voor uitlegbaarheid, AVG en de AI Act",
-          "Nederlands vloeiend, Engels professioneel",
-        ],
-      },
-      {
-        titel: "Wat bieden we?",
-        items: [
-          "Salaris tussen €4.500 en €6.000, transparant en gelijk bij gelijke ervaring",
-          "Zeggenschap: je beslist mee over strategie en investeringen",
-          "Persoonlijk groeipad, 360°-feedback en de jaarlijkse learning week",
-          "Elektrische auto van de zaak, hybride werken vanuit Utrecht",
-        ],
-      },
-    ],
-    facts: {
-      team: "AI",
       niveau: "Medior",
       locatie: "Utrecht / hybride",
-      uren: "32–40 per week",
-      salaris: "€4.500–€6.000",
+      uren: "In overleg",
+      salaris: "Marktconform",
     },
     employmentType: "FULL_TIME",
-    gepubliceerdOp: "2026-05-01",
+    gepubliceerdOp: "2025-06-01",
   },
   {
-    slug: "business-consultant",
-    functietitel: "Business Consultant",
-    discipline: "Strategie · Medior/Senior",
+    slug: "senior-mendix-consultant",
+    functietitel: "Senior Mendix Consultant",
+    discipline: "Mendix · Senior",
     locatie: "Utrecht / hybride",
-    tags: ["Strategie", "Medior/Senior", "Utrecht / hybride", "32–40 uur"],
-    intro:
-      "Jij verbindt business en IT en blijft aan boord tot het werkt. Geen rapport voor in de la, maar mijlpalen die de operatie van onze partners meteen merkt.",
+    tags: ["Mendix", "Senior", "Utrecht / hybride"],
+    intro: INTRO,
     secties: [
+      { titel: "Waarom begin jij met enthousiasme je werkdag?", items: ROL_ITEMS },
       {
-        titel: "Wat ga je doen?",
+        titel: "Wie ben jij?",
         items: [
-          "Businessvraagstukken vertalen naar een gedragen digitale roadmap",
-          "Businesscases opstellen en initiatieven prioriteren met de klant",
-          "Transformaties begeleiden, met meetbare mijlpalen per kwartaal",
-          "Bruggen bouwen tussen directie, IT en de werkvloer",
+          "Minimaal 4 jaar ervaring als Mendix Consultant of een bewezen snelle leercurve",
+          ...PROFIEL_STAART,
         ],
       },
       {
-        titel: "Wat breng je mee?",
-        items: [
-          "4+ jaar ervaring in consulting, business analyse of digitale transformatie",
-          "Je schakelt moeiteloos tussen boardroom en werkvloer",
-          "Analytisch sterk, met gevoel voor verandermanagement",
-          "Nederlands vloeiend, Engels professioneel",
-        ],
+        titel: "Wat bieden wij jou?",
+        items: aanbod("Een uitstekend salaris met een aantrekkelijk bonuscomponent"),
       },
-      {
-        titel: "Wat bieden we?",
-        items: [
-          "Salaris tussen €4.500 en €6.500, transparant en gelijk bij gelijke ervaring",
-          "Zeggenschap: je beslist mee over strategie en investeringen",
-          "Persoonlijk groeipad, 360°-feedback en de jaarlijkse learning week",
-          "Elektrische auto van de zaak, hybride werken vanuit Utrecht",
-        ],
-      },
+      { titel: "Het sollicitatieproces", items: PROCES },
     ],
     facts: {
-      team: "Strategie",
-      niveau: "Medior / Senior",
+      team: "Mendix",
+      niveau: "Senior",
       locatie: "Utrecht / hybride",
-      uren: "32–40 per week",
-      salaris: "€4.500–€6.500",
+      uren: "In overleg",
+      salaris: "Marktconform, met bonuscomponent",
     },
     employmentType: "FULL_TIME",
-    gepubliceerdOp: "2026-05-01",
+    gepubliceerdOp: "2025-03-01",
   },
 ];
 
-export const VACATURE_MAP: Record<string, Vacature> = Object.fromEntries(
-  VACATURES.map((v) => [v.slug, v]),
-);
 export const VACATURE_SLUGS = VACATURES.map((v) => v.slug);
+export const VACATURE_MAP = Object.fromEntries(VACATURES.map((v) => [v.slug, v]));
