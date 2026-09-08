@@ -18,9 +18,58 @@ function impactList(v: unknown): KPI[] {
     .map((x) => ({ n: String(x.n ?? ""), l: String(x.l ?? "") }));
 }
 
-/** Structuurvelden (keten, secties, eindresultaten) komen uit de CMS-JSON of anders uit de seed. */
+/** Structuurvelden (keten, eindresultaten) komen uit de CMS-JSON of anders uit de seed. */
 function lijst<T>(v: unknown, fallback?: T[]): T[] | undefined {
   return Array.isArray(v) && v.length ? (v as T[]) : fallback;
+}
+
+const isObj = (v: unknown): v is Record<string, unknown> =>
+  !!v && typeof v === "object" && !Array.isArray(v);
+
+/**
+ * Resultaatkaarten uit het CMS. Rijen die vóór de verrijking zijn geseed hebben
+ * hier nog `string[]` staan; die leverden lege kaarten op omdat de component
+ * `titel`/`tekst` verwacht. Een losse string wordt daarom de tekst van de kaart.
+ */
+function kaarten(v: unknown): ResultaatKaart[] {
+  if (!Array.isArray(v)) return [];
+  return v
+    .map((x) =>
+      typeof x === "string"
+        ? { titel: "", tekst: x }
+        : isObj(x)
+          ? { titel: String(x.titel ?? ""), tekst: String(x.tekst ?? "") }
+          : { titel: "", tekst: "" },
+    )
+    .filter((k) => k.titel || k.tekst);
+}
+
+/**
+ * Secties per stuk samenvoegen in plaats van de hele array te vervangen.
+ *
+ * `seedContent()` slaat bestaande slugs over, dus een rij die vóór een
+ * modelwijziging is aangemaakt houdt de oude vorm. Nam je zo'n array dan in zijn
+ * geheel over, dan verdwenen de nieuwere velden (situatie, aanpak, rijke
+ * resultaatkaarten) en bleven er lege koppen staan. Per veld terugvallen op de
+ * seed-sectie — gematcht op titel, anders op positie — houdt de pagina heel.
+ */
+function secties(v: unknown, basis?: Sectie[]): Sectie[] | undefined {
+  if (!Array.isArray(v) || !v.length) return basis;
+  return v.map((raw, i) => {
+    const c = isObj(raw) ? raw : {};
+    const titel = String(c.titel ?? "");
+    const b = basis?.find((x) => x.titel === titel) ?? basis?.[i];
+    const cmsKaarten = kaarten(c.resultaten);
+    return {
+      titel: titel || b?.titel || "",
+      situatie: String(c.situatie ?? "") || b?.situatie || "",
+      // Oude rijen hebben één `tekst`-veld i.p.v. situatie/aanpak.
+      aanpak: String(c.aanpak ?? "") || b?.aanpak || String(c.tekst ?? ""),
+      stappen: lijst<Stap>(c.stappen, b?.stappen),
+      functionaliteiten: lijst<string>(c.functionaliteiten, b?.functionaliteiten),
+      resultaten: cmsKaarten.length ? cmsKaarten : (b?.resultaten ?? []),
+    };
+  });
 }
 
 /**
@@ -50,7 +99,7 @@ function mapRow(row: ContentRow): Klantverhaal {
     ketenTitel: tekst("ketenTitel", base?.ketenTitel) || undefined,
     ketenStappen: lijst<Stap>(d.ketenStappen, base?.ketenStappen),
     ketenSynthese: tekst("ketenSynthese", base?.ketenSynthese) || undefined,
-    secties: lijst<Sectie>(d.secties, base?.secties),
+    secties: secties(d.secties, base?.secties),
     resultaat: s("resultaat") ? sanitizeLite(s("resultaat")) : (base?.resultaat ?? ""),
     eindresultaten: lijst<ResultaatKaart>(d.eindresultaten, base?.eindresultaten),
     aside: {

@@ -79,3 +79,48 @@ describe("getKlantverhaalBySlug", () => {
     expect(await getKlantverhaalBySlug("bestaat-niet")).toBeNull();
   });
 });
+
+/**
+ * Een rij die vóór de verrijking is geseed heeft wél een `secties`-array, maar
+ * in de oude vorm. Die array in zijn geheel overnemen gaf op productie lege
+ * koppen ("Situatie & uitdaging" zonder tekst) en lege resultaatkaarten.
+ */
+describe("secties uit een rij van vóór de modelwijziging", () => {
+  it("vult situatie en aanpak aan vanuit de seed", async () => {
+    const seed = KLANTVERHAAL_MAP.moove!;
+    state.rows = [
+      dunneRij("moove", {
+        secties: seed.secties!.map((s) => ({ titel: s.titel, tekst: "" })),
+      }),
+    ];
+
+    const k = await getKlantverhaalBySlug("moove");
+    expect(k?.secties?.length).toBe(seed.secties!.length);
+    expect(k?.secties?.[0]?.situatie).toBe(seed.secties![0]!.situatie);
+    expect(k?.secties?.[0]?.aanpak).toBe(seed.secties![0]!.aanpak);
+    expect(k?.secties?.[0]?.resultaten.length).toBe(seed.secties![0]!.resultaten.length);
+  });
+
+  it("maakt van losse resultaat-strings echte kaarten", async () => {
+    state.rows = [
+      dunneRij("moove", {
+        secties: [{ titel: "Eigen sectie", resultaten: ["Minder handmatig werk"] }],
+      }),
+    ];
+
+    const k = await getKlantverhaalBySlug("moove");
+    expect(k?.secties?.[0]?.resultaten).toEqual([{ titel: "", tekst: "Minder handmatig werk" }]);
+  });
+
+  it("laat ingevulde CMS-waarden winnen van de seed", async () => {
+    state.rows = [
+      dunneRij("moove", {
+        secties: [{ titel: "Eigen sectie", situatie: "Eigen situatie", aanpak: "Eigen aanpak" }],
+      }),
+    ];
+
+    const k = await getKlantverhaalBySlug("moove");
+    expect(k?.secties?.[0]?.situatie).toBe("Eigen situatie");
+    expect(k?.secties?.[0]?.aanpak).toBe("Eigen aanpak");
+  });
+});
