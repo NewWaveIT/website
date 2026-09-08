@@ -21,10 +21,28 @@ export function HomeInteractions() {
         p.classList.toggle("active", p.getAttribute("data-panel") === id);
       });
     };
-    tabs.forEach((t) => {
+    const kiesTab = (t: HTMLButtonElement) => {
+      onTab(t)();
+      // Roving tabindex meeverplaatsen, zodat Tab de tablist weer verlaat.
+      tabs.forEach((x) => x.setAttribute("tabindex", x === t ? "0" : "-1"));
+      t.focus();
+    };
+    tabs.forEach((t, idx) => {
       const handler = onTab(t);
       t.addEventListener("click", handler);
-      cleanups.push(() => t.removeEventListener("click", handler));
+      // Het tabs-patroon belooft pijltoetsnavigatie; zonder dit is alleen de
+      // eerste tab bereikbaar met het toetsenbord.
+      const onKey = (e: KeyboardEvent) => {
+        const stap = e.key === "ArrowRight" ? 1 : e.key === "ArrowLeft" ? -1 : 0;
+        if (stap === 0) return;
+        e.preventDefault();
+        kiesTab(tabs[(idx + stap + tabs.length) % tabs.length]!);
+      };
+      t.addEventListener("keydown", onKey);
+      cleanups.push(() => {
+        t.removeEventListener("click", handler);
+        t.removeEventListener("keydown", onKey);
+      });
     });
 
     // Featured case: parallax op Ken Burns-laag

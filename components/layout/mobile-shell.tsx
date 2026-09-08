@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
@@ -17,6 +17,8 @@ export function MobileShell() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const [prevPathname, setPrevPathname] = useState(pathname);
+  const sluitRef = useRef<HTMLButtonElement>(null);
+  const burgerRef = useRef<HTMLButtonElement>(null);
 
   // Sluit menu bij navigatie. State aanpassen tijdens render (i.p.v. in een
   // effect) voorkomt een extra render-cyclus na elke navigatie.
@@ -35,10 +37,23 @@ export function MobileShell() {
       if (e.key === "Escape") setOpen(false);
     };
     window.addEventListener("keydown", onKey);
+    // Focus meenemen naar het paneel; anders staat de focus nog achter de
+    // overlay en tabt de bezoeker door onzichtbare pagina-inhoud.
+    sluitRef.current?.focus();
     return () => {
       document.body.classList.remove("m-menu-open");
       window.removeEventListener("keydown", onKey);
     };
+  }, [open]);
+
+  // Focus terug naar de openknop zodra het menu dichtgaat.
+  const eersteRender = useRef(true);
+  useEffect(() => {
+    if (eersteRender.current) {
+      eersteRender.current = false;
+      return;
+    }
+    if (!open) burgerRef.current?.focus();
   }, [open]);
 
   // Sticky CTA: toont de knop na 420px scroll, verbergt 'm zodra de echte
@@ -79,6 +94,7 @@ export function MobileShell() {
             />
           </Link>
           <button
+            ref={burgerRef}
             className="burger"
             aria-label="Menu"
             aria-expanded={open}
@@ -99,7 +115,12 @@ export function MobileShell() {
             height={24}
             style={{ height: 24, width: "auto" }}
           />
-          <button className="close" aria-label="Sluit menu" onClick={() => setOpen(false)}>
+          <button
+            ref={sluitRef}
+            className="close"
+            aria-label="Sluit menu"
+            onClick={() => setOpen(false)}
+          >
             <X />
           </button>
         </div>

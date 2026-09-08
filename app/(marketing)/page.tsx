@@ -7,6 +7,7 @@ import { HomeInteractions } from "@/components/home/home-interactions";
 import { SectorSplit } from "@/components/sector-split";
 import { ClientLogos, AWARD } from "@/components/home/client-logos";
 import { CasesCarousel } from "@/components/home/cases-carousel";
+import { MarqueePauze } from "@/components/home/marquee-pauze";
 import { SlotCta } from "@/components/layout/slot-cta";
 import { getPagina } from "@/lib/paginas-data";
 import { getKlantverhalen } from "@/lib/klantverhalen-data";
@@ -82,6 +83,7 @@ export default async function HomePage() {
             <a className="award" href={AWARD.url} target="_blank" rel="noopener noreferrer">
               <Award /> {AWARD.label}
             </a>
+            <MarqueePauze />
           </div>
           <ClientLogos />
         </div>
@@ -103,7 +105,12 @@ export default async function HomePage() {
               <button
                 className="tab"
                 role="tab"
+                id={`tab-${richting}`}
                 aria-selected={i === 0}
+                aria-controls={`panel-${richting}`}
+                // Roving tabindex: alleen de actieve tab zit in de tabvolgorde,
+                // de rest bereik je met de pijltoetsen (zie HomeInteractions).
+                tabIndex={i === 0 ? 0 : -1}
                 data-tab={richting}
                 key={richting}
               >
@@ -116,6 +123,10 @@ export default async function HomePage() {
             s ? (
               <div
                 className={`panel${i === 0 ? " active" : ""}`}
+                id={`panel-${richting}`}
+                role="tabpanel"
+                aria-labelledby={`tab-${richting}`}
+                tabIndex={0}
                 data-panel={richting}
                 key={richting}
               >

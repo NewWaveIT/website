@@ -158,11 +158,12 @@
     border-color 140ms ease,
     box-shadow 140ms ease;
 }
-.field input:focus,
-.field select:focus,
-.field textarea:focus {
+.field input:focus-visible,
+.field select:focus-visible,
+.field textarea:focus-visible {
   border-color: var(--color-primary);
-  box-shadow: 0 0 0 3px rgba(241, 88, 34, 0.15);
+  outline: 2px solid var(--orange-text);
+  outline-offset: 1px;
 }
 .field textarea {
   min-height: 120px;
@@ -187,6 +188,12 @@
 .chips .chip:hover {
   border-color: var(--color-primary);
   color: var(--orange-text);
+}
+/* De invoer zelf is opacity:0; zonder dit krijgt een chip bij toetsenbordgebruik
+   geen enkele zichtbare focusindicatie. */
+.chips .chip:has(input:focus-visible) {
+  outline: 2px solid var(--orange-text);
+  outline-offset: 2px;
 }
 .chips .chip input {
   position: absolute;

@@ -48,10 +48,11 @@
   min-height: 110px;
   resize: vertical;
 }
-.sol-form .field input:focus,
-.sol-form .field textarea:focus {
+.sol-form .field input:focus-visible,
+.sol-form .field textarea:focus-visible {
   border-color: var(--color-primary);
-  box-shadow: 0 0 0 3px rgba(241, 88, 34, 0.15);
+  outline: 2px solid var(--orange-text);
+  outline-offset: 1px;
 }
 .sol-form .field input[type="file"] {
   padding: 9px 12px;

@@ -39,24 +39,34 @@ export function Header() {
         <nav className="nav-links">
           {NAV_LINKS.map((link) => {
             const sub = NAV_DROPDOWNS[link.href];
+            const actief = isActive(link.href);
+            // Bewust geen role="menu"/"menuitem": dat patroon belooft
+            // applicatiegedrag (pijltjesnavigatie, Escape) dat een hover-lijst
+            // met links niet heeft. Een genest <nav> met links beschrijft het
+            // eerlijker en werkt met de gewone linknavigatie van screenreaders.
             return sub ? (
               <div className="nav-drop" key={link.href}>
-                <Link href={link.href} className={cn(isActive(link.href) && "active")}>
+                <Link
+                  href={link.href}
+                  className={cn(actief && "active")}
+                  aria-current={actief ? "page" : undefined}
+                >
                   {link.label}
                 </Link>
-                <div className="nav-menu" role="menu" aria-label={link.label}>
+                <nav className="nav-menu" aria-label={`${link.label} — onderdelen`}>
                   {sub.map((s) => (
-                    <Link key={s.href} href={s.href} role="menuitem">
+                    <Link key={s.href} href={s.href}>
                       {s.label}
                     </Link>
                   ))}
-                </div>
+                </nav>
               </div>
             ) : (
               <Link
                 key={link.href}
                 href={link.href}
-                className={cn(isActive(link.href) && "active")}
+                className={cn(actief && "active")}
+                aria-current={actief ? "page" : undefined}
               >
                 {link.label}
               </Link>

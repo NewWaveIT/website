@@ -197,10 +197,23 @@ h4 {
   margin: 0;
 }
 
+/* Een echte outline i.p.v. een zachte gloed: die haalde maar 1.52:1 tegen de
+   achtergrond en voldeed dus niet aan WCAG 1.4.11/2.4.7. */
 :focus-visible {
-  outline: none;
-  box-shadow: var(--ring-focus);
+  outline: 2px solid var(--orange-text);
+  outline-offset: 2px;
   border-radius: var(--radius-sm);
+}
+/* Op donkere secties is --orange-text te donker; --orange-400 haalt daar 5.61:1. */
+.shero :focus-visible,
+.dhero :focus-visible,
+.chero :focus-visible,
+.cta :focus-visible,
+.outcomes :focus-visible,
+.samen :focus-visible,
+footer :focus-visible,
+.m-menu :focus-visible {
+  outline-color: var(--orange-400);
 }
 
 /* Alleen voor schermlezers: houdt de koppenstructuur compleet waar het ontwerp
@@ -418,10 +431,11 @@ header.nav {
   font-size: var(--text-sm);
 }
 .nav-links a:hover {
-  color: var(--color-primary);
+  color: var(--orange-text);
 }
 .nav-links a.active {
-  color: var(--color-primary);
+  /* --color-primary haalt op paper maar 3.26:1 bij deze tekstgrootte. */
+  color: var(--orange-text);
   font-weight: var(--fw-semibold);
 }
 /* Sectoren-dropdown (hover + toetsenbord via focus-within) */
@@ -475,7 +489,7 @@ header.nav {
 }
 .nav-menu a:hover {
   background: var(--ink-50);
-  color: var(--color-primary);
+  color: var(--orange-text);
 }
 .nav-cta {
   margin-left: auto;
@@ -701,7 +715,7 @@ footer.site-footer {
   color: var(--text-body);
 }
 .notfound .nf-tel:hover {
-  color: var(--color-primary);
+  color: var(--orange-text);
 }
 
 /* Award-badge (over-ons, werken-bij) — op donkere hero's */
@@ -1211,10 +1225,16 @@ footer.site-footer {
     backdrop-filter: blur(10px);
     border-top: 1px solid var(--border-subtle);
     transform: translateY(110%);
-    transition: transform 300ms cubic-bezier(0.22, 1, 0.36, 1);
+    /* `visibility` erbij: met alleen een transform blijft de knop focusbaar en
+       springt de toetsenbordfocus naar iets dat buiten beeld staat. */
+    visibility: hidden;
+    transition:
+      transform 300ms cubic-bezier(0.22, 1, 0.36, 1),
+      visibility 300ms;
   }
   .stickycta.show {
     transform: none;
+    visibility: visible;
   }
   .stickycta .btn {
     width: 100%;

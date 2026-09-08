@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import { Pause, Play } from "lucide-react";
 import { buildHeroSvg } from "@/lib/sector-hero-svg";
 import "./hero-split.css";
 
@@ -266,6 +267,7 @@ function contentHtml(s: Scene): string {
 export function HeroSplit() {
   const [i, setI] = useState(0);
   const [sweep, setSweep] = useState(0);
+  const [pauze, setPauze] = useState(false);
   const contentRef = useRef<HTMLDivElement>(null);
 
   const fitFlow = useCallback(() => {
@@ -330,8 +332,11 @@ export function HeroSplit() {
     });
   }, []);
 
-  // Scene-cyclus. Respecteert prefers-reduced-motion (dan geen cyclus).
+  // Scene-cyclus. Respecteert prefers-reduced-motion (dan geen cyclus) en is
+  // pauzeerbaar — WCAG 2.2.2 vraagt een mechanisme voor bewegende content die
+  // langer dan vijf seconden doorloopt, en hover telt niet voor toetsenbord.
   useEffect(() => {
+    if (pauze) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const timers: number[] = [];
     const id = window.setInterval(() => {
@@ -342,7 +347,7 @@ export function HeroSplit() {
       clearInterval(id);
       timers.forEach(clearTimeout);
     };
-  }, []);
+  }, [pauze]);
 
   // Schaal de microflow zodat 'ie past, na elke scene-wissel en bij resize.
   // Een ResizeObserver op het (zwevende) systeempaneel houdt de flow passend als
@@ -411,11 +416,19 @@ export function HeroSplit() {
           />
         </div>
 
-        {/* Voortgangsstreepjes per sector */}
+        {/* Voortgangsstreepjes per sector, met pauzeknop (WCAG 2.2.2) */}
         <div
           className="hs-ticks"
           data-ticks="1"
-          style={{ position: "absolute", left: 48, top: 34, display: "flex", gap: 7, zIndex: 3 }}
+          style={{
+            position: "absolute",
+            left: 48,
+            top: 34,
+            display: "flex",
+            alignItems: "center",
+            gap: 7,
+            zIndex: 3,
+          }}
         >
           {SCENES.map((sc, n) => (
             <div
@@ -427,6 +440,17 @@ export function HeroSplit() {
               }}
             />
           ))}
+          <button
+            type="button"
+            className="hs-pauze"
+            onClick={() => setPauze((p) => !p)}
+            aria-pressed={pauze}
+            aria-label={
+              pauze ? "Sectoren automatisch laten wisselen" : "Wisselen van sector pauzeren"
+            }
+          >
+            {pauze ? <Play aria-hidden="true" /> : <Pause aria-hidden="true" />}
+          </button>
         </div>
       </div>
     </section>

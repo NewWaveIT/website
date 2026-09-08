@@ -237,3 +237,31 @@
     animation: none !important;
   }
 }
+
+/* Pauzeknop bij de sectorstreepjes — WCAG 2.2.2: bewegende content die langer
+   dan vijf seconden doorloopt moet te stoppen zijn, ook zonder muis. */
+.hs-pauze {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  margin-left: 6px;
+  padding: 0;
+  border: 1px solid rgba(255, 253, 249, 0.25);
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: rgba(255, 253, 249, 0.7);
+  cursor: pointer;
+  transition:
+    color 140ms ease,
+    border-color 140ms ease;
+}
+.hs-pauze:hover {
+  color: #fff;
+  border-color: rgba(255, 253, 249, 0.6);
+}
+.hs-pauze .lucide {
+  width: 12px;
+  height: 12px;
+}

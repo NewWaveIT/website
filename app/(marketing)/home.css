@@ -36,7 +36,9 @@
   width: max-content;
   animation: clientScroll 30s linear infinite;
 }
-.clientband .track:hover .set {
+.clientband .track:hover .set,
+.clientband .track:focus-within .set,
+.marquee-pauze .clientband .track .set {
   animation-play-state: paused;
 }
 .client {
@@ -94,7 +96,9 @@
   padding-right: var(--space-8);
   animation: clientScroll 45s linear infinite;
 }
-.logo-track:hover .logo-set {
+.logo-track:hover .logo-set,
+.logo-track:focus-within .logo-set,
+.marquee-pauze .logo-track .logo-set {
   animation-play-state: paused;
 }
 .logo-tile {
@@ -917,6 +921,8 @@
 
 @media (prefers-reduced-motion: reduce) {
   .clientband .set,
+  .logo-set,
+  .panel.active,
   .fcase .kb {
     animation: none !important;
   }
@@ -1064,4 +1070,30 @@
   .home .sec-left {
     position: static;
   }
+}
+
+/* Pauzeknop bij de logobanden (WCAG 2.2.2) */
+.marquee-knop {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--text-subtle);
+  cursor: pointer;
+  transition:
+    color 140ms ease,
+    border-color 140ms ease;
+}
+.marquee-knop:hover {
+  color: var(--orange-text);
+  border-color: var(--color-primary);
+}
+.marquee-knop .lucide {
+  width: 13px;
+  height: 13px;
 }

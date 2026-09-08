@@ -26,7 +26,9 @@ export function TeamCarousel({ team }: { team: Teamlid[] }) {
           <ChevronRight />
         </button>
       </div>
-      <div className="tc-track" ref={trackRef}>
+      {/* Focusbaar: de kaarten bevatten geen links, dus zonder dit is de rij
+          niet met het toetsenbord te scrollen. */}
+      <div className="tc-track" ref={trackRef} tabIndex={0} role="group" aria-label="Teamleden">
         {team.map((m) => (
           <div className="tcard" key={m.slug}>
             <div className="pf">
