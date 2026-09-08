@@ -4,7 +4,12 @@ import { createClient } from "@/lib/supabase/server";
 import { sendAanvraagNotificatie, sendAanvraagBevestiging } from "@/lib/email";
 import { magDoor } from "@/lib/rate-limit";
 import { getServices } from "@/lib/services-data";
-import { SERVICE_VRAGEN, VRAGEN_PER_SERVICE, type VraagKey } from "@/lib/services-vragen";
+import {
+  CONTACT_TYPES,
+  SERVICE_VRAGEN,
+  VRAGEN_PER_SERVICE,
+  type VraagKey,
+} from "@/lib/services-vragen";
 
 export interface ContactState {
   ok: boolean;
@@ -55,6 +60,12 @@ export async function submitContact(
   else if (email.length > 320) errors.email = "E-mailadres is te lang.";
   if (toelichting.length > 5000) errors.toelichting = "Toelichting is te lang (max. 5000 tekens).";
   if (groepsgrootte.length > 100) errors.groepsgrootte = "Dat is wel erg lang voor een aantal.";
+  // Deze velden komen uit chips/selects en horen kort te zijn; zonder cap kan één
+  // request megabytes de tabel in schrijven.
+  if (bedrijf.length > 200) errors.organisatie = "Organisatie is te lang (max. 200 tekens).";
+  if (rol.length > 200) errors.rol = "Rol is te lang (max. 200 tekens).";
+  if (sector.length > 200) errors.sector = "Ongeldige sector.";
+  if (onderwerpen.length > 400) errors.onderwerp = "Te veel onderwerpen gekozen.";
 
   const services = await getServices();
   let serviceNaam = "";
@@ -90,7 +101,8 @@ export async function submitContact(
   // Een gekozen dienst maakt het een dienstaanvraag, ook als de bezoeker op de
   // algemene contactpagina begon. Een specifiekere ingang (kennismaking,
   // sectorrapport) blijft wel staan.
-  const gekozenType = str(formData, "type");
+  const ruwType = str(formData, "type");
+  const gekozenType = CONTACT_TYPES.includes(ruwType) ? ruwType : "";
   const type =
     dienst && (!gekozenType || gekozenType === "gesprek")
       ? "dienstaanvraag"

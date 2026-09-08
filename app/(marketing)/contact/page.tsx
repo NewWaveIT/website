@@ -14,6 +14,7 @@ import { ContactForm } from "@/components/contact/contact-form";
 import { getPagina } from "@/lib/paginas-data";
 import { getContactpersoon } from "@/lib/team-data";
 import { getServices } from "@/lib/services-data";
+import { CONTACT_TYPES } from "@/lib/services-vragen";
 import "./contact.css";
 
 /** Alleen cijfers/+ voor een tel:-URI. */
@@ -27,9 +28,6 @@ export const metadata: Metadata = {
     "Bel, mail, app of plan een vrijblijvend gesprek met een practice lead van The New Wave IT. Ook voor een korte vraag. Reactie binnen één werkdag.",
   alternates: { canonical: "/contact" },
 };
-
-/** Bekende waarden voor ?type= — een onbekende waarde wordt genegeerd. */
-const TYPE_OPTIES = ["gesprek", "dienstaanvraag", "sectorrapport", "kennismaking"];
 
 // Geen `revalidate`: deze pagina leest ?dienst= en ?type= uit de queryparameters
 // en is daarmee altijd dynamisch — een statische cache zou de voorinvulling
@@ -54,7 +52,7 @@ export default async function ContactPage({
 
   // Nooit een ongefilterde queryparameter doorgeven aan een formulierveld.
   const dienstPreset = services.some((s) => s.slug === params.dienst) ? (params.dienst ?? "") : "";
-  const type = params.type && TYPE_OPTIES.includes(params.type) ? params.type : "gesprek";
+  const type = params.type && CONTACT_TYPES.includes(params.type) ? params.type : "gesprek";
   const diensten = services.map((s) => ({
     slug: s.slug,
     naam: s.naam,

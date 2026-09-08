@@ -127,6 +127,32 @@ describe("submitContact", () => {
     expect((insertMock.mock.calls[0]![0] as { type: string }).type).toBe("kennismaking");
   });
 
+  it("negeert een verzonnen type in plaats van het rauw op te slaan", async () => {
+    const result = await submitContact(
+      initialState,
+      // De whitelist stond alleen op de pagina; een directe POST omzeilde hem.
+      formData({ naam: "Jane Doe", email: "jane@example.com", type: "<script>evil</script>" }),
+    );
+    expect(result.ok).toBe(true);
+    expect((insertMock.mock.calls[0]![0] as { type: string }).type).toBe("gesprek");
+  });
+
+  it("weigert buitensporig lange waarden in de losse velden", async () => {
+    const result = await submitContact(
+      initialState,
+      formData({
+        naam: "Jane Doe",
+        email: "jane@example.com",
+        organisatie: "x".repeat(201),
+        rol: "y".repeat(201),
+      }),
+    );
+    expect(result.ok).toBe(false);
+    expect(result.errors?.organisatie).toBeTruthy();
+    expect(result.errors?.rol).toBeTruthy();
+    expect(insertMock).not.toHaveBeenCalled();
+  });
+
   it("'weet-ik-niet' als dienst is altijd geldig", async () => {
     const result = await submitContact(
       initialState,

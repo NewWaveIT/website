@@ -47,9 +47,12 @@ const DIENST_ALT: Record<ServiceRichting, string> = {
 };
 
 export default async function HomePage() {
-  const t = await getPagina("home");
-  const instap = await getInstapPerRichting();
-  const cases = (await getKlantverhalen()).map((k) => ({
+  const [t, instap, klantverhalen] = await Promise.all([
+    getPagina("home"),
+    getInstapPerRichting(),
+    getKlantverhalen(),
+  ]);
+  const cases = klantverhalen.map((k) => ({
     slug: k.slug,
     tag: k.tag || k.sector,
     image: k.image,

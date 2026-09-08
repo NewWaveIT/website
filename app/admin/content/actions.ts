@@ -11,6 +11,9 @@ import { PAGE_FIELDS, PAGE_PATH } from "@/lib/cms/pages";
 import { buildSeed } from "@/lib/cms/seed-data";
 import { logAudit } from "@/lib/cms/audit";
 
+/** Bitmapformaten die sharp betrouwbaar naar WebP omzet. Bewust zonder SVG. */
+const BEELD_TYPES = ["image/jpeg", "image/png", "image/webp", "image/avif", "image/gif"];
+
 /** Weergavenaam van de ingelogde gebruiker (voor audit + bewerkt_door). */
 function gebruikerNaam(user: {
   user_metadata?: Record<string, unknown>;
@@ -224,34 +227,33 @@ export async function uploadImage(
 
   const file = formData.get("file");
   if (!(file instanceof File) || file.size === 0) return { error: "Geen bestand gekozen." };
-  if (!file.type.startsWith("image/")) return { error: "Alleen afbeeldingen zijn toegestaan." };
+  // Allow-list i.p.v. `image/*`: die laat ook SVG door, en een SVG in de publieke
+  // bucket is uitvoerbare HTML op de storage-origin.
+  if (!BEELD_TYPES.includes(file.type)) {
+    return { error: "Alleen JPG, PNG, WebP, AVIF of GIF." };
+  }
   if (file.size > 5 * 1024 * 1024) return { error: "Maximaal 5 MB." };
 
-  // Converteer naar WebP voor snelheid; val terug op het origineel als dat niet lukt (bv. SVG).
-  const ext =
-    (file.name.split(".").pop() ?? "png").toLowerCase().replace(/[^a-z0-9]/g, "") || "png";
-  let body: Buffer | File = file;
-  let outExt = ext;
-  let contentType = file.type;
+  // Alles gaat als WebP de bucket in. Lukt de conversie niet, dan weigeren we —
+  // het origineel doorlaten zou de allow-list hierboven alsnog omzeilen.
+  let body: Buffer;
   let width: number | undefined;
   let height: number | undefined;
   try {
     const input = Buffer.from(await file.arrayBuffer());
     body = await sharp(input).rotate().webp({ quality: 82 }).toBuffer();
-    outExt = "webp";
-    contentType = "image/webp";
     const meta = await sharp(body).metadata();
     width = meta.width;
     height = meta.height;
   } catch {
-    // origineel behouden
+    return { error: "Dit bestand kon niet worden verwerkt. Probeer een JPG of PNG." };
   }
-  const path = `${crypto.randomUUID()}.${outExt}`;
+  const path = `${crypto.randomUUID()}.webp`;
 
   const supabase = await createClient();
   const { error } = await supabase.storage
     .from("content")
-    .upload(path, body, { contentType, upsert: false });
+    .upload(path, body, { contentType: "image/webp", upsert: false });
   if (error) return { error: error.message };
 
   const { data } = supabase.storage.from("content").getPublicUrl(path);

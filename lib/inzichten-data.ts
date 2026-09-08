@@ -111,9 +111,8 @@ export async function getArtikelenVoorDienst(slug: string): Promise<Artikel[]> {
 
 export async function getArtikelBySlug(slug: string): Promise<Artikel | null> {
   const rows = await getPublishedContent("artikelen");
-  if (rows.length) {
-    const r = rows.find((x) => x.slug === slug);
-    return r ? mapRow(r, await authorResolver()) : null;
-  }
+  const r = rows.find((x) => x.slug === slug);
+  if (r) return mapRow(r, await authorResolver());
+  // Zie klantverhalen-data.ts: per-slug terugvallen, niet alleen bij een lege tabel.
   return ARTIKEL_MAP[slug] ?? null;
 }

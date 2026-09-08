@@ -73,9 +73,9 @@ export async function getKlantverhalen(): Promise<Klantverhaal[]> {
 
 export async function getKlantverhaalBySlug(slug: string): Promise<Klantverhaal | null> {
   const rows = await getPublishedContent("cases");
-  if (rows.length) {
-    const r = rows.find((x) => x.slug === slug);
-    return r ? mapRow(r) : null;
-  }
+  const r = rows.find((x) => x.slug === slug);
+  if (r) return mapRow(r);
+  // Per-slug terugvallen, niet alleen bij een lege tabel: een seed-item dat nog
+  // geen CMS-rij heeft moet blijven werken zodra er ándere rijen bestaan.
   return KLANTVERHAAL_MAP[slug] ?? null;
 }

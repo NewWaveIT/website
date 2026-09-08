@@ -37,8 +37,7 @@ const jsonLd = {
 export const revalidate = 300;
 
 export default async function OverOnsPage() {
-  const t = await getPagina("over-ons");
-  const team = await getTeamleden();
+  const [t, team] = await Promise.all([getPagina("over-ons"), getTeamleden()]);
   return (
     <div className="p-over">
       <script
@@ -48,7 +47,13 @@ export default async function OverOnsPage() {
 
       <section className="shero">
         <div className="badge-img">
-          <Image src="/assets/photos/team-presentatie-applaus.webp" alt="" fill sizes="46vw" />
+          <Image
+            src="/assets/photos/team-presentatie-applaus.webp"
+            alt=""
+            fill
+            sizes="46vw"
+            priority
+          />
         </div>
         <div className="wrap-wide">
           <div className="crumbs">

@@ -50,9 +50,9 @@ export async function generateMetadata({
 
 export default async function SectorPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const s = await getSectorBySlug(slug);
+  const [s, artikelen] = await Promise.all([getSectorBySlug(slug), getArtikelenVoorSector(slug)]);
   if (!s) notFound();
-  const artikelen = await getArtikelenVoorSector(slug);
+  // Hangt af van `s`, dus die kan niet mee in de Promise.all hierboven.
   const proposities = await getPropositiesVoorSector(s.proposities);
 
   const Icon = ICONS[s.icon];

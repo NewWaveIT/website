@@ -6,6 +6,13 @@
  * `server-only`.
  */
 
+/**
+ * Toegestane waarden voor `?type=` en het verborgen type-veld. Eén bron voor de
+ * pagina (die de queryparameter filtert) en de server action (die het formulier
+ * valideert) — anders is de whitelist client-side te omzeilen.
+ */
+export const CONTACT_TYPES = ["gesprek", "dienstaanvraag", "sectorrapport", "kennismaking"];
+
 export type VraagKey =
   | "claudeToegang"
   | "mendixOmgeving"

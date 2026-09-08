@@ -20,11 +20,12 @@ export const metadata: Metadata = {
 export const revalidate = 300;
 
 export default async function WerkenBijPage() {
-  const vacatures = await getVacatures();
-  const t = await getPagina("werken-bij");
-
   // Recruitment-contactpersoon (dynamisch), met terugval op een standaard.
-  const rec = await getContactpersoon("recruitment");
+  const [vacatures, t, rec] = await Promise.all([
+    getVacatures(),
+    getPagina("werken-bij"),
+    getContactpersoon("recruitment"),
+  ]);
   const recVoornaam = (rec?.naam || "Mitchel Wallaart").split(" ")[0] || "Mitchel";
   const recTel = rec?.telefoon || "06–10751254";
 
@@ -32,7 +33,7 @@ export default async function WerkenBijPage() {
     <div className="p-werken">
       <section className="shero">
         <div className="cutout">
-          <Image src="/assets/photos/cutout-spreker-groen.webp" alt="" fill sizes="32vw" />
+          <Image src="/assets/photos/cutout-spreker-groen.webp" alt="" fill sizes="32vw" priority />
         </div>
         <div className="wrap-wide">
           <div className="crumbs">

@@ -1,5 +1,7 @@
 import "server-only";
+import { cache } from "react";
 import { createClient } from "@/lib/supabase/server";
+import { createPublicClient } from "@/lib/supabase/public";
 
 export type ContentType =
   | "paginas"
@@ -156,12 +158,19 @@ export async function getContentById<T = Record<string, unknown>>(
   }
 }
 
-/** Gepubliceerde ('live') content voor de publieke site. */
-export async function getPublishedContent<T = Record<string, unknown>>(
-  type: ContentType,
-): Promise<ContentRow<T>[]> {
+/**
+ * Gepubliceerde ('live') content voor de publieke site.
+ *
+ * Bewust op de cookieloze client (zie `lib/supabase/public.ts`): dit is de enige
+ * content-functie die publieke pagina's aanroepen, en cookies zouden ze allemaal
+ * dynamisch maken. `cache()` dedupliceert bovendien binnen één render — meerdere
+ * componenten op dezelfde pagina vragen vaak dezelfde tabel op.
+ */
+export const getPublishedContent = cache(async function getPublishedContent<
+  T = Record<string, unknown>,
+>(type: ContentType): Promise<ContentRow<T>[]> {
   try {
-    const supabase = await createClient();
+    const supabase = createPublicClient();
     const { data } = await supabase
       .from(CONTENT_TABLE[type])
       .select("*")
@@ -172,4 +181,4 @@ export async function getPublishedContent<T = Record<string, unknown>>(
   } catch {
     return [];
   }
-}
+});

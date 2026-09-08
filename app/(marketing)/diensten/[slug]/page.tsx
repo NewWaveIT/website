@@ -36,9 +36,9 @@ export async function generateMetadata({
 
 export default async function DienstPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const d = await getDienstBySlug(slug);
+  const [d, artikelen] = await Promise.all([getDienstBySlug(slug), getArtikelenVoorDienst(slug)]);
   if (!d) notFound();
-  const artikelen = await getArtikelenVoorDienst(slug);
+  // Beide hangen af van de vorige stap; `getServices` is dankzij cache() geen extra query.
   const service = d.serviceSlug ? await getServiceBySlug(d.serviceSlug) : null;
   const alleServices = service?.volgendeStapSlugs?.length ? await getServices() : [];
   const vervolgLinks = (service?.volgendeStapSlugs ?? [])

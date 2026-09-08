@@ -79,7 +79,10 @@ export async function submitSollicitatie(
     };
   }
 
-  const vacatureSlug = str(formData, "vacature_slug");
+  // De slug komt uit een hidden field en vormt het storage-pad; zonder filter
+  // bepaalt de indiener de mapstructuur (`../`) en de kolomwaarde.
+  const ruweSlug = str(formData, "vacature_slug");
+  const vacatureSlug = /^[a-z0-9-]{1,80}$/.test(ruweSlug) ? ruweSlug : "";
   const vacatureTitel = str(formData, "vacature_titel");
   const naam = str(formData, "naam");
   const email = str(formData, "email");

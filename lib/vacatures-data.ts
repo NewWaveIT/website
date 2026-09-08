@@ -46,9 +46,8 @@ export async function getVacatures(): Promise<Vacature[]> {
 
 export async function getVacatureBySlug(slug: string): Promise<Vacature | null> {
   const rows = await getPublishedContent("vacatures");
-  if (rows.length) {
-    const r = rows.find((x) => x.slug === slug);
-    return r ? mapRow(r) : null;
-  }
+  const r = rows.find((x) => x.slug === slug);
+  if (r) return mapRow(r);
+  // Zie klantverhalen-data.ts: per-slug terugvallen, niet alleen bij een lege tabel.
   return VACATURE_MAP[slug] ?? null;
 }

@@ -11,8 +11,14 @@ export async function updateSollicitatie(
   const user = await getCurrentUser();
   if (!user) return { ok: false };
   const supabase = await createClient();
-  const { error } = await supabase.from("sollicitaties").update(patch).eq("id", id);
-  if (error) return { ok: false };
+  // `.select()` erbij: zonder passende RLS-policy raakt een update 0 rijen zónder
+  // fout. Alleen op `error` vertrouwen zou zo'n stille mislukking als succes melden.
+  const { data, error } = await supabase
+    .from("sollicitaties")
+    .update(patch)
+    .eq("id", id)
+    .select("id");
+  if (error || !data?.length) return { ok: false };
   revalidatePath("/admin/sollicitaties");
   revalidatePath("/admin");
   return { ok: true };
