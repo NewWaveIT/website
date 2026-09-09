@@ -320,11 +320,15 @@ export async function controleerContent(): Promise<{
         slug: row.slug,
       });
 
-      // De richting-slugs zijn sinds de dienstencatalogus lichte hub-pagina's;
-      // diensten-detail-data.ts filtert ze weg, dus deze rijen renderen nooit.
+      // Het type `diensten` beschrijft sinds de dienstencatalogus de drie
+      // richting-hubs, niet meer de losse dienstpagina's. `getRichtingBySlug`
+      // laat alleen die drie slugs door, dus elke ándere rij is een rest van
+      // het vorige ontwerp en rendert nooit. (Deze check stond eerder omgekeerd:
+      // hij meldde juist de drie rijen die er wél horen.)
       const onbereikbaar =
-        type === "diensten" && (RICHTING_SLUGS as readonly string[]).includes(row.slug)
-          ? "wordt door de routing weggefilterd (dit is nu een richting-hub)"
+        type === "diensten" && !(RICHTING_SLUGS as readonly string[]).includes(row.slug)
+          ? "wordt door de routing weggefilterd (alleen mendix, ai en strategie renderen; " +
+            "de negen diensten staan onder Diensten)"
           : undefined;
 
       const eigen = !seed;
