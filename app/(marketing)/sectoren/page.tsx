@@ -22,7 +22,7 @@ const SECTOREN = [
     hook: "“Onze doorlooptijden groeien sneller dan onze formatie.”",
     tekst:
       "Van vergunningverlening tot subsidies: wij helpen overheden processen versnellen, papierstromen vervangen en volledig aantoonbaar werken, veilig en binnen alle kaders.",
-    kpi: "-40% doorlooptijd",
+    kpi: "Sneller vergunnen",
   },
   {
     slug: "mobiliteit",

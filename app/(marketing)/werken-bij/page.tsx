@@ -13,7 +13,7 @@ import "./werken-bij.css";
 export const metadata: Metadata = {
   title: "Werken bij — word een Waver",
   description:
-    "Werken bij The New Wave IT: een gelijk speelveld, open feedbackcultuur, persoonlijk groeipad en een jaarlijkse learning week. Bekijk onze vacatures.",
+    "Werken bij The New Wave IT: een gelijk speelveld, open feedbackcultuur, persoonlijk groeipad en een jaarlijkse learning week. Bekijk onze openstaande rollen.",
   alternates: { canonical: "/werken-bij" },
 };
 
@@ -51,8 +51,11 @@ export default async function WerkenBijPage() {
             <Award /> Erkend werkgever · {AWARD.label}
           </a>
           <div className="hero-actions" style={{ marginTop: "var(--space-6)" }}>
-            <a href="#vacatures" className="btn btn-primary">
-              Bekijk vacatures <ArrowRight />
+            <a
+              href={vacatures.length ? "#vacatures" : "#open-sollicitatie"}
+              className="btn btn-primary"
+            >
+              {vacatures.length ? "Bekijk vacatures" : "Stuur een open sollicitatie"} <ArrowRight />
             </a>
             <Link href="/over-ons" className="btn btn-ghost-dark">
               Leer ons eerst kennen
@@ -148,16 +151,18 @@ export default async function WerkenBijPage() {
               Kom de golf versterken.
             </h2>
           </div>
-          <div className="list">
-            {vacatures.map((v) => (
-              <Link href={`/vacatures/${v.slug}`} className="vrow" key={v.slug}>
-                <h3>{v.functietitel}</h3>
-                <span className="meta">{v.discipline}</span>
-                <span className="meta">{v.locatie}</span>
-                <ArrowRight className="arrow" />
-              </Link>
-            ))}
-          </div>
+          {vacatures.length > 0 && (
+            <div className="list">
+              {vacatures.map((v) => (
+                <Link href={`/vacatures/${v.slug}`} className="vrow" key={v.slug}>
+                  <h3>{v.functietitel}</h3>
+                  <span className="meta">{v.discipline}</span>
+                  <span className="meta">{v.locatie}</span>
+                  <ArrowRight className="arrow" />
+                </Link>
+              ))}
+            </div>
+          )}
           <p
             style={{
               fontSize: "var(--text-sm)",
@@ -165,7 +170,14 @@ export default async function WerkenBijPage() {
               marginTop: "var(--space-6)",
             }}
           >
-            Staat jouw rol er niet tussen?{" "}
+            {vacatures.length > 0 ? (
+              <>Staat jouw rol er niet tussen? </>
+            ) : (
+              <>
+                Op dit moment staan er geen vacatures open. We spreken sowieso graag met Mendix- en
+                AI-consultants die bij ons passen.{" "}
+              </>
+            )}
             <a href="#open-sollicitatie" style={{ color: "var(--orange-400)" }}>
               Stuur hieronder een open sollicitatie
             </a>{" "}

@@ -1,5 +1,11 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { zonder } from "./helpers/cms-rij";
+
+/**
+ * Vacatures is het enige contenttype met een lege seed: bij livegang staan er
+ * geen rollen open. Dat maakt hem ook de test van "leeg is echt leeg" op
+ * typeniveau — zonder rijen hoort de site niets te tonen in plaats van terug te
+ * vallen op oude tekst. Zie de toelichting in lib/vacatures.ts.
+ */
 
 const { state, getPublishedContent } = vi.hoisted(() => {
   const state: { rows: Record<string, unknown>[] } = { rows: [] };
@@ -14,9 +20,7 @@ vi.mock("@/lib/cms/content", () => ({
 const { getVacatures, getVacatureBySlug } = await import("@/lib/vacatures-data");
 const { VACATURES } = await import("@/lib/vacatures");
 
-const eerste = VACATURES[0]!;
-
-function rij(slug: string, titel: string, data: Record<string, unknown>) {
+function rij(slug: string, titel: string, data: Record<string, unknown> = {}) {
   return {
     id: slug,
     slug,
@@ -25,12 +29,25 @@ function rij(slug: string, titel: string, data: Record<string, unknown>) {
     volgorde: 0,
     bijgewerkt_op: "",
     bewerkt_door: null,
-    data,
+    data: {
+      functietitel: titel,
+      discipline: "Mendix · Medior",
+      locatie: "Utrecht / hybride",
+      tags: ["Mendix"],
+      intro: "Korte intro.",
+      secties: [{ titel: "Wie ben jij?", items: ["Mendix-ervaring"] }],
+      facts: {
+        team: "Mendix",
+        niveau: "Medior",
+        locatie: "Utrecht / hybride",
+        uren: "In overleg",
+        salaris: "Marktconform",
+      },
+      employmentType: "FULL_TIME",
+      gepubliceerdOp: "2026-09-01",
+      ...data,
+    },
   };
-}
-
-function heleRij(slug = eerste.slug, extra: Record<string, unknown> = {}) {
-  return rij(slug, eerste.functietitel, { ...zonder(eerste, "slug"), ...extra });
 }
 
 beforeEach(() => {
@@ -39,44 +56,60 @@ beforeEach(() => {
   vi.spyOn(console, "error").mockImplementation(() => {});
 });
 
+describe("lege seed", () => {
+  it("heeft geen vacatures in de code staan", () => {
+    expect(VACATURES).toEqual([]);
+  });
+
+  it("toont niets als er geen live rijen zijn", async () => {
+    expect(await getVacatures()).toEqual([]);
+    expect(await getVacatureBySlug("medior-mendix-consultant")).toBeNull();
+  });
+});
+
 describe("getVacatures", () => {
-  it("valt op de statische lijst terug als er geen rijen zijn", async () => {
-    expect((await getVacatures()).map((v) => v.slug)).toEqual(VACATURES.map((v) => v.slug));
-  });
-
-  it("laat de CMS-rij winnen en houdt een leeggemaakt veld leeg", async () => {
-    state.rows = [heleRij(eerste.slug, { locatie: "" })];
+  it("leest een live rij volledig uit het CMS", async () => {
+    state.rows = [rij("medior-mendix-consultant", "Medior Mendix Consultant")];
     const [v] = await getVacatures();
-    expect(v?.locatie).toBe("");
-    expect(v?.functietitel).toBe(eerste.functietitel);
-  });
-
-  it("vult secties die de rij niet kent aan uit de seed", async () => {
-    const rest = zonder(heleRij().data, "secties");
-    state.rows = [rij(eerste.slug, eerste.functietitel, rest)];
-    expect((await getVacatures())[0]?.secties.length).toBe(eerste.secties.length);
+    expect(v?.functietitel).toBe("Medior Mendix Consultant");
+    expect(v?.secties[0]?.items).toEqual(["Mendix-ervaring"]);
   });
 
   it("ontsmet de intro", async () => {
-    state.rows = [heleRij(eerste.slug, { intro: "Hoi <script>alert(1)</script><b>daar</b>" })];
+    state.rows = [rij("rol", "Rol", { intro: "Hoi <script>alert(1)</script><b>daar</b>" })];
     const [v] = await getVacatures();
     expect(v?.intro).not.toContain("<script");
     expect(v?.intro).toContain("<b>daar</b>");
   });
 
-  it("slaat een onvolledige eigen vacature over", async () => {
-    state.rows = [rij("eigen-rol", "Eigen rol", { locatie: "Utrecht" })];
+  /** Zonder seed is er geen vangnet, dus een halve rij hoort niet te renderen. */
+  it("slaat een onvolledige rij over", async () => {
+    state.rows = [
+      {
+        id: "half",
+        slug: "half",
+        titel: "Half",
+        status: "live",
+        volgorde: 0,
+        bijgewerkt_op: "",
+        bewerkt_door: null,
+        data: { locatie: "Utrecht" },
+      },
+    ];
     expect(await getVacatures()).toEqual([]);
   });
 });
 
 describe("getVacatureBySlug", () => {
-  it("valt per slug terug op de seed als er andere rijen bestaan", async () => {
-    state.rows = [heleRij("andere-rol", { functietitel: "Andere rol" })];
-    expect((await getVacatureBySlug(eerste.slug))?.functietitel).toBe(eerste.functietitel);
+  it("vindt een rij op slug", async () => {
+    state.rows = [rij("senior-mendix-consultant", "Senior Mendix Consultant")];
+    expect((await getVacatureBySlug("senior-mendix-consultant"))?.functietitel).toBe(
+      "Senior Mendix Consultant",
+    );
   });
 
-  it("geeft null voor een slug die nergens bestaat", async () => {
+  it("geeft null voor een slug die niet bestaat", async () => {
+    state.rows = [rij("senior-mendix-consultant", "Senior Mendix Consultant")];
     expect(await getVacatureBySlug("bestaat-niet")).toBeNull();
   });
 });
