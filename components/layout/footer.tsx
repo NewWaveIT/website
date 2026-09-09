@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { FOOTER_SECTOREN, FOOTER_BEDRIJF } from "@/lib/nav";
+import { CopyrightJaar } from "./copyright-jaar";
 
 export function Footer() {
   return (
@@ -50,7 +51,9 @@ export function Footer() {
           </div>
         </div>
         <div className="foot-bottom">
-          <span>© {new Date().getFullYear()} The New Wave IT</span>
+          <span>
+            © <CopyrightJaar /> The New Wave IT
+          </span>
           <span>
             <Link href="/privacy">Privacybeleid</Link>
           </span>

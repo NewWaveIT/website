@@ -1,3 +1,4 @@
+import { cacheLife } from "next/cache";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Landmark, TrainFront, Banknote, HeartPulse, Factory } from "lucide-react";
@@ -19,9 +20,10 @@ export const metadata: Metadata = {
   alternates: { canonical: "/diensten" },
 };
 
-export const revalidate = 300;
-
 export default async function DienstenPage() {
+  "use cache";
+  cacheLife("content");
+
   const t = await getPagina("diensten");
   const matrix = await getDienstMatrix();
   const fases = getFaseItems(t);

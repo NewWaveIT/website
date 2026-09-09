@@ -1,3 +1,4 @@
+import { cacheLife } from "next/cache";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { SectorHeroAnim } from "@/components/sector-hero-anim";
@@ -73,9 +74,10 @@ const jsonLd = {
   })),
 };
 
-export const revalidate = 300;
-
 export default async function SectorenPage() {
+  "use cache";
+  cacheLife("content");
+
   const t = await getPagina("sectoren");
   return (
     <div className="p-sectoren">

@@ -1,3 +1,4 @@
+import { cacheLife } from "next/cache";
 import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
@@ -21,8 +22,6 @@ import { SITE_URL } from "@/lib/site";
 import "./sector-detail.css";
 import { BreadcrumbJsonLd } from "@/components/breadcrumb-jsonld";
 
-export const revalidate = 300;
-
 const ICONS = {
   "building-2": Building2,
   "train-front": TrainFront,
@@ -40,6 +39,9 @@ export async function generateMetadata({
 }: {
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
+  "use cache";
+  cacheLife("content");
+
   const { slug } = await params;
   const s = await getSectorBySlug(slug);
   if (!s) return {};
@@ -51,6 +53,9 @@ export async function generateMetadata({
 }
 
 export default async function SectorPage({ params }: { params: Promise<{ slug: string }> }) {
+  "use cache";
+  cacheLife("content");
+
   const { slug } = await params;
   const [s, artikelen] = await Promise.all([getSectorBySlug(slug), getArtikelenVoorSector(slug)]);
   if (!s) notFound();

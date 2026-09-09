@@ -111,10 +111,32 @@ test.describe("geen openstaande vacatures", () => {
     await expect(page.locator("#open-sollicitatie")).toBeVisible();
   });
 
-  test("een vacature-URL geeft 404, en de sitemap noemt er geen", async ({ request }) => {
-    expect((await request.get("/vacatures/medior-mendix-consultant")).status()).toBe(404);
+  test("een vacature-URL toont de niet-gevonden-pagina en staat niet in de sitemap", async ({
+    page,
+    request,
+  }) => {
+    await page.goto("/vacatures/medior-mendix-consultant");
+    await expect(page.getByText(/niet gevonden|bestaat niet|404/i).first()).toBeVisible();
+    // Geen harde 404 maar 200: zonder generateStaticParams (er staan geen
+    // vacatures open) streamt Cache Components eerst een shell, en daarna kan
+    // de status niet meer wijzigen. Daarom moet `noindex` er wél staan — dat is
+    // hier de bescherming tegen indexering. Zie de toelichting in
+    // app/(marketing)/vacatures/[slug]/page.tsx.
+    await expect(page.locator('meta[name="robots"][content*="noindex"]')).toHaveCount(1);
+
     const sitemap = await (await request.get("/sitemap.xml")).text();
     expect(sitemap).not.toContain("/vacatures/");
+  });
+
+  test("de detailroutes die hun slugs wél kennen geven een echte 404", async ({ request }) => {
+    for (const pad of [
+      "/diensten/bestaat-niet",
+      "/sectoren/bestaat-niet",
+      "/klantverhalen/bestaat-niet",
+      "/inzichten/bestaat-niet",
+    ]) {
+      expect((await request.get(pad)).status(), `status van ${pad}`).toBe(404);
+    }
   });
 });
 

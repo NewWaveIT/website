@@ -1,3 +1,4 @@
+import { cacheLife } from "next/cache";
 import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
@@ -35,9 +36,10 @@ const jsonLd = {
   },
 };
 
-export const revalidate = 300;
-
 export default async function OverOnsPage() {
+  "use cache";
+  cacheLife("content");
+
   const [t, team] = await Promise.all([getPagina("over-ons"), getTeamleden()]);
   return (
     <div className="p-over">

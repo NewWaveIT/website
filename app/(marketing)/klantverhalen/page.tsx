@@ -1,3 +1,4 @@
+import { cacheLife } from "next/cache";
 import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
@@ -13,8 +14,6 @@ export const metadata: Metadata = {
     "Verhalen van organisaties in de publieke sector, mobiliteit, banken, zorg en manufacturing, verteld met de cijfers erbij.",
   alternates: { canonical: "/klantverhalen" },
 };
-
-export const revalidate = 300;
 
 const ICONS = {
   "building-2": Building2,
@@ -92,6 +91,9 @@ const SECTORBELOFTES: {
 ];
 
 export default async function KlantverhalenPage() {
+  "use cache";
+  cacheLife("content");
+
   const verhalen = await getKlantverhalen();
   const featured = verhalen[0];
   return (

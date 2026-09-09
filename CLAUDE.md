@@ -76,10 +76,27 @@ uit de code afleidt.
   overzicht, of als 404 op een detailpagina. Schrijf dus geen eigen `mapRow` met per-veld-
   `??`-ketens; dat compenseerde precies de rommel die dit pad zichtbaar hoort te maken.
   `lib/inzichten-data.ts` is de enige, gedocumenteerde uitzondering.
+- **Caching: Cache Components (`cacheComponents: true`).** Geen `export const revalidate`
+  meer — dat is niet toegestaan. Een pagina zegt zelf wat gecachet mag worden met
+  `"use cache"` + `cacheLife("content")` bovenin de component; `content` is één profiel in
+  `next.config.ts` (5 min vers, 1 dag houdbaar) zodat er nergens losse getallen staan.
+  Hetzelfde geldt voor `generateMetadata`. De admin staat er buiten met
+  `export const instant = false` op `app/admin/layout.tsx`: die leest cookies en heeft
+  niets te prerenderen.
+- **Wat per request verschilt, hoort niet in een cache-scope.** `searchParams`, `cookies()`
+  en `new Date()` mogen niet binnen `use cache`. Kan de waarde in de browser worden
+  bepaald, doe dat dan met `useBrowserwaarde` (`lib/hooks/use-browserwaarde.ts`) — dan
+  blijft de pagina volledig statisch. Zo leest het contactformulier zelf `?dienst=`, en
+  vult de footer zelf het jaartal in. Let op: die hook gebruikt `useSyncExternalStore`, dus
+  `lees` moet een primitieve, stabiele waarde teruggeven.
+- **Een dynamische route zonder `generateStaticParams` kan geen echte 404 geven.** Cache
+  Components streamt eerst een shell, en daarna staat de HTTP-status vast. Alle
+  detailroutes hebben daarom een slug-lijst; `/vacatures/[slug]` is de gedocumenteerde
+  uitzondering (geen live vacatures), en geeft een 200 met `noindex`.
 - **Revalidatie is grofmazig en dat is de bedoeling.** `revalidateContent()` neemt geen
   argumenten en ververst de hele site. Hier stond een kaart van contenttype naar routes;
-  die dreef weg. Elke pagina is al ISR met `revalidate = 300`, dus dit vervroegt alleen wat
-  toch gebeurt.
+  die dreef weg. Elke pagina wordt sowieso elke vijf minuten opnieuw opgebouwd, dus dit
+  vervroegt alleen wat toch gebeurt.
 - **Auth/RLS.** `proxy.ts` (de Next 16-naam voor middleware) redirect ongeauthenticeerde `/admin` → login; `requireAdmin()`
   (`lib/dal.ts`) in élke admin-action en -pagina. Anon mag alleen `insert` op de
   formuliertabellen; de service-role-client (`lib/supabase/admin.ts`) is uitsluitend voor

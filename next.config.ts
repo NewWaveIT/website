@@ -35,6 +35,20 @@ const securityHeaders = [
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
+  // Cache Components: het cachingmodel dat Next 16 aanraadt. Elke pagina zegt
+  // zelf wat gecachet mag worden ('use cache' + cacheLife) in plaats van via de
+  // route-config `revalidate`, en wat per request moet gebeuren staat in een
+  // <Suspense>. Levert ook Partial Prerendering: een statische shell die
+  // meteen geserveerd wordt terwijl het dynamische deel binnenstroomt.
+  cacheComponents: true,
+  cacheLife: {
+    // Eén profiel voor alle publieke pagina's, zodat er nergens losse getallen
+    // rondslingeren. `revalidate` 300 komt overeen met de oude route-config;
+    // `stale` houdt de browsercache kort, want een redacteur wil zijn wijziging
+    // zien. `expire` een dag: valt de revalidatie uit, dan serveren we liever
+    // content van gisteren dan een foutpagina.
+    content: { stale: 60, revalidate: 300, expire: 86400 },
+  },
   images: {
     formats: ["image/avif", "image/webp"],
     // Cache geoptimaliseerde afbeeldingen 30 dagen (minder heroptimalisatie).

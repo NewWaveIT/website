@@ -6,7 +6,13 @@ import { useFormStatus } from "react-dom";
 import { ArrowRight } from "lucide-react";
 import { submitContact, type ContactState } from "@/app/(marketing)/contact/actions";
 import { SERVICE_FAMILIES, type ServiceFamilie } from "@/lib/dienstenstructuur";
-import { SERVICE_VRAGEN, VRAGEN_PER_SERVICE, type VraagKey } from "@/lib/services-vragen";
+import { useBrowserwaarde } from "@/lib/hooks/use-browserwaarde";
+import {
+  SERVICE_VRAGEN,
+  VRAGEN_PER_SERVICE,
+  CONTACT_TYPES,
+  type VraagKey,
+} from "@/lib/services-vragen";
 
 const initial: ContactState = { ok: false, message: "" };
 
@@ -29,18 +35,31 @@ function SubmitButton({ label }: { label: string }) {
   );
 }
 
-export function ContactForm({
-  type = "gesprek",
-  diensten = [],
-  dienstPreset = "",
-}: {
-  type?: string;
-  diensten?: DienstOptie[];
-  dienstPreset?: string;
-}) {
+export function ContactForm({ diensten = [] }: { diensten?: DienstOptie[] }) {
   const [state, formAction] = useActionState(submitContact, initial);
-  const [dienst, setDienst] = useState(dienstPreset);
   const err = (k: string) => state.errors?.[k];
+
+  /**
+   * Voorinvulling uit ?dienst= en ?type= — de dienstpagina's linken hierheen.
+   *
+   * Bewust in de browser en niet op de server: zo blijft /contact volledig
+   * statisch en is er één formulier, in plaats van een placeholder die na het
+   * streamen wordt vervangen (waarbij kwijtraakt wat je al had getypt). Beide
+   * waarden worden hier tegen de echte lijst gehouden, en de server action
+   * valideert ze nog een keer bij het versturen: voorinvulling is gemak, geen
+   * beveiligingsgrens.
+   */
+  // Een string, geen URLSearchParams: useSyncExternalStore vergelijkt snapshots
+  // op identiteit, dus een nieuw object per aanroep is een oneindige lus.
+  const zoek = useBrowserwaarde(() => window.location.search, "");
+  const uitUrl = new URLSearchParams(zoek);
+  const dienstUitUrl = uitUrl.get("dienst") ?? "";
+  const typeUitUrl = uitUrl.get("type") ?? "";
+  const type = CONTACT_TYPES.includes(typeUitUrl) ? typeUitUrl : "gesprek";
+
+  // De keuze van de bezoeker wint zodra hij er een maakt; daarvoor telt de URL.
+  const [keuze, setDienst] = useState<string | null>(null);
+  const dienst = keuze ?? (diensten.some((d) => d.slug === dienstUitUrl) ? dienstUitUrl : "");
 
   // Bij validatiefouten: zet focus op het eerste gemarkeerde veld.
   useEffect(() => {

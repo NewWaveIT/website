@@ -9,6 +9,15 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
+/**
+ * De admin is per definitie dynamisch: elke pagina leest de sessiecookie en
+ * toont de actuele stand van de database. Er valt hier niets zinnigs te
+ * prerenderen, dus we zetten de instant-validatie van Cache Components uit voor
+ * de hele boom in plaats van elke pagina in een <Suspense> te hangen die
+ * niemand ziet. Geldt alleen voor /admin; de publieke site is wél gecachet.
+ */
+export const instant = false;
+
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {
   const user = await getCurrentUser();
 

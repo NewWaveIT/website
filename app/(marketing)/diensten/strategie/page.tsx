@@ -1,3 +1,4 @@
+import { cacheLife } from "next/cache";
 import type { Metadata } from "next";
 import { RichtingHub } from "@/components/diensten/richting-hub";
 
@@ -8,8 +9,9 @@ export const metadata: Metadata = {
   alternates: { canonical: "/diensten/strategie" },
 };
 
-export const revalidate = 300;
+export default async function StrategieHubPage() {
+  "use cache";
+  cacheLife("content");
 
-export default function StrategieHubPage() {
   return <RichtingHub richting="strategie" />;
 }

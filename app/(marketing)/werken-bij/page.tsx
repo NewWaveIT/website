@@ -1,3 +1,4 @@
+import { cacheLife } from "next/cache";
 import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
@@ -17,9 +18,10 @@ export const metadata: Metadata = {
   alternates: { canonical: "/werken-bij" },
 };
 
-export const revalidate = 300;
-
 export default async function WerkenBijPage() {
+  "use cache";
+  cacheLife("content");
+
   // Recruitment-contactpersoon (dynamisch), met terugval op een standaard.
   const [vacatures, t, rec] = await Promise.all([
     getVacatures(),

@@ -1,3 +1,4 @@
+import { cacheLife } from "next/cache";
 import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
@@ -12,9 +13,8 @@ import {
 } from "lucide-react";
 import { ContactForm } from "@/components/contact/contact-form";
 import { getPagina } from "@/lib/paginas-data";
+import { getDienstOpties } from "@/lib/services-data";
 import { getContactpersoon } from "@/lib/team-data";
-import { getServices } from "@/lib/services-data";
-import { CONTACT_TYPES } from "@/lib/services-vragen";
 import "./contact.css";
 
 /** Alleen cijfers/+ voor een tel:-URI. */
@@ -29,19 +29,19 @@ export const metadata: Metadata = {
   alternates: { canonical: "/contact" },
 };
 
-// Geen `revalidate`: deze pagina leest ?dienst= en ?type= uit de queryparameters
-// en is daarmee altijd dynamisch — een statische cache zou de voorinvulling
-// van het formulier negeren.
-export default async function ContactPage({
-  searchParams,
-}: {
-  searchParams: Promise<{ dienst?: string; type?: string }>;
-}) {
-  const [t, sales, services, params] = await Promise.all([
+/**
+ * Volledig statisch. De voorinvulling uit ?dienst= en ?type= doet het formulier
+ * zelf in de browser, zodat deze pagina niet per bezoek gerenderd hoeft te
+ * worden voor iets wat alleen een keuzelijst anders zet.
+ */
+export default async function ContactPage() {
+  "use cache";
+  cacheLife("content");
+
+  const [t, sales, diensten] = await Promise.all([
     getPagina("contact"),
     getContactpersoon("sales"),
-    getServices(),
-    searchParams,
+    getDienstOpties(),
   ]);
 
   // Sales-contactpersoon (dynamisch), met terugval op een standaard.
@@ -49,16 +49,6 @@ export default async function ContactPage({
   const salesFoto = sales?.foto || "/assets/photos/portret-blauw.webp";
   const salesTel = sales?.telefoon || "06–10751254";
   const salesLinkedin = sales?.linkedin || "https://www.linkedin.com/company/the-new-wave-it";
-
-  // Nooit een ongefilterde queryparameter doorgeven aan een formulierveld.
-  const dienstPreset = services.some((s) => s.slug === params.dienst) ? (params.dienst ?? "") : "";
-  const type = params.type && CONTACT_TYPES.includes(params.type) ? params.type : "gesprek";
-  const diensten = services.map((s) => ({
-    slug: s.slug,
-    naam: s.naam,
-    familie: s.familie,
-    ctaType: s.ctaType,
-  }));
 
   return (
     <div className="p-contact">
@@ -140,7 +130,7 @@ export default async function ContactPage({
 
       <section className="block" id="gesprek">
         <div className="wrap-wide contact-grid">
-          <ContactForm type={type} diensten={diensten} dienstPreset={dienstPreset} />
+          <ContactForm diensten={diensten} />
           <aside className="aside">
             <div className="expect">
               <h3>{t.verwachtTitel}</h3>

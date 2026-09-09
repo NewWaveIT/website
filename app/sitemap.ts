@@ -1,3 +1,4 @@
+import { cacheLife } from "next/cache";
 import type { MetadataRoute } from "next";
 import { getArtikelen } from "@/lib/inzichten-data";
 import { getKlantverhalen } from "@/lib/klantverhalen-data";
@@ -6,10 +7,12 @@ import { getServices } from "@/lib/services-data";
 import { getSectorSlugs } from "@/lib/sectoren-detail-data";
 import { SITE_URL } from "@/lib/site";
 
-// Periodiek verversen zodat nieuwe CMS-content vanzelf in de sitemap komt.
-export const revalidate = 3600;
-
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  "use cache";
+  // Ruimer dan de pagina's zelf: de sitemap is voor crawlers, niet voor
+  // bezoekers, en `revalidateContent()` ververst hem toch bij elke wijziging.
+  cacheLife("hours");
+
   const now = new Date();
 
   const staticPaths = [

@@ -1,4 +1,5 @@
 import "server-only";
+import { cacheLife } from "next/cache";
 import { CONTENT_SCHEMAS } from "@/lib/cms/schemas";
 import { maakLezer } from "@/lib/cms/lees";
 import { SERVICES, type Service } from "@/lib/services";
@@ -24,6 +25,31 @@ const lezer = maakLezer<Service>({
 export const getServices = lezer.alle;
 
 export const getServiceBySlug = lezer.bijSlug;
+
+/** Wat het contactformulier van een dienst nodig heeft, en niets meer. */
+export interface DienstOptie {
+  slug: string;
+  naam: string;
+  familie: ServiceFamilie;
+  ctaType: Service["ctaType"];
+}
+
+/**
+ * De keuzelijst van het contactformulier. Apart en gecachet omdat het
+ * formulier achter een <Suspense> hangt (het leest queryparameters) en dus
+ * buiten de paginacache valt — zonder dit zou elk bezoek de dienstentabel
+ * opnieuw ophalen. Levert alleen de vier velden die de lijst toont.
+ */
+export async function getDienstOpties(): Promise<DienstOptie[]> {
+  "use cache";
+  cacheLife("content");
+  return (await getServices()).map((s) => ({
+    slug: s.slug,
+    naam: s.naam,
+    familie: s.familie,
+    ctaType: s.ctaType,
+  }));
+}
 
 export interface MatrixCel {
   richting: ServiceRichting;

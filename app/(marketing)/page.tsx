@@ -1,3 +1,4 @@
+import { cacheLife } from "next/cache";
 import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
@@ -34,8 +35,6 @@ const jsonLd = {
   sameAs: ["https://www.linkedin.com/company/the-new-wave-it"],
 };
 
-export const revalidate = 300;
-
 /** Beeld per richting bij de dienstensectie. */
 const DIENST_FOTO: Record<ServiceRichting, string> = {
   mendix: "/assets/photos/overleg-laptop.webp",
@@ -49,6 +48,9 @@ const DIENST_ALT: Record<ServiceRichting, string> = {
 };
 
 export default async function HomePage() {
+  "use cache";
+  cacheLife("content");
+
   const [t, instap, klantverhalen] = await Promise.all([
     getPagina("home"),
     getInstapPerRichting(),

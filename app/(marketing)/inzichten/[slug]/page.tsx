@@ -1,3 +1,4 @@
+import { cacheLife } from "next/cache";
 import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
@@ -8,8 +9,6 @@ import { LeadCta } from "@/components/inzichten/lead-cta";
 import { SITE_URL } from "@/lib/site";
 import "./article.css";
 
-export const revalidate = 300;
-
 export async function generateStaticParams() {
   return (await getArtikelen()).map((a) => ({ slug: a.slug }));
 }
@@ -19,6 +18,9 @@ export async function generateMetadata({
 }: {
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
+  "use cache";
+  cacheLife("content");
+
   const { slug } = await params;
   const a = await getArtikelBySlug(slug);
   if (!a) return {};
@@ -31,6 +33,9 @@ export async function generateMetadata({
 }
 
 export default async function ArtikelPage({ params }: { params: Promise<{ slug: string }> }) {
+  "use cache";
+  cacheLife("content");
+
   const { slug } = await params;
   const a = await getArtikelBySlug(slug);
   if (!a) notFound();

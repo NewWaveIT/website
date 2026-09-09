@@ -1,3 +1,4 @@
+import { cacheLife } from "next/cache";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -16,8 +17,6 @@ import { SITE_URL } from "@/lib/site";
 import "@/components/diensten/secties/secties.css";
 import "./dienst.css";
 
-export const revalidate = 300;
-
 export async function generateStaticParams() {
   return (await getServices()).map((s) => ({ slug: s.slug }));
 }
@@ -27,6 +26,9 @@ export async function generateMetadata({
 }: {
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
+  "use cache";
+  cacheLife("content");
+
   const { slug } = await params;
   const s = await getServiceBySlug(slug);
   if (!s) return {};
@@ -38,6 +40,9 @@ export async function generateMetadata({
 }
 
 export default async function DienstPage({ params }: { params: Promise<{ slug: string }> }) {
+  "use cache";
+  cacheLife("content");
+
   const { slug } = await params;
   const [s, artikelen] = await Promise.all([getServiceBySlug(slug), getArtikelenVoorDienst(slug)]);
   if (!s) notFound();

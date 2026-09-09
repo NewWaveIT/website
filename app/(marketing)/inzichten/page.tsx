@@ -1,3 +1,4 @@
+import { cacheLife } from "next/cache";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { getArtikelen } from "@/lib/inzichten-data";
@@ -14,9 +15,11 @@ export const metadata: Metadata = {
 };
 
 // Publieke content komt uit Supabase (met lib-fallback); ververs periodiek.
-export const revalidate = 300;
 
 export default async function InzichtenPage() {
+  "use cache";
+  cacheLife("content");
+
   const artikelen = await getArtikelen();
   return (
     <div className="p-inzichten">

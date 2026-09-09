@@ -1,3 +1,4 @@
+import { cacheLife } from "next/cache";
 import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
@@ -14,8 +15,6 @@ import { BreadcrumbJsonLd } from "@/components/breadcrumb-jsonld";
 function telHref(t: string): string {
   return `tel:${t.replace(/[^\d+]/g, "")}`;
 }
-
-export const revalidate = 300;
 
 /** Plaatsingsdatum (ISO) → een jaar later, voor `validThrough` in de JobPosting. */
 function vacatureVervalt(gepubliceerdOp: string): string | undefined {
@@ -48,15 +47,37 @@ const PROCES = [
   },
 ];
 
-export async function generateStaticParams() {
-  return (await getVacatures()).map((v) => ({ slug: v.slug }));
-}
+export const instant = false;
+
+/**
+ * Bewust géén generateStaticParams, met één bekend gevolg.
+ *
+ * Onder Cache Components moet die functie minstens één param teruggeven, en er
+ * staan nu geen vacatures open — de seed is leeg en de CMS-rijen staan op
+ * concept. Zonder die lijst kent Next de geldige slugs niet en begint hij met
+ * een statische shell te streamen, waarna `notFound()` de HTTP-status niet meer
+ * kan zetten: /vacatures/<onzin> geeft 200 met de 404-pagina in beeld, in
+ * plaats van een echte 404. De vier andere detailroutes hebben dat probleem
+ * niet, juist omdat die wél een slug-lijst hebben.
+ *
+ * Waarom dat hier acceptabel is: nergens op de site of in de sitemap staat een
+ * link naar een vacature, dus een crawler komt er niet, en het antwoord draagt
+ * `noindex`. Zodra er weer één vacature live staat hoort hieronder terug te
+ * komen — en daarmee ook de echte 404:
+ *
+ *   export async function generateStaticParams() {
+ *     return (await getVacatures()).map((v) => ({ slug: v.slug }));
+ *   }
+ */
 
 export async function generateMetadata({
   params,
 }: {
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
+  "use cache";
+  cacheLife("content");
+
   const { slug } = await params;
   const v = await getVacatureBySlug(slug);
   if (!v) return {};
@@ -68,6 +89,9 @@ export async function generateMetadata({
 }
 
 export default async function VacaturePage({ params }: { params: Promise<{ slug: string }> }) {
+  "use cache";
+  cacheLife("content");
+
   const { slug } = await params;
   const v = await getVacatureBySlug(slug);
   if (!v) notFound();

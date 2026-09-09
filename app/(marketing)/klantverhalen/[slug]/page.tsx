@@ -1,3 +1,4 @@
+import { cacheLife } from "next/cache";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -7,8 +8,6 @@ import type { Stap } from "@/lib/klantverhalen";
 import { SlotCta } from "@/components/layout/slot-cta";
 import { SITE_URL } from "@/lib/site";
 import "./case.css";
-
-export const revalidate = 300;
 
 /** Klein procesdiagram (bv. "de keten in drie stappen" of een sectie-flow). */
 function StappenFlow({ stappen, klein = false }: { stappen: Stap[]; klein?: boolean }) {
@@ -35,6 +34,9 @@ export async function generateMetadata({
 }: {
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
+  "use cache";
+  cacheLife("content");
+
   const { slug } = await params;
   const k = await getKlantverhaalBySlug(slug);
   if (!k) return {};
@@ -47,6 +49,9 @@ export async function generateMetadata({
 }
 
 export default async function CasePage({ params }: { params: Promise<{ slug: string }> }) {
+  "use cache";
+  cacheLife("content");
+
   const { slug } = await params;
   const k = await getKlantverhaalBySlug(slug);
   if (!k) notFound();
