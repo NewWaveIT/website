@@ -15,7 +15,7 @@ const DIENST_SLUGS = [
   "ai-strategie",
   "it-strategie",
   "mendix-scale-sessie",
-  "foundation-starterkit",
+  "consultant-inhuren",
   "fusion-team-startsprint",
   "training-enablement",
 ];

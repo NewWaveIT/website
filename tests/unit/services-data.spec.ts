@@ -129,7 +129,7 @@ describe("getDienstMatrix", () => {
     expect(capaciteit?.layout).toBe("breed");
     expect(capaciteit?.diensten.map((s) => s.slug)).toEqual([
       "fusion-team-startsprint",
-      "foundation-starterkit",
+      "consultant-inhuren",
       "training-enablement",
     ]);
   });

@@ -85,5 +85,5 @@ export const VRAGEN_PER_SERVICE: Record<string, VraagKey[]> = {
   "ai-agent-in-a-day": ["claudeToegang"],
   "ai-strategie": ["beslisserAanwezig"],
   "mendix-scale-sessie": ["appsInProductie", "teamsOpPlatform"],
-  "foundation-starterkit": ["appsInProductie", "teamsOpPlatform"],
+  "consultant-inhuren": ["appsInProductie", "teamsOpPlatform"],
 };

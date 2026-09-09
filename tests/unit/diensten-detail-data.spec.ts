@@ -44,7 +44,7 @@ describe("getRichtingSlugs", () => {
   });
 
   it("blijft bij die drie, ook als het CMS andere rijen bevat", async () => {
-    state.rows = [rij("it-strategie"), rij("foundation-starterkit")];
+    state.rows = [rij("it-strategie"), rij("consultant-inhuren")];
     expect(await getRichtingSlugs()).toEqual([...RICHTING_SLUGS]);
   });
 });

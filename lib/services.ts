@@ -19,7 +19,7 @@ export interface Service extends CaseVerwijzing {
   naam: string;
   /** Groepering op het /diensten-overzicht. */
   familie: ServiceFamilie;
-  /** "Thuis"-richting; leeg = geen eigen hub (Foundation Starterkit, Training & Enablement). */
+  /** "Thuis"-richting; leeg = geen eigen hub (inhuur, Training & Enablement). */
   richting?: ServiceRichting;
   /** Kolom op de richting-hub; standaard gelijk aan familie. */
   hubTier?: ServiceFamilie;
@@ -179,8 +179,8 @@ export const SERVICES: Service[] = [
       "Het passende deliverymodel, en waar AI in dat landschap landt",
     ],
     volgendeStap:
-      "Inrichting van de fundering, opzetten van het deliverymodel, of een Fusion Team Startsprint.",
-    volgendeStapSlugs: ["foundation-starterkit", "fusion-team-startsprint"],
+      "Het deliverymodel opzetten, capaciteit inhuren om te beginnen, of een Fusion Team Startsprint.",
+    volgendeStapSlugs: ["consultant-inhuren", "fusion-team-startsprint"],
     ctaLabel: "Plan een kennismaking (20 min)",
     ctaType: "kennismaking",
     volgorde: 5,
@@ -207,30 +207,37 @@ export const SERVICES: Service[] = [
       "De route ernaartoe in gefaseerde stappen, op papier binnen een week",
     ],
     volgendeStap:
-      "IT-strategie op low-code en AI voor de volledige uitwerking, of direct de Foundation Starterkit.",
-    volgendeStapSlugs: ["it-strategie", "foundation-starterkit"],
+      "IT-strategie op low-code en AI voor de volledige uitwerking, of meteen capaciteit inhuren.",
+    volgendeStapSlugs: ["it-strategie", "consultant-inhuren"],
     ctaLabel: "Vraag een datum aan",
     ctaType: "datum",
     volgorde: 6,
   },
   {
-    slug: "foundation-starterkit",
-    naam: "Foundation Starterkit",
+    // VOORZET — afgeleid uit de Fusion Team-beschrijving en de vacatureteksten
+    // over wat een consultant bij TNW doet (Advanced/Expert-certificering,
+    // Scrum, coachen van collega's). Geen tarieven, niveaus of doorlooptijden:
+    // die levert de eigenaar aan.
+    slug: "consultant-inhuren",
+    naam: "Consultant of team inhuren",
     familie: "capaciteit",
+    ookRelevantVoor: ["mendix"],
     fase: 3,
-    pitch: "De gedeelde fundering waardoor app nummer twee de helft kost van app nummer één.",
+    pitch:
+      "Een gecertificeerde Mendix-consultant die meedraait in jouw team, of een team dat een traject draagt.",
     beschrijving:
-      "App nummer één kost wat hij kost. App nummer twee zou de helft moeten kosten — en dat gebeurt alleen als er een gedeelde fundering onder ligt. In drie tot vier weken bouwen we die met jullie ontwikkelaars: een starter app met jullie huisstijl, inloggen en rechten geregeld, een herbruikbare koppellaag naar jullie kernsystemen, gedeelde componenten en geautomatiseerd testen en uitrollen. Elk volgend team begint hiermee in plaats van bij nul. En jullie eigen mensen kunnen hem daarna zelf uitbreiden.",
-    doelgroep: "Organisaties met twee of meer Mendix-apps in productie of op de rol.",
-    duur: "Drie tot vier weken",
+      "Soms is er geen vraagstuk om te onderzoeken, maar werk dat gedaan moet worden. Dan lever je capaciteit. Onze consultants zijn Mendix Advanced of Expert gecertificeerd en draaien mee in jullie eigen ritme en Scrum-proces — als teamlid, niet als externe partij ernaast. Ze bouwen niet alleen: ze coachen de mensen om zich heen en nemen mee wat ze bij andere opdrachtgevers hebben gezien. Eén consultant om een team te versterken, of een compleet team dat een traject draagt. Wat past, hangt af van wat er ligt.",
+    doelgroep:
+      "Organisaties met werk op de plank en te weinig handen, of zonder Mendix-kennis in huis.",
+    duur: "In overleg",
     prijzen: [],
     resultaten: [
-      "Een starter app met de huisstijl erin",
-      "Inloggen en rechten, een herbruikbare integratielaag en gedeelde componenten",
-      "Geautomatiseerd testen en uitrollen, plus een vastgelegde beheerafspraak",
+      "Een gecertificeerde consultant die meedraait in jullie ritme",
+      "Kennisoverdracht onderweg, zodat jullie eigen mensen meegroeien",
+      "Op- of afschalen in overleg",
     ],
     volgendeStap:
-      "Fusion Team Startsprint om de fundering te gaan gebruiken, of uitbreiding naar een tweede business unit.",
+      "Een Fusion Team Startsprint als jullie het daarna zelf willen kunnen, of uitbreiding naar een tweede team.",
     volgendeStapSlugs: ["fusion-team-startsprint"],
     ctaLabel: "Plan een kennismaking (20 min)",
     ctaType: "kennismaking",
