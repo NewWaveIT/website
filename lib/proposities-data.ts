@@ -1,30 +1,19 @@
 import "server-only";
-import { getPublishedContent, type ContentRow } from "@/lib/cms/content";
+import { getPublishedContent } from "@/lib/cms/content";
+import { CONTENT_SCHEMAS } from "@/lib/cms/schemas";
+import { leesRijen } from "@/lib/cms/merge";
 import { PROPOSITIES, type Propositie } from "@/lib/proposities";
 
-const arr = (v: unknown, fallback: string[] = []): string[] =>
-  Array.isArray(v) ? v.map((x) => String(x)).filter(Boolean) : fallback;
+const seedVoor = (slug: string) =>
+  PROPOSITIES.find((p) => p.slug === slug) as Record<string, unknown> | undefined;
 
-function mapRow(row: ContentRow): Propositie {
-  const base = PROPOSITIES.find((p) => p.slug === row.slug);
-  const d = (row.data ?? {}) as Partial<Propositie>;
-  return {
-    slug: row.slug,
-    nummer: Number(d.nummer ?? base?.nummer ?? 0),
-    titel: row.titel || base?.titel || row.slug,
-    belofte: String(d.belofte ?? base?.belofte ?? ""),
-    wat: arr(d.wat, base?.wat ?? []),
-    hoe: arr(d.hoe, base?.hoe ?? []),
-    onderscheid: arr(d.onderscheid, base?.onderscheid ?? []),
-    solutions: arr(d.solutions, base?.solutions ?? []),
-  };
-}
-
-/** Alle live proposities (CMS met lib-fallback), op nummer gesorteerd. */
+/** Alle live proposities (CMS met de seed als vangnet), op nummer gesorteerd. */
 export async function getProposities(): Promise<Propositie[]> {
   const rows = await getPublishedContent("proposities");
-  if (rows.length) return rows.map(mapRow).sort((a, b) => a.nummer - b.nummer);
-  return PROPOSITIES;
+  if (!rows.length) return PROPOSITIES;
+  return leesRijen("proposities", CONTENT_SCHEMAS.proposities, rows, seedVoor).sort(
+    (a, b) => a.nummer - b.nummer,
+  );
 }
 
 /**

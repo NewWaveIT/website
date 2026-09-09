@@ -1,130 +1,38 @@
 import "server-only";
-import { getPublishedContent, fotoWebp, type ContentRow } from "@/lib/cms/content";
+import { getPublishedContent, fotoWebp } from "@/lib/cms/content";
+import { CONTENT_SCHEMAS } from "@/lib/cms/schemas";
+import { leesRijen } from "@/lib/cms/merge";
 import { sanitizeLite } from "@/lib/cms/sanitize";
-import {
-  KLANTVERHALEN,
-  KLANTVERHAAL_MAP,
-  type Klantverhaal,
-  type KPI,
-  type Stap,
-  type Sectie,
-  type ResultaatKaart,
-} from "@/lib/klantverhalen";
+import { KLANTVERHALEN, KLANTVERHAAL_MAP, type Klantverhaal } from "@/lib/klantverhalen";
 
-function impactList(v: unknown): KPI[] {
-  if (!Array.isArray(v)) return [];
-  return v
-    .filter((x): x is Record<string, unknown> => !!x && typeof x === "object")
-    .map((x) => ({ n: String(x.n ?? ""), l: String(x.l ?? "") }));
-}
-
-/** Structuurvelden (keten, eindresultaten) komen uit de CMS-JSON of anders uit de seed. */
-function lijst<T>(v: unknown, fallback?: T[]): T[] | undefined {
-  return Array.isArray(v) && v.length ? (v as T[]) : fallback;
-}
-
-const isObj = (v: unknown): v is Record<string, unknown> =>
-  !!v && typeof v === "object" && !Array.isArray(v);
+const seedVoor = (slug: string) => KLANTVERHAAL_MAP[slug] as Record<string, unknown> | undefined;
 
 /**
- * Resultaatkaarten uit het CMS. Rijen die vóór de verrijking zijn geseed hebben
- * hier nog `string[]` staan; die leverden lege kaarten op omdat de component
- * `titel`/`tekst` verwacht. Een losse string wordt daarom de tekst van de kaart.
+ * Wat het schema niet doet: opmaak ontsmetten, oude .png-paden naar .webp
+ * trekken, en `tag` afleiden van de sector als hij niet apart is ingevuld.
  */
-function kaarten(v: unknown): ResultaatKaart[] {
-  if (!Array.isArray(v)) return [];
-  return v
-    .map((x) =>
-      typeof x === "string"
-        ? { titel: "", tekst: x }
-        : isObj(x)
-          ? { titel: String(x.titel ?? ""), tekst: String(x.tekst ?? "") }
-          : { titel: "", tekst: "" },
-    )
-    .filter((k) => k.titel || k.tekst);
-}
-
-/**
- * Secties per stuk samenvoegen in plaats van de hele array te vervangen.
- *
- * `seedContent()` slaat bestaande slugs over, dus een rij die vóór een
- * modelwijziging is aangemaakt houdt de oude vorm. Nam je zo'n array dan in zijn
- * geheel over, dan verdwenen de nieuwere velden (situatie, aanpak, rijke
- * resultaatkaarten) en bleven er lege koppen staan. Per veld terugvallen op de
- * seed-sectie — gematcht op titel, anders op positie — houdt de pagina heel.
- */
-function secties(v: unknown, basis?: Sectie[]): Sectie[] | undefined {
-  if (!Array.isArray(v) || !v.length) return basis;
-  return v.map((raw, i) => {
-    const c = isObj(raw) ? raw : {};
-    const titel = String(c.titel ?? "");
-    const b = basis?.find((x) => x.titel === titel) ?? basis?.[i];
-    const cmsKaarten = kaarten(c.resultaten);
-    return {
-      titel: titel || b?.titel || "",
-      situatie: String(c.situatie ?? "") || b?.situatie || "",
-      // Oude rijen hebben één `tekst`-veld i.p.v. situatie/aanpak.
-      aanpak: String(c.aanpak ?? "") || b?.aanpak || String(c.tekst ?? ""),
-      stappen: lijst<Stap>(c.stappen, b?.stappen),
-      functionaliteiten: lijst<string>(c.functionaliteiten, b?.functionaliteiten),
-      resultaten: cmsKaarten.length ? cmsKaarten : (b?.resultaten ?? []),
-    };
-  });
-}
-
-/**
- * CMS-rij over de seed heen. De seed is de basis, zodat rijkere content die
- * (nog) niet in het CMS-schema zit — de ketenstappen, de secties per app en de
- * eindresultaten — niet verdwijnt zodra er een cms_cases-rij bestaat.
- */
-function mapRow(row: ContentRow): Klantverhaal {
-  const base = KLANTVERHAAL_MAP[row.slug];
-  const d = row.data as Record<string, unknown>;
-  const s = (k: string) => (typeof d[k] === "string" ? (d[k] as string) : "");
-  const tekst = (k: string, val?: string) => s(k) || val || "";
-  const aside = (d.aside && typeof d.aside === "object" ? d.aside : {}) as Record<string, unknown>;
+function verrijk(k: Klantverhaal): Klantverhaal {
   return {
-    slug: row.slug,
-    sector: tekst("sector", base?.sector),
-    metric: tekst("metric", base?.metric),
-    cardTitel: s("cardTitel") || row.titel || base?.cardTitel || "",
-    org: tekst("org", base?.org),
-    image: fotoWebp(s("image")) || base?.image || "/assets/photos/team-presentatie-breed.webp",
-    tag: s("tag") || s("sector") || base?.tag || "",
-    h1: s("h1") || row.titel || base?.h1 || "",
-    intro: tekst("intro", base?.intro),
-    impact: impactList(d.impact).length ? impactList(d.impact) : (base?.impact ?? []),
-    challenge: s("challenge") ? sanitizeLite(s("challenge")) : (base?.challenge ?? ""),
-    pull: tekst("pull", base?.pull),
-    ketenTitel: tekst("ketenTitel", base?.ketenTitel) || undefined,
-    ketenStappen: lijst<Stap>(d.ketenStappen, base?.ketenStappen),
-    ketenSynthese: tekst("ketenSynthese", base?.ketenSynthese) || undefined,
-    secties: secties(d.secties, base?.secties),
-    resultaat: s("resultaat") ? sanitizeLite(s("resultaat")) : (base?.resultaat ?? ""),
-    eindresultaten: lijst<ResultaatKaart>(d.eindresultaten, base?.eindresultaten),
-    aside: {
-      sector: String(aside.sector ?? s("sector") ?? base?.aside.sector ?? ""),
-      diensten: String(aside.diensten ?? base?.aside.diensten ?? ""),
-      doorlooptijd: String(aside.doorlooptijd ?? base?.aside.doorlooptijd ?? ""),
-      team: String(aside.team ?? base?.aside.team ?? "Plan-build-run"),
-    },
-    quote: tekst("quote", base?.quote),
-    quoteNaam: tekst("quoteNaam", base?.quoteNaam),
-    quoteRol: tekst("quoteRol", base?.quoteRol),
+    ...k,
+    image: fotoWebp(k.image),
+    tag: k.tag || k.sector,
+    challenge: sanitizeLite(k.challenge),
+    resultaat: sanitizeLite(k.resultaat),
   };
 }
 
 /** Gepubliceerde klantverhalen uit Supabase; valt terug op de statische lib-data. */
 export async function getKlantverhalen(): Promise<Klantverhaal[]> {
   const rows = await getPublishedContent("cases");
-  return rows.length ? rows.map(mapRow) : KLANTVERHALEN;
+  if (!rows.length) return KLANTVERHALEN.map(verrijk);
+  return leesRijen("cases", CONTENT_SCHEMAS.cases, rows, seedVoor).map(verrijk);
 }
 
 export async function getKlantverhaalBySlug(slug: string): Promise<Klantverhaal | null> {
-  const rows = await getPublishedContent("cases");
-  const r = rows.find((x) => x.slug === slug);
-  if (r) return mapRow(r);
-  // Per-slug terugvallen, niet alleen bij een lege tabel: een seed-item dat nog
+  const uitCms = (await getKlantverhalen()).find((k) => k.slug === slug);
+  if (uitCms) return uitCms;
+  // Per slug terugvallen, niet alleen bij een lege tabel: een seed-item dat nog
   // geen CMS-rij heeft moet blijven werken zodra er ándere rijen bestaan.
-  return KLANTVERHAAL_MAP[slug] ?? null;
+  const seed = KLANTVERHAAL_MAP[slug];
+  return seed ? verrijk(seed) : null;
 }

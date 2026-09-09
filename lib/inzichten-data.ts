@@ -65,6 +65,14 @@ export function isoDatum(d: string): string {
   return maand ? `${m[3]}-${maand}-${m[1]!.padStart(2, "0")}` : "";
 }
 
+/**
+ * Het enige contenttype met een eigen mapRow, en bewust zo — zie de toelichting
+ * in `lib/cms/rij.ts`. Artikelen doen echte transformatie (datumnotatie,
+ * HTML-detectie, auteur opzoeken in het team) en hun rij-sleutels verschillen
+ * van de uitvoer (`cover`→`image`, `samenvatting`→`intro`, `inhoud`→`body`).
+ * Er is hier ook niets te beschermen: elk veld heeft een totale fallback en de
+ * seed wordt nooit over een CMS-waarde gelegd, dus geen rij kan half renderen.
+ */
 function mapRow(row: ContentRow, resolve: AuthorResolver): Artikel {
   const d = row.data as Record<string, unknown>;
   const str = (k: string) => (typeof d[k] === "string" ? (d[k] as string) : "");

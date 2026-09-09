@@ -33,6 +33,14 @@ uit de code afleidt.
 - Commit met een heldere NL-boodschap. **Push alleen als de gebruiker erom vraagt.**
 - **Hergebruik bestaande patronen, tokens en CSS exact.** Introduceer geen nieuwe kleur,
   stijl of component-variant als er al één bestaat — consistentie boven creativiteit.
+- **Een contentmodelwijziging is pas af als de data mee is.** Verwijder je een veld, een
+  sectie of een contenttype uit de code, ruim dan in dezelfde wijziging de bijbehorende
+  rijen en sleutels in Supabase op — of zet ze op concept. `seedContent()` voegt alleen
+  ontbrekende rijen toe en verwijdert nooit iets, dus data die uit de code verdwijnt
+  blijft gewoon op de site staan. Dat is de oorzaak van elke lege-content-bug tot nu toe:
+  verzonnen klantverhalen die live bleven, `secties` in de oude vorm, dode `samen*`-velden,
+  onbereikbare dienstrijen. Controleer met **Controleer content** op het admin-dashboard en
+  repareer met **Vul aan uit standaard**.
 
 ## Kernpatronen
 
@@ -55,6 +63,16 @@ uit de code afleidt.
 - **CMS.** Editor genereert velden uit `FIELD_SCHEMAS` (`panel:"side"` = instellingenrail).
   Publieke pagina's lezen live-rijen met fallback op de seed; `saveContent` revalideert de
   publieke paden.
+- **De CMS-rij is de waarheid, de seed is het vangnet.** Elk contenttype heeft één
+  leespad: `leesRijen` (`lib/cms/merge.ts`) valideert de rij tegen zijn runtime-schema
+  (`lib/cms/schemas.ts`, zod) na platslaan door `rijNaarRuw` (`lib/cms/rij.ts`). Drie
+  regels, en het verschil ertussen is waar alle lege-content-bugs vandaan kwamen: een
+  **leeg opgeslagen** veld blijft leeg, een veld dat de rij **niet noemt** of **niet geldig**
+  levert komt uit de seed (met een `console.error` in de Vercel-logs), en een rij die zo
+  nóg niet compleet is valt weg — in een overzicht verdwijnt hij, op een detailpagina wordt
+  het een 404. Schrijf dus geen eigen `mapRow` met per-veld-`??`-ketens meer; dat
+  compenseerde precies de rommel die dit pad zichtbaar hoort te maken. `lib/inzichten-data.ts`
+  is de enige, gedocumenteerde uitzondering.
 - **Auth/RLS.** Middleware redirect ongeauthenticeerde `/admin` → login; `requireAdmin()`
   (`lib/dal.ts`) in élke admin-action en -pagina. Anon mag alleen `insert` op de
   formuliertabellen; de service-role-client (`lib/supabase/admin.ts`) is uitsluitend voor

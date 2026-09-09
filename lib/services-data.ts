@@ -1,5 +1,7 @@
 import "server-only";
-import { getPublishedContent, type ContentRow } from "@/lib/cms/content";
+import { getPublishedContent } from "@/lib/cms/content";
+import { CONTENT_SCHEMAS } from "@/lib/cms/schemas";
+import { leesRijen } from "@/lib/cms/merge";
 import {
   SERVICES,
   SERVICE_FAMILIES,
@@ -9,78 +11,17 @@ import {
   type ServiceRichting,
 } from "@/lib/services";
 
-const arr = (v: unknown, fallback: string[] = []): string[] =>
-  Array.isArray(v) ? v.map((x) => String(x)).filter(Boolean) : fallback;
-
-function toRichting(v?: string): ServiceRichting | undefined {
-  return v === "mendix" || v === "ai" || v === "strategie" ? v : undefined;
-}
-
-function toFamilie(v?: string): ServiceFamilie | undefined {
-  return v === "doen" || v === "richting" || v === "capaciteit" ? v : undefined;
-}
-
-function toFase(v?: string): 1 | 2 | 3 | undefined {
-  const n = Number(v);
-  return n === 1 || n === 2 || n === 3 ? n : undefined;
-}
-
-/**
- * De keuzevelden in het CMS hebben expliciete 'leeg'-opties ("(geen)",
- * "(zelfde als familie)"). Zo'n keuze moet de seed-waarde wíssen, niet erop
- * terugvallen — anders lijkt het veld in de admin niets te doen.
- */
-const SENTINELS = new Set(["(geen)", "(zelfde als familie)"]);
-
-function keuze(d: Record<string, unknown>, key: string): { gezet: boolean; waarde?: string } {
-  if (!(key in d)) return { gezet: false };
-  const s = typeof d[key] === "string" ? (d[key] as string).trim() : String(d[key] ?? "");
-  return s && !SENTINELS.has(s) ? { gezet: true, waarde: s } : { gezet: true };
-}
-
-function mapRow(row: ContentRow): Service {
-  const base = SERVICES.find((s) => s.slug === row.slug);
-  const d = row.data as Partial<Service>;
-  const rij = row.data as Record<string, unknown>;
-  const kFamilie = keuze(rij, "familie");
-  const kRichting = keuze(rij, "richting");
-  const kHubTier = keuze(rij, "hubTier");
-  const kFase = keuze(rij, "fase");
-  return {
-    slug: row.slug,
-    naam: String(d.naam ?? "") || row.titel || base?.naam || row.slug,
-    familie:
-      (kFamilie.gezet ? toFamilie(kFamilie.waarde) : base?.familie) ?? base?.familie ?? "doen",
-    richting: kRichting.gezet ? toRichting(kRichting.waarde) : base?.richting,
-    hubTier: kHubTier.gezet ? toFamilie(kHubTier.waarde) : base?.hubTier,
-    ookRelevantVoor: arr(d.ookRelevantVoor, base?.ookRelevantVoor ?? []).filter(
-      (r): r is ServiceRichting => r === "mendix" || r === "ai" || r === "strategie",
-    ),
-    fase: kFase.gezet ? toFase(kFase.waarde) : base?.fase,
-    pitch: String(d.pitch ?? base?.pitch ?? ""),
-    beschrijving: String(d.beschrijving ?? base?.beschrijving ?? ""),
-    doelgroep: String(d.doelgroep ?? base?.doelgroep ?? ""),
-    duur: String(d.duur ?? base?.duur ?? ""),
-    groepsgrootte: d.groepsgrootte ? String(d.groepsgrootte) : base?.groepsgrootte,
-    prijzen: Array.isArray(d.prijzen) && d.prijzen.length ? d.prijzen : (base?.prijzen ?? []),
-    resultaten: arr(d.resultaten, base?.resultaten ?? []),
-    volgendeStap: String(d.volgendeStap ?? base?.volgendeStap ?? ""),
-    volgendeStapSlugs: d.volgendeStapSlugs ? arr(d.volgendeStapSlugs) : base?.volgendeStapSlugs,
-    ctaLabel: String(d.ctaLabel ?? base?.ctaLabel ?? "Neem contact op"),
-    ctaType:
-      d.ctaType === "kennismaking" || d.ctaType === "datum"
-        ? d.ctaType
-        : (base?.ctaType ?? "datum"),
-    volgorde: Number(row.volgorde ?? base?.volgorde ?? 0),
-  };
-}
+const seedVoor = (slug: string) =>
+  SERVICES.find((s) => s.slug === slug) as Record<string, unknown> | undefined;
 
 const FAMILIE_ORDER: Record<ServiceFamilie, number> = { doen: 0, richting: 1, capaciteit: 2 };
 
 /** Alle live services (CMS met lib-fallback), gesorteerd op familie dan volgorde. */
 export async function getServices(): Promise<Service[]> {
   const rows = await getPublishedContent("services");
-  const services = rows.length ? rows.map(mapRow) : SERVICES;
+  const services = rows.length
+    ? leesRijen("services", CONTENT_SCHEMAS.services, rows, seedVoor)
+    : SERVICES;
   return [...services].sort(
     (a, b) => FAMILIE_ORDER[a.familie] - FAMILIE_ORDER[b.familie] || a.volgorde - b.volgorde,
   );

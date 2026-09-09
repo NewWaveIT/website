@@ -19,6 +19,9 @@ export type GemapteType = Exclude<GevalideerdType, "artikelen">;
 
 type Bouwer = (row: ContentRow) => Record<string, unknown>;
 
+/** Wat een keuzeveld in de admin toont als "niet ingevuld". */
+const SENTINELS = new Set(["(geen)", "(zelfde als familie)"]);
+
 const BOUWERS: Record<GemapteType, Bouwer> = {
   cases: (row) => {
     const d = row.data as Record<string, unknown>;
@@ -33,7 +36,19 @@ const BOUWERS: Record<GemapteType, Bouwer> = {
   sectoren: (row) => ({ ...(row.data as object), slug: row.slug }),
   services: (row) => {
     const d = row.data as Record<string, unknown>;
-    return { ...d, slug: row.slug, naam: d.naam || row.titel, volgorde: row.volgorde };
+    const uit: Record<string, unknown> = { ...d };
+    // De keuzevelden in de admin hebben een expliciete 'leeg'-optie. Die staat
+    // als tekst in de data, dus hier normaliseren naar een lege waarde. Let op:
+    // de sleutel blíjft staan (met `undefined`), want dat is het verschil tussen
+    // "de redacteur koos (geen)" en "de rij kent dit veld niet" — alleen bij het
+    // tweede springt de seed bij. Zie `vulAan` in lib/cms/merge.ts.
+    for (const veld of ["richting", "hubTier", "fase"]) {
+      const v = uit[veld];
+      if (typeof v === "string" && SENTINELS.has(v.trim())) uit[veld] = undefined;
+    }
+    // `fase` staat als tekst in een select maar is in het schema een getal.
+    if (typeof uit.fase === "string" && uit.fase.trim()) uit.fase = Number(uit.fase);
+    return { ...uit, slug: row.slug, naam: d.naam || row.titel, volgorde: row.volgorde };
   },
   vacatures: (row) => {
     const d = row.data as Record<string, unknown>;

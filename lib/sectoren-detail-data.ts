@@ -1,45 +1,29 @@
 import "server-only";
-import { getPublishedContent, type ContentRow } from "@/lib/cms/content";
+import { getPublishedContent } from "@/lib/cms/content";
+import { CONTENT_SCHEMAS } from "@/lib/cms/schemas";
+import { leesRijen } from "@/lib/cms/merge";
 import { SECTOREN, SECTOR_SLUGS, type SectorDetail } from "@/lib/sectoren-detail";
 import { sanitizeInline } from "@/lib/cms/sanitize";
 
-function skeleton(row: ContentRow): SectorDetail {
-  return {
-    slug: row.slug,
-    naam: row.titel,
-    icon: "building-2",
-    h1: row.titel,
-    intro: "",
-    kpis: [],
-    challengesIntro: "",
-    challenges: [],
-    solutions: [],
-    outcomes: [],
-    caseTitle: "",
-    caseSector: "",
-    caseQuote: "",
-    caseNaam: "",
-    caseRol: "",
-    caseImage: "/assets/photos/team-presentatie-breed.webp",
-    insightsTitle: "",
-    insights: [],
-    ctaTitle: "",
-  };
+const seedVoor = (slug: string) => SECTOREN[slug] as Record<string, unknown> | undefined;
+
+/** Wat het schema niet doet: opmaak ontsmetten voor weergave. */
+function verrijk(s: SectorDetail): SectorDetail {
+  return { ...s, intro: sanitizeInline(s.intro) };
 }
 
-function mapRow(row: ContentRow): SectorDetail {
-  const base = SECTOREN[row.slug] ?? skeleton(row);
-  const d = (row.data ?? {}) as Partial<SectorDetail>;
-  const merged = { ...base, ...d, slug: row.slug, naam: (d.naam as string) || base.naam };
-  merged.intro = sanitizeInline(String(merged.intro ?? ""));
-  return merged;
+async function lees(): Promise<SectorDetail[]> {
+  const rows = await getPublishedContent("sectoren");
+  if (!rows.length) return Object.values(SECTOREN).map(verrijk);
+  return leesRijen("sectoren", CONTENT_SCHEMAS.sectoren, rows, seedVoor).map(verrijk);
 }
 
 export async function getSectorBySlug(slug: string): Promise<SectorDetail | null> {
-  const rows = await getPublishedContent("sectoren");
-  const row = rows.find((x) => x.slug === slug);
-  if (row) return mapRow(row);
-  return SECTOREN[slug] ?? null;
+  const uitCms = (await lees()).find((s) => s.slug === slug);
+  if (uitCms) return uitCms;
+  // Per slug terugvallen: een sector zonder eigen rij hoort gewoon te renderen.
+  const seed = SECTOREN[slug];
+  return seed ? verrijk(seed) : null;
 }
 
 export async function getSectorSlugs(): Promise<string[]> {
@@ -50,6 +34,5 @@ export async function getSectorSlugs(): Promise<string[]> {
 /** Alle sectoren; gebruikt door de sectorkoppeling op de richting-hubs, die
  *  alleen slugs opslaat en de namen hier ophaalt. */
 export async function getSectoren(): Promise<SectorDetail[]> {
-  const rows = await getPublishedContent("sectoren");
-  return rows.length ? rows.map(mapRow) : Object.values(SECTOREN);
+  return lees();
 }
