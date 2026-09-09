@@ -1,23 +1,35 @@
 import Link from "next/link";
 import { Plus } from "lucide-react";
-import type { ContentRow, ContentType } from "@/lib/cms/content";
-import { ContentListClient, type Facet } from "./content-list-client";
+import { listContentSamenvatting, type ContentType } from "@/lib/cms/content";
+import { LIJST_FACETTEN, isSorteerbaar } from "@/lib/cms/admin-lijst";
+import { ContentListClient } from "./content-list-client";
 
-export function AdminContentList({
+/**
+ * De adminlijst van één contenttype.
+ *
+ * Haalt zijn eigen rijen op, en alleen wat de tabel toont: de negen
+ * lijstpagina's zeiden eerst allemaal zelf `listContent(type)` en kregen
+ * daarmee de volledige inhoud van elke rij mee. Nu bepaalt de facetdeclaratie
+ * (`LIJST_FACETTEN`) welke velden er nodig zijn, en kan die query niet meer uit
+ * de pas lopen met wat de lijst laat zien.
+ */
+export async function AdminContentList({
   type,
   crumb,
   titel,
   sub,
-  rows,
-  facets,
 }: {
   type: ContentType;
   crumb: string;
   titel: string;
   sub: string;
-  rows: ContentRow[];
-  facets?: Facet[];
 }) {
+  const facets = LIJST_FACETTEN[type] ?? [];
+  const rows = await listContentSamenvatting(
+    type,
+    facets.map((f) => f.key),
+  );
+
   return (
     <>
       <div className="crumb">{crumb}</div>
@@ -30,12 +42,7 @@ export function AdminContentList({
           <Plus /> Nieuw
         </Link>
       </div>
-      <ContentListClient
-        type={type}
-        rows={rows}
-        facets={facets}
-        orderable={type !== "artikelen" && type !== "paginas"}
-      />
+      <ContentListClient type={type} rows={rows} facets={facets} orderable={isSorteerbaar(type)} />
     </>
   );
 }

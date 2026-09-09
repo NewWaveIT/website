@@ -97,6 +97,13 @@ uit de code afleidt.
   argumenten en ververst de hele site. Hier stond een kaart van contenttype naar routes;
   die dreef weg. Elke pagina wordt sowieso elke vijf minuten opnieuw opgebouwd, dus dit
   vervroegt alleen wat toch gebeurt.
+- **Haal in de admin alleen op wat je toont.** De lijstpagina's gebruiken
+  `listContentSamenvatting` (`lib/cms/content.ts`): de kolommen die de tabel laat zien plus
+  de `data`-velden waarop gefilterd wordt, afgeleid uit `LIJST_FACETTEN`
+  (`lib/cms/admin-lijst.ts`). Niet `listContent`, want die haalt de volledige `data`-jsonb
+  van elke rij op — tientallen KB's bodytekst voor een tabel met titels. Een nieuw filter
+  voeg je toe aan `LIJST_FACETTEN`; de query volgt dan vanzelf. Zijbalktellers komen uit
+  één RPC (`admin_aantallen`), niet uit elf count-queries.
 - **Auth/RLS.** `proxy.ts` (de Next 16-naam voor middleware) redirect ongeauthenticeerde `/admin` → login; `requireAdmin()`
   (`lib/dal.ts`) in élke admin-action en -pagina. Anon mag alleen `insert` op de
   formuliertabellen; de service-role-client (`lib/supabase/admin.ts`) is uitsluitend voor

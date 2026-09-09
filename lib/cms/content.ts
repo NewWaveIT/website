@@ -51,58 +51,72 @@ export function fotoWebp(s: string | null | undefined): string {
  *  krijgt een harde timeout, zodat we snel terugvallen op de statische content. */
 const QUERY_TIMEOUT_MS = 3000;
 
-async function count(table: string, onlyOpen?: string): Promise<number> {
+/**
+ * De tellers naast de menu-items in de admin-zijbalk.
+ *
+ * Eén databasefunctie in plaats van elf losse count-queries per paginabezoek —
+ * zie supabase/migrations/20260909160000_admin-aantallen.sql. De functie draait
+ * met de rechten van de aanroeper, dus RLS bepaalt wat er geteld wordt.
+ *
+ * Faalt stil met nullen: een zijbalk zonder badges is vervelend, een admin die
+ * niet laadt is erger.
+ */
+export async function getAdminCounts(): Promise<Record<string, number>> {
   try {
     const supabase = await createClient();
-    let q = supabase.from(table).select("*", { count: "exact", head: true });
-    if (onlyOpen) q = q.neq("status", onlyOpen);
-    const { count: c } = await q.abortSignal(AbortSignal.timeout(QUERY_TIMEOUT_MS));
-    return c ?? 0;
-  } catch {
-    return 0;
+    const { data, error } = await supabase
+      .rpc("admin_aantallen")
+      .abortSignal(AbortSignal.timeout(QUERY_TIMEOUT_MS));
+    if (error) {
+      console.error("[cms] admin_aantallen mislukt:", error.message);
+      return {};
+    }
+    const rijen = (data ?? []) as { naam: string; aantal: number }[];
+    return Object.fromEntries(rijen.map((r) => [r.naam, Number(r.aantal)]));
+  } catch (e) {
+    console.error("[cms] admin_aantallen onbereikbaar:", (e as Error).message);
+    return {};
   }
 }
 
-/** Aantallen voor de admin-sidebar. Faalt stil (0) zonder Supabase. */
-export async function getAdminCounts(): Promise<Record<string, number>> {
-  const [
-    paginas,
-    cases,
-    diensten,
-    sectoren,
-    proposities,
-    services,
-    artikelen,
-    vacatures,
-    teamleden,
-    aanvragen,
-    sollicitaties,
-  ] = await Promise.all([
-    count("cms_paginas"),
-    count("cms_cases"),
-    count("cms_diensten"),
-    count("cms_sectoren"),
-    count("cms_proposities"),
-    count("cms_services"),
-    count("cms_artikelen"),
-    count("cms_vacatures"),
-    count("cms_teamleden"),
-    count("contact_aanvragen", "afgerond"),
-    count("sollicitaties", "afgerond"),
-  ]);
-  return {
-    paginas,
-    cases,
-    diensten,
-    sectoren,
-    proposities,
-    services,
-    artikelen,
-    vacatures,
-    teamleden,
-    aanvragen,
-    sollicitaties,
-  };
+/** Kolommen die de adminlijst toont; `data` blijft er bewust buiten. */
+const LIJST_KOLOMMEN = "id, slug, titel, status, volgorde, bijgewerkt_op, bewerkt_door";
+
+/** Alleen letters, cijfers en liggende streepjes: een veldnaam, geen expressie. */
+const VEILIG_VELD = /^[A-Za-z0-9_]+$/;
+
+export async function listContentSamenvatting(
+  type: ContentType,
+  facetVelden: readonly string[] = [],
+): Promise<ContentRow[]> {
+  const velden = facetVelden.filter((v) => VEILIG_VELD.test(v));
+  const selectie = [LIJST_KOLOMMEN, ...velden.map((v) => `${v}:data->>${v}`)].join(", ");
+  try {
+    const supabase = await createClient();
+    const { data, error } = await supabase
+      .from(CONTENT_TABLE[type])
+      .select(selectie)
+      .order("volgorde", { ascending: true })
+      .order("bijgewerkt_op", { ascending: false })
+      .abortSignal(AbortSignal.timeout(QUERY_TIMEOUT_MS));
+    if (error) {
+      console.error(`[cms] lijstquery mislukt op ${CONTENT_TABLE[type]}:`, error.message);
+      return [];
+    }
+    return ((data ?? []) as unknown as Record<string, unknown>[]).map((rij) => ({
+      id: String(rij.id),
+      slug: String(rij.slug),
+      titel: String(rij.titel),
+      status: String(rij.status),
+      volgorde: Number(rij.volgorde ?? 0),
+      bijgewerkt_op: String(rij.bijgewerkt_op ?? ""),
+      bewerkt_door: (rij.bewerkt_door as string | null) ?? null,
+      data: Object.fromEntries(velden.map((v) => [v, rij[v] ?? ""])),
+    }));
+  } catch (e) {
+    console.error(`[cms] ${CONTENT_TABLE[type]} onbereikbaar:`, (e as Error).message);
+    return [];
+  }
 }
 
 export async function listContent<T = Record<string, unknown>>(

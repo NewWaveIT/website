@@ -5,8 +5,7 @@ import Link from "next/link";
 import { Search, X, Check, AlertTriangle, GripVertical } from "lucide-react";
 import { reorderContent } from "@/app/admin/content/actions";
 import type { ContentRow, ContentType } from "@/lib/cms/content";
-
-export type Facet = { key: string; label: string };
+import type { Facet } from "@/lib/cms/admin-lijst";
 
 function fmt(iso: string) {
   try {
