@@ -8,9 +8,9 @@ export default async function CasesPage() {
   return (
     <AdminContentList
       type="cases"
-      crumb="Content"
-      titel="Cases"
-      sub="Klantverhalen op de website."
+      crumb="Verhalen"
+      titel="Klantverhalen"
+      sub="De klantverhalen op de website."
       rows={rows}
       facets={[{ key: "sector", label: "sectoren" }]}
     />

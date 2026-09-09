@@ -7,7 +7,7 @@ import { ContentEditor } from "@/components/admin/content-editor";
 
 const META: Record<ContentType, { label: string; listPath: string }> = {
   paginas: { label: "Pagina", listPath: "/admin/paginas" },
-  cases: { label: "Case", listPath: "/admin/cases" },
+  cases: { label: "Klantverhaal", listPath: "/admin/cases" },
   diensten: { label: "Richting", listPath: "/admin/diensten" },
   sectoren: { label: "Sector", listPath: "/admin/sectoren" },
   artikelen: { label: "Artikel", listPath: "/admin/inzichten" },

@@ -8,8 +8,8 @@ export default async function SectorenAdminPage() {
   return (
     <AdminContentList
       type="sectoren"
-      crumb="Content"
-      titel="Sectoren"
+      crumb="Sectoren"
+      titel="Sectorpagina's"
       sub="De vijf focussectoren."
       rows={rows}
     />

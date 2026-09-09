@@ -8,7 +8,7 @@ export default async function PropositiesAdminPage() {
   return (
     <AdminContentList
       type="proposities"
-      crumb="Content"
+      crumb="Sectoren"
       titel="Proposities"
       sub="De proposities (probleem-eerst) die als PMC op de sectorpagina's verschijnen."
       rows={rows}

@@ -8,7 +8,7 @@ export default async function InzichtenAdminPage() {
   return (
     <AdminContentList
       type="artikelen"
-      crumb="Content"
+      crumb="Verhalen"
       titel="Inzichten"
       sub="Artikelen en kennisdeling."
       rows={rows}

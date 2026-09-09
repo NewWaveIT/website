@@ -8,7 +8,7 @@ export default async function TeamledenAdminPage() {
   return (
     <AdminContentList
       type="teamleden"
-      crumb="Content"
+      crumb="Organisatie"
       titel="Teamleden"
       sub="De mensen achter The New Wave IT."
       rows={rows}

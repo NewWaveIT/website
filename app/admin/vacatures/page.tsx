@@ -8,7 +8,7 @@ export default async function VacaturesAdminPage() {
   return (
     <AdminContentList
       type="vacatures"
-      crumb="Content"
+      crumb="Organisatie"
       titel="Vacatures"
       sub="Openstaande rollen en hun sollicitaties."
       rows={rows}

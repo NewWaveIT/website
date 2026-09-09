@@ -8,7 +8,7 @@ export default async function PaginasPage() {
   return (
     <AdminContentList
       type="paginas"
-      crumb="Content"
+      crumb="Overzicht"
       titel="Pagina's"
       sub="Beheer de vaste pagina's van de website."
       rows={rows}

@@ -8,10 +8,11 @@ import {
   FileText,
   Briefcase,
   Layers,
+  ListChecks,
   Building2,
   Newspaper,
   Package,
-  Users,
+  Quote,
   UserRound,
   Inbox,
   UserCheck,
@@ -19,20 +20,23 @@ import {
   History,
   LogOut,
 } from "lucide-react";
-import { ADMIN_NAV } from "@/lib/admin-nav";
+import { ADMIN_NAV, type AdminNavIcon } from "@/lib/admin-nav";
 import { logout } from "@/app/admin/actions";
 import { cn } from "@/lib/utils";
 
-const ICONS: Record<string, React.ComponentType> = {
+/** Compleet per constructie: `Record<AdminNavIcon, …>` maakt een ontbrekend
+ *  icoon een typefout in plaats van een lege plek in de zijbalk. */
+const ICONS: Record<AdminNavIcon, React.ComponentType> = {
   "layout-dashboard": LayoutDashboard,
   "file-text": FileText,
-  briefcase: Briefcase,
   layers: Layers,
+  "list-checks": ListChecks,
   "building-2": Building2,
   package: Package,
+  quote: Quote,
   newspaper: Newspaper,
-  users: Users,
   "user-round": UserRound,
+  briefcase: Briefcase,
   inbox: Inbox,
   "user-check": UserCheck,
   shield: Shield,

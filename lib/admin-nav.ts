@@ -1,7 +1,36 @@
+/**
+ * De navigatie van het CMS.
+ *
+ * De groepen volgen de publieke site, niet het datamodel: wie iets wil
+ * aanpassen denkt in "de sectorpagina's" of "het aanbod", niet in
+ * contenttypen. Daarom staan Proposities bij Sectoren (daar verschijnen ze) en
+ * Richtingen bij Diensten (de hubs waaronder ze hangen), en heet `cases` hier
+ * Klantverhalen — zoals op de site.
+ */
+
+/** De iconen die de sidebar kent. Deze lijst en de `ICONS`-map in
+ *  components/admin/sidebar.tsx houden elkaar in bedwang: een sleutel die daar
+ *  ontbreekt is een typefout, geen stilzwijgend verdwenen icoon. */
+export type AdminNavIcon =
+  | "layout-dashboard"
+  | "file-text"
+  | "layers"
+  | "list-checks"
+  | "building-2"
+  | "package"
+  | "quote"
+  | "newspaper"
+  | "user-round"
+  | "briefcase"
+  | "inbox"
+  | "user-check"
+  | "shield"
+  | "history";
+
 export interface AdminNavItem {
   href: string;
   label: string;
-  icon: string; // lucide key
+  icon: AdminNavIcon;
   countKey?: string;
 }
 export interface AdminNavGroup {
@@ -12,25 +41,47 @@ export interface AdminNavGroup {
 export const ADMIN_NAV: AdminNavGroup[] = [
   {
     groep: "Overzicht",
-    items: [{ href: "/admin", label: "Dashboard", icon: "layout-dashboard" }],
+    items: [
+      { href: "/admin", label: "Dashboard", icon: "layout-dashboard" },
+      { href: "/admin/paginas", label: "Pagina's", icon: "file-text", countKey: "paginas" },
+    ],
   },
   {
-    groep: "Content",
+    groep: "Aanbod",
     items: [
-      { href: "/admin/paginas", label: "Pagina's", icon: "file-text", countKey: "paginas" },
-      { href: "/admin/cases", label: "Cases", icon: "briefcase", countKey: "cases" },
       { href: "/admin/diensten", label: "Richtingen", icon: "layers", countKey: "diensten" },
       { href: "/admin/services", label: "Diensten", icon: "list-checks", countKey: "services" },
-      { href: "/admin/sectoren", label: "Sectoren", icon: "building-2", countKey: "sectoren" },
+    ],
+  },
+  {
+    groep: "Sectoren",
+    items: [
+      {
+        href: "/admin/sectoren",
+        label: "Sectorpagina's",
+        icon: "building-2",
+        countKey: "sectoren",
+      },
       {
         href: "/admin/proposities",
         label: "Proposities",
         icon: "package",
         countKey: "proposities",
       },
+    ],
+  },
+  {
+    groep: "Verhalen",
+    items: [
+      { href: "/admin/cases", label: "Klantverhalen", icon: "quote", countKey: "cases" },
       { href: "/admin/inzichten", label: "Inzichten", icon: "newspaper", countKey: "artikelen" },
-      { href: "/admin/vacatures", label: "Vacatures", icon: "users", countKey: "vacatures" },
+    ],
+  },
+  {
+    groep: "Organisatie",
+    items: [
       { href: "/admin/teamleden", label: "Teamleden", icon: "user-round", countKey: "teamleden" },
+      { href: "/admin/vacatures", label: "Vacatures", icon: "briefcase", countKey: "vacatures" },
     ],
   },
   {

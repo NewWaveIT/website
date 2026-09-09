@@ -8,7 +8,7 @@ export default async function ServicesAdminPage() {
   return (
     <AdminContentList
       type="services"
-      crumb="Content"
+      crumb="Aanbod"
       titel="Diensten"
       sub="De negen boekbare diensten, elk met een eigen pagina onder /diensten."
       rows={rows}
