@@ -178,7 +178,13 @@ export default async function WerkenBijPage() {
                 AI-consultants die bij ons passen.{" "}
               </>
             )}
-            <a href="#open-sollicitatie" style={{ color: "var(--orange-400)" }}>
+            {/* Onderstreept: als tekstlink binnen een alinea is kleur alleen niet
+                genoeg om hem te herkennen (WCAG 1.4.1) — het verschil met de
+                omringende tekst haalt de 3:1 niet. */}
+            <a
+              href="#open-sollicitatie"
+              style={{ color: "var(--orange-400)", textDecoration: "underline" }}
+            >
               Stuur hieronder een open sollicitatie
             </a>{" "}
             — of bel {recVoornaam}: {recTel}.
