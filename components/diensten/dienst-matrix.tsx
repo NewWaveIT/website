@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Boxes, BrainCircuit, Route, ArrowRight } from "lucide-react";
-import { RICHTINGEN, type ServiceRichting } from "@/lib/services";
+import { RICHTINGEN, type ServiceRichting } from "@/lib/dienstenstructuur";
 import type { DienstMatrix as Matrix } from "@/lib/services-data";
 import { ServiceCard } from "./service-card";
 import "./niveau.css";

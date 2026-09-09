@@ -142,7 +142,7 @@ export async function saveContent(_prev: SaveState, formData: FormData): Promise
   });
 
   revalidatePath(LIST_PATH[type]);
-  revalidateContent(type, slug);
+  revalidateContent();
   redirect(`${LIST_PATH[type]}?ok=${bestaat ? "bijgewerkt" : "aangemaakt"}`);
 }
 
@@ -200,7 +200,7 @@ export async function reorderContent(type: string, orderedIds: string[]): Promis
   }
 
   revalidatePath(LIST_PATH[type]);
-  revalidateContent(type, "");
+  revalidateContent();
   return { ok: true };
 }
 
@@ -229,6 +229,6 @@ export async function deleteContent(formData: FormData): Promise<void> {
   });
 
   revalidatePath(LIST_PATH[type]);
-  revalidateContent(type, (bestaand as { slug?: string } | null)?.slug ?? "");
+  revalidateContent();
   redirect(`${LIST_PATH[type]}?ok=verwijderd`);
 }

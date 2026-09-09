@@ -1,23 +1,18 @@
 import "server-only";
-import { getPublishedContent, fotoWebp } from "@/lib/cms/content";
+import { fotoWebp } from "@/lib/cms/content";
 import { CONTENT_SCHEMAS } from "@/lib/cms/schemas";
-import { leesRijen } from "@/lib/cms/merge";
+import { maakLezer } from "@/lib/cms/lees";
 import { TEAMLEDEN, type Teamlid } from "@/lib/team";
 
-const seedVoor = (slug: string) =>
-  TEAMLEDEN.find((t) => t.slug === slug) as Record<string, unknown> | undefined;
+const lezer = maakLezer<Teamlid>({
+  type: "teamleden",
+  schema: CONTENT_SCHEMAS.teamleden,
+  seed: TEAMLEDEN,
+  // Wat het schema niet doet: oude .png-paden naar .webp trekken.
+  verrijk: (t) => ({ ...t, foto: fotoWebp(t.foto) || undefined }),
+});
 
-/** Wat het schema niet doet: oude .png-paden naar .webp trekken. */
-function verrijk(t: Teamlid): Teamlid {
-  return { ...t, foto: fotoWebp(t.foto) || undefined };
-}
-
-/** Gepubliceerde teamleden uit Supabase; valt terug op de standaardlijst. */
-export async function getTeamleden(): Promise<Teamlid[]> {
-  const rows = await getPublishedContent("teamleden");
-  if (!rows.length) return TEAMLEDEN.map(verrijk);
-  return leesRijen("teamleden", CONTENT_SCHEMAS.teamleden, rows, seedVoor).map(verrijk);
-}
+export const getTeamleden = lezer.alle;
 
 /**
  * Het teamlid dat als contactpersoon voor een rol is aangewezen (sales of

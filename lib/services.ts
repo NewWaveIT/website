@@ -7,15 +7,12 @@
  */
 
 import type { KPI, Vraagstuk, AanpakRow, WaaromItem, CaseVerwijzing } from "@/lib/content-blokken";
+import type { ServiceFamilie, ServiceRichting, ServicePrijs } from "@/lib/dienstenstructuur";
 
-export type ServiceFamilie = "doen" | "richting" | "capaciteit";
-export type ServiceRichting = "mendix" | "ai" | "strategie";
-
-export interface ServicePrijs {
-  label: string;
-  /** Toelichting op de prijs, bv. "dagdeel" of "exclusief licenties". */
-  variant?: string;
-}
+// Doorgeven zodat serverbestanden aan één import genoeg hebben; client-
+// componenten importeren rechtstreeks uit lib/dienstenstructuur.
+export type { ServiceFamilie, ServiceRichting, ServicePrijs } from "@/lib/dienstenstructuur";
+export { SERVICE_FAMILIES, RICHTINGEN } from "@/lib/dienstenstructuur";
 
 export interface Service extends CaseVerwijzing {
   slug: string;
@@ -57,28 +54,6 @@ export interface Service extends CaseVerwijzing {
   waarom?: WaaromItem[];
   outcomes?: KPI[];
 }
-
-/**
- * De drie families zijn tegelijk de drie niveaus van de ladder: je begint altijd
- * bij het instapniveau (één dag, vaste prijs) en schaalt op wanneer dat werkt.
- */
-export const SERVICE_FAMILIES: {
-  key: ServiceFamilie;
-  niveau: number;
-  label: string;
-  kicker: string;
-}[] = [
-  { key: "doen", niveau: 1, label: "Instap", kicker: "Doen in één dag" },
-  { key: "richting", niveau: 2, label: "Richting", kicker: "Richting bepalen" },
-  { key: "capaciteit", niveau: 3, label: "Capaciteit", kicker: "Capaciteit opbouwen" },
-];
-
-/** De drie richtingen als kolommen van de keuzematrix, in vaste volgorde. */
-export const RICHTINGEN: { key: ServiceRichting; naam: string; href: string }[] = [
-  { key: "mendix", naam: "Mendix", href: "/diensten/mendix" },
-  { key: "ai", naam: "AI", href: "/diensten/ai" },
-  { key: "strategie", naam: "Strategie", href: "/diensten/strategie" },
-];
 
 export const SERVICES: Service[] = [
   {

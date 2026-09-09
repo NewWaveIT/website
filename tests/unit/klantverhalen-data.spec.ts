@@ -60,9 +60,12 @@ describe("getKlantverhaalBySlug", () => {
     expect(k?.ketenStappen?.length).toBeGreaterThan(0);
   });
 
-  it("valt per slug terug: een seed-item zonder eigen rij blijft werken", async () => {
+  it("laat een seed-item dat niet in het CMS staat verdwijnen", async () => {
+    // De admin is de waarheid: zodra er rijen zijn, telt alleen wat daar staat.
+    // Een verwijderd klantverhaal komt niet terug uit de seed.
     state.rows = [heleRij("andere-case", { cardTitel: "Andere case" })];
-    expect((await getKlantverhaalBySlug("moove"))?.h1).toBe(seed.h1);
+    expect(await getKlantverhaalBySlug("moove")).toBeNull();
+    expect((await getKlantverhalen()).map((k) => k.slug)).toEqual(["andere-case"]);
   });
 
   it("geeft null voor een slug die nergens bestaat", async () => {

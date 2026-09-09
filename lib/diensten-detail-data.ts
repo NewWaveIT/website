@@ -1,16 +1,16 @@
 import "server-only";
-import { getPublishedContent } from "@/lib/cms/content";
 import { CONTENT_SCHEMAS } from "@/lib/cms/schemas";
-import { leesRijen } from "@/lib/cms/merge";
-import { DIENSTEN, RICHTING_SLUGS, type DienstDetail } from "@/lib/diensten-detail";
+import { maakLezer } from "@/lib/cms/lees";
 import { sanitizeInline } from "@/lib/cms/sanitize";
+import { DIENSTEN, RICHTING_SLUGS, type DienstDetail } from "@/lib/diensten-detail";
 
-const seedVoor = (slug: string) => DIENSTEN[slug] as Record<string, unknown> | undefined;
-
-/** Wat het schema niet doet: opmaak ontsmetten voor weergave. */
-function verrijk(d: DienstDetail): DienstDetail {
-  return { ...d, intro: sanitizeInline(d.intro) };
-}
+const lezer = maakLezer<DienstDetail>({
+  type: "diensten",
+  schema: CONTENT_SCHEMAS.diensten,
+  seed: Object.values(DIENSTEN),
+  // Wat het schema niet doet: opmaak ontsmetten voor weergave.
+  verrijk: (d) => ({ ...d, intro: sanitizeInline(d.intro) }),
+});
 
 /**
  * Alleen de drie richtingen bestaan hier. Rijen met een andere slug — resten van
@@ -22,13 +22,7 @@ function isRichting(slug: string): boolean {
 }
 
 export async function getRichtingBySlug(slug: string): Promise<DienstDetail | null> {
-  if (!isRichting(slug)) return null;
-  const rows = (await getPublishedContent("diensten")).filter((r) => r.slug === slug);
-  const [uitCms] = leesRijen("diensten", CONTENT_SCHEMAS.diensten, rows, seedVoor);
-  if (uitCms) return verrijk(uitCms);
-  // Per slug terugvallen: een richting zonder eigen rij hoort gewoon te renderen.
-  const seed = DIENSTEN[slug];
-  return seed ? verrijk(seed) : null;
+  return isRichting(slug) ? lezer.bijSlug(slug) : null;
 }
 
 export async function getRichtingSlugs(): Promise<string[]> {

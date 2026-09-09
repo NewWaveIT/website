@@ -63,16 +63,23 @@ uit de code afleidt.
 - **CMS.** Editor genereert velden uit `FIELD_SCHEMAS` (`panel:"side"` = instellingenrail).
   Publieke pagina's lezen live-rijen met fallback op de seed; `saveContent` revalideert de
   publieke paden.
-- **De CMS-rij is de waarheid, de seed is het vangnet.** Elk contenttype heeft één
-  leespad: `leesRijen` (`lib/cms/merge.ts`) valideert de rij tegen zijn runtime-schema
-  (`lib/cms/schemas.ts`, zod) na platslaan door `rijNaarRuw` (`lib/cms/rij.ts`). Drie
-  regels, en het verschil ertussen is waar alle lege-content-bugs vandaan kwamen: een
-  **leeg opgeslagen** veld blijft leeg, een veld dat de rij **niet noemt** of **niet geldig**
-  levert komt uit de seed (met een `console.error` in de Vercel-logs), en een rij die zo
-  nóg niet compleet is valt weg — in een overzicht verdwijnt hij, op een detailpagina wordt
-  het een 404. Schrijf dus geen eigen `mapRow` met per-veld-`??`-ketens meer; dat
-  compenseerde precies de rommel die dit pad zichtbaar hoort te maken. `lib/inzichten-data.ts`
-  is de enige, gedocumenteerde uitzondering.
+- **De admin is de waarheid, de seed is een koude start.** Elk contenttype leest via
+  `maakLezer` (`lib/cms/lees.ts`) — één functie, geen zeven varianten. Tabel leeg ⇒ de
+  seed in `lib/<type>.ts` rendert (verse database, of Supabase onbereikbaar). Tabel gevuld
+  ⇒ **alleen** wat in het CMS staat; een slug die je daar verwijdert verdwijnt van de site
+  en komt niet terug uit de seed. Content hoort dus in de admin te staan, niet in de code.
+- **Binnen een rij: leeg is echt leeg.** `leesRijen`/`leesRij` (`lib/cms/merge.ts`)
+  valideert elke rij tegen zijn zod-schema (`lib/cms/schemas.ts`) na platslaan door
+  `rijNaarRuw` (`lib/cms/rij.ts`). Een **leeg opgeslagen** veld blijft leeg; een veld dat de
+  rij **niet noemt** of **niet geldig** levert komt uit de seed van dezelfde slug (met een
+  `console.error` in de Vercel-logs); een rij die zo nóg niet compleet is valt weg — uit een
+  overzicht, of als 404 op een detailpagina. Schrijf dus geen eigen `mapRow` met per-veld-
+  `??`-ketens; dat compenseerde precies de rommel die dit pad zichtbaar hoort te maken.
+  `lib/inzichten-data.ts` is de enige, gedocumenteerde uitzondering.
+- **Revalidatie is grofmazig en dat is de bedoeling.** `revalidateContent()` neemt geen
+  argumenten en ververst de hele site. Hier stond een kaart van contenttype naar routes;
+  die dreef weg. Elke pagina is al ISR met `revalidate = 300`, dus dit vervroegt alleen wat
+  toch gebeurt.
 - **Auth/RLS.** `proxy.ts` (de Next 16-naam voor middleware) redirect ongeauthenticeerde `/admin` → login; `requireAdmin()`
   (`lib/dal.ts`) in élke admin-action en -pagina. Anon mag alleen `insert` op de
   formuliertabellen; de service-role-client (`lib/supabase/admin.ts`) is uitsluitend voor

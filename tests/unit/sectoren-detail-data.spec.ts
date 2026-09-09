@@ -46,9 +46,9 @@ describe("getSectorBySlug", () => {
     expect((await getSectorBySlug(eerste.slug))?.h1).toBe("Eigen kop");
   });
 
-  it("valt per slug terug als er alleen ándere rijen zijn", async () => {
+  it("toont een sector niet meer zodra hij uit het CMS is", async () => {
     state.rows = [heleRij(SECTOR_SLUGS[1]!)];
-    expect((await getSectorBySlug(eerste.slug))?.h1).toBe(eerste.h1);
+    expect(await getSectorBySlug(eerste.slug)).toBeNull();
   });
 
   it("geeft null voor een slug die nergens bestaat", async () => {
@@ -57,11 +57,13 @@ describe("getSectorBySlug", () => {
 });
 
 describe("getSectorSlugs", () => {
-  it("voegt zelf aangemaakte sectoren toe zonder de seed te verliezen", async () => {
+  it("volgt het CMS, zodat er niets wordt voorgerenderd wat niet bestaat", async () => {
     state.rows = [heleRij("eigen-sector")];
-    const slugs = await getSectorSlugs();
-    expect(slugs).toContain("eigen-sector");
-    for (const s of SECTOR_SLUGS) expect(slugs).toContain(s);
+    expect(await getSectorSlugs()).toEqual(["eigen-sector"]);
+  });
+
+  it("gebruikt de seed als koude start, met een lege tabel", async () => {
+    expect(await getSectorSlugs()).toEqual([...SECTOR_SLUGS]);
   });
 });
 

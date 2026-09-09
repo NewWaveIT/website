@@ -1,36 +1,29 @@
 import "server-only";
-import { getPublishedContent } from "@/lib/cms/content";
 import { CONTENT_SCHEMAS } from "@/lib/cms/schemas";
-import { leesRijen } from "@/lib/cms/merge";
+import { maakLezer } from "@/lib/cms/lees";
+import { SERVICES, type Service } from "@/lib/services";
 import {
-  SERVICES,
   SERVICE_FAMILIES,
   RICHTINGEN,
-  type Service,
   type ServiceFamilie,
   type ServiceRichting,
-} from "@/lib/services";
+} from "@/lib/dienstenstructuur";
 
-const seedVoor = (slug: string) =>
-  SERVICES.find((s) => s.slug === slug) as Record<string, unknown> | undefined;
+/** De ladder loopt van instap naar capaciteit; binnen een niveau telt `volgorde`. */
+const FAMILIE_VOLGORDE: Record<ServiceFamilie, number> = { doen: 0, richting: 1, capaciteit: 2 };
 
-const FAMILIE_ORDER: Record<ServiceFamilie, number> = { doen: 0, richting: 1, capaciteit: 2 };
+const lezer = maakLezer<Service>({
+  type: "services",
+  schema: CONTENT_SCHEMAS.services,
+  seed: SERVICES,
+  sorteer: (a, b) =>
+    FAMILIE_VOLGORDE[a.familie] - FAMILIE_VOLGORDE[b.familie] || a.volgorde - b.volgorde,
+});
 
-/** Alle live services (CMS met lib-fallback), gesorteerd op familie dan volgorde. */
-export async function getServices(): Promise<Service[]> {
-  const rows = await getPublishedContent("services");
-  const services = rows.length
-    ? leesRijen("services", CONTENT_SCHEMAS.services, rows, seedVoor)
-    : SERVICES;
-  return [...services].sort(
-    (a, b) => FAMILIE_ORDER[a.familie] - FAMILIE_ORDER[b.familie] || a.volgorde - b.volgorde,
-  );
-}
+/** Alle live diensten, gesorteerd op familie dan volgorde. */
+export const getServices = lezer.alle;
 
-export async function getServiceBySlug(slug: string): Promise<Service | null> {
-  const services = await getServices();
-  return services.find((s) => s.slug === slug) ?? null;
-}
+export const getServiceBySlug = lezer.bijSlug;
 
 export interface MatrixCel {
   richting: ServiceRichting;
