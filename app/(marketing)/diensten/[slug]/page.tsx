@@ -82,14 +82,16 @@ export default async function DienstPage({ params }: { params: Promise<{ slug: s
               {s.doelgroep} · {s.duur}
               {s.groepsgrootte ? ` · ${s.groepsgrootte}` : ""}
             </p>
-            <div className="dienst-prijzen">
-              {s.prijzen.map((p) => (
-                <span key={p.label}>
-                  <strong>{p.label}</strong>
-                  {p.variant ? ` ${p.variant}` : ""}
-                </span>
-              ))}
-            </div>
+            {s.prijzen.length > 0 && (
+              <div className="dienst-prijzen">
+                {s.prijzen.map((p) => (
+                  <span key={p.label}>
+                    <strong>{p.label}</strong>
+                    {p.variant ? ` ${p.variant}` : ""}
+                  </span>
+                ))}
+              </div>
+            )}
             <div className="hero-actions">
               <Link href={`/contact?dienst=${s.slug}`} className="btn btn-primary">
                 {s.ctaLabel} <ArrowRight />

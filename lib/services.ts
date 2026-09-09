@@ -122,7 +122,7 @@ export const SERVICES: Service[] = [
       "Proceseigenaren, managers en de mensen die het werk kennen, bij voorkeur uit meer dan één afdeling.",
     duur: "Halve dag",
     groepsgrootte: "Zes tot tien deelnemers",
-    prijzen: [{ label: "€ 1.500 – 2.500", variant: "verrekenbaar bij een vervolgopdracht" }],
+    prijzen: [],
     resultaten: [
       "De AI Opportunity Map van de eigen processen",
       "De drie kansrijkste toepassingen met randvoorwaarden",
@@ -146,10 +146,7 @@ export const SERVICES: Service[] = [
     doelgroep: "Directie en MT — werkt alleen goed als de eindverantwoordelijke er zelf bij zit.",
     duur: "Halve of hele dag",
     groepsgrootte: "Vijf tot twaalf deelnemers",
-    prijzen: [
-      { label: "€ 3.500 – 4.500", variant: "dagdeel" },
-      { label: "€ 6.500 – 8.500", variant: "hele dag" },
-    ],
+    prijzen: [],
     resultaten: [
       "Een schriftelijke positiebepaling binnen een week",
       "Prioriteiten voor het komende jaar",
@@ -175,9 +172,7 @@ export const SERVICES: Service[] = [
       "Low-code groeit bij jullie harder dan de inrichting eromheen. Er komen apps bij, teams bij en vragen bij — en de architectuur, governance en het deliverymodel zijn niet meegegroeid. In twee tot drie weken brengen we in kaart waar jullie staan op business waarde, delivery en teams, en platformfundering. Je krijgt een roadmap met gefaseerde stappen, plus heldere antwoorden op de vragen waar je nu tegenaan loopt: waar past low-code en waar niet, welk deliverymodel hoort bij jullie ambitie, en waar landt AI in dit landschap.",
     doelgroep: "CIO, IT-directeur, informatiemanager of enterprise architect.",
     duur: "Twee tot drie weken",
-    prijzen: [
-      { label: "€ 12.500 – 20.000", variant: "afhankelijk van de omvang van het landschap" },
-    ],
+    prijzen: [],
     resultaten: [
       "Een strategie- en roadmapdocument op drie lagen: business waarde, delivery en teams, platformfundering",
       "De keuze waar low-code past en waar een standaardpakket of maatwerk beter is",
@@ -205,7 +200,7 @@ export const SERVICES: Service[] = [
       "Organisaties die al met Mendix werken; het team zelf plus de opdrachtgever, uit business, delivery en architectuur samen.",
     duur: "Eén dag",
     groepsgrootte: "Acht tot vijftien deelnemers",
-    prijzen: [{ label: "€ 4.500 – 6.500" }],
+    prijzen: [],
     resultaten: [
       "Een volwassenheidsbepaling op business waarde, delivery/teams en platformfundering",
       "Het doelbeeld van het deliverymodel: van één team naar meerdere teams met een gedeelde fundering",
@@ -228,7 +223,7 @@ export const SERVICES: Service[] = [
       "App nummer één kost wat hij kost. App nummer twee zou de helft moeten kosten — en dat gebeurt alleen als er een gedeelde fundering onder ligt. In drie tot vier weken bouwen we die met jullie ontwikkelaars: een starter app met jullie huisstijl, inloggen en rechten geregeld, een herbruikbare koppellaag naar jullie kernsystemen, gedeelde componenten en geautomatiseerd testen en uitrollen. Elk volgend team begint hiermee in plaats van bij nul. En jullie eigen mensen kunnen hem daarna zelf uitbreiden.",
     doelgroep: "Organisaties met twee of meer Mendix-apps in productie of op de rol.",
     duur: "Drie tot vier weken",
-    prijzen: [{ label: "€ 15.000 – 25.000", variant: "afhankelijk van het aantal koppelingen" }],
+    prijzen: [],
     resultaten: [
       "Een starter app met de huisstijl erin",
       "Inloggen en rechten, een herbruikbare integratielaag en gedeelde componenten",
@@ -254,7 +249,7 @@ export const SERVICES: Service[] = [
     doelgroep:
       "Organisaties die willen dat business en IT samen ontwikkelen — vaak de logische stap na App in a Day.",
     duur: "Vier weken",
-    prijzen: [{ label: "€ 18.000 – 28.000" }],
+    prijzen: [],
     resultaten: [
       "Een werkende oplossing in gebruik of in pilot",
       "Een medewerker die hem zelfstandig kan onderhouden en uitbreiden",
@@ -278,10 +273,7 @@ export const SERVICES: Service[] = [
       "Citizen developers, business analisten, ontwikkelaars en teams die zelf willen bouwen.",
     duur: "Modulair, losse blokken of doorlopende coaching",
     groepsgrootte: "Groepen tot tien deelnemers",
-    prijzen: [
-      { label: "€ 2.500 – 3.500", variant: "per dagblok, tot 10 deelnemers" },
-      { label: "Op dagbasis", variant: "coaching op de werkvloer" },
-    ],
+    prijzen: [],
     resultaten: [
       "Mensen die zelfstandig bouwen",
       "Huisstandaarden vastgelegd, zodat het onderhoudbaar blijft",

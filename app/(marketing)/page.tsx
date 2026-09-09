@@ -140,14 +140,16 @@ export default async function HomePage() {
                       <li key={r}>{r}</li>
                     ))}
                   </ul>
-                  <div className="dienst-prijs">
-                    {s.prijzen.map((p) => (
-                      <span key={p.label}>
-                        <strong>{p.label}</strong>
-                        {p.variant ? ` ${p.variant}` : ""}
-                      </span>
-                    ))}
-                  </div>
+                  {s.prijzen.length > 0 && (
+                    <div className="dienst-prijs">
+                      {s.prijzen.map((p) => (
+                        <span key={p.label}>
+                          <strong>{p.label}</strong>
+                          {p.variant ? ` ${p.variant}` : ""}
+                        </span>
+                      ))}
+                    </div>
+                  )}
                   <div
                     style={{
                       display: "flex",

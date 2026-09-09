@@ -54,14 +54,16 @@ export function ServiceCard({ service: s, toonFase = false, compact = false }: S
         <span>{s.duur}</span>
         {s.groepsgrootte && <span>{s.groepsgrootte}</span>}
       </div>
-      <div className="svc-prijs">
-        {s.prijzen.map((p) => (
-          <div key={p.label}>
-            <strong>{p.label}</strong>
-            {p.variant && <span> {p.variant}</span>}
-          </div>
-        ))}
-      </div>
+      {s.prijzen.length > 0 && (
+        <div className="svc-prijs">
+          {s.prijzen.map((p) => (
+            <div key={p.label}>
+              <strong>{p.label}</strong>
+              {p.variant && <span> {p.variant}</span>}
+            </div>
+          ))}
+        </div>
+      )}
 
       {compact ? (
         <details className="svc-diepte">

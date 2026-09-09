@@ -201,3 +201,27 @@ describe("getFaseItems", () => {
     expect(Object.keys(fases[3] ?? {})).toEqual(["nummer", "titel", "tekst"]);
   });
 });
+
+/**
+ * Prijzen horen alleen bij de instapdiensten. Die zijn concreet en in één dag
+ * af, dus een bedrag zegt daar iets. Alles daarboven — richting bepalen,
+ * capaciteit opbouwen — hangt van de situatie af; een bedrag zou daar
+ * schijnnauwkeurigheid zijn en de verkeerde verwachting wekken.
+ *
+ * Het is een contentregel, geen code: `prijzen` is gewoon leeg voor die
+ * diensten en de weergave verbergt een leeg blok. Deze test bewaakt dat de
+ * regel niet stilletjes terugdraait bij een volgende contentwijziging.
+ */
+describe("prijzen alleen bij instap", () => {
+  it("toont een prijs bij elke instapdienst", () => {
+    for (const s of SERVICES.filter((s) => s.familie === "doen")) {
+      expect(s.prijzen.length, `${s.slug} hoort een prijs te hebben`).toBeGreaterThan(0);
+    }
+  });
+
+  it("toont geen prijs bij richting- en capaciteitsdiensten", () => {
+    for (const s of SERVICES.filter((s) => s.familie !== "doen")) {
+      expect(s.prijzen, `${s.slug} hoort geen prijs te tonen`).toEqual([]);
+    }
+  });
+});
