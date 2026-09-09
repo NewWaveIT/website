@@ -128,3 +128,17 @@ test("de richting-hubs tonen 'wanneer wel, wanneer niet'", async ({ page }) => {
     await expect(sectie.locator(".welniet-kolom--niet li").first()).toBeVisible();
   }
 });
+
+/**
+ * De admin hangt volledig achter proxy.ts (tot Next 16 middleware.ts). Die
+ * bestandsnaam is een conventie, geen import: hernoem je hem verkeerd, dan
+ * verdwijnt de bescherming zonder dat er iets stukgaat. Vandaar deze test.
+ */
+test.describe("admin is afgeschermd", () => {
+  for (const pad of ["/admin", "/admin/sectoren", "/admin/gebruikers"]) {
+    test(`${pad} stuurt een niet-ingelogde bezoeker naar de login`, async ({ page }) => {
+      await page.goto(pad);
+      expect(new URL(page.url()).pathname, `eindbestemming van ${pad}`).toBe("/admin/login");
+    });
+  }
+});

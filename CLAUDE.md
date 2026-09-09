@@ -73,7 +73,7 @@ uit de code afleidt.
   het een 404. Schrijf dus geen eigen `mapRow` met per-veld-`??`-ketens meer; dat
   compenseerde precies de rommel die dit pad zichtbaar hoort te maken. `lib/inzichten-data.ts`
   is de enige, gedocumenteerde uitzondering.
-- **Auth/RLS.** Middleware redirect ongeauthenticeerde `/admin` → login; `requireAdmin()`
+- **Auth/RLS.** `proxy.ts` (de Next 16-naam voor middleware) redirect ongeauthenticeerde `/admin` → login; `requireAdmin()`
   (`lib/dal.ts`) in élke admin-action en -pagina. Anon mag alleen `insert` op de
   formuliertabellen; de service-role-client (`lib/supabase/admin.ts`) is uitsluitend voor
   gebruikersbeheer.

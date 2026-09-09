@@ -95,7 +95,7 @@ content lezen; ingelogde staff beheert alles.
 ### 4. CMS / admin (`/admin`)
 
 De admin draait op `/admin` (buiten de site-huisstijl, eigen layout) en is
-beveiligd met Supabase Auth via `middleware.ts`.
+beveiligd met Supabase Auth via `proxy.ts` (tot Next 16 `middleware.ts`).
 
 1. Maak een admin-gebruiker aan in Supabase → **Authentication → Users → Add user**
    (e-mail + wachtwoord). Optioneel `user_metadata`: `{ "naam": "Merel Jansen",
