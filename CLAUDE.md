@@ -129,6 +129,11 @@ uit de code afleidt.
 
 - **OS: Windows + PowerShell.** Draai de dev-server via de browser-preview-tools op poort
   3000, niet via een losse shell.
+- **Kill poort 3100 vóór een lokale e2e-run.** `playwright.config.ts` heeft
+  `reuseExistingServer: !CI`, dus lokaal test hij tegen een server die er al draait — ook
+  als die een oudere build serveert. Dat levert groene tests op code die je net hebt
+  gewijzigd, waarna CI alsnog rood gaat. Sluit de poort af (`Get-NetTCPConnection
+-LocalPort 3100 | Stop-Process`) en laat Playwright zelf bouwen.
 - **Lint = ESLint flat config** (`eslint.config.mjs`) met `ignores` voor gegenereerde
   bestanden (`.next`, `next-env.d.ts`, …). Ga **niet** terug naar `next lint` (deprecated,
   breekt CI).

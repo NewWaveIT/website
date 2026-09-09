@@ -122,7 +122,10 @@ test.describe("geen openstaande vacatures", () => {
     // de status niet meer wijzigen. Daarom moet `noindex` er wél staan — dat is
     // hier de bescherming tegen indexering. Zie de toelichting in
     // app/(marketing)/vacatures/[slug]/page.tsx.
-    await expect(page.locator('meta[name="robots"][content*="noindex"]')).toHaveCount(1);
+    // Op "minstens één" en niet op een exact aantal: de laadstaat draagt hem ook,
+    // dus na het streamen staan er twee. Wat telt is dat hij er is.
+    const noindex = page.locator('meta[name="robots"][content*="noindex"]');
+    await expect.poll(() => noindex.count()).toBeGreaterThan(0);
 
     const sitemap = await (await request.get("/sitemap.xml")).text();
     expect(sitemap).not.toContain("/vacatures/");
