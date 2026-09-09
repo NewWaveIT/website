@@ -332,18 +332,54 @@ export function HeroSplit() {
     });
   }, []);
 
+  /**
+   * fitFlow meet en schrijft layout door elkaar heen, dus elke aanroep kost een
+   * geforceerde herberekening. Hij wordt uit vier hoeken aangeroepen (scene-
+   * wissel, fallback-timer, webfonts, ResizeObserver) die vlak na elkaar vuren.
+   * Deze planner laat die samenvallen in één meting per frame.
+   */
+  const gepland = useRef(false);
+  const planFit = useCallback(() => {
+    if (gepland.current) return;
+    gepland.current = true;
+    const draai = () => {
+      gepland.current = false;
+      fitFlow();
+    };
+    // In een achtergrondtab vuurt requestAnimationFrame niet. Daar meteen
+    // meten in plaats van wachten: de vorige opzet deed dat ook (via een
+    // timer), en anders staat de flow ongeschaald klaar voor wie de tab
+    // openklikt.
+    if (document.hidden) window.setTimeout(draai, 0);
+    else requestAnimationFrame(draai);
+  }, [fitFlow]);
+
   // Scene-cyclus. Respecteert prefers-reduced-motion (dan geen cyclus) en is
   // pauzeerbaar — WCAG 2.2.2 vraagt een mechanisme voor bewegende content die
   // langer dan vijf seconden doorloopt, en hover telt niet voor toetsenbord.
+  //
+  // Start pas als de pagina geladen is. Meteen beginnen legde het scene-werk
+  // bovenop de hydratie: samen goed voor een seconde geblokkeerde main thread
+  // en een LCP die daarop wachtte. De bezoeker ziet de eerste scene hoe dan ook
+  // meteen — die staat in de server-HTML.
   useEffect(() => {
     if (pauze) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const timers: number[] = [];
-    const id = window.setInterval(() => {
-      setSweep((s) => s + 1);
-      timers.push(window.setTimeout(() => setI((v) => (v + 1) % SCENES.length), 480));
-    }, CYCLE_MS);
+    let id = 0;
+    const start = () => {
+      id = window.setInterval(() => {
+        setSweep((s) => s + 1);
+        timers.push(window.setTimeout(() => setI((v) => (v + 1) % SCENES.length), 480));
+      }, CYCLE_MS);
+    };
+    if (document.readyState === "complete") {
+      start();
+    } else {
+      window.addEventListener("load", start, { once: true });
+    }
     return () => {
+      window.removeEventListener("load", start);
       clearInterval(id);
       timers.forEach(clearTimeout);
     };
@@ -353,31 +389,30 @@ export function HeroSplit() {
   // Een ResizeObserver op het (zwevende) systeempaneel houdt de flow passend als
   // dat paneel op tablet/telefoon van formaat verandert.
   useEffect(() => {
-    const raf = requestAnimationFrame(fitFlow);
-    const fallback = window.setTimeout(fitFlow, 80);
+    planFit();
+    const fallback = window.setTimeout(planFit, 80);
     // Herbereken zodra webfonts geladen zijn: een late fontwissel kan de
     // tekstbreedte net genoeg laten verschuiven om de nee-branch onder de
     // beslissingsruit te laten verspringen.
-    document.fonts?.ready?.then(fitFlow).catch(() => {});
+    document.fonts?.ready?.then(planFit).catch(() => {});
     const root = contentRef.current;
     let ro: ResizeObserver | undefined;
     if (root && typeof ResizeObserver !== "undefined") {
-      ro = new ResizeObserver(() => fitFlow());
+      ro = new ResizeObserver(() => planFit());
       const right = root.querySelector("[data-right]");
       const flowParent = root.querySelector<HTMLElement>('[data-flow="1"]')?.parentElement;
       if (right) ro.observe(right);
       if (flowParent) ro.observe(flowParent);
     }
     return () => {
-      cancelAnimationFrame(raf);
       clearTimeout(fallback);
       ro?.disconnect();
     };
-  }, [i, fitFlow]);
+  }, [i, planFit]);
   useEffect(() => {
-    window.addEventListener("resize", fitFlow);
-    return () => window.removeEventListener("resize", fitFlow);
-  }, [fitFlow]);
+    window.addEventListener("resize", planFit);
+    return () => window.removeEventListener("resize", planFit);
+  }, [planFit]);
 
   const s = SCENES[i]!;
 
