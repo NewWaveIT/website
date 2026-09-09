@@ -7,9 +7,9 @@ import type { GevalideerdType } from "@/lib/cms/schemas";
  *
  * Een rij bewaart de inhoud in `data`, maar een paar velden staan in de kolommen
  * (`slug`, `titel`, `volgorde`). Welk veld waar vandaan komt verschilt per
- * contenttype en zat tot nu toe verspreid over negen `mapRow`-functies. Dit is
- * die kennis op één plek, zodat validatie, synchronisatie en het leespad
- * allemaal naar dezelfde vorm kijken.
+ * contenttype en zat ooit verspreid over negen `mapRow`-functies. Dit is die
+ * kennis op één plek: de enige stap tussen een rij uit Supabase en het
+ * runtime-schema in `leesRij`.
  *
  * `artikelen` staat er bewust niet bij: dat type doet echte transformatie
  * (datumnotatie, HTML-detectie, auteur opzoeken) in plaats van een
@@ -57,31 +57,6 @@ const BOUWERS: Record<GemapteType, Bouwer> = {
   teamleden: (row) => ({ ...(row.data as object), slug: row.slug, naam: row.titel }),
   proposities: (row) => ({ ...(row.data as object), slug: row.slug, titel: row.titel }),
 };
-
-/**
- * Velden die uit een kolom komen en dus nooit in `data` thuishoren. Zonder deze
- * lijst zou synchronisatie ze als "ontbrekend veld" in de JSON schrijven en
- * ontstaat er een tweede, stille bron van waarheid naast de kolom.
- */
-const KOLOMVELDEN: Record<GemapteType, string[]> = {
-  cases: ["slug"],
-  diensten: ["slug"],
-  sectoren: ["slug"],
-  services: ["slug", "volgorde"],
-  vacatures: ["slug"],
-  teamleden: ["slug", "naam"],
-  proposities: ["slug", "titel"],
-};
-
-export function isKolomveld(type: GemapteType, veld: string): boolean {
-  return KOLOMVELDEN[type].includes(veld);
-}
-
-export const GEMAPTE_TYPES = Object.keys(BOUWERS) as GemapteType[];
-
-export function isGemapteType(t: string): t is GemapteType {
-  return t in BOUWERS;
-}
 
 /** Sla één rij plat tot de vorm die het runtime-schema beschrijft. */
 export function rijNaarRuw(type: GemapteType, row: ContentRow): Record<string, unknown> {

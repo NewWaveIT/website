@@ -34,13 +34,13 @@ uit de code afleidt.
 - **Hergebruik bestaande patronen, tokens en CSS exact.** Introduceer geen nieuwe kleur,
   stijl of component-variant als er al één bestaat — consistentie boven creativiteit.
 - **Een contentmodelwijziging is pas af als de data mee is.** Verwijder je een veld, een
-  sectie of een contenttype uit de code, ruim dan in dezelfde wijziging de bijbehorende
-  rijen en sleutels in Supabase op — of zet ze op concept. `seedContent()` voegt alleen
-  ontbrekende rijen toe en verwijdert nooit iets, dus data die uit de code verdwijnt
-  blijft gewoon op de site staan. Dat is de oorzaak van elke lege-content-bug tot nu toe:
+  sectie of een contenttype uit de code, schrijf dan in dezelfde wijziging de SQL die de
+  bijbehorende rijen en sleutels in Supabase opruimt (of ze op concept zet), en laat de
+  gebruiker die draaien. Niets ruimt dit vanzelf op: data die uit de code verdwijnt blijft
+  gewoon in de database staan. Dat is de oorzaak van elke lege-content-bug tot nu toe —
   verzonnen klantverhalen die live bleven, `secties` in de oude vorm, dode `samen*`-velden,
-  onbereikbare dienstrijen. Controleer met **Controleer content** op het admin-dashboard en
-  repareer met **Vul aan uit standaard**.
+  onbereikbare dienstrijen. Het leespad hieronder maakt zulke resten zichtbaar in de
+  Vercel-logs in plaats van ze stil te compenseren; negeer die regels niet.
 
 ## Kernpatronen
 
