@@ -237,6 +237,21 @@ export const DIENSTEN: Record<string, DienstDetail> = {
     caseHref: "/klantverhalen/moove",
     insightsTitle: "Kennis over bouwen met low-code",
     insights: [],
+    // VOORZET — afgeleid uit de doelgroep-, duur- en beschrijvingsvelden van de
+    // dienstencatalogus (lib/services.ts). Nog niet door de eigenaar geschreven:
+    // herschrijf in /admin/diensten voordat de site live gaat.
+    welNietTitel: "Wanneer Mendix wel past, en wanneer niet",
+    welWanneer: [
+      "Er loopt een proces vast in spreadsheets en mailtjes, en je wilt er iets werkends voor.",
+      "Je werkt al met Mendix en het landschap groeit harder dan de architectuur, governance en het deliverymodel eromheen.",
+      "Je hebt twee of meer apps in productie of op de rol, en app nummer twee moet goedkoper worden dan nummer één.",
+      "Je wilt dat business en IT samen bouwen in plaats van specificaties uitwisselen.",
+    ],
+    nietWanneer: [
+      "Je proces is standaard en je zoekt standaardsoftware — dan is een pakket vrijwel altijd goedkoper.",
+      "Je wilt een prototype om te laten zien, niet iets dat morgen in gebruik gaat.",
+      "Je wilt de bouw volledig uitbesteden: al onze diensten gaan ervan uit dat jullie eigen mensen meedoen en het daarna zelf kunnen.",
+    ],
     ctaTitle: "Welke applicatie zou jouw operatie versnellen?",
   },
 
@@ -392,6 +407,18 @@ export const DIENSTEN: Record<string, DienstDetail> = {
     ],
     insightsTitle: "Kennis over verantwoorde AI",
     insights: [],
+    // VOORZET — zie de toelichting bij Mendix hierboven.
+    welNietTitel: "Wanneer AI wel past, en wanneer niet",
+    welWanneer: [
+      "Er zijn plekken waar je mensen beslissingen nemen met onvolledige informatie.",
+      "Je wilt eerst weten waar AI geld oplevert en waar niet, voordat je investeert.",
+      "Je teams willen het zelf doen: één echte taak meenemen en er een werkende agent voor bouwen.",
+    ],
+    nietWanneer: [
+      "Je zoekt één AI-tool om aan te schaffen — wij beginnen bij jullie processen, niet bij een product.",
+      "Je wilt een presentatie over de mogelijkheden; onze dagen zijn werksessies waarin je team zelf bouwt.",
+      "Er is geen enkele ruimte om afspraken te maken over wat er met bedrijfsgegevens mag.",
+    ],
     ctaTitle: "Waar zou AI jouw mensen kunnen versterken?",
   },
 
@@ -546,6 +573,17 @@ export const DIENSTEN: Record<string, DienstDetail> = {
     ],
     insightsTitle: "Kennis die je koers vooruit denkt",
     insights: [],
+    // VOORZET — zie de toelichting bij Mendix hierboven.
+    welNietTitel: "Wanneer een strategietraject wel past, en wanneer niet",
+    welWanneer: [
+      "De eindverantwoordelijke zit zelf aan tafel — zonder directie werkt het niet.",
+      "Low-code en AI groeien harder dan de inrichting eromheen, en je wilt weten waar ze wél en niet passen.",
+      "Je wilt vastgestelde prioriteiten, inclusief een expliciete niet-doen-lijst.",
+    ],
+    nietWanneer: [
+      "De directie kan er niet zelf bij zijn; dan levert het een document op dat niemand draagt.",
+      "Je wilt volgende week bouwen — begin dan bij App in a Day of AI Agent in a Day en kom hier later terug.",
+    ],
     ctaTitle: "Klaar om van ambitie naar uitvoering te gaan?",
   },
 };
