@@ -1,6 +1,7 @@
 import { cacheLife } from "next/cache";
 import type { Metadata } from "next";
 import Link from "next/link";
+import { Kruimelpad } from "@/components/kruimelpad";
 import Image from "next/image";
 import { Check, ArrowRight, Award } from "lucide-react";
 import { getVacatures } from "@/lib/vacatures-data";
@@ -38,9 +39,7 @@ export default async function WerkenBijPage() {
           <Image src="/assets/photos/cutout-spreker-groen.webp" alt="" fill sizes="32vw" priority />
         </div>
         <div className="wrap-wide">
-          <div className="crumbs">
-            <Link href="/">Home</Link> / Werken bij
-          </div>
+          <Kruimelpad kruimels={[{ naam: "Werken bij", pad: "/werken-bij" }]} />
           <div className="kicker on-dark" style={{ marginTop: "var(--space-6)" }}>
             {"Werken bij The New Wave IT"}
           </div>

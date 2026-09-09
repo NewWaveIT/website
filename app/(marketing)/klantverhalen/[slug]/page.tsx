@@ -1,6 +1,8 @@
+import { JsonLd } from "@/components/json-ld";
 import { cacheLife } from "next/cache";
 import type { Metadata } from "next";
 import Link from "next/link";
+import { Kruimelpad } from "@/components/kruimelpad";
 import { notFound } from "next/navigation";
 import { Building2, ArrowRight } from "lucide-react";
 import { getKlantverhalen, getKlantverhaalBySlug } from "@/lib/klantverhalen-data";
@@ -77,17 +79,16 @@ export default async function CasePage({ params }: { params: Promise<{ slug: str
 
   return (
     <div className="p-case">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }}
-      />
+      <JsonLd data={jsonLd} />
 
       <section className="chero">
         <div className="wrap-wide">
-          <div className="crumbs">
-            <Link href="/">Home</Link> / <Link href="/klantverhalen">Klantverhalen</Link> /{" "}
-            {k.quoteNaam ? k.tag.split("·").pop()?.trim() : k.tag}
-          </div>
+          <Kruimelpad
+            kruimels={[
+              { naam: "Klantverhalen", pad: "/klantverhalen" },
+              { naam: (k.quoteNaam ? k.tag.split("·").pop()?.trim() : k.tag) ?? k.tag },
+            ]}
+          />
           <span className="tag">
             <Building2 /> {k.tag}
           </span>

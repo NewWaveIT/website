@@ -14,6 +14,13 @@ vi.mock("@/lib/supabase/server", () => ({
   createClient: createClientMock,
 }));
 
+// Inzendingen gaan sinds de policy-wijziging niet meer via de anon-client maar
+// via lib/supabase/inzendingen (service-role, server-only). Zie de toelichting
+// daar: anon mag niet meer inserten, anders is de rate-limiter te omzeilen.
+vi.mock("@/lib/supabase/inzendingen", () => ({
+  inzendingClient: () => ({ from: fromMock }),
+}));
+
 vi.mock("next/headers", () => ({
   headers: vi.fn(async () => ({ get: () => "203.0.113.1" })),
 }));

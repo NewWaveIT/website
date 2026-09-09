@@ -1,6 +1,6 @@
 import { cacheLife } from "next/cache";
 import type { Metadata } from "next";
-import Link from "next/link";
+import { Kruimelpad } from "@/components/kruimelpad";
 import { getArtikelen } from "@/lib/inzichten-data";
 import { SectorHeroAnim } from "@/components/sector-hero-anim";
 import { InzichtenList } from "@/components/inzichten-list";
@@ -26,9 +26,7 @@ export default async function InzichtenPage() {
       <section className="dhero">
         <SectorHeroAnim theme="inzichten" />
         <div className="wrap-wide">
-          <div className="crumbs">
-            <Link href="/">Home</Link> / Inzichten
-          </div>
+          <Kruimelpad kruimels={[{ naam: "Inzichten", pad: "/inzichten" }]} />
           <div className="kicker on-dark" style={{ marginTop: "var(--space-6)" }}>
             {"Inzichten"}
           </div>

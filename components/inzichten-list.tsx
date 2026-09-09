@@ -34,6 +34,40 @@ export function InzichtenList({ artikelen }: { artikelen: Artikel[] }) {
   const featured = gefilterd[0];
   const grid = gefilterd.slice(1, 7);
 
+  /**
+   * Lege staat, voor twee gevallen die er hetzelfde uitzagen: een filter zonder
+   * treffers, en helemaal geen artikelen. Zonder dit stond er alleen een rij
+   * filterknoppen boven witruimte, en leek de pagina stuk.
+   */
+  if (gefilterd.length === 0) {
+    return (
+      <>
+        <div className="filters">
+          {chips.map((c) => (
+            <button
+              key={c}
+              type="button"
+              className={c === actief ? "fchip on" : "fchip"}
+              onClick={() => setActief(c)}
+            >
+              {c}
+            </button>
+          ))}
+        </div>
+        <p className="leeg" role="status">
+          {actief === ALLE
+            ? "Er staan nog geen inzichten online. Kom binnenkort terug."
+            : `Nog geen inzichten over ${actief}.`}{" "}
+          {actief !== ALLE && (
+            <button type="button" className="link-knop" onClick={() => setActief(ALLE)}>
+              Bekijk alle inzichten
+            </button>
+          )}
+        </p>
+      </>
+    );
+  }
+
   return (
     <>
       <div className="filters">

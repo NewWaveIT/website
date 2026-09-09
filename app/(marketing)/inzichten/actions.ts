@@ -1,6 +1,6 @@
 "use server";
 
-import { createClient } from "@/lib/supabase/server";
+import { inzendingClient } from "@/lib/supabase/inzendingen";
 import { magDoor } from "@/lib/rate-limit";
 
 export interface LeadState {
@@ -35,7 +35,7 @@ export async function subscribeLead(_prev: LeadState, formData: FormData): Promi
   if (email.length > 320 || naam.length > 200) return { ok: false, message: "Invoer is te lang." };
 
   try {
-    const supabase = await createClient();
+    const supabase = inzendingClient();
     const { error } = await supabase.from("contact_aanvragen").insert({
       naam: naam || email,
       email,

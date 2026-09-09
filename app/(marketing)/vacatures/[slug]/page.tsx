@@ -1,6 +1,8 @@
+import { JsonLd } from "@/components/json-ld";
 import { cacheLife } from "next/cache";
 import type { Metadata } from "next";
 import Link from "next/link";
+import { Kruimelpad } from "@/components/kruimelpad";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { Check, ArrowRight, Phone } from "lucide-react";
@@ -9,7 +11,6 @@ import { getContactpersoon } from "@/lib/team-data";
 import { stripHtml, kort } from "@/lib/cms/sanitize";
 import { SollicitatieForm } from "@/components/vacatures/sollicitatie-form";
 import "./vacature.css";
-import { BreadcrumbJsonLd } from "@/components/breadcrumb-jsonld";
 
 /** Alleen cijfers/+ voor een tel:-URI. */
 function telHref(t: string): string {
@@ -125,25 +126,13 @@ export default async function VacaturePage({ params }: { params: Promise<{ slug:
 
   return (
     <div className="p-vacature">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }}
-      />
-
-      <BreadcrumbJsonLd
-        kruimels={[
-          { naam: "Home", pad: "/" },
-          { naam: "Werken bij", pad: "/werken-bij" },
-          { naam: v.functietitel },
-        ]}
-      />
+      <JsonLd data={jsonLd} />
 
       <section className="shero">
         <div className="wrap-wide">
-          <div className="crumbs">
-            <Link href="/">Home</Link> / <Link href="/werken-bij">Werken bij</Link> /{" "}
-            {v.functietitel}
-          </div>
+          <Kruimelpad
+            kruimels={[{ naam: "Werken bij", pad: "/werken-bij" }, { naam: v.functietitel }]}
+          />
           <div className="tags">
             {v.tags.map((t) => (
               <span className="tag" key={t}>

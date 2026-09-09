@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Kruimelpad } from "@/components/kruimelpad";
 import { Boxes, BrainCircuit, Route } from "lucide-react";
 import { SectorHeroAnim } from "@/components/sector-hero-anim";
 import { SlotCta } from "@/components/layout/slot-cta";
@@ -64,10 +65,9 @@ export async function RichtingHub({ richting }: { richting: ServiceRichting }) {
       <section className="shero">
         <SectorHeroAnim theme={richting} />
         <div className="wrap-wide">
-          <div className="crumbs">
-            <Link href="/">Home</Link> / <Link href="/diensten">Diensten</Link> /{" "}
-            {RICHTING_NAAM[richting]}
-          </div>
+          <Kruimelpad
+            kruimels={[{ naam: "Diensten", pad: "/diensten" }, { naam: RICHTING_NAAM[richting] }]}
+          />
           <div style={{ position: "relative", paddingTop: "var(--space-6)" }}>
             <span className="badge">
               <Icon /> {t.badgeLabel || label}

@@ -1,4 +1,5 @@
 import { SITE_URL } from "@/lib/site";
+import { JsonLd } from "@/components/json-ld";
 
 export interface Kruimel {
   naam: string;
@@ -21,10 +22,5 @@ export function BreadcrumbJsonLd({ kruimels }: { kruimels: Kruimel[] }) {
       ...(k.pad ? { item: `${SITE_URL}${k.pad}` } : {}),
     })),
   };
-  return (
-    <script
-      type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }}
-    />
-  );
+  return <JsonLd data={jsonLd} />;
 }

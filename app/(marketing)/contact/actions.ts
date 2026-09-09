@@ -1,6 +1,6 @@
 "use server";
 
-import { createClient } from "@/lib/supabase/server";
+import { inzendingClient } from "@/lib/supabase/inzendingen";
 import { sendAanvraagNotificatie, sendAanvraagBevestiging } from "@/lib/email";
 import { magDoor } from "@/lib/rate-limit";
 import { getServices } from "@/lib/services-data";
@@ -116,7 +116,7 @@ export async function submitContact(
     `Aanvraag via het contactformulier. ${onderwerpLabel || "Geen extra toelichting."}`;
 
   try {
-    const supabase = await createClient();
+    const supabase = inzendingClient();
     const { error } = await supabase.from("contact_aanvragen").insert({
       naam,
       email,

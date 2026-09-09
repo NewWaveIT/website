@@ -1,3 +1,4 @@
+import { JsonLd } from "@/components/json-ld";
 import { cacheLife } from "next/cache";
 import type { Metadata } from "next";
 import Link from "next/link";
@@ -67,12 +68,7 @@ export default async function HomePage() {
   }));
   return (
     <div className="home">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c"),
-        }}
-      />
+      <JsonLd data={jsonLd} />
 
       {/* Hero */}
       <HeroSplit />

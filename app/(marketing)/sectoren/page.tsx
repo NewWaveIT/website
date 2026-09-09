@@ -1,6 +1,7 @@
+import { JsonLd } from "@/components/json-ld";
 import { cacheLife } from "next/cache";
 import type { Metadata } from "next";
-import Link from "next/link";
+import { Kruimelpad } from "@/components/kruimelpad";
 import { SectorHeroAnim } from "@/components/sector-hero-anim";
 import { SectorSplit } from "@/components/sector-split";
 import { SlotCta } from "@/components/layout/slot-cta";
@@ -81,17 +82,12 @@ export default async function SectorenPage() {
   const t = await getPagina("sectoren");
   return (
     <div className="p-sectoren">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }}
-      />
+      <JsonLd data={jsonLd} />
 
       <section className="dhero">
         <SectorHeroAnim theme="sectoren" />
         <div className="wrap-wide">
-          <div className="crumbs">
-            <Link href="/">Home</Link> / Sectoren
-          </div>
+          <Kruimelpad kruimels={[{ naam: "Sectoren", pad: "/sectoren" }]} />
           <div className="kicker on-dark" style={{ marginTop: "var(--space-6)" }}>
             {"Sectoren"}
           </div>

@@ -296,3 +296,10 @@
     font-size: var(--text-3xl);
   }
 }
+
+/* Plaatshouder terwijl de vacature binnenstroomt (loading.tsx). */
+.p-vacature .laden {
+  padding: var(--space-8) 0;
+  color: var(--text-on-dark-muted);
+  font-size: var(--text-sm);
+}

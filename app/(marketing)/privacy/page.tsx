@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import { Kruimelpad } from "@/components/kruimelpad";
 import "./privacy.css";
 
 export const metadata: Metadata = {
@@ -14,9 +14,7 @@ export default function PrivacyPage() {
     <div className="p-legal">
       <section className="legal-hero">
         <div className="wrap-wide">
-          <div className="crumbs">
-            <Link href="/">Home</Link> / Privacybeleid
-          </div>
+          <Kruimelpad kruimels={[{ naam: "Privacybeleid", pad: "/privacy" }]} />
           <h1>Privacy Policy</h1>
           <p>
             Hoe wij persoonsgegevens verzamelen, gebruiken, delen en beschermen in relatie tot onze

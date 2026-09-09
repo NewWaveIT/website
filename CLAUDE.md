@@ -104,6 +104,17 @@ uit de code afleidt.
   van elke rij op — tientallen KB's bodytekst voor een tabel met titels. Een nieuw filter
   voeg je toe aan `LIJST_FACETTEN`; de query volgt dan vanzelf. Zijbalktellers komen uit
   één RPC (`admin_aantallen`), niet uit elf count-queries.
+- **Publieke formulieren schrijven met de service-rol, niet met anon.** `anon` heeft geen
+  insert-rechten meer op `contact_aanvragen`, `sollicitaties` en de cv-bucket: die sleutel
+  staat in elke browser, dus daarmee kon je rechtstreeks naar de Supabase-API posten en de
+  honeypot, de validatie én `magDoor()` overslaan. De drie server actions gebruiken
+  `inzendingClient()` (`lib/supabase/inzendingen.ts`). Die omzeilt RLS — gebruik hem alleen
+  voor de insert van een al gevalideerde inzending.
+- **Kruimelpad en structured data: één component.** `<Kruimelpad>` levert de zichtbare
+  kruimels én de BreadcrumbList; `<JsonLd>` zet elk stuk structured data neer, mét de
+  escape van `<`. Schrijf geen eigen `<script type="application/ld+json">` meer — dertien
+  pagina's hadden kruimels en maar vier de bijbehorende structured data, precies omdat het
+  twee losse handelingen waren.
 - **Auth/RLS.** `proxy.ts` (de Next 16-naam voor middleware) redirect ongeauthenticeerde `/admin` → login; `requireAdmin()`
   (`lib/dal.ts`) in élke admin-action en -pagina. Anon mag alleen `insert` op de
   formuliertabellen; de service-role-client (`lib/supabase/admin.ts`) is uitsluitend voor

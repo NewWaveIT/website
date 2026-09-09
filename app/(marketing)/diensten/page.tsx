@@ -1,6 +1,8 @@
+import { JsonLd } from "@/components/json-ld";
 import { cacheLife } from "next/cache";
 import type { Metadata } from "next";
 import Link from "next/link";
+import { Kruimelpad } from "@/components/kruimelpad";
 import { Landmark, TrainFront, Banknote, HeartPulse, Factory } from "lucide-react";
 import { SectorHeroAnim } from "@/components/sector-hero-anim";
 import { DienstMatrix } from "@/components/diensten/dienst-matrix";
@@ -11,7 +13,6 @@ import { getDienstMatrix, getFaseItems } from "@/lib/services-data";
 import type { Service } from "@/lib/services";
 import { SITE_URL } from "@/lib/site";
 import "./diensten.css";
-import { BreadcrumbJsonLd } from "@/components/breadcrumb-jsonld";
 
 export const metadata: Metadata = {
   title: "Zo begin je — negen diensten van dag tot traject",
@@ -51,19 +52,12 @@ export default async function DienstenPage() {
 
   return (
     <div className="p-diensten">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }}
-      />
-
-      <BreadcrumbJsonLd kruimels={[{ naam: "Home", pad: "/" }, { naam: "Diensten" }]} />
+      <JsonLd data={jsonLd} />
 
       <section className="dhero">
         <SectorHeroAnim theme="diensten" />
         <div className="wrap-wide">
-          <div className="crumbs">
-            <Link href="/">Home</Link> / Diensten
-          </div>
+          <Kruimelpad kruimels={[{ naam: "Diensten", pad: "/diensten" }]} />
           <div className="kicker on-dark" style={{ marginTop: "var(--space-6)" }}>
             {"Diensten"}
           </div>

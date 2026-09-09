@@ -1,6 +1,7 @@
 import { cacheLife } from "next/cache";
 import type { Metadata } from "next";
 import Link from "next/link";
+import { Kruimelpad } from "@/components/kruimelpad";
 import Image from "next/image";
 import { ArrowRight, Building2, TrainFront, Banknote, HeartPulse, Factory } from "lucide-react";
 import { getKlantverhalen } from "@/lib/klantverhalen-data";
@@ -101,9 +102,7 @@ export default async function KlantverhalenPage() {
       <section className="dhero">
         <SectorHeroAnim theme="klantverhalen" />
         <div className="wrap-wide">
-          <div className="crumbs">
-            <Link href="/">Home</Link> / Klantverhalen
-          </div>
+          <Kruimelpad kruimels={[{ naam: "Klantverhalen", pad: "/klantverhalen" }]} />
           <div className="kicker on-dark" style={{ marginTop: "var(--space-6)" }}>
             {"Klantverhalen"}
           </div>

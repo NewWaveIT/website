@@ -1,3 +1,4 @@
+import { JsonLd } from "@/components/json-ld";
 import { cacheLife } from "next/cache";
 import type { Metadata } from "next";
 import Link from "next/link";
@@ -8,7 +9,7 @@ import { getArtikelenVoorDienst } from "@/lib/inzichten-data";
 import { RICHTINGEN } from "@/lib/services";
 import { SectorHeroAnim } from "@/components/sector-hero-anim";
 import { SlotCta } from "@/components/layout/slot-cta";
-import { BreadcrumbJsonLd } from "@/components/breadcrumb-jsonld";
+import { Kruimelpad } from "@/components/kruimelpad";
 import { VraagstukkenSectie } from "@/components/diensten/secties/probleem";
 import { AanpakSectie } from "@/components/diensten/secties/aanpak";
 import { WaaromSectie, OutcomesSectie } from "@/components/diensten/secties/bewijs";
@@ -63,32 +64,17 @@ export default async function DienstPage({ params }: { params: Promise<{ slug: s
 
   return (
     <div className="p-dienst dienst-secties">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }}
-      />
-      <BreadcrumbJsonLd
-        kruimels={[
-          { naam: "Home", pad: "/" },
-          { naam: "Diensten", pad: "/diensten" },
-          ...(richting ? [{ naam: richting.naam, pad: richting.href }] : []),
-          { naam: s.naam },
-        ]}
-      />
-
+      <JsonLd data={jsonLd} />
       <section className="shero">
         <SectorHeroAnim theme={s.richting ?? "diensten"} />
         <div className="wrap-wide">
-          <div className="crumbs">
-            <Link href="/">Home</Link> / <Link href="/diensten">Diensten</Link>
-            {richting && (
-              <>
-                {" / "}
-                <Link href={richting.href}>{richting.naam}</Link>
-              </>
-            )}{" "}
-            / {s.naam}
-          </div>
+          <Kruimelpad
+            kruimels={[
+              { naam: "Diensten", pad: "/diensten" },
+              ...(richting ? [{ naam: richting.naam, pad: richting.href }] : []),
+              { naam: s.naam },
+            ]}
+          />
           <div style={{ position: "relative", paddingTop: "var(--space-6)" }}>
             <h1>{s.naam}</h1>
             <p>{s.pitch}</p>

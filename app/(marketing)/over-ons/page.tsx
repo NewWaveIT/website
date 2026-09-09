@@ -1,6 +1,8 @@
+import { JsonLd } from "@/components/json-ld";
 import { cacheLife } from "next/cache";
 import type { Metadata } from "next";
 import Link from "next/link";
+import { Kruimelpad } from "@/components/kruimelpad";
 import Image from "next/image";
 import { Users, Target, Award, Leaf, MapPin, Mail } from "lucide-react";
 import { getPagina } from "@/lib/paginas-data";
@@ -43,10 +45,7 @@ export default async function OverOnsPage() {
   const [t, team] = await Promise.all([getPagina("over-ons"), getTeamleden()]);
   return (
     <div className="p-over">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }}
-      />
+      <JsonLd data={jsonLd} />
 
       <section className="shero">
         <div className="badge-img">
@@ -59,9 +58,7 @@ export default async function OverOnsPage() {
           />
         </div>
         <div className="wrap-wide">
-          <div className="crumbs">
-            <Link href="/">Home</Link> / Over ons
-          </div>
+          <Kruimelpad kruimels={[{ naam: "Over ons", pad: "/over-ons" }]} />
           <div className="kicker on-dark" style={{ marginTop: "var(--space-6)" }}>
             {"Over ons"}
           </div>

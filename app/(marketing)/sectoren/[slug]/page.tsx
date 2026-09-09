@@ -1,6 +1,8 @@
+import { JsonLd } from "@/components/json-ld";
 import { cacheLife } from "next/cache";
 import type { Metadata } from "next";
 import Link from "next/link";
+import { Kruimelpad } from "@/components/kruimelpad";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import {
@@ -20,7 +22,6 @@ import { getArtikelenVoorSector } from "@/lib/inzichten-data";
 import { SectorHeroAnim } from "@/components/sector-hero-anim";
 import { SITE_URL } from "@/lib/site";
 import "./sector-detail.css";
-import { BreadcrumbJsonLd } from "@/components/breadcrumb-jsonld";
 
 const ICONS = {
   "building-2": Building2,
@@ -75,25 +76,12 @@ export default async function SectorPage({ params }: { params: Promise<{ slug: s
 
   return (
     <div className="p-sector">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }}
-      />
-
-      <BreadcrumbJsonLd
-        kruimels={[
-          { naam: "Home", pad: "/" },
-          { naam: "Sectoren", pad: "/sectoren" },
-          { naam: s.naam },
-        ]}
-      />
+      <JsonLd data={jsonLd} />
 
       <section className="shero">
         <SectorHeroAnim theme={slug === "publieke-sector" ? "publiek" : slug} />
         <div className="wrap-wide">
-          <div className="crumbs">
-            <Link href="/">Home</Link> / <Link href="/sectoren">Sectoren</Link> / {s.naam}
-          </div>
+          <Kruimelpad kruimels={[{ naam: "Sectoren", pad: "/sectoren" }, { naam: s.naam }]} />
           <div style={{ position: "relative", paddingTop: "var(--space-6)" }}>
             <span className="badge">
               <Icon /> {s.naam}

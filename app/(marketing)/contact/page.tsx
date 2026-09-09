@@ -1,6 +1,7 @@
 import { cacheLife } from "next/cache";
 import type { Metadata } from "next";
 import Link from "next/link";
+import { Kruimelpad } from "@/components/kruimelpad";
 import Image from "next/image";
 import {
   Phone,
@@ -54,9 +55,7 @@ export default async function ContactPage() {
     <div className="p-contact">
       <section className="chero">
         <div className="wrap-wide">
-          <div className="crumbs">
-            <Link href="/">Home</Link> / Contact
-          </div>
+          <Kruimelpad kruimels={[{ naam: "Contact", pad: "/contact" }]} />
           <div className="kicker" style={{ marginTop: "var(--space-6)" }}>
             {"Contact"}
           </div>

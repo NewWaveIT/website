@@ -1,11 +1,11 @@
 "use server";
 
-import { createClient } from "@/lib/supabase/server";
+import { inzendingClient } from "@/lib/supabase/inzendingen";
 import { sendSollicitatieNotificatie, sendSollicitatieBevestiging } from "@/lib/email";
 import { getContactpersoon } from "@/lib/team-data";
 import { magDoor } from "@/lib/rate-limit";
 
-type DbClient = Awaited<ReturnType<typeof createClient>>;
+type DbClient = ReturnType<typeof inzendingClient>;
 
 export interface SollicitatieState {
   ok: boolean;
@@ -109,7 +109,7 @@ export async function submitSollicitatie(
     return { ok: false, message: "Controleer de gemarkeerde velden.", errors };
   }
 
-  const supabase = await createClient();
+  const supabase = inzendingClient();
 
   const uploadFout = {
     ok: false as const,

@@ -1,6 +1,7 @@
+import { JsonLd } from "@/components/json-ld";
 import { cacheLife } from "next/cache";
 import type { Metadata } from "next";
-import Link from "next/link";
+import { Kruimelpad } from "@/components/kruimelpad";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { getArtikelen, getArtikelBySlug, isoDatum } from "@/lib/inzichten-data";
@@ -62,16 +63,11 @@ export default async function ArtikelPage({ params }: { params: Promise<{ slug: 
 
   return (
     <div className="p-artikel">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }}
-      />
+      <JsonLd data={jsonLd} />
 
       <section className="ahero">
         <div className="wrap">
-          <div className="crumbs">
-            <Link href="/">Home</Link> / <Link href="/inzichten">Inzichten</Link> / {a.cat}
-          </div>
+          <Kruimelpad kruimels={[{ naam: "Inzichten", pad: "/inzichten" }, { naam: a.cat }]} />
           <div className="kicker on-dark">{`// ${a.cat}`}</div>
           <h1>{a.titel}</h1>
           <div className="byline">
