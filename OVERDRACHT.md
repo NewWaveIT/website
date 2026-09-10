@@ -9,8 +9,9 @@ Branch: `dienstdetailpaginas` · PR: NewWaveIT/website#11
 
 ## 1 · Waar het staat
 
-Het sjabloon voor de dienstdetailpagina is af en werkt. **Twee van de negen
-diensten zijn gevuld.**
+Het sjabloon voor de dienstdetailpagina is af en werkt. **Acht van de negen
+diensten zijn gevuld.** Alleen `consultant-inhuren` niet: die verving Foundation
+Starterkit en heeft daarom geen eigen ontwerp (zie 2.3).
 
 ### Wat er gebouwd is
 
@@ -65,21 +66,29 @@ verhuisd, want de dienstpagina's gebruiken hem nu ook.
 
 ## 2 · Wat er nog moet gebeuren
 
-### 2.1 De zeven resterende diensten vullen
+### 2.1 De ontwerpen ophalen — ~~zeven diensten vullen~~ nog één
 
-Ophalen via de claude_design MCP, project `93963f8e-4fc4-4c82-8ea7-312c015ef6b8`
-(auth via `/design-login` in een **interactieve** terminal — in de desktop-app
-lukt de OAuth-flow niet):
+**De ontwerpen zijn gewoon leesbaar met de `DesignSync`-tool**, ook vanuit een
+websessie. Dat scheelt de OAuth-omweg uit de vorige overdracht:
 
-| Ontwerp                               | Service-slug                    |
-| ------------------------------------- | ------------------------------- |
-| `dienst-app-in-a-day.html`            | `app-in-a-day`                  |
-| `dienst-ai-opportunity-scan.html`     | `ai-opportunity-scan`           |
-| `dienst-ai-strategie.html`            | `ai-strategie`                  |
-| `dienst-mendix-scale-sessie.html`     | `mendix-scale-sessie`           |
-| `dienst-fusion-team-startsprint.html` | `fusion-team-startsprint`       |
-| `dienst-training-enablement.html`     | `training-enablement`           |
-| `dienst-foundation-starterkit.html`   | **bestaat niet meer — zie 2.3** |
+```
+DesignSync  get_project / list_files / get_file
+projectId   93963f8e-4fc4-4c82-8ea7-312c015ef6b8   ("The New Wave IT | Huisstijl")
+```
+
+Let op: `list_projects` toont dit project **niet**, want dat filtert op
+design-system-projecten en dit is een gewoon project. Ga rechtstreeks met het
+projectId naar `get_project` of `list_files`.
+
+Er staan **ook mobiele ontwerpen** (`mobile-dienst-*.html`) naast de
+desktopvarianten. Die zijn niet apart geport — het sjabloon is responsive en is
+nagelopen van 320 tot 1440px — maar raadpleeg ze als je twijfelt over de
+bedoelde mobiele volgorde.
+
+Gevuld: `app-in-a-day`, `ai-agent-in-a-day`, `ai-opportunity-scan`,
+`ai-strategie`, `it-strategie`, `mendix-scale-sessie`,
+`fusion-team-startsprint`, `training-enablement`. Alleen `consultant-inhuren`
+ontbreekt; zie 2.3.
 
 Neem het blok van `ai-agent-in-a-day` in `lib/services.ts` als voorbeeld; de
 veldvolgorde volgt de secties van de pagina.
@@ -87,18 +96,22 @@ veldvolgorde volgt de secties van de pagina.
 Twee dingen om op te letten:
 
 - **Iconen.** De ontwerpen gebruiken lucide-namen (`bot`, `map`, `git-fork`,
-  `shield-check`, …). Die moeten in de `ICONEN`-map bovenin `page.tsx` staan;
-  een onbekende naam valt stil terug op een vinkje, dus controleer het.
+  `shield-check`, …). Die moeten in `iconen.ts` naast `page.tsx` staan; een
+  onbekende naam valt stil terug op een vinkje. `tests/unit/diensten-detail.spec.ts`
+  vangt dat nu af, samen met ontbrekende foto's en dode vervolg-slugs.
 - **Foto's.** In de ontwerpen `.png`, in de repo uitsluitend `.webp`. Controleer
   of het bestand in `public/assets/photos/` bestaat voordat je ernaar verwijst.
+- **Prijzen in de toelichting.** Het ontwerp van AI-strategie zet een staffel
+  ("€ 3.500 – 4.500 per dagdeel") in `prijsToelichting`. Bewust weggelaten:
+  alleen de instapdiensten tonen een bedrag. Kom je zoiets tegen, laat het weg.
 
 ### 2.2 SQL voor alle negen CMS-rijen — dit is de belangrijkste stap
 
 **De seed is een koude start; de CMS-rij wint.** Zolang je alleen
 `lib/services.ts` bijwerkt, verandert er niets op de live site.
 
-`supabase/scripts/20260910-dienstdetail-velden.sql` doet dit voor de twee
-gevulde diensten (`ai-agent-in-a-day`, `it-strategie`, elk 22 sleutels).
+`supabase/scripts/20260910-dienstdetail-velden.sql` doet dit voor de acht
+gevulde diensten (22 sleutels per dienst, AI-strategie 21).
 **De eigenaar moet het nog draaien.**
 
 Het script is uit de seed gegenereerd, niet overgetypt. Vul je een dienst bij,
@@ -123,9 +136,18 @@ Die dienst is op 9 september vervangen door `consultant-inhuren` (zie
 verwijzen er nog naar als vervolgstap, met een reden die niet op een consultant
 slaat ("Van losse agents naar iets dat structureel in je landschap zit").
 
-Ik heb die kaarten weggelaten; die twee pagina's tonen nu twee vervolgdiensten
-in plaats van drie. **Vraag de eigenaar om één regel** waarom Consultant of team
-inhuren logisch volgt, als de kaart terug moet. Niet zelf verzinnen.
+Inmiddels verwijzen **vijf** ontwerpen naar Foundation Starterkit als
+vervolgstap. Al die kaarten zijn weggelaten; die pagina's tonen nu twee
+vervolgdiensten in plaats van drie. **Vraag de eigenaar om één regel** waarom
+Consultant of team inhuren logisch volgt, als de kaart terug moet. Niet zelf
+verzinnen.
+
+Dezelfde vraag blokkeert de negende dienstpagina: `consultant-inhuren` heeft
+geen ontwerp, dus zonder copy van de eigenaar blijft die op de terugval staan
+(eigen beschrijving, doelgroep en inzichten). Het `dienst-foundation-starterkit`
+-ontwerp is er nog wel en kan als vorm dienen — maar de tekst gaat over een
+gedeelde fundering, niet over het inhuren van mensen, dus die is niet
+overdraagbaar.
 
 ### 2.4 Openstaande beslissing: vijf velden zijn ongebruikt geworden
 
@@ -148,9 +170,17 @@ vervangen door `vervolg`, maar controleer of ze elders nog gerenderd worden
 
 ### 2.5 Nog niet visueel gecontroleerd
 
-- ~~De dienstpagina onder de vouw en op mobiel.~~ Gedaan: `ai-agent-in-a-day`
-  (geport) en `app-in-a-day` (terugval) op 1440px en 390px, alle secties, geen
-  horizontale overflow. Hier kwam de `.cover`-bug hierboven uit.
+- ~~De dienstpagina onder de vouw en op mobiel.~~ Gedaan: alle negen slugs op
+  320, 360, 375, 390, 620, 621, 700, 768, 800, 801, 900, 1024, 1280 en 1440px.
+  Geen horizontale overflow, één `<h1>` per pagina, alle foto's laden, geen
+  console-errors, geen icoon dat terugvalt op een vinkje.
+
+  Drie bugs kwamen daar uit, alle drie verholpen: de `.cover`-bug hierboven, de
+  nowrap-knop in de slot-CTA-band, en lange samenstellingen die de pagina opzij
+  duwden. Voor dat laatste is `overflow-wrap: anywhere` nodig en **niet**
+  `break-word` — alleen `anywhere` telt mee in de min-content-breedte, en juist
+  die bepaalt hoe smal een grid- of flexkolom mag worden.
+
 - `/sectoren/[slug]` na het verwijderen van de herofoto — alleen manufacturing
   is nagekeken.
 - De nieuwe homepage-hero-foto's na deploy. Zelfde bestandsnamen, andere
@@ -203,6 +233,8 @@ Werkt anders dan de desktop-app, en beter voor de visuele controle:
   Draai `npm ci` eerst, de container start met een lege `node_modules`.
 - **De Vercel-preview is niet met `curl` te halen** (het netwerkbeleid blokkeert
   de host), wel via de Vercel-MCP `web_fetch_vercel_url`.
+- **De Claude Design-ontwerpen zijn hier wél bereikbaar**, met `DesignSync`. Zie
+  2.1 voor het projectId en de valkuil met `list_projects`.
 
 ---
 
