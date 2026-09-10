@@ -11,9 +11,10 @@
   overflow: hidden;
   background: var(--ink-900);
   font-family: var(--font-sans);
-  /* Vult de viewport onder de sticky header (76px), met een bodem voor korte
-     schermen. */
-  min-height: max(560px, calc(100dvh - 96px));
+  /* Volle viewporthoogte: op de homepage is de navigatie uit de flow gehaald
+     en loopt de foto eronder door — zie header.nav-op-hero en .mnav-op-hero in
+     globals.css. De tekst krijgt hieronder de balkhoogte als extra padding. */
+  min-height: max(560px, 100dvh);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -103,7 +104,8 @@
   position: relative;
   z-index: 1;
   width: min(700px, 100%);
-  padding: 40px 40px calc(40px + var(--hsec-voet-h, 96px)) 40px;
+  /* Boven: 40px marge + 60px mobiele balk, want die staat er overheen. */
+  padding: 100px 40px calc(40px + var(--hsec-voet-h, 96px)) 40px;
   box-sizing: border-box;
 }
 
@@ -275,6 +277,17 @@
 
 /* ---- Schermformaten ---- */
 
+/* Vanaf hier loopt de foto onder de navigatie door: volle hoogte, en de tekst
+   krijgt de balkhoogte (76px) extra ruimte zodat hij er niet onder valt. */
+@media (min-width: 1041px) {
+  .hsec {
+    min-height: 100dvh;
+  }
+  .hsec-copy {
+    padding-top: 116px;
+  }
+}
+
 @media (max-width: 1200px) {
   .hsec-copy {
     width: 100%;
@@ -307,7 +320,7 @@
 
 @media (max-width: 620px) {
   .hsec-copy {
-    padding: 28px 20px calc(28px + var(--hsec-voet-h));
+    padding: 88px 20px calc(28px + var(--hsec-voet-h));
   }
   .hsec-voet {
     left: 20px;

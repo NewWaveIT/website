@@ -29,6 +29,31 @@ export function MobileShell() {
 
   const isActive = (href: string) => (href === "/" ? pathname === "/" : pathname.startsWith(href));
 
+  /**
+   * Zelfde overlay als op desktop (zie Header): op de homepage loopt de
+   * hero-foto onder de balk door, dus die is daar doorzichtig met een wit logo
+   * tot je de hero voorbij bent. Menu open ⇒ altijd ondoorzichtig, anders
+   * staat het logo op het geopende paneel.
+   */
+  const opHero = pathname === "/";
+  const [voorbijHero, setVoorbijHero] = useState(false);
+
+  useEffect(() => {
+    if (!opHero) return;
+    const hero = document.querySelector<HTMLElement>(".hsec");
+    if (!hero) return;
+    const meet = () => setVoorbijHero(window.scrollY > hero.offsetHeight - 60);
+    meet();
+    window.addEventListener("scroll", meet, { passive: true });
+    window.addEventListener("resize", meet);
+    return () => {
+      window.removeEventListener("scroll", meet);
+      window.removeEventListener("resize", meet);
+    };
+  }, [opHero]);
+
+  const doorzichtig = opHero && !voorbijHero && !open;
+
   // Body-scroll blokkeren bij open menu + Esc sluit
   useEffect(() => {
     document.body.classList.toggle("m-menu-open", open);
@@ -82,11 +107,15 @@ export function MobileShell() {
 
   return (
     <>
-      <header className="mnav">
+      <header className={cn("mnav", opHero && "mnav-op-hero", doorzichtig && "mnav-doorzichtig")}>
         <div className="mnav-inner">
           <Link href="/" className="logo-link" aria-label="The New Wave IT — home">
             <Image
-              src="/assets/logos/logo-horizontal-espresso.png"
+              src={
+                doorzichtig
+                  ? "/assets/logos/logo-horizontal-white.png"
+                  : "/assets/logos/logo-horizontal-espresso.png"
+              }
               alt="The New Wave IT"
               width={140}
               height={24}

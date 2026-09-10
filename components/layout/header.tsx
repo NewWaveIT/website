@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
@@ -22,12 +23,42 @@ export function Header() {
 
   const isActive = (href: string) => (href === "/" ? pathname === "/" : pathname.startsWith(href));
 
+  /**
+   * Op de homepage loopt de hero-foto onder de navigatie door (hero 3a). De
+   * balk is daar dus doorzichtig met witte tekst, en wordt pas ondoorzichtig
+   * zodra je de hero voorbij bent — anders staat er donkere tekst op niets.
+   * Alleen ≥1041px; daaronder verbergt globals.css deze balk en neemt
+   * MobileShell het over.
+   */
+  const opHero = pathname === "/";
+  const [voorbijHero, setVoorbijHero] = useState(false);
+
+  useEffect(() => {
+    if (!opHero) return;
+    const hero = document.querySelector<HTMLElement>(".hsec");
+    if (!hero) return;
+    const meet = () => setVoorbijHero(window.scrollY > hero.offsetHeight - 76);
+    meet();
+    window.addEventListener("scroll", meet, { passive: true });
+    window.addEventListener("resize", meet);
+    return () => {
+      window.removeEventListener("scroll", meet);
+      window.removeEventListener("resize", meet);
+    };
+  }, [opHero]);
+
+  const doorzichtig = opHero && !voorbijHero;
+
   return (
-    <header className="nav">
+    <header className={cn("nav", opHero && "nav-op-hero", doorzichtig && "nav-doorzichtig")}>
       <div className="wrap-wide nav-inner">
         <Link href="/" aria-label="The New Wave IT — home">
           <Image
-            src="/assets/logos/logo-horizontal-espresso.png"
+            src={
+              doorzichtig
+                ? "/assets/logos/logo-horizontal-white.png"
+                : "/assets/logos/logo-horizontal-espresso.png"
+            }
             alt="The New Wave IT"
             width={190}
             height={30}

@@ -438,6 +438,37 @@ header.nav {
   color: var(--orange-text);
   font-weight: var(--fw-semibold);
 }
+/* Homepage: de hero-foto loopt onder de navigatie door (hero 3a). De balk is
+   daar uit de flow gehaald zodat de hero op y=0 begint, en doorzichtig zolang
+   je in de hero staat. Zodra je erlangs bent valt hij terug op de gewone
+   ondergrond, anders komt donkere tekst op een lichte sectie zonder vlak.
+   MobileShell neemt ≤1040px de navigatie over, dus dit geldt alleen daarboven. */
+@media (min-width: 1041px) {
+  header.nav.nav-op-hero {
+    position: fixed;
+    left: 0;
+    right: 0;
+  }
+  header.nav.nav-doorzichtig {
+    background: transparent;
+    backdrop-filter: none;
+    border-bottom-color: color-mix(in srgb, var(--paper) 16%, transparent);
+  }
+  header.nav.nav-doorzichtig .nav-links a,
+  header.nav.nav-doorzichtig .nav-secondary {
+    color: var(--paper);
+  }
+  header.nav.nav-doorzichtig .nav-links a:hover,
+  header.nav.nav-doorzichtig .nav-secondary:hover,
+  header.nav.nav-doorzichtig .nav-links a.active {
+    color: var(--orange-400);
+  }
+  /* De dropdown zelf houdt zijn eigen lichte vlak; alleen de aanzet is wit. */
+  header.nav.nav-doorzichtig .nav-menu a {
+    color: var(--text-body);
+  }
+}
+
 /* Sectoren-dropdown (hover + toetsenbord via focus-within) */
 .nav-drop {
   position: relative;
@@ -1124,6 +1155,22 @@ footer.site-footer {
     border: 0;
     cursor: pointer;
     color: var(--text-strong);
+  }
+
+  /* Homepage: de hero-foto loopt ook hier onder de balk door. Zie
+     header.nav-op-hero hierboven voor de desktopvariant. */
+  .mnav.mnav-op-hero {
+    position: fixed;
+    left: 0;
+    right: 0;
+  }
+  .mnav.mnav-doorzichtig {
+    background: transparent;
+    backdrop-filter: none;
+    border-bottom-color: color-mix(in srgb, var(--paper) 16%, transparent);
+  }
+  .mnav.mnav-doorzichtig .burger {
+    color: var(--paper);
   }
 
   .m-menu {
