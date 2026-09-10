@@ -254,8 +254,9 @@ export default async function SectorPage({ params }: { params: Promise<{ slug: s
                     <Image
                       src={s.waaromFoto}
                       alt=""
-                      width={640}
-                      height={400}
+                      width={1600}
+                      height={1000}
+                      sizes="(max-width: 1100px) 100vw, 50vw"
                       style={{ objectPosition: s.waaromFotoPositie }}
                     />
                   </figure>
@@ -368,8 +369,9 @@ export default async function SectorPage({ params }: { params: Promise<{ slug: s
                   <Image
                     src={s.aanpakFoto}
                     alt=""
-                    width={560}
-                    height={747}
+                    width={1120}
+                    height={1494}
+                    sizes="(max-width: 1100px) 100vw, 40vw"
                     style={{ objectPosition: s.aanpakFotoPositie }}
                   />
                 </figure>

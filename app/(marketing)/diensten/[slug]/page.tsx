@@ -259,8 +259,12 @@ export default async function DienstPage({ params }: { params: Promise<{ slug: s
                 <Image
                   src={s.meeneemtFoto}
                   alt=""
-                  width={640}
-                  height={480}
+                  width={1600}
+                  height={1200}
+                  // Zonder `sizes` serveert Next de opgegeven breedte, terwijl
+                  // de CSS de foto over de halve pagina uitrekt — op een
+                  // 2x-scherm zichtbaar zacht. De kolom is 46% van 1440px.
+                  sizes="(max-width: 1100px) 100vw, 46vw"
                   className="split-foto"
                 />
               )}
