@@ -1,25 +1,11 @@
 import { JsonLd } from "@/components/json-ld";
 import { cacheLife } from "next/cache";
 import type { Metadata } from "next";
-import type { ComponentType } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { notFound } from "next/navigation";
-import {
-  ArrowRight,
-  BookOpen,
-  Bot,
-  Check,
-  GitFork,
-  HardHat,
-  ListOrdered,
-  Map,
-  Presentation,
-  Route,
-  ScanSearch,
-  ShieldCheck,
-  Users,
-} from "lucide-react";
+import { ArrowRight, Check, HardHat, Users } from "lucide-react";
+import { ICONEN } from "./iconen";
 import { getServices, getServiceBySlug } from "@/lib/services-data";
 import { getArtikelenVoorDienst } from "@/lib/inzichten-data";
 import { RICHTINGEN } from "@/lib/services";
@@ -35,22 +21,6 @@ import "./dienst.css";
    Design). Alle negen diensten delen dit sjabloon; wat per dienst verschilt
    staat in de CMS-rij. Elke sectie verbergt zichzelf als haar velden leeg
    zijn, zodat een dienst die nog niet gevuld is geen lege koppen toont. */
-
-/** Iconen die de "wat je meeneemt"-regels kunnen gebruiken. */
-const ICONEN: Record<string, ComponentType> = {
-  "book-open": BookOpen,
-  bot: Bot,
-  check: Check,
-  "git-fork": GitFork,
-  "hard-hat": HardHat,
-  "list-ordered": ListOrdered,
-  map: Map,
-  presentation: Presentation,
-  route: Route,
-  "scan-search": ScanSearch,
-  "shield-check": ShieldCheck,
-  users: Users,
-};
 
 /** Prijsregel; leeg betekent bewust "op aanvraag", niet "gratis". */
 function prijsRegel(s: Service): string {
