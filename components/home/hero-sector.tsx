@@ -6,27 +6,31 @@ import Link from "next/link";
 import { Pause, Play } from "lucide-react";
 import "./hero-sector.css";
 
-/* Hero — geport uit ui_kits/website/Hero Opties.dc.html, variant 3c
-   ("Achtergrond + sectorrail als bediening").
+/* Hero — geport uit ui_kits/website/Hero Opties.dc.html, variant 3a
+   ("Crossfade + trage zoom, scrim alleen links").
 
-   De sectorfoto vult de hero en wisselt met een crossfade plus trage zoom; de
-   scrim is radiaal en alleen donker waar tekst staat, zodat het beeld rechts
-   helder blijft. Onderaan staan de vijf sectoren als rail — die is tegelijk de
-   bediening, dus elk item is een knop.
+   De sectorfoto vult de hero en wisselt met een crossfade plus trage zoom. De
+   scrim is een zijdelingse verduistering in plaats van een deken over alles,
+   zodat de foto rechts herkenbaar blijft. Boven de kop staan een teller en het
+   sectorlabel, onderin een praktijkregel met rechts de streepjes.
 
-   Twee bewuste afwijkingen van het design:
+   Drie bewuste afwijkingen van het design:
 
-   1. De cijferkolom (metricValue/metricLabel — "1.940 ritten per week" en
-      soortgelijke) is weggelaten. Dat zijn mockup-getallen uit het designdoc en
-      op de rail lezen ze als harde claims over ons werk. Komt er een
-      onderbouwd cijfer per sector, dan hoort dat in het CMS en niet hier.
-   2. De <header> uit het design is weggelaten: de site heeft zijn eigen
+   1. Het cijfer linksonder (metricValue/metricLabel — "1.940 ritten per week"
+      en soortgelijke) is vervangen door de praktijkregel van dezelfde sector.
+      Dat waren mockup-getallen uit het designdoc en op die plek lezen ze als
+      harde claims over ons werk. Komt er een onderbouwd cijfer per sector, dan
+      hoort dat in het CMS en niet hier.
+   2. De streepjes rechtsonder zijn knoppen, en er staat een pauzeknop bij:
+      WCAG 2.2.2 vraagt een mechanisme voor bewegende content die langer dan
+      vijf seconden doorloopt, en hover telt niet voor toetsenbord.
+   3. De <header> uit het design is weggelaten: de site heeft zijn eigen
       <Header> in app/(marketing)/layout.tsx. */
 
 interface Scene {
   key: string;
   sector: string;
-  /** Wat er in die sector op de werkvloer gebeurt — vult de hero-alinea en de rail. */
+  /** Wat er in die sector op de werkvloer gebeurt — de regel linksonder. */
   real: string;
   foto: string;
 }
@@ -66,6 +70,8 @@ const SCENES: Scene[] = [
 
 const CYCLE_MS = 6500;
 
+const tel = (n: number) => String(n).padStart(2, "0");
+
 export function HeroSector() {
   // i en vorige zitten in één state-object: de vorige scene blijft als
   // onderlaag staan zolang de nieuwe infadet (anders flitst de espresso-
@@ -77,10 +83,6 @@ export function HeroSector() {
     setScene((s) => ({ i: n, vorige: s.i }));
   }, []);
 
-  // Scene-cyclus. Respecteert prefers-reduced-motion (dan geen cyclus) en is
-  // pauzeerbaar: WCAG 2.2.2 vraagt een mechanisme voor bewegende content die
-  // langer dan vijf seconden doorloopt, en hover telt niet voor toetsenbord.
-  //
   // Start pas na 'load'. Meteen beginnen legt het scenewerk bovenop de
   // hydratie; de bezoeker ziet de eerste scene sowieso, die staat in de
   // server-HTML.
@@ -130,19 +132,28 @@ export function HeroSector() {
           priority={i === 0}
           aria-hidden="true"
         />
+        {/* Zijdelingse verduistering: links donker genoeg voor tekst, rechts
+            blijft de foto herkenbaar. */}
         <div className="hsec-scrim" aria-hidden="true" />
+        <div className="hsec-scrim-onder" aria-hidden="true" />
       </div>
 
       <div className="hsec-copy">
         <p className="hsec-kicker">
+          <span className="hsec-teller">
+            {tel(i + 1)} / {tel(SCENES.length)}
+          </span>
           <span className="hsec-kicker-streep" aria-hidden="true" />
-          Business-specialist in vijf sectoren
+          <span key={s.key} className="hsec-sector">
+            {s.sector}
+          </span>
         </p>
         <h1 className="hsec-h1">
-          Wij maken van business en IT <span className="hsec-h1-accent">één beweging</span>.
+          Business en IT als <span className="hsec-h1-accent">één beweging</span>.
         </h1>
-        <p key={s.key} className="hsec-real">
-          {s.real} — en achter die handeling draait software die wij samen met de sector bouwden.
+        <p className="hsec-intro">
+          Sectorkennis, Mendix en AI in één team — van eerste sessie tot werkende software voor de
+          mensen die ermee werken.
         </p>
         <div className="hsec-acties">
           <Link className="hsec-cta" href="/contact">
@@ -154,37 +165,33 @@ export function HeroSector() {
         </div>
       </div>
 
-      <div className="hsec-rail">
-        {SCENES.map((sc, n) => (
+      <div className="hsec-voet">
+        <p key={s.key} className="hsec-real">
+          {s.real}
+        </p>
+        <div className="hsec-ticks">
+          {SCENES.map((sc, n) => (
+            <button
+              key={sc.key}
+              type="button"
+              className="hsec-tick"
+              aria-current={n === i ? "true" : undefined}
+              aria-label={`Toon ${sc.sector}`}
+              onClick={() => naar(n)}
+            />
+          ))}
           <button
-            key={sc.key}
             type="button"
-            className="hsec-rail-item"
-            aria-current={n === i ? "true" : undefined}
-            onClick={() => naar(n)}
+            className="hsec-pauze"
+            onClick={() => setPauze((p) => !p)}
+            aria-pressed={pauze}
+            aria-label={
+              pauze ? "Sectoren automatisch laten wisselen" : "Wisselen van sector pauzeren"
+            }
           >
-            <span className="hsec-rail-baan" aria-hidden="true">
-              <span
-                key={`${sc.key}-${n === i ? i : "uit"}-${pauze ? "stil" : "loop"}`}
-                className={n === i ? "hsec-rail-bar hsec-rail-bar-actief" : "hsec-rail-bar"}
-                style={n === i && !pauze ? { animationDuration: `${CYCLE_MS}ms` } : undefined}
-              />
-            </span>
-            <span className="hsec-rail-naam">{sc.sector}</span>
-            <span className="hsec-rail-regel">{sc.real}</span>
+            {pauze ? <Play aria-hidden="true" /> : <Pause aria-hidden="true" />}
           </button>
-        ))}
-        <button
-          type="button"
-          className="hsec-pauze"
-          onClick={() => setPauze((p) => !p)}
-          aria-pressed={pauze}
-          aria-label={
-            pauze ? "Sectoren automatisch laten wisselen" : "Wisselen van sector pauzeren"
-          }
-        >
-          {pauze ? <Play aria-hidden="true" /> : <Pause aria-hidden="true" />}
-        </button>
+        </div>
       </div>
     </section>
   );
