@@ -100,10 +100,7 @@ export interface SectorDetail {
   // 1 · Hero
   h1: string;
   intro: string;
-  heroFoto: string;
-  heroFotoBijschrift: string;
   /** CSS object-position, om het onderwerp in beeld te houden. */
-  heroFotoPositie?: string;
 
   // 2 · Herkenning
   herkenningTitel: string;
@@ -173,9 +170,6 @@ export const SECTOREN: Record<string, SectorDetail> = {
     h1: "Van werkplaats tot last mile in één keten",
     intro:
       "Elektrificatie, deelmobiliteit en ketens die haperen. Wij verbinden werkplaats, fleet, warehouse en klantproces in apps die live zijn binnen weken.",
-    heroFoto: "/assets/photos/overleg-lachend.webp",
-    heroFotoBijschrift: "Meekijken in de werkplaats, de planning en het magazijn",
-    heroFotoPositie: "50% 18%",
 
     herkenningTitel: "Wat we in werkplaatsen, planning en magazijnen tegenkomen",
     herkenning: [
@@ -364,9 +358,6 @@ export const SECTOREN: Record<string, SectorDetail> = {
     h1: "Software die meebeweegt met veranderende wet- en regelgeving",
     intro:
       "Gemeenten en uitvoeringsorganisaties lopen vast op systemen die nieuw beleid niet aankunnen. Wij bouwen applicaties die in weken aanpasbaar zijn, niet in jaren.",
-    heroFoto: "/assets/photos/team-presentatie-klant.webp",
-    heroFotoBijschrift: "Beleid en IT aan dezelfde tafel",
-    heroFotoPositie: "50% 25%",
 
     herkenningTitel: "Waar het bij gemeenten en uitvoerders vastloopt",
     herkenning: [
@@ -553,9 +544,6 @@ export const SECTOREN: Record<string, SectorDetail> = {
     h1: "Meer tijd voor zorg, minder tijd voor systemen",
     intro:
       "De zorgvraag groeit, de handen worden schaarser en de administratie blijft. Wij digitaliseren processen en verbinden systemen, zodat zorgverleners tijd terugkrijgen voor de patiënt.",
-    heroFoto: "/assets/photos/team-overleg-cafe.webp",
-    heroFotoBijschrift: "Zorg en IT aan dezelfde tafel",
-    heroFotoPositie: "50% 28%",
 
     herkenningTitel: "Wat zorgorganisaties ons vertellen",
     herkenning: [
@@ -740,9 +728,6 @@ export const SECTOREN: Record<string, SectorDetail> = {
     h1: "Productie die meebeweegt met de vraag",
     intro:
       "Je machines produceren al data en je ERP staat er al. Wij bouwen planning, kwaliteit en shopfloor daar bovenop — live binnen weken.",
-    heroFoto: "/assets/photos/project-parkeergarage-rotterdam.webp",
-    heroFotoBijschrift: "Samen kijken naar het proces met de meeste pijn",
-    heroFotoPositie: "50% 30%",
 
     herkenningTitel: "Wat we op productievloeren steeds terug horen",
     herkenning: [
@@ -927,9 +912,6 @@ export const SECTOREN: Record<string, SectorDetail> = {
     h1: "Van tien apps naar honderd, zonder de controle te verliezen",
     intro:
       "Met twintig Mendix-apps red je het op discipline. Bij honderd niet meer. Wij helpen banken en verzekeraars opschalen met governance die de snelheid niet in de weg zit.",
-    heroFoto: "/assets/photos/team-brainstorm-glaswand.webp",
-    heroFotoBijschrift: "Schalen is een organisatievraag, niet alleen een platformvraag",
-    heroFotoPositie: "50% 25%",
 
     herkenningTitel: "Waar het gaat schuiven als low-code doorgroeit",
     herkenning: [

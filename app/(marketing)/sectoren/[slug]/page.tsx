@@ -187,19 +187,6 @@ export default async function SectorPage({ params }: { params: Promise<{ slug: s
                 </a>
               </div>
             </div>
-            {s.heroFoto && (
-              <figure className="hero-photo">
-                <Image
-                  src={s.heroFoto}
-                  alt=""
-                  width={720}
-                  height={540}
-                  priority
-                  style={{ objectPosition: s.heroFotoPositie }}
-                />
-                {s.heroFotoBijschrift && <figcaption>{s.heroFotoBijschrift}</figcaption>}
-              </figure>
-            )}
           </div>
         </div>
       </section>
