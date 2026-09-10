@@ -33,8 +33,7 @@ Elf secties in vaste volgorde:
 10. Slot-CTA
 
 **Elke sectie verbergt zichzelf als haar velden leeg zijn.** Dat is geen
-bijkomstigheid: zeven diensten hebben deze content nog niet, en die horen geen
-lege koppen te tonen.
+bijkomstigheid: een dienst zonder deze content hoort geen lege koppen te tonen.
 
 Heeft een dienst géén van die secties, dan valt de pagina terug op de tekst die
 er al was: `beschrijving`, `doelgroep` en de gekoppelde inzichten. Zonder die
@@ -132,12 +131,11 @@ apostroffen bevat.
 ### 2.3 Foundation Starterkit bestaat niet meer
 
 Die dienst is op 9 september vervangen door `consultant-inhuren` (zie
-`supabase/scripts/20260909-inhuurdienst.sql`, al gedraaid). Twee ontwerpen
-verwijzen er nog naar als vervolgstap, met een reden die niet op een consultant
-slaat ("Van losse agents naar iets dat structureel in je landschap zit").
+`supabase/scripts/20260909-inhuurdienst.sql`, al gedraaid).
 
-Inmiddels verwijzen **vijf** ontwerpen naar Foundation Starterkit als
-vervolgstap. Al die kaarten zijn weggelaten; die pagina's tonen nu twee
+**Vijf** ontwerpen verwijzen er nog naar als vervolgstap, met een reden die niet
+op een consultant slaat ("De gedeelde fundering waardoor de volgende app de
+helft kost"). Al die kaarten zijn weggelaten; die pagina's tonen nu twee
 vervolgdiensten in plaats van drie. **Vraag de eigenaar om één regel** waarom
 Consultant of team inhuren logisch volgt, als de kaart terug moet. Niet zelf
 verzinnen.
