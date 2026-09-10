@@ -21,11 +21,14 @@ import {
   Users,
 } from "lucide-react";
 import { getServices, getServiceBySlug } from "@/lib/services-data";
+import { getArtikelenVoorDienst } from "@/lib/inzichten-data";
 import { RICHTINGEN } from "@/lib/services";
 import type { Service } from "@/lib/services";
 import { SlotCta } from "@/components/layout/slot-cta";
 import { Kruimelpad } from "@/components/kruimelpad";
+import { InzichtenSectie } from "@/components/diensten/secties/verwijzingen";
 import { SITE_URL } from "@/lib/site";
+import "@/components/diensten/secties/secties.css";
 import "./dienst.css";
 
 /* Dienstdetailpagina — geport uit ui_kits/website/dienst-*.html (Claude
@@ -123,6 +126,12 @@ export default async function DienstPage({ params }: { params: Promise<{ slug: s
     s.faq?.length ? { id: "faq", label: "Vragen" } : null,
   ].filter((x): x is { id: string; label: string } => x !== null);
 
+  // Een dienst die nog niet naar het ontwerp van september is overgezet heeft
+  // geen enkele van die secties. Zonder terugval blijft daar een pagina over met
+  // alleen een kop, een pitchregel en de boekkaart — geen tekst om op te vinden.
+  const geport = secties.length > 0;
+  const artikelen = geport ? [] : await getArtikelenVoorDienst(slug);
+
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Service",
@@ -215,6 +224,24 @@ export default async function DienstPage({ params }: { params: Promise<{ slug: s
             ))}
           </div>
         </nav>
+      )}
+
+      {/* Terugval (buiten het ontwerp): de tekst die deze dienst al heeft,
+             zolang er geen ontwerpsecties zijn om te tonen */}
+      {!geport && (
+        <section className="block">
+          <div className="wrap-wide">
+            <div className="sec-head">
+              <div className="kicker">Over deze dienst</div>
+              <h2>Wat {s.naam} inhoudt</h2>
+              <p>{s.beschrijving}</p>
+            </div>
+            <div className="sec-head">
+              <div className="kicker">Voor wie</div>
+              <p>{s.doelgroep}</p>
+            </div>
+          </div>
+        </section>
       )}
 
       {/* 2 · Voor wie */}
@@ -383,6 +410,16 @@ export default async function DienstPage({ params }: { params: Promise<{ slug: s
             </div>
           </div>
         </section>
+      )}
+
+      {/* `secties.css` scopet zichzelf onder .dienst-secties; die class staat
+             bewust niet op de paginaroot, want .subnav en .crumbs botsen met het
+             nieuwe ontwerp. Zonder de scope verliest .cover zijn positionering
+             en ontsnapt de fill-afbeelding naar de viewport. */}
+      {artikelen.length > 0 && (
+        <div className="dienst-secties">
+          <InzichtenSectie artikelen={artikelen} titel={`Kennis over ${s.naam}`} />
+        </div>
       )}
 
       {/* 8 · De rest van de catalogus */}
