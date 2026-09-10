@@ -17,6 +17,8 @@
  * cms_teamleden.
  */
 
+import type { FaqItem } from "@/lib/content-blokken";
+
 /** Lucide-iconen die in de sectorbadge en de use-cases voorkomen. */
 export type SectorIcon =
   | "building-2"
@@ -75,10 +77,8 @@ export interface DienstLink {
   href: string;
 }
 
-export interface FaqItem {
-  vraag: string;
-  antwoord: string;
-}
+// FaqItem staat in content-blokken.ts: dienstpagina's gebruiken hem ook.
+export type { FaqItem };
 
 /** Een teamlid op de sectorpagina: wie het is staat in het CMS, waarom hij hier
  *  staat is sectorspecifiek. */

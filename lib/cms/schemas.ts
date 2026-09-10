@@ -25,6 +25,7 @@ const lijst = z.array(z.string());
 const kpi = z.object({ n: tekst, l: tekst });
 const stap = z.object({ label: tekst, titel: tekst, tekst: optTekst });
 const resultaatKaart = z.object({ titel: tekst, tekst: tekst });
+const faqItem = z.object({ vraag: tekst, antwoord: tekst });
 
 const cases = z.object({
   slug: tekst,
@@ -198,7 +199,7 @@ const sectoren = z.object({
   dienstLinks: z.array(z.object({ label: tekst, href: tekst })),
 
   faqTitel: tekst,
-  faq: z.array(z.object({ vraag: tekst, antwoord: tekst })),
+  faq: z.array(faqItem),
 
   teamTitel: tekst,
   team: z.array(z.object({ teamlid: tekst, tekst: tekst })),
@@ -245,6 +246,31 @@ const services = z.object({
   caseRol: optTekst,
   caseImage: optTekst,
   caseHref: optTekst,
+  // Detailpagina (ontwerp september 2026). Alles optioneel: een leeg blok
+  // verbergt zijn sectie, zodat een dienst die nog niet gevuld is geen lege
+  // koppen toont.
+  kop: optTekst,
+  lead: optTekst,
+  feiten: z.array(z.object({ label: tekst, waarde: tekst })).optional(),
+  prijsToelichting: optTekst,
+  boekPunten: lijst.optional(),
+  herkenIntro: optTekst,
+  herken: lijst.optional(),
+  meeneemtTitel: optTekst,
+  meeneemt: z.array(z.object({ icon: tekst, titel: tekst, tekst: tekst })).optional(),
+  meeneemtFoto: optTekst,
+  dagLabel: optTekst,
+  dagTitel: optTekst,
+  dagIntro: optTekst,
+  dagSlots: z.array(z.object({ tijd: tekst, titel: tekst, tekst: tekst })).optional(),
+  voorbereidingIntro: optTekst,
+  wijZorgen: lijst.optional(),
+  jijZorgt: lijst.optional(),
+  daarnaIntro: optTekst,
+  vervolg: z.array(z.object({ slug: tekst, reden: tekst })).optional(),
+  faqTitel: optTekst,
+  faq: z.array(faqItem).optional(),
+  ctaTitel: optTekst,
 });
 
 const artikelen = z.object({

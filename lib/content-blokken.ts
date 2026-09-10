@@ -71,3 +71,41 @@ export interface CaseVerwijzing {
   caseImage?: string;
   caseHref?: string;
 }
+
+/* ---------------------------------------------------------------
+   Blokken van de dienstdetailpagina (ontwerp september 2026).
+   Alle negen diensten delen één sjabloon; per dienst is elk blok
+   optioneel, en een leeg blok verbergt zijn hele sectie.
+   --------------------------------------------------------------- */
+
+/** Eén kolom in de feitenregel onder de hero-tekst. */
+export interface Feit {
+  label: string;
+  waarde: string;
+}
+
+/** Regel in "Wat je meeneemt": lucide-icoonnaam, kop en toelichting. */
+export interface Meeneem {
+  icon: string;
+  titel: string;
+  tekst: string;
+}
+
+/** Blok in het programma. `tijd` is vrije tekst: "09:00" of "Week 1". */
+export interface DagSlot {
+  tijd: string;
+  titel: string;
+  tekst: string;
+}
+
+/** Vervolgdienst mét de reden waarom die logisch volgt op deze. */
+export interface Vervolg {
+  slug: string;
+  reden: string;
+}
+
+/** Vraag en antwoord. Gedeeld met de sectorpagina's. */
+export interface FaqItem {
+  vraag: string;
+  antwoord: string;
+}

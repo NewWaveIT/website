@@ -796,6 +796,97 @@ export const FIELD_SCHEMAS: Record<ContentType, FieldDef[]> = {
     { key: "caseRol", label: "Pagina — klantverhaal: rol", type: "text" },
     { key: "caseImage", label: "Pagina — klantverhaal: afbeelding", type: "image" },
     { key: "caseHref", label: "Pagina — klantverhaal: link", type: "text" },
+
+    // Detailpagina volgens het ontwerp van september 2026. Eén sjabloon voor
+    // alle negen diensten; elk blok verbergt zijn sectie als het leeg is.
+    { key: "kop", label: "Detail — kop in de hero", type: "text", help: "Leeg = de naam." },
+    {
+      key: "lead",
+      label: "Detail — alinea onder de kop",
+      type: "textarea",
+      help: "Leeg = de pitch.",
+    },
+    {
+      key: "feiten",
+      label: "Detail — feitenregel",
+      type: "items",
+      itemLabel: "Feit",
+      of: [
+        { key: "label", label: "Label", type: "text", placeholder: "Duur" },
+        { key: "waarde", label: "Waarde", type: "text", placeholder: "Eén dag · 09:00–17:00" },
+      ],
+    },
+    {
+      key: "prijsToelichting",
+      label: "Detail — toelichting onder de prijs",
+      type: "textarea",
+    },
+    {
+      key: "boekPunten",
+      label: "Detail — bullets in de boekkaart",
+      type: "list",
+      help: "Leeg = de resultaten van de kaart.",
+    },
+    { key: "herkenIntro", label: "Detail — intro bij 'Herken je dit?'", type: "textarea" },
+    { key: "herken", label: "Detail — herkenningscitaten", type: "list", help: "Drie citaten." },
+    { key: "meeneemtTitel", label: "Detail — titel 'Wat je meeneemt'", type: "text" },
+    {
+      key: "meeneemt",
+      label: "Detail — wat je meeneemt",
+      type: "items",
+      itemLabel: "Regel",
+      of: [
+        { key: "icon", label: "Icoon (lucide)", type: "text", placeholder: "bot" },
+        { key: "titel", label: "Titel", type: "text" },
+        { key: "tekst", label: "Toelichting", type: "textarea" },
+      ],
+    },
+    { key: "meeneemtFoto", label: "Detail — foto bij 'Wat je meeneemt'", type: "image" },
+    {
+      key: "dagLabel",
+      label: "Detail — label boven het programma",
+      type: "text",
+      placeholder: "De dag zelf",
+    },
+    { key: "dagTitel", label: "Detail — titel van het programma", type: "text" },
+    { key: "dagIntro", label: "Detail — intro bij het programma", type: "textarea" },
+    {
+      key: "dagSlots",
+      label: "Detail — programma",
+      type: "items",
+      itemLabel: "Blok",
+      of: [
+        { key: "tijd", label: "Tijd of week", type: "text", placeholder: "09:00" },
+        { key: "titel", label: "Titel", type: "text" },
+        { key: "tekst", label: "Toelichting", type: "textarea" },
+      ],
+    },
+    { key: "voorbereidingIntro", label: "Detail — intro bij voorbereiding", type: "textarea" },
+    { key: "wijZorgen", label: "Detail — wij zorgen voor", type: "list" },
+    { key: "jijZorgt", label: "Detail — jij zorgt voor", type: "list" },
+    { key: "daarnaIntro", label: "Detail — intro bij 'Daarna'", type: "textarea" },
+    {
+      key: "vervolg",
+      label: "Detail — vervolgdiensten",
+      type: "items",
+      itemLabel: "Vervolg",
+      of: [
+        { key: "slug", label: "Service-slug", type: "text", placeholder: "ai-opportunity-scan" },
+        { key: "reden", label: "Waarom deze volgt", type: "textarea" },
+      ],
+    },
+    { key: "faqTitel", label: "Detail — titel boven de FAQ", type: "text" },
+    {
+      key: "faq",
+      label: "Detail — veelgestelde vragen",
+      type: "items",
+      itemLabel: "Vraag",
+      of: [
+        { key: "vraag", label: "Vraag", type: "text" },
+        { key: "antwoord", label: "Antwoord", type: "textarea" },
+      ],
+    },
+    { key: "ctaTitel", label: "Detail — kop van de slot-CTA", type: "text" },
   ],
 };
 
