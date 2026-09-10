@@ -146,6 +146,10 @@
 .p-dienst .book .btn {
   width: 100%;
   justify-content: center;
+  /* .btn is site-breed nowrap. Een lang ctaLabel ("Plan een kennismaking
+     (20 min)") maakt de boekkaart daardoor breder dan een telefoon van 360px.
+     Hier mag hij over twee regels. */
+  white-space: normal;
 }
 .p-dienst .book .alt {
   display: block;
@@ -538,6 +542,21 @@
   .p-dienst .facts {
     grid-template-columns: 1fr 1fr;
     gap: var(--space-5);
+  }
+}
+
+/* De koppen staan in expanded display op --text-3xl/4xl en de copy is
+   Nederlands: "productieomgeving", "opleidingsverantwoordelijken". Zulke
+   samenstellingen zijn breder dan een smal scherm en duwden de hele pagina
+   opzij. Ze passen vanaf ongeveer 800px naast de sectiemarge; daarboven houdt
+   het ontwerp zijn eigen regelval en breken we niet. */
+@media (max-width: 800px) {
+  /* `anywhere` en niet `break-word`: alleen `anywhere` telt mee in de
+     min-content-breedte, en juist die bepaalt hoe smal een grid- of flexkolom
+     mag worden. Met `break-word` bleef de kolom zo breed als het langste woord
+     en schoof de pagina alsnog opzij. */
+  .p-dienst {
+    overflow-wrap: anywhere;
   }
 }
 

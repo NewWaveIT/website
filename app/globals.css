@@ -683,6 +683,10 @@ footer.site-footer {
   border-color: var(--white);
   font-size: var(--text-md);
   padding: 15px 30px;
+  /* .btn is nowrap; met een lang label ("Plan een kennismaking (20 min)") is
+     deze knop op --text-md breder dan een telefoon van 375px en schuift de hele
+     pagina opzij. Laat hem dan over twee regels lopen. */
+  white-space: normal;
 }
 .cta .btn-on:hover {
   background: var(--ink-900);
