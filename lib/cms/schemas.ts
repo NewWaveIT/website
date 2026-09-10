@@ -157,9 +157,6 @@ const sectoren = z.object({
 
   h1: tekst,
   intro: tekst,
-  heroFoto: tekst,
-  heroFotoBijschrift: tekst,
-  heroFotoPositie: optTekst,
 
   herkenningTitel: tekst,
   herkenning: lijst,

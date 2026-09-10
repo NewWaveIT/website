@@ -482,9 +482,6 @@ export const FIELD_SCHEMAS: Record<ContentType, FieldDef[]> = {
 
     { key: "h1", label: "Titel (H1)", type: "text" },
     { key: "intro", label: "Intro", type: "richtext-lite" },
-    { key: "heroFoto", label: "Herofoto", type: "image" },
-    { key: "heroFotoBijschrift", label: "Bijschrift bij de herofoto", type: "text" },
-    { key: "heroFotoPositie", label: "Uitsnede herofoto", type: "text", panel: "side" },
 
     { key: "herkenningTitel", label: "Herkenning — titel", type: "text" },
     {
