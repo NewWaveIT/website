@@ -35,6 +35,14 @@ export const SERVICE_FAMILIES: {
   { key: "capaciteit", niveau: 3, label: "Capaciteit", kicker: "Capaciteit opbouwen" },
 ];
 
+/**
+ * De basisdienst staat naast de catalogus, niet erin: capaciteit is doorlopend
+ * en heeft geen vaste scope of prijs, terwijl de negen catalogusdiensten dat
+ * juist wel hebben. Overzichten filteren hem er daarom uit; `/diensten` geeft
+ * hem een eigen sectie bovenaan.
+ */
+export const BASIS_SLUG = "consultant-inhuren";
+
 /** De drie richtingen als kolommen van de keuzematrix, in vaste volgorde. */
 export const RICHTINGEN: { key: ServiceRichting; naam: string; href: string }[] = [
   { key: "mendix", naam: "Mendix", href: "/diensten/mendix" },

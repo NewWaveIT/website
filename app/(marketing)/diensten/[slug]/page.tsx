@@ -9,6 +9,7 @@ import { ICONEN } from "./iconen";
 import { getServices, getServiceBySlug } from "@/lib/services-data";
 import { getArtikelenVoorDienst } from "@/lib/inzichten-data";
 import { RICHTINGEN } from "@/lib/services";
+import { BASIS_SLUG } from "@/lib/dienstenstructuur";
 import type { Service } from "@/lib/services";
 import { SlotCta } from "@/components/layout/slot-cta";
 import { Kruimelpad } from "@/components/kruimelpad";
@@ -83,7 +84,9 @@ export default async function DienstPage({ params }: { params: Promise<{ slug: s
   const vervolg = (s.vervolg ?? [])
     .map((v) => ({ reden: v.reden, dienst: alle.find((d) => d.slug === v.slug) }))
     .filter((v): v is { reden: string; dienst: Service } => Boolean(v.dienst));
-  const rest = alle.filter((d) => d.slug !== s.slug);
+  // De basisdienst hoort niet in de catalogus; een vervolgverwijzing ernaartoe
+  // mag wel, dus die filteren we hier pas weg en niet in `alle`.
+  const rest = alle.filter((d) => d.slug !== s.slug && d.slug !== BASIS_SLUG);
 
   const secties = [
     s.herken?.length ? { id: "voor-wie", label: "Voor wie" } : null,

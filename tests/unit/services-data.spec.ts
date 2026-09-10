@@ -25,6 +25,7 @@ const {
   getFaseItems,
 } = await import("@/lib/services-data");
 const { SERVICES, RICHTINGEN } = await import("@/lib/services");
+const { BASIS_SLUG } = await import("@/lib/dienstenstructuur");
 
 /** CMS-rij voor één dienst; `data` bevat alleen wat de redacteur heeft aangeraakt. */
 function rij(slug: string, data: Record<string, unknown> = {}, volgorde = 0) {
@@ -112,13 +113,15 @@ describe("getDienstMatrix", () => {
     }
   });
 
-  it("plaatst alle 9 diensten precies één keer", async () => {
+  it("plaatst alle catalogusdiensten precies één keer", async () => {
+    // De basisdienst hoort niet in de matrix: die staat naast de catalogus.
+    const catalogus = SERVICES.filter((s) => s.slug !== BASIS_SLUG).length;
     const { rijen } = await getDienstMatrix();
     const slugs = rijen.flatMap((r) =>
       r.layout === "kolommen" ? r.cellen.map((c) => c.service.slug) : r.diensten.map((s) => s.slug),
     );
-    expect(slugs).toHaveLength(SERVICES.length);
-    expect(new Set(slugs).size).toBe(SERVICES.length);
+    expect(slugs).toHaveLength(catalogus);
+    expect(new Set(slugs).size).toBe(catalogus);
   });
 
   it("maakt het capaciteitsniveau breed, omdat het richting-overstijgend is", async () => {
@@ -129,7 +132,7 @@ describe("getDienstMatrix", () => {
     expect(capaciteit?.layout).toBe("breed");
     expect(capaciteit?.diensten.map((s) => s.slug)).toEqual([
       "fusion-team-startsprint",
-      "consultant-inhuren",
+      "foundation-starterkit",
       "training-enablement",
     ]);
   });

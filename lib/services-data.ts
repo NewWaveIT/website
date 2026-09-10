@@ -6,6 +6,7 @@ import { SERVICES, type Service } from "@/lib/services";
 import {
   SERVICE_FAMILIES,
   RICHTINGEN,
+  BASIS_SLUG,
   type ServiceFamilie,
   type ServiceRichting,
 } from "@/lib/dienstenstructuur";
@@ -25,6 +26,21 @@ const lezer = maakLezer<Service>({
 export const getServices = lezer.alle;
 
 export const getServiceBySlug = lezer.bijSlug;
+
+/**
+ * De catalogus: alles behalve de basisdienst. Gebruik deze waar je "de negen
+ * diensten" bedoelt — overzichten, kaartenrasters, de rest-van-de-catalogus.
+ * `getServices` blijft alles teruggeven, want een vervolgverwijzing of de
+ * keuzelijst van het contactformulier mag de basisdienst wél noemen.
+ */
+export async function getCatalogus(): Promise<Service[]> {
+  return (await getServices()).filter((s) => s.slug !== BASIS_SLUG);
+}
+
+/** De doorlopende basisdienst, of null als hij uit het CMS verwijderd is. */
+export async function getBasisdienst(): Promise<Service | null> {
+  return (await getServices()).find((s) => s.slug === BASIS_SLUG) ?? null;
+}
 
 /** Wat het contactformulier van een dienst nodig heeft, en niets meer. */
 export interface DienstOptie {
@@ -84,7 +100,7 @@ export interface DienstMatrix {
  * bezoeker een kolom kiest en van boven naar beneden opschaalt.
  */
 export async function getDienstMatrix(): Promise<DienstMatrix> {
-  const services = await getServices();
+  const services = await getCatalogus();
 
   const rijen: MatrixRij[] = SERVICE_FAMILIES.map(({ key, niveau, label, kicker }) => {
     const opNiveau = (s: Service) => (s.hubTier ?? s.familie) === key;
