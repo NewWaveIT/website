@@ -35,6 +35,17 @@ Elf secties in vaste volgorde:
 bijkomstigheid: zeven diensten hebben deze content nog niet, en die horen geen
 lege koppen te tonen.
 
+Heeft een dienst géén van die secties, dan valt de pagina terug op de tekst die
+er al was: `beschrijving`, `doelgroep` en de gekoppelde inzichten. Zonder die
+terugval bleef er een kop met een pitchregel en een boekkaart over — geen tekst
+om op gevonden te worden. De terugval verdwijnt vanzelf zodra de dienst gevuld
+is, dus de geporte pagina's zien hem nooit.
+
+De inzichten staan in een eigen `.dienst-secties`-wrapper. Zet die class **niet**
+op de paginaroot: `.subnav` en `.crumbs` uit `secties.css` botsen met het nieuwe
+ontwerp. Laat je de scope wég, dan verliest `.cover` zijn positionering en
+ontsnapt de `fill`-afbeelding naar de viewport, dwars over de hero heen.
+
 ### Contentmodel
 
 `Service` (`lib/services.ts`) heeft er 22 optionele velden bij: `kop`, `lead`,
@@ -84,17 +95,26 @@ Twee dingen om op te letten:
 ### 2.2 SQL voor alle negen CMS-rijen — dit is de belangrijkste stap
 
 **De seed is een koude start; de CMS-rij wint.** Zolang je alleen
-`lib/services.ts` bijwerkt, verandert er niets op de live site. Per dienst:
+`lib/services.ts` bijwerkt, verandert er niets op de live site.
+
+`supabase/scripts/20260910-dienstdetail-velden.sql` doet dit voor de twee
+gevulde diensten (`ai-agent-in-a-day`, `it-strategie`, elk 22 sleutels).
+**De eigenaar moet het nog draaien.**
+
+Het script is uit de seed gegenereerd, niet overgetypt. Vul je een dienst bij,
+genereer het dan opnieuw in plaats van er met de hand een blok bij te schrijven:
+lees `SERVICES` uit `lib/services.ts`, houd per dienst de 22 nieuwe sleutels
+over die niet leeg zijn, en schrijf per dienst één
 
 ```sql
 update public.cms_services
-set data = data || '{ … nieuwe sleutels … }'::jsonb
+set data = data || $json$ … $json$::jsonb
 where slug = '…';
 ```
 
-Gebruik `data || jsonb` en niet een volledige overschrijving, zodat wat de
-eigenaar zelf in de admin heeft aangepast blijft staan. Zet het script in
-`supabase/scripts/` en laat de eigenaar het draaien.
+`data || jsonb` en niet een volledige overschrijving, zodat wat de eigenaar zelf
+in de admin heeft aangepast blijft staan. Dollar-quoting omdat de copy
+apostroffen bevat.
 
 ### 2.3 Foundation Starterkit bestaat niet meer
 
@@ -128,8 +148,9 @@ vervangen door `vervolg`, maar controleer of ze elders nog gerenderd worden
 
 ### 2.5 Nog niet visueel gecontroleerd
 
-- De dienstpagina **onder de vouw** (programma, voorbereiding, vervolg, FAQ,
-  catalogus) en op mobiel. Alleen de hero is op 1440px bekeken.
+- ~~De dienstpagina onder de vouw en op mobiel.~~ Gedaan: `ai-agent-in-a-day`
+  (geport) en `app-in-a-day` (terugval) op 1440px en 390px, alle secties, geen
+  horizontale overflow. Hier kwam de `.cover`-bug hierboven uit.
 - `/sectoren/[slug]` na het verwijderen van de herofoto — alleen manufacturing
   is nagekeken.
 - De nieuwe homepage-hero-foto's na deploy. Zelfde bestandsnamen, andere
@@ -169,6 +190,19 @@ vervangen door `vervolg`, maar controleer of ze elders nog gerenderd worden
 - **Push alleen als de eigenaar erom vraagt.**
 - Draai `npm run test:unit` en laat de pre-commit hook (eslint + prettier +
   typecheck) zijn werk doen. CI draait daarnaast Playwright en Lighthouse.
+
+### Vanuit een Claude Code-websessie (Linux-container)
+
+Werkt anders dan de desktop-app, en beter voor de visuele controle:
+
+- **Supabase is er net zo onbereikbaar**, maar dat is bruikbaar: zet placeholders
+  in `.env.local`, dan lopen de queries in een timeout en rendert `npm run dev`
+  de seed. Precies wat je wilt om de nog niet gevulde diensten te bekijken.
+- **Screenshots met de voorgeïnstalleerde Chromium**, want de browserversie in
+  de repo staat er niet: `chromium.launch({ executablePath: "/opt/pw-browsers/chromium" })`.
+  Draai `npm ci` eerst, de container start met een lege `node_modules`.
+- **De Vercel-preview is niet met `curl` te halen** (het netwerkbeleid blokkeert
+  de host), wel via de Vercel-MCP `web_fetch_vercel_url`.
 
 ---
 
