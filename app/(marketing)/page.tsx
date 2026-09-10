@@ -4,7 +4,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowRight, Award } from "lucide-react";
-import { HeroSplit } from "@/components/home/hero-split";
+import { HeroSector } from "@/components/home/hero-sector";
 import { HomeInteractions } from "@/components/home/home-interactions";
 import { SectorSplit } from "@/components/sector-split";
 import { ClientLogos, AWARD } from "@/components/home/client-logos";
@@ -71,7 +71,7 @@ export default async function HomePage() {
       <JsonLd data={jsonLd} />
 
       {/* Hero */}
-      <HeroSplit />
+      <HeroSector />
 
       {/* Klantenband */}
       <div className="proof">

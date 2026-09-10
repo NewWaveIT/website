@@ -1,0 +1,363 @@
+/* Hero 3c — geport uit ui_kits/website/Hero Opties.dc.html
+   ("Achtergrond + sectorrail als bediening").
+
+   Het design staat volledig inline met vaste hexwaarden; hier zijn die
+   vertaald naar de tokens uit globals.css. De scrim en de randen hebben alfa
+   nodig, dus die gaan via color-mix over hetzelfde token in plaats van via een
+   losse rgba(). Structuur in hero-sector.tsx. */
+
+.hsec {
+  position: relative;
+  overflow: hidden;
+  background: var(--ink-900);
+  font-family: var(--font-sans);
+  /* Vult de viewport onder de sticky header (76px), met een bodem voor korte
+     schermen. */
+  min-height: max(560px, calc(100dvh - 96px));
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  isolation: isolate;
+}
+
+/* ---- Beeld ---- */
+
+.hsec-beeld {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.hsec-foto {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.hsec-foto-in {
+  animation:
+    hsecFade 1.1s ease both,
+    hsecKen 7s linear both;
+}
+
+.hsec-scrim {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    120% 90% at 18% 42%,
+    color-mix(in srgb, var(--ink-950) 95%, transparent) 0%,
+    color-mix(in srgb, var(--ink-950) 82%, transparent) 38%,
+    color-mix(in srgb, var(--ink-950) 42%, transparent) 72%,
+    color-mix(in srgb, var(--ink-950) 28%, transparent) 100%
+  );
+}
+
+@keyframes hsecFade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes hsecKen {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.12);
+  }
+}
+@keyframes hsecUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes hsecClip {
+  from {
+    clip-path: inset(0 100% 0 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+/* ---- Tekstblok ---- */
+
+.hsec-copy {
+  position: relative;
+  z-index: 1;
+  width: min(700px, 100%);
+  padding: 40px 40px calc(40px + var(--hsec-rail-h, 132px)) 40px;
+  box-sizing: border-box;
+}
+
+.hsec-kicker {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 26px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--orange-500);
+}
+
+.hsec-kicker-streep {
+  width: 26px;
+  height: 2px;
+  background: var(--orange-500);
+  flex: none;
+}
+
+.hsec-h1 {
+  margin: 0 0 22px;
+  font-family: var(--font-display-expanded);
+  font-weight: 900;
+  font-size: clamp(32px, 4.6vw, 70px);
+  line-height: 0.98;
+  letter-spacing: -2px;
+  color: var(--paper);
+  text-wrap: balance;
+}
+
+.hsec-h1-accent {
+  color: var(--orange-500);
+  border-bottom: 3px solid var(--orange-500);
+}
+
+.hsec-real {
+  margin: 0 0 34px;
+  max-width: 46ch;
+  font-size: clamp(16px, 1.3vw, 19px);
+  line-height: 1.55;
+  color: var(--ink-200);
+  text-wrap: pretty;
+  animation: hsecUp 0.6s ease both;
+}
+
+.hsec-acties {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 18px 24px;
+}
+
+.hsec-cta {
+  background: var(--orange-500);
+  color: var(--white);
+  font-size: 16px;
+  font-weight: 600;
+  padding: 17px 30px;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.hsec-cta:hover {
+  background: var(--orange-600);
+}
+
+.hsec-link {
+  color: var(--paper);
+  font-size: 16px;
+  font-weight: 600;
+  text-decoration: none;
+  border-bottom: 2px solid color-mix(in srgb, var(--paper) 30%, transparent);
+  padding-bottom: 3px;
+}
+
+.hsec-link:hover {
+  border-bottom-color: var(--orange-500);
+}
+
+/* ---- Sectorrail (tegelijk de bediening) ---- */
+
+.hsec-rail {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  background: color-mix(in srgb, var(--ink-950) 88%, transparent);
+  backdrop-filter: blur(8px);
+  border-top: 1px solid color-mix(in srgb, var(--paper) 18%, transparent);
+}
+
+.hsec-rail-item {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 24px 26px 26px;
+  border: 0;
+  border-right: 1px solid color-mix(in srgb, var(--paper) 12%, transparent);
+  background: none;
+  text-align: left;
+  font: inherit;
+  cursor: pointer;
+}
+
+.hsec-rail-item:hover .hsec-rail-naam,
+.hsec-rail-item:focus-visible .hsec-rail-naam {
+  color: var(--paper);
+}
+
+.hsec-rail-baan {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 3px;
+  background: color-mix(in srgb, var(--paper) 12%, transparent);
+  overflow: hidden;
+}
+
+.hsec-rail-bar {
+  display: block;
+  height: 3px;
+  width: 100%;
+  background: transparent;
+}
+
+.hsec-rail-bar-actief {
+  background: var(--orange-500);
+  animation: hsecClip 6500ms linear both;
+}
+
+.hsec-rail-naam {
+  font-family: var(--font-display);
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: -0.3px;
+  color: var(--ink-400);
+  transition: color 0.5s ease;
+}
+
+/* Vastgezet op twee regels: anders bepaalt de langste praktijkzin de hoogte van
+   de hele rail, en die staat onderaan de hero precies op de vouw. */
+.hsec-rail-regel {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  overflow: hidden;
+  min-height: calc(2 * 1.4em);
+  font-size: 13px;
+  line-height: 1.4;
+  color: var(--ink-500);
+  transition: color 0.5s ease;
+}
+
+.hsec-rail-item[aria-current="true"] .hsec-rail-naam {
+  color: var(--paper);
+}
+
+.hsec-rail-item[aria-current="true"] .hsec-rail-regel {
+  color: var(--ink-300);
+}
+
+.hsec-pauze {
+  position: absolute;
+  right: 14px;
+  top: -46px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1px solid color-mix(in srgb, var(--paper) 30%, transparent);
+  background: color-mix(in srgb, var(--ink-950) 55%, transparent);
+  color: var(--paper);
+  cursor: pointer;
+}
+
+.hsec-pauze:hover {
+  border-color: var(--orange-500);
+  color: var(--orange-500);
+}
+
+.hsec-pauze svg {
+  width: 14px;
+  height: 14px;
+}
+
+/* ---- Schermformaten ---- */
+
+@media (max-width: 1200px) {
+  .hsec-copy {
+    width: 100%;
+    padding-right: 32px;
+  }
+  .hsec-rail-item {
+    padding: 20px 18px 22px;
+  }
+  .hsec-rail-regel {
+    font-size: 12px;
+  }
+}
+
+/* Onder de 900px past een vijfkoloms rail niet meer: dan wordt het een
+   horizontaal schuifbare strip met vaste kolombreedte. */
+@media (max-width: 900px) {
+  .hsec {
+    --hsec-rail-h: 116px;
+  }
+  .hsec-rail {
+    grid-template-columns: none;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(210px, 1fr);
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+  }
+  .hsec-rail-item {
+    scroll-snap-align: start;
+  }
+}
+
+@media (max-width: 620px) {
+  .hsec {
+    --hsec-rail-h: 74px;
+  }
+  .hsec-copy {
+    padding: 28px 20px calc(28px + var(--hsec-rail-h));
+  }
+  .hsec-h1 {
+    letter-spacing: -1px;
+  }
+  .hsec-rail {
+    grid-auto-columns: minmax(150px, 1fr);
+  }
+  .hsec-rail-regel {
+    display: none;
+  }
+  .hsec-rail-item {
+    padding: 18px 16px;
+  }
+  .hsec-acties {
+    gap: 14px 18px;
+  }
+  .hsec-cta {
+    padding: 15px 24px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hsec-foto-in,
+  .hsec-real,
+  .hsec-rail-bar-actief {
+    animation: none;
+  }
+}
