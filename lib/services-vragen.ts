@@ -9,7 +9,9 @@
 /**
  * Toegestane waarden voor `?type=` en het verborgen type-veld. Eén bron voor de
  * pagina (die de queryparameter filtert) en de server action (die het formulier
- * valideert) — anders is de whitelist client-side te omzeilen.
+ * valideert) — anders is de whitelist client-side te omzeilen. De inzichten-lead
+ * gaat hier niet doorheen: die zet zijn type ("inzichten") server-side vast en
+ * leest niets van de bezoeker.
  *
  * `sectorrapport` stond hier ook in, maar de enige ingang die dat type zette was
  * het leadgenblok op de homepage, en dat is afgeschaft (zie

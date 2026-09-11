@@ -29,15 +29,17 @@ export async function subscribeLead(_prev: LeadState, formData: FormData): Promi
     return { ok: false, message: "Te veel pogingen. Probeer het over een paar minuten opnieuw." };
   }
 
+  // Het formulier vraagt alleen om een e-mailadres; een naamveld zou de drempel
+  // verhogen voor wat een aanmelding van één regel hoort te zijn. De action las
+  // hier ooit ook `naam`, maar niets stuurde dat ooit mee.
   const email = str(formData, "email");
-  const naam = str(formData, "naam");
   if (!EMAIL_RE.test(email)) return { ok: false, message: "Vul een geldig e-mailadres in." };
-  if (email.length > 320 || naam.length > 200) return { ok: false, message: "Invoer is te lang." };
+  if (email.length > 320) return { ok: false, message: "Invoer is te lang." };
 
   try {
     const supabase = inzendingClient();
     const { error } = await supabase.from("contact_aanvragen").insert({
-      naam: naam || email,
+      naam: email,
       email,
       onderwerp: "Inzichten",
       bericht: "Aanmelding via de inzichten-pagina (content volgen / nieuwsbrief).",

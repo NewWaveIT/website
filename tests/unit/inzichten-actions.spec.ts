@@ -65,10 +65,7 @@ describe("subscribeLead", () => {
   });
 
   it("slaat een geldig e-mailadres op als lead", async () => {
-    const result = await subscribeLead(
-      initialState,
-      formData({ email: "jane@example.com", naam: "Jane" }),
-    );
+    const result = await subscribeLead(initialState, formData({ email: "jane@example.com" }));
     expect(result.ok).toBe(true);
     expect(fromMock).toHaveBeenCalledWith("contact_aanvragen");
     expect(insertMock).toHaveBeenCalledWith(
@@ -76,8 +73,10 @@ describe("subscribeLead", () => {
     );
   });
 
-  it("gebruikt het e-mailadres als naam ontbreekt", async () => {
-    await subscribeLead(initialState, formData({ email: "jane@example.com" }));
+  it("zet het e-mailadres als naam, want het formulier vraagt er geen", async () => {
+    // Het lead-formulier heeft één invoerveld. Een meegestuurde `naam` -- uit een
+    // handmatige POST bijvoorbeeld -- wordt genegeerd in plaats van opgeslagen.
+    await subscribeLead(initialState, formData({ email: "jane@example.com", naam: "Jane" }));
     expect(insertMock).toHaveBeenCalledWith(expect.objectContaining({ naam: "jane@example.com" }));
   });
 });
