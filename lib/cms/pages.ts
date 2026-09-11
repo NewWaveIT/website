@@ -6,35 +6,16 @@ import type { FieldDef } from "./schema";
 
 export const PAGE_FIELDS: Record<string, FieldDef[]> = {
   home: [
-    { key: "heroKicker", label: "Hero — kicker", type: "text" },
     { key: "heroTitleStart", label: "Hero — titel (begin)", type: "text" },
     { key: "heroAccent", label: "Hero — accentwoord", type: "text" },
     { key: "heroLead", label: "Hero — introtekst", type: "textarea" },
-    { key: "heroCtaVideo", label: "Hero — knop video", type: "text" },
-    { key: "statementKicker", label: "Statement — kicker", type: "text" },
-    { key: "statementTitel", label: "Statement — titel", type: "textarea" },
-    { key: "statementBody", label: "Statement — tekst", type: "textarea" },
     { key: "ctaTitel", label: "Slot-CTA — titel", type: "text" },
     { key: "ctaKnop", label: "Slot-CTA — knoptekst", type: "text" },
-    { key: "heroKickerMobiel", label: "Hero — kicker (mobiel)", type: "text" },
-    { key: "heroLeadMobiel", label: "Hero — introtekst (mobiel)", type: "textarea" },
-    { key: "waaromKicker", label: "Waarom wij — kicker", type: "text" },
     { key: "waaromTitel", label: "Waarom wij — titel", type: "text" },
-    { key: "waarom1Titel", label: "Waarom 1 — titel", type: "text" },
-    { key: "waarom1Tekst", label: "Waarom 1 — tekst", type: "textarea" },
-    { key: "waarom2Titel", label: "Waarom 2 — titel", type: "text" },
-    { key: "waarom2Tekst", label: "Waarom 2 — tekst", type: "textarea" },
-    { key: "waarom3Titel", label: "Waarom 3 — titel", type: "text" },
-    { key: "waarom3Tekst", label: "Waarom 3 — tekst", type: "textarea" },
-    { key: "waarom4Titel", label: "Waarom 4 — titel", type: "text" },
-    { key: "waarom4Tekst", label: "Waarom 4 — tekst", type: "textarea" },
     { key: "mensenKicker", label: "Mensen — kicker", type: "text" },
     { key: "mensenTitel", label: "Mensen — titel", type: "text" },
     { key: "mensenP1", label: "Mensen — alinea 1", type: "textarea" },
     { key: "mensenP2", label: "Mensen — alinea 2", type: "textarea" },
-    { key: "joinusKicker", label: "Word een Waver — kicker", type: "text" },
-    { key: "joinusTitel", label: "Word een Waver — titel", type: "text" },
-    { key: "joinusLead", label: "Word een Waver — introtekst", type: "textarea" },
   ],
   "over-ons": [
     { key: "heroTitleStart", label: "Hero — titel (begin)", type: "text" },
@@ -47,7 +28,6 @@ export const PAGE_FIELDS: Record<string, FieldDef[]> = {
     { key: "teamP1", label: "Team — alinea 1", type: "textarea" },
     { key: "teamP2", label: "Team — alinea 2", type: "textarea" },
     { key: "ctaTitel", label: "Slot-CTA — titel", type: "text" },
-    { key: "heroLeadMobiel", label: "Hero — introtekst (mobiel)", type: "textarea" },
     { key: "waardenKicker", label: "Waarden — kicker", type: "text" },
     { key: "waardenTitel", label: "Waarden — titel", type: "text" },
     { key: "waarde1Titel", label: "Waarde 1 — titel", type: "text" },
@@ -63,7 +43,6 @@ export const PAGE_FIELDS: Record<string, FieldDef[]> = {
     { key: "heroTitleStart", label: "Hero — titel (begin)", type: "text" },
     { key: "heroAccent", label: "Hero — accentwoord", type: "text" },
     { key: "heroLead", label: "Hero — introtekst", type: "textarea" },
-    { key: "heroLeadMobiel", label: "Hero — introtekst (mobiel)", type: "textarea" },
     { key: "verwachtTitel", label: "Wat je kunt verwachten — titel", type: "text" },
     { key: "verwacht1Titel", label: "Stap 1 — titel", type: "text" },
     { key: "verwacht1Tekst", label: "Stap 1 — tekst", type: "textarea" },
@@ -78,7 +57,6 @@ export const PAGE_FIELDS: Record<string, FieldDef[]> = {
     { key: "heroAccent", label: "Hero — accentwoord", type: "text" },
     { key: "heroTitleEnd", label: "Hero — titel (eind)", type: "text" },
     { key: "heroLead", label: "Hero — introtekst", type: "textarea" },
-    { key: "heroLeadMobiel", label: "Hero — introtekst (mobiel)", type: "textarea" },
 
     { key: "basisKicker", label: "Basisdienst — kicker", type: "text" },
     { key: "basisTitel", label: "Basisdienst — titel", type: "text" },
@@ -168,7 +146,6 @@ export const PAGE_FIELDS: Record<string, FieldDef[]> = {
     { key: "heroTitleStart", label: "Hero — titel (begin)", type: "text" },
     { key: "heroAccent", label: "Hero — accentwoord", type: "text" },
     { key: "heroLead", label: "Hero — introtekst", type: "textarea" },
-    { key: "heroLeadMobiel", label: "Hero — introtekst (mobiel)", type: "textarea" },
     { key: "werkwijzeKicker", label: "Waarom sectorfocus — kicker", type: "text" },
     { key: "werkwijzeTitel", label: "Waarom sectorfocus — titel", type: "text" },
     { key: "wijze1Titel", label: "Reden 1 — titel", type: "text" },
@@ -183,7 +160,6 @@ export const PAGE_FIELDS: Record<string, FieldDef[]> = {
     { key: "heroTitleStart", label: "Hero — titel (begin)", type: "text" },
     { key: "heroAccent", label: "Hero — accentwoord", type: "text" },
     { key: "heroLead", label: "Hero — introtekst", type: "textarea" },
-    { key: "heroLeadMobiel", label: "Hero — introtekst (mobiel)", type: "textarea" },
     { key: "groeiKicker", label: "Groei — kicker", type: "text" },
     { key: "groeiTitel", label: "Groei — titel", type: "text" },
     { key: "groeiIntro", label: "Groei — intro", type: "textarea" },
@@ -229,46 +205,19 @@ export const PAGE_PATH: Record<string, string> = {
 /** Standaardteksten per pagina (fallback op de site + startwaarde in de editor). */
 export const PAGE_DEFAULTS: Record<string, Record<string, string>> = {
   home: {
-    heroKicker:
-      "Business-specialist in publieke sector · mobiliteit · banken · zorg · manufacturing",
     heroTitleStart: "Wij maken van business en IT ",
     heroAccent: "één beweging",
     heroLead:
       "The New Wave IT combineert diepgaande sectorkennis met Mendix, AI en strategie. Zo vertalen we jouw ambitie naar oplossingen die werken voor de mensen die ermee moeten werken.",
-    heroCtaVideo: "Bekijk klantverhalen",
-    statementKicker: "Plan · build · run",
-    statementTitel: "Wij adviseren niet alleen. Wij bouwen, leveren en beheren.",
-    statementBody:
-      "Hetzelfde senior team dat jouw strategie mee vormgeeft, staat ook aan de knoppen bij bouw en beheer. Zo blijft verantwoordelijkheid op één plek en houden we vaart tot ver na livegang.",
     ctaTitel: "Klaar om samen te bouwen aan meetbare groei?",
     ctaKnop: "Plan een gesprek",
-    heroKickerMobiel: "IT-consultancy voor vijf sectoren",
-    heroLeadMobiel:
-      "Sectorkennis × Mendix, AI en strategie. Oplossingen die werken voor de mensen die ermee werken.",
-    waaromKicker: "Waarom sectorleiders voor ons kiezen",
     waaromTitel: "Senioriteit die je merkt vanaf gesprek één.",
-    waarom1Titel: "Bewezen impact",
-    waarom1Tekst:
-      "Meetbare resultaten in publieke sector, mobiliteit, banken, zorg en manufacturing. Geen beloftes, wel cijfers.",
-    waarom2Titel: "Senior teams",
-    waarom2Tekst:
-      "Consultants die de taal van de boardroom én de shopfloor spreken. Betrokken als partner, niet als leverancier.",
-    waarom3Titel: "Eén team, plan-build-run",
-    waarom3Tekst:
-      "Hetzelfde team adviseert, bouwt én beheert. Zo houden we vaart, kwaliteit en verantwoordelijkheid bij elkaar.",
-    waarom4Titel: "Sectorkennis & compliance",
-    waarom4Tekst:
-      "We kennen de regels en systemen van jouw markt: auditproof, veilig en schaalbaar vanaf dag één.",
     mensenKicker: "De mens centraal",
     mensenTitel: "Je werkt met mensen, niet met een leverancier.",
     mensenP1:
       "Geen anonieme delivery-machine: bij ons ken je de mensen die jouw vraagstuk oplossen. Gepassioneerde consultants en engineers die naast je team staan, van eerste sessie tot livegang en daarna. Van wekelijkse Wavetime-sessies tot onze jaarlijkse Company week, we investeren structureel in hoe we sámen werken, niet alleen in wat we opleveren.",
     mensenP2:
       "Ons doel? Dat jouw mensen er beter van worden. Technologie is het middel, de mens is de maat.",
-    joinusKicker: "Werken bij The New Wave IT",
-    joinusTitel: "Bouw je aan onze klanten, of word je er zelf een?",
-    joinusLead:
-      "Dezelfde mensen die naast onze klanten staan, kiezen hier hun eigen groeipad. Een gelijk speelveld, open feedback en ruimte om te ondernemen. Misschien versterk jij straks de golf.",
   },
   "over-ons": {
     heroTitleStart: "De ondernemende mens zorgt voor ",
@@ -286,8 +235,6 @@ export const PAGE_DEFAULTS: Record<string, Record<string, string>> = {
     teamP2:
       "Van strategische sessies tot livegang en beheer: hetzelfde team blijft aan boord. Zo houden we vaart, kwaliteit en verantwoordelijkheid bij elkaar. Wekelijkse Wavetime-sessies en een jaarlijkse Company week: structurele investering in hoe we sámen werken.",
     ctaTitel: "Benieuwd wat onze mensen voor jouw doelen kunnen betekenen?",
-    heroLeadMobiel:
-      "Succesvolle verandering begint bij mensen. Wij verzorgen de randvoorwaarden voor onze Wavers, zij helpen onze partners maximaal digitaal versnellen.",
     waardenKicker: "Waar wij voor staan",
     waardenTitel: "Vier overtuigingen die je terugziet in ons werk",
     waarde1Titel: "Mens centraal",
@@ -308,7 +255,6 @@ export const PAGE_DEFAULTS: Record<string, Record<string, string>> = {
     heroAccent: "mee helpen",
     heroLead:
       "Een gesprek plannen kan, maar een korte vraag stellen mag ook gewoon. Bel, mail, app of kom langs, je zit nergens aan vast.",
-    heroLeadMobiel: "Bel, mail, app of kom langs, je zit nergens aan vast.",
     verwachtTitel: "Wat je kunt verwachten",
     verwacht1Titel: "Voorbereiding",
     verwacht1Tekst:
@@ -327,8 +273,6 @@ export const PAGE_DEFAULTS: Record<string, Record<string, string>> = {
     heroTitleEnd: ".",
     heroLead:
       "Onze basis is capaciteit: consultants die in jouw team meebouwen aan Mendix en AI. Wil je eerst richting, snelheid of een fundering, dan hebben we daar afgebakende diensten voor — met een vaste scope en een prijs vooraf.",
-    heroLeadMobiel:
-      "Consultants die in jouw team meebouwen, of een afgebakende dienst met vaste scope en prijs vooraf.",
 
     basisKicker: "Onze basisdienstverlening · doorlopend",
     basisTitel: "Consultant inhuren",
@@ -429,8 +373,6 @@ export const PAGE_DEFAULTS: Record<string, Record<string, string>> = {
     heroAccent: "jouw sector",
     heroLead:
       "Wij kiezen bewust voor vijf sectoren in plaats van generiek IT-advies: publieke sector, mobiliteit, banken, zorg en manufacturing. In elke sector kennen we de regels, de systemen en de druk waaronder jouw organisatie werkt. Daardoor leveren we sneller iets dat écht past, in plaats van een generieke oplossing die overal een beetje werkt.",
-    heroLeadMobiel:
-      "Business-specialist in vijf markten. We kennen de processen, de wetgeving en de systemen, zodat het eerste gesprek meteen de diepte in kan.",
     werkwijzeKicker: "Waarom sectorfocus",
     werkwijzeTitel: "Wat sectorkennis je oplevert",
     wijze1Titel: "Geen inwerktijd",
@@ -449,8 +391,6 @@ export const PAGE_DEFAULTS: Record<string, Record<string, string>> = {
     heroAccent: "Waver",
     heroLead:
       "Het is onze droom dat elk mens werk doet dat aansluit bij persoonlijke doelen en drijfveren. Wij verzorgen de randvoorwaarden: een gelijk speelveld, een open cultuur en alle ruimte om te groeien. Jij zorgt voor de versnelling bij onze partners.",
-    heroLeadMobiel:
-      "Een gelijk speelveld, een open cultuur en alle ruimte om te groeien. Jij zorgt voor de versnelling bij onze partners.",
     ctaTitel: "Eerst een kop koffie? Kom kennismaken.",
     groeiKicker: "Groei & ontwikkeling",
     groeiTitel: "Elke dag samen beter worden",
