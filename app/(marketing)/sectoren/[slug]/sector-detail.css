@@ -243,10 +243,14 @@
   flex-direction: column;
   gap: var(--space-4);
 }
+/* De laatste kolom is een vaste maat en geen `auto`: kop en rijen zijn aparte
+   grids, dus alleen zo lopen ze uit op dezelfde lijn. 210px omdat het langste
+   label ("Platform & governance") 197px meet; met de oude 138px stak die pill
+   uit de kaart. */
 .p-sector .solhead,
 .p-sector .solcard {
   display: grid;
-  grid-template-columns: 1.15fr 1fr 1.5fr 138px;
+  grid-template-columns: 1.15fr 1fr 1.5fr 210px;
   gap: var(--space-6);
 }
 .p-sector .solhead {
@@ -307,7 +311,9 @@
   letter-spacing: var(--tracking-kicker);
   padding: 6px 12px;
   border-radius: var(--radius-pill);
-  white-space: nowrap;
+  /* Geen nowrap: een nieuw, langer label hoort af te breken binnen de kolom in
+     plaats van de kaart uit te lopen. */
+  text-align: center;
 }
 .p-sector .laag-strategie {
   background: var(--ink-900);

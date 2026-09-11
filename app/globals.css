@@ -504,8 +504,14 @@ header.nav {
   right: 0;
   height: 8px;
 }
+/* Openen op hover, en op toetsenbordfocus — maar niet op muisfocus. Met
+   `:focus-within` bleef het menu na een klik op de triggerlink openstaan: die
+   houdt focus, ook als je de muis wegbeweegt of wegscrollt. `:focus-visible`
+   staat alleen aan bij toetsenbordnavigatie, dus daar blijft het menu wel
+   openstaan zolang je erin tabt. */
 .nav-drop:hover .nav-menu,
-.nav-drop:focus-within .nav-menu {
+.nav-drop > a:focus-visible ~ .nav-menu,
+.nav-menu:focus-within {
   opacity: 1;
   visibility: visible;
   transform: none;

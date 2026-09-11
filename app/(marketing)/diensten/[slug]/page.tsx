@@ -179,9 +179,13 @@ export default async function DienstPage({ params }: { params: Promise<{ slug: s
               <Link href={`/contact?dienst=${s.slug}`} className="btn btn-primary">
                 {s.ctaLabel} <ArrowRight />
               </Link>
-              <Link href="/contact" className="alt">
-                Liever eerst 20 min kennismaken →
-              </Link>
+              {/* Alleen zinvol náást een datumaanvraag. Bij een dienst die zelf
+                  al om een kennismaking vraagt stond er twee keer hetzelfde. */}
+              {s.ctaType === "datum" && (
+                <Link href="/contact" className="alt">
+                  Liever eerst 20 min kennismaken →
+                </Link>
+              )}
             </aside>
           </div>
         </div>

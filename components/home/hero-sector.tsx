@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState, type CSSProperties } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Pause, Play } from "lucide-react";
@@ -108,11 +108,16 @@ export function HeroSector() {
   const vorigeScene = SCENES[scene.vorige]!;
 
   return (
-    <section className="hsec" aria-label="The New Wave IT in vijf sectoren">
+    <section
+      className="hsec"
+      aria-label="The New Wave IT in vijf sectoren"
+      style={{ "--hsec-cyclus": `${CYCLE_MS}ms` } as CSSProperties}
+    >
       <div className="hsec-beeld">
-        {/* Onderlaag: de scene waar we vandaan komen. */}
+        {/* Onderlaag: de scene waar we vandaan komen. Die staat stil op de
+            eindstand van de inzoom, anders springt hij bij de wissel terug. */}
         <Image
-          className="hsec-foto"
+          className={`hsec-foto${scene.vorige === i ? "" : " hsec-foto-uit"}`}
           src={vorigeScene.foto}
           alt=""
           fill

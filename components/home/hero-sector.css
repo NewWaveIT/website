@@ -38,10 +38,23 @@
   display: block;
 }
 
+/* De inzoom loopt precies één cyclus (--hsec-cyclus komt uit de component, zodat
+   CSS en JS niet uit elkaar kunnen lopen). Zou hij langer duren, dan wordt hij
+   halverwege afgekapt en klopt de eindstand hieronder niet meer. */
 .hsec-foto-in {
   animation:
     hsecFade 1.1s ease both,
-    hsecKen 7s linear both;
+    hsecKen var(--hsec-cyclus) linear both;
+}
+
+/* De uitgaande foto zakt naar de onderlaag, en die heeft geen animatie. Zonder
+   deze regel springt hij daar terug naar scale(1) en zie je hem één frame
+   onvergroot staan voordat de nieuwe eroverheen fadet. Hij blijft dus staan
+   waar de inzoom eindigde. Alleen bij een échte wissel: op de eerste render is
+   de onderlaag dezelfde foto als de bovenlaag, en dan zou dit dubbelbeeld
+   geven. */
+.hsec-foto-uit {
+  transform: scale(1.12);
 }
 
 /* Zijdelings: donker waar de tekst staat, rechts blijft de foto herkenbaar. */
