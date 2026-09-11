@@ -23,12 +23,14 @@ export function PaginaHero({
   accent,
   staart,
   lead,
+  leadHtml,
   toon = "donker",
   achtergrond,
   children,
 }: {
   kruimels: Kruimel[];
-  kicker?: string;
+  /** Tekst wordt een kicker; een node (badge, tag) zet je zelf neer. */
+  kicker?: ReactNode;
   /** Het deel van de kop vóór het accentwoord. */
   titel: string;
   /** Het woord in oranje. Weglaten voor een kop zonder accent. */
@@ -36,6 +38,8 @@ export function PaginaHero({
   /** Wat er ná het accent komt, meestal "." of "?". */
   staart?: string;
   lead?: string;
+  /** Voor de ene lead die opmaak uit het CMS draagt; al ontsmet. */
+  leadHtml?: string;
   /** Licht is voor pagina's waar de kop geen aandacht hoeft te trekken. */
   toon?: "donker" | "licht";
   /** Achtergrondlaag: een `SectorHeroAnim` of een foto. */
@@ -49,12 +53,17 @@ export function PaginaHero({
       {achtergrond}
       <div className="wrap-wide">
         <Kruimelpad kruimels={kruimels} opDonker={donker} />
-        {kicker ? <div className={donker ? "kicker on-dark" : "kicker"}>{kicker}</div> : null}
+        {typeof kicker === "string" ? (
+          <div className={donker ? "kicker on-dark" : "kicker"}>{kicker}</div>
+        ) : (
+          kicker
+        )}
         <h1>
           {titel}
           {accent ? <em>{accent}</em> : null}
           {staart}
         </h1>
+        {leadHtml ? <p dangerouslySetInnerHTML={{ __html: leadHtml }} /> : null}
         {lead ? <p>{lead}</p> : null}
         {children}
       </div>

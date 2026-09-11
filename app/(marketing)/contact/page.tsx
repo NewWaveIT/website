@@ -1,7 +1,7 @@
 import { cacheLife } from "next/cache";
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Kruimelpad } from "@/components/kruimelpad";
+import { PaginaHero } from "@/components/layout/pagina-hero";
 import Image from "next/image";
 import {
   Phone,
@@ -53,19 +53,15 @@ export default async function ContactPage() {
 
   return (
     <div className="p-contact">
-      <section className="chero">
-        <div className="wrap-wide">
-          <Kruimelpad kruimels={[{ naam: "Contact", pad: "/contact" }]} />
-          <div className="kicker" style={{ marginTop: "var(--space-6)" }}>
-            {"Contact"}
-          </div>
-          <h1>
-            {t.heroTitleStart}
-            <em>{t.heroAccent}</em>?
-          </h1>
-          <p>{t.heroLead}</p>
-        </div>
-      </section>
+      <PaginaHero
+        toon="licht"
+        kruimels={[{ naam: "Contact", pad: "/contact" }]}
+        kicker="Contact"
+        titel={t.heroTitleStart ?? ""}
+        accent={t.heroAccent}
+        staart="?"
+        lead={t.heroLead}
+      />
 
       <section className="block" style={{ paddingBottom: 0 }} aria-labelledby="manieren">
         <div className="wrap-wide">

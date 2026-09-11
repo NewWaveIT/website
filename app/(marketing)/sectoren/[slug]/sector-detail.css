@@ -1,3 +1,9 @@
+/* De animatie rechts vraagt om een smallere tekstkolom. */
+.p-sector .pkop {
+  --pkop-kop: 22ch;
+  --pkop-lead: 56ch;
+}
+
 /* Sectordetail — geport uit ui_kits/website/sector-*.html + site.css
    ("Sectorpagina v2" en "mens & fotografie"), gescoopt onder .p-sector.
 
@@ -18,59 +24,9 @@
 }
 
 /* 1 · Hero */
-.p-sector .shero {
-  background: var(--ink-900);
-  color: var(--eggshell);
-  position: relative;
-  overflow: hidden;
-}
-.p-sector .shero .wrap-wide {
-  position: relative;
-  padding: var(--space-9) var(--space-6) var(--space-10);
-}
 .p-sector .shero-anim {
   width: 48%;
   opacity: 0.72;
-}
-.p-sector .shero .badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid var(--border-dark);
-  border-radius: var(--radius-pill);
-  padding: 8px 16px;
-  font-size: var(--text-sm);
-  font-weight: var(--fw-medium);
-  color: var(--eggshell);
-}
-.p-sector .shero .badge svg {
-  width: 18px;
-  height: 18px;
-  color: var(--orange-400);
-}
-.p-sector .shero h1 {
-  font-family: var(--font-display-expanded);
-  font-weight: var(--fw-black);
-  font-size: var(--text-4xl);
-  line-height: var(--leading-tight);
-  color: #fff;
-  margin: var(--space-5) 0;
-  max-width: 22ch;
-}
-.p-sector .shero p {
-  font-size: var(--text-lg);
-  color: var(--text-on-dark-muted);
-  line-height: var(--leading-relaxed);
-  max-width: 56ch;
-  margin: 0 0 var(--space-7);
-}
-/* Eén kolom sinds de herofoto eruit is: de animatie rechts is nu het enige
-   beeld, dus de tekst krijgt een leesbreedte in plaats van de halve pagina. */
-.p-sector .hero-split {
-  position: relative;
-  max-width: 46rem;
-  padding-top: var(--space-6);
 }
 .p-sector .hero-actions {
   display: flex;
@@ -754,9 +710,6 @@
   .p-sector .how-grid,
   .p-sector .svc-links {
     grid-template-columns: 1fr;
-  }
-  .p-sector .shero h1 {
-    font-size: var(--text-3xl);
   }
   .p-sector .hero-actions .btn {
     width: 100%;

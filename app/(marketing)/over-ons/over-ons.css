@@ -1,3 +1,9 @@
+/* Kop en lead iets breder dan de standaard. */
+.p-over .pkop {
+  --pkop-kop: 22ch;
+  --pkop-lead: 54ch;
+}
+
 /* Over ons — geport uit ui_kits/website/over-ons.html (gescoopt onder .p-over) */
 
 .p-over .crumbs {
@@ -13,59 +19,7 @@
   color: var(--orange-400);
 }
 
-.p-over .shero {
-  background: var(--ink-900);
-  color: var(--eggshell);
-  position: relative;
-  overflow: hidden;
-}
-.p-over .shero .wrap-wide {
-  position: relative;
-  padding-block: var(--space-9) var(--space-10);
-  z-index: 1;
-}
-.p-over .shero h1 {
-  font-family: var(--font-display-expanded);
-  font-weight: var(--fw-black);
-  font-size: var(--text-4xl);
-  line-height: var(--leading-tight);
-  color: #fff;
-  margin: var(--space-5) 0;
-  max-width: 22ch;
-}
-.p-over .shero h1 em {
-  font-style: normal;
-  color: var(--orange-400);
-}
-.p-over .shero p {
-  font-size: var(--text-lg);
-  color: var(--text-on-dark-muted);
-  line-height: var(--leading-relaxed);
-  max-width: 54ch;
-  margin: 0 0 var(--space-7);
-}
-.p-over .shero .kpis {
-  display: flex;
-  gap: var(--space-9);
-  margin-top: var(--space-8);
-  padding-top: var(--space-6);
-  border-top: 1px solid var(--border-dark);
-  flex-wrap: wrap;
-}
-.p-over .shero .kpis .n {
-  font-family: var(--font-mono);
-  font-size: var(--text-2xl);
-  font-weight: var(--fw-medium);
-  color: var(--orange-400);
-  line-height: 1;
-}
-.p-over .shero .kpis .l {
-  font-size: var(--text-sm);
-  color: var(--text-on-dark-muted);
-  margin-top: 6px;
-  max-width: 20ch;
-}
-.p-over .shero .badge-img {
+.p-over .pkop .badge-img {
   position: absolute;
   right: 0;
   top: 0;
@@ -75,7 +29,7 @@
   mask-image: linear-gradient(to left, black 55%, transparent);
   opacity: 0.28;
 }
-.p-over .shero .badge-img img {
+.p-over .pkop .badge-img img {
   object-fit: cover;
 }
 
@@ -298,10 +252,7 @@
   .p-over .team .grid {
     grid-template-columns: 1fr;
   }
-  .p-over .shero h1 {
-    font-size: var(--text-3xl);
-  }
-  .p-over .shero .badge-img {
+  .p-over .pkop .badge-img {
     display: none;
   }
 }

@@ -1,7 +1,7 @@
 import { cacheLife } from "next/cache";
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Kruimelpad } from "@/components/kruimelpad";
+import { PaginaHero } from "@/components/layout/pagina-hero";
 import Image from "next/image";
 import { Check, ArrowRight, Award } from "lucide-react";
 import { getVacatures } from "@/lib/vacatures-data";
@@ -34,36 +34,40 @@ export default async function WerkenBijPage() {
 
   return (
     <div className="p-werken">
-      <section className="shero">
-        <div className="cutout">
-          <Image src="/assets/photos/cutout-spreker-groen.webp" alt="" fill sizes="32vw" priority />
-        </div>
-        <div className="wrap-wide">
-          <Kruimelpad kruimels={[{ naam: "Werken bij", pad: "/werken-bij" }]} />
-          <div className="kicker on-dark" style={{ marginTop: "var(--space-6)" }}>
-            {"Werken bij The New Wave IT"}
+      <PaginaHero
+        kruimels={[{ naam: "Werken bij", pad: "/werken-bij" }]}
+        kicker="Werken bij The New Wave IT"
+        titel={t.heroTitleStart ?? ""}
+        accent={t.heroAccent}
+        staart="."
+        lead={t.heroLead}
+        achtergrond={
+          <div className="cutout">
+            <Image
+              src="/assets/photos/cutout-spreker-groen.webp"
+              alt=""
+              fill
+              sizes="32vw"
+              priority
+            />
           </div>
-          <h1>
-            {t.heroTitleStart}
-            <em>{t.heroAccent}</em>.
-          </h1>
-          <p>{t.heroLead}</p>
-          <a className="award-badge" href={AWARD.url} target="_blank" rel="noopener noreferrer">
-            <Award /> Erkend werkgever · {AWARD.label}
+        }
+      >
+        <a className="award-badge" href={AWARD.url} target="_blank" rel="noopener noreferrer">
+          <Award /> Erkend werkgever · {AWARD.label}
+        </a>
+        <div className="hero-actions">
+          <a
+            href={vacatures.length ? "#vacatures" : "#open-sollicitatie"}
+            className="btn btn-primary"
+          >
+            {vacatures.length ? "Bekijk vacatures" : "Stuur een open sollicitatie"} <ArrowRight />
           </a>
-          <div className="hero-actions" style={{ marginTop: "var(--space-6)" }}>
-            <a
-              href={vacatures.length ? "#vacatures" : "#open-sollicitatie"}
-              className="btn btn-primary"
-            >
-              {vacatures.length ? "Bekijk vacatures" : "Stuur een open sollicitatie"} <ArrowRight />
-            </a>
-            <Link href="/over-ons" className="btn btn-ghost-dark">
-              Leer ons eerst kennen
-            </Link>
-          </div>
+          <Link href="/over-ons" className="btn btn-ghost-dark">
+            Leer ons eerst kennen
+          </Link>
         </div>
-      </section>
+      </PaginaHero>
 
       <section className="block groei">
         <div className="wrap-wide">

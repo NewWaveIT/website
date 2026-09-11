@@ -4,7 +4,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowRight, Check } from "lucide-react";
-import { Kruimelpad } from "@/components/kruimelpad";
+import { PaginaHero } from "@/components/layout/pagina-hero";
 import { SectorHeroAnim } from "@/components/sector-hero-anim";
 import { SlotCta } from "@/components/layout/slot-cta";
 import { getPagina } from "@/lib/paginas-data";
@@ -92,19 +92,15 @@ export default async function DienstenPage() {
       <JsonLd data={jsonLd} />
 
       {/* 1 · Hero */}
-      <section className="dhero">
-        <SectorHeroAnim theme="diensten" />
-        <div className="wrap-wide">
-          <Kruimelpad kruimels={[{ naam: "Diensten", pad: "/diensten" }]} />
-          <div className="kicker on-dark">Diensten</div>
-          <h1>
-            {t.heroTitleStart}
-            <em>{t.heroAccent}</em>
-            {t.heroTitleEnd}
-          </h1>
-          <p className="lead">{t.heroLead}</p>
-        </div>
-      </section>
+      <PaginaHero
+        kruimels={[{ naam: "Diensten", pad: "/diensten" }]}
+        kicker="Diensten"
+        titel={t.heroTitleStart ?? ""}
+        accent={t.heroAccent}
+        staart={t.heroTitleEnd}
+        lead={t.heroLead}
+        achtergrond={<SectorHeroAnim theme="diensten" />}
+      />
 
       {/* 2 · De doorlopende basisdienst, naast de catalogus */}
       {basis && (

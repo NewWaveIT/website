@@ -5,7 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { ArrowRight, ArrowUpRight, Handshake } from "lucide-react";
-import { Kruimelpad } from "@/components/kruimelpad";
+import { PaginaHero } from "@/components/layout/pagina-hero";
 import { JsonLd } from "@/components/json-ld";
 import { SectorHeroAnim } from "@/components/sector-hero-anim";
 import { getSectorBySlug, getSectorSlugs, getSectoren } from "@/lib/sectoren-detail-data";
@@ -105,29 +105,26 @@ export default async function SectorPage({ params }: { params: Promise<{ slug: s
       )}
 
       {/* 1 · Hero */}
-      <section className="shero">
-        <SectorHeroAnim theme={s.heroTheme} />
-        <div className="wrap-wide">
-          <Kruimelpad kruimels={[{ naam: "Sectoren", pad: "/sectoren" }, { naam: s.naam }]} />
-          <div className="hero-split">
-            <div>
-              <span className="badge">
-                <Badge /> {s.naam}
-              </span>
-              <h1>{s.h1}</h1>
-              <p>{s.intro}</p>
-              <div className="hero-actions">
-                <Link href={`/contact?sector=${s.slug}`} className="btn btn-primary">
-                  Plan een gesprek <ArrowRight />
-                </Link>
-                <a href="#aanpak" className="btn btn-ghost-dark">
-                  Bekijk onze aanpak
-                </a>
-              </div>
-            </div>
-          </div>
+      <PaginaHero
+        kruimels={[{ naam: "Sectoren", pad: "/sectoren" }, { naam: s.naam }]}
+        kicker={
+          <span className="badge">
+            <Badge /> {s.naam}
+          </span>
+        }
+        titel={s.h1}
+        lead={s.intro}
+        achtergrond={<SectorHeroAnim theme={s.heroTheme} />}
+      >
+        <div className="hero-actions">
+          <Link href={`/contact?sector=${s.slug}`} className="btn btn-primary">
+            Plan een gesprek <ArrowRight />
+          </Link>
+          <a href="#aanpak" className="btn btn-ghost-dark">
+            Bekijk onze aanpak
+          </a>
         </div>
-      </section>
+      </PaginaHero>
 
       {/* 2 · Herkenning */}
       {s.herkenning.length > 0 && (

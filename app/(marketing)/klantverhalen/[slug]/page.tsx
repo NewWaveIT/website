@@ -3,7 +3,7 @@ import { cacheLife } from "next/cache";
 import type { Metadata } from "next";
 import { citaat } from "@/lib/utils";
 import Link from "next/link";
-import { Kruimelpad } from "@/components/kruimelpad";
+import { PaginaHero } from "@/components/layout/pagina-hero";
 import { notFound } from "next/navigation";
 import { Building2, ArrowRight } from "lucide-react";
 import { getKlantverhalen, getKlantverhaalBySlug } from "@/lib/klantverhalen-data";
@@ -82,22 +82,22 @@ export default async function CasePage({ params }: { params: Promise<{ slug: str
     <div className="p-case">
       <JsonLd data={jsonLd} />
 
-      <section className="chero">
-        <div className="wrap-wide">
-          <Kruimelpad
-            kruimels={[
-              { naam: "Klantverhalen", pad: "/klantverhalen" },
-              { naam: (k.quoteNaam ? k.tag.split("·").pop()?.trim() : k.tag) ?? k.tag },
-            ]}
-          />
+      <PaginaHero
+        kruimels={[
+          { naam: "Klantverhalen", pad: "/klantverhalen" },
+          { naam: (k.quoteNaam ? k.tag.split("·").pop()?.trim() : k.tag) ?? k.tag },
+        ]}
+        kicker={
           <span className="tag">
             <Building2 /> {k.tag}
           </span>
-          <h1>{k.h1}</h1>
-          <p>{k.intro}</p>
-          <div className="video" style={{ backgroundImage: `url('${k.image}')` }} />
-        </div>
-      </section>
+        }
+        titel={k.h1}
+        lead={k.intro}
+      >
+        {/* De afbeelding komt uit het CMS, dus die kan niet in een class. */}
+        <div className="video" style={{ backgroundImage: `url('${k.image}')` }} />
+      </PaginaHero>
 
       <div className="impact">
         <div className="wrap-wide">

@@ -236,9 +236,8 @@ h4 {
   border-radius: var(--radius-sm);
 }
 /* Op donkere secties is --orange-text te donker; --orange-400 haalt daar 5.61:1. */
-.shero :focus-visible,
+.pkop:not(.pkop-licht) :focus-visible,
 .dhero :focus-visible,
-.chero :focus-visible,
 .cta :focus-visible,
 /* Alleen de homepagevariant is donker; `.featured` op een dienstpagina is licht. */
 .home .featured .eyebrow-row :focus-visible,

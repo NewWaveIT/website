@@ -2,7 +2,7 @@ import { JsonLd } from "@/components/json-ld";
 import { cacheLife } from "next/cache";
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Kruimelpad } from "@/components/kruimelpad";
+import { PaginaHero } from "@/components/layout/pagina-hero";
 import Image from "next/image";
 import { Users, Target, Award, Leaf, MapPin, Mail } from "lucide-react";
 import { getPagina } from "@/lib/paginas-data";
@@ -47,45 +47,43 @@ export default async function OverOnsPage() {
     <div className="p-over">
       <JsonLd data={jsonLd} />
 
-      <section className="shero">
-        <div className="badge-img">
-          <Image
-            src="/assets/photos/team-presentatie-applaus.webp"
-            alt=""
-            fill
-            sizes="46vw"
-            priority
-          />
-        </div>
-        <div className="wrap-wide">
-          <Kruimelpad kruimels={[{ naam: "Over ons", pad: "/over-ons" }]} />
-          <div className="kicker on-dark" style={{ marginTop: "var(--space-6)" }}>
-            {"Over ons"}
+      <PaginaHero
+        kruimels={[{ naam: "Over ons", pad: "/over-ons" }]}
+        kicker="Over ons"
+        titel={t.heroTitleStart ?? ""}
+        accent={t.heroAccent}
+        staart="."
+        lead={t.heroLead}
+        achtergrond={
+          <div className="badge-img">
+            <Image
+              src="/assets/photos/team-presentatie-applaus.webp"
+              alt=""
+              fill
+              sizes="46vw"
+              priority
+            />
           </div>
-          <h1>
-            {t.heroTitleStart}
-            <em>{t.heroAccent}</em>.
-          </h1>
-          <p>{t.heroLead}</p>
-          <a className="award-badge" href={AWARD.url} target="_blank" rel="noopener noreferrer">
-            <Award /> {AWARD.label}
-          </a>
-          <div className="kpis">
-            <div>
-              <div className="n">2023</div>
-              <div className="l">Opgericht, kantoor in Utrecht</div>
-            </div>
-            <div>
-              <div className="n">100%</div>
-              <div className="l">De mens centraal, op elk project</div>
-            </div>
-            <div>
-              <div className="n">2030</div>
-              <div className="l">Doel: CO2-neutraal businessmodel</div>
-            </div>
+        }
+      >
+        <a className="award-badge" href={AWARD.url} target="_blank" rel="noopener noreferrer">
+          <Award /> {AWARD.label}
+        </a>
+        <div className="kpis">
+          <div>
+            <div className="n">2023</div>
+            <div className="l">Opgericht, kantoor in Utrecht</div>
+          </div>
+          <div>
+            <div className="n">100%</div>
+            <div className="l">De mens centraal, op elk project</div>
+          </div>
+          <div>
+            <div className="n">2030</div>
+            <div className="l">Doel: CO2-neutraal businessmodel</div>
           </div>
         </div>
-      </section>
+      </PaginaHero>
 
       <section className="block missie">
         <div className="wrap-wide">

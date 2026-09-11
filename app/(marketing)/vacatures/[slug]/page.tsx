@@ -2,7 +2,7 @@ import { JsonLd } from "@/components/json-ld";
 import { cacheLife } from "next/cache";
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Kruimelpad } from "@/components/kruimelpad";
+import { PaginaHero } from "@/components/layout/pagina-hero";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { Check, ArrowRight, Phone } from "lucide-react";
@@ -128,11 +128,9 @@ export default async function VacaturePage({ params }: { params: Promise<{ slug:
     <div className="p-vacature">
       <JsonLd data={jsonLd} />
 
-      <section className="shero">
-        <div className="wrap-wide">
-          <Kruimelpad
-            kruimels={[{ naam: "Werken bij", pad: "/werken-bij" }, { naam: v.functietitel }]}
-          />
+      <PaginaHero
+        kruimels={[{ naam: "Werken bij", pad: "/werken-bij" }, { naam: v.functietitel }]}
+        kicker={
           <div className="tags">
             {v.tags.map((t) => (
               <span className="tag" key={t}>
@@ -140,22 +138,22 @@ export default async function VacaturePage({ params }: { params: Promise<{ slug:
               </span>
             ))}
           </div>
-          <h1>{v.functietitel}</h1>
-          <p dangerouslySetInnerHTML={{ __html: v.intro }} />
-          <div className="hero-actions">
-            <a href="#solliciteer" className="btn btn-primary">
-              Solliciteer direct <ArrowRight />
-            </a>
-            <Link href="/werken-bij" className="btn btn-ghost-dark">
-              Ontdek werken bij
-            </Link>
-          </div>
-          <p className="hero-note">
-            Binnen twee werkdagen reactie — meestal van {recVoornaam} zelf. Geen motivatiebrief
-            nodig.
-          </p>
+        }
+        titel={v.functietitel}
+        leadHtml={v.intro}
+      >
+        <div className="hero-actions">
+          <a href="#solliciteer" className="btn btn-primary">
+            Solliciteer direct <ArrowRight />
+          </a>
+          <Link href="/werken-bij" className="btn btn-ghost-dark">
+            Ontdek werken bij
+          </Link>
         </div>
-      </section>
+        <p className="hero-note">
+          Binnen twee werkdagen reactie — meestal van {recVoornaam} zelf. Geen motivatiebrief nodig.
+        </p>
+      </PaginaHero>
 
       <section className="block">
         <div className="wrap-wide vac-grid">

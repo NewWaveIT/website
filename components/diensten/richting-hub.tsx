@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Kruimelpad } from "@/components/kruimelpad";
+import { PaginaHero } from "@/components/layout/pagina-hero";
 import { Boxes, BrainCircuit, Route } from "lucide-react";
 import { SectorHeroAnim } from "@/components/sector-hero-anim";
 import { SlotCta } from "@/components/layout/slot-cta";
@@ -62,21 +62,17 @@ export async function RichtingHub({ richting }: { richting: ServiceRichting }) {
 
   return (
     <div className="p-richting dienst-secties">
-      <section className="shero">
-        <SectorHeroAnim theme={richting} />
-        <div className="wrap-wide">
-          <Kruimelpad
-            kruimels={[{ naam: "Diensten", pad: "/diensten" }, { naam: RICHTING_NAAM[richting] }]}
-          />
-          <div style={{ position: "relative", paddingTop: "var(--space-6)" }}>
-            <span className="badge">
-              <Icon /> {t.badgeLabel || label}
-            </span>
-            <h1>{t.heroTitleStart}</h1>
-            <p>{t.heroLead}</p>
-          </div>
-        </div>
-      </section>
+      <PaginaHero
+        kruimels={[{ naam: "Diensten", pad: "/diensten" }, { naam: RICHTING_NAAM[richting] }]}
+        kicker={
+          <span className="badge">
+            <Icon /> {t.badgeLabel || label}
+          </span>
+        }
+        titel={t.heroTitleStart ?? ""}
+        lead={t.heroLead}
+        achtergrond={<SectorHeroAnim theme={richting} />}
+      />
 
       {t.instapTitel && (
         <section className="block instap-strip">
