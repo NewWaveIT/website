@@ -224,7 +224,7 @@
 .p-vacature .vrow h3 {
   font-size: var(--text-lg);
   font-weight: var(--fw-bold);
-  color: #fff;
+  color: var(--white);
   margin: 0;
 }
 .p-vacature .vrow .meta {

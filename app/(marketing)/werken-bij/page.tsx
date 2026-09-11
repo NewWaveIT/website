@@ -63,7 +63,7 @@ export default async function WerkenBijPage() {
           >
             {vacatures.length ? "Bekijk vacatures" : "Stuur een open sollicitatie"} <ArrowRight />
           </a>
-          <Link href="/over-ons" className="btn btn-ghost-dark">
+          <Link href="/over-ons" className="btn btn-ghost-on">
             Leer ons eerst kennen
           </Link>
         </div>
@@ -119,15 +119,7 @@ export default async function WerkenBijPage() {
             </div>
             <div>
               <div className="kicker">{t.cultuurKicker}</div>
-              <h2
-                style={{
-                  fontSize: "var(--text-3xl)",
-                  fontWeight: "var(--fw-extrabold)",
-                  margin: "var(--space-4) 0 var(--space-5)",
-                }}
-              >
-                {t.cultuurTitel}
-              </h2>
+              <h2>{t.cultuurTitel}</h2>
               <p>{t.cultuurP}</p>
               <ul>
                 {["1", "2", "3", "4"].map((n) => (
@@ -145,16 +137,7 @@ export default async function WerkenBijPage() {
         <div className="wrap-wide">
           <div className="sec-head">
             <div className="kicker on-dark">Vacatures</div>
-            <h2
-              style={{
-                color: "#fff",
-                fontSize: "var(--text-3xl)",
-                fontWeight: "var(--fw-extrabold)",
-                margin: "var(--space-4) 0 0",
-              }}
-            >
-              Kom de golf versterken.
-            </h2>
+            <h2>Kom de golf versterken.</h2>
           </div>
           {vacatures.length > 0 && (
             <div className="list">
@@ -168,13 +151,7 @@ export default async function WerkenBijPage() {
               ))}
             </div>
           )}
-          <p
-            style={{
-              fontSize: "var(--text-sm)",
-              color: "var(--text-on-dark-muted)",
-              marginTop: "var(--space-6)",
-            }}
-          >
+          <p className="geen-match">
             {vacatures.length > 0 ? (
               <>Staat jouw rol er niet tussen? </>
             ) : (
@@ -186,13 +163,8 @@ export default async function WerkenBijPage() {
             {/* Onderstreept: als tekstlink binnen een alinea is kleur alleen niet
                 genoeg om hem te herkennen (WCAG 1.4.1) — het verschil met de
                 omringende tekst haalt de 3:1 niet. */}
-            <a
-              href="#open-sollicitatie"
-              style={{ color: "var(--orange-400)", textDecoration: "underline" }}
-            >
-              Stuur hieronder een open sollicitatie
-            </a>{" "}
-            — of bel {recVoornaam}: {recTel}.
+            <a href="#open-sollicitatie">Stuur hieronder een open sollicitatie</a> — of bel{" "}
+            {recVoornaam}: {recTel}.
           </p>
         </div>
       </section>

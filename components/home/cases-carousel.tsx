@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { citaat } from "@/lib/utils";
@@ -52,7 +53,13 @@ export function CasesCarousel({ items }: { items: CaseCard[] }) {
       <div className="fcase">
         <div className="media">
           <div className="kbwrap">
-            <div className="kb" style={{ backgroundImage: `url('${c.image}')` }} />
+            <Image
+              className="kb"
+              src={c.image}
+              alt=""
+              fill
+              sizes="(max-width: 900px) 100vw, 50vw"
+            />
           </div>
           {c.tag && <span className="tag">{c.tag}</span>}
         </div>
@@ -78,11 +85,7 @@ export function CasesCarousel({ items }: { items: CaseCard[] }) {
                 </div>
               </>
             )}
-            <Link
-              href={`/klantverhalen/${c.slug}`}
-              className="btn btn-outline btn-sm"
-              style={{ marginLeft: "auto" }}
-            >
+            <Link href={`/klantverhalen/${c.slug}`} className="btn btn-outline btn-sm">
               Lees het verhaal
             </Link>
           </div>

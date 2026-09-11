@@ -239,28 +239,35 @@
   flex: none;
 }
 
+/* Het streepje is 3px hoog, maar de knop is 44x24: WCAG 2.5.8 vraagt 24x24 en
+   een lijn van drie pixels raak je op een telefoon niet. De knop zelf is dus
+   het aanraakdoel en blijft doorzichtig; het zichtbare streepje tekent
+   ::before, verticaal gecentreerd. Dit is hetzelfde patroon als .fcase-dots.
+   Een omgekeerde poging (knop 3px hoog, ::before eromheen) werkte niet: het
+   klikbare gebied van een knop is zijn eigen randbox, niet wat er uitsteekt. */
 .hsec-tick {
+  display: flex;
+  align-items: center;
   width: 44px;
-  height: 3px;
+  height: 24px;
   padding: 0;
   border: 0;
-  background: color-mix(in srgb, var(--paper) 25%, transparent);
-  transition: background 0.5s ease;
+  background: none;
   cursor: pointer;
 }
 
-.hsec-tick:hover,
-.hsec-tick[aria-current="true"] {
-  background: var(--orange-500);
-}
-
-/* Het streepje zelf is 3px hoog; een onzichtbaar vlak eromheen maakt er een
-   aanraakdoel van dat groot genoeg is. */
 .hsec-tick::before {
   content: "";
   display: block;
-  height: 24px;
-  margin-top: -10px;
+  width: 100%;
+  height: 3px;
+  background: color-mix(in srgb, var(--paper) 25%, transparent);
+  transition: background 0.5s ease;
+}
+
+.hsec-tick:hover::before,
+.hsec-tick[aria-current="true"]::before {
+  background: var(--orange-500);
 }
 
 .hsec-pauze {

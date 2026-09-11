@@ -69,7 +69,7 @@ export function SollicitatieForm({
         tabIndex={-1}
         autoComplete="off"
         aria-hidden="true"
-        style={{ position: "absolute", left: "-9999px", width: 1, height: 1 }}
+        className="hp"
       />
 
       <div className="field">
@@ -110,10 +110,7 @@ export function SollicitatieForm({
 
       <div className="field">
         <label htmlFor="s-tel">
-          Telefoon{" "}
-          <span style={{ fontWeight: "var(--fw-regular)", color: "var(--text-subtle)" }}>
-            (optioneel)
-          </span>
+          Telefoon <span className="veld-optioneel">(optioneel)</span>
         </label>
         <input
           id="s-tel"
@@ -132,10 +129,7 @@ export function SollicitatieForm({
 
       <div className="field">
         <label htmlFor="s-mot">
-          Motivatie{" "}
-          <span style={{ fontWeight: "var(--fw-regular)", color: "var(--text-subtle)" }}>
-            (optioneel)
-          </span>
+          Motivatie <span className="veld-optioneel">(optioneel)</span>
         </label>
         <textarea
           id="s-mot"
@@ -158,10 +152,7 @@ export function SollicitatieForm({
 
       <div className="field">
         <label htmlFor="s-mot-file">
-          Motivatie als bestand{" "}
-          <span style={{ fontWeight: "var(--fw-regular)", color: "var(--text-subtle)" }}>
-            (optioneel · pdf of Word)
-          </span>
+          Motivatie als bestand <span className="veld-optioneel">(optioneel · pdf of Word)</span>
         </label>
         <input
           id="s-mot-file"
@@ -180,10 +171,7 @@ export function SollicitatieForm({
 
       <div className="field">
         <label htmlFor="s-cv">
-          Je cv{" "}
-          <span style={{ fontWeight: "var(--fw-regular)", color: "var(--text-subtle)" }}>
-            (optioneel · pdf of Word, max. 8 MB)
-          </span>
+          Je cv <span className="veld-optioneel">(optioneel · pdf of Word, max. 8 MB)</span>
         </label>
         <input
           id="s-cv"
@@ -202,10 +190,7 @@ export function SollicitatieForm({
 
       <div className="field">
         <label htmlFor="s-link">
-          LinkedIn of portfolio{" "}
-          <span style={{ fontWeight: "var(--fw-regular)", color: "var(--text-subtle)" }}>
-            (optioneel)
-          </span>
+          LinkedIn of portfolio <span className="veld-optioneel">(optioneel)</span>
         </label>
         <input
           id="s-link"

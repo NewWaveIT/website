@@ -146,7 +146,7 @@ export default async function VacaturePage({ params }: { params: Promise<{ slug:
           <a href="#solliciteer" className="btn btn-primary">
             Solliciteer direct <ArrowRight />
           </a>
-          <Link href="/werken-bij" className="btn btn-ghost-dark">
+          <Link href="/werken-bij" className="btn btn-ghost-on">
             Ontdek werken bij
           </Link>
         </div>
@@ -239,16 +239,7 @@ export default async function VacaturePage({ params }: { params: Promise<{ slug:
         <div className="wrap-wide">
           <div className="sec-head">
             <div className="kicker on-dark">Andere vacatures</div>
-            <h2
-              style={{
-                color: "#fff",
-                fontSize: "var(--text-3xl)",
-                fontWeight: "var(--fw-extrabold)",
-                margin: "var(--space-4) 0 0",
-              }}
-            >
-              Ook op zoek naar…
-            </h2>
+            <h2>Ook op zoek naar…</h2>
           </div>
           <div className="list">
             {andere.map((a) => (

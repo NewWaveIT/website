@@ -14,7 +14,7 @@
   margin: var(--space-4) 0;
 }
 .dienst-secties .sectie-h2--op-donker {
-  color: #fff;
+  color: var(--white);
   margin-bottom: 0;
 }
 
@@ -201,8 +201,15 @@
   margin: 0 0 12px;
 }
 
-.dienst-secties .sol {
+/* Sluit aan op het blok erboven: geen dubbele witruimte ertussen. */
+.dienst-secties .crossref-blok {
+  padding-top: 0;
+}
+.dienst-secties .pijlers {
   background: var(--eggshell);
+}
+.dienst-secties .sol {
+  background: var(--paper);
 }
 .dienst-secties .sol-row {
   display: grid;
@@ -401,11 +408,19 @@
   overflow: hidden;
   box-shadow: var(--shadow-lg);
 }
+.dienst-secties .case-mini .body .lees-meer {
+  display: inline-block;
+  margin-top: 14px;
+}
+.dienst-secties .post .cover img,
+.dienst-secties .case-mini .media img,
+.dienst-secties .sol-row .ph img {
+  object-fit: cover;
+}
 .dienst-secties .case-mini .media {
   min-height: 360px;
   background-color: var(--ink-200);
-  background-size: cover;
-  background-position: center;
+  overflow: hidden;
   position: relative;
   display: flex;
   align-items: center;
@@ -470,7 +485,7 @@
   top: 14px;
   left: 14px;
   background: var(--color-primary);
-  color: #fff;
+  color: var(--white);
   font-weight: var(--fw-semibold);
   font-size: var(--text-xs);
   padding: 5px 12px;

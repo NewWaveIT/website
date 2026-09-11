@@ -62,7 +62,7 @@ export function Header() {
             alt="The New Wave IT"
             width={190}
             height={30}
-            style={{ height: 30, width: "auto" }}
+            className="nav-logo"
             priority
           />
         </Link>
@@ -84,9 +84,13 @@ export function Header() {
                 >
                   {link.label}
                 </Link>
+                {/* prefetch uit: het uitklapmenu is `visibility: hidden`, niet
+                    `display: none`, dus Next ziet deze acht links op élke pagina
+                    in beeld staan en haalt hun RSC-payload op nog voor iemand het
+                    menu opent. De twee hublinks erboven prefetchen wel. */}
                 <nav className="nav-menu" aria-label={`${link.label} — onderdelen`}>
                   {sub.map((s) => (
-                    <Link key={s.href} href={s.href}>
+                    <Link key={s.href} href={s.href} prefetch={false}>
                       {s.label}
                     </Link>
                   ))}

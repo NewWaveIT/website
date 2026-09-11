@@ -158,7 +158,7 @@ export async function RichtingHub({ richting }: { richting: ServiceRichting }) {
       )}
 
       {hub.crossRefs.length > 0 && (
-        <section className="block" style={{ paddingTop: 0 }}>
+        <section className="block crossref-blok">
           <div className="wrap-wide">
             <CrossRef
               titel={t.crossrefTitel || "Ook relevant"}

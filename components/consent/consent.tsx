@@ -62,7 +62,10 @@ export function Consent() {
             <p>
               We gebruiken alleen functionele cookies. Met jouw toestemming plaatsen we ook
               analytische cookies om de site te verbeteren. Zie ons{" "}
-              <Link href="/privacy">privacybeleid</Link>.
+              <Link href="/privacy" prefetch={false}>
+                privacybeleid
+              </Link>
+              .
             </p>
             <div className="cookie-actions">
               <button type="button" className="cookie-btn ghost" onClick={() => decide("denied")}>

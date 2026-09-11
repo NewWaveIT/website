@@ -63,7 +63,7 @@ export default async function ContactPage() {
         lead={t.heroLead}
       />
 
-      <section className="block" style={{ paddingBottom: 0 }} aria-labelledby="manieren">
+      <section className="block manieren" aria-labelledby="manieren">
         <div className="wrap-wide">
           {/* Het ontwerp heeft hier geen zichtbare kop; zonder deze h2 springt de
               koppenstructuur van h1 naar h3. */}

@@ -10,6 +10,10 @@
   color: var(--ink-400);
 }
 
+.p-klanten .uitgelicht {
+  background: var(--eggshell);
+}
+
 .p-klanten .case-mini {
   display: grid;
   grid-template-columns: 1fr 1.1fr;
@@ -17,6 +21,9 @@
   border-radius: var(--radius-xl);
   overflow: hidden;
   box-shadow: var(--shadow-lg);
+}
+.p-klanten .case-mini .media img {
+  object-fit: cover;
 }
 .p-klanten .case-mini .media {
   min-height: 380px;
@@ -48,6 +55,11 @@
 }
 .p-klanten .case-mini .body .who strong {
   color: var(--text-strong);
+}
+.p-klanten .case-mini .body .lees-meer {
+  display: inline-block;
+  margin-top: 14px;
+  font-weight: var(--fw-semibold);
 }
 
 .p-klanten .belofte-grid {

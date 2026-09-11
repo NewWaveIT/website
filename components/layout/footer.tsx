@@ -10,21 +10,25 @@ export function Footer() {
         <div className="foot-top">
           <div>
             <Image
+              className="foot-logo"
               src="/assets/logos/logo-horizontal-white.png"
               alt="The New Wave IT"
               width={190}
               height={30}
-              style={{ height: 30, width: "auto" }}
             />
             <p className="foot-blurb">
               De business-specialist in publieke sector, mobiliteit, banken, zorg en manufacturing.
               Technologie als middel, jouw resultaat als doel.
             </p>
           </div>
+          {/* prefetch uit: de voettekst staat op elke pagina en haalde daarmee
+              de RSC-payload van elf routes op zodra hij in beeld kwam -- op
+              /contact 131 kB die de bezoeker in de regel niet gebruikt. De
+              navigatie boven en de CTA's in de tekst prefetchen wel. */}
           <div>
             <h2>Sectoren</h2>
             {FOOTER_SECTOREN.map((link) => (
-              <Link key={link.href} href={link.href}>
+              <Link key={link.href} href={link.href} prefetch={false}>
                 {link.label}
               </Link>
             ))}
@@ -32,7 +36,7 @@ export function Footer() {
           <div>
             <h2>Bedrijf</h2>
             {FOOTER_BEDRIJF.map((link) => (
-              <Link key={link.href} href={link.href}>
+              <Link key={link.href} href={link.href} prefetch={false}>
                 {link.label}
               </Link>
             ))}
@@ -55,7 +59,9 @@ export function Footer() {
             © <CopyrightJaar /> The New Wave IT
           </span>
           <span>
-            <Link href="/privacy">Privacybeleid</Link>
+            <Link href="/privacy" prefetch={false}>
+              Privacybeleid
+            </Link>
           </span>
         </div>
       </div>

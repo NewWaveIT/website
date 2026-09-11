@@ -77,7 +77,7 @@ export default async function KlantverhalenPage() {
       />
 
       {featured && (
-        <section className="block" style={{ background: "var(--eggshell)" }}>
+        <section className="block uitgelicht">
           <div className="wrap-wide">
             <div className="sec-head">
               <div className="kicker">Uitgelicht</div>
@@ -90,7 +90,6 @@ export default async function KlantverhalenPage() {
                   alt={featured.cardTitel}
                   fill
                   sizes="(max-width: 980px) 100vw, 45vw"
-                  style={{ objectFit: "cover" }}
                 />
               </div>
               <div className="body">
@@ -99,14 +98,7 @@ export default async function KlantverhalenPage() {
                 <div className="who">
                   <strong>{featured.quoteNaam}</strong>, {featured.quoteRol}
                   <br />
-                  <Link
-                    href={`/klantverhalen/${featured.slug}`}
-                    style={{
-                      display: "inline-block",
-                      marginTop: 14,
-                      fontWeight: "var(--fw-semibold)",
-                    }}
-                  >
+                  <Link href={`/klantverhalen/${featured.slug}`} className="lees-meer">
                     Lees het volledige verhaal →
                   </Link>
                 </div>

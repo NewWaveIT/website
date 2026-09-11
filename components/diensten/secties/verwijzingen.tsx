@@ -33,18 +33,18 @@ export function KlantverhaalSectie({ waarborg, ...c }: KlantverhaalProps) {
           <h2 className="sectie-h2">{c.caseTitle}</h2>
         </div>
         <div className="case-mini">
-          <div className="media" style={{ backgroundImage: `url('${c.caseImage}')` }} />
+          <div className="media">
+            {c.caseImage && (
+              <Image src={c.caseImage} alt="" fill sizes="(max-width: 980px) 100vw, 45vw" />
+            )}
+          </div>
           <div className="body">
             <div className="kicker">{c.caseSector}</div>
             <blockquote>{c.caseQuote}</blockquote>
             <div className="who">
               <strong>{c.caseNaam}</strong>, {c.caseRol}
               <br />
-              <Link
-                href={c.caseHref ?? "/klantverhalen"}
-                className="more"
-                style={{ display: "inline-block", marginTop: 14 }}
-              >
+              <Link href={c.caseHref ?? "/klantverhalen"} className="more lees-meer">
                 Lees het volledige verhaal →
               </Link>
             </div>
@@ -99,13 +99,7 @@ export function InzichtenSectie({ artikelen, titel }: { artikelen: Artikel[]; ti
           {artikelen.slice(0, 3).map((a) => (
             <Link href={`/inzichten/${a.slug}`} className="post" key={a.slug}>
               <div className="cover">
-                <Image
-                  src={a.image}
-                  alt={a.titel}
-                  fill
-                  sizes="(max-width: 980px) 100vw, 33vw"
-                  style={{ objectFit: "cover" }}
-                />
+                <Image src={a.image} alt={a.titel} fill sizes="(max-width: 980px) 100vw, 33vw" />
                 <span className="cat">{a.cat}</span>
               </div>
               <div className="pbody">

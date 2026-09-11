@@ -73,16 +73,7 @@ export default async function SectorenPage() {
         <div className="wrap-wide">
           <div className="sec-head">
             <div className="kicker on-dark">{t.werkwijzeKicker}</div>
-            <h2
-              style={{
-                color: "#fff",
-                fontSize: "var(--text-3xl)",
-                fontWeight: "var(--fw-extrabold)",
-                margin: "var(--space-4) 0 0",
-              }}
-            >
-              {t.werkwijzeTitel}
-            </h2>
+            <h2>{t.werkwijzeTitel}</h2>
           </div>
           <div className="grid">
             {["1", "2", "3"].map((n) => (

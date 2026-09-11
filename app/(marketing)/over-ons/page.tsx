@@ -90,15 +90,7 @@ export default async function OverOnsPage() {
           <div className="grid">
             <div>
               <div className="kicker">Onze missie</div>
-              <h2
-                style={{
-                  fontSize: "var(--text-3xl)",
-                  fontWeight: "var(--fw-extrabold)",
-                  margin: "var(--space-4) 0 var(--space-5)",
-                }}
-              >
-                {t.missieTitel}
-              </h2>
+              <h2>{t.missieTitel}</h2>
               <p>{t.missieP1}</p>
               <p>{t.missieP2}</p>
             </div>
@@ -147,15 +139,7 @@ export default async function OverOnsPage() {
             </div>
             <div>
               <div className="kicker">Het team</div>
-              <h2
-                style={{
-                  fontSize: "var(--text-3xl)",
-                  fontWeight: "var(--fw-extrabold)",
-                  margin: "var(--space-4) 0 var(--space-5)",
-                }}
-              >
-                {t.teamTitel}
-              </h2>
+              <h2>{t.teamTitel}</h2>
               <p>{t.teamP1}</p>
               <p>{t.teamP2}</p>
               <Link href="/contact" className="btn btn-outline btn-sm">

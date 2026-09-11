@@ -71,7 +71,6 @@ export function InzichtenList({ artikelen }: { artikelen: Artikel[] }) {
               alt={featured.titel}
               fill
               sizes="(max-width: 980px) 100vw, 45vw"
-              style={{ objectFit: "cover" }}
             />
           </div>
           <div className="body">
@@ -89,13 +88,7 @@ export function InzichtenList({ artikelen }: { artikelen: Artikel[] }) {
         {grid.map((a) => (
           <Link href={`/inzichten/${a.slug}`} className="post" key={a.slug}>
             <div className="cover">
-              <Image
-                src={a.image}
-                alt={a.titel}
-                fill
-                sizes="(max-width: 980px) 100vw, 33vw"
-                style={{ objectFit: "cover" }}
-              />
+              <Image src={a.image} alt={a.titel} fill sizes="(max-width: 980px) 100vw, 33vw" />
               <span className="cat">{a.cat}</span>
             </div>
             <div className="pbody">

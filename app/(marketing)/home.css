@@ -45,7 +45,7 @@
   font-family: var(--font-display);
   font-weight: var(--fw-bold);
   font-size: var(--text-lg);
-  color: var(--ink-300, #b9b0a2);
+  color: var(--ink-300);
   white-space: nowrap;
   transition: color 200ms ease;
 }
@@ -75,7 +75,7 @@
 }
 .proof .award:hover {
   border-color: var(--orange-400);
-  color: #fff;
+  color: var(--white);
 }
 .proof .award .lucide {
   width: 16px;
@@ -113,7 +113,7 @@
   font-weight: var(--fw-semibold);
   font-size: var(--text-base);
   letter-spacing: 0.01em;
-  color: var(--ink-300, #b9b0a2);
+  color: var(--ink-300);
   white-space: nowrap;
   transition: color 200ms ease;
 }
@@ -328,11 +328,8 @@
   will-change: transform;
 }
 .fcase .kb {
-  position: absolute;
-  inset: 0;
+  object-fit: cover;
   background-color: var(--ink-200);
-  background-size: cover;
-  background-position: center;
   animation: kenburns 26s ease-in-out infinite alternate;
 }
 @keyframes kenburns {
@@ -351,7 +348,7 @@
   top: var(--space-5);
   left: var(--space-5);
   background: var(--color-primary);
-  color: #fff;
+  color: var(--white);
   font-weight: var(--fw-bold);
   font-size: var(--text-sm);
   padding: 8px 16px;
@@ -361,6 +358,11 @@
   padding: var(--space-9) var(--space-8);
   display: flex;
   flex-direction: column;
+}
+/* De knop zakt naar de onderkant van de kaart, ongeacht de lengte van het
+   citaat erboven. */
+.fcase .body .btn {
+  margin-left: auto;
 }
 .fcase .body .kick {
   font-family: var(--font-mono);
@@ -601,7 +603,7 @@
   font-family: var(--font-display);
   font-size: var(--text-md);
   font-weight: var(--fw-bold);
-  color: #fff;
+  color: var(--white);
   margin: 0 0 8px;
 }
 .wcard p {
@@ -609,6 +611,26 @@
   color: var(--text-on-dark-muted);
   line-height: var(--leading-relaxed);
   margin: 0;
+}
+
+/* Knop plus tekstlink op één rij. Stond twee keer als inline style in
+   page.tsx, met twee verschillende gaten; dezelfde vorm als .post .more, maar
+   op bodygrootte. */
+.home .acties {
+  display: flex;
+  align-items: center;
+  gap: var(--space-5);
+  flex-wrap: wrap;
+}
+.home .acties .tekstlink {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: var(--fw-semibold);
+}
+.home .acties .tekstlink .lucide {
+  width: 15px;
+  height: 15px;
 }
 
 /* Mensen */
@@ -620,6 +642,14 @@
   grid-template-columns: 1fr 1.15fr;
   gap: var(--space-9);
   align-items: center;
+}
+.mensen .txt h2 {
+  font-size: var(--text-3xl);
+  font-weight: var(--fw-extrabold);
+  margin: var(--space-4) 0 var(--space-5);
+}
+.mensen .txt .award-badge {
+  margin-bottom: var(--space-5);
 }
 .mensen .txt p {
   font-size: var(--text-md);
@@ -641,6 +671,10 @@
 }
 .mensen .collage .slot img {
   object-fit: cover;
+}
+/* Portret: de uitsnede pakt het hoofd, niet het midden van de foto. */
+.mensen .collage .uitsnede-boven {
+  object-position: top;
 }
 .mensen .collage .big {
   grid-row: 1 / 3;
@@ -664,7 +698,7 @@
   align-items: center;
 }
 .joinus h2 {
-  color: #fff;
+  color: var(--white);
   font-family: var(--font-display-expanded);
   font-weight: var(--fw-black);
   font-size: var(--text-3xl);
@@ -706,7 +740,7 @@
 }
 .joinus .role:hover {
   border-color: var(--color-primary);
-  color: #fff;
+  color: var(--white);
 }
 .joinus .role .lucide {
   width: 14px;
@@ -733,7 +767,7 @@
   left: var(--space-5);
   bottom: var(--space-5);
   background: var(--color-primary);
-  color: #fff;
+  color: var(--white);
   border-radius: var(--radius-md);
   padding: var(--space-4) var(--space-5);
   z-index: 1;
@@ -776,15 +810,17 @@
   position: relative;
   height: 190px;
   background-color: var(--ink-200);
-  background-size: cover;
-  background-position: center;
+  overflow: hidden;
+}
+.post .cover img {
+  object-fit: cover;
 }
 .post .cover .cat {
   position: absolute;
   top: 14px;
   left: 14px;
   background: var(--color-primary);
-  color: #fff;
+  color: var(--white);
   font-weight: var(--fw-semibold);
   font-size: var(--text-xs);
   padding: 5px 12px;
@@ -1055,7 +1091,7 @@
   left: 20px;
   bottom: 18px;
   z-index: 2;
-  color: #fff;
+  color: var(--white);
   font-family: var(--font-mono);
   font-size: 12px;
   letter-spacing: 0.08em;

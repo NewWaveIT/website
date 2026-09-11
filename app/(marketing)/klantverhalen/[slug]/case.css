@@ -27,7 +27,7 @@
   align-items: center;
   gap: 8px;
   background: var(--color-primary);
-  color: #fff;
+  color: var(--white);
   font-weight: var(--fw-semibold);
   font-size: var(--text-sm);
   padding: 7px 15px;
@@ -44,8 +44,6 @@
   border-radius: var(--radius-xl) var(--radius-xl) 0 0;
   overflow: hidden;
   background-color: var(--ink-800);
-  background-size: cover;
-  background-position: center;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -236,7 +234,12 @@
   background: var(--eggshell);
   border-radius: var(--radius-md);
 }
-.p-case .resultaat-kaart h4 {
+/* De kaartkop is h3 of h4 al naar gelang wat er in de koppenboom boven staat;
+   hij ziet er hetzelfde uit. De .prose-selector staat er voor de h3 bij, want
+   `.p-case .article .prose h3` maakt er anders een genummerde sectiekop van. */
+.p-case .resultaat-kaart h4,
+.p-case .article .prose .resultaat-kaart h3 {
+  display: block;
   font-size: var(--text-sm);
   font-weight: var(--fw-bold);
   color: var(--text-strong);
@@ -259,7 +262,7 @@
   padding: var(--space-6);
   background: var(--white);
 }
-.p-case .aside-card h4 {
+.p-case .aside-card h2 {
   font-family: var(--font-mono);
   font-size: 11px;
   text-transform: uppercase;
@@ -352,15 +355,18 @@
   position: relative;
   height: 160px;
   background-color: var(--ink-200);
-  background-size: cover;
-  background-position: center;
+  overflow: hidden;
+}
+.p-case .video img,
+.p-case .post .cover img {
+  object-fit: cover;
 }
 .p-case .post .cover .cat {
   position: absolute;
   top: 14px;
   left: 14px;
   background: var(--color-primary);
-  color: #fff;
+  color: var(--white);
   font-weight: var(--fw-semibold);
   font-size: var(--text-xs);
   padding: 5px 12px;

@@ -33,13 +33,7 @@ export function TeamCarousel({ team }: { team: Teamlid[] }) {
           <div className="tcard" key={m.slug}>
             <div className="pf">
               {m.foto ? (
-                <Image
-                  src={m.foto}
-                  alt={m.naam}
-                  fill
-                  sizes="300px"
-                  style={{ objectPosition: "top" }}
-                />
+                <Image src={m.foto} alt={m.naam} fill sizes="300px" />
               ) : (
                 <div className="pf-fallback" aria-hidden="true">
                   <UserRound />

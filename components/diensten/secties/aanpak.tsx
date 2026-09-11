@@ -16,7 +16,7 @@ export function PijlersSectie({
 }) {
   if (!pijlers.length) return null;
   return (
-    <section className="block" id="diensten" style={{ background: "var(--eggshell)" }}>
+    <section className="block pijlers" id="diensten">
       <div className="wrap-wide">
         <div className="sec-head">
           <div className="kicker">Wat we doen</div>
@@ -48,7 +48,7 @@ export function PijlersSectie({
 export function AanpakSectie({ aanpak }: { aanpak: AanpakRow[] }) {
   if (!aanpak.length) return null;
   return (
-    <section className="block sol" id="aanpak" style={{ background: "var(--paper)" }}>
+    <section className="block sol" id="aanpak">
       <div className="wrap-wide">
         <div className="sec-head">
           <div className="kicker">Onze aanpak</div>
@@ -70,13 +70,7 @@ export function AanpakSectie({ aanpak }: { aanpak: AanpakRow[] }) {
             </div>
             {row.img && (
               <div className="ph">
-                <Image
-                  src={row.img}
-                  alt=""
-                  fill
-                  sizes="(max-width: 900px) 100vw, 50vw"
-                  style={{ objectFit: "cover" }}
-                />
+                <Image src={row.img} alt="" fill sizes="(max-width: 900px) 100vw, 50vw" />
               </div>
             )}
           </div>

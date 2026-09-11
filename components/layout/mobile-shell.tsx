@@ -119,7 +119,7 @@ export function MobileShell() {
               alt="The New Wave IT"
               width={140}
               height={24}
-              style={{ height: 24, width: "auto" }}
+              className="mnav-logo"
             />
           </Link>
           <button
@@ -142,7 +142,7 @@ export function MobileShell() {
             alt="The New Wave IT"
             width={140}
             height={24}
-            style={{ height: 24, width: "auto" }}
+            className="mnav-logo"
           />
           <button
             ref={sluitRef}

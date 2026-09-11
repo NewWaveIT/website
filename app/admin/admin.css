@@ -88,7 +88,7 @@
 }
 .cms .side .nav-item.active {
   background: var(--color-primary);
-  color: #fff;
+  color: var(--white);
 }
 .cms .side .nav-item .cnt {
   margin-left: auto;
@@ -114,7 +114,7 @@
   height: 34px;
   border-radius: 50%;
   background: var(--color-primary);
-  color: #fff;
+  color: var(--white);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -280,7 +280,7 @@
 .cms .choicechips .chip.on {
   background: var(--color-primary);
   border-color: var(--color-primary);
-  color: #fff;
+  color: var(--white);
 }
 
 /* Auteur-keuze */
@@ -367,7 +367,7 @@
 .cms .rte-btn.on {
   background: var(--color-primary);
   border-color: var(--color-primary);
-  color: #fff;
+  color: var(--white);
 }
 .cms .rte-btn:disabled {
   opacity: 0.4;
@@ -476,7 +476,7 @@
 }
 .cms .btn-primary {
   background: var(--color-primary);
-  color: #fff;
+  color: var(--white);
 }
 .cms .btn-primary:hover {
   background: var(--color-primary-hover);
@@ -628,12 +628,12 @@
   color: var(--text-body);
 }
 .cms .chip.klaar {
-  background: rgba(58, 125, 68, 0.12);
-  color: #3a7d44;
+  background: var(--success-100);
+  color: var(--success-600);
 }
 .cms .chip.live {
-  background: rgba(58, 125, 68, 0.12);
-  color: #3a7d44;
+  background: var(--success-100);
+  color: var(--success-600);
 }
 .cms .chip.concept {
   background: rgba(46, 37, 26, 0.07);
@@ -1097,7 +1097,7 @@
   height: 16px;
 }
 .cms .ce-delete:hover {
-  color: var(--danger-600, #b42318);
+  color: var(--danger-600);
 }
 .cms .ce-perma code {
   display: inline-block;
@@ -1145,18 +1145,18 @@
   color: var(--eggshell);
 }
 .cms .seg button.on.live {
-  background: #3a7d44;
-  color: #fff;
+  background: var(--success-600);
+  color: var(--white);
 }
 
 .cms .btn-danger {
   background: var(--danger-500);
-  color: #fff;
+  color: var(--white);
   border-color: var(--danger-500);
 }
 .cms .btn-danger:hover {
-  background: var(--danger-600, #b42318);
-  border-color: var(--danger-600, #b42318);
+  background: var(--danger-600);
+  border-color: var(--danger-600);
 }
 
 /* Modal (nette in-stijl popup) */
@@ -1323,7 +1323,7 @@
   cursor: pointer;
   border: 1px solid var(--color-primary);
   background: var(--color-primary);
-  color: #fff;
+  color: var(--white);
   margin-top: var(--space-2);
 }
 .cms-login .btn:hover {

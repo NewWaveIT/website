@@ -120,7 +120,7 @@ export default async function SectorPage({ params }: { params: Promise<{ slug: s
           <Link href={`/contact?sector=${s.slug}`} className="btn btn-primary">
             Plan een gesprek <ArrowRight />
           </Link>
-          <a href="#aanpak" className="btn btn-ghost-dark">
+          <a href="#aanpak" className="btn btn-ghost-on">
             Bekijk onze aanpak
           </a>
         </div>
@@ -411,9 +411,7 @@ export default async function SectorPage({ params }: { params: Promise<{ slug: s
             )}
             {andereSectoren.length > 0 && (
               <div className="sector-links">
-                <div className="kicker" style={{ marginBottom: "var(--space-5)" }}>
-                  Andere sectoren
-                </div>
+                <div className="kicker">Andere sectoren</div>
                 <div className="sector-pills">
                   {andereSectoren.map((x) => (
                     <Link href={`/sectoren/${x.slug}`} key={x.slug}>
@@ -458,7 +456,7 @@ export default async function SectorPage({ params }: { params: Promise<{ slug: s
             <h2>{s.ctaTitel}</h2>
             <p>{s.ctaTekst}</p>
             <div className="acts">
-              <Link href={`/contact?sector=${s.slug}`} className="btn btn-op-oranje">
+              <Link href={`/contact?sector=${s.slug}`} className="btn btn-on">
                 Plan een gesprek <ArrowRight />
               </Link>
               <a href="#aanpak" className="btn btn-ghost-on">

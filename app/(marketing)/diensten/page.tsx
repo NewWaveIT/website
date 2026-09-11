@@ -193,10 +193,18 @@ export default async function DienstenPage() {
                       {prijs.label}
                       {prijs.variant && <small>{prijs.variant}</small>}
                     </div>
-                    <Link href={`/contact?dienst=${s.slug}`} className="btn btn-primary btn-sm">
+                    <Link
+                      href={`/contact?dienst=${s.slug}`}
+                      className="btn btn-primary btn-sm"
+                      aria-label={`${s.ctaLabel} — ${s.naam}`}
+                    >
                       {s.ctaLabel}
                     </Link>
-                    <Link href={`/diensten/${s.slug}`} className="more">
+                    <Link
+                      href={`/diensten/${s.slug}`}
+                      className="more"
+                      aria-label={`Meer over ${s.naam}`}
+                    >
                       Meer over deze dienst →
                     </Link>
                   </article>

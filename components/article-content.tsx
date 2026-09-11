@@ -15,7 +15,7 @@ const options: HTMLReactParserOptions = {
           width={w}
           height={h}
           sizes="(max-width: 720px) 100vw, 720px"
-          style={{ width: "100%", height: "auto" }}
+          className="artikel-beeld"
         />
       );
     }

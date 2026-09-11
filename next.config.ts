@@ -2,14 +2,21 @@ import type { NextConfig } from "next";
 
 const isDev = process.env.NODE_ENV === "development";
 
-// Inline `style`-attributen en één inline GA-initscript (components/consent/consent.tsx)
-// vereisen 'unsafe-inline' voor style-src/script-src — een nonce-opzet zou honderden
-// bestaande inline styles moeten aanraken. In dev staan 'unsafe-eval' en de HMR-websocket
-// erbij, anders breekt `next dev` (React Refresh/webpack).
+// style-src is gesplitst. `style-src-attr 'unsafe-inline'` moet aan blijven: next/image
+// zet op élke <img> een inline style (minimaal `color: transparent`, bij `fill` de hele
+// positionering) en neemt daar geen nonce voor aan — zie
+// node_modules/next/dist/shared/lib/get-img-props.js. `style-src-elem 'self'` kan wél
+// dicht: de productie-HTML bevat geen enkel <style>-element, alleen <link rel=stylesheet>.
+// Daarmee blijft een geïnjecteerd <style>-blok geweigerd, wat met één losse
+// `style-src 'unsafe-inline'` niet zo was.
+// script-src houdt 'unsafe-inline' voor het GA-initscript (components/consent/consent.tsx).
+// In dev staan 'unsafe-eval' en de HMR-websocket erbij, anders breekt `next dev`
+// (React Refresh/webpack).
 const csp = [
   "default-src 'self'",
   `script-src 'self' 'unsafe-inline'${isDev ? " 'unsafe-eval'" : ""} https://www.googletagmanager.com`,
-  "style-src 'self' 'unsafe-inline'",
+  "style-src-elem 'self'",
+  "style-src-attr 'unsafe-inline'",
   "img-src 'self' data:",
   "font-src 'self' data:",
   `connect-src 'self' https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com${isDev ? " ws://localhost:*" : ""}`,

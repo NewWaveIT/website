@@ -110,7 +110,7 @@ export function ContactForm({ diensten = [] }: { diensten?: DienstOptie[] }) {
         tabIndex={-1}
         autoComplete="off"
         aria-hidden="true"
-        style={{ position: "absolute", left: "-9999px", width: 1, height: 1 }}
+        className="hp"
       />
 
       <div className="frow2">
@@ -197,10 +197,7 @@ export function ContactForm({ diensten = [] }: { diensten?: DienstOptie[] }) {
           </div>
           <div className="field">
             <label htmlFor="f-groep">
-              Aantal deelnemers{" "}
-              <span style={{ fontWeight: "var(--fw-regular)", color: "var(--text-subtle)" }}>
-                (indicatie)
-              </span>
+              Aantal deelnemers <span className="veld-optioneel">(indicatie)</span>
             </label>
             <input
               id="f-groep"
@@ -297,10 +294,7 @@ export function ContactForm({ diensten = [] }: { diensten?: DienstOptie[] }) {
 
       <div className="field">
         <label htmlFor="f-msg">
-          Toelichting{" "}
-          <span style={{ fontWeight: "var(--fw-regular)", color: "var(--text-subtle)" }}>
-            (optioneel)
-          </span>
+          Toelichting <span className="veld-optioneel">(optioneel)</span>
         </label>
         <textarea
           id="f-msg"

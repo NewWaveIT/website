@@ -86,7 +86,7 @@
   gap: var(--space-5);
 }
 .p-sector .people-band h2 {
-  color: #fff;
+  color: var(--white);
   font-family: var(--font-display-expanded);
   font-weight: var(--fw-black);
   font-size: var(--text-3xl);
@@ -159,7 +159,7 @@
   font-weight: var(--fw-bold);
   font-size: var(--text-lg);
   line-height: var(--leading-snug);
-  color: #fff;
+  color: var(--white);
   margin: 0 0 var(--space-6);
   text-wrap: pretty;
 }
@@ -180,7 +180,7 @@
 }
 .p-sector .why-quote .who .n {
   font-weight: var(--fw-semibold);
-  color: #fff;
+  color: var(--white);
   font-size: var(--text-base);
 }
 .p-sector .why-quote .who .r {
@@ -283,7 +283,7 @@
 .p-sector .laag-toekomst {
   background: var(--info-100);
   color: var(--info-500);
-  border: 1px solid #bbd2de;
+  border: 1px solid color-mix(in srgb, var(--info-500) 30%, var(--info-100));
 }
 
 /* 5 · Wat we bouwen */
@@ -343,7 +343,7 @@
   color: var(--eggshell);
 }
 .p-sector .how h2 {
-  color: #fff;
+  color: var(--white);
   font-size: var(--text-3xl);
   font-weight: var(--fw-extrabold);
   margin: var(--space-4) 0 0;
@@ -403,7 +403,7 @@
 .p-sector .belofte p {
   margin: 0;
   font-size: var(--text-md);
-  color: #fff;
+  color: var(--white);
   line-height: var(--leading-relaxed);
 }
 
@@ -498,6 +498,9 @@
   padding-top: var(--space-6);
   border-top: 1px solid var(--border-default);
 }
+.p-sector .sector-links .kicker {
+  margin-bottom: var(--space-5);
+}
 .p-sector .sector-pills {
   display: flex;
   flex-wrap: wrap;
@@ -572,7 +575,7 @@
 /* 10 · CTA */
 .p-sector .cta-sector {
   background: var(--color-primary);
-  color: #fff;
+  color: var(--white);
 }
 .p-sector .cta-sector .wrap-wide {
   padding: var(--space-10) var(--space-6);
@@ -582,7 +585,7 @@
   align-items: center;
 }
 .p-sector .cta-sector h2 {
-  color: #fff;
+  color: var(--white);
   font-family: var(--font-display-expanded);
   font-weight: var(--fw-black);
   font-size: var(--text-3xl);
@@ -590,7 +593,7 @@
   max-width: 24ch;
 }
 .p-sector .cta-sector p {
-  color: #fff;
+  color: var(--white);
   font-size: var(--text-md);
   line-height: var(--leading-relaxed);
   max-width: 52ch;
@@ -600,20 +603,6 @@
   display: flex;
   gap: var(--space-4);
   flex-wrap: wrap;
-}
-.p-sector .cta-sector .btn-op-oranje {
-  background: #fff;
-  color: var(--color-primary);
-  border-color: #fff;
-}
-.p-sector .cta-sector .btn-ghost-on {
-  background: transparent;
-  color: #fff;
-  border-color: rgba(255, 255, 255, 0.6);
-}
-.p-sector .cta-sector .btn-ghost-on:hover {
-  background: rgba(255, 255, 255, 0.14);
-  color: #fff;
 }
 .p-sector .who-card {
   background: var(--white);
@@ -721,7 +710,7 @@
 .p-sector .laag-platform {
   background: var(--success-100);
   color: var(--success-500);
-  border: 1px solid #cfdec0;
+  border: 1px solid color-mix(in srgb, var(--success-500) 30%, var(--success-100));
 }
 .p-sector .laag-operating {
   background: var(--ink-100);

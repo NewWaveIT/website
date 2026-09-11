@@ -2,6 +2,7 @@ import { JsonLd } from "@/components/json-ld";
 import { cacheLife } from "next/cache";
 import type { Metadata } from "next";
 import { citaat } from "@/lib/utils";
+import Image from "next/image";
 import Link from "next/link";
 import { PaginaHero } from "@/components/layout/pagina-hero";
 import { notFound } from "next/navigation";
@@ -96,7 +97,9 @@ export default async function CasePage({ params }: { params: Promise<{ slug: str
         lead={k.intro}
       >
         {/* De afbeelding komt uit het CMS, dus die kan niet in een class. */}
-        <div className="video" style={{ backgroundImage: `url('${k.image}')` }} />
+        <div className="video">
+          <Image src={k.image} alt="" fill sizes="100vw" priority />
+        </div>
       </PaginaHero>
 
       <div className="impact">
@@ -171,7 +174,9 @@ export default async function CasePage({ params }: { params: Promise<{ slug: str
               <div className="resultaat-kaarten resultaat-kaarten--eind">
                 {k.eindresultaten.map((r, i) => (
                   <div className="resultaat-kaart" key={i}>
-                    {r.titel && <h4>{r.titel}</h4>}
+                    {/* Onder <h2>Het resultaat</h2>, dus h3 — de kaarten in een
+                        sectie hieronder hangen onder een h4 en blijven h4. */}
+                    {r.titel && <h3>{r.titel}</h3>}
                     <p>{r.tekst}</p>
                   </div>
                 ))}
@@ -180,7 +185,7 @@ export default async function CasePage({ params }: { params: Promise<{ slug: str
           </div>
           <aside>
             <div className="aside-card">
-              <h4>Over dit project</h4>
+              <h2>Over dit project</h2>
               <div className="row">
                 <span className="k">Sector</span>
                 <span className="v">{k.aside.sector}</span>
@@ -232,7 +237,8 @@ export default async function CasePage({ params }: { params: Promise<{ slug: str
             <div className="cards3">
               {meer.map((m) => (
                 <Link href={`/klantverhalen/${m.slug}`} className="post" key={m.slug}>
-                  <div className="cover" style={{ backgroundImage: `url('${m.image}')` }}>
+                  <div className="cover">
+                    <Image src={m.image} alt="" fill sizes="(max-width: 900px) 100vw, 33vw" />
                     <span className="cat">{m.sector}</span>
                   </div>
                   <div className="pbody">

@@ -76,11 +76,18 @@ export function ServiceCard({ service: s, toonFase = false, compact = false }: S
         diepte
       )}
 
+      {/* "Vraag een datum aan" en "Meer over deze dienst" staan op elke kaart,
+          dus in een linklijst zijn ze niet uit elkaar te houden. Het aria-label
+          zet de dienstnaam erbij; de zichtbare tekst blijft kort. */}
       <div className="svc-acts">
-        <Link href={href} className="btn btn-primary btn-sm">
+        <Link
+          href={href}
+          className="btn btn-primary btn-sm"
+          aria-label={`${s.ctaLabel} — ${s.naam}`}
+        >
           {s.ctaLabel} <ArrowRight aria-hidden="true" />
         </Link>
-        <Link href={`/diensten/${s.slug}`} className="svc-meer">
+        <Link href={`/diensten/${s.slug}`} className="svc-meer" aria-label={`Meer over ${s.naam}`}>
           Meer over deze dienst <ArrowRight aria-hidden="true" />
         </Link>
       </div>

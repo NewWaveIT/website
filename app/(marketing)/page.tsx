@@ -153,27 +153,16 @@ export default async function HomePage() {
                       ))}
                     </div>
                   )}
-                  <div
-                    style={{
-                      display: "flex",
-                      gap: "var(--space-6)",
-                      alignItems: "center",
-                      flexWrap: "wrap",
-                    }}
-                  >
-                    <Link href={`/contact?dienst=${s.slug}`} className="btn btn-outline">
+                  <div className="acties">
+                    <Link
+                      href={`/contact?dienst=${s.slug}`}
+                      className="btn btn-outline"
+                      aria-label={`${s.ctaLabel} — ${s.naam}`}
+                    >
                       {s.ctaLabel}
                     </Link>
-                    <Link
-                      href={href}
-                      style={{
-                        fontWeight: "var(--fw-semibold)",
-                        display: "inline-flex",
-                        alignItems: "center",
-                        gap: 6,
-                      }}
-                    >
-                      Alle {naam}-diensten <ArrowRight style={{ width: 15, height: 15 }} />
+                    <Link href={href} className="tekstlink">
+                      Alle {naam}-diensten <ArrowRight />
                     </Link>
                   </div>
                 </div>
@@ -232,7 +221,7 @@ export default async function HomePage() {
               <div className="kicker on-dark">Klantverhalen</div>
               <h2>Business-impact, geen technische anekdote.</h2>
             </div>
-            <Link href="/klantverhalen" className="btn btn-ghost-dark btn-sm">
+            <Link href="/klantverhalen" className="btn btn-ghost-on btn-sm">
               Alle klantverhalen <ArrowRight />
             </Link>
           </div>
@@ -246,15 +235,7 @@ export default async function HomePage() {
           <div className="grid">
             <div className="txt">
               <div className="kicker">{t.mensenKicker}</div>
-              <h2
-                style={{
-                  fontSize: "var(--text-3xl)",
-                  fontWeight: "var(--fw-extrabold)",
-                  margin: "var(--space-4) 0 var(--space-5)",
-                }}
-              >
-                {t.mensenTitel}
-              </h2>
+              <h2>{t.mensenTitel}</h2>
               <p>{t.mensenP1}</p>
               <p>{t.mensenP2}</p>
               <p>
@@ -266,31 +247,15 @@ export default async function HomePage() {
                 href={AWARD.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                style={{ marginBottom: "var(--space-5)" }}
               >
                 <Award /> {AWARD.label}
               </a>
-              <div
-                style={{
-                  display: "flex",
-                  gap: "var(--space-5)",
-                  alignItems: "center",
-                  flexWrap: "wrap",
-                }}
-              >
-                <Link href="/over-ons" className="btn btn-dark">
+              <div className="acties">
+                <Link href="/over-ons" className="btn btn-primary">
                   Ontmoet ons team
                 </Link>
-                <Link
-                  href="/werken-bij"
-                  style={{
-                    fontWeight: "var(--fw-semibold)",
-                    display: "inline-flex",
-                    alignItems: "center",
-                    gap: 6,
-                  }}
-                >
-                  Werken bij The New Wave IT <ArrowRight style={{ width: 15, height: 15 }} />
+                <Link href="/werken-bij" className="tekstlink">
+                  Werken bij The New Wave IT <ArrowRight />
                 </Link>
               </div>
             </div>
@@ -309,7 +274,7 @@ export default async function HomePage() {
                   alt="Teamlid van The New Wave IT"
                   fill
                   sizes="(max-width: 900px) 50vw, 20vw"
-                  style={{ objectPosition: "top" }}
+                  className="uitsnede-boven"
                 />
               </div>
               <div className="slot small">
@@ -318,7 +283,7 @@ export default async function HomePage() {
                   alt="Teamlid van The New Wave IT"
                   fill
                   sizes="(max-width: 900px) 50vw, 20vw"
-                  style={{ objectPosition: "top" }}
+                  className="uitsnede-boven"
                 />
               </div>
             </div>
@@ -340,14 +305,13 @@ export default async function HomePage() {
           </div>
           <div className="cards3">
             <article className="post">
-              <Link
-                href="/inzichten/novi-ai-collega-overheid"
-                className="cover"
-                style={{
-                  backgroundImage: "url('/assets/photos/project-parkeergarage-rotterdam.webp')",
-                  backgroundPosition: "center",
-                }}
-              >
+              <Link href="/inzichten/novi-ai-collega-overheid" className="cover">
+                <Image
+                  src="/assets/photos/project-parkeergarage-rotterdam.webp"
+                  alt=""
+                  fill
+                  sizes="(max-width: 900px) 100vw, 33vw"
+                />
                 <span className="cat">Publieke sector</span>
               </Link>
               <div className="pbody">
@@ -363,14 +327,13 @@ export default async function HomePage() {
               </div>
             </article>
             <article className="post">
-              <Link
-                href="/inzichten/security-mendix-in-de-zorg"
-                className="cover"
-                style={{
-                  backgroundImage: "url('/assets/photos/team-overleg-flipover.webp')",
-                  backgroundPosition: "center",
-                }}
-              >
+              <Link href="/inzichten/security-mendix-in-de-zorg" className="cover">
+                <Image
+                  src="/assets/photos/team-overleg-flipover.webp"
+                  alt=""
+                  fill
+                  sizes="(max-width: 900px) 100vw, 33vw"
+                />
                 <span className="cat">Zorg</span>
               </Link>
               <div className="pbody">
@@ -386,14 +349,13 @@ export default async function HomePage() {
               </div>
             </article>
             <article className="post">
-              <Link
-                href="/inzichten/van-0-naar-100-apps-in-een-bank"
-                className="cover"
-                style={{
-                  backgroundImage: "url('/assets/photos/team-overleg-cafe.webp')",
-                  backgroundPosition: "center",
-                }}
-              >
+              <Link href="/inzichten/van-0-naar-100-apps-in-een-bank" className="cover">
+                <Image
+                  src="/assets/photos/team-overleg-cafe.webp"
+                  alt=""
+                  fill
+                  sizes="(max-width: 900px) 100vw, 33vw"
+                />
                 <span className="cat">Banken</span>
               </Link>
               <div className="pbody">
