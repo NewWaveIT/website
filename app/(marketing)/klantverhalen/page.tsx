@@ -2,7 +2,7 @@ import { cacheLife } from "next/cache";
 import type { Metadata } from "next";
 import { citaat } from "@/lib/utils";
 import Link from "next/link";
-import { Kruimelpad } from "@/components/kruimelpad";
+import { PaginaHero } from "@/components/layout/pagina-hero";
 import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 import { getKlantverhalen } from "@/lib/klantverhalen-data";
@@ -66,23 +66,15 @@ export default async function KlantverhalenPage() {
   const featured = verhalen[0];
   return (
     <div className="p-klanten">
-      <section className="dhero">
-        <SectorHeroAnim theme="klantverhalen" />
-        <div className="wrap-wide">
-          <Kruimelpad kruimels={[{ naam: "Klantverhalen", pad: "/klantverhalen" }]} />
-          <div className="kicker on-dark" style={{ marginTop: "var(--space-6)" }}>
-            {"Klantverhalen"}
-          </div>
-          <h1>
-            Resultaat dat je kunt <em>navragen</em>.
-          </h1>
-          <p>
-            Business-impact, geen technische anekdote. Hier laten we zien wat er daadwerkelijk
-            verandert bij een klant als strategie, Mendix en AI samenkomen: minder handwerk,
-            snellere processen, meetbaar resultaat.
-          </p>
-        </div>
-      </section>
+      <PaginaHero
+        kruimels={[{ naam: "Klantverhalen", pad: "/klantverhalen" }]}
+        kicker="Klantverhalen"
+        titel="Resultaat dat je kunt "
+        accent="navragen"
+        staart="."
+        lead="Business-impact, geen technische anekdote. Hier laten we zien wat er daadwerkelijk verandert bij een klant als strategie, Mendix en AI samenkomen: minder handwerk, snellere processen, meetbaar resultaat."
+        achtergrond={<SectorHeroAnim theme="klantverhalen" />}
+      />
 
       {featured && (
         <section className="block" style={{ background: "var(--eggshell)" }}>

@@ -1,0 +1,119 @@
+/* Gedeelde paginakop — zie components/layout/pagina-hero.tsx voor het waarom.
+   Regelbreedtes per pagina via --pkop-kop en --pkop-lead op de sectie. */
+
+.pkop {
+  background: var(--surface-dark);
+  color: var(--text-on-dark);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Direct kind, zodat een .wrap-wide dieper in de kop deze padding niet erft. */
+.pkop > .wrap-wide {
+  position: relative;
+  z-index: 1;
+  padding-block: var(--space-9) var(--space-10);
+}
+
+.pkop .kicker {
+  margin-top: var(--space-6);
+}
+
+.pkop h1 {
+  font-family: var(--font-display-expanded);
+  font-weight: var(--fw-black);
+  font-size: var(--text-4xl);
+  line-height: var(--leading-tight);
+  color: var(--white);
+  margin: var(--space-5) 0;
+  max-width: var(--pkop-kop, 20ch);
+}
+
+.pkop h1 em {
+  font-style: normal;
+  color: var(--orange-400);
+}
+
+.pkop p {
+  font-size: var(--text-lg);
+  color: var(--text-on-dark-muted);
+  line-height: var(--leading-relaxed);
+  max-width: var(--pkop-lead, 52ch);
+  margin: 0;
+}
+
+/* Licht: dezelfde maten, andere kleuren. --orange-400 haalt op eggshell geen AA,
+   --orange-text wel. */
+.pkop-licht {
+  background: var(--surface-eggshell);
+  color: var(--text-body);
+  border-bottom: 1px solid var(--border-subtle);
+}
+.pkop-licht h1 {
+  color: var(--text-strong);
+}
+.pkop-licht h1 em {
+  color: var(--orange-text);
+}
+.pkop-licht p {
+  color: var(--text-muted);
+}
+
+/* Onderdelen die meerdere koppen onder de lead zetten. Ze dragen zelf hun
+   bovenmarge, zodat de <p> er niet één hoeft te hebben die zonder deze
+   onderdelen als gat overblijft. */
+.pkop .hero-actions {
+  display: flex;
+  gap: var(--space-5);
+  flex-wrap: wrap;
+  margin-top: var(--space-7);
+}
+
+.pkop .badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: var(--space-6);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--border-dark);
+  border-radius: var(--radius-pill);
+  padding: 8px 16px;
+  font-size: var(--text-sm);
+  font-weight: var(--fw-medium);
+  color: var(--eggshell);
+}
+.pkop .badge .lucide,
+.pkop .badge svg {
+  width: 18px;
+  height: 18px;
+  color: var(--orange-400);
+}
+
+.pkop .kpis {
+  display: flex;
+  gap: var(--space-9);
+  flex-wrap: wrap;
+  margin-top: var(--space-8);
+  padding-top: var(--space-6);
+  border-top: 1px solid var(--border-dark);
+}
+.pkop .kpis .n {
+  font-family: var(--font-mono);
+  font-size: var(--text-2xl);
+  font-weight: var(--fw-medium);
+  color: var(--orange-400);
+  line-height: 1;
+}
+.pkop .kpis .l {
+  font-size: var(--text-sm);
+  color: var(--text-on-dark-muted);
+  margin-top: 6px;
+  max-width: 20ch;
+}
+
+/* Eén breekpunt in plaats van de vijf die de gekopieerde blokken hadden. */
+@media (max-width: 900px) {
+  .pkop h1 {
+    font-size: var(--text-3xl);
+  }
+}

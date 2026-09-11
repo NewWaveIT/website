@@ -1,7 +1,7 @@
 import { JsonLd } from "@/components/json-ld";
 import { cacheLife } from "next/cache";
 import type { Metadata } from "next";
-import { Kruimelpad } from "@/components/kruimelpad";
+import { PaginaHero } from "@/components/layout/pagina-hero";
 import { SectorHeroAnim } from "@/components/sector-hero-anim";
 import { SectorSplit } from "@/components/sector-split";
 import { SlotCta } from "@/components/layout/slot-cta";
@@ -36,20 +36,15 @@ export default async function SectorenPage() {
     <div className="p-sectoren">
       <JsonLd data={jsonLd} />
 
-      <section className="dhero">
-        <SectorHeroAnim theme="sectoren" />
-        <div className="wrap-wide">
-          <Kruimelpad kruimels={[{ naam: "Sectoren", pad: "/sectoren" }]} />
-          <div className="kicker on-dark" style={{ marginTop: "var(--space-6)" }}>
-            {"Sectoren"}
-          </div>
-          <h1>
-            {t.heroTitleStart}
-            <em>{t.heroAccent}</em>.
-          </h1>
-          <p>{t.heroLead}</p>
-        </div>
-      </section>
+      <PaginaHero
+        kruimels={[{ naam: "Sectoren", pad: "/sectoren" }]}
+        kicker="Sectoren"
+        titel={t.heroTitleStart ?? ""}
+        accent={t.heroAccent}
+        staart="."
+        lead={t.heroLead}
+        achtergrond={<SectorHeroAnim theme="sectoren" />}
+      />
 
       <section className="block">
         <div className="wrap-wide">
