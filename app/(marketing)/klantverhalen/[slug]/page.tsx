@@ -1,6 +1,7 @@
 import { JsonLd } from "@/components/json-ld";
 import { cacheLife } from "next/cache";
 import type { Metadata } from "next";
+import { citaat } from "@/lib/utils";
 import Link from "next/link";
 import { Kruimelpad } from "@/components/kruimelpad";
 import { notFound } from "next/navigation";
@@ -208,7 +209,7 @@ export default async function CasePage({ params }: { params: Promise<{ slug: str
         <div className="wrap-wide">
           <div className="av" />
           <div>
-            <blockquote>{k.quote}</blockquote>
+            <blockquote>{citaat(k.quote)}</blockquote>
             <div className="who">
               <strong>{k.quoteNaam}</strong>, {k.quoteRol}
             </div>

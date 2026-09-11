@@ -1,5 +1,6 @@
 import { cacheLife } from "next/cache";
 import type { Metadata } from "next";
+import { citaat } from "@/lib/utils";
 import Link from "next/link";
 import { Kruimelpad } from "@/components/kruimelpad";
 import Image from "next/image";
@@ -136,7 +137,7 @@ export default async function KlantverhalenPage() {
               </div>
               <div className="body">
                 <div className="kicker">{featured.tag}</div>
-                <blockquote>{featured.quote}</blockquote>
+                <blockquote>{citaat(featured.quote)}</blockquote>
                 <div className="who">
                   <strong>{featured.quoteNaam}</strong>, {featured.quoteRol}
                   <br />

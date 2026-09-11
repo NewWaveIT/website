@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { citaat } from "@/lib/utils";
 
 type KPI = { n: string; l: string };
 export type CaseCard = {
@@ -56,7 +57,7 @@ export function CasesCarousel({ items }: { items: CaseCard[] }) {
           {c.tag && <span className="tag">{c.tag}</span>}
         </div>
         <div className="body">
-          {c.quote && <blockquote>“{c.quote}”</blockquote>}
+          {c.quote && <blockquote>{citaat(c.quote)}</blockquote>}
           {c.impact.length > 0 && (
             <div className="metrics">
               {c.impact.slice(0, 3).map((m, k) => (

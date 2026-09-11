@@ -1,5 +1,6 @@
 import { cacheLife } from "next/cache";
 import type { Metadata } from "next";
+import { citaat } from "@/lib/utils";
 import Link from "next/link";
 import Image from "next/image";
 import { notFound } from "next/navigation";
@@ -263,7 +264,7 @@ export default async function SectorPage({ params }: { params: Promise<{ slug: s
                 )}
                 {s.quote && quotePersoon && (
                   <div className="why-quote">
-                    <blockquote>{`“${s.quote}”`}</blockquote>
+                    <blockquote>{citaat(s.quote)}</blockquote>
                     <div className="who">
                       {quotePersoon.foto && (
                         <Image
