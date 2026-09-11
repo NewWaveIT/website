@@ -918,7 +918,7 @@ export function fieldValue(data: Record<string, unknown>, f: FieldDef): string {
 
 /** Overige data-sleutels die niet in de gegeven velden zitten (voor de JSON-uitklap). */
 export function extraData(
-  fields: FieldDef[],
+  fields: readonly FieldDef[],
   data: Record<string, unknown>,
 ): Record<string, unknown> {
   const known = new Set(fields.map((f) => f.key));

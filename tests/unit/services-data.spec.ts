@@ -183,7 +183,14 @@ describe("getFaseItems", () => {
     const fases = getFaseItems({
       fase1Titel: "Basis",
       fase1Tekst: "Tekst 1",
+      fase2Titel: "Bouwen",
+      fase2Tekst: "Tekst 2",
+      fase3Titel: "Verankeren",
+      fase3Tekst: "Tekst 3",
       fase4Titel: "Schalen",
+      fase4Tekst: "Tekst 4",
+      fase5Titel: "Doorontwikkelen",
+      fase5Tekst: "Tekst 5",
     });
     expect(fases).toHaveLength(5);
     expect(fases[0]).toEqual({ nummer: 1, titel: "Basis", tekst: "Tekst 1" });

@@ -77,7 +77,7 @@ export default async function WerkenBijPage() {
             <p>{t.groeiIntro}</p>
           </div>
           <div className="grid">
-            {["1", "2", "3"].map((n) => (
+            {(["1", "2", "3"] as const).map((n) => (
               <div className="gcard" key={n}>
                 <div className="num">{`0${n}`}</div>
                 <h3>{t[`groei${n}Titel`]}</h3>
@@ -96,7 +96,7 @@ export default async function WerkenBijPage() {
             <p>{t.tpIntro}</p>
           </div>
           <div className="grid">
-            {["1", "2", "3"].map((n) => (
+            {(["1", "2", "3"] as const).map((n) => (
               <div className="tp" key={n}>
                 <h3>{t[`tp${n}Titel`]}</h3>
                 <p>{t[`tp${n}Tekst`]}</p>
@@ -122,7 +122,7 @@ export default async function WerkenBijPage() {
               <h2>{t.cultuurTitel}</h2>
               <p>{t.cultuurP}</p>
               <ul>
-                {["1", "2", "3", "4"].map((n) => (
+                {(["1", "2", "3", "4"] as const).map((n) => (
                   <li key={n}>
                     <Check /> {t[`cultuur${n}`]}
                   </li>

@@ -20,7 +20,14 @@ export const metadata: Metadata = {
   alternates: { canonical: "/over-ons" },
 };
 
-const WAARDE_ICONS = [Users, Target, Award, Leaf];
+/** Het nummer staat erbij als tekst: `waarde${i + 1}` levert een sleutel van
+    type `waarde${number}Titel` op, en die kan de compiler niet nakijken. */
+const WAARDEN = [
+  { nr: "1", Icon: Users },
+  { nr: "2", Icon: Target },
+  { nr: "3", Icon: Award },
+  { nr: "4", Icon: Leaf },
+] as const;
 
 const jsonLd = {
   "@context": "https://schema.org",
@@ -113,13 +120,13 @@ export default async function OverOnsPage() {
             <h2>{t.waardenTitel}</h2>
           </div>
           <div className="grid">
-            {WAARDE_ICONS.map((Icon, i) => (
-              <div className="vcard" key={i}>
+            {WAARDEN.map(({ nr, Icon }) => (
+              <div className="vcard" key={nr}>
                 <div className="ic">
                   <Icon />
                 </div>
-                <h3>{t[`waarde${i + 1}Titel`]}</h3>
-                <p>{t[`waarde${i + 1}Tekst`]}</p>
+                <h3>{t[`waarde${nr}Titel`]}</h3>
+                <p>{t[`waarde${nr}Tekst`]}</p>
               </div>
             ))}
           </div>

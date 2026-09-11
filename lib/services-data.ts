@@ -2,6 +2,7 @@ import "server-only";
 import { cacheLife } from "next/cache";
 import { CONTENT_SCHEMAS } from "@/lib/cms/schemas";
 import { maakLezer } from "@/lib/cms/lees";
+import type { PaginaTeksten } from "@/lib/cms/pages";
 import { SERVICES, type Service } from "@/lib/services";
 import {
   SERVICE_FAMILIES,
@@ -73,17 +74,20 @@ export interface FaseTijdlijnData {
   tekst: string;
 }
 
+/** Precies de tien sleutels die getFaseItems leest, geen veld meer. */
+type FaseTeksten = Pick<PaginaTeksten<"diensten">, `fase${1 | 2 | 3 | 4 | 5}${"Titel" | "Tekst"}`>;
+
 /**
  * De 5 fase-items voor <FaseTijdlijn>, met de teksten uit `t`
  * (getPagina("diensten")). Bewust zonder dienstverwijzingen: die relatie staat
  * als fase-badge op de kaarten in de keuzematrix, zodat alle vijf de fasen er
  * gelijk uitzien — ook de fasen zonder eigen dienst.
  */
-export function getFaseItems(t: Record<string, string>): FaseTijdlijnData[] {
-  return [1, 2, 3, 4, 5].map((n) => ({
+export function getFaseItems(t: FaseTeksten): FaseTijdlijnData[] {
+  return ([1, 2, 3, 4, 5] as const).map((n) => ({
     nummer: n,
-    titel: t[`fase${n}Titel`] ?? "",
-    tekst: t[`fase${n}Tekst`] ?? "",
+    titel: t[`fase${n}Titel`],
+    tekst: t[`fase${n}Tekst`],
   }));
 }
 

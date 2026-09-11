@@ -7,7 +7,7 @@ import { requireAdmin } from "@/lib/dal";
 import { createClient } from "@/lib/supabase/server";
 import { CONTENT_TABLE, type ContentType } from "@/lib/cms/content";
 import { FIELD_SCHEMAS, isStructured } from "@/lib/cms/schema";
-import { PAGE_FIELDS } from "@/lib/cms/pages";
+import { paginaVelden } from "@/lib/cms/pages";
 import { revalidateContent } from "@/lib/cms/revalidate";
 import { logAudit } from "@/lib/cms/audit";
 
@@ -76,7 +76,7 @@ export async function saveContent(_prev: SaveState, formData: FormData): Promise
   }
 
   const fields =
-    type === "paginas" ? (PAGE_FIELDS[slug] ?? FIELD_SCHEMAS.paginas) : FIELD_SCHEMAS[type];
+    type === "paginas" ? (paginaVelden(slug) ?? FIELD_SCHEMAS.paginas) : FIELD_SCHEMAS[type];
   for (const f of fields) {
     const raw = String(formData.get(`f_${f.key}`) ?? "").trim();
     if (isStructured(f.type)) {

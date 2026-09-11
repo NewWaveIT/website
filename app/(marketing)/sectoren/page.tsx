@@ -76,7 +76,7 @@ export default async function SectorenPage() {
             <h2>{t.werkwijzeTitel}</h2>
           </div>
           <div className="grid">
-            {["1", "2", "3"].map((n) => (
+            {(["1", "2", "3"] as const).map((n) => (
               <div className="wcard" key={n}>
                 <div className="num">{`0${n}`}</div>
                 <h3>{t[`wijze${n}Titel`]}</h3>

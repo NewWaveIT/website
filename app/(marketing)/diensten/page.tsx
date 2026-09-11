@@ -49,14 +49,14 @@ export default async function DienstenPage() {
     getContactpersoon("sales"),
   ]);
 
-  const rollen = [1, 2, 3, 4]
+  const rollen = ([1, 2, 3, 4] as const)
     .map((n) => ({
       label: t[`basisRol${n}Label`],
       naam: t[`basisRol${n}Naam`],
       tekst: t[`basisRol${n}Tekst`],
     }))
     .filter((r) => r.label && r.naam);
-  const basisPunten = [1, 2, 3, 4].map((n) => t[`basisPunt${n}`]).filter(Boolean);
+  const basisPunten = ([1, 2, 3, 4] as const).map((n) => t[`basisPunt${n}`]).filter(Boolean);
 
   // De instapkaarten zijn de drie diensten van niveau 1, één per richting; de
   // verdieping is de rest van de catalogus, gegroepeerd op niveau.

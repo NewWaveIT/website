@@ -4,7 +4,7 @@
 
 import type { FieldDef } from "./schema";
 
-export const PAGE_FIELDS: Record<string, FieldDef[]> = {
+export const PAGE_FIELDS = {
   home: [
     { key: "heroTitleStart", label: "Hero — titel (begin)", type: "text" },
     { key: "heroAccent", label: "Hero — accentwoord", type: "text" },
@@ -187,10 +187,33 @@ export const PAGE_FIELDS: Record<string, FieldDef[]> = {
     { key: "cultuur4", label: "Cultuur — punt 4", type: "text" },
     { key: "ctaTitel", label: "Slot-CTA — titel", type: "text" },
   ],
-};
+} as const satisfies Record<string, readonly FieldDef[]>;
+
+/**
+ * Van veldschema naar type. `getPagina("home")` levert precies de sleutels van
+ * de home-pagina, dus `t.mensenTitell` is een compileerfout en een veld dat uit
+ * PAGE_FIELDS verdwijnt breekt de pagina die het nog leest. Dat werd hiervoor
+ * met regexes over de broncode gecontroleerd in tests/unit/cms-pages.spec.ts;
+ * drie van die vijf controles kunnen daardoor weg.
+ */
+export type PaginaSlug = keyof typeof PAGE_FIELDS;
+
+/** Alle sleutels die deze slug kent. */
+export type PaginaVeld<S extends PaginaSlug> = (typeof PAGE_FIELDS)[S][number]["key"];
+
+type PerSlug<S extends PaginaSlug> = S extends PaginaSlug ? Record<PaginaVeld<S>, string> : never;
+
+/**
+ * Eén slug: alle velden verplicht. Een union van slugs (de richting-hubs vragen
+ * `diensten-${richting}` op): alleen wat ze delen is verplicht, de rest
+ * optioneel. `instapTitel` bestaat namelijk op diensten-strategie en niet op de
+ * andere twee, en dat hoort het type te zeggen in plaats van string te beloven.
+ */
+export type PaginaTeksten<S extends PaginaSlug> = Record<keyof PerSlug<S>, string> &
+  Partial<Record<PaginaVeld<S>, string>>;
 
 /** Bekende pagina's → hun publieke pad (voor revalidatie na opslaan). */
-export const PAGE_PATH: Record<string, string> = {
+export const PAGE_PATH = {
   home: "/",
   "over-ons": "/over-ons",
   contact: "/contact",
@@ -200,10 +223,10 @@ export const PAGE_PATH: Record<string, string> = {
   "diensten-strategie": "/diensten/strategie",
   sectoren: "/sectoren",
   "werken-bij": "/werken-bij",
-};
+} satisfies Record<PaginaSlug, string>;
 
 /** Standaardteksten per pagina (fallback op de site + startwaarde in de editor). */
-export const PAGE_DEFAULTS: Record<string, Record<string, string>> = {
+export const PAGE_DEFAULTS = {
   home: {
     heroTitleStart: "Wij maken van business en IT ",
     heroAccent: "één beweging",
@@ -428,4 +451,21 @@ export const PAGE_DEFAULTS: Record<string, Record<string, string>> = {
       "Werken met bewezen frameworks (App Factory, OGSM, App in a Day) in plaats van losse projecten",
     cultuur4: "Gelijke, transparante beloning bij gelijke ervaring, ongeacht gender of achtergrond",
   },
-};
+} satisfies { [S in PaginaSlug]: Record<PaginaVeld<S>, string> };
+
+/**
+ * De admin kent de slug pas op runtime (uit de URL), dus daar kan het niet
+ * getypeerd. Eén plek met die verbreding in plaats van een cast op elke
+ * aanroep.
+ */
+export function paginaVelden(slug: string): readonly FieldDef[] | undefined {
+  return (PAGE_FIELDS as Record<string, readonly FieldDef[] | undefined>)[slug];
+}
+
+export function paginaStandaard(slug: string): Record<string, string> | undefined {
+  return (PAGE_DEFAULTS as Record<string, Record<string, string> | undefined>)[slug];
+}
+
+export function paginaPad(slug: string): string | undefined {
+  return (PAGE_PATH as Record<string, string | undefined>)[slug];
+}

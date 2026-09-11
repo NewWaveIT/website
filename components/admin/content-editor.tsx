@@ -6,7 +6,7 @@ import { Trash2, ExternalLink } from "lucide-react";
 import { saveContent, deleteContent, type SaveState } from "@/app/admin/content/actions";
 import type { ContentRow, ContentType } from "@/lib/cms/content";
 import { FIELD_SCHEMAS, extraData, isStructured, type FieldDef } from "@/lib/cms/schema";
-import { PAGE_FIELDS, PAGE_DEFAULTS, PAGE_PATH } from "@/lib/cms/pages";
+import { paginaPad, paginaStandaard, paginaVelden } from "@/lib/cms/pages";
 import { ImageField } from "./image-field";
 import { StructuredField } from "./structured-field";
 import { IconField } from "./icon-field";
@@ -177,13 +177,15 @@ export function ContentEditor({
     type === "teamleden"
       ? "/over-ons"
       : isPaginas
-        ? PAGE_PATH[slug]
+        ? paginaPad(slug)
         : VIEW_BASE[type]
           ? `${VIEW_BASE[type]}/${slug}`
           : undefined;
 
   const data = (row?.data ?? {}) as Record<string, unknown>;
-  const fields = isPaginas ? (PAGE_FIELDS[slug] ?? FIELD_SCHEMAS.paginas) : FIELD_SCHEMAS[type];
+  const fields: readonly FieldDef[] = isPaginas
+    ? (paginaVelden(slug) ?? FIELD_SCHEMAS.paginas)
+    : FIELD_SCHEMAS[type];
   const sideFields = fields.filter((f) => f.panel === "side");
   const mainFields = fields.filter((f) => f.panel !== "side");
   const rest = extraData(fields, data);
@@ -200,7 +202,7 @@ export function ContentEditor({
     if (typeof v === "string") return v;
     if (isNew) {
       if (isPaginas) {
-        const pd = PAGE_DEFAULTS[slug]?.[f.key];
+        const pd = paginaStandaard(slug)?.[f.key];
         if (pd) return pd;
       }
       if (f.defaultToday) return today;

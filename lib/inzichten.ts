@@ -20,7 +20,49 @@ export interface Artikel {
   sector?: string;
 }
 
+/**
+ * Nieuwste eerst. `getArtikelen` sorteert de CMS-rijen op hun ISO-datum, maar de
+ * seed heeft alleen de weergavedatum ("13 aug 2026") en die is niet te
+ * sorteren. De volgorde hier is dus de sortering: houd hem aflopend, anders
+ * belooft de koude start iets anders dan een gevulde database.
+ */
 export const ARTIKELEN: Artikel[] = [
+  {
+    slug: "security-audit-xximo",
+    cat: "Mobiliteit",
+    sector: "Mobiliteit",
+    datum: "13 aug 2026",
+    leestijd: "4 min",
+    titel: "Waarom een security-audit geen alarmsignaal is, maar goed onderhoud",
+    auteur: "The New Wave IT",
+    image: "/assets/photos/team-brainstorm-glaswand.webp",
+    intro:
+      "Hoe een periodieke security- en compliancecheck bij XXImo leidde tot concrete verbeterstappen, zonder de organisatie te vertragen.",
+    body: [
+      "Applicaties die vandaag goed en veilig draaien, doen dat niet vanzelf over twee jaar. Daarom voeren wij bij klanten periodiek een security- en complianceaudit uit, niet omdat er iets mis is, maar om te borgen dat het goed blíjft.",
+      "Dat deden we bij XXImo, specialist in mobiliteitsbudgetten voor lease- en wagenparkbeheer. We voerden een grondige security-audit uit en vertaalden de uitkomsten naar een concreet adviesrapport. Dat rapport hebben we samen met XXImo doorgenomen, en we bleven betrokken bij het daadwerkelijk oppakken van de verbeterpunten.",
+      "Resultaat: XXImo's applicaties zijn steviger ingericht op security en compliance, en klaar voor de eisen van morgen, als onderdeel van een doorlopende samenwerking. Security is geen vinkje dat je één keer zet, maar een ritme.",
+    ],
+  },
+  {
+    slug: "van-0-naar-100-apps-in-een-bank",
+    cat: "Banken",
+    sector: "Banken",
+    discipline: "Mendix",
+    datum: "10 apr 2026",
+    leestijd: "8 min",
+    titel: "Van 0 naar 100 apps in een bank: de 5 fases die wél werken",
+    auteur: "Koen Wijsman",
+    image: "/assets/photos/team-overleg-cafe.webp",
+    intro:
+      "Waarom schalen in een bank sneller complex wordt dan elders, en welke keuzes bepalen of je portfolio beheersbaar blijft of ontspoort.",
+    body: [
+      "De eerste Mendix-app in een bank voelt als een doorbraak. Maar succes versnelt de vraag: al snel liggen er twaalf ideeën op tafel en verliest de organisatie tempo, niet omdat teams niet kunnen bouwen, maar omdat de organisatie nog niet kan schalen.",
+      "Banken hebben lagen die je niet kunt wegorganiseren: risico en compliance zitten overal (4-ogenprincipe, autorisaties, auditability), afhankelijkheden zijn groter dan ze lijken, en run vs. change concurreert om dezelfde mensen.",
+      "De route van 0 naar 100 kent 5 fases. Strategie (scherpe basis vóór je bouwt), Start (momentum, niet alleen opleveren), Structure (structuur vóór schaal: rollen, governance, UX-standaarden), Schalen & innoveren (portfoliomanagement, hergebruik als versneller), en Evalueren (ritme, geen eindstation).",
+      "Drie keuzes maken het verschil: waarde definiëren met harde criteria, eigenaarschap hard en klein maken, en stoppen normaliseren. Niet alles wat kan, moet.",
+    ],
+  },
   {
     slug: "novi-ai-collega-overheid",
     cat: "Publieke sector",
@@ -55,42 +97,6 @@ export const ARTIKELEN: Artikel[] = [
       "De zorgsector digitaliseert razendsnel. Maar met die voordelen loert er één risico constant om de hoek: security. Bewustwording rondom applicatiebeveiliging moet in elke organisatie verankerd zitten, juist in de zorg.",
       "Wij helpen zorgorganisaties met Security by Design workshops (teams leren vanaf dag één veilige Mendix-apps bouwen), Mendix Security Reviews (technische scans met pragmatisch verbeteradvies) en begeleiding bij compliance (NEN 7510, AVG): logging, sessiebeheer, pseudonimisering.",
       "Security gaat niet alleen over firewalls en encryptie. Het gaat om cultuur en gedrag, in de hele organisatie, niet alleen bij IT.",
-    ],
-  },
-  {
-    slug: "van-0-naar-100-apps-in-een-bank",
-    cat: "Banken",
-    sector: "Banken",
-    discipline: "Mendix",
-    datum: "10 apr 2026",
-    leestijd: "8 min",
-    titel: "Van 0 naar 100 apps in een bank: de 5 fases die wél werken",
-    auteur: "Koen Wijsman",
-    image: "/assets/photos/team-overleg-cafe.webp",
-    intro:
-      "Waarom schalen in een bank sneller complex wordt dan elders, en welke keuzes bepalen of je portfolio beheersbaar blijft of ontspoort.",
-    body: [
-      "De eerste Mendix-app in een bank voelt als een doorbraak. Maar succes versnelt de vraag: al snel liggen er twaalf ideeën op tafel en verliest de organisatie tempo, niet omdat teams niet kunnen bouwen, maar omdat de organisatie nog niet kan schalen.",
-      "Banken hebben lagen die je niet kunt wegorganiseren: risico en compliance zitten overal (4-ogenprincipe, autorisaties, auditability), afhankelijkheden zijn groter dan ze lijken, en run vs. change concurreert om dezelfde mensen.",
-      "De route van 0 naar 100 kent 5 fases. Strategie (scherpe basis vóór je bouwt), Start (momentum, niet alleen opleveren), Structure (structuur vóór schaal: rollen, governance, UX-standaarden), Schalen & innoveren (portfoliomanagement, hergebruik als versneller), en Evalueren (ritme, geen eindstation).",
-      "Drie keuzes maken het verschil: waarde definiëren met harde criteria, eigenaarschap hard en klein maken, en stoppen normaliseren. Niet alles wat kan, moet.",
-    ],
-  },
-  {
-    slug: "security-audit-xximo",
-    cat: "Mobiliteit",
-    sector: "Mobiliteit",
-    datum: "13 aug 2026",
-    leestijd: "4 min",
-    titel: "Waarom een security-audit geen alarmsignaal is, maar goed onderhoud",
-    auteur: "The New Wave IT",
-    image: "/assets/photos/team-brainstorm-glaswand.webp",
-    intro:
-      "Hoe een periodieke security- en compliancecheck bij XXImo leidde tot concrete verbeterstappen, zonder de organisatie te vertragen.",
-    body: [
-      "Applicaties die vandaag goed en veilig draaien, doen dat niet vanzelf over twee jaar. Daarom voeren wij bij klanten periodiek een security- en complianceaudit uit, niet omdat er iets mis is, maar om te borgen dat het goed blíjft.",
-      "Dat deden we bij XXImo, specialist in mobiliteitsbudgetten voor lease- en wagenparkbeheer. We voerden een grondige security-audit uit en vertaalden de uitkomsten naar een concreet adviesrapport. Dat rapport hebben we samen met XXImo doorgenomen, en we bleven betrokken bij het daadwerkelijk oppakken van de verbeterpunten.",
-      "Resultaat: XXImo's applicaties zijn steviger ingericht op security en compliance, en klaar voor de eisen van morgen, als onderdeel van een doorlopende samenwerking. Security is geen vinkje dat je één keer zet, maar een ritme.",
     ],
   },
 ];

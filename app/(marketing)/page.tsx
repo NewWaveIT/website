@@ -13,6 +13,7 @@ import { MarqueePauze } from "@/components/home/marquee-pauze";
 import { SlotCta } from "@/components/layout/slot-cta";
 import { getPagina } from "@/lib/paginas-data";
 import { getKlantverhalen } from "@/lib/klantverhalen-data";
+import { getArtikelen } from "@/lib/inzichten-data";
 import { getCatalogus, getInstapPerRichting } from "@/lib/services-data";
 import { getSectorKaarten } from "@/lib/sectoren-detail-data";
 import type { ServiceRichting } from "@/lib/services";
@@ -53,13 +54,15 @@ export default async function HomePage() {
   "use cache";
   cacheLife("content");
 
-  const [t, instap, catalogus, sectoren, klantverhalen] = await Promise.all([
+  const [t, instap, catalogus, sectoren, klantverhalen, artikelen] = await Promise.all([
     getPagina("home"),
     getInstapPerRichting(),
     getCatalogus(),
     getSectorKaarten(),
     getKlantverhalen(),
+    getArtikelen(),
   ]);
+  const inzichten = artikelen.slice(0, 3);
   const cases = klantverhalen.map((k) => ({
     slug: k.slug,
     tag: k.tag || k.sector,
@@ -291,88 +294,44 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* Inzichten */}
-      <section className="block" id="inzichten">
-        <div className="wrap-wide">
-          <div className="eyebrow-row">
-            <div>
-              <div className="kicker">Inzichten &amp; thought leadership</div>
-              <h2>Sectorkennis die je vooruit denkt</h2>
+      {/* Inzichten — de drie nieuwste artikelen, uit dezelfde bron als
+          /inzichten. Ze stonden hier hardgecodeerd, met ingekorte titels en
+          samenvattingen die daardoor uit de pas liepen met het CMS. */}
+      {inzichten.length > 0 && (
+        <section className="block" id="inzichten">
+          <div className="wrap-wide">
+            <div className="eyebrow-row">
+              <div>
+                <div className="kicker">Inzichten &amp; thought leadership</div>
+                <h2>Sectorkennis die je vooruit denkt</h2>
+              </div>
+              <Link href="/inzichten" className="btn btn-outline btn-sm">
+                Alle inzichten <ArrowRight />
+              </Link>
             </div>
-            <Link href="/inzichten" className="btn btn-outline btn-sm">
-              Alle inzichten <ArrowRight />
-            </Link>
+            <div className="cards3">
+              {inzichten.map((a) => (
+                <article className="post" key={a.slug}>
+                  <Link href={`/inzichten/${a.slug}`} className="cover">
+                    <Image src={a.image} alt="" fill sizes="(max-width: 900px) 100vw, 33vw" />
+                    <span className="cat">{a.cat}</span>
+                  </Link>
+                  <div className="pbody">
+                    <div className="meta">
+                      Leestijd {a.leestijd} · {a.datum}
+                    </div>
+                    <h3>{a.titel}</h3>
+                    <p>{a.intro}</p>
+                    <Link href={`/inzichten/${a.slug}`} className="more">
+                      Lees meer <ArrowRight />
+                    </Link>
+                  </div>
+                </article>
+              ))}
+            </div>
           </div>
-          <div className="cards3">
-            <article className="post">
-              <Link href="/inzichten/novi-ai-collega-overheid" className="cover">
-                <Image
-                  src="/assets/photos/project-parkeergarage-rotterdam.webp"
-                  alt=""
-                  fill
-                  sizes="(max-width: 900px) 100vw, 33vw"
-                />
-                <span className="cat">Publieke sector</span>
-              </Link>
-              <div className="pbody">
-                <div className="meta">Leestijd 4 min · 24 juni 2025</div>
-                <h3>Novi: de AI-collega die overheidsteams grip geeft op digitalisering</h3>
-                <p>
-                  Hoe een zelflerende AI-assistent nieuwe medewerkers sneller inwerkt en 24/7
-                  antwoord geeft op IT-vragen.
-                </p>
-                <Link href="/inzichten/novi-ai-collega-overheid" className="more">
-                  Lees meer <ArrowRight />
-                </Link>
-              </div>
-            </article>
-            <article className="post">
-              <Link href="/inzichten/security-mendix-in-de-zorg" className="cover">
-                <Image
-                  src="/assets/photos/team-overleg-flipover.webp"
-                  alt=""
-                  fill
-                  sizes="(max-width: 900px) 100vw, 33vw"
-                />
-                <span className="cat">Zorg</span>
-              </Link>
-              <div className="pbody">
-                <div className="meta">Leestijd 4 min · 16 mei 2025</div>
-                <h3>Security &amp; Mendix in de zorg: bewustwording, geen blok aan het been</h3>
-                <p>
-                  Waarom security in Mendix-applicaties een mindset moet zijn, van developer tot
-                  zorgverlener.
-                </p>
-                <Link href="/inzichten/security-mendix-in-de-zorg" className="more">
-                  Lees meer <ArrowRight />
-                </Link>
-              </div>
-            </article>
-            <article className="post">
-              <Link href="/inzichten/van-0-naar-100-apps-in-een-bank" className="cover">
-                <Image
-                  src="/assets/photos/team-overleg-cafe.webp"
-                  alt=""
-                  fill
-                  sizes="(max-width: 900px) 100vw, 33vw"
-                />
-                <span className="cat">Banken</span>
-              </Link>
-              <div className="pbody">
-                <div className="meta">Leestijd 8 min · 10 april 2026</div>
-                <h3>Van 0 naar 100 apps in een bank: de 5 fases die wél werken</h3>
-                <p>
-                  Waarom schalen in een bank sneller complex wordt dan elders, en welke keuzes het
-                  verschil maken.
-                </p>
-                <Link href="/inzichten/van-0-naar-100-apps-in-een-bank" className="more">
-                  Lees meer <ArrowRight />
-                </Link>
-              </div>
-            </article>
-          </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* CTA */}
       <SlotCta titel={t.ctaTitel ?? ""} knop={t.ctaKnop} />

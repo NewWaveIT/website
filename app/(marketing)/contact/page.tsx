@@ -130,7 +130,7 @@ export default async function ContactPage() {
             <div className="expect">
               <h3>{t.verwachtTitel}</h3>
               <ol>
-                {["1", "2", "3"].map((n) => (
+                {(["1", "2", "3"] as const).map((n) => (
                   <li key={n}>
                     <div>
                       <strong>{t[`verwacht${n}Titel`]}</strong>
