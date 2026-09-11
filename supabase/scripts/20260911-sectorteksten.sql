@@ -39,8 +39,10 @@ update cms_sectoren
  where slug = 'banken';
 
 -- Controle: vijf rijen, alle drie de velden gevuld.
+-- De cms-tabellen hebben alleen slug, titel, status, data, volgorde,
+-- bijgewerkt_op en bewerkt_door als kolom; `naam` zit in de jsonb.
 select slug,
-       naam,
+       data->>'naam'          as naam,
        data->>'kpiLabel'      as label,
        length(data->>'pitch') as pitch_lengte,
        (data ? 'hook')        as heeft_hook
