@@ -228,9 +228,19 @@
   color: var(--orange-400);
 }
 
-/* Featured case */
+/* Featured case.
+
+   Donker, en dat is een ritmekeuze: tussen de klantenband en de oranje CTA lag
+   5.500px aan licht met drie tinten die je niet uit elkaar houdt — dit blok en
+   het mensen-blok deelden zelfs exact dezelfde eggshell, waardoor die grens
+   verdween. Bewijs hoort ook het blok te zijn dat eruit springt. De kaart zelf
+   blijft wit; dat contrast doet het werk. */
 .featured {
-  background: var(--eggshell);
+  background: var(--surface-dark);
+  color: var(--text-on-dark);
+}
+.featured .eyebrow-row h2 {
+  color: var(--white);
 }
 .fcase {
   display: grid;
@@ -446,6 +456,25 @@
   gap: var(--space-7);
   border-bottom: 1px solid var(--border-default);
   margin-bottom: var(--space-8);
+}
+/* Sluit het blok af waar anders alleen padding stond. */
+.diensten .catalogus-cue {
+  margin: var(--space-8) 0 0;
+  padding-top: var(--space-6);
+  border-top: 1px solid var(--border-default);
+  font-size: var(--text-md);
+  color: var(--text-muted);
+}
+.diensten .catalogus-cue a {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: var(--fw-semibold);
+  color: var(--text-link);
+}
+.diensten .catalogus-cue .lucide {
+  width: 15px;
+  height: 15px;
 }
 .tab {
   appearance: none;
@@ -837,12 +866,33 @@
   max-width: 42ch;
 }
 
-/* Breathing room */
+/* Breathing room.
+
+   Let op de specificiteit: `section.block` in globals.css is (0,1,1) en deze
+   regel (0,2,1), dus de mobiele verkleining daar raakte de homepage niet. Het
+   gevolg was 128px boven én onder elk blok op een telefoon — 256px tussenruimte
+   op een scherm van 844px, vijf keer achter elkaar. De schaal hoort dus hier te
+   staan, bij de regel die wint. */
 .home section.block {
-  padding: var(--space-12) 0;
+  padding: var(--space-11) 0;
+}
+@media (max-width: 900px) {
+  .home section.block {
+    padding: var(--space-10) 0;
+  }
+}
+@media (max-width: 640px) {
+  .home section.block {
+    padding: var(--space-8) 0;
+  }
 }
 .home .sec-head {
   margin-bottom: var(--space-9);
+}
+@media (max-width: 640px) {
+  .home .sec-head {
+    margin-bottom: var(--space-7);
+  }
 }
 .home .eyebrow-row {
   margin-bottom: var(--space-8);

@@ -13,7 +13,7 @@ import { MarqueePauze } from "@/components/home/marquee-pauze";
 import { SlotCta } from "@/components/layout/slot-cta";
 import { getPagina } from "@/lib/paginas-data";
 import { getKlantverhalen } from "@/lib/klantverhalen-data";
-import { getInstapPerRichting } from "@/lib/services-data";
+import { getCatalogus, getInstapPerRichting } from "@/lib/services-data";
 import type { ServiceRichting } from "@/lib/services";
 import { SITE_URL } from "@/lib/site";
 import "./home.css";
@@ -52,9 +52,10 @@ export default async function HomePage() {
   "use cache";
   cacheLife("content");
 
-  const [t, instap, klantverhalen] = await Promise.all([
+  const [t, instap, catalogus, klantverhalen] = await Promise.all([
     getPagina("home"),
     getInstapPerRichting(),
+    getCatalogus(),
     getKlantverhalen(),
   ]);
   const cases = klantverhalen.map((k) => ({
@@ -185,6 +186,17 @@ export default async function HomePage() {
               </div>
             ) : null,
           )}
+          {/* De tabs tonen per richting alleen de instapdienst; zonder deze regel
+              is nergens te zien dat er een hele catalogus achter zit. Het aantal
+              komt uit de catalogus zelf, zodat het niet kan verlopen. */}
+          {catalogus.length > 0 && (
+            <p className="catalogus-cue">
+              Dit is de instapdienst per richting.{" "}
+              <Link href="/diensten">
+                Bekijk alle {catalogus.length} diensten <ArrowRight />
+              </Link>
+            </p>
+          )}
         </div>
       </section>
 
@@ -251,17 +263,14 @@ export default async function HomePage() {
       {/* Klantverhalen */}
       <section className="block featured">
         <div className="wrap-wide">
-          <div className="sec-head">
-            <div className="kicker">Klantverhalen</div>
-            <h2
-              style={{
-                fontSize: "var(--text-3xl)",
-                fontWeight: "var(--fw-extrabold)",
-                margin: "var(--space-4) 0 0",
-              }}
-            >
-              Business-impact, geen technische anekdote.
-            </h2>
+          <div className="eyebrow-row">
+            <div>
+              <div className="kicker on-dark">Klantverhalen</div>
+              <h2>Business-impact, geen technische anekdote.</h2>
+            </div>
+            <Link href="/klantverhalen" className="btn btn-ghost-dark btn-sm">
+              Alle klantverhalen <ArrowRight />
+            </Link>
           </div>
           <CasesCarousel items={cases} />
         </div>

@@ -209,6 +209,9 @@ h4 {
 .dhero :focus-visible,
 .chero :focus-visible,
 .cta :focus-visible,
+/* Alleen de homepagevariant is donker; `.featured` op een dienstpagina is licht. */
+.home .featured .eyebrow-row :focus-visible,
+.home .featured .fcase-nav :focus-visible,
 .outcomes :focus-visible,
 .samen :focus-visible,
 footer :focus-visible,
