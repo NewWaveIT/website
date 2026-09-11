@@ -67,67 +67,6 @@ export async function getDienstOpties(): Promise<DienstOptie[]> {
   }));
 }
 
-export interface MatrixCel {
-  richting: ServiceRichting;
-  service: Service;
-}
-
-export interface MatrixRij {
-  familie: ServiceFamilie;
-  niveau: number;
-  label: string;
-  kicker: string;
-  /**
-   * "kolommen" = elke richting heeft op dit niveau een dienst, dus de rij lijnt
-   * uit op de kolomkoppen. "breed" = het niveau werkt richting-overstijgend en
-   * de rij loopt door over de volle breedte. Zo blijft de rij altijd gevuld en
-   * ontstaat er nooit een zichtbaar gat.
-   */
-  layout: "kolommen" | "breed";
-  /** Alleen bij layout "kolommen". */
-  cellen: MatrixCel[];
-  /** Alleen bij layout "breed": alle diensten van dit niveau, in leesvolgorde. */
-  diensten: Service[];
-}
-
-export interface DienstMatrix {
-  rijen: MatrixRij[];
-}
-
-/**
- * De keuzematrix van /diensten: richtingen als kolommen, de drie niveaus als
- * rijen (instap bovenaan). Eén dienst staat op precies één plek, zodat de
- * bezoeker een kolom kiest en van boven naar beneden opschaalt.
- */
-export async function getDienstMatrix(): Promise<DienstMatrix> {
-  const services = await getCatalogus();
-
-  const rijen: MatrixRij[] = SERVICE_FAMILIES.map(({ key, niveau, label, kicker }) => {
-    const opNiveau = (s: Service) => (s.hubTier ?? s.familie) === key;
-    const perRichting = RICHTINGEN.map(({ key: richting }) => ({
-      richting,
-      service: services.find((s) => s.richting === richting && opNiveau(s)),
-    }));
-    const volledig = perRichting.every((c) => c.service);
-    const diensten = [
-      ...perRichting.map((c) => c.service),
-      ...services.filter((s) => !s.richting && opNiveau(s)),
-    ].filter((s): s is Service => Boolean(s));
-
-    return {
-      familie: key,
-      niveau,
-      label,
-      kicker,
-      layout: volledig && diensten.length === RICHTINGEN.length ? "kolommen" : "breed",
-      cellen: volledig ? (perRichting as MatrixCel[]) : [],
-      diensten,
-    };
-  });
-
-  return { rijen };
-}
-
 export interface FaseTijdlijnData {
   nummer: number;
   titel: string;

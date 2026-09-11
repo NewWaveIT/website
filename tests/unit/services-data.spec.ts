@@ -1,10 +1,10 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 /**
- * De catalogus-logica: hoe de 9 diensten over de keuzematrix en de richting-hubs
- * verdeeld worden. Hier zitten drie regels in die zichtbaar zijn voor de
- * bezoeker en dus niet stil mogen wegvallen:
- *   1. geen enkel vak in de matrix blijft leeg;
+ * De catalogus-logica: hoe de negen diensten over het overzicht en de
+ * richting-hubs verdeeld worden. Hier zitten drie regels in die zichtbaar zijn
+ * voor de bezoeker en dus niet stil mogen wegvallen:
+ *   1. elke dienst komt precies één keer op /diensten terecht;
  *   2. dezelfde dienst staat nooit twee keer op één hub;
  *   3. een "(geen)"-keuze in het CMS wist een seed-waarde echt.
  */
@@ -19,13 +19,14 @@ vi.mock("@/lib/cms/content", () => ({ getPublishedContent }));
 const {
   getServices,
   getServiceBySlug,
-  getDienstMatrix,
+  getCatalogus,
+  getBasisdienst,
   getRichtingHub,
   getInstapPerRichting,
   getFaseItems,
 } = await import("@/lib/services-data");
 const { SERVICES, RICHTINGEN } = await import("@/lib/services");
-const { BASIS_SLUG } = await import("@/lib/dienstenstructuur");
+const { BASIS_SLUG, SERVICE_FAMILIES } = await import("@/lib/dienstenstructuur");
 
 /** CMS-rij voor één dienst; `data` bevat alleen wat de redacteur heeft aangeraakt. */
 function rij(slug: string, data: Record<string, unknown> = {}, volgorde = 0) {
@@ -100,49 +101,35 @@ describe("CMS-keuzevelden", () => {
   });
 });
 
-describe("getDienstMatrix", () => {
-  it("laat nooit een leeg vak zien", async () => {
-    const { rijen } = await getDienstMatrix();
-    for (const r of rijen) {
-      if (r.layout === "kolommen") {
-        expect(r.cellen).toHaveLength(RICHTINGEN.length);
-        expect(r.cellen.every((c) => c.service)).toBe(true);
-      } else {
-        expect(r.diensten.length).toBeGreaterThan(0);
-      }
-    }
-  });
-
-  it("plaatst alle catalogusdiensten precies één keer", async () => {
-    // De basisdienst hoort niet in de matrix: die staat naast de catalogus.
-    const catalogus = SERVICES.filter((s) => s.slug !== BASIS_SLUG).length;
-    const { rijen } = await getDienstMatrix();
-    const slugs = rijen.flatMap((r) =>
-      r.layout === "kolommen" ? r.cellen.map((c) => c.service.slug) : r.diensten.map((s) => s.slug),
+describe("de indeling van het dienstenoverzicht", () => {
+  it("toont elke catalogusdienst precies één keer, in instap of verdieping", async () => {
+    // Wat de keuzematrix vroeger bewaakte: geen dienst valt tussen wal en
+    // schip. /diensten deelt de catalogus nu in drie instapkaarten en twee
+    // faseblokken; samen moeten die de hele catalogus dekken.
+    const catalogus = await getCatalogus();
+    const instap = (await getInstapPerRichting())
+      .map((i) => i.service?.slug)
+      .filter((s): s is string => Boolean(s));
+    const verdieping = SERVICE_FAMILIES.filter((f) => f.key !== "doen").flatMap((f) =>
+      catalogus.filter((s) => (s.hubTier ?? s.familie) === f.key).map((s) => s.slug),
     );
-    expect(slugs).toHaveLength(catalogus);
-    expect(new Set(slugs).size).toBe(catalogus);
+
+    const getoond = [...instap, ...verdieping];
+    expect(new Set(getoond).size).toBe(getoond.length);
+    expect(new Set(getoond)).toEqual(new Set(catalogus.map((s) => s.slug)));
   });
 
-  it("maakt het capaciteitsniveau breed, omdat het richting-overstijgend is", async () => {
-    const { rijen } = await getDienstMatrix();
-    const instap = rijen.find((r) => r.familie === "doen");
-    const capaciteit = rijen.find((r) => r.familie === "capaciteit");
-    expect(instap?.layout).toBe("kolommen");
-    expect(capaciteit?.layout).toBe("breed");
-    expect(capaciteit?.diensten.map((s) => s.slug)).toEqual([
-      "fusion-team-startsprint",
-      "foundation-starterkit",
-      "training-enablement",
-    ]);
+  it("laat de basisdienst buiten de catalogus", async () => {
+    const catalogus = await getCatalogus();
+    expect(catalogus.map((s) => s.slug)).not.toContain(BASIS_SLUG);
+    expect((await getBasisdienst())?.slug).toBe(BASIS_SLUG);
+    // Wél in de volledige lijst, want het contactformulier biedt hem aan.
+    expect((await getServices()).map((s) => s.slug)).toContain(BASIS_SLUG);
   });
 
   it("zet AI-strategie via hubTier op het instapniveau van Strategie", async () => {
-    const { rijen } = await getDienstMatrix();
-    const instap = rijen.find((r) => r.familie === "doen");
-    expect(instap?.cellen.find((c) => c.richting === "strategie")?.service.slug).toBe(
-      "ai-strategie",
-    );
+    const instap = await getInstapPerRichting();
+    expect(instap.find((i) => i.richting === "strategie")?.service?.slug).toBe("ai-strategie");
   });
 });
 
