@@ -897,6 +897,19 @@
 .home .eyebrow-row {
   margin-bottom: var(--space-8);
 }
+/* Zonder dit blijft de tekstkolom op zijn min-content-breedte staan: op 320px
+   is "Sectorkennis" op --text-3xl breder dan de kolom en schuift de hele
+   pagina horizontaal mee. */
+.home .eyebrow-row > div {
+  min-width: 0;
+}
+@media (max-width: 640px) {
+  .home .sec-head h2,
+  .home .eyebrow-row h2,
+  .home .sec-left h2 {
+    font-size: var(--text-2xl);
+  }
+}
 
 /* Motion */
 @keyframes riseIn {
