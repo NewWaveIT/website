@@ -13,9 +13,14 @@ const lezer = maakLezer<DienstDetail>({
 });
 
 /**
- * Alleen de drie richtingen bestaan hier. Rijen met een andere slug — resten van
- * het vorige ontwerp, toen dit contenttype de dienstdetailpagina's bediende —
- * worden genegeerd in plaats van gerenderd.
+ * Alleen de drie richtingen bestaan hier; dit contenttype bediende ooit ook de
+ * dienstdetailpagina's, die inmiddels uit cms_services komen.
+ *
+ * Het comment hier beweerde dat de filter resten van dat ontwerp wegvangt.
+ * Nagekeken op 11 september 2026: cms_diensten bevat precies mendix, ai en
+ * strategie en verder niets. De filter vangt dus niets weg — hij blijft staan
+ * als grendel, want de drie richtingen zijn vaste routes en een vierde rij zou
+ * hier nooit een pagina mogen worden.
  */
 function isRichting(slug: string): boolean {
   return (RICHTING_SLUGS as readonly string[]).includes(slug);
