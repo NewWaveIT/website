@@ -11,7 +11,7 @@ import { SITE_URL } from "@/lib/site";
 import "./sectoren.css";
 
 export const metadata: Metadata = {
-  title: "Sectoren — vijf markten die we echt kennen",
+  title: "Sectoren: vijf markten die we echt kennen",
   description:
     "Wij spreken de taal van jouw sector. Business-specialist in vijf markten: we kennen de processen, wetgeving en systemen en gaan meteen de diepte in.",
   alternates: { canonical: "/sectoren" },

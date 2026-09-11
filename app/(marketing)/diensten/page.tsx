@@ -20,7 +20,7 @@ import "./diensten.css";
    catalogus daaronder in instap (één dag) en verdieping (twee faseblokken). */
 
 export const metadata: Metadata = {
-  title: "Diensten — consultants die meebouwen, of een dienst met vaste scope",
+  title: "Diensten: consultants die meebouwen, of een dienst met vaste scope",
   description:
     "Consultants die in jouw team meebouwen aan Mendix en AI, of een afgebakende dienst met vaste scope en een prijs vooraf. Begin met één dag.",
   alternates: { canonical: "/diensten" },
@@ -196,7 +196,7 @@ export default async function DienstenPage() {
                     <Link
                       href={`/contact?dienst=${s.slug}`}
                       className="btn btn-primary btn-sm"
-                      aria-label={`${s.ctaLabel} — ${s.naam}`}
+                      aria-label={`${s.ctaLabel}, ${s.naam}`}
                     >
                       {s.ctaLabel}
                     </Link>

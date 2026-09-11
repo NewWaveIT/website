@@ -106,7 +106,7 @@ export default async function ActiviteitPage() {
               <tr>
                 <td colSpan={4}>
                   <div className="empty">
-                    Nog geen activiteit — of de audit-tabel is nog niet aangemaakt. Voer de migratie{" "}
+                    Nog geen activiteit, of de audit-tabel is nog niet aangemaakt. Voer de migratie{" "}
                     <code style={{ fontFamily: "var(--font-mono)", fontSize: "var(--text-xs)" }}>
                       20260729120000_audit.sql
                     </code>{" "}

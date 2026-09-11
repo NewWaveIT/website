@@ -99,7 +99,7 @@ export function ContactForm({ diensten = [] }: { diensten?: DienstOptie[] }) {
       <p className="sub">
         {gekozenDienst
           ? `Je vraag gaat over ${gekozenDienst.naam}. Vul je gegevens in, dan komen we binnen één werkdag met een voorstel terug.`
-          : "Vertel kort waar het over gaat — een korte vraag mag ook. Je krijgt binnen één werkdag antwoord van een echt mens."}
+          : "Vertel kort waar het over gaat; een korte vraag mag ook. Je krijgt binnen één werkdag antwoord van een echt mens."}
       </p>
 
       <input type="hidden" name="type" value={type} />

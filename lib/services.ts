@@ -133,7 +133,7 @@ export const SERVICES: Service[] = [
     volgorde: 1,
 
     kop: "Aan het eind van de dag draait er een app.",
-    lead: "Eén proces dat nu in spreadsheets en mailtjes zit, is aan het eind van de dag een werkende applicatie op je eigen data. Geen mockup, geen rapport — iets waar je maandag mee verder kunt.",
+    lead: "Eén proces dat nu in spreadsheets en mailtjes zit, is aan het eind van de dag een werkende applicatie op je eigen data. Geen mockup, geen rapport, maar iets waar je maandag mee verder kunt.",
     feiten: [
       { label: "Duur", waarde: "Eén dag · 09:00–17:00" },
       { label: "Deelnemers", waarde: "Zes tot tien" },
@@ -147,7 +147,7 @@ export const SERVICES: Service[] = [
       "Geen vervolgverplichting",
     ],
     herkenIntro:
-      "App in a Day is bedoeld voor teams die één concreet proces willen aanpakken en willen weten of low-code voor hen werkt — zonder eerst een traject van drie maanden te kopen.",
+      "App in a Day is er voor teams die één concreet proces willen aanpakken en willen weten of low-code voor hen werkt, zonder eerst een traject van drie maanden te kopen.",
     herken: [
       "Ons belangrijkste proces draait op één spreadsheet die maar één iemand echt begrijpt.",
       "We praten al een jaar over dit systeem en er is nog steeds niets gebouwd.",
@@ -159,7 +159,7 @@ export const SERVICES: Service[] = [
         icon: "app-window",
         titel: "Een werkende app op je eigen data",
         tekst:
-          "Live in een acceptatieomgeving, met echte gebruikers erin — geen klikbaar prototype.",
+          "Live in een acceptatieomgeving, met echte gebruikers erin. Geen klikbaar prototype.",
       },
       {
         icon: "git-branch",
@@ -243,7 +243,7 @@ export const SERVICES: Service[] = [
       "De oplevering: app, procesplaat, backlog en projectbestand",
     ],
     jijZorgt: [
-      "Eén proces dat pijn doet en in een dag te vatten is — wij helpen kiezen als je twijfelt",
+      "Eén proces dat pijn doet en in een dag te vatten is; wij helpen kiezen als je twijfelt",
       "De mensen die het proces echt uitvoeren, niet alleen hun leidinggevende",
       "Een besluitvormer die ter plekke ja of nee kan zeggen",
       "Een export van de huidige spreadsheet of een testset met representatieve data",
@@ -255,7 +255,7 @@ export const SERVICES: Service[] = [
       {
         slug: "fusion-team-startsprint",
         reden:
-          "Vier weken waarin een businessexpert en onze developer samen bouwen — en de businessexpert het daarna zelf kan.",
+          "Vier weken waarin een businessexpert en onze developer samen bouwen, en de businessexpert het daarna zelf kan.",
       },
       {
         slug: "mendix-scale-sessie",
@@ -306,7 +306,7 @@ export const SERVICES: Service[] = [
     fase: 2,
     pitch: "Iedereen brengt één echte taak mee en gaat naar huis met een agent die die taak doet.",
     beschrijving:
-      "Geen presentatie over de mogelijkheden, maar een dag waarin je team het zelf doet. Iedereen brengt één echte taak uit het eigen werk mee. Aan het eind van de dag heeft ieder teamlid daar een werkende agent voor gebouwd — en begrijpt hij ook waar het misgaat en hoe je dat afvangt. We sluiten af met afspraken die het team zelf opstelt over wat er wel en niet met bedrijfsgegevens mag. Maximaal twaalf deelnemers, zodat iedereen echt aan de slag komt.",
+      "Geen presentatie over de mogelijkheden, maar een dag waarin je team het zelf doet. Iedereen brengt één echte taak uit het eigen werk mee. Aan het eind van de dag heeft ieder teamlid daar een werkende agent voor gebouwd, en weet hij ook waar het misgaat en hoe je dat afvangt. We sluiten af met afspraken die het team zelf opstelt over wat er wel en niet met bedrijfsgegevens mag. Maximaal twaalf deelnemers, zodat iedereen echt aan de slag komt.",
     doelgroep:
       "Teams die het werk uitvoeren: operations, service, finance, marketing, engineering.",
     duur: "Eén dag",
@@ -325,7 +325,7 @@ export const SERVICES: Service[] = [
     volgorde: 2,
 
     kop: "Iedereen gaat naar huis met een agent die zijn eigen taak doet.",
-    lead: "Eén dag, één echte taak per deelnemer. Aan het eind draait er voor iedereen een werkende agent — op jullie eigen documenten, systemen en werkwijze.",
+    lead: "Eén dag, één echte taak per deelnemer. Aan het eind draait er voor iedereen een werkende agent, op jullie eigen documenten, systemen en werkwijze.",
     feiten: [
       { label: "Duur", waarde: "Eén dag · 09:00–17:00" },
       { label: "Deelnemers", waarde: "Maximaal twaalf" },
@@ -410,7 +410,7 @@ export const SERVICES: Service[] = [
         tijd: "15:00",
         titel: "Grenzen verkennen",
         tekst:
-          "We laten ook zien waar het misgaat — hallucinaties, AVG, dingen die je niet moet automatiseren.",
+          "We laten ook zien waar het misgaat: hallucinaties, AVG, dingen die je niet moet automatiseren.",
       },
       {
         tijd: "16:00",
@@ -436,13 +436,13 @@ export const SERVICES: Service[] = [
       "Zes tot twaalf deelnemers die hun eigen werk goed kennen",
       "Per deelnemer één taak die tijd kost en zich herhaalt",
       "Voorbeelddocumenten of data waar de agents mee mogen werken",
-      "Duidelijkheid over wat wel en niet in een AI-tool mag — of de bereidheid dat die dag te bepalen",
+      "Duidelijkheid over wat wel en niet in een AI-tool mag, of de bereidheid dat die dag te bepalen",
     ],
     daarnaIntro: "Twaalf agents is een start, geen strategie. Dit zijn de logische vervolgen.",
     vervolg: [
       {
         slug: "ai-opportunity-scan",
-        reden: "Waar levert AI bij jullie echt geld op — en waar niet.",
+        reden: "Waar levert AI bij jullie echt geld op, en waar niet.",
       },
       {
         slug: "ai-strategie",
@@ -475,7 +475,7 @@ export const SERVICES: Service[] = [
       {
         vraag: "Kan dit ook met Mendix-apps?",
         antwoord:
-          "Ja — dan is App in a Day waarschijnlijk het betere startpunt, of we combineren beide.",
+          "Ja. Dan is App in a Day waarschijnlijk het betere startpunt, of we combineren beide.",
       },
     ],
     ctaTitel: "Eén dag, twaalf mensen, twaalf werkende agents.",
@@ -488,7 +488,7 @@ export const SERVICES: Service[] = [
     fase: 2,
     pitch: "Een halve dag met je team, en je weet waar AI bij jullie geld oplevert en waar niet.",
     beschrijving:
-      "Weten waar AI bij jullie écht iets oplevert — in een halve dag. Wij komen langs, brengen jullie processen in kaart en gaan met het team op zoek naar de plekken waar mensen nu beslissingen nemen met onvolledige informatie. Je krijgt de drie kansrijkste toepassingen op een rij, gescoord op wat ze opleveren en hoe haalbaar ze zijn, plus een uitgewerkt voorstel voor de eerste stap. Vaste prijs, verrekenbaar als je verdergaat.",
+      "Weten waar AI bij jullie écht iets oplevert, in een halve dag. Wij komen langs, brengen jullie processen in kaart en gaan met het team op zoek naar de plekken waar mensen nu beslissingen nemen met onvolledige informatie. Je krijgt de drie kansrijkste toepassingen op een rij, gescoord op wat ze opleveren en hoe haalbaar ze zijn, plus een uitgewerkt voorstel voor de eerste stap. Vaste prijs, verrekenbaar als je verdergaat.",
     doelgroep:
       "Proceseigenaren, managers en de mensen die het werk kennen, bij voorkeur uit meer dan één afdeling.",
     duur: "Halve dag",
@@ -505,7 +505,7 @@ export const SERVICES: Service[] = [
     volgorde: 3,
 
     kop: "Een halve dag, en je weet waar AI geld oplevert.",
-    lead: "We nemen je processen door met het team dat ze uitvoert, en zetten er cijfers bij. Aan het eind ligt er een korte lijst met kansen, gerangschikt op waarde en haalbaarheid — inclusief wat je beter niet doet.",
+    lead: "We nemen je processen door met het team dat ze uitvoert, en zetten er cijfers bij. Aan het eind ligt er een korte lijst met kansen, gerangschikt op waarde en haalbaarheid, inclusief wat je beter niet doet.",
     feiten: [
       { label: "Duur", waarde: "Halve dag" },
       { label: "Deelnemers", waarde: "Zes tot tien" },
@@ -536,7 +536,7 @@ export const SERVICES: Service[] = [
       {
         icon: "calculator",
         titel: "Een ruwe businesscase per kans",
-        tekst: "Uren, doorlooptijd of fouten — wat de kans raakt, met een orde van grootte erbij.",
+        tekst: "Uren, doorlooptijd of fouten: wat de kans raakt, met een orde van grootte erbij.",
       },
       {
         icon: "ban",
@@ -569,12 +569,12 @@ export const SERVICES: Service[] = [
       {
         tijd: "13:00",
         titel: "Processen op tafel",
-        tekst: "Waar gaat tijd in zitten, waar ontstaan fouten, waar wordt gewacht.",
+        tekst: "Waar gaat tijd in zitten, waar ontstaan fouten, waar staat iemand te wachten.",
       },
       {
         tijd: "14:00",
         titel: "Kansen benoemen",
-        tekst: "Breed en zonder filter — eerst verzamelen, dan pas oordelen.",
+        tekst: "Breed en zonder filter: eerst verzamelen, dan pas oordelen.",
       },
       {
         tijd: "15:00",
@@ -604,7 +604,7 @@ export const SERVICES: Service[] = [
       "Zes tot tien mensen die de processen uitvoeren en aansturen",
       "Beschikbare procesdocumentatie of cijfers over doorlooptijd en volume",
       "Iemand die iets kan zeggen over data en privacy",
-      "Openheid over wat er nu misgaat — daar zitten de kansen",
+      "Openheid over wat er nu misgaat; daar zitten de kansen",
     ],
     daarnaIntro: "De scan wijst de richting. Wat je daarna doet hangt af van waar de kans zit.",
     vervolg: [
@@ -655,8 +655,8 @@ export const SERVICES: Service[] = [
     fase: 1,
     pitch: "Waar verandert AI ons verdienmodel, en waar is het alleen een efficiëntieslag?",
     beschrijving:
-      "Iedereen praat over AI. De vraag voor de directie is een andere: waar verandert het ons verdienmodel, en waar is het alleen een efficiëntieslag? In een dagdeel of een dag brengen we uw positie in kaart met een strategisch kader dat verder gaat dan de gebruikelijke lijstjes met toepassingen. We kijken naar waar uw onderscheidende capaciteit zit, wat commodity wordt, en wat dat betekent voor uw mensen. U eindigt met vastgestelde prioriteiten — inclusief een lijst van wat u expliciet niet gaat doen.",
-    doelgroep: "Directie en MT — werkt alleen goed als de eindverantwoordelijke er zelf bij zit.",
+      "Iedereen praat over AI. De vraag voor de directie is een andere: waar verandert het ons verdienmodel, en waar is het alleen een efficiëntieslag? In een dagdeel of een dag brengen we je positie in kaart met een strategisch kader dat verder gaat dan de gebruikelijke lijstjes met toepassingen. We kijken waar je onderscheidende capaciteit zit, wat commodity wordt, en wat dat betekent voor je mensen. Je eindigt met vastgestelde prioriteiten, inclusief een lijst van wat je expliciet niet gaat doen.",
+    doelgroep: "Directie en MT. Werkt alleen goed als de eindverantwoordelijke er zelf bij zit.",
     duur: "Halve of hele dag",
     groepsgrootte: "Vijf tot twaalf deelnemers",
     prijzen: [],
@@ -768,7 +768,7 @@ export const SERVICES: Service[] = [
       "Bij een hele dag: het standpunt en de roadmap uitgewerkt",
     ],
     jijZorgt: [
-      "De mensen die over strategie en budget gaan — vijf tot twaalf",
+      "De mensen die over strategie en budget gaan: vijf tot twaalf",
       "Inzicht in je huidige verdienmodel en de belangrijkste kostenposten",
       "Eén voorgesprek van een half uur ter voorbereiding",
       "De bereidheid om ook te besluiten waar je níet op inzet",
@@ -829,7 +829,7 @@ export const SERVICES: Service[] = [
     pitch:
       "Waar zetten we low-code en AI in, waar juist niet, en welk deliverymodel hoort daarbij?",
     beschrijving:
-      "Low-code groeit bij jullie harder dan de inrichting eromheen. Er komen apps bij, teams bij en vragen bij — en de architectuur, governance en het deliverymodel zijn niet meegegroeid. In twee tot drie weken brengen we in kaart waar jullie staan op business waarde, delivery en teams, en platformfundering. Je krijgt een roadmap met gefaseerde stappen, plus heldere antwoorden op de vragen waar je nu tegenaan loopt: waar past low-code en waar niet, welk deliverymodel hoort bij jullie ambitie, en waar landt AI in dit landschap.",
+      "Low-code groeit bij jullie harder dan de inrichting eromheen. Er komen apps bij, teams bij en vragen bij, maar de architectuur, governance en het deliverymodel groeiden niet mee. In twee tot drie weken brengen we in kaart waar jullie staan op business waarde, delivery en teams, en platformfundering. Je krijgt een roadmap met gefaseerde stappen, plus heldere antwoorden op de vragen waar je nu tegenaan loopt: waar past low-code en waar niet, welk deliverymodel hoort bij jullie ambitie, en waar landt AI in dit landschap.",
     doelgroep: "CIO, IT-directeur, informatiemanager of enterprise architect.",
     duur: "Twee tot drie weken",
     prijzen: [],
@@ -845,7 +845,7 @@ export const SERVICES: Service[] = [
     ctaType: "kennismaking",
     volgorde: 5,
 
-    kop: "Waar zet je low-code en AI in — en waar juist niet.",
+    kop: "Waar zet je low-code en AI in, en waar juist niet.",
     lead: "In twee tot drie weken brengen we je applicatielandschap, je deliverymodel en je ambities bij elkaar in één plan: wat bouw je zelf, wat koop je, wat bouw je met low-code, en welke teams horen daarbij.",
     feiten: [
       { label: "Duur", waarde: "Twee tot drie weken" },
@@ -862,7 +862,7 @@ export const SERVICES: Service[] = [
     herkenIntro:
       "Voor IT-managers en CIO's die willen dat low-code en AI ergens op slaan in plaats van los rondzwerven.",
     herken: [
-      "We hebben low-code, maar het is nooit een keuze geweest — het gebeurde gewoon.",
+      "We hebben low-code, maar we kozen er nooit voor. Het gebeurde gewoon.",
       "Elke afdeling koopt zijn eigen pakket en wij mogen het koppelen.",
       "Ik moet volgend jaar budget verantwoorden en heb geen verhaal.",
     ],
@@ -911,7 +911,7 @@ export const SERVICES: Service[] = [
         tijd: "Week 1",
         titel: "Landschap in kaart",
         tekst:
-          "Applicaties, koppelingen, kosten en eigenaarschap — inclusief wat er buiten IT om loopt.",
+          "Applicaties, koppelingen, kosten en eigenaarschap, inclusief wat er buiten IT om loopt.",
       },
       {
         tijd: "Week 2",
@@ -932,7 +932,7 @@ export const SERVICES: Service[] = [
       {
         tijd: "Week 3",
         titel: "Presentatie",
-        tekst: "Aan MT of board, door ons of door jou — wat intern het beste werkt.",
+        tekst: "Aan MT of board, door ons of door jou: wat intern het beste werkt.",
       },
     ],
     voorbereidingIntro:
@@ -947,7 +947,7 @@ export const SERVICES: Service[] = [
       "Beschikbaarheid van tien tot vijftien mensen voor een uur",
       "Inzicht in je huidige applicatiekosten en contracten",
       "Een opdrachtgever die knopen kan doorhakken in de werksessie",
-      "Openheid over wat er nu niet werkt — ook als dat politiek gevoelig ligt",
+      "Openheid over wat er nu niet werkt, ook als dat politiek gevoelig ligt",
     ],
     daarnaIntro:
       "Een roadmap is pas iets waard als de eerste stap gezet wordt. Die stap staat meestal in dit rijtje.",
@@ -971,12 +971,12 @@ export const SERVICES: Service[] = [
       {
         vraag: "Zijn jullie niet gekleurd, als Mendix-partner?",
         antwoord:
-          "Deels: we kennen low-code goed. Daarom staat in elk advies expliciet waar low-code níet het antwoord is — dat is meestal het nuttigste deel.",
+          "Deels: we kennen low-code goed. Daarom staat in elk advies expliciet waar low-code níet het antwoord is. Dat is meestal het nuttigste deel.",
       },
       {
         vraag: "Kunnen jullie ook de uitvoering doen?",
         antwoord:
-          "Ja, maar dat is geen voorwaarde. Het plan is zo geschreven dat een andere partij het ook kan uitvoeren.",
+          "Ja, maar dat is geen voorwaarde. We schrijven het plan zo dat een andere partij het ook kan uitvoeren.",
       },
       {
         vraag: "Wat als de uitkomst is dat we moeten stoppen met een platform?",
@@ -1001,7 +1001,7 @@ export const SERVICES: Service[] = [
     pitch:
       "Waar staat ons low-codeteam vandaag, wat is de stip op de horizon, en hoe komen we daar?",
     beschrijving:
-      "Jullie Mendix-landschap groeit harder dan de inrichting eromheen. Er komen apps bij, teams bij en vragen bij — en de architectuur, het deliverymodel en de governance zijn niet meegegroeid. In één dag brengen we met jullie team in kaart waar jullie staan op de drie lagen waarop organisaties volwassen worden: waar levert het platform waarde, hoe zijn de teams georganiseerd, en welke technische fundering maakt opschalen mogelijk. Je gaat naar huis met een gedeeld doelbeeld en een route in stappen — vastgesteld door de mensen die het moeten doen.",
+      "Jullie Mendix-landschap groeit harder dan de inrichting eromheen. Er komen apps bij, teams bij en vragen bij, maar de architectuur, het deliverymodel en de governance groeiden niet mee. In één dag brengen we met jullie team in kaart waar jullie staan op de drie lagen waarop organisaties volwassen worden: waar levert het platform waarde, hoe organiseren jullie de teams, en welke technische fundering maakt opschalen mogelijk. Je gaat naar huis met een gedeeld doelbeeld en een route in stappen, vastgesteld door de mensen die het moeten doen.",
     doelgroep:
       "Organisaties die al met Mendix werken; het team zelf plus de opdrachtgever, uit business, delivery en architectuur samen.",
     duur: "Eén dag",
@@ -1124,7 +1124,7 @@ export const SERVICES: Service[] = [
       "Een terugkoppelmoment twee weken later, kosteloos",
     ],
     jijZorgt: [
-      "De mensen die over budget, platform en teams gaan — allemaal op dezelfde dag",
+      "De mensen die over budget, platform en teams gaan: allemaal op dezelfde dag",
       "Een lijst van je huidige apps met eigenaar en status",
       "Inzicht in je teamsamenstelling en je Mendix-licentiemodel",
       "Bereidheid om die dag ook echt een keuze te maken",
@@ -1184,7 +1184,7 @@ export const SERVICES: Service[] = [
     pitch:
       "Een gecertificeerde Mendix-consultant die meedraait in jouw team, of een team dat een traject draagt.",
     beschrijving:
-      "Soms is er geen vraagstuk om te onderzoeken, maar werk dat gedaan moet worden. Dan lever je capaciteit. Onze consultants zijn Mendix Advanced of Expert gecertificeerd en draaien mee in jullie eigen ritme en Scrum-proces — als teamlid, niet als externe partij ernaast. Ze bouwen niet alleen: ze coachen de mensen om zich heen en nemen mee wat ze bij andere opdrachtgevers hebben gezien. Eén consultant om een team te versterken, of een compleet team dat een traject draagt. Wat past, hangt af van wat er ligt.",
+      "Soms is er geen vraagstuk om te onderzoeken, maar werk dat gedaan moet worden. Dan lever je capaciteit. Onze consultants zijn Mendix Advanced of Expert gecertificeerd en draaien mee in jullie eigen ritme en Scrum-proces, als teamlid en niet als externe partij ernaast. Ze bouwen niet alleen: ze coachen de mensen om zich heen en nemen mee wat ze bij andere opdrachtgevers hebben gezien. Eén consultant om een team te versterken, of een compleet team dat een traject draagt. Wat past, hangt af van wat er ligt.",
     doelgroep:
       "Organisaties met werk op de plank en te weinig handen, of zonder Mendix-kennis in huis.",
     duur: "In overleg",
@@ -1215,7 +1215,7 @@ export const SERVICES: Service[] = [
     fase: 3,
     pitch: "De gedeelde fundering waardoor app nummer twee de helft kost van app nummer één.",
     beschrijving:
-      "Koppelingen, security, deploymentstraat en herbruikbare componenten: de laag onder je applicatielandschap die je normaal per app opnieuw bouwt. Wij zetten hem één keer goed neer, aan de hand van een echte applicatie zodat alles in de praktijk bewezen is. Daarna landt elke volgende app erop — sneller, en met een securityreview die je maar één keer hoeft te doen.",
+      "Koppelingen, security, deploymentstraat en herbruikbare componenten: de laag onder je applicatielandschap die je normaal per app opnieuw bouwt. Wij zetten hem één keer goed neer, aan de hand van een echte applicatie zodat alles in de praktijk bewezen is. Daarna landt elke volgende app erop: sneller, en met een securityreview die je maar één keer hoeft te doen.",
     doelgroep:
       "Organisaties met één of meer apps live, die merken dat elke volgende app weer bij nul begint.",
     duur: "Drie tot vier weken",
@@ -1270,7 +1270,7 @@ export const SERVICES: Service[] = [
         icon: "git-merge",
         titel: "Een deploymentstraat",
         tekst:
-          "Omgevingen, versiebeheer en geautomatiseerde uitrol — met de checks erin, niet in een overleg.",
+          "Omgevingen, versiebeheer en geautomatiseerde uitrol, met de checks erin en niet in een overleg.",
       },
       {
         icon: "boxes",
@@ -1351,7 +1351,7 @@ export const SERVICES: Service[] = [
       {
         vraag: "Is dit niet iets wat we zelf kunnen?",
         antwoord:
-          "Vaak wel, technisch. Wat meestal ontbreekt is de tijd en het overzicht om het naast de lopende bouw te doen — daar zit onze toegevoegde waarde.",
+          "Vaak wel, technisch. Wat meestal ontbreekt is de tijd en het overzicht om het naast de lopende bouw te doen. Daar zit onze toegevoegde waarde.",
       },
       {
         vraag: "Werkt dit ook als we meerdere leveranciers hebben?",
@@ -1383,11 +1383,11 @@ export const SERVICES: Service[] = [
     richting: "mendix",
     fase: 3,
     pitch:
-      "Vier weken waarin een businessexpert en onze developer samen bouwen — en de businessexpert het daarna zelf kan.",
+      "Vier weken waarin een businessexpert en onze developer samen bouwen, en de businessexpert het daarna zelf kan.",
     beschrijving:
       "Business en IT die samen bouwen in plaats van specificaties uitwisselen. Vier weken lang werken één van jullie businessexperts en één van onze ontwikkelaars samen aan een echte oplossing. Wij bouwen mee en leiden tegelijk op, zodat jullie medewerker het daarna zelf kan onderhouden en uitbreiden. Je houdt drie dingen over: een oplossing die in gebruik is, iemand die het kan, en een werkwijze die je op de volgende afdeling kunt herhalen.",
     doelgroep:
-      "Organisaties die willen dat business en IT samen ontwikkelen — vaak de logische stap na App in a Day.",
+      "Organisaties die willen dat business en IT samen ontwikkelen; vaak de logische stap na App in a Day.",
     duur: "Vier weken",
     prijzen: [],
     resultaten: [
@@ -1439,7 +1439,7 @@ export const SERVICES: Service[] = [
         icon: "book-open",
         titel: "Werkafspraken op papier",
         tekst:
-          "Hoe je wijzigingen doorvoert, test en uitrolt — het handboek voor wat er na de vier weken komt.",
+          "Hoe je wijzigingen doorvoert, test en uitrolt: het handboek voor wat er na de vier weken komt.",
       },
       {
         icon: "git-branch",
@@ -1499,7 +1499,7 @@ export const SERVICES: Service[] = [
       "Een terugkomdag twee weken na oplevering",
     ],
     jijZorgt: [
-      "Eén businessexpert die minimaal drie dagen per week vrij is — geen halve inzet",
+      "Eén businessexpert die minimaal drie dagen per week vrij is; geen halve inzet",
       "Een applicatie die echt nodig is en binnen vier weken haalbaar",
       "Toegang tot de systemen waarmee gekoppeld moet worden",
       "Een opdrachtgever die knopen doorhakt als de scope onder druk komt",
@@ -1521,7 +1521,7 @@ export const SERVICES: Service[] = [
       {
         vraag: "Wat als onze expert het niet blijkt te kunnen?",
         antwoord:
-          "Dat merken we in week één en dan zeggen we het meteen. Soms is de conclusie dat een andere collega beter past — wisselen kan in de eerste week.",
+          "Dat merken we in week één en dan zeggen we het meteen. Soms is de conclusie dat een andere collega beter past. Wisselen kan in de eerste week.",
       },
       {
         vraag: "Is vier weken genoeg om te leren bouwen?",
@@ -1571,7 +1571,7 @@ export const SERVICES: Service[] = [
     volgorde: 9,
 
     kop: "Je eigen mensen zover krijgen dat ze het dragen.",
-    lead: "Losse dagblokken over Mendix, AI en de manier van werken eromheen — of een vaste coach die één dag per week meeloopt met je teams. Altijd op jullie eigen projecten, nooit op oefencasussen.",
+    lead: "Losse dagblokken over Mendix, AI en de manier van werken eromheen, of een vaste coach die één dag per week meeloopt met je teams. Altijd op jullie eigen projecten, nooit op oefencasussen.",
     feiten: [
       { label: "Vorm", waarde: "Losse blokken of vaste coach" },
       { label: "Groepsgrootte", waarde: "Tot tien deelnemers" },
@@ -1585,7 +1585,7 @@ export const SERVICES: Service[] = [
       "Modulair: je kiest alleen de blokken die je nodig hebt",
     ],
     herkenIntro:
-      "Voor organisaties die willen dat hun eigen mensen het overnemen — en gemerkt hebben dat een standaardcursus daar niet voor zorgt.",
+      "Voor organisaties die willen dat hun eigen mensen het overnemen, en gemerkt hebben dat een standaardcursus daar niet voor zorgt.",
     herken: [
       "Onze mensen hebben de officiële cursus gedaan en kunnen nog steeds niet zelfstandig bouwen.",
       "Alle kennis zit bij twee mensen en één daarvan gaat weg.",

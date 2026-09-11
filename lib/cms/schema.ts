@@ -228,7 +228,7 @@ export const FIELD_SCHEMAS: Record<ContentType, FieldDef[]> = {
       label: "Type dienstverband",
       type: "select",
       options: ["FULL_TIME", "PART_TIME"],
-      help: "Voltijd of deeltijd (wordt gebruikt voor vacature-structured data).",
+      help: "Voltijd of deeltijd (gebruiken we voor de structured data van de vacature).",
       panel: "side",
     },
     { key: "gepubliceerdOp", label: "Gepubliceerd op", type: "date", panel: "side" },

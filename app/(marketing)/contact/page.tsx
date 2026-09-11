@@ -166,7 +166,7 @@ export default async function ContactPage() {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <MapPin /> Ganzenmarkt 6, Utrecht — koffie staat klaar
+                <MapPin /> Ganzenmarkt 6, Utrecht. Koffie staat klaar
               </a>
               <a
                 href="https://www.linkedin.com/company/the-new-wave-it"

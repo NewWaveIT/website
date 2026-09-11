@@ -163,7 +163,7 @@ export async function RichtingHub({ richting }: { richting: ServiceRichting }) {
             <CrossRef
               titel={t.crossrefTitel || "Ook relevant"}
               items={hub.crossRefs.map((s) => ({
-                label: `${s.naam} — ook relevant vanuit ${RICHTING_NAAM[richting]}`,
+                label: `${s.naam}, ook relevant vanuit ${RICHTING_NAAM[richting]}`,
                 href: `/diensten/${s.slug}`,
               }))}
             />

@@ -101,7 +101,7 @@ export default async function HomePage() {
             <h2>Drie richtingen. Begin met wat je in één dag kunt doen.</h2>
             <p>
               Mendix, AI en strategie zijn de ingangen. Elke richting begint met een concreet
-              product van één dag met een vaste prijs — daarna schaal je op wanneer het werkt.
+              product van één dag met een vaste prijs. Daarna schaal je op wanneer het werkt.
             </p>
           </div>
           <div className="tabs" role="tablist">
@@ -160,7 +160,7 @@ export default async function HomePage() {
                     <Link
                       href={`/contact?dienst=${s.slug}`}
                       className="btn btn-outline"
-                      aria-label={`${s.ctaLabel} — ${s.naam}`}
+                      aria-label={`${s.ctaLabel}, ${s.naam}`}
                     >
                       {s.ctaLabel}
                     </Link>

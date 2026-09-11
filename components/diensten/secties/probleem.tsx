@@ -45,7 +45,7 @@ export function WelNietSectie({ titel, wel = [], niet = [] }: WelNietProps) {
       <div className="wrap-wide">
         <div className="sec-head">
           <div className="kicker">Eerlijk over de grenzen</div>
-          <h2 className="sectie-h2">{titel || "Wanneer dit past — en wanneer niet"}</h2>
+          <h2 className="sectie-h2">{titel || "Wanneer dit past, en wanneer niet"}</h2>
         </div>
         <div className="welniet-grid">
           {wel.length > 0 && (

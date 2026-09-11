@@ -103,7 +103,7 @@ export default async function ArtikelPage({ params }: { params: Promise<{ slug: 
 
       <LeadCta
         titel="Dit soort inzichten, één keer per maand"
-        tekst="Laat je e-mail achter en ontvang onze scherpste inzichten over technologie in jouw sector. Geen sales — uitschrijven kan altijd."
+        tekst="Laat je e-mail achter en ontvang onze scherpste inzichten over technologie in jouw sector. Geen sales, uitschrijven kan altijd."
       />
     </div>
   );

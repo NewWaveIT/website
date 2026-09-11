@@ -83,7 +83,7 @@ export function ServiceCard({ service: s, toonFase = false, compact = false }: S
         <Link
           href={href}
           className="btn btn-primary btn-sm"
-          aria-label={`${s.ctaLabel} — ${s.naam}`}
+          aria-label={`${s.ctaLabel}, ${s.naam}`}
         >
           {s.ctaLabel} <ArrowRight aria-hidden="true" />
         </Link>

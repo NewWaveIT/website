@@ -8,7 +8,7 @@ export default async function DienstenAdminPage() {
       type="diensten"
       crumb="Aanbod"
       titel="Richtingen"
-      sub="Mendix, AI en Strategie — de hub-pagina's waaronder de diensten hangen."
+      sub="Mendix, AI en Strategie: de hub-pagina's waaronder de diensten hangen."
     />
   );
 }

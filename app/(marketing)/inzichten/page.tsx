@@ -8,7 +8,7 @@ import { LeadCta } from "@/components/inzichten/lead-cta";
 import "./inzichten.css";
 
 export const metadata: Metadata = {
-  title: "Inzichten — kennis die je morgen kunt gebruiken",
+  title: "Inzichten: kennis die je morgen kunt gebruiken",
   description:
     "Praktische artikelen over Mendix, AI en digitale strategie, geschreven vanuit de vraagstukken van onze vijf sectoren, zonder jargon.",
   alternates: { canonical: "/inzichten" },

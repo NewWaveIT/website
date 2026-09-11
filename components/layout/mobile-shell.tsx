@@ -109,7 +109,7 @@ export function MobileShell() {
     <>
       <header className={cn("mnav", opHero && "mnav-op-hero", doorzichtig && "mnav-doorzichtig")}>
         <div className="mnav-inner">
-          <Link href="/" className="logo-link" aria-label="The New Wave IT — home">
+          <Link href="/" className="logo-link" aria-label="The New Wave IT, home">
             <Image
               src={
                 doorzichtig

@@ -13,7 +13,7 @@ import { getContactpersoon } from "@/lib/team-data";
 import "./werken-bij.css";
 
 export const metadata: Metadata = {
-  title: "Werken bij — word een Waver",
+  title: "Werken bij: word een Waver",
   description:
     "Werken bij The New Wave IT: een gelijk speelveld, open feedbackcultuur, persoonlijk groeipad en een jaarlijkse learning week. Bekijk onze openstaande rollen.",
   alternates: { canonical: "/werken-bij" },
@@ -163,7 +163,7 @@ export default async function WerkenBijPage() {
             {/* Onderstreept: als tekstlink binnen een alinea is kleur alleen niet
                 genoeg om hem te herkennen (WCAG 1.4.1) — het verschil met de
                 omringende tekst haalt de 3:1 niet. */}
-            <a href="#open-sollicitatie">Stuur hieronder een open sollicitatie</a> — of bel{" "}
+            <a href="#open-sollicitatie">Stuur hieronder een open sollicitatie</a>, of bel{" "}
             {recVoornaam}: {recTel}.
           </p>
         </div>
@@ -176,10 +176,10 @@ export default async function WerkenBijPage() {
               vacatureSlug=""
               vacatureTitel="Open sollicitatie"
               heading="Open sollicitatie"
-              intro="Geen passende vacature? Laat je gegevens achter — we kijken graag of er een match is."
+              intro="Geen passende vacature? Laat je gegevens achter, we kijken graag of er een match is."
             />
             <p className="open-soll-note">
-              Na je sollicitatie neemt {recVoornaam} binnen twee werkdagen contact op — een echt
+              Na je sollicitatie neemt {recVoornaam} binnen twee werkdagen contact op. Een echt
               mens, geen automatische afwijzing.
             </p>
           </div>

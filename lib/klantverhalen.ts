@@ -78,7 +78,7 @@ export const KLANTVERHALEN: Klantverhaal[] = [
       { n: "Auditproof", l: "Met volledige logging" },
     ],
     challenge:
-      "Moove had een bestaand Mendix-platform. De uitdaging was niet het platform zelf, maar de ontbrekende schakels: een betrouwbare verwerking van voertuiginstallaties en een moderne manier om handmatige ritregistratie te vervangen. Installaties van voertuigen werden verwerkt via meerdere losse systemen — foutgevoelig, arbeidsintensief en moeilijk te auditen. Tegelijk deden chauffeurs ritregistratie zoals dat twintig jaar geleden ook ging: handmatig in een notitieboekje of via generieke tools. GPS maakt dat notitieboekje overbodig: Geotab registreert elke rit automatisch. Maar de stap van rijdata naar een compliant rittenrapport dat een chauffeur zelf beheert, ontbrak nog — en daarvoor moesten installaties eerst correct en gestandaardiseerd verwerkt zijn in MyGeotab.",
+      "Moove had een bestaand Mendix-platform. De uitdaging was niet het platform zelf, maar de ontbrekende schakels: een betrouwbare verwerking van voertuiginstallaties en een moderne manier om handmatige ritregistratie te vervangen. Moove verwerkte voertuiginstallaties via meerdere losse systemen: foutgevoelig, arbeidsintensief en moeilijk te auditen. Tegelijk deden chauffeurs ritregistratie zoals dat twintig jaar geleden ook ging: handmatig in een notitieboekje of via generieke tools. GPS maakt dat notitieboekje overbodig: Geotab registreert elke rit automatisch. Maar de stap van rijdata naar een compliant rittenrapport dat een chauffeur zelf beheert, ontbrak nog. Daarvoor moest Moove installaties eerst correct en gestandaardiseerd in MyGeotab verwerken.",
     pull: "“Het voelt alsof je samenwerkt met goed ingewerkte en enthousiaste collega's.”",
     ketenTitel: "De keten in drie stappen",
     ketenStappen: [
@@ -98,7 +98,7 @@ export const KLANTVERHALEN: Klantverhaal[] = [
         situatie:
           "Moove had al een Mendix-applicatie. De ambitie was om die verder te structureren en twee nieuwe applicaties te bouwen die direct aansluiten op de operationele werkprocessen van het bedrijf. Dat vraagt om meer dan ontwikkelcapaciteit: een partner die meedenkt over architectuur, prioriteiten en schaalbaarheid. Welke applicatie bouw je eerst? Hoe zorg je dat de nieuwe apps goed communiceren met het bestaande platform? En hoe borg je kwaliteit als het team van Moove en de vloten van haar klanten blijven groeien?",
         aanpak:
-          "We begonnen niet met bouwen. We begonnen met begrijpen: een analyse van het bestaande Mendix-landschap en de gewenste applicaties. Op basis daarvan stelden we een roadmap op en bepaalden we samen met Moove welke prioriteiten als eerste gebouwd zouden worden. We brachten de bestaande structuur in kaart en formuleerden een gefaseerde aanpak — geen big-bang — voor applicaties die schaalbaar zijn en goed integreren met het bestaande platform. Daarbij stelden we governance op voor security, performance en datakwaliteit, zodat alle applicaties vanuit dezelfde standaarden worden gebouwd. Business en IT werkten vanaf het begin samen in een Competence Center, vanuit gedeelde richtlijnen en een gezamenlijke roadmap. Dat legt de basis voor doorontwikkeling die Moove zelf kan sturen.",
+          "We begonnen niet met bouwen. We begonnen met begrijpen: een analyse van het bestaande Mendix-landschap en de gewenste applicaties. Op basis daarvan stelden we een roadmap op en kozen we samen met Moove wat we als eerste zouden bouwen. We brachten de bestaande structuur in kaart en formuleerden een gefaseerde aanpak, geen big-bang, voor applicaties die schaalbaar zijn en goed integreren met het bestaande platform. Daarbij stelden we governance op voor security, performance en datakwaliteit, zodat elk team vanuit dezelfde standaarden bouwt. Business en IT werkten vanaf het begin samen in een Competence Center, vanuit gedeelde richtlijnen en een gezamenlijke roadmap. Dat legt de basis voor doorontwikkeling die Moove zelf kan sturen.",
         stappen: [
           { label: "1", titel: "Analyse", tekst: "Huidig landschap" },
           { label: "2", titel: "Roadmap", tekst: "Prioriteiten bepalen" },
@@ -109,7 +109,7 @@ export const KLANTVERHALEN: Klantverhaal[] = [
           {
             titel: "Gestructureerd fundament",
             tekst:
-              "Het bestaande Mendix-platform werd verder gestructureerd en uitgebreid met twee nieuwe applicaties die direct bruikbaar zijn in de dagelijkse operatie.",
+              "We structureerden het bestaande Mendix-platform verder en breidden het uit met twee applicaties die het team meteen in de dagelijkse operatie gebruikt.",
           },
           {
             titel: "Competence Center actief",
@@ -121,9 +121,9 @@ export const KLANTVERHALEN: Klantverhaal[] = [
       {
         titel: "MooveInstaller: foutloze verwerking van voertuiginstallaties",
         situatie:
-          "Installaties van voertuigen — install, swap en de-install — werden verwerkt via meerdere losse systemen. Dit leidde tot tijdverlies, foutgevoelige koppelingen en extra druk op support en CSM, met een grote hoeveelheid handmatige handelingen. Compliance was lastig te borgen zonder centrale logging, en fouten in de koppeling van assets kwamen laat aan het licht — met extra correctiewerk voor het operations-team tot gevolg.",
+          "Install, swap en de-install liepen elk door hun eigen systeem. Dit leidde tot tijdverlies, foutgevoelige koppelingen en extra druk op support en CSM, met een grote hoeveelheid handmatige handelingen. Compliance was lastig te borgen zonder centrale logging, en fouten in de koppeling van assets kwamen laat aan het licht, waarna het operations-team ze moest rechtzetten.",
         aanpak:
-          "We bouwden MooveInstaller: een centrale Mendix-applicatie die het volledige installatieproces van voertuigen digitaal en gestandaardiseerd verwerkt. Assets en installatielogs worden gekoppeld op basis van VIN of serienummer, data wordt opgehaald uit MyGeotab en GeoTabMyAdmin, en elke installatie wordt gevalideerd via centrale bedrijfsregels vóór synchronisatie met MyGeotab en het Moove-platform. Centrale foutopvang met logging zorgt voor een volledige audittrail. Vanaf scratch naar werkende applicatie in twee maanden.",
+          "We bouwden MooveInstaller: een centrale Mendix-applicatie die het volledige installatieproces van voertuigen digitaal en gestandaardiseerd verwerkt. De applicatie koppelt assets en installatielogs op VIN of serienummer, haalt data op uit MyGeotab en GeoTabMyAdmin, en toetst elke installatie aan centrale bedrijfsregels vóór ze synchroniseert met MyGeotab en het Moove-platform. Centrale foutopvang met logging zorgt voor een volledige audittrail. Vanaf scratch naar werkende applicatie in twee maanden.",
         stappen: [
           { label: "Input", titel: "VIN / serienummer", tekst: "install · swap · de-install" },
           {
@@ -159,16 +159,16 @@ export const KLANTVERHALEN: Klantverhaal[] = [
           {
             titel: "Volledige audittrail",
             tekst:
-              "Elke installatie, swap of de-installatie wordt centraal gelogd. Compliance is aantoonbaar zonder handmatige rapportage.",
+              "De applicatie logt elke installatie, swap en de-installatie centraal. Compliance is aantoonbaar zonder handmatige rapportage.",
           },
         ],
       },
       {
         titel: "MooveTrips: automatische ritregistratie voor elke chauffeur",
         situatie:
-          "Rittenregistratie voor zakelijke en fiscale doeleinden is een verplichting voor veel chauffeurs. Maar de traditionele manier — handmatig in een notitieboekje of via generieke tools — kost tijd, leidt tot fouten en is moeilijk te controleren.",
+          "Rittenregistratie voor zakelijke en fiscale doeleinden is een verplichting voor veel chauffeurs. Maar de traditionele manier kost tijd, leidt tot fouten en is moeilijk te controleren: handmatig in een notitieboekje of via generieke tools.",
         aanpak:
-          "We bouwden MooveTrips: een driver-gerichte Progressive Web App die Geotab-data omzet naar een compleet, eenvoudig te bedienen ritregistratiesysteem. Waar een chauffeur vroeger alles handmatig bijhield, logt Geotab nu automatisch elke rit. De chauffeur opent MooveTrips, ziet zijn ritten en geeft per rit aan of het een zakelijke of privérit was — meer heeft hij niet nodig. Het rapport genereert zichzelf.",
+          "We bouwden MooveTrips: een driver-gerichte Progressive Web App die Geotab-data omzet naar een compleet, eenvoudig te bedienen ritregistratiesysteem. Waar een chauffeur vroeger alles handmatig bijhield, logt Geotab nu automatisch elke rit. De chauffeur opent MooveTrips, ziet zijn ritten en geeft per rit aan of het zakelijk of privé was. Meer hoeft hij niet te doen. Het rapport genereert zichzelf.",
         stappen: [
           { label: "Automatisch", titel: "Geotab", tekst: "Logt elke rit via GPS" },
           {
@@ -196,12 +196,12 @@ export const KLANTVERHALEN: Klantverhaal[] = [
           {
             titel: "Minder ongecategoriseerde ritten",
             tekst:
-              "Doordat de app actief pushmeldingen stuurt en ritten automatisch inlaadt, worden ritten sneller en vaker correct gecategoriseerd.",
+              "De app laadt ritten automatisch in en stuurt een pushmelding zodra er nog iets openstaat. Chauffeurs categoriseren daardoor sneller en vaker correct.",
           },
           {
             titel: "Snellere en betrouwbare rapportages",
             tekst:
-              "PDF- en Excel-rapporten worden automatisch gegenereerd. Geen handmatige exports, geen fouten door verouderde of ontbrekende data.",
+              "MooveTrips genereert de PDF- en Excel-rapporten zelf. Geen handmatige exports, geen fouten door verouderde of ontbrekende data.",
           },
           {
             titel: "Compliance geborgd, wereldwijd toepasbaar",
@@ -217,17 +217,17 @@ export const KLANTVERHALEN: Klantverhaal[] = [
       },
     ],
     resultaat:
-      "MooveInstaller en MooveTrips zijn geen losstaande projecten, maar twee schakels in dezelfde keten: installaties van voertuigen worden correct en gestandaardiseerd verwerkt via MooveInstaller, en de data die daardoor beschikbaar komt wordt via MooveTrips bruikbaar gemaakt voor de chauffeur. The New Wave IT bouwde beide applicaties, in nauwe samenwerking met het team van Moove.",
+      "MooveInstaller en MooveTrips zijn geen losstaande projecten, maar twee schakels in dezelfde keten: MooveInstaller verwerkt voertuiginstallaties correct en gestandaardiseerd, en MooveTrips maakt de data die daaruit komt bruikbaar voor de chauffeur. The New Wave IT bouwde beide applicaties, in nauwe samenwerking met het team van Moove.",
     eindresultaten: [
       {
         titel: "Snellere voertuig-onboarding",
         tekst:
-          "Het operations-team verwerkt installaties zonder correctiewerk achteraf. Elke install, swap of de-installatie is direct gelogd, gevalideerd en synchroon met MyGeotab.",
+          "Het operations-team verwerkt installaties zonder correctiewerk achteraf. Elke install, swap en de-installatie staat meteen gelogd, gevalideerd en synchroon in MyGeotab.",
       },
       {
         titel: "Chauffeurs registreren compliant, zonder handmatig werk",
         tekst:
-          "Ritten worden automatisch ingeladen vanuit Geotab. Categoriseren kost seconden. Ongecategoriseerde ritten zijn grotendeels verdwenen.",
+          "Geotab laadt de ritten zelf in. Categoriseren kost seconden. Ongecategoriseerde ritten zijn grotendeels verdwenen.",
       },
       {
         titel: "Fiscale compliance zonder extra inspanning",
@@ -237,12 +237,12 @@ export const KLANTVERHALEN: Klantverhaal[] = [
       {
         titel: "Minder vragen, minder correcties, minder supportdruk",
         tekst:
-          "Fouten worden voorkomen vóór ze het systeem in komen. CSM'ers houden tijd over voor werk dat er echt toe doet, in plaats van brandjes blussen.",
+          "MooveInstaller vangt fouten af vóór ze het systeem in komen. CSM'ers houden tijd over voor werk dat er echt toe doet, in plaats van brandjes blussen.",
       },
       {
         titel: "Schaalbaar platform voor Moove's klanten",
         tekst:
-          "Beide apps zijn gebouwd om mee te groeien. Nieuwe klanten, nieuwe landen, nieuwe vloten: de architectuur houdt het bij.",
+          "We bouwden beide apps om mee te groeien. Nieuwe klanten, nieuwe landen, nieuwe vloten: de architectuur houdt het bij.",
       },
     ],
     aside: {

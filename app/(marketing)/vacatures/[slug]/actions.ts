@@ -163,7 +163,7 @@ export async function submitSollicitatie(
       ? "Link meegestuurd"
       : "Niet bijgevoegd";
   let motivatieTekst =
-    motivatie || (motivatiePath ? "Motivatie als bestand bijgevoegd — zie de admin." : "");
+    motivatie || (motivatiePath ? "Motivatie als bestand bijgevoegd; zie de admin." : "");
   if (link) motivatieTekst += `${motivatieTekst ? "\n\n" : ""}Link: ${link}`;
   if (!motivatieTekst) motivatieTekst = "—";
 
@@ -192,6 +192,6 @@ export async function submitSollicitatie(
   const recVoornaam = (rec?.naam || "Mitchel Wallaart").split(" ")[0] || "Mitchel";
   return {
     ok: true,
-    message: `Bedankt — je sollicitatie staat bij ons binnen. Je ontvangt zo een bevestiging per mail, en je hoort binnen twee werkdagen van ons, meestal van ${recVoornaam} zelf.`,
+    message: `Bedankt, je sollicitatie staat bij ons binnen. Je ontvangt zo een bevestiging per mail, en je hoort binnen twee werkdagen van ons, meestal van ${recVoornaam} zelf.`,
   };
 }

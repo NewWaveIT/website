@@ -79,7 +79,7 @@ export const PROPOSITIES: Propositie[] = [
     slug: "it-landschap-moderniseren",
     nummer: 3,
     titel: "Moderniseren van jouw IT-landschap",
-    belofte: "Maak je IT-landschap binnen 8 weken wendbaar — zonder vervangingen.",
+    belofte: "Maak je IT-landschap binnen 8 weken wendbaar, zonder vervangingen.",
     wat: [
       "Legacy-systemen blijven bestaan, geen volledige nieuwbouw",
       "Nieuwe functionaliteit on-top-of-legacy",

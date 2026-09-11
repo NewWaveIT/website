@@ -296,7 +296,7 @@ export function ContentListClient({
               <tr>
                 <td colSpan={cols}>
                   <div className="empty">
-                    Nog geen items. Klik op ‘Nieuw’ om er een aan te maken — of ga naar het{" "}
+                    Nog geen items. Klik op ‘Nieuw’ om er een aan te maken, of ga naar het{" "}
                     <Link
                       href="/admin"
                       style={{ color: "var(--color-primary)", fontWeight: "var(--fw-semibold)" }}

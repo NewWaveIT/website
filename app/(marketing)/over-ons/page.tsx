@@ -14,7 +14,7 @@ import { SITE_URL } from "@/lib/site";
 import "./over-ons.css";
 
 export const metadata: Metadata = {
-  title: "Over ons — de mens als maat",
+  title: "Over ons: de mens als maat",
   description:
     "The New Wave IT: opgericht in 2023, kantoor in Utrecht. Wij realiseren maximale digitale impact met de mens als maat, via low-code en AI.",
   alternates: { canonical: "/over-ons" },

@@ -52,7 +52,7 @@ export default async function GebruikersPage() {
       <Notice titel="Nog één stap nodig">
         <p style={{ margin: 0 }}>
           Gebruikersbeheer gebruikt de Supabase Auth Admin API. Stel daarvoor de
-          server-omgevingsvariabele <Code>SUPABASE_SERVICE_ROLE_KEY</Code> in — lokaal in{" "}
+          server-omgevingsvariabele <Code>SUPABASE_SERVICE_ROLE_KEY</Code> in. Lokaal in{" "}
           <Code>.env.local</Code> en in Vercel bij de projectinstellingen. Herstart daarna de
           server. De sleutel vind je in Supabase onder{" "}
           <em>Project Settings → API → service_role</em>.

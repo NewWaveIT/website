@@ -52,7 +52,7 @@ export function Header() {
   return (
     <header className={cn("nav", opHero && "nav-op-hero", doorzichtig && "nav-doorzichtig")}>
       <div className="wrap-wide nav-inner">
-        <Link href="/" aria-label="The New Wave IT — home">
+        <Link href="/" aria-label="The New Wave IT, home">
           <Image
             src={
               doorzichtig
@@ -88,7 +88,7 @@ export function Header() {
                     `display: none`, dus Next ziet deze acht links op élke pagina
                     in beeld staan en haalt hun RSC-payload op nog voor iemand het
                     menu opent. De twee hublinks erboven prefetchen wel. */}
-                <nav className="nav-menu" aria-label={`${link.label} — onderdelen`}>
+                <nav className="nav-menu" aria-label={`${link.label}, onderdelen`}>
                   {sub.map((s) => (
                     <Link key={s.href} href={s.href} prefetch={false}>
                       {s.label}

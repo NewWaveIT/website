@@ -382,7 +382,7 @@ export function ContentEditor({
                       color: "var(--text-muted)",
                     }}
                   >
-                    Geavanceerd — overige velden (JSON)
+                    Geavanceerd: overige velden (JSON)
                   </summary>
                   <div className="fld" style={{ marginTop: "var(--space-3)", marginBottom: 0 }}>
                     <textarea

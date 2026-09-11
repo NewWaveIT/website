@@ -45,7 +45,7 @@ export const metadata: Metadata = {
         url: "/assets/og/og-default.jpg",
         width: 1200,
         height: 630,
-        alt: "The New Wave IT — business-specialist in Mendix, AI en strategie",
+        alt: "The New Wave IT, business-specialist in Mendix, AI en strategie",
       },
     ],
   },

@@ -177,7 +177,7 @@ export const SECTOREN: Record<string, SectorDetail> = {
     naam: "Mobiliteit & logistiek",
     icon: "truck",
     heroTheme: "mobiliteit",
-    metaTitle: "Software voor mobiliteit en logistiek — werkplaats, fleet en keten verbonden",
+    metaTitle: "Software voor mobiliteit en logistiek: werkplaats, fleet en keten verbonden",
     metaDescription:
       "Apps bovenop je bestaande ERP, TMS en voertuigdata. Snellere service, minder stilstand en realtime inzicht van werkplaats tot last mile.",
 
@@ -316,7 +316,7 @@ export const SECTOREN: Record<string, SectorDetail> = {
       "We kijken mee in de werkplaats, bij de planning of in het magazijn en kiezen de plek met de meeste pijn.",
       "We bouwen klein. Een proof-of-value op jullie eigen data, zodat je ziet wat het doet.",
       "We regelen de koppelingen met systemen en partners: EDI, API of bestand, net wat de ander aankan.",
-      "We laten het landen bij technici, planners en klantcontact. Daar wordt het verschil gemaakt.",
+      "We laten het landen bij technici, planners en klantcontact. Daar maken zij het verschil.",
     ],
     belofte:
       "Wat je van ons mag verwachten: een werkende basisapp in een week en een MVP binnen drie maanden. En iemand die bijspringt als het piekt.",
@@ -370,7 +370,7 @@ export const SECTOREN: Record<string, SectorDetail> = {
     naam: "Publieke sector",
     icon: "building-2",
     heroTheme: "publiek",
-    metaTitle: "Software voor de publieke sector — beleid sneller in uitvoering",
+    metaTitle: "Software voor de publieke sector: beleid sneller in uitvoering",
     metaDescription:
       "Applicaties die meebewegen met nieuwe wetgeving. Toegankelijke loketten, verbonden ketens en herbruikbare bouwblokken.",
 
@@ -560,7 +560,7 @@ export const SECTOREN: Record<string, SectorDetail> = {
     naam: "Zorg",
     icon: "heart-pulse",
     heroTheme: "zorg",
-    metaTitle: "Software voor de zorg — minder administratie, meer tijd voor de patiënt",
+    metaTitle: "Software voor de zorg: minder administratie, meer tijd voor de patiënt",
     metaDescription:
       "Applicaties en integraties bovenop je bestaande zorgsystemen. Minder registratielast, betere planning, live binnen weken.",
 
@@ -577,7 +577,7 @@ export const SECTOREN: Record<string, SectorDetail> = {
     herkenning: [
       "“Systemen wisselen niet uit, dus dezelfde gegevens worden drie keer ingevoerd.”",
       "“Het kernsysteem is gesloten: elke wens wordt een leveranciersproject.”",
-      "“Roosters en capaciteit worden nog in Excel gelegd, met last-minute gaten.”",
+      "“Roosters en capaciteit houden we nog in Excel bij, met last-minute gaten.”",
       "“Cliënten en patiënten verwachten digitaal contact; wij bieden een telefoonnummer.”",
     ],
 
@@ -749,7 +749,7 @@ export const SECTOREN: Record<string, SectorDetail> = {
     naam: "Manufacturing",
     icon: "factory",
     heroTheme: "manufacturing",
-    metaTitle: "Software voor manufacturing — planning, kwaliteit en shopfloor verbonden",
+    metaTitle: "Software voor manufacturing: planning, kwaliteit en shopfloor verbonden",
     metaDescription:
       "Applicaties bovenop je bestaande ERP, MES en machinedata. Kortere doorlooptijden, minder stilstand, live binnen weken.",
 
@@ -759,13 +759,13 @@ export const SECTOREN: Record<string, SectorDetail> = {
 
     h1: "Productie die meebeweegt met de vraag",
     intro:
-      "Je machines produceren al data en je ERP staat er al. Wij bouwen planning, kwaliteit en shopfloor daar bovenop — live binnen weken.",
+      "Je machines produceren al data en je ERP staat er al. Wij bouwen planning, kwaliteit en shopfloor daar bovenop. Live binnen weken.",
 
     herkenningTitel: "Wat we op productievloeren steeds terug horen",
     herkenning: [
       "“De machines produceren data, maar we sturen nog op gevoel.”",
       "“De planning van maandagochtend klopt woensdag al niet meer.”",
-      "“Kwaliteitsdata zit in MES, LIMS en Excel — nergens bij elkaar.”",
+      "“Kwaliteitsdata zit in MES, LIMS en Excel, nergens bij elkaar.”",
       "“Een storing zie je pas als de lijn stilstaat.”",
     ],
 
@@ -798,7 +798,7 @@ export const SECTOREN: Record<string, SectorDetail> = {
     oplossingen: [
       {
         pijn: "“Onze machines produceren data die niemand gebruikt”",
-        kost: "Verbeterpotentieel blijft op de vloer liggen; besluiten worden op ervaring genomen in plaats van op cijfers",
+        kost: "Verbeterpotentieel blijft op de vloer liggen; de vloer beslist op ervaring in plaats van op cijfers",
         oplossing:
           "Smart manufacturing apps die IoT- en machinedata koppelen aan realtime dashboards en KPI-visualisatie",
         laag: "toekomst",
@@ -814,7 +814,7 @@ export const SECTOREN: Record<string, SectorDetail> = {
         pijn: "“Kwaliteitsdata zit in losse systemen”",
         kost: "Continu verbeteren stagneert; afkeur en herbewerking blijven onzichtbaar tot de maandrapportage",
         oplossing:
-          "Quality apps met integraties naar MES, LIMS en PLM — registratie, afwijkingen en trends in één beeld",
+          "Quality apps met integraties naar MES, LIMS en PLM: registratie, afwijkingen en trends in één beeld",
         laag: "operatie",
       },
       {
@@ -1003,7 +1003,7 @@ export const SECTOREN: Record<string, SectorDetail> = {
       },
       {
         pijn: "AI-enabled development",
-        kost: "AI wordt her en der gebruikt bij bouwen en testen, zonder afspraken over kwaliteit en controle",
+        kost: "Teams gebruiken AI her en der bij bouwen en testen, zonder afspraken over kwaliteit en controle",
         oplossing:
           "AI inzetten in analyse, development, testen, documentatie en beheer, binnen dezelfde governance als de rest",
         laag: "toekomst",
@@ -1013,7 +1013,7 @@ export const SECTOREN: Record<string, SectorDetail> = {
     bouwenTitel: "",
     useCases: [],
 
-    aanpakTitel: "Strategie, Start, Structure, Scale — en meten wat het oplevert",
+    aanpakTitel: "Strategie, Start, Structure, Scale, en meten wat het oplevert",
     aanpakFoto: "/assets/photos/team-overleg-cafe.webp",
     aanpakFotoPositie: "50% 35%",
     stappen: [

@@ -24,7 +24,7 @@ export function SollicitatieForm({
   vacatureSlug,
   vacatureTitel,
   heading = "Solliciteren? Zo gepiept.",
-  intro = "Naam en e-mail is genoeg om te beginnen. Voeg toe wat je makkelijk bij de hand hebt — geen motivatiebrief nodig. We lezen elke sollicitatie zelf.",
+  intro = "Naam en e-mail is genoeg om te beginnen. Voeg toe wat je makkelijk bij de hand hebt; een motivatiebrief hoeft niet. We lezen elke sollicitatie zelf.",
 }: {
   vacatureSlug: string;
   vacatureTitel: string;
@@ -134,7 +134,7 @@ export function SollicitatieForm({
         <textarea
           id="s-mot"
           name="motivatie"
-          placeholder="Een paar zinnen waarom deze rol je aanspreekt is genoeg. Wat je écht leuk lijkt, hoe je bij ons terechtkwam — zeg het op je eigen manier."
+          placeholder="Een paar zinnen waarom deze rol je aanspreekt is genoeg. Wat je écht leuk lijkt, hoe je bij ons terechtkwam: zeg het op je eigen manier."
           aria-invalid={err("motivatie") ? true : undefined}
           aria-describedby={err("motivatie") ? "serr-mot" : "s-mot-help"}
         />
@@ -144,7 +144,7 @@ export function SollicitatieForm({
           </p>
         ) : (
           <p className="field-help" id="s-mot-help">
-            Liever niet typen? Upload je motivatie hieronder als bestand — allebei mag, geen van
+            Liever niet typen? Upload je motivatie hieronder als bestand. Allebei mag, geen van
             beide moet.
           </p>
         )}

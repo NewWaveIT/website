@@ -11,7 +11,7 @@ const INIT: LeadState = { ok: false, message: "" };
  */
 export function LeadCta({
   titel = "Blijf voorop met onze inzichten",
-  tekst = "Eén mail per maand met onze scherpste inzichten over technologie in jouw sector. Geen sales — uitschrijven kan altijd.",
+  tekst = "Eén mail per maand met onze scherpste inzichten over technologie in jouw sector. Geen sales, uitschrijven kan altijd.",
 }: {
   titel?: string;
   tekst?: string;

@@ -249,7 +249,7 @@ export const PAGE_DEFAULTS = {
       "Wij geloven dat succesvolle verandering begint bij mensen. Daarom verzorgen wij alle randvoorwaarden voor onze Wavers, en helpen zij onze partners maximaal digitaal versnellen. Zo staat jouw organisatie klaar voor de dag van overmorgen.",
     missieTitel: "Maximale digitale impact, met de mens als maat.",
     missieP1:
-      "The New Wave IT is opgericht vanuit één overtuiging: technologie is het middel, de mens is de maat. Wij zijn geen anonieme delivery-machine. Je werkt met mensen die je vraagstuk écht doorgronden, van de eerste sessie tot livegang en daarna.",
+      "We richtten The New Wave IT op vanuit één overtuiging: technologie is het middel, de mens is de maat. Wij zijn geen anonieme delivery-machine. Je werkt met mensen die je vraagstuk écht doorgronden, van de eerste sessie tot livegang en daarna.",
     missieP2:
       "Dat doen we door op elk project de mensen te kiezen van wie de ervaring, skills en ambitie het beste passen bij jouw vraagstuk. Ons doel? Dat elk mens werk doet dat aansluit bij zijn of haar persoonlijke doelen en drijfveren.",
     teamTitel: "Ontmoet de Wavers.",
@@ -295,12 +295,12 @@ export const PAGE_DEFAULTS = {
     heroAccent: "een dienst met vaste scope",
     heroTitleEnd: ".",
     heroLead:
-      "Onze basis is capaciteit: consultants die in jouw team meebouwen aan Mendix en AI. Wil je eerst richting, snelheid of een fundering, dan hebben we daar afgebakende diensten voor — met een vaste scope en een prijs vooraf.",
+      "Onze basis is capaciteit: consultants die in jouw team meebouwen aan Mendix en AI. Wil je eerst richting, snelheid of een fundering, dan hebben we daar afgebakende diensten voor, met een vaste scope en een prijs vooraf.",
 
     basisKicker: "Onze basisdienstverlening · doorlopend",
     basisTitel: "Consultant inhuren",
     basisTekst:
-      "Waar de meeste van onze samenwerkingen beginnen en eindigen: een consultant die naast je team komt staan en meebouwt. Aan een Mendix-applicatie, aan AI in je processen, of aan allebei — want in de praktijk loopt dat door elkaar heen. Heb je op dat niveau iemand nodig die de richting bewaakt, dan schuift er een strategisch adviseur aan. Je huurt geen uren in, je haalt iemand binnen die je landschap leert kennen en kennis achterlaat.",
+      "Waar de meeste van onze samenwerkingen beginnen en eindigen: een consultant die naast je team komt staan en meebouwt. Aan een Mendix-applicatie, aan AI in je processen, of aan allebei, want in de praktijk loopt dat door elkaar heen. Heb je op dat niveau iemand nodig die de richting bewaakt, dan schuift er een strategisch adviseur aan. Je huurt geen uren in, je haalt iemand binnen die je landschap leert kennen en kennis achterlaat.",
     basisRol1Label: "Mendix",
     basisRol1Naam: "Developer & lead",
     basisRol1Tekst: "Bouwt mee in je bestaande teams of zet er een op.",
@@ -328,12 +328,12 @@ export const PAGE_DEFAULTS = {
     instapKicker: "Begin hier",
     instapTitel: "Of begin met één dag",
     instapIntro:
-      "Wil je liever eerst zien wat het oplevert voordat je mensen inhuurt? Dan starten we met een dag. Aan het eind ligt er iets werkends waar je intern mee verder kunt — zonder vervolgverplichting.",
+      "Wil je liever eerst zien wat het oplevert voordat je mensen inhuurt? Dan starten we met een dag. Aan het eind ligt er iets werkends waar je intern mee verder kunt, zonder vervolgverplichting.",
 
     verdiepingKicker: "Verder in het traject",
     verdiepingTitel: "Zes diensten voor als je al onderweg bent",
     verdiepingIntro:
-      "Niet nodig om nu te kiezen — ze komen meestal pas aan de orde als de eerste app draait of het team groeit. Voor de volledigheid staan ze hier wel.",
+      "Niet nodig om nu te kiezen: ze komen meestal pas aan de orde als de eerste app draait of het team groeit. Voor de volledigheid staan ze hier wel.",
     verdiepingRichtingTekst: "Voor als je al bouwt en wilt weten of je de goede kant op schaalt.",
     verdiepingCapaciteitTekst:
       "Als je van één app naar een portfolio wilt en je eigen mensen het moeten dragen.",
@@ -355,7 +355,7 @@ export const PAGE_DEFAULTS = {
     ctaTitel: "Niet zeker welke dienst bij jouw vraagstuk past?",
   },
   "diensten-mendix": {
-    metaTitle: "Mendix — van App in a Day tot Fusion Team",
+    metaTitle: "Mendix: van App in a Day tot Fusion Team",
     metaDescription:
       "Drie diensten om met Mendix te starten of op te schalen: App in a Day, de Mendix Scale Sessie en de Fusion Team Startsprint.",
     badgeLabel: "Mendix",
@@ -366,7 +366,7 @@ export const PAGE_DEFAULTS = {
     ctaTitel: "Welke stap past bij jouw Mendix-landschap?",
   },
   "diensten-ai": {
-    metaTitle: "AI — van AI Agent in a Day tot de Opportunity Scan",
+    metaTitle: "AI: van AI Agent in a Day tot de Opportunity Scan",
     metaDescription:
       "Twee diensten om met AI te starten: de AI Agent in a Day-workshop en de AI Opportunity Scan om de grootste kansen te prioriteren.",
     badgeLabel: "AI",
@@ -377,7 +377,7 @@ export const PAGE_DEFAULTS = {
     ctaTitel: "Welke stap past bij jullie AI-ambitie?",
   },
   "diensten-strategie": {
-    metaTitle: "Strategie — van AI-strategie tot IT-strategie op low-code en AI",
+    metaTitle: "Strategie: van AI-strategie tot IT-strategie op low-code en AI",
     metaDescription:
       "Twee diensten om koers te bepalen: AI-strategie voor de directie en IT-strategie op low-code en AI voor de CIO.",
     badgeLabel: "Strategie",
@@ -386,7 +386,7 @@ export const PAGE_DEFAULTS = {
       "Twee diensten voor twee vragen: waar verandert AI ons verdienmodel (directie), en waar past low-code in ons landschap (CIO).",
     instapTitel: "Nog aan het oriënteren?",
     instapTekst:
-      "Begin met een korte, vrijblijvende kennismaking van twintig minuten — geen verplichtingen, wel een eerlijk beeld van waar je staat.",
+      "Begin met een korte, vrijblijvende kennismaking van twintig minuten. Geen verplichtingen, wel een eerlijk beeld van waar je staat.",
     instapKnop: "Plan een kennismaking (20 min)",
     crossrefTitel: "Ook relevant vanuit Strategie",
     ctaTitel: "Klaar om koers te bepalen?",

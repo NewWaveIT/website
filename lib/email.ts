@@ -56,7 +56,7 @@ async function verstuur(payload: {
 }): Promise<void> {
   const key = process.env.RESEND_API_KEY;
   if (!key) {
-    console.warn(`[email] RESEND_API_KEY ontbreekt — mail overgeslagen: ${payload.subject}`);
+    console.warn(`[email] RESEND_API_KEY ontbreekt, mail overgeslagen: ${payload.subject}`);
     return;
   }
   const body: Record<string, unknown> = {
@@ -169,7 +169,7 @@ function footerPubliek(redenHtml: string): string {
       <tr><td style="font-family:'Courier New',Courier,monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#F15822;padding-bottom:10px;mso-line-height-rule:exactly;line-height:16px;">De nieuwe golf in IT-consultancy</td></tr>
       <tr><td style="font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#AC9D85;mso-line-height-rule:exactly;line-height:20px;">
         The New Wave IT &nbsp;·&nbsp; <a href="${SITE}" style="color:#AC9D85;text-decoration:underline;">thenewwaveit.com</a><br>
-        ${redenHtml} — <a href="${SITE}/privacy" style="color:#AC9D85;text-decoration:underline;">privacyverklaring</a>.
+        ${redenHtml}. <a href="${SITE}/privacy" style="color:#AC9D85;text-decoration:underline;">privacyverklaring</a>.
       </td></tr>
     </table>
   </td></tr>`;
@@ -220,9 +220,9 @@ ${FOOTER_ADMIN}`;
   await verstuur({
     from: FROM_ADMIN,
     to: NOTIFY,
-    subject: `Nieuwe sollicitatie · ${a.vacature} — ${a.naam}`,
+    subject: `Nieuwe sollicitatie · ${a.vacature} · ${a.naam}`,
     html: omhulsel(
-      `Nieuwe sollicitatie van ${a.naam} op de vacature ${a.vacature} — bekijk het dossier in de admin.`,
+      `Nieuwe sollicitatie van ${a.naam} op de vacature ${a.vacature}. Bekijk het dossier in de admin.`,
       inner,
     ),
   });
@@ -245,7 +245,7 @@ ${GOLFBALK}
   <div style="height:16px;line-height:16px;font-size:0;">&nbsp;</div>
   Bedankt voor je sollicitatie op <strong style="color:#2E251A;">${escapeHtml(a.vacature)}</strong>. We hebben alles goed ontvangen.
   <div style="height:16px;line-height:16px;font-size:0;">&nbsp;</div>
-  We nemen 'm zorgvuldig door en je hoort <strong style="color:#2E251A;">binnen vijf werkdagen</strong> van ons — ook als het deze keer geen match is.
+  We nemen 'm zorgvuldig door en je hoort <strong style="color:#2E251A;">binnen vijf werkdagen</strong> van ons, ook als het deze keer geen match is.
 </td></tr>
 <tr><td style="padding:28px 36px 0 36px;">
   <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="width:100%;border-collapse:collapse;background:#F4F1EA;">
@@ -264,7 +264,7 @@ ${GOLFBALK}
 </td></tr>
 ${stappen("Hoe het verder gaat", [
   "We lezen je sollicitatie en koppelen binnen vijf werkdagen terug.",
-  "Klikt het? Dan plannen we een kennismaking van een half uur — bij ons of digitaal.",
+  "Klikt het? Dan plannen we een kennismaking van een half uur, bij ons of digitaal.",
   "Daarna een verdiepend gesprek met het team waar je terechtkomt.",
 ])}
 ${knop(`${SITE}/over-ons`, "Maak vast kennis met het team", "32px 36px 0 36px")}
@@ -315,9 +315,9 @@ ${FOOTER_ADMIN}`;
   await verstuur({
     from: FROM_ADMIN,
     to: NOTIFY,
-    subject: `Nieuwe aanvraag · ${a.organisatie || a.naam}${a.onderwerp ? ` — ${a.onderwerp}` : ""}`,
+    subject: `Nieuwe aanvraag · ${a.organisatie || a.naam}${a.onderwerp ? ` · ${a.onderwerp}` : ""}`,
     html: omhulsel(
-      `Nieuwe aanvraag van ${a.organisatie || a.naam}${a.onderwerp ? ` over ${a.onderwerp}` : ""} — pak op binnen één werkdag.`,
+      `Nieuwe aanvraag van ${a.organisatie || a.naam}${a.onderwerp ? ` over ${a.onderwerp}` : ""}. Pak op binnen één werkdag.`,
       inner,
     ),
   });
@@ -359,7 +359,7 @@ ${GOLFBALK}
   </table>
 </td></tr>
 ${stappen("Hoe het verder gaat", [
-  "Een consultant met de juiste ervaring pakt je vraag op — binnen één werkdag.",
+  "Een consultant met de juiste ervaring pakt je vraag op, binnen één werkdag.",
   "In een kort gesprek scherpen we samen de vraag en de scope aan.",
   "Je krijgt een concreet voorstel met aanpak, team en doorlooptijd.",
 ])}

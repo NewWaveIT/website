@@ -248,7 +248,7 @@ export const DIENSTEN: Record<string, DienstDetail> = {
       "Je wilt dat business en IT samen bouwen in plaats van specificaties uitwisselen.",
     ],
     nietWanneer: [
-      "Je proces is standaard en je zoekt standaardsoftware — dan is een pakket vrijwel altijd goedkoper.",
+      "Je proces is standaard en je zoekt standaardsoftware. Dan is een pakket vrijwel altijd goedkoper.",
       "Je wilt een prototype om te laten zien, niet iets dat morgen in gebruik gaat.",
       "Je wilt de bouw volledig uitbesteden: al onze diensten gaan ervan uit dat jullie eigen mensen meedoen en het daarna zelf kunnen.",
     ],
@@ -415,7 +415,7 @@ export const DIENSTEN: Record<string, DienstDetail> = {
       "Je teams willen het zelf doen: één echte taak meenemen en er een werkende agent voor bouwen.",
     ],
     nietWanneer: [
-      "Je zoekt één AI-tool om aan te schaffen — wij beginnen bij jullie processen, niet bij een product.",
+      "Je zoekt één AI-tool om aan te schaffen. Wij beginnen bij jullie processen, niet bij een product.",
       "Je wilt een presentatie over de mogelijkheden; onze dagen zijn werksessies waarin je team zelf bouwt.",
       "Er is geen enkele ruimte om afspraken te maken over wat er met bedrijfsgegevens mag.",
     ],
@@ -576,13 +576,13 @@ export const DIENSTEN: Record<string, DienstDetail> = {
     // VOORZET — zie de toelichting bij Mendix hierboven.
     welNietTitel: "Wanneer een strategietraject wel past, en wanneer niet",
     welWanneer: [
-      "De eindverantwoordelijke zit zelf aan tafel — zonder directie werkt het niet.",
+      "De eindverantwoordelijke zit zelf aan tafel: zonder directie werkt het niet.",
       "Low-code en AI groeien harder dan de inrichting eromheen, en je wilt weten waar ze wél en niet passen.",
       "Je wilt vastgestelde prioriteiten, inclusief een expliciete niet-doen-lijst.",
     ],
     nietWanneer: [
       "De directie kan er niet zelf bij zijn; dan levert het een document op dat niemand draagt.",
-      "Je wilt volgende week bouwen — begin dan bij App in a Day of AI Agent in a Day en kom hier later terug.",
+      "Je wilt volgende week bouwen. Begin dan bij App in a Day of AI Agent in a Day en kom hier later terug.",
     ],
     ctaTitle: "Klaar om van ambitie naar uitvoering te gaan?",
   },

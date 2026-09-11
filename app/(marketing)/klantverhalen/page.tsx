@@ -13,7 +13,7 @@ import { SlotCta } from "@/components/layout/slot-cta";
 import "./klantverhalen.css";
 
 export const metadata: Metadata = {
-  title: "Klantverhalen — resultaat dat je kunt navragen",
+  title: "Klantverhalen: resultaat dat je kunt navragen",
   description:
     "Verhalen van organisaties in de publieke sector, mobiliteit, banken, zorg en manufacturing, verteld met de cijfers erbij.",
   alternates: { canonical: "/klantverhalen" },
@@ -115,7 +115,7 @@ export default async function KlantverhalenPage() {
             <h2>Nog geen klantverhaal in jouw sector? Dit is wat je kunt verwachten.</h2>
             <p>
               We werken pas kort genoeg samen met organisaties als Moove om al hun verhaal te kunnen
-              delen — de rest volgt. Hieronder alvast het type resultaat dat we per sector al
+              delen. De rest volgt. Hieronder alvast het type resultaat dat we per sector al
               aantoonbaar leveren.
             </p>
           </div>

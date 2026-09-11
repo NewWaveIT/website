@@ -157,7 +157,7 @@ export function HeroSector() {
           Business en IT als <span className="hsec-h1-accent">één beweging</span>.
         </h1>
         <p className="hsec-intro">
-          Sectorkennis, Mendix en AI in één team — van eerste sessie tot werkende software voor de
+          Sectorkennis, Mendix en AI in één team, van eerste sessie tot werkende software voor de
           mensen die ermee werken.
         </p>
         <div className="hsec-acties">

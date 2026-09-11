@@ -35,9 +35,8 @@ export default function Error({
             </div>
             <h1>Er ging iets mis</h1>
             <p>
-              Door een onverwachte fout kon deze pagina niet worden geladen. Probeer het opnieuw —
-              lukt het dan nog steeds niet, ga terug naar de homepage of neem gerust contact met ons
-              op.
+              Door een onverwachte fout konden we deze pagina niet laden. Probeer het opnieuw; lukt
+              het dan nog steeds niet, ga terug naar de homepage of neem gerust contact met ons op.
             </p>
             <div className="nf-actions">
               <button type="button" onClick={reset} className="btn btn-primary">
