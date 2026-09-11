@@ -5,7 +5,7 @@
 -- RLS staat aan; anonieme bezoekers mogen alleen INSERTen, nooit lezen.
 
 -- ============================================================
--- Contactaanvragen (contact / strategiegesprek / quick scan)
+-- Contactaanvragen (gesprek / dienstaanvraag / kennismaking)
 -- ============================================================
 create table if not exists public.contact_aanvragen (
   id           uuid primary key default gen_random_uuid(),
@@ -15,7 +15,9 @@ create table if not exists public.contact_aanvragen (
   bedrijf      text,
   onderwerp    text,
   bericht      text not null,
-  type         text not null default 'contact', -- contact | strategiegesprek | quickscan | sectorrapport
+  type         text not null default 'contact', -- gesprek | dienstaanvraag | kennismaking
+  -- De default 'contact' is historisch; de server action zet altijd zelf een
+  -- waarde uit CONTACT_TYPES (lib/services-vragen.ts).
   status       text not null default 'nieuw'    -- nieuw | in_behandeling | afgehandeld
 );
 

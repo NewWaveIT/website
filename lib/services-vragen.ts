@@ -10,8 +10,14 @@
  * Toegestane waarden voor `?type=` en het verborgen type-veld. Eén bron voor de
  * pagina (die de queryparameter filtert) en de server action (die het formulier
  * valideert) — anders is de whitelist client-side te omzeilen.
+ *
+ * `sectorrapport` stond hier ook in, maar de enige ingang die dat type zette was
+ * het leadgenblok op de homepage, en dat is afgeschaft (zie
+ * docs/archief/2026-09-11-leadgenblok-homepage.md). Een type dat niets meer kan
+ * aanmaken hoort niet in een whitelist: `?type=sectorrapport` valt nu terug op
+ * "gesprek". Bestaande rijen met die waarde blijven gewoon staan.
  */
-export const CONTACT_TYPES = ["gesprek", "dienstaanvraag", "sectorrapport", "kennismaking"];
+export const CONTACT_TYPES = ["gesprek", "dienstaanvraag", "kennismaking"];
 
 export type VraagKey =
   | "claudeToegang"

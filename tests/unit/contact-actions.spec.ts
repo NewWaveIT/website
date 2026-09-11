@@ -134,6 +134,19 @@ describe("submitContact", () => {
     expect((insertMock.mock.calls[0]![0] as { type: string }).type).toBe("kennismaking");
   });
 
+  it("laat een afgeschaft type terugvallen op gesprek", async () => {
+    // `sectorrapport` stond in de whitelist zolang het leadgenblok op de
+    // homepage bestond. Dat blok is afgeschaft (docs/archief/2026-09-11-
+    // leadgenblok-homepage.md), dus niets zet dit type nog. Een oude link of
+    // bookmark met ?type=sectorrapport hoort een gewoon gesprek te worden.
+    const result = await submitContact(
+      initialState,
+      formData({ naam: "Jane Doe", email: "jane@example.com", type: "sectorrapport" }),
+    );
+    expect(result.ok).toBe(true);
+    expect((insertMock.mock.calls[0]![0] as { type: string }).type).toBe("gesprek");
+  });
+
   it("negeert een verzonnen type in plaats van het rauw op te slaan", async () => {
     const result = await submitContact(
       initialState,

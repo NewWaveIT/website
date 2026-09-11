@@ -99,8 +99,8 @@ export async function submitContact(
   }
 
   // Een gekozen dienst maakt het een dienstaanvraag, ook als de bezoeker op de
-  // algemene contactpagina begon. Een specifiekere ingang (kennismaking,
-  // sectorrapport) blijft wel staan.
+  // algemene contactpagina begon. Een specifiekere ingang (kennismaking) blijft
+  // wel staan.
   const ruwType = str(formData, "type");
   const gekozenType = CONTACT_TYPES.includes(ruwType) ? ruwType : "";
   const type =
