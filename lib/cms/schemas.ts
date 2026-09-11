@@ -156,6 +156,10 @@ const sectoren = z.object({
   metaTitle: tekst,
   metaDescription: tekst,
 
+  hook: tekst,
+  pitch: tekst,
+  kpiLabel: tekst,
+
   h1: tekst,
   intro: tekst,
 

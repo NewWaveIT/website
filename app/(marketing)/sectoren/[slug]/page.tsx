@@ -4,40 +4,7 @@ import { citaat } from "@/lib/utils";
 import Link from "next/link";
 import Image from "next/image";
 import { notFound } from "next/navigation";
-import {
-  ArrowRight,
-  ArrowUpRight,
-  Handshake,
-  Building2,
-  Truck,
-  Banknote,
-  HeartPulse,
-  Factory,
-  CalendarCheck,
-  Route,
-  ScanBarcode,
-  BatteryCharging,
-  PackageSearch,
-  ClipboardCheck,
-  FileCheck,
-  Users,
-  ShieldCheck,
-  Workflow,
-  Gauge,
-  Boxes,
-  BrainCircuit,
-  MonitorSmartphone,
-  ClipboardList,
-  Sparkles,
-  UserRound,
-  CalendarDays,
-  Bed,
-  CalendarClock,
-  TabletSmartphone,
-  BadgeCheck,
-  Wrench,
-  Landmark,
-} from "lucide-react";
+import { ArrowRight, ArrowUpRight, Handshake } from "lucide-react";
 import { Kruimelpad } from "@/components/kruimelpad";
 import { JsonLd } from "@/components/json-ld";
 import { SectorHeroAnim } from "@/components/sector-hero-anim";
@@ -45,43 +12,13 @@ import { getSectorBySlug, getSectorSlugs, getSectoren } from "@/lib/sectoren-det
 import { getArtikelenVoorSector, isoDatum } from "@/lib/inzichten-data";
 import { getTeamleden } from "@/lib/team-data";
 import { SITE_URL } from "@/lib/site";
-import type { SectorIcon, TeamRegel } from "@/lib/sectoren-detail";
+import type { TeamRegel } from "@/lib/sectoren-detail";
+import { SECTOR_ICONEN } from "@/components/sector-iconen";
 import type { Teamlid } from "@/lib/team";
 import "./sector-detail.css";
 
 /** De lucide-iconen die het ontwerp gebruikt. Compleet per constructie: een
  *  ontbrekend icoon is een typefout, geen lege plek op de pagina. */
-const ICONEN: Record<SectorIcon, React.ComponentType<{ className?: string }>> = {
-  "building-2": Building2,
-  truck: Truck,
-  banknote: Banknote,
-  "heart-pulse": HeartPulse,
-  factory: Factory,
-  "calendar-check": CalendarCheck,
-  route: Route,
-  "scan-barcode": ScanBarcode,
-  "battery-charging": BatteryCharging,
-  "package-search": PackageSearch,
-  "clipboard-check": ClipboardCheck,
-  "file-check": FileCheck,
-  users: Users,
-  "shield-check": ShieldCheck,
-  workflow: Workflow,
-  gauge: Gauge,
-  boxes: Boxes,
-  "brain-circuit": BrainCircuit,
-  "monitor-smartphone": MonitorSmartphone,
-  "clipboard-list": ClipboardList,
-  sparkles: Sparkles,
-  "user-round": UserRound,
-  "calendar-days": CalendarDays,
-  bed: Bed,
-  "calendar-clock": CalendarClock,
-  "tablet-smartphone": TabletSmartphone,
-  "badge-check": BadgeCheck,
-  wrench: Wrench,
-  landmark: Landmark,
-};
 
 const LAAG_LABEL = {
   strategie: "Strategie",
@@ -139,7 +76,7 @@ export default async function SectorPage({ params }: { params: Promise<{ slug: s
     .filter((x): x is { regel: TeamRegel; persoon: Teamlid } => Boolean(x.persoon));
   const andereSectoren = alleSectoren.filter((x) => x.slug !== s.slug);
 
-  const Badge = ICONEN[s.icon];
+  const Badge = SECTOR_ICONEN[s.icon];
 
   return (
     <div className="p-sector">
@@ -337,7 +274,7 @@ export default async function SectorPage({ params }: { params: Promise<{ slug: s
             </div>
             <div className="ucgrid">
               {s.useCases.map((u) => {
-                const Icoon = ICONEN[u.icon];
+                const Icoon = SECTOR_ICONEN[u.icon];
                 return (
                   <article className="uccard" key={u.titel}>
                     <Icoon />

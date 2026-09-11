@@ -97,6 +97,20 @@ export interface SectorDetail {
   metaTitle: string;
   metaDescription: string;
 
+  // 0 · Overzichten
+  /**
+   * De drie korte teksten die de homepage, /sectoren en /klantverhalen tonen.
+   * Ze staan hier omdat een sector één bron hoort te hebben: daarvoor stond
+   * dezelfde pitch in vier versies op vier plekken, en liep een wijziging in de
+   * admin niet door naar de overzichten.
+   */
+  /** Het probleem in de woorden van de klant, tussen aanhalingstekens. */
+  hook: string;
+  /** Wat wij doen, in één zin. De tweede zin van `intro`, los bruikbaar. */
+  pitch: string;
+  /** Het labeltje onder de kaart, twee tot drie woorden. */
+  kpiLabel: string;
+
   // 1 · Hero
   h1: string;
   intro: string;
@@ -166,6 +180,11 @@ export const SECTOREN: Record<string, SectorDetail> = {
     metaTitle: "Software voor mobiliteit en logistiek — werkplaats, fleet en keten verbonden",
     metaDescription:
       "Apps bovenop je bestaande ERP, TMS en voertuigdata. Snellere service, minder stilstand en realtime inzicht van werkplaats tot last mile.",
+
+    hook: "“Onze assets worden slimmer, onze systemen niet.”",
+    pitch:
+      "Wij verbinden werkplaats, fleet, warehouse en klantproces in apps die live zijn binnen weken.",
+    kpiLabel: "Realtime inzicht",
 
     h1: "Van werkplaats tot last mile in één keten",
     intro:
@@ -355,6 +374,10 @@ export const SECTOREN: Record<string, SectorDetail> = {
     metaDescription:
       "Applicaties die meebewegen met nieuwe wetgeving. Toegankelijke loketten, verbonden ketens en herbruikbare bouwblokken.",
 
+    hook: "“Onze doorlooptijden groeien sneller dan onze formatie.”",
+    pitch: "Wij bouwen applicaties die in weken aanpasbaar zijn, niet in jaren.",
+    kpiLabel: "Sneller vergunnen",
+
     h1: "Software die meebeweegt met veranderende wet- en regelgeving",
     intro:
       "Gemeenten en uitvoeringsorganisaties lopen vast op systemen die nieuw beleid niet aankunnen. Wij bouwen applicaties die in weken aanpasbaar zijn, niet in jaren.",
@@ -541,6 +564,11 @@ export const SECTOREN: Record<string, SectorDetail> = {
     metaDescription:
       "Applicaties en integraties bovenop je bestaande zorgsystemen. Minder registratielast, betere planning, live binnen weken.",
 
+    hook: "“Onze mensen registreren meer dan ze zorgen.”",
+    pitch:
+      "Wij digitaliseren processen en verbinden systemen, zodat zorgverleners tijd terugkrijgen voor de patiënt.",
+    kpiLabel: "Minder registratielast",
+
     h1: "Meer tijd voor zorg, minder tijd voor systemen",
     intro:
       "De zorgvraag groeit, de handen worden schaarser en de administratie blijft. Wij digitaliseren processen en verbinden systemen, zodat zorgverleners tijd terugkrijgen voor de patiënt.",
@@ -724,6 +752,10 @@ export const SECTOREN: Record<string, SectorDetail> = {
     metaTitle: "Software voor manufacturing — planning, kwaliteit en shopfloor verbonden",
     metaDescription:
       "Applicaties bovenop je bestaande ERP, MES en machinedata. Kortere doorlooptijden, minder stilstand, live binnen weken.",
+
+    hook: "“Onze machines produceren data die niemand gebruikt.”",
+    pitch: "Wij bouwen planning, kwaliteit en shopfloor bovenop de data en het ERP die je al hebt.",
+    kpiLabel: "Kortere omsteltijden",
 
     h1: "Productie die meebeweegt met de vraag",
     intro:
@@ -909,6 +941,11 @@ export const SECTOREN: Record<string, SectorDetail> = {
     metaDescription:
       "Van tien apps naar honderd, met kwaliteit, beheer en governance op orde. Voor banken en verzekeraars die Mendix breed inzetten.",
 
+    hook: "“Elke innovatie strandt op compliance.”",
+    pitch:
+      "Wij helpen banken en verzekeraars opschalen met governance die de snelheid niet in de weg zit.",
+    kpiLabel: "Audit-proof",
+
     h1: "Van tien apps naar honderd, zonder de controle te verliezen",
     intro:
       "Met twintig Mendix-apps red je het op discipline. Bij honderd niet meer. Wij helpen banken en verzekeraars opschalen met governance die de snelheid niet in de weg zit.",
@@ -1036,3 +1073,15 @@ export const SECTOREN: Record<string, SectorDetail> = {
 };
 
 export const SECTOR_SLUGS = Object.keys(SECTOREN);
+
+/**
+ * De volgorde waarin de sectoren in de overzichten staan. Los van `SECTOREN`,
+ * want dat is een record en de sleutelvolgorde daarvan is geen ontwerpkeuze.
+ */
+export const SECTOR_VOLGORDE = [
+  "publieke-sector",
+  "mobiliteit",
+  "banken",
+  "zorg",
+  "manufacturing",
+] as const;

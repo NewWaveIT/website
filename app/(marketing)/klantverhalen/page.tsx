@@ -4,8 +4,10 @@ import { citaat } from "@/lib/utils";
 import Link from "next/link";
 import { Kruimelpad } from "@/components/kruimelpad";
 import Image from "next/image";
-import { ArrowRight, Building2, TrainFront, Banknote, HeartPulse, Factory } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { getKlantverhalen } from "@/lib/klantverhalen-data";
+import { getSectorKaarten } from "@/lib/sectoren-detail-data";
+import { SECTOR_ICONEN } from "@/components/sector-iconen";
 import { SectorHeroAnim } from "@/components/sector-hero-anim";
 import { SlotCta } from "@/components/layout/slot-cta";
 import "./klantverhalen.css";
@@ -17,86 +19,50 @@ export const metadata: Metadata = {
   alternates: { canonical: "/klantverhalen" },
 };
 
-const ICONS = {
-  "building-2": Building2,
-  "train-front": TrainFront,
-  banknote: Banknote,
-  "heart-pulse": HeartPulse,
-  factory: Factory,
+/**
+ * De drie cijfers per sector. Alleen deze staan nog in de pagina: naam, icoon en
+ * pitch komen uit `cms_sectoren`, zodat een tekstwijziging in de admin hier
+ * meteen doorwerkt.
+ *
+ * Deze getallen hebben géén bron in de sectordata — er stond een comment dat ze
+ * "1-op-1 uit lib/sectoren-detail.ts (kpis)" kwamen, maar dat veld bestaat daar
+ * niet en "6\u201310\u00d7" komt er nul keer in voor. Het is één algemene
+ * low-codeclaim die bij alle vijf de sectoren herhaald wordt. Bewust laten
+ * staan tot er cijfers zijn die je kunt onderbouwen.
+ */
+const SECTOR_KPIS: Record<string, { n: string; l: string }[]> = {
+  "publieke-sector": [
+    { n: "Korter", l: "Doorlooptijd van aanvragen" },
+    { n: "Sneller", l: "Live dan met traditionele bouw" },
+    { n: "Auditproof", l: "En AVG-compliant opgeleverd" },
+  ],
+  mobiliteit: [
+    { n: "Realtime", l: "Inzicht in assets en stromen" },
+    { n: "6–10×", l: "Sneller live met low-code" },
+    { n: "24/7", l: "Beschikbaar en beheersbaar" },
+  ],
+  banken: [
+    { n: "Audit-proof", l: "Herleidbaar en beheerst" },
+    { n: "6–10×", l: "Sneller live met low-code" },
+    { n: "100%", l: "Binnen toezicht en beleid" },
+  ],
+  zorg: [
+    { n: "Minder", l: "Registratielast" },
+    { n: "6–10×", l: "Sneller live met low-code" },
+    { n: "100%", l: "Veilig en gekoppeld aan je EPD" },
+  ],
+  manufacturing: [
+    { n: "Kortere", l: "Omsteltijden en doorlooptijd" },
+    { n: "6–10×", l: "Sneller live met low-code" },
+    { n: "Realtime", l: "Zicht van shopfloor tot boardroom" },
+  ],
 };
-
-/** Sectorbeloftes: het type resultaat dat we per sector bieden — geen quotes,
- *  geen namen, alleen de capaciteit die we al aantoonbaar in huis hebben.
- *  Cijfers komen 1-op-1 uit lib/sectoren-detail.ts (kpis), niet los verzonnen. */
-const SECTORBELOFTES: {
-  slug: string;
-  naam: string;
-  icon: keyof typeof ICONS;
-  belofte: string;
-  kpis: { n: string; l: string }[];
-}[] = [
-  {
-    slug: "publieke-sector",
-    naam: "Publieke sector",
-    icon: "building-2",
-    belofte: "Digitale dienstverlening die burgers vertrouwen.",
-    kpis: [
-      { n: "Korter", l: "Doorlooptijd van aanvragen" },
-      { n: "Sneller", l: "Live dan met traditionele bouw" },
-      { n: "Auditproof", l: "En AVG-compliant opgeleverd" },
-    ],
-  },
-  {
-    slug: "mobiliteit",
-    naam: "Mobiliteit",
-    icon: "train-front",
-    belofte: "Realtime grip op planning, assets en stromen.",
-    kpis: [
-      { n: "Realtime", l: "Inzicht in assets en stromen" },
-      { n: "6–10×", l: "Sneller live met low-code" },
-      { n: "24/7", l: "Beschikbaar en beheersbaar" },
-    ],
-  },
-  {
-    slug: "banken",
-    naam: "Banken",
-    icon: "banknote",
-    belofte: "Compliant en wendbaar, zonder concessies.",
-    kpis: [
-      { n: "Audit-proof", l: "Herleidbaar en beheerst" },
-      { n: "6–10×", l: "Sneller live met low-code" },
-      { n: "100%", l: "Binnen toezicht en beleid" },
-    ],
-  },
-  {
-    slug: "zorg",
-    naam: "Zorg",
-    icon: "heart-pulse",
-    belofte: "Meer tijd voor de patiënt, minder registratielast.",
-    kpis: [
-      { n: "Minder", l: "Registratielast" },
-      { n: "6–10×", l: "Sneller live met low-code" },
-      { n: "100%", l: "Veilig en gekoppeld aan je EPD" },
-    ],
-  },
-  {
-    slug: "manufacturing",
-    naam: "Manufacturing",
-    icon: "factory",
-    belofte: "Productie die meebeweegt met de vraag.",
-    kpis: [
-      { n: "Kortere", l: "Omsteltijden en doorlooptijd" },
-      { n: "6–10×", l: "Sneller live met low-code" },
-      { n: "Realtime", l: "Zicht van shopfloor tot boardroom" },
-    ],
-  },
-];
 
 export default async function KlantverhalenPage() {
   "use cache";
   cacheLife("content");
 
-  const verhalen = await getKlantverhalen();
+  const [verhalen, sectoren] = await Promise.all([getKlantverhalen(), getSectorKaarten()]);
   const featured = verhalen[0];
   return (
     <div className="p-klanten">
@@ -170,17 +136,17 @@ export default async function KlantverhalenPage() {
             </p>
           </div>
           <div className="belofte-grid">
-            {SECTORBELOFTES.map((s) => {
-              const Icon = ICONS[s.icon];
+            {sectoren.map((s) => {
+              const Icon = SECTOR_ICONEN[s.icon];
               return (
-                <Link href={`/sectoren/${s.slug}`} className="belofte-card" key={s.slug}>
+                <Link href={s.href} className="belofte-card" key={s.slug}>
                   <span className="ic">
                     <Icon />
                   </span>
                   <h3>{s.naam}</h3>
-                  <p>{s.belofte}</p>
+                  <p>{s.pitch}</p>
                   <div className="kpis">
-                    {s.kpis.map((k, i) => (
+                    {(SECTOR_KPIS[s.slug] ?? []).map((k, i) => (
                       <div className="kpi" key={i}>
                         <div className="n">{k.n}</div>
                         <div className="l">{k.l}</div>

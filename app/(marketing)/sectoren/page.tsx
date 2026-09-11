@@ -6,6 +6,7 @@ import { SectorHeroAnim } from "@/components/sector-hero-anim";
 import { SectorSplit } from "@/components/sector-split";
 import { SlotCta } from "@/components/layout/slot-cta";
 import { getPagina } from "@/lib/paginas-data";
+import { getSectorKaarten } from "@/lib/sectoren-detail-data";
 import { SITE_URL } from "@/lib/site";
 import "./sectoren.css";
 
@@ -16,70 +17,21 @@ export const metadata: Metadata = {
   alternates: { canonical: "/sectoren" },
 };
 
-const SECTOREN = [
-  {
-    slug: "publieke-sector",
-    naam: "Publieke sector",
-    theme: "publiek",
-    hook: "“Onze doorlooptijden groeien sneller dan onze formatie.”",
-    tekst:
-      "Van vergunningverlening tot subsidies: wij helpen overheden processen versnellen, papierstromen vervangen en volledig aantoonbaar werken, veilig en binnen alle kaders.",
-    kpi: "Sneller vergunnen",
-  },
-  {
-    slug: "mobiliteit",
-    naam: "Mobiliteit & logistiek",
-    theme: "mobiliteit",
-    hook: "“Onze assets worden slimmer, onze systemen niet.”",
-    tekst:
-      "Van assetbeheer tot reizigersinformatie: wij bouwen de systemen waarmee infra, OV en logistiek sneller schakelen op verstoringen én op groei.",
-    kpi: "Realtime inzicht",
-  },
-  {
-    slug: "banken",
-    naam: "Banken & financials",
-    theme: "banken",
-    hook: "“Elke innovatie strandt op compliance.”",
-    tekst:
-      "Compliant én wendbaar: wij digitaliseren kernprocessen van banken en financials zonder concessies aan toezicht, beheersing en klantvertrouwen.",
-    kpi: "Audit-proof",
-  },
-  {
-    slug: "zorg",
-    naam: "Zorg",
-    theme: "zorg",
-    hook: "“Onze mensen registreren meer dan ze zorgen.”",
-    tekst:
-      "Wij nemen registratielast weg en geven zorgprofessionals systemen die met ze meewerken: veilig, gekoppeld aan je EPD en gebouwd rond het echte werkproces.",
-    kpi: "Minder registratielast",
-  },
-  {
-    slug: "manufacturing",
-    naam: "Manufacturing",
-    theme: "manufacturing",
-    hook: "“Onze machines produceren data die niemand gebruikt.”",
-    tekst:
-      "Wij verbinden productie, planning en kwaliteit in applicaties die je operatie écht versnellen, gebouwd op de data die je machines al produceren.",
-    kpi: "Kortere omsteltijden",
-  },
-];
-
-const jsonLd = {
-  "@context": "https://schema.org",
-  "@type": "ItemList",
-  itemListElement: SECTOREN.map((s, i) => ({
-    "@type": "ListItem",
-    position: i + 1,
-    name: s.naam,
-    url: `${SITE_URL}/sectoren/${s.slug}`,
-  })),
-};
-
 export default async function SectorenPage() {
   "use cache";
   cacheLife("content");
 
-  const t = await getPagina("sectoren");
+  const [t, sectoren] = await Promise.all([getPagina("sectoren"), getSectorKaarten()]);
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    itemListElement: sectoren.map((s, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      name: s.naam,
+      url: `${SITE_URL}${s.href}`,
+    })),
+  };
   return (
     <div className="p-sectoren">
       <JsonLd data={jsonLd} />
@@ -106,12 +58,12 @@ export default async function SectorenPage() {
             kicker="Vijf focusmarkten"
             titel="Kies jouw sector."
             intro="Beweeg over een sector om het beeld te wisselen, of klik door naar de volledige sectoroplossing."
-            items={SECTOREN.map((s) => ({
+            items={sectoren.map((s) => ({
               naam: s.naam,
-              href: `/sectoren/${s.slug}`,
-              chal: s.tekst,
+              href: s.href,
+              chal: s.pitch,
               hook: s.hook,
-              kpi: s.kpi,
+              kpi: s.kpiLabel,
               theme: s.theme,
               cap: s.naam,
             }))}

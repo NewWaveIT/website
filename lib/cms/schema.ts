@@ -480,6 +480,25 @@ export const FIELD_SCHEMAS: Record<ContentType, FieldDef[]> = {
     { key: "metaTitle", label: "SEO-titel", type: "text", panel: "side" },
     { key: "metaDescription", label: "SEO-omschrijving", type: "textarea", panel: "side" },
 
+    {
+      key: "hook",
+      label: "Overzichten \u2014 uitspraak",
+      type: "text",
+      help: "Het probleem in de woorden van de klant, met aanhalingstekens. Staat op de homepage en op /sectoren.",
+    },
+    {
+      key: "pitch",
+      label: "Overzichten \u2014 pitch",
+      type: "textarea",
+      help: "Wat wij doen, in \u00e9\u00e9n zin. Staat op de homepage, /sectoren en /klantverhalen. Houd het onder 110 tekens, anders past het niet op de kaart.",
+    },
+    {
+      key: "kpiLabel",
+      label: "Overzichten \u2014 label",
+      type: "text",
+      help: "Twee tot drie woorden onder de pitch, bijvoorbeeld \u201cSneller vergunnen\u201d.",
+    },
+
     { key: "h1", label: "Titel (H1)", type: "text" },
     { key: "intro", label: "Intro", type: "richtext-lite" },
 
