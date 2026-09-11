@@ -2,187 +2,38 @@
 --
 -- De home-rij had 23 sleutels terwijl het schema er 10 kent. Die dertien
 -- stonden nooit in PAGE_FIELDS; ze komen uit een ontwerp van vóór de velden die
--- we eerder verwijderden. Ze doen niets -- geen pagina leest ze, de editor
--- toont ze niet -- maar ze staan er wel.
+-- we eerder verwijderden. Geen pagina leest ze en de editor toont ze niet, want
+-- die genereert zijn velden uit het schema. Ze staan er alleen.
 --
 -- Deze drift is niet met een unittest te vangen: tests/unit/cms-pages.spec.ts
 -- vergelijkt code met schema, en de database zit daar niet bij.
 --
--- De sleutellijst is gegenereerd uit PAGE_FIELDS (154 sleutels).
--- Regenereer hem als het schema wijzigt, anders ruimt stap 2 iets op dat wél
--- gebruikt wordt.
+-- De lijst hieronder is gegenereerd uit PAGE_FIELDS. Regenereer hem als het
+-- schema wijzigt, anders ruimt stap 2 iets op dat wél gebruikt wordt.
 
--- Draai stap 1 eerst en lees de uitkomst. Dit statement verwijdert alles wat
--- daar staat.
+-- Draai stap 1 eerst en lees de uitkomst. Dit verwijdert alles wat daar staat.
 
-with schema_sleutels (slug, sleutel) as (
+with schema_sleutels (slug, sleutels) as (
   values
-    ('contact', 'heroTitleStart'),
-    ('contact', 'heroAccent'),
-    ('contact', 'heroLead'),
-    ('contact', 'verwachtTitel'),
-    ('contact', 'verwacht1Titel'),
-    ('contact', 'verwacht1Tekst'),
-    ('contact', 'verwacht2Titel'),
-    ('contact', 'verwacht2Tekst'),
-    ('contact', 'verwacht3Titel'),
-    ('contact', 'verwacht3Tekst'),
-    ('contact', 'ctaTitel'),
-    ('diensten', 'heroTitleStart'),
-    ('diensten', 'heroAccent'),
-    ('diensten', 'heroTitleEnd'),
-    ('diensten', 'heroLead'),
-    ('diensten', 'basisKicker'),
-    ('diensten', 'basisTitel'),
-    ('diensten', 'basisTekst'),
-    ('diensten', 'basisRol1Label'),
-    ('diensten', 'basisRol1Naam'),
-    ('diensten', 'basisRol1Tekst'),
-    ('diensten', 'basisRol2Label'),
-    ('diensten', 'basisRol2Naam'),
-    ('diensten', 'basisRol2Tekst'),
-    ('diensten', 'basisRol3Label'),
-    ('diensten', 'basisRol3Naam'),
-    ('diensten', 'basisRol3Tekst'),
-    ('diensten', 'basisRol4Label'),
-    ('diensten', 'basisRol4Naam'),
-    ('diensten', 'basisRol4Tekst'),
-    ('diensten', 'basisPersoonRol'),
-    ('diensten', 'basisPersoonTekst'),
-    ('diensten', 'basisInzetLabel'),
-    ('diensten', 'basisInzetWaarde'),
-    ('diensten', 'basisPunt1'),
-    ('diensten', 'basisPunt2'),
-    ('diensten', 'basisPunt3'),
-    ('diensten', 'basisPunt4'),
-    ('diensten', 'basisCta'),
-    ('diensten', 'basisCtaAlt'),
-    ('diensten', 'instapKicker'),
-    ('diensten', 'instapTitel'),
-    ('diensten', 'instapIntro'),
-    ('diensten', 'verdiepingKicker'),
-    ('diensten', 'verdiepingTitel'),
-    ('diensten', 'verdiepingIntro'),
-    ('diensten', 'verdiepingRichtingTekst'),
-    ('diensten', 'verdiepingCapaciteitTekst'),
-    ('diensten', 'fase1Titel'),
-    ('diensten', 'fase1Tekst'),
-    ('diensten', 'fase2Titel'),
-    ('diensten', 'fase2Tekst'),
-    ('diensten', 'fase3Titel'),
-    ('diensten', 'fase3Tekst'),
-    ('diensten', 'fase4Titel'),
-    ('diensten', 'fase4Tekst'),
-    ('diensten', 'fase5Titel'),
-    ('diensten', 'fase5Tekst'),
-    ('diensten', 'ctaTitel'),
-    ('diensten-ai', 'metaTitle'),
-    ('diensten-ai', 'metaDescription'),
-    ('diensten-ai', 'badgeLabel'),
-    ('diensten-ai', 'heroTitleStart'),
-    ('diensten-ai', 'heroLead'),
-    ('diensten-ai', 'crossrefTitel'),
-    ('diensten-ai', 'ctaTitel'),
-    ('diensten-mendix', 'metaTitle'),
-    ('diensten-mendix', 'metaDescription'),
-    ('diensten-mendix', 'badgeLabel'),
-    ('diensten-mendix', 'heroTitleStart'),
-    ('diensten-mendix', 'heroLead'),
-    ('diensten-mendix', 'crossrefTitel'),
-    ('diensten-mendix', 'ctaTitel'),
-    ('diensten-strategie', 'metaTitle'),
-    ('diensten-strategie', 'metaDescription'),
-    ('diensten-strategie', 'badgeLabel'),
-    ('diensten-strategie', 'heroTitleStart'),
-    ('diensten-strategie', 'heroLead'),
-    ('diensten-strategie', 'instapTitel'),
-    ('diensten-strategie', 'instapTekst'),
-    ('diensten-strategie', 'instapKnop'),
-    ('diensten-strategie', 'crossrefTitel'),
-    ('diensten-strategie', 'ctaTitel'),
-    ('home', 'heroTitleStart'),
-    ('home', 'heroAccent'),
-    ('home', 'heroLead'),
-    ('home', 'ctaTitel'),
-    ('home', 'ctaKnop'),
-    ('home', 'waaromTitel'),
-    ('home', 'mensenKicker'),
-    ('home', 'mensenTitel'),
-    ('home', 'mensenP1'),
-    ('home', 'mensenP2'),
-    ('over-ons', 'heroTitleStart'),
-    ('over-ons', 'heroAccent'),
-    ('over-ons', 'heroLead'),
-    ('over-ons', 'missieTitel'),
-    ('over-ons', 'missieP1'),
-    ('over-ons', 'missieP2'),
-    ('over-ons', 'teamTitel'),
-    ('over-ons', 'teamP1'),
-    ('over-ons', 'teamP2'),
-    ('over-ons', 'ctaTitel'),
-    ('over-ons', 'waardenKicker'),
-    ('over-ons', 'waardenTitel'),
-    ('over-ons', 'waarde1Titel'),
-    ('over-ons', 'waarde1Tekst'),
-    ('over-ons', 'waarde2Titel'),
-    ('over-ons', 'waarde2Tekst'),
-    ('over-ons', 'waarde3Titel'),
-    ('over-ons', 'waarde3Tekst'),
-    ('over-ons', 'waarde4Titel'),
-    ('over-ons', 'waarde4Tekst'),
-    ('sectoren', 'heroTitleStart'),
-    ('sectoren', 'heroAccent'),
-    ('sectoren', 'heroLead'),
-    ('sectoren', 'werkwijzeKicker'),
-    ('sectoren', 'werkwijzeTitel'),
-    ('sectoren', 'wijze1Titel'),
-    ('sectoren', 'wijze1Tekst'),
-    ('sectoren', 'wijze2Titel'),
-    ('sectoren', 'wijze2Tekst'),
-    ('sectoren', 'wijze3Titel'),
-    ('sectoren', 'wijze3Tekst'),
-    ('sectoren', 'ctaTitel'),
-    ('werken-bij', 'heroTitleStart'),
-    ('werken-bij', 'heroAccent'),
-    ('werken-bij', 'heroLead'),
-    ('werken-bij', 'groeiKicker'),
-    ('werken-bij', 'groeiTitel'),
-    ('werken-bij', 'groeiIntro'),
-    ('werken-bij', 'groei1Titel'),
-    ('werken-bij', 'groei1Tekst'),
-    ('werken-bij', 'groei2Titel'),
-    ('werken-bij', 'groei2Tekst'),
-    ('werken-bij', 'groei3Titel'),
-    ('werken-bij', 'groei3Tekst'),
-    ('werken-bij', 'tpKicker'),
-    ('werken-bij', 'tpTitel'),
-    ('werken-bij', 'tpIntro'),
-    ('werken-bij', 'tp1Titel'),
-    ('werken-bij', 'tp1Tekst'),
-    ('werken-bij', 'tp2Titel'),
-    ('werken-bij', 'tp2Tekst'),
-    ('werken-bij', 'tp3Titel'),
-    ('werken-bij', 'tp3Tekst'),
-    ('werken-bij', 'cultuurKicker'),
-    ('werken-bij', 'cultuurTitel'),
-    ('werken-bij', 'cultuurP'),
-    ('werken-bij', 'cultuur1'),
-    ('werken-bij', 'cultuur2'),
-    ('werken-bij', 'cultuur3'),
-    ('werken-bij', 'cultuur4'),
-    ('werken-bij', 'ctaTitel')
+    ('contact', array['heroTitleStart', 'heroAccent', 'heroLead', 'verwachtTitel', 'verwacht1Titel', 'verwacht1Tekst', 'verwacht2Titel', 'verwacht2Tekst', 'verwacht3Titel', 'verwacht3Tekst', 'ctaTitel']),
+    ('diensten', array['heroTitleStart', 'heroAccent', 'heroTitleEnd', 'heroLead', 'basisKicker', 'basisTitel', 'basisTekst', 'basisRol1Label', 'basisRol1Naam', 'basisRol1Tekst', 'basisRol2Label', 'basisRol2Naam', 'basisRol2Tekst', 'basisRol3Label', 'basisRol3Naam', 'basisRol3Tekst', 'basisRol4Label', 'basisRol4Naam', 'basisRol4Tekst', 'basisPersoonRol', 'basisPersoonTekst', 'basisInzetLabel', 'basisInzetWaarde', 'basisPunt1', 'basisPunt2', 'basisPunt3', 'basisPunt4', 'basisCta', 'basisCtaAlt', 'instapKicker', 'instapTitel', 'instapIntro', 'verdiepingKicker', 'verdiepingTitel', 'verdiepingIntro', 'verdiepingRichtingTekst', 'verdiepingCapaciteitTekst', 'fase1Titel', 'fase1Tekst', 'fase2Titel', 'fase2Tekst', 'fase3Titel', 'fase3Tekst', 'fase4Titel', 'fase4Tekst', 'fase5Titel', 'fase5Tekst', 'ctaTitel']),
+    ('diensten-ai', array['metaTitle', 'metaDescription', 'badgeLabel', 'heroTitleStart', 'heroLead', 'crossrefTitel', 'ctaTitel']),
+    ('diensten-mendix', array['metaTitle', 'metaDescription', 'badgeLabel', 'heroTitleStart', 'heroLead', 'crossrefTitel', 'ctaTitel']),
+    ('diensten-strategie', array['metaTitle', 'metaDescription', 'badgeLabel', 'heroTitleStart', 'heroLead', 'instapTitel', 'instapTekst', 'instapKnop', 'crossrefTitel', 'ctaTitel']),
+    ('home', array['heroTitleStart', 'heroAccent', 'heroLead', 'ctaTitel', 'ctaKnop', 'waaromTitel', 'mensenKicker', 'mensenTitel', 'mensenP1', 'mensenP2']),
+    ('over-ons', array['heroTitleStart', 'heroAccent', 'heroLead', 'missieTitel', 'missieP1', 'missieP2', 'teamTitel', 'teamP1', 'teamP2', 'ctaTitel', 'waardenKicker', 'waardenTitel', 'waarde1Titel', 'waarde1Tekst', 'waarde2Titel', 'waarde2Tekst', 'waarde3Titel', 'waarde3Tekst', 'waarde4Titel', 'waarde4Tekst']),
+    ('sectoren', array['heroTitleStart', 'heroAccent', 'heroLead', 'werkwijzeKicker', 'werkwijzeTitel', 'wijze1Titel', 'wijze1Tekst', 'wijze2Titel', 'wijze2Tekst', 'wijze3Titel', 'wijze3Tekst', 'ctaTitel']),
+    ('werken-bij', array['heroTitleStart', 'heroAccent', 'heroLead', 'groeiKicker', 'groeiTitel', 'groeiIntro', 'groei1Titel', 'groei1Tekst', 'groei2Titel', 'groei2Tekst', 'groei3Titel', 'groei3Tekst', 'tpKicker', 'tpTitel', 'tpIntro', 'tp1Titel', 'tp1Tekst', 'tp2Titel', 'tp2Tekst', 'tp3Titel', 'tp3Tekst', 'cultuurKicker', 'cultuurTitel', 'cultuurP', 'cultuur1', 'cultuur2', 'cultuur3', 'cultuur4', 'ctaTitel'])
 )
 update cms_paginas p
    set data = coalesce((
          select jsonb_object_agg(k.key, p.data -> k.key)
            from jsonb_object_keys(p.data) k(key)
-          where exists (
-                  select 1 from schema_sleutels s
-                   where s.slug = p.slug and s.sleutel = k.key)
+          where k.key = any(s.sleutels)
        ), '{}'::jsonb),
        bijgewerkt_op = now()
- where exists (
+  from schema_sleutels s
+ where s.slug = p.slug
+   and exists (
          select 1 from jsonb_object_keys(p.data) k(key)
-          where not exists (
-                  select 1 from schema_sleutels s
-                   where s.slug = p.slug and s.sleutel = k.key));
+          where not (k.key = any(s.sleutels)));
