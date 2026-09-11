@@ -19,8 +19,8 @@ import { getContactpersoon } from "@/lib/team-data";
 import "./contact.css";
 
 /** Alleen cijfers/+ voor een tel:-URI. */
-function telHref(t: string): string {
-  return `tel:${t.replace(/[^\d+]/g, "")}`;
+function telHref(nummer: string): string {
+  return `tel:${nummer.replace(/[^\d+]/g, "")}`;
 }
 
 export const metadata: Metadata = {

@@ -93,3 +93,65 @@ describe("elke pagina met velden heeft een pad om te revalideren", () => {
     expect(zonderPad).toEqual([]);
   });
 });
+
+/**
+ * De andere richting: een sleutel die een pagina opvraagt maar die niet in het
+ * schema staat. `getPagina` levert `Record<string, string>`, dus `t.mensenTitell`
+ * compileert prima en rendert stil niets. Deze test leest per bestand welke
+ * pagina's het opvraagt en controleert elke `t.…` daartegen.
+ *
+ * Dit leunt op de conventie dat de paginateksten altijd `t` heten. Noem een
+ * lokale variabele in zo'n bestand dus niet ook `t` — deze test kent geen
+ * scopes en ziet dan een sleutel die niet bestaat.
+ */
+const BESTANDEN = WORTELS.flatMap((w) => bronbestanden(w)).map((pad) => ({
+  pad,
+  bron: readFileSync(pad, "utf8"),
+}));
+
+/** De paginaslugs die één bestand opvraagt; een sjabloon telt als alle treffers. */
+function opgevraagdeSlugs(bron: string): string[] {
+  const uit = new Set<string>();
+  for (const m of bron.matchAll(/getPagina\("([a-z0-9-]+)"\)/g)) uit.add(m[1]!);
+  for (const m of bron.matchAll(/getPagina\(`([a-z0-9-]*)\$\{[^}]+\}`\)/g)) {
+    const voor = m[1] ?? "";
+    for (const slug of Object.keys(PAGE_FIELDS)) if (slug.startsWith(voor)) uit.add(slug);
+  }
+  return [...uit];
+}
+
+describe("elke opgevraagde sleutel staat in het schema", () => {
+  const lezers = BESTANDEN.map((b) => ({ ...b, slugs: opgevraagdeSlugs(b.bron) })).filter(
+    (b) => b.slugs.length > 0,
+  );
+
+  it("er zijn bestanden die paginateksten lezen", () => {
+    expect(lezers.length).toBeGreaterThan(0);
+  });
+
+  for (const { pad, bron, slugs } of lezers) {
+    it(pad, () => {
+      const bekend = new Set(slugs.flatMap((s) => (PAGE_FIELDS[s] ?? []).map((v) => v.key)));
+
+      const onbekend = [...bron.matchAll(/\bt\.([a-zA-Z][A-Za-z0-9]*)\b/g)]
+        .map((m) => m[1]!)
+        .filter((k) => !bekend.has(k));
+
+      // Een lus als t[`groei${n}Titel`] moet minstens één bestaand veld raken.
+      const leegSjabloon = [...bron.matchAll(/\bt\[`([A-Za-z]*)\$\{[^}]+\}([A-Za-z]*)`\]/g)]
+        .filter(
+          ([, voor = "", na = ""]) =>
+            ![...bekend].some(
+              (k) => k.startsWith(voor) && k.endsWith(na) && k.length > voor.length + na.length,
+            ),
+        )
+        .map(([hele]) => hele);
+
+      expect(
+        [...new Set(onbekend)],
+        `${pad}: leest een sleutel die niet in PAGE_FIELDS staat`,
+      ).toEqual([]);
+      expect(leegSjabloon, `${pad}: lus over velden die niet bestaan`).toEqual([]);
+    });
+  }
+});
