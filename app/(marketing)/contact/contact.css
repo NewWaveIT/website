@@ -18,7 +18,7 @@
   border-bottom: 1px solid var(--border-subtle);
 }
 .chero .wrap-wide {
-  padding: var(--space-8) 0 var(--space-9);
+  padding-block: var(--space-8) var(--space-9);
 }
 .chero h1 {
   font-family: var(--font-display-expanded);
@@ -143,9 +143,22 @@
   font-weight: var(--fw-semibold);
   color: var(--text-strong);
 }
+/* Rasteritem: zonder dit wordt het spoor op de min-content van de <select>
+   opgemeten en past de rij niet meer op 320px. */
+.field {
+  min-width: 0;
+}
 .field input,
 .field select,
 .field textarea {
+  /* Een <select> is van zichzelf zo breed als zijn langste <option>
+     ("Low-code applicatieontwikkeling (Mendix)"), en dat telt mee als
+     min-content van de hele formulierkaart -- op 390px schoof de pagina daardoor
+     9px opzij. min-width alleen is niet genoeg: de kaart is een rasteritem en
+     dat spoor wordt op min-content opgemeten, dus de kaart krijgt hieronder
+     hetzelfde. */
+  min-width: 0;
+  max-width: 100%;
   font-family: var(--font-sans);
   font-size: var(--text-base);
   color: var(--text-body);
@@ -372,6 +385,9 @@
 @media (max-width: 1024px) {
   .contact-grid {
     grid-template-columns: 1fr;
+  }
+  .contact-grid > * {
+    min-width: 0;
   }
   .aside {
     position: static;

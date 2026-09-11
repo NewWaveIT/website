@@ -21,7 +21,7 @@
 }
 .p-vacature .shero .wrap-wide {
   position: relative;
-  padding: var(--space-8) 0 var(--space-9);
+  padding-block: var(--space-8) var(--space-9);
 }
 .p-vacature .shero .tags {
   display: flex;

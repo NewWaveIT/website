@@ -18,7 +18,7 @@
 }
 .p-klanten .dhero .wrap-wide {
   position: relative;
-  padding: var(--space-8) 0 var(--space-9);
+  padding-block: var(--space-8) var(--space-9);
 }
 .p-klanten .dhero h1 {
   font-family: var(--font-display-expanded);

@@ -18,7 +18,7 @@
   color: var(--eggshell);
 }
 .p-case .chero .wrap-wide {
-  padding: var(--space-8) 0 0;
+  padding-block: var(--space-8) 0;
 }
 .p-case .chero .tag {
   display: inline-flex;

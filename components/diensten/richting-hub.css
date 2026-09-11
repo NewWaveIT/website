@@ -21,7 +21,7 @@
 }
 .p-richting .shero .wrap-wide {
   position: relative;
-  padding: var(--space-9) 0 var(--space-10);
+  padding-block: var(--space-9) var(--space-10);
 }
 .p-richting .shero .badge {
   display: inline-flex;

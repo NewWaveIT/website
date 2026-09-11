@@ -6,7 +6,7 @@
   color: var(--eggshell);
 }
 .p-legal .legal-hero .wrap-wide {
-  padding: var(--space-8) 0 var(--space-7);
+  padding-block: var(--space-8) var(--space-7);
 }
 .p-legal .legal-hero .crumbs {
   font-family: var(--font-mono);

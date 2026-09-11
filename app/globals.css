@@ -156,6 +156,37 @@
   --ring-focus: 0 0 0 3px rgba(241, 88, 34, 0.35);
 }
 
+/* De typeschaal had geen mobiele trap: een kop van 64px stond ook op een
+   telefoon van 320px op 64px. Dat is niet alleen te groot, het brak de layout —
+   één lang woord ("Ondernemende", "Sectorkennis", "Auditproof") is op die
+   grootte breder dan de kolom, waardoor de kolom op zijn min-content-breedte
+   bleef staan en de pagina horizontaal meeschoof. Alleen de drie displaymaten
+   schalen mee; de leesmaten blijven wat ze zijn. */
+@media (max-width: 640px) {
+  :root {
+    --text-2xl: 1.75rem;
+    --text-3xl: 2.25rem;
+    --text-4xl: 3rem;
+  }
+  /* Nederlandse samenstellingen -- "Zeggenschapswijziging",
+     "applicatieontwikkeling", "Auditproof" -- zijn op 320px breder dan de kolom
+     waarin ze staan. `overflow-wrap: break-word` lost dat niet op: dat breekt het
+     woord wel bij het renderen, maar telt niet mee in de min-content-breedte
+     waarmee grid- en flexsporen worden opgemeten, dus bleef de pagina horizontaal
+     schuiven. `anywhere` telt wel mee, en grijpt alleen in als een woord echt
+     nergens past. */
+  body {
+    /* `hyphens: auto` breekt op de juiste plek mét een koppelteken
+       ("Zeggenschaps-wijziging"); de html staat op lang="nl", dus het
+       woordenboek klopt. `anywhere` blijft eronder liggen als vangnet voor wat
+       zelfs afgebroken niet past -- en het is die eigenschap, niet
+       `break-word`, die meetelt in de min-content-breedte waarmee grid- en
+       flexsporen worden opgemeten. */
+    hyphens: auto;
+    overflow-wrap: anywhere;
+  }
+}
+
 /* ============================================================
    Base — gedeelde site styles (uit ui_kits/website/site.css)
    ============================================================ */
@@ -897,6 +928,14 @@ footer.site-footer {
   }
 }
 @media (max-width: 640px) {
+  /* Een knoplabel dat niet past hoort te wikkelen, niet de pagina opzij te
+     duwen: `white-space: nowrap` op .btn maakte "Vergelijkbaar vraagstuk?"
+     259px breed in een kolom van 256. Deze regel hoort ná .btn te staan --
+     een media-query verhoogt de specificiteit niet, dus bij gelijke
+     specificiteit wint de laatste. */
+  .btn {
+    white-space: normal;
+  }
   .foot-top {
     grid-template-columns: 1fr;
   }
