@@ -27,12 +27,19 @@ export const NAV_DIENSTEN: NavLink[] = [
   { label: "Strategie", href: "/diensten/strategie" },
 ];
 
+/**
+ * De kolom "Bedrijf" in de footer: dezelfde pagina's als de hoofdnavigatie,
+ * min Sectoren en Contact — die hebben hun eigen kolom.
+ *
+ * Bewust één ingang naar de diensten en niet ook nog Mendix, AI en Strategie:
+ * dat overzicht is de beginpagina, en de drie richtingen zijn daarvandaan en
+ * via de dropdown bereikbaar. "Over ons" stond hier eerder helemaal niet in,
+ * terwijl de kolom er wel naar heet.
+ */
 export const FOOTER_BEDRIJF: NavLink[] = [
-  { label: "Zo begin je", href: "/diensten" },
-  { label: "Mendix", href: "/diensten/mendix" },
-  { label: "AI", href: "/diensten/ai" },
-  { label: "Strategie", href: "/diensten/strategie" },
+  { label: "Diensten", href: "/diensten" },
   { label: "Klantverhalen", href: "/klantverhalen" },
   { label: "Inzichten", href: "/inzichten" },
+  { label: "Over ons", href: "/over-ons" },
   { label: "Werken bij", href: "/werken-bij" },
 ];
