@@ -1,11 +1,19 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
+import { getContactgegevens } from "@/lib/contact-data";
 
 /**
  * Uniforme slot-CTA onderaan pagina's: contactformulier primair, bellen als
  * vast secundair alternatief. Eén bron zodat de CTA-taal overal gelijk is.
  */
-export function SlotCta({ titel, knop = "Plan een gesprek" }: { titel: string; knop?: string }) {
+export async function SlotCta({
+  titel,
+  knop = "Plan een gesprek",
+}: {
+  titel: string;
+  knop?: string;
+}) {
+  const contact = await getContactgegevens();
   return (
     <section className="cta">
       <div className="wrap-wide">
@@ -14,8 +22,8 @@ export function SlotCta({ titel, knop = "Plan een gesprek" }: { titel: string; k
           <Link href="/contact" className="btn btn-on">
             {knop} <ArrowRight />
           </Link>
-          <a href="tel:+31610751254" className="cta-tel">
-            of bel 06–10751254
+          <a href={`tel:${contact.telefoon}`} className="cta-tel">
+            of bel {contact.telefoonWeergave}
           </a>
         </div>
       </div>

@@ -1,10 +1,11 @@
 import Image from "next/image";
 import type { Expert, KPI, WaaromItem } from "@/lib/content-blokken";
+import { getContactgegevens } from "@/lib/contact-data";
 import "./secties.css";
 
 /** Onderbouwing: waarom wij, met wie, en wat het oplevert. */
 
-export function WaaromSectie({
+export async function WaaromSectie({
   waarom,
   experts = [],
   expertsHead,
@@ -14,6 +15,7 @@ export function WaaromSectie({
   expertsHead?: string;
 }) {
   if (!waarom.length && !experts.length) return null;
+  const contact = await getContactgegevens();
   return (
     <section className="block why" id="waarom">
       <div className="wrap-wide">
@@ -46,7 +48,7 @@ export function WaaromSectie({
                     <h3>{e.naam}</h3>
                     <div className="links">
                       <a href={`tel:${e.tel}`}>{e.tel.replace("+31", "0")}</a>
-                      <a href="mailto:hello@thenewwaveit.com">Mail</a>
+                      <a href={`mailto:${contact.email}`}>Mail</a>
                       <a
                         href="https://www.linkedin.com/company/the-new-wave-it"
                         target="_blank"

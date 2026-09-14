@@ -12,6 +12,7 @@ import { CasesCarousel } from "@/components/home/cases-carousel";
 import { MarqueePauze } from "@/components/home/marquee-pauze";
 import { SlotCta } from "@/components/layout/slot-cta";
 import { getPagina } from "@/lib/paginas-data";
+import { CONTACT_TERUGVAL } from "@/lib/contactgegevens";
 import { getKlantverhalen } from "@/lib/klantverhalen-data";
 import { getArtikelen } from "@/lib/inzichten-data";
 import { getCatalogus, getInstapPerRichting } from "@/lib/services-data";
@@ -34,7 +35,7 @@ const jsonLd = {
   description:
     "Business-specialist in Mendix, AI en strategie voor publieke sector, mobiliteit, banken, zorg en manufacturing.",
   url: SITE_URL,
-  email: "hello@thenewwaveit.com",
+  email: CONTACT_TERUGVAL.email,
   sameAs: ["https://www.linkedin.com/company/the-new-wave-it"],
 };
 

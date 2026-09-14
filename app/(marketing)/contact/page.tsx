@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 import { ContactForm } from "@/components/contact/contact-form";
 import { getPagina } from "@/lib/paginas-data";
+import { getContactgegevens } from "@/lib/contact-data";
 import { getDienstOpties } from "@/lib/services-data";
 import { getContactpersoon } from "@/lib/team-data";
 import "./contact.css";
@@ -39,8 +40,9 @@ export default async function ContactPage() {
   "use cache";
   cacheLife("content");
 
-  const [t, sales, diensten] = await Promise.all([
+  const [t, contact, sales, diensten] = await Promise.all([
     getPagina("contact"),
+    getContactgegevens(),
     getContactpersoon("sales"),
     getDienstOpties(),
   ]);
@@ -48,7 +50,7 @@ export default async function ContactPage() {
   // Sales-contactpersoon (dynamisch), met terugval op een standaard.
   const salesNaam = sales?.naam || "Koen Wijsman";
   const salesFoto = sales?.foto || "/assets/photos/portret-blauw.webp";
-  const salesTel = sales?.telefoon || "06–10751254";
+  const salesTel = sales?.telefoon || contact.telefoonWeergave;
   const salesLinkedin = sales?.linkedin || "https://www.linkedin.com/company/the-new-wave-it";
 
   return (
@@ -71,32 +73,27 @@ export default async function ContactPage() {
             {t.manierenKop}
           </h2>
           <div className="opts">
-            <a href="tel:+31610751254" className="opt">
+            <a href={`tel:${contact.telefoon}`} className="opt">
               <span className="ic">
                 <Phone />
               </span>
               <h3>{t.manier1Titel}</h3>
               <p>{t.manier1Tekst}</p>
               <span className="go">
-                06–10751254 <ArrowRight />
+                {contact.telefoonWeergave} <ArrowRight />
               </span>
             </a>
-            <a href="mailto:hello@thenewwaveit.com" className="opt">
+            <a href={`mailto:${contact.email}`} className="opt">
               <span className="ic">
                 <Mail />
               </span>
               <h3>{t.manier2Titel}</h3>
               <p>{t.manier2Tekst}</p>
               <span className="go">
-                hello@thenewwaveit.com <ArrowRight />
+                {contact.email} <ArrowRight />
               </span>
             </a>
-            <a
-              href="https://wa.me/31610751254"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="opt"
-            >
+            <a href={contact.whatsapp} target="_blank" rel="noopener noreferrer" className="opt">
               <span className="ic">
                 <MessageCircle />
               </span>

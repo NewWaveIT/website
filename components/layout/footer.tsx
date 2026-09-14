@@ -2,8 +2,16 @@ import Link from "next/link";
 import Image from "next/image";
 import { FOOTER_SECTOREN, FOOTER_BEDRIJF } from "@/lib/nav";
 import { CopyrightJaar } from "./copyright-jaar";
+import { CONTACT_TERUGVAL } from "@/lib/contactgegevens";
 
-export function Footer() {
+/**
+ * `email` als prop en niet als eigen databaseleesactie: de footer staat ook op
+ * app/error.tsx, en dat is een client component. Die kan geen async server
+ * component renderen, en hoort al helemaal niet op de database te wachten op
+ * het moment dat er net iets is misgegaan. De marketinglayout geeft de waarde
+ * uit het CMS mee; de foutpagina laat de terugval staan.
+ */
+export function Footer({ email = CONTACT_TERUGVAL.email }: { email?: string }) {
   return (
     <footer className="site-footer">
       <div className="wrap-wide">
@@ -43,7 +51,7 @@ export function Footer() {
           </div>
           <div>
             <h2>Contact</h2>
-            <a href="mailto:hello@thenewwaveit.com">hello@thenewwaveit.com</a>
+            <a href={`mailto:${email}`}>{email}</a>
             <a
               href="https://www.linkedin.com/company/the-new-wave-it"
               target="_blank"

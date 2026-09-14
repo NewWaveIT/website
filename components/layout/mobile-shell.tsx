@@ -13,7 +13,7 @@ const MENU_LINKS = [
   { label: "Werken bij", href: "/werken-bij" },
 ];
 
-export function MobileShell() {
+export function MobileShell({ email }: { email: string }) {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const [prevPathname, setPrevPathname] = useState(pathname);
@@ -170,7 +170,7 @@ export function MobileShell() {
           <Link href="/contact" className="btn btn-primary" onClick={() => setOpen(false)}>
             Plan een gesprek <ArrowRight />
           </Link>
-          <span className="sub">hello@thenewwaveit.com</span>
+          <span className="sub">{email}</span>
         </div>
       </div>
 

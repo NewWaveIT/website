@@ -1,4 +1,5 @@
 "use server";
+import { CONTACT_TERUGVAL } from "@/lib/contactgegevens";
 
 import { inzendingClient } from "@/lib/supabase/inzendingen";
 import { magDoor } from "@/lib/rate-limit";
@@ -48,13 +49,13 @@ export async function subscribeLead(_prev: LeadState, formData: FormData): Promi
     if (error) {
       return {
         ok: false,
-        message: "Er ging iets mis. Probeer het later opnieuw of mail hello@thenewwaveit.com.",
+        message: `Er ging iets mis. Probeer het later opnieuw of mail ${CONTACT_TERUGVAL.email}.`,
       };
     }
   } catch {
     return {
       ok: false,
-      message: "Er ging iets mis. Probeer het later opnieuw of mail hello@thenewwaveit.com.",
+      message: `Er ging iets mis. Probeer het later opnieuw of mail ${CONTACT_TERUGVAL.email}.`,
     };
   }
 

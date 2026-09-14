@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
+import { CONTACT_TERUGVAL } from "@/lib/contactgegevens";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 
@@ -24,8 +25,8 @@ export default function NotFound() {
               <Link href="/sectoren" className="btn btn-outline">
                 Bekijk sectoren
               </Link>
-              <a href="tel:+31610751254" className="nf-tel">
-                Of bel 06–10751254
+              <a href={`tel:${CONTACT_TERUGVAL.telefoon}`} className="nf-tel">
+                Of bel {CONTACT_TERUGVAL.telefoonWeergave}
               </a>
             </div>
           </div>

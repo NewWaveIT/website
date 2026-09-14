@@ -6,6 +6,7 @@ import Image from "next/image";
 import { Check, ArrowRight, Award } from "lucide-react";
 import { getVacatures } from "@/lib/vacatures-data";
 import { getPagina } from "@/lib/paginas-data";
+import { getContactgegevens } from "@/lib/contact-data";
 import { AWARD } from "@/lib/award";
 import { SlotCta } from "@/components/layout/slot-cta";
 import { SollicitatieForm } from "@/components/vacatures/sollicitatie-form";
@@ -24,13 +25,14 @@ export default async function WerkenBijPage() {
   cacheLife("content");
 
   // Recruitment-contactpersoon (dynamisch), met terugval op een standaard.
-  const [vacatures, t, rec] = await Promise.all([
+  const [vacatures, t, rec, contact] = await Promise.all([
     getVacatures(),
     getPagina("werken-bij"),
     getContactpersoon("recruitment"),
+    getContactgegevens(),
   ]);
   const recVoornaam = (rec?.naam || "Mitchel Wallaart").split(" ")[0] || "Mitchel";
-  const recTel = rec?.telefoon || "06–10751254";
+  const recTel = rec?.telefoon || contact.telefoonWeergave;
 
   return (
     <div className="p-werken">

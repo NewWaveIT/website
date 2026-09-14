@@ -1,7 +1,6 @@
 import { Header } from "@/components/layout/header";
-import { Footer } from "@/components/layout/footer";
-import { MobileShell } from "@/components/layout/mobile-shell";
 import { Consent } from "@/components/consent/consent";
+import { FooterMetContact, MobileShellMetContact } from "@/components/layout/schil-cms";
 
 export default function MarketingLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -10,9 +9,9 @@ export default function MarketingLayout({ children }: { children: React.ReactNod
         Direct naar inhoud
       </a>
       <Header />
-      <MobileShell />
+      <MobileShellMetContact />
       <main id="main">{children}</main>
-      <Footer />
+      <FooterMetContact />
       <Consent />
     </>
   );

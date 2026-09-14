@@ -8,6 +8,7 @@ import { notFound } from "next/navigation";
 import { Check, ArrowRight, Phone } from "lucide-react";
 import { getVacatures, getVacatureBySlug } from "@/lib/vacatures-data";
 import { getContactpersoon } from "@/lib/team-data";
+import { getContactgegevens } from "@/lib/contact-data";
 import { stripHtml, kort } from "@/lib/cms/sanitize";
 import { SollicitatieForm } from "@/components/vacatures/sollicitatie-form";
 import "./vacature.css";
@@ -101,11 +102,12 @@ export default async function VacaturePage({ params }: { params: Promise<{ slug:
 
   // Recruitment-contactpersoon (dynamisch), met terugval op een standaard.
   const rec = await getContactpersoon("recruitment");
+  const contact = await getContactgegevens();
   const recNaam = rec?.naam || "Mitchel Wallaart";
   const recVoornaam = recNaam.split(" ")[0] || recNaam;
   const recFoto = rec?.foto || "/assets/photos/portret-3.webp";
-  const recTel = rec?.telefoon || "06–10751254";
-  const recMail = rec?.email || "hello@thenewwaveit.com";
+  const recTel = rec?.telefoon || contact.telefoonWeergave;
+  const recMail = rec?.email || contact.email;
 
   const jsonLd = {
     "@context": "https://schema.org",

@@ -16,13 +16,17 @@ import { SITE_URL } from "@/lib/site";
  */
 
 const RESEND_ENDPOINT = "https://api.resend.com/emails";
+import { CONTACT_TERUGVAL } from "@/lib/contactgegevens";
 const SITE = SITE_URL;
 const LOGO = `${SITE}/assets/logos/logo-horizontal-white.png`;
 const FROM_ADMIN = process.env.MAIL_FROM || "The New Wave IT <notificaties@thenewwaveit.com>";
-const FROM_PUBLIC = process.env.MAIL_FROM_PUBLIC || "The New Wave IT <hello@thenewwaveit.com>";
+const FROM_PUBLIC = process.env.MAIL_FROM_PUBLIC || `The New Wave IT <${CONTACT_TERUGVAL.email}>`;
 const NOTIFY = process.env.NOTIFY_EMAIL || "people@thenewwaveit.com";
-const TEL = "+31610751254";
-const TEL_DISPLAY = "06–10751254";
+// De terugval en niet het CMS: een mail wordt verstuurd op het moment dat een
+// inzending net is opgeslagen, en mag daar geen tweede databaseleesactie bij
+// krijgen die kan mislukken. Zie lib/contactgegevens.ts.
+const TEL = CONTACT_TERUGVAL.telefoon;
+const TEL_DISPLAY = CONTACT_TERUGVAL.telefoonWeergave;
 
 function escapeHtml(s: string): string {
   return s

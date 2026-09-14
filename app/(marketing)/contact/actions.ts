@@ -1,4 +1,5 @@
 "use server";
+import { CONTACT_TERUGVAL } from "@/lib/contactgegevens";
 
 import { inzendingClient } from "@/lib/supabase/inzendingen";
 import { sendAanvraagNotificatie, sendAanvraagBevestiging } from "@/lib/email";
@@ -129,15 +130,13 @@ export async function submitContact(
     if (error) {
       return {
         ok: false,
-        message:
-          "Er ging iets mis bij het versturen. Probeer het later opnieuw of mail hello@thenewwaveit.com.",
+        message: `Er ging iets mis bij het versturen. Probeer het later opnieuw of mail ${CONTACT_TERUGVAL.email}.`,
       };
     }
   } catch {
     return {
       ok: false,
-      message:
-        "Er ging iets mis bij het versturen. Probeer het later opnieuw of mail hello@thenewwaveit.com.",
+      message: `Er ging iets mis bij het versturen. Probeer het later opnieuw of mail ${CONTACT_TERUGVAL.email}.`,
     };
   }
 

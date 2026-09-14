@@ -84,6 +84,20 @@ export const PAGE_FIELDS = {
     { key: "adresTitel", label: "Bezoekadres — titel", type: "text" },
     { key: "adresRegel", label: "Bezoekadres — regel", type: "text" },
     { key: "ctaTitel", label: "Slot-CTA — titel", type: "text" },
+    { key: "emailAdres", label: "Contactgegevens — e-mailadres", type: "text" },
+    {
+      key: "telefoonNummer",
+      label: "Contactgegevens — telefoonnummer (voor de link)",
+      type: "text",
+      placeholder: "+31610751254",
+      help: "Internationaal en zonder opmaak; hier hangen de bel- en WhatsApp-link aan.",
+    },
+    {
+      key: "telefoonWeergave",
+      label: "Contactgegevens — telefoonnummer (zoals getoond)",
+      type: "text",
+      placeholder: "06–10751254",
+    },
   ],
   diensten: [
     { key: "heroTitleStart", label: "Hero — titel (begin)", type: "text" },
@@ -388,6 +402,9 @@ export const PAGE_DEFAULTS = {
     adresRegel: "Ganzenmarkt 6, 3512 GD Utrecht",
   },
   contact: {
+    emailAdres: "hello@thenewwaveit.com",
+    telefoonNummer: "+31610751254",
+    telefoonWeergave: "06–10751254",
     heroTitleStart: "Waar kunnen we je ",
     heroAccent: "mee helpen",
     heroLead:

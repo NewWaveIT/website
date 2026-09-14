@@ -6,6 +6,8 @@ import { PaginaHero } from "@/components/layout/pagina-hero";
 import Image from "next/image";
 import { Users, Target, Award, Leaf, MapPin, Mail } from "lucide-react";
 import { getPagina } from "@/lib/paginas-data";
+import { CONTACT_TERUGVAL } from "@/lib/contactgegevens";
+import { getContactgegevens } from "@/lib/contact-data";
 import { getTeamleden } from "@/lib/team-data";
 import { AWARD } from "@/lib/award";
 import { SlotCta } from "@/components/layout/slot-cta";
@@ -34,7 +36,7 @@ const jsonLd = {
   "@type": "Organization",
   name: "The New Wave IT",
   foundingDate: "2023",
-  email: "hello@thenewwaveit.com",
+  email: CONTACT_TERUGVAL.email,
   url: SITE_URL,
   address: {
     "@type": "PostalAddress",
@@ -49,7 +51,11 @@ export default async function OverOnsPage() {
   "use cache";
   cacheLife("content");
 
-  const [t, team] = await Promise.all([getPagina("over-ons"), getTeamleden()]);
+  const [t, team, contact] = await Promise.all([
+    getPagina("over-ons"),
+    getTeamleden(),
+    getContactgegevens(),
+  ]);
   return (
     <div className="p-over">
       <JsonLd data={jsonLd} />
@@ -159,7 +165,7 @@ export default async function OverOnsPage() {
               <MapPin /> {t.adresRegel}
             </span>
             <span className="f">
-              <Mail /> hello@thenewwaveit.com
+              <Mail /> {contact.email}
             </span>
           </div>
         </div>

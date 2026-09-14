@@ -3,6 +3,7 @@
 import { useEffect } from "react";
 import Link from "next/link";
 import { ArrowRight, RotateCcw } from "lucide-react";
+import { CONTACT_TERUGVAL } from "@/lib/contactgegevens";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 
@@ -45,8 +46,8 @@ export default function Error({
               <Link href="/" className="btn btn-outline">
                 Naar de homepage <ArrowRight />
               </Link>
-              <a href="tel:+31610751254" className="nf-tel">
-                Of bel 06–10751254
+              <a href={`tel:${CONTACT_TERUGVAL.telefoon}`} className="nf-tel">
+                Of bel {CONTACT_TERUGVAL.telefoonWeergave}
               </a>
             </div>
           </div>
