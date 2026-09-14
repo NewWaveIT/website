@@ -7,7 +7,13 @@ uit de code afleidt.
 
 ## Snel oriënteren
 
-**Begin bij [`docs/MANIFEST.md`](docs/MANIFEST.md).** Daar staat per contenttype de
+**Begin bij [`docs/MANIFEST.md`](docs/MANIFEST.md) en
+[`docs/BESLISSINGEN.md`](docs/BESLISSINGEN.md).** Het eerste is de kaart, het tweede
+bevat wat we bewust zo hebben gedaan en waarom — dingen die je niet uit de code kunt
+aflezen en die een sessie zonder geheugen anders terugdraait omdat het een verbetering
+lijkt. Lees ze allebei voordat je iets weghaalt.
+
+**De kaart.** Daar staat per contenttype de
 tabel, de seed, de datalaag en de publieke route; per pagina-ingang welke velden er zijn
 en welke bestanden ze lezen; en de lijst publieke routes. Dat bestand is gegenereerd uit
 de code (`npm run manifest`) en een unittest faalt zodra het achterloopt — het kan dus
@@ -24,6 +30,7 @@ niet stilletjes wegdrijven zoals de handgeschreven routekaart in `revalidate.ts`
 | E-mail                  | `lib/email.ts` (Resend, fail-safe, 4 huisstijltemplates)                                                        |
 | Migraties               | `supabase/migrations/` (chronologisch geprefixt)                                                                |
 | Unit tests              | `tests/unit/` (Vitest) — pure logica: sanitize, formuliervalidatie                                              |
+| Schermafdrukken         | `npm run shots` → `docs/shots/<breedte>/<pagina>.png` (twaalf pagina's × drie breedtes, niet in git)            |
 
 ## Werkwijze bij elke wijziging
 
