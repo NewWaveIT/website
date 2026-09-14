@@ -9,13 +9,39 @@ import {
 } from "@/app/(marketing)/vacatures/[slug]/actions";
 import "./sollicitatie-form.css";
 
+export interface SolTeksten {
+  solKnop: string;
+  solKnopBezig: string;
+  solBedankt: string;
+  solVeldNaam: string;
+  solHintNaam: string;
+  solVeldEmail: string;
+  solHintEmail: string;
+  solVeldTelefoon: string;
+  solHintTelefoon: string;
+  solVeldMotivatie: string;
+  solHintMotivatie: string;
+  solMotivatieUitleg: string;
+  solVeldMotivatieBestand: string;
+  solBijMotivatieBestand: string;
+  solVeldCv: string;
+  solBijCv: string;
+  solVeldLink: string;
+  solBijLink: string;
+  solHintLink: string;
+  solLinkUitleg: string;
+  solOptioneel: string;
+  solPrivacyTekst: string;
+  solPrivacyLink: string;
+}
+
 const initial: SollicitatieState = { ok: false, message: "" };
 
-function SubmitButton() {
+function SubmitButton({ knop, bezig }: { knop: string; bezig: string }) {
   const { pending } = useFormStatus();
   return (
     <button type="submit" className="btn btn-primary" disabled={pending}>
-      {pending ? "Versturen…" : "Verstuur sollicitatie"} <ArrowRight />
+      {pending ? bezig : knop} <ArrowRight />
     </button>
   );
 }
@@ -23,11 +49,13 @@ function SubmitButton() {
 export function SollicitatieForm({
   vacatureSlug,
   vacatureTitel,
+  tk,
   heading = "Solliciteren? Zo gepiept.",
   intro = "Naam en e-mail is genoeg om te beginnen. Voeg toe wat je makkelijk bij de hand hebt; een motivatiebrief hoeft niet. We lezen elke sollicitatie zelf.",
 }: {
   vacatureSlug: string;
   vacatureTitel: string;
+  tk: SolTeksten;
   heading?: string;
   intro?: string;
 }) {
@@ -49,7 +77,7 @@ export function SollicitatieForm({
         <div className="sol-done-ic" aria-hidden="true">
           <Check />
         </div>
-        <h3>Bedankt voor je sollicitatie!</h3>
+        <h3>{tk.solBedankt}</h3>
         <p>{state.message}</p>
       </div>
     );
@@ -73,12 +101,12 @@ export function SollicitatieForm({
       />
 
       <div className="field">
-        <label htmlFor="s-naam">Naam</label>
+        <label htmlFor="s-naam">{tk.solVeldNaam}</label>
         <input
           id="s-naam"
           name="naam"
           type="text"
-          placeholder="Jouw naam"
+          placeholder={tk.solHintNaam}
           required
           aria-invalid={err("naam") ? true : undefined}
           aria-describedby={err("naam") ? "serr-naam" : undefined}
@@ -91,12 +119,12 @@ export function SollicitatieForm({
       </div>
 
       <div className="field">
-        <label htmlFor="s-mail">E-mailadres</label>
+        <label htmlFor="s-mail">{tk.solVeldEmail}</label>
         <input
           id="s-mail"
           name="email"
           type="email"
-          placeholder="naam@voorbeeld.nl"
+          placeholder={tk.solHintEmail}
           required
           aria-invalid={err("email") ? true : undefined}
           aria-describedby={err("email") ? "serr-mail" : undefined}
@@ -110,13 +138,13 @@ export function SollicitatieForm({
 
       <div className="field">
         <label htmlFor="s-tel">
-          Telefoon <span className="veld-optioneel">(optioneel)</span>
+          {tk.solVeldTelefoon} <span className="veld-optioneel">{tk.solOptioneel}</span>
         </label>
         <input
           id="s-tel"
           name="telefoon"
           type="tel"
-          placeholder="06–12345678"
+          placeholder={tk.solHintTelefoon}
           aria-invalid={err("telefoon") ? true : undefined}
           aria-describedby={err("telefoon") ? "serr-tel" : undefined}
         />
@@ -129,12 +157,12 @@ export function SollicitatieForm({
 
       <div className="field">
         <label htmlFor="s-mot">
-          Motivatie <span className="veld-optioneel">(optioneel)</span>
+          {tk.solVeldMotivatie} <span className="veld-optioneel">{tk.solOptioneel}</span>
         </label>
         <textarea
           id="s-mot"
           name="motivatie"
-          placeholder="Een paar zinnen waarom deze rol je aanspreekt is genoeg. Wat je écht leuk lijkt, hoe je bij ons terechtkwam: zeg het op je eigen manier."
+          placeholder={tk.solHintMotivatie}
           aria-invalid={err("motivatie") ? true : undefined}
           aria-describedby={err("motivatie") ? "serr-mot" : "s-mot-help"}
         />
@@ -144,15 +172,15 @@ export function SollicitatieForm({
           </p>
         ) : (
           <p className="field-help" id="s-mot-help">
-            Liever niet typen? Upload je motivatie hieronder als bestand. Allebei mag, geen van
-            beide moet.
+            {tk.solMotivatieUitleg}
           </p>
         )}
       </div>
 
       <div className="field">
         <label htmlFor="s-mot-file">
-          Motivatie als bestand <span className="veld-optioneel">(optioneel · pdf of Word)</span>
+          {tk.solVeldMotivatieBestand}{" "}
+          <span className="veld-optioneel">{tk.solBijMotivatieBestand}</span>
         </label>
         <input
           id="s-mot-file"
@@ -171,7 +199,7 @@ export function SollicitatieForm({
 
       <div className="field">
         <label htmlFor="s-cv">
-          Je cv <span className="veld-optioneel">(optioneel · pdf of Word, max. 8 MB)</span>
+          {tk.solVeldCv} <span className="veld-optioneel">{tk.solBijCv}</span>
         </label>
         <input
           id="s-cv"
@@ -190,14 +218,14 @@ export function SollicitatieForm({
 
       <div className="field">
         <label htmlFor="s-link">
-          LinkedIn of portfolio <span className="veld-optioneel">(optioneel)</span>
+          {tk.solVeldLink} <span className="veld-optioneel">{tk.solBijLink}</span>
         </label>
         <input
           id="s-link"
           name="link"
           type="url"
           inputMode="url"
-          placeholder="linkedin.com/in/jouwnaam"
+          placeholder={tk.solHintLink}
           aria-invalid={err("link") ? true : undefined}
           aria-describedby={err("link") ? "serr-link" : "s-link-help"}
         />
@@ -207,12 +235,12 @@ export function SollicitatieForm({
           </p>
         ) : (
           <p className="field-help" id="s-link-help">
-            Geen cv bij de hand? Je LinkedIn of portfolio is net zo goed.
+            {tk.solLinkUitleg}
           </p>
         )}
       </div>
 
-      <SubmitButton />
+      <SubmitButton knop={tk.solKnop} bezig={tk.solKnopBezig} />
 
       {state.message && !state.ok && (
         <p className="form-status err" role="alert">
@@ -221,8 +249,7 @@ export function SollicitatieForm({
       )}
 
       <p className="sol-privacy">
-        We gebruiken je gegevens alleen voor deze sollicitatie. Zie ons{" "}
-        <a href="/privacy">privacybeleid</a>.
+        {tk.solPrivacyTekst} <a href="/privacy">{tk.solPrivacyLink}</a>.
       </p>
     </form>
   );

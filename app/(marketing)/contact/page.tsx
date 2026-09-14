@@ -119,7 +119,41 @@ export default async function ContactPage() {
 
       <section className="block" id="gesprek">
         <div className="wrap-wide contact-grid">
-          <ContactForm diensten={diensten} />
+          <ContactForm
+            diensten={diensten}
+            tk={{
+              formTitel: t.formTitel,
+              formSubDienst: t.formSubDienst,
+              formSubAlgemeen: t.formSubAlgemeen,
+              formBedankt: t.formBedankt,
+              formKnopBezig: t.formKnopBezig,
+              formKnopDatum: t.formKnopDatum,
+              formKnopKennismaking: t.formKnopKennismaking,
+              formKnopGesprek: t.formKnopGesprek,
+              veldNaam: t.veldNaam,
+              hintNaam: t.hintNaam,
+              veldEmail: t.veldEmail,
+              hintEmail: t.hintEmail,
+              veldOrganisatie: t.veldOrganisatie,
+              hintOrganisatie: t.hintOrganisatie,
+              veldRol: t.veldRol,
+              hintRol: t.hintRol,
+              veldDienst: t.veldDienst,
+              optieKies: t.optieKies,
+              optieWeetNiet: t.optieWeetNiet,
+              veldGroep: t.veldGroep,
+              veldGroepBij: t.veldGroepBij,
+              hintGroep: t.hintGroep,
+              vragenKicker: t.vragenKicker,
+              veldSector: t.veldSector,
+              veldOnderwerp: t.veldOnderwerp,
+              veldToelichting: t.veldToelichting,
+              veldToelichtingBij: t.veldToelichtingBij,
+              hintToelichting: t.hintToelichting,
+              privacyTekst: t.privacyTekst,
+              privacyLink: t.privacyLink,
+            }}
+          />
           <aside className="aside">
             <div className="expect">
               <h3>{t.verwachtTitel}</h3>

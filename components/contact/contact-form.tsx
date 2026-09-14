@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useActionState } from "react";
 import { useFormStatus } from "react-dom";
 import { ArrowRight } from "lucide-react";
+import { vulIn } from "@/lib/utils";
 import { submitContact, type ContactState } from "@/app/(marketing)/contact/actions";
 import { SERVICE_FAMILIES, type ServiceFamilie } from "@/lib/dienstenstructuur";
 import { useBrowserwaarde } from "@/lib/hooks/use-browserwaarde";
@@ -19,6 +20,42 @@ const initial: ContactState = { ok: false, message: "" };
 const SECTOREN = ["Publieke sector", "Mobiliteit", "Banken", "Zorg", "Manufacturing", "Anders"];
 const ONDERWERPEN = ["Mendix / applicaties", "AI", "Digitale strategie", "Weet ik nog niet"];
 
+/** De teksten van het formulier. Komen uit de contactpagina in het CMS; de
+ *  pagina geeft ze veld voor veld door, zodat de dode-veldentest ziet dat elk
+ *  veld ook echt ergens landt. */
+export interface FormTeksten {
+  formTitel: string;
+  formSubDienst: string;
+  formSubAlgemeen: string;
+  formBedankt: string;
+  formKnopBezig: string;
+  formKnopDatum: string;
+  formKnopKennismaking: string;
+  formKnopGesprek: string;
+  veldNaam: string;
+  hintNaam: string;
+  veldEmail: string;
+  hintEmail: string;
+  veldOrganisatie: string;
+  hintOrganisatie: string;
+  veldRol: string;
+  hintRol: string;
+  veldDienst: string;
+  optieKies: string;
+  optieWeetNiet: string;
+  veldGroep: string;
+  veldGroepBij: string;
+  hintGroep: string;
+  vragenKicker: string;
+  veldSector: string;
+  veldOnderwerp: string;
+  veldToelichting: string;
+  veldToelichtingBij: string;
+  hintToelichting: string;
+  privacyTekst: string;
+  privacyLink: string;
+}
+
 export interface DienstOptie {
   slug: string;
   naam: string;
@@ -26,16 +63,16 @@ export interface DienstOptie {
   ctaType: "datum" | "kennismaking";
 }
 
-function SubmitButton({ label }: { label: string }) {
+function SubmitButton({ label, bezig }: { label: string; bezig: string }) {
   const { pending } = useFormStatus();
   return (
     <button type="submit" className="btn btn-primary" disabled={pending}>
-      {pending ? "Versturen…" : label} <ArrowRight />
+      {pending ? bezig : label} <ArrowRight />
     </button>
   );
 }
 
-export function ContactForm({ diensten = [] }: { diensten?: DienstOptie[] }) {
+export function ContactForm({ diensten = [], tk }: { diensten?: DienstOptie[]; tk: FormTeksten }) {
   const [state, formAction] = useActionState(submitContact, initial);
   const err = (k: string) => state.errors?.[k];
 
@@ -73,7 +110,7 @@ export function ContactForm({ diensten = [] }: { diensten?: DienstOptie[] }) {
   if (state.ok) {
     return (
       <div className="form-card">
-        <h2>Bedankt!</h2>
+        <h2>{tk.formBedankt}</h2>
         <p className="form-status ok" role="status">
           {state.message}
         </p>
@@ -88,18 +125,18 @@ export function ContactForm({ diensten = [] }: { diensten?: DienstOptie[] }) {
   // vraagt om een datum, een traject begint met een kennismaking.
   const submitLabel =
     gekozenDienst?.ctaType === "datum"
-      ? "Vraag een datum aan"
+      ? tk.formKnopDatum
       : gekozenDienst?.ctaType === "kennismaking"
-        ? "Plan de kennismaking"
-        : "Plan het gesprek";
+        ? tk.formKnopKennismaking
+        : tk.formKnopGesprek;
 
   return (
     <form className="form-card" action={formAction} noValidate>
-      <h2>Plan een gesprek</h2>
+      <h2>{tk.formTitel}</h2>
       <p className="sub">
         {gekozenDienst
-          ? `Je vraag gaat over ${gekozenDienst.naam}. Vul je gegevens in, dan komen we binnen één werkdag met een voorstel terug.`
-          : "Vertel kort waar het over gaat; een korte vraag mag ook. Je krijgt binnen één werkdag antwoord van een echt mens."}
+          ? vulIn(tk.formSubDienst, { dienst: gekozenDienst.naam })
+          : tk.formSubAlgemeen}
       </p>
 
       <input type="hidden" name="type" value={type} />
@@ -115,12 +152,12 @@ export function ContactForm({ diensten = [] }: { diensten?: DienstOptie[] }) {
 
       <div className="frow2">
         <div className="field">
-          <label htmlFor="f-naam">Naam</label>
+          <label htmlFor="f-naam">{tk.veldNaam}</label>
           <input
             id="f-naam"
             name="naam"
             type="text"
-            placeholder="Jouw naam"
+            placeholder={tk.hintNaam}
             required
             aria-invalid={err("naam") ? true : undefined}
             aria-describedby={err("naam") ? "err-naam" : undefined}
@@ -132,12 +169,12 @@ export function ContactForm({ diensten = [] }: { diensten?: DienstOptie[] }) {
           )}
         </div>
         <div className="field">
-          <label htmlFor="f-mail">Zakelijk e-mailadres</label>
+          <label htmlFor="f-mail">{tk.veldEmail}</label>
           <input
             id="f-mail"
             name="email"
             type="email"
-            placeholder="naam@organisatie.nl"
+            placeholder={tk.hintEmail}
             required
             aria-invalid={err("email") ? true : undefined}
             aria-describedby={err("email") ? "err-mail" : undefined}
@@ -152,19 +189,19 @@ export function ContactForm({ diensten = [] }: { diensten?: DienstOptie[] }) {
 
       <div className="frow2">
         <div className="field">
-          <label htmlFor="f-org">Organisatie</label>
-          <input id="f-org" name="organisatie" type="text" placeholder="Naam van je organisatie" />
+          <label htmlFor="f-org">{tk.veldOrganisatie}</label>
+          <input id="f-org" name="organisatie" type="text" placeholder={tk.hintOrganisatie} />
         </div>
         <div className="field">
-          <label htmlFor="f-rol">Jouw rol</label>
-          <input id="f-rol" name="rol" type="text" placeholder="Bijv. CIO, manager uitvoering" />
+          <label htmlFor="f-rol">{tk.veldRol}</label>
+          <input id="f-rol" name="rol" type="text" placeholder={tk.hintRol} />
         </div>
       </div>
 
       {diensten.length > 0 && (
         <div className="frow2">
           <div className="field">
-            <label htmlFor="f-dienst">Waar gaat het over?</label>
+            <label htmlFor="f-dienst">{tk.veldDienst}</label>
             <select
               id="f-dienst"
               name="dienst"
@@ -173,7 +210,7 @@ export function ContactForm({ diensten = [] }: { diensten?: DienstOptie[] }) {
               aria-invalid={err("dienst") ? true : undefined}
               aria-describedby={err("dienst") ? "err-dienst" : undefined}
             >
-              <option value="">Kies een dienst</option>
+              <option value="">{tk.optieKies}</option>
               {SERVICE_FAMILIES.map((f) => {
                 const opties = diensten.filter((d) => d.familie === f.key);
                 if (opties.length === 0) return null;
@@ -187,7 +224,7 @@ export function ContactForm({ diensten = [] }: { diensten?: DienstOptie[] }) {
                   </optgroup>
                 );
               })}
-              <option value="weet-ik-niet">Weet ik nog niet</option>
+              <option value="weet-ik-niet">{tk.optieWeetNiet}</option>
             </select>
             {err("dienst") && (
               <p className="field-err" id="err-dienst">
@@ -197,13 +234,13 @@ export function ContactForm({ diensten = [] }: { diensten?: DienstOptie[] }) {
           </div>
           <div className="field">
             <label htmlFor="f-groep">
-              Aantal deelnemers <span className="veld-optioneel">(indicatie)</span>
+              {tk.veldGroep} <span className="veld-optioneel">{tk.veldGroepBij}</span>
             </label>
             <input
               id="f-groep"
               name="groepsgrootte"
               type="text"
-              placeholder="Bijv. 8"
+              placeholder={tk.hintGroep}
               aria-invalid={err("groepsgrootte") ? true : undefined}
               aria-describedby={err("groepsgrootte") ? "err-groep" : undefined}
             />
@@ -218,7 +255,7 @@ export function ContactForm({ diensten = [] }: { diensten?: DienstOptie[] }) {
 
       {vraagKeys.length > 0 && (
         <div className="vraag-groep">
-          <div className="kicker">Over deze dienst</div>
+          <div className="kicker">{tk.vragenKicker}</div>
           {vraagKeys.map((key) => {
             const v = SERVICE_VRAGEN[key as VraagKey];
             return (
@@ -269,7 +306,7 @@ export function ContactForm({ diensten = [] }: { diensten?: DienstOptie[] }) {
       )}
 
       <div className="field" role="group" aria-labelledby="lbl-sector">
-        <label id="lbl-sector">In welke sector werk je?</label>
+        <label id="lbl-sector">{tk.veldSector}</label>
         <div className="chips">
           {SECTOREN.map((s) => (
             <label className="chip" key={s}>
@@ -281,7 +318,7 @@ export function ContactForm({ diensten = [] }: { diensten?: DienstOptie[] }) {
       </div>
 
       <div className="field" role="group" aria-labelledby="lbl-onderwerp">
-        <label id="lbl-onderwerp">Waar gaat je vraagstuk over?</label>
+        <label id="lbl-onderwerp">{tk.veldOnderwerp}</label>
         <div className="chips">
           {ONDERWERPEN.map((o) => (
             <label className="chip" key={o}>
@@ -294,12 +331,12 @@ export function ContactForm({ diensten = [] }: { diensten?: DienstOptie[] }) {
 
       <div className="field">
         <label htmlFor="f-msg">
-          Toelichting <span className="veld-optioneel">(optioneel)</span>
+          {tk.veldToelichting} <span className="veld-optioneel">{tk.veldToelichtingBij}</span>
         </label>
         <textarea
           id="f-msg"
           name="toelichting"
-          placeholder="Wat speelt er? Een paar zinnen is genoeg."
+          placeholder={tk.hintToelichting}
           aria-invalid={err("toelichting") ? true : undefined}
           aria-describedby={err("toelichting") ? "err-msg" : undefined}
         />
@@ -310,7 +347,7 @@ export function ContactForm({ diensten = [] }: { diensten?: DienstOptie[] }) {
         )}
       </div>
 
-      <SubmitButton label={submitLabel} />
+      <SubmitButton label={submitLabel} bezig={tk.formKnopBezig} />
 
       {state.message && !state.ok && (
         <p className="form-status err" role="alert">
@@ -319,8 +356,7 @@ export function ContactForm({ diensten = [] }: { diensten?: DienstOptie[] }) {
       )}
 
       <p className="privacy">
-        We gebruiken je gegevens alleen om dit gesprek te plannen. Geen nieuwsbrief, geen belrondes.
-        Zie ons <a href="/privacy">privacybeleid</a>.
+        {tk.privacyTekst} <a href="/privacy">{tk.privacyLink}</a>.
       </p>
     </form>
   );

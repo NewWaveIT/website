@@ -192,7 +192,35 @@ export default async function VacaturePage({ params }: { params: Promise<{ slug:
                 Vragen vooraf? Bel of mail {recVoornaam} gerust. Binnen twee werkdagen reactie.
               </p>
             </div>
-            <SollicitatieForm vacatureSlug={slug} vacatureTitel={v.functietitel} />
+            <SollicitatieForm
+              vacatureSlug={slug}
+              vacatureTitel={v.functietitel}
+              tk={{
+                solKnop: t.solKnop,
+                solKnopBezig: t.solKnopBezig,
+                solBedankt: t.solBedankt,
+                solVeldNaam: t.solVeldNaam,
+                solHintNaam: t.solHintNaam,
+                solVeldEmail: t.solVeldEmail,
+                solHintEmail: t.solHintEmail,
+                solVeldTelefoon: t.solVeldTelefoon,
+                solHintTelefoon: t.solHintTelefoon,
+                solVeldMotivatie: t.solVeldMotivatie,
+                solHintMotivatie: t.solHintMotivatie,
+                solMotivatieUitleg: t.solMotivatieUitleg,
+                solVeldMotivatieBestand: t.solVeldMotivatieBestand,
+                solBijMotivatieBestand: t.solBijMotivatieBestand,
+                solVeldCv: t.solVeldCv,
+                solBijCv: t.solBijCv,
+                solVeldLink: t.solVeldLink,
+                solBijLink: t.solBijLink,
+                solHintLink: t.solHintLink,
+                solLinkUitleg: t.solLinkUitleg,
+                solOptioneel: t.solOptioneel,
+                solPrivacyTekst: t.solPrivacyTekst,
+                solPrivacyLink: t.solPrivacyLink,
+              }}
+            />
             <div className="facts">
               <dl>
                 <div className="frow">

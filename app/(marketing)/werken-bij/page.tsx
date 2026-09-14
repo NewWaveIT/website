@@ -25,11 +25,12 @@ export default async function WerkenBijPage() {
   cacheLife("content");
 
   // Recruitment-contactpersoon (dynamisch), met terugval op een standaard.
-  const [vacatures, t, rec, contact] = await Promise.all([
+  const [vacatures, t, rec, contact, vd] = await Promise.all([
     getVacatures(),
     getPagina("werken-bij"),
     getContactpersoon("recruitment"),
     getContactgegevens(),
+    getPagina("vacature-detail"),
   ]);
   const recVoornaam = (rec?.naam || "Mitchel Wallaart").split(" ")[0] || "Mitchel";
   const recTel = rec?.telefoon || contact.telefoonWeergave;
@@ -172,6 +173,31 @@ export default async function WerkenBijPage() {
               vacatureTitel={t.openSollKop}
               heading={t.openSollKop}
               intro={t.openSollIntro}
+              tk={{
+                solKnop: vd.solKnop,
+                solKnopBezig: vd.solKnopBezig,
+                solBedankt: vd.solBedankt,
+                solVeldNaam: vd.solVeldNaam,
+                solHintNaam: vd.solHintNaam,
+                solVeldEmail: vd.solVeldEmail,
+                solHintEmail: vd.solHintEmail,
+                solVeldTelefoon: vd.solVeldTelefoon,
+                solHintTelefoon: vd.solHintTelefoon,
+                solVeldMotivatie: vd.solVeldMotivatie,
+                solHintMotivatie: vd.solHintMotivatie,
+                solMotivatieUitleg: vd.solMotivatieUitleg,
+                solVeldMotivatieBestand: vd.solVeldMotivatieBestand,
+                solBijMotivatieBestand: vd.solBijMotivatieBestand,
+                solVeldCv: vd.solVeldCv,
+                solBijCv: vd.solBijCv,
+                solVeldLink: vd.solVeldLink,
+                solBijLink: vd.solBijLink,
+                solHintLink: vd.solHintLink,
+                solLinkUitleg: vd.solLinkUitleg,
+                solOptioneel: vd.solOptioneel,
+                solPrivacyTekst: vd.solPrivacyTekst,
+                solPrivacyLink: vd.solPrivacyLink,
+              }}
             />
             <p className="open-soll-note">{t.openSollNoot.replace("{naam}", recVoornaam)}</p>
           </div>
