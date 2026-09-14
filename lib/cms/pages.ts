@@ -16,6 +16,16 @@ export const PAGE_FIELDS = {
     { key: "mensenTitel", label: "Mensen — titel", type: "text" },
     { key: "mensenP1", label: "Mensen — alinea 1", type: "textarea" },
     { key: "mensenP2", label: "Mensen — alinea 2", type: "textarea" },
+    { key: "dienstenKicker", label: "Diensten — kicker", type: "text" },
+    { key: "dienstenTitel", label: "Diensten — titel", type: "text" },
+    { key: "dienstenIntro", label: "Diensten — introtekst", type: "textarea" },
+    { key: "sectorenKicker", label: "Sectoren — kicker", type: "text" },
+    { key: "sectorenTitel", label: "Sectoren — titel", type: "text" },
+    { key: "sectorenIntro", label: "Sectoren — introtekst", type: "textarea" },
+    { key: "casesKicker", label: "Klantverhalen — kicker", type: "text" },
+    { key: "casesTitel", label: "Klantverhalen — titel", type: "text" },
+    { key: "inzichtenKicker", label: "Inzichten — kicker", type: "text" },
+    { key: "inzichtenTitel", label: "Inzichten — titel", type: "text" },
   ],
   "over-ons": [
     { key: "heroTitleStart", label: "Hero — titel (begin)", type: "text" },
@@ -316,12 +326,24 @@ export const PAGE_DEFAULTS = {
     heroTitleEnd: ".",
     heroLead:
       "Sectorkennis, Mendix en AI in één team, van eerste sessie tot werkende software voor de mensen die ermee werken.",
-    ctaTitel: "Klaar om samen te bouwen aan meetbare groei?",
+    ctaTitel: "Samen bouwen aan schaalbare groei?",
     ctaKnop: "Plan een gesprek",
     mensenKicker: "De mens centraal",
     mensenTitel: "Je werkt met mensen, niet met een leverancier.",
     mensenP1:
       "Geen anonieme delivery-machine: bij ons ken je de mensen die jouw vraagstuk oplossen. Gepassioneerde consultants en engineers die naast je team staan, van eerste sessie tot livegang en daarna. Van wekelijkse Wavetime-sessies tot onze jaarlijkse Company week, we investeren structureel in hoe we sámen werken, niet alleen in wat we opleveren.",
+    dienstenKicker: "Hoe wij het doen",
+    dienstenTitel: "Jouw uitdaging, drie richtingen naar de oplossing.",
+    dienstenIntro:
+      "Een proces dat vastloopt, een systeem dat niet meebeweegt, een koers die nog moet landen. Mendix, AI en strategie zijn de drie richtingen waarlangs we dat aanpakken. Elke richting begint met een concreet product van één dag met een vaste prijs, zodat je snel weet waar je aan toe bent.",
+    sectorenKicker: "Onze sectoren",
+    sectorenTitel: "Wij spreken de taal van jouw sector.",
+    sectorenIntro:
+      "Wij kennen de regels, de systemen en de druk waaronder jouw organisatie werkt. Daardoor leveren we sneller iets dat écht past.",
+    casesKicker: "Klantverhalen",
+    casesTitel: "Business-impact, geen technische anekdote.",
+    inzichtenKicker: "Inzichten & thought leadership",
+    inzichtenTitel: "Sectorkennis die je helpt voorop te lopen",
     mensenP2:
       "Ons doel? Dat jouw mensen er beter van worden. Technologie is het middel, de mens is de maat.",
   },

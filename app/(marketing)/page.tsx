@@ -102,12 +102,9 @@ export default async function HomePage() {
       <section className="block diensten" id="diensten">
         <div className="wrap-wide">
           <div className="sec-head">
-            <div className="kicker">Hoe wij het doen</div>
-            <h2>Drie richtingen. Begin met wat je in één dag kunt doen.</h2>
-            <p>
-              Mendix, AI en strategie zijn de ingangen. Elke richting begint met een concreet
-              product van één dag met een vaste prijs. Daarna schaal je op wanneer het werkt.
-            </p>
+            <div className="kicker">{t.dienstenKicker}</div>
+            <h2>{t.dienstenTitel}</h2>
+            <p>{t.dienstenIntro}</p>
           </div>
           <div className="tabs" role="tablist">
             {instap.map(({ richting, naam }, i) => (
@@ -203,9 +200,9 @@ export default async function HomePage() {
       <section className="block sectoren">
         <div className="wrap-wide">
           <SectorSplit
-            kicker="Onze sectoren"
-            titel="Wij spreken de taal van jouw sector."
-            intro="Wij kennen de regels, de systemen en de druk waaronder jouw organisatie werkt. Daardoor leveren we sneller iets dat écht past."
+            kicker={t.sectorenKicker}
+            titel={t.sectorenTitel}
+            intro={t.sectorenIntro}
             items={sectoren.map((s) => ({
               naam: s.naam,
               href: s.href,
@@ -226,8 +223,8 @@ export default async function HomePage() {
         <div className="wrap-wide">
           <div className="eyebrow-row">
             <div>
-              <div className="kicker on-dark">Klantverhalen</div>
-              <h2>Business-impact, geen technische anekdote.</h2>
+              <div className="kicker on-dark">{t.casesKicker}</div>
+              <h2>{t.casesTitel}</h2>
             </div>
             <Link href="/klantverhalen" className="btn btn-ghost-on btn-sm">
               Alle klantverhalen <ArrowRight />
@@ -307,8 +304,8 @@ export default async function HomePage() {
           <div className="wrap-wide">
             <div className="eyebrow-row">
               <div>
-                <div className="kicker">Inzichten &amp; thought leadership</div>
-                <h2>Sectorkennis die je vooruit denkt</h2>
+                <div className="kicker">{t.inzichtenKicker}</div>
+                <h2>{t.inzichtenTitel}</h2>
               </div>
               <Link href="/inzichten" className="btn btn-outline btn-sm">
                 Alle inzichten <ArrowRight />

@@ -375,7 +375,7 @@ export const SECTOREN: Record<string, SectorDetail> = {
       "Applicaties die meebewegen met nieuwe wetgeving. Toegankelijke loketten, verbonden ketens en herbruikbare bouwblokken.",
 
     hook: "“Onze doorlooptijden groeien sneller dan onze formatie.”",
-    pitch: "Wij bouwen applicaties die in weken aanpasbaar zijn, niet in jaren.",
+    pitch: "Jouw proces in vier weken gedigitaliseerd, van aanvraag tot besluit.",
     kpiLabel: "Sneller vergunnen",
 
     h1: "Software die meebeweegt met veranderende wet- en regelgeving",
@@ -566,12 +566,12 @@ export const SECTOREN: Record<string, SectorDetail> = {
 
     hook: "“Onze mensen registreren meer dan ze zorgen.”",
     pitch:
-      "Wij digitaliseren processen en verbinden systemen, zodat zorgverleners tijd terugkrijgen voor de patiënt.",
+      "Wij digitaliseren processen en verbinden systemen, zodat zorgverleners tijd terugkrijgen voor patiënt en cliënt.",
     kpiLabel: "Minder registratielast",
 
     h1: "Meer tijd voor zorg, minder tijd voor systemen",
     intro:
-      "De zorgvraag groeit, de handen worden schaarser en de administratie blijft. Wij digitaliseren processen en verbinden systemen, zodat zorgverleners tijd terugkrijgen voor de patiënt.",
+      "De zorgvraag groeit, de handen worden schaarser en de administratie blijft. Wij digitaliseren processen en verbinden systemen, zodat zorgverleners tijd terugkrijgen voor de patiënt en de cliënt.",
 
     herkenningTitel: "Wat zorgorganisaties ons vertellen",
     herkenning: [
@@ -943,7 +943,7 @@ export const SECTOREN: Record<string, SectorDetail> = {
 
     hook: "“Elke innovatie strandt op compliance.”",
     pitch:
-      "Wij helpen banken en verzekeraars opschalen met governance die de snelheid niet in de weg zit.",
+      "Wij helpen banken en verzekeraars opschalen met governance die snelheid en controle samen laat gaan.",
     kpiLabel: "Audit-proof",
 
     h1: "Van tien apps naar honderd, zonder de controle te verliezen",

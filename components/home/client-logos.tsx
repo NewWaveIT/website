@@ -21,7 +21,6 @@ export const CLIENTS: Client[] = [
   { naam: "Rabobank", logo: "/assets/logos/klanten/rabobank.svg", w: 130, h: 24 },
   { naam: "Van Mossel", logo: "/assets/logos/klanten/van-mossel.svg", w: 195, h: 30 },
   { naam: "Netradyne", logo: "/assets/logos/klanten/netradyne.svg", w: 261, h: 44 },
-  { naam: "AutoBinck", logo: "/assets/logos/klanten/autobinck.svg", w: 194, h: 48 },
   { naam: "XXImo", logo: "/assets/logos/klanten/xximo.svg", w: 124, h: 37 },
   { naam: "Welcome app", logo: "/assets/logos/klanten/welcome-app.svg", w: 68, h: 42 },
   // Nog aan te leveren officiële bestanden (schone SVG of transparante PNG):
