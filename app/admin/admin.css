@@ -917,8 +917,42 @@
   padding: var(--space-4) var(--space-6);
   border-top: 1px solid var(--border-subtle);
   display: flex;
+  align-items: center;
+  flex-wrap: wrap;
   gap: var(--space-3);
   justify-content: flex-end;
+}
+/* Verwijderen staat links en is bewust een tekstknop: het hoort bereikbaar te
+   zijn, niet uitnodigend. De bevestiging verschijnt in dezelfde balk. */
+.cms .dfoot-verwijder {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 0;
+  background: none;
+  border: 0;
+  cursor: pointer;
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  font-weight: var(--fw-medium);
+  color: var(--danger-600);
+}
+.cms .dfoot-verwijder:hover {
+  text-decoration: underline;
+}
+.cms .dfoot-verwijder svg {
+  width: 15px;
+  height: 15px;
+}
+.cms .dfoot-vul {
+  flex: 1;
+}
+.cms .dfoot-vraag {
+  flex: 1 1 100%;
+  font-size: var(--text-xs);
+  line-height: 1.5;
+  color: var(--text-body);
 }
 .cms .fld {
   margin-bottom: var(--space-5);

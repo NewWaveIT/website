@@ -1,7 +1,7 @@
 "use client";
 
-import { useId } from "react";
-import { X } from "lucide-react";
+import { useId, useState } from "react";
+import { Trash2, X } from "lucide-react";
 import { useDialoog } from "@/lib/hooks/use-dialoog";
 import { cn } from "@/lib/utils";
 
@@ -103,5 +103,74 @@ export function Statusbalk<T extends string>({
         ))}
       </div>
     </div>
+  );
+}
+
+/**
+ * De voet van een detaildrawer: verwijderen links, de gewone acties rechts.
+ *
+ * Verwijderen vraagt eerst om bevestiging, en dat gebeurt in de voet zelf en
+ * niet in een tweede dialoog bovenop de eerste — twee geneste dialogen vechten
+ * om de focus, en de vraag hoort naast de knop te staan waar je net op klikte.
+ * Zolang de vraag openstaat verdwijnen de andere acties, zodat er precies twee
+ * antwoorden mogelijk zijn.
+ */
+export function DrawerVoet({
+  wat,
+  bezig,
+  onVerwijder,
+  onSluit,
+  children,
+}: {
+  /** Waar de bevestiging over gaat, bv. "De aanvraag van Jasper". Verandert
+   *  deze waarde, dan hoort de openstaande vraag bij een ander item en gaat
+   *  hij dicht. */
+  wat: string;
+  bezig?: boolean;
+  onVerwijder: () => void;
+  onSluit: () => void;
+  children?: React.ReactNode;
+}) {
+  const [vragen, setVragen] = useState(false);
+  const [vorigWat, setVorigWat] = useState(wat);
+
+  // Ander item in beeld: de openstaande vraag hoort daar niet bij.
+  if (wat !== vorigWat) {
+    setVorigWat(wat);
+    setVragen(false);
+  }
+
+  if (vragen) {
+    return (
+      <>
+        <span className="dfoot-vraag" role="alert">
+          {wat} definitief verwijderen? Dit kan niet ongedaan worden gemaakt.
+        </span>
+        <button
+          type="button"
+          className="btn btn-outline"
+          disabled={bezig}
+          onClick={() => setVragen(false)}
+        >
+          Annuleren
+        </button>
+        <button type="button" className="btn btn-danger" disabled={bezig} onClick={onVerwijder}>
+          {bezig ? "Bezig…" : "Verwijderen"}
+        </button>
+      </>
+    );
+  }
+
+  return (
+    <>
+      <button type="button" className="dfoot-verwijder" onClick={() => setVragen(true)}>
+        <Trash2 /> Verwijderen
+      </button>
+      <span className="dfoot-vul" />
+      <button type="button" className="btn btn-outline" onClick={onSluit}>
+        Sluiten
+      </button>
+      {children}
+    </>
   );
 }

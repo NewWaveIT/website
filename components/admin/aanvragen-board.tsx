@@ -3,9 +3,9 @@
 import { useEffect, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { Mail, AlertTriangle, Check } from "lucide-react";
-import { updateLead } from "@/app/admin/aanvragen/actions";
+import { deleteLead, updateLead } from "@/app/admin/aanvragen/actions";
 import { LEAD_STATUSSEN, STATUS_LABEL, type Lead } from "@/lib/cms/inzendingen-types";
-import { Drawer, Statusbalk } from "@/components/admin/drawer";
+import { Drawer, DrawerVoet, Statusbalk } from "@/components/admin/drawer";
 
 function fmt(iso: string) {
   try {
@@ -26,7 +26,7 @@ export function AanvragenBoard({ leads, eigenaren = [] }: { leads: Lead[]; eigen
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [err, setErr] = useState<string | null>(null);
   const [okMsg, setOkMsg] = useState<string | null>(null);
-  const [, startTransition] = useTransition();
+  const [bezig, startTransition] = useTransition();
   const router = useRouter();
 
   const selected = items.find((l) => l.id === selectedId) ?? null;
@@ -48,6 +48,22 @@ export function AanvragenBoard({ leads, eigenaren = [] }: { leads: Lead[]; eigen
   // verse installatie gewoon in beeld alsof het collega's waren.
   const eigenaarOpties = (huidige: string | null) =>
     Array.from(new Set(["—", ...eigenaren, huidige].filter(Boolean))) as string[];
+
+  function verwijder(id: string) {
+    const vorige = items;
+    setItems((prev) => prev.filter((l) => l.id !== id));
+    setSelectedId(null);
+    startTransition(async () => {
+      const res = await deleteLead(id);
+      if (!res.ok) {
+        setItems(vorige); // zet 'm terug; hij is niet echt weg
+        setErr(res.error ?? "Kon de aanvraag niet verwijderen.");
+        return;
+      }
+      setOkMsg("Aanvraag verwijderd.");
+      router.refresh();
+    });
+  }
 
   function patch(id: string, p: Partial<Lead>) {
     const vorige = items;
@@ -125,14 +141,16 @@ export function AanvragenBoard({ leads, eigenaren = [] }: { leads: Lead[]; eigen
         subtitel={[selected?.bedrijf, selected?.email].filter(Boolean).join(" · ")}
         onClose={() => setSelectedId(null)}
         footer={
-          <>
-            <button type="button" className="btn btn-outline" onClick={() => setSelectedId(null)}>
-              Sluiten
-            </button>
+          <DrawerVoet
+            wat={selected ? `De aanvraag van ${selected.naam}` : "Deze aanvraag"}
+            bezig={bezig}
+            onVerwijder={() => selected && verwijder(selected.id)}
+            onSluit={() => setSelectedId(null)}
+          >
             <a className="btn btn-primary" href={`mailto:${selected?.email}`}>
               <Mail /> Beantwoorden
             </a>
-          </>
+          </DrawerVoet>
         }
       >
         {selected && (

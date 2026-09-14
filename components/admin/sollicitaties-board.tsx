@@ -3,9 +3,13 @@
 import { useEffect, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { Search, Calendar, AlertTriangle, Check } from "lucide-react";
-import { updateSollicitatie, getCvUrl } from "@/app/admin/sollicitaties/actions";
+import {
+  deleteSollicitatie,
+  updateSollicitatie,
+  getCvUrl,
+} from "@/app/admin/sollicitaties/actions";
 import { SOL_STATUSSEN, STATUS_LABEL, type Sollicitatie } from "@/lib/cms/inzendingen-types";
-import { Drawer, Statusbalk } from "@/components/admin/drawer";
+import { Drawer, DrawerVoet, Statusbalk } from "@/components/admin/drawer";
 
 function fmt(iso: string) {
   try {
@@ -25,7 +29,7 @@ export function SollicitatiesBoard({ sols }: { sols: Sollicitatie[] }) {
   const [q, setQ] = useState("");
   const [err, setErr] = useState<string | null>(null);
   const [okMsg, setOkMsg] = useState<string | null>(null);
-  const [, startTransition] = useTransition();
+  const [bezig, startTransition] = useTransition();
   const router = useRouter();
 
   const selected = items.find((s) => s.id === selectedId) ?? null;
@@ -54,6 +58,22 @@ export function SollicitatiesBoard({ sols }: { sols: Sollicitatie[] }) {
       tab?.close();
       setErr(res.error || "Kon het cv niet openen.");
     }
+  }
+
+  function verwijder(id: string) {
+    const vorige = items;
+    setItems((prev) => prev.filter((s) => s.id !== id));
+    setSelectedId(null);
+    startTransition(async () => {
+      const res = await deleteSollicitatie(id);
+      if (!res.ok) {
+        setItems(vorige); // zet 'm terug; hij is niet echt weg
+        setErr(res.error ?? "Kon de sollicitatie niet verwijderen.");
+        return;
+      }
+      setOkMsg("Sollicitatie verwijderd, inclusief het cv.");
+      router.refresh();
+    });
   }
 
   function patch(id: string, p: Partial<Sollicitatie>) {
@@ -137,14 +157,16 @@ export function SollicitatiesBoard({ sols }: { sols: Sollicitatie[] }) {
         subtitel={[selected?.vacature_slug, selected?.email].filter(Boolean).join(" · ")}
         onClose={() => setSelectedId(null)}
         footer={
-          <>
-            <button type="button" className="btn btn-outline" onClick={() => setSelectedId(null)}>
-              Sluiten
-            </button>
+          <DrawerVoet
+            wat={selected ? `De sollicitatie van ${selected.naam}` : "Deze sollicitatie"}
+            bezig={bezig}
+            onVerwijder={() => selected && verwijder(selected.id)}
+            onSluit={() => setSelectedId(null)}
+          >
             <a className="btn btn-primary" href={`mailto:${selected?.email}`}>
               <Calendar /> Plan gesprek
             </a>
-          </>
+          </DrawerVoet>
         }
       >
         {selected && (
