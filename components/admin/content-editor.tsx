@@ -7,6 +7,7 @@ import { saveContent, deleteContent, type SaveState } from "@/app/admin/content/
 import type { ContentRow, ContentType } from "@/lib/cms/content";
 import { FIELD_SCHEMAS, extraData, isStructured, type FieldDef } from "@/lib/cms/schema";
 import { paginaPad, paginaStandaard, paginaVelden } from "@/lib/cms/pages";
+import { ADMIN_PADEN } from "@/lib/cms/admin-paden";
 import { ImageField } from "./image-field";
 import { StructuredField } from "./structured-field";
 import { IconField } from "./icon-field";
@@ -49,14 +50,6 @@ function groupFields(
   }
   return groups;
 }
-
-const VIEW_BASE: Partial<Record<ContentType, string>> = {
-  artikelen: "/inzichten",
-  cases: "/klantverhalen",
-  vacatures: "/vacatures",
-  diensten: "/diensten",
-  sectoren: "/sectoren",
-};
 
 /** Verwijder-knop met nette bevestigingsmodal (submit gaat via het hoofdformulier). */
 function DeleteButton() {
@@ -173,13 +166,14 @@ export function ContentEditor({
     }
   };
 
+  const basis = ADMIN_PADEN[type].pad;
   const viewPath =
     type === "teamleden"
       ? "/over-ons"
       : isPaginas
         ? paginaPad(slug)
-        : VIEW_BASE[type]
-          ? `${VIEW_BASE[type]}/${slug}`
+        : basis
+          ? `${basis}/${slug}`
           : undefined;
 
   const data = (row?.data ?? {}) as Record<string, unknown>;
@@ -478,7 +472,7 @@ export function ContentEditor({
                   <label htmlFor="ce-slug">Webadres</label>
                   <div className="ce-perma">
                     <code>
-                      {VIEW_BASE[type] ?? ""}/{slug}
+                      {basis ?? ""}/{slug}
                     </code>
                   </div>
                 </div>

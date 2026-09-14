@@ -508,6 +508,14 @@
 .cms .kpi {
   padding: var(--space-5);
 }
+/* De tegels zijn links naar de bijbehorende lijst. */
+.cms a.kpi {
+  color: inherit;
+  transition: border-color 120ms ease;
+}
+.cms a.kpi:hover {
+  border-color: var(--border-strong);
+}
 .cms .kpi .lbl {
   font-family: var(--font-mono);
   font-size: 11px;
@@ -1242,6 +1250,241 @@
   padding: var(--space-8);
   color: var(--text-subtle);
   font-size: var(--text-sm);
+}
+
+/* ---- Dashboard: wat vraagt om actie ----
+   Het dashboard toonde vier tellers en twee leestabellen; nu zet het het werk
+   vóór je neer. Elke rij is een link naar het item; de knop rechts doet iets
+   anders (de volgende stap zetten) en stopt daarom de klik. */
+
+.cms .quick {
+  display: flex;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
+.cms .quick a {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: var(--white);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-pill);
+  padding: 8px 14px;
+  font-size: var(--text-sm);
+  font-weight: var(--fw-medium);
+  color: var(--text-body);
+  transition:
+    border-color 120ms ease,
+    color 120ms ease;
+}
+.cms .quick a:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+.cms .quick a .lucide {
+  width: 15px;
+  height: 15px;
+}
+
+/* De twee kolommen van het dashboard stapelen hun kaarten. */
+.cms .dash-col {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.cms .act {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding: 14px var(--space-5);
+  border-bottom: 1px solid var(--border-subtle);
+  color: inherit;
+  transition: background 100ms ease;
+}
+.cms .act:last-child {
+  border-bottom: 0;
+}
+.cms .act:hover {
+  background: var(--ink-50);
+}
+.cms .act .ic {
+  width: 34px;
+  height: 34px;
+  flex: none;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: color-mix(in srgb, var(--color-primary) 10%, transparent);
+  color: var(--color-primary);
+}
+.cms .act .ic[data-kind="sol"],
+.cms .act .ic[data-kind="concept"] {
+  background: color-mix(in srgb, var(--ink-900) 6%, transparent);
+  color: var(--text-body);
+}
+.cms .act .bd {
+  flex: 1;
+  min-width: 0;
+}
+/* Eén regel per veld, en een lange zin knipt af in plaats van de rij op te
+   rekken: deze rijen moeten scanbaar blijven. */
+.cms .act .bd .t,
+.cms .act .bd .s {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.cms .act .bd .t {
+  font-size: var(--text-sm);
+  font-weight: var(--fw-semibold);
+  color: var(--text-strong);
+}
+.cms .act .bd .s {
+  font-size: var(--text-xs);
+  color: var(--text-subtle);
+  margin-top: 2px;
+}
+.cms .age {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--text-subtle);
+  white-space: nowrap;
+}
+.cms .go {
+  border: 1px solid var(--border-default);
+  background: var(--white);
+  border-radius: var(--radius-pill);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  padding: 6px 12px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition:
+    border-color 120ms ease,
+    color 120ms ease;
+}
+.cms .go:hover:not(:disabled) {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+.cms .go:disabled {
+  opacity: 0.6;
+  cursor: progress;
+}
+
+/* ---- Dashboard: wat staat er op de site ---- */
+
+.cms .clist {
+  padding: var(--space-4) var(--space-5) var(--space-5);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.cms .crow {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 4px 12px;
+  align-items: center;
+  color: inherit;
+}
+.cms .crow:hover .cnm {
+  color: var(--color-primary);
+}
+.cms .crow .cnm {
+  font-size: var(--text-sm);
+  font-weight: var(--fw-medium);
+  color: var(--text-body);
+  transition: color 120ms ease;
+}
+.cms .crow .cct {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-subtle);
+}
+.cms .crow .track {
+  grid-column: 1 / -1;
+  height: 5px;
+  border-radius: 3px;
+  background: var(--ink-100);
+  overflow: hidden;
+  display: flex;
+}
+.cms .crow .track i {
+  display: block;
+  height: 100%;
+  background: var(--ink-900);
+}
+.cms .crow .track i.draft {
+  background: var(--orange-400);
+}
+.cms .legend {
+  display: flex;
+  gap: var(--space-4);
+  padding: 0 var(--space-5) var(--space-5);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--text-subtle);
+}
+.cms .legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.cms .legend b {
+  width: 8px;
+  height: 8px;
+  border-radius: 2px;
+  background: var(--ink-900);
+  display: inline-block;
+}
+.cms .legend b.draft {
+  background: var(--orange-400);
+}
+
+/* ---- Dashboard: tijdlijn ---- */
+
+.cms .tl {
+  border-left: 2px solid var(--border-default);
+  margin: var(--space-5) var(--space-5) var(--space-5) calc(var(--space-5) + 6px);
+  padding-left: var(--space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+.cms .tl .ev {
+  position: relative;
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+}
+.cms .tl .ev::before {
+  content: "";
+  position: absolute;
+  left: calc(-1 * var(--space-5) - 7px);
+  top: 3px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--white);
+  border: 2px solid var(--color-primary);
+}
+.cms .tl .ev .when {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--text-subtle);
+  display: block;
+  margin-bottom: 2px;
 }
 .cms .acty-link {
   color: var(--text-strong);

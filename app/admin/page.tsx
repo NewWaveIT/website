@@ -1,27 +1,84 @@
 import Link from "next/link";
+import { FileEdit, Inbox, Plus, UserCheck } from "lucide-react";
 import { requireAdmin } from "@/lib/dal";
-import { getLeads, getSollicitaties, STATUS_LABEL } from "@/lib/cms/inzendingen";
+import { getLeads, getSollicitaties } from "@/lib/cms/inzendingen";
+import { getConcepten, getStatusTellingen } from "@/lib/cms/dashboard";
+import { ADMIN_PADEN, bewerkPad } from "@/lib/cms/admin-paden";
+import { AUDIT_STAART, AUDIT_WERKWOORD, listAudit } from "@/lib/cms/audit";
+import type { ContentType } from "@/lib/cms/content";
+import { updateLead } from "@/app/admin/aanvragen/actions";
+import { updateSollicitatie } from "@/app/admin/sollicitaties/actions";
+import { publiceerContent } from "@/app/admin/content/actions";
+import { DashboardActie } from "@/components/admin/dashboard-actie";
 
-function Chip({ status }: { status: string }) {
-  const cls = status === "nieuw" ? "nieuw" : status === "afgerond" ? "klaar" : "bezig";
-  return (
-    <span className={`chip ${cls}`}>
-      <span className="dot" />
-      {STATUS_LABEL[status] ?? status}
-    </span>
-  );
+/** Datum als "Vandaag 08:41" / "Gisteren" / "8 sep", altijd in NL-tijd. */
+function wanneer(iso: string | null): string {
+  if (!iso) return "—";
+  const d = new Date(iso);
+  if (Number.isNaN(d.getTime())) return "—";
+  const nu = new Date();
+  const dag = (x: Date) =>
+    x.toLocaleDateString("nl-NL", { timeZone: "Europe/Amsterdam", dateStyle: "short" });
+  const tijd = d.toLocaleTimeString("nl-NL", {
+    timeZone: "Europe/Amsterdam",
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+  if (dag(d) === dag(nu)) return `Vandaag ${tijd}`;
+  const gisteren = new Date(nu.getTime() - 86_400_000);
+  if (dag(d) === dag(gisteren)) return "Gisteren";
+  return d.toLocaleDateString("nl-NL", {
+    timeZone: "Europe/Amsterdam",
+    day: "numeric",
+    month: "short",
+  });
 }
+
+/** De contenttypen op de balk "Wat staat er op de site", in de volgorde van de zijbalk. */
+const OVERZICHT: ContentType[] = [
+  "paginas",
+  "diensten",
+  "services",
+  "sectoren",
+  "proposities",
+  "cases",
+  "artikelen",
+  "teamleden",
+  "vacatures",
+];
+
+/** Waar een snelknop een nieuw item aanmaakt. */
+const SNELKNOPPEN: ContentType[] = ["cases", "artikelen", "vacatures"];
 
 export default async function AdminDashboard() {
   const user = await requireAdmin();
-  const [leads, sols] = await Promise.all([getLeads(), getSollicitaties()]);
+  const [leads, sols, tellingen, concepten, audit] = await Promise.all([
+    getLeads(),
+    getSollicitaties(),
+    getStatusTellingen(),
+    getConcepten(6),
+    listAudit(5),
+  ]);
 
   const naam = (user.user_metadata?.naam as string) || user.email?.split("@")[0] || "";
-  const nieuweAanvragen = leads.filter((l) => l.status === "nieuw").length;
-  const openAanvragen = leads.filter((l) => l.status !== "afgerond").length;
-  const inBehandeling = leads.filter((l) => l.status === "in_behandeling").length;
-  const nieuweSols = sols.filter((s) => s.status === "nieuw").length;
-  const openSols = sols.filter((s) => s.status !== "afgerond").length;
+  const nieuweLeads = leads.filter((l) => l.status === "nieuw");
+  const nieuweSols = sols.filter((s) => s.status === "nieuw");
+  const inBehandeling = leads.filter((l) => l.status === "in_behandeling");
+  const openSols = sols.filter((s) => s.status !== "afgerond");
+  const liveVacatures = tellingen.vacatures?.live ?? 0;
+  const wachtrij = nieuweLeads.length + nieuweSols.length;
+  const conceptTotaal = OVERZICHT.reduce((n, t) => n + (tellingen[t]?.concept ?? 0), 0);
+
+  const samenvatting =
+    wachtrij === 0 && conceptTotaal === 0
+      ? "Alles is opgepakt. Geen openstaande acties."
+      : [
+          wachtrij > 0 && `${wachtrij} ${wachtrij === 1 ? "item vraagt" : "items vragen"} om actie`,
+          conceptTotaal > 0 &&
+            `${conceptTotaal} ${conceptTotaal === 1 ? "concept wacht" : "concepten wachten"} op publicatie`,
+        ]
+          .filter(Boolean)
+          .join(" · ");
 
   return (
     <>
@@ -29,92 +86,199 @@ export default async function AdminDashboard() {
       <div className="page-head">
         <div>
           <h1>Goedendag{naam ? `, ${naam}` : ""}</h1>
-          <p className="sub">De openstaande aanvragen en sollicitaties in één oogopslag.</p>
+          <p className="sub">{samenvatting}</p>
+        </div>
+        <div className="quick">
+          {SNELKNOPPEN.map((t) => (
+            <Link key={t} href={bewerkPad(t, "new")}>
+              <Plus /> {ADMIN_PADEN[t].label}
+            </Link>
+          ))}
         </div>
       </div>
 
       <div className="kpis">
-        <div className="card kpi">
+        <Link className="card kpi" href="/admin/aanvragen">
           <div className="lbl">Nieuwe aanvragen</div>
-          <div className="val">{nieuweAanvragen}</div>
+          <div className="val">{nieuweLeads.length}</div>
           <div className="delta">nog niet opgepakt</div>
-        </div>
-        <div className="card kpi">
-          <div className="lbl">Open aanvragen</div>
-          <div className="val">{openAanvragen}</div>
-          <div className="delta">in behandeling: {inBehandeling}</div>
-        </div>
-        <div className="card kpi">
-          <div className="lbl">Nieuwe sollicitaties</div>
-          <div className="val">{nieuweSols}</div>
-          <div className="delta">open in totaal: {openSols}</div>
-        </div>
-        <div className="card kpi">
-          <div className="lbl">Totaal inzendingen</div>
-          <div className="val">{leads.length + sols.length}</div>
-          <div className="delta">aanvragen + sollicitaties</div>
-        </div>
+        </Link>
+        <Link className="card kpi" href="/admin/aanvragen">
+          <div className="lbl">In behandeling</div>
+          <div className="val">{inBehandeling.length}</div>
+          <div className="delta">
+            {inBehandeling.filter((l) => !l.toegewezen_aan).length} zonder eigenaar
+          </div>
+        </Link>
+        <Link className="card kpi" href="/admin/sollicitaties">
+          <div className="lbl">Sollicitaties open</div>
+          <div className="val">{openSols.length}</div>
+          <div className="delta">
+            op {liveVacatures} live {liveVacatures === 1 ? "vacature" : "vacatures"}
+          </div>
+        </Link>
+        <Link
+          className="card kpi"
+          href={concepten[0] ? ADMIN_PADEN[concepten[0].soort].lijst : "/admin/paginas"}
+        >
+          <div className="lbl">Concepten</div>
+          <div className="val">{conceptTotaal}</div>
+          <div className="delta">wachten op publicatie</div>
+        </Link>
       </div>
 
       <div className="dash2">
-        <div className="card">
-          <div className="chead">
-            <h3>Laatste aanvragen</h3>
-            <Link href="/admin/aanvragen">Alle aanvragen →</Link>
-          </div>
-          <table>
-            <tbody>
-              {leads.slice(0, 5).map((l) => (
-                <tr key={l.id}>
-                  <td>
-                    <div className="t-title">{l.naam}</div>
-                    <div className="t-sub">{l.bedrijf ?? l.email}</div>
-                  </td>
-                  <td>
-                    <Chip status={l.status} />
-                  </td>
-                </tr>
-              ))}
-              {leads.length === 0 && (
-                <tr>
-                  <td>
-                    <div className="empty">Nog geen aanvragen.</div>
-                  </td>
-                </tr>
-              )}
-            </tbody>
-          </table>
-        </div>
-        <div className="card">
-          <div className="chead">
-            <h3>Sollicitaties in beweging</h3>
-            <Link href="/admin/sollicitaties">Pipeline →</Link>
-          </div>
-          <table>
-            <tbody>
-              {sols
-                .filter((s) => s.status !== "afgerond")
-                .slice(0, 5)
-                .map((s) => (
-                  <tr key={s.id}>
-                    <td>
-                      <div className="t-title">{s.naam}</div>
-                      <div className="t-sub">{s.vacature_slug}</div>
-                    </td>
-                    <td style={{ textAlign: "right" }}>
-                      <Chip status={s.status} />
-                    </td>
-                  </tr>
+        <div className="dash-col">
+          <div className="card">
+            <div className="chead">
+              <h3>Vraagt om jouw actie</h3>
+              <Link href="/admin/aanvragen">Alle aanvragen →</Link>
+            </div>
+            {wachtrij === 0 ? (
+              <div className="empty">
+                Niets openstaand. Alle aanvragen en sollicitaties zijn opgepakt.
+              </div>
+            ) : (
+              <>
+                {nieuweLeads.map((l) => (
+                  <Link className="act" key={l.id} href={`/admin/aanvragen?open=${l.id}`}>
+                    <span className="ic" data-kind="lead">
+                      <Inbox />
+                    </span>
+                    <span className="bd">
+                      <span className="t">
+                        {l.naam}
+                        {l.bedrijf ? ` · ${l.bedrijf}` : ""}
+                      </span>
+                      <span className="s">{l.bericht}</span>
+                    </span>
+                    <span className="age">{wanneer(l.created_at)}</span>
+                    <DashboardActie
+                      label="Oppakken"
+                      bezigLabel="Bezig…"
+                      onActie={async () => {
+                        "use server";
+                        return updateLead(l.id, { status: "in_behandeling" });
+                      }}
+                    />
+                  </Link>
                 ))}
-              {sols.length === 0 && (
-                <tr>
-                  <td>
-                    <div className="empty">Nog geen sollicitaties.</div>
-                  </td>
-                </tr>
-              )}
-            </tbody>
-          </table>
+                {nieuweSols.map((s) => (
+                  <Link className="act" key={s.id} href={`/admin/sollicitaties?open=${s.id}`}>
+                    <span className="ic" data-kind="sol">
+                      <UserCheck />
+                    </span>
+                    <span className="bd">
+                      <span className="t">{s.naam}</span>
+                      <span className="s">{s.vacature_slug}</span>
+                    </span>
+                    <span className="age">{wanneer(s.created_at)}</span>
+                    <DashboardActie
+                      label="Naar screening"
+                      bezigLabel="Bezig…"
+                      onActie={async () => {
+                        "use server";
+                        return updateSollicitatie(s.id, { status: "screening" });
+                      }}
+                    />
+                  </Link>
+                ))}
+              </>
+            )}
+          </div>
+
+          <div className="card">
+            <div className="chead">
+              <h3>Klaar om te publiceren</h3>
+              <span className="age">
+                {conceptTotaal} {conceptTotaal === 1 ? "concept" : "concepten"}
+              </span>
+            </div>
+            {concepten.length === 0 ? (
+              <div className="empty">Geen concepten. Alles staat live.</div>
+            ) : (
+              concepten.map((c) => (
+                <Link className="act" key={`${c.soort}-${c.id}`} href={bewerkPad(c.soort, c.id)}>
+                  <span className="ic" data-kind="concept">
+                    <FileEdit />
+                  </span>
+                  <span className="bd">
+                    <span className="t">{c.titel}</span>
+                    <span className="s">
+                      {ADMIN_PADEN[c.soort].label} · bewerkt {wanneer(c.bijgewerktOp)}
+                      {c.bewerktDoor ? ` · ${c.bewerktDoor}` : ""}
+                    </span>
+                  </span>
+                  <DashboardActie
+                    label="Publiceer"
+                    bezigLabel="Bezig…"
+                    onActie={async () => {
+                      "use server";
+                      return publiceerContent(c.soort, c.id);
+                    }}
+                  />
+                </Link>
+              ))
+            )}
+          </div>
+        </div>
+
+        <div className="dash-col">
+          <div className="card">
+            <div className="chead">
+              <h3>Wat staat er op de site</h3>
+            </div>
+            <div className="clist">
+              {OVERZICHT.map((t) => {
+                const { live = 0, concept = 0 } = tellingen[t] ?? {};
+                const totaal = live + concept;
+                return (
+                  <Link className="crow" key={t} href={ADMIN_PADEN[t].lijst}>
+                    <span className="cnm">{ADMIN_PADEN[t].meervoud}</span>
+                    <span className="cct">
+                      {live} live{concept ? ` · ${concept} concept` : ""}
+                    </span>
+                    <span className="track" aria-hidden="true">
+                      <i style={{ width: totaal ? `${(live / totaal) * 100}%` : 0 }} />
+                      <i
+                        className="draft"
+                        style={{ width: totaal ? `${(concept / totaal) * 100}%` : 0 }}
+                      />
+                    </span>
+                  </Link>
+                );
+              })}
+            </div>
+            <div className="legend">
+              <span>
+                <b /> Live
+              </span>
+              <span>
+                <b className="draft" /> Concept
+              </span>
+            </div>
+          </div>
+
+          <div className="card">
+            <div className="chead">
+              <h3>Recente activiteit</h3>
+              <Link href="/admin/activiteit">Alles →</Link>
+            </div>
+            {audit.length === 0 ? (
+              <div className="empty">Nog geen activiteit.</div>
+            ) : (
+              <div className="tl">
+                {audit.map((a) => (
+                  <div className="ev" key={a.id}>
+                    <span className="when">{wanneer(a.tijdstip)}</span>
+                    {a.gebruiker_naam ?? "Iemand"} {AUDIT_WERKWOORD[a.actie]}{" "}
+                    <strong>{a.titel ?? a.slug ?? a.content_type}</strong>
+                    {AUDIT_STAART[a.actie] ? ` ${AUDIT_STAART[a.actie]}` : ""}
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </>

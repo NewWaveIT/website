@@ -4,6 +4,26 @@ import { createClient } from "@/lib/supabase/server";
 
 export type AuditActie = "aangemaakt" | "bijgewerkt" | "verwijderd" | "gesynchroniseerd";
 
+/**
+ * De actie als werkwoord in een lopende zin: "Merel {…} Diensten".
+ *
+ * De opgeslagen waarde is een voltooid deelwoord, want zo staat hij ook als
+ * label in de tabelkolom. In een zin levert dat "merel bijgewerkt Diensten" op,
+ * en dat is geen Nederlands.
+ */
+export const AUDIT_WERKWOORD: Record<AuditActie, string> = {
+  aangemaakt: "maakte",
+  bijgewerkt: "werkte",
+  verwijderd: "verwijderde",
+  gesynchroniseerd: "synchroniseerde",
+};
+
+/** Het scheidbare deel dat achter het object hoort ("werkte X bij"). */
+export const AUDIT_STAART: Partial<Record<AuditActie, string>> = {
+  aangemaakt: "aan",
+  bijgewerkt: "bij",
+};
+
 export interface AuditRow {
   id: string;
   tijdstip: string;

@@ -1,26 +1,10 @@
 import Link from "next/link";
 import { requireAdmin } from "@/lib/dal";
 import { listAudit, type AuditActie } from "@/lib/cms/audit";
+import { ADMIN_PADEN } from "@/lib/cms/admin-paden";
+import { CONTENT_TABLE, type ContentType } from "@/lib/cms/content";
 
-const TYPE_LABEL: Record<string, string> = {
-  paginas: "Pagina",
-  cases: "Case",
-  diensten: "Dienst",
-  sectoren: "Sector",
-  artikelen: "Inzicht",
-  vacatures: "Vacature",
-  teamleden: "Teamlid",
-};
-
-const ADMIN_PATH: Record<string, string> = {
-  paginas: "/admin/paginas",
-  cases: "/admin/cases",
-  diensten: "/admin/diensten",
-  sectoren: "/admin/sectoren",
-  artikelen: "/admin/inzichten",
-  vacatures: "/admin/vacatures",
-  teamleden: "/admin/teamleden",
-};
+const isType = (s: string): s is ContentType => s in CONTENT_TABLE;
 
 const ACTIE_CLASS: Record<AuditActie, string> = {
   aangemaakt: "live",
@@ -70,7 +54,7 @@ export default async function ActiviteitPage() {
           </thead>
           <tbody>
             {rows.map((r) => {
-              const adminPath = ADMIN_PATH[r.content_type];
+              const pad = isType(r.content_type) ? ADMIN_PADEN[r.content_type] : undefined;
               return (
                 <tr key={r.id}>
                   <td style={{ whiteSpace: "nowrap" }}>{fmt(r.tijdstip)}</td>
@@ -86,8 +70,8 @@ export default async function ActiviteitPage() {
                   </td>
                   <td>
                     <div className="t-title">
-                      {adminPath ? (
-                        <Link href={adminPath} className="acty-link">
+                      {pad ? (
+                        <Link href={pad.lijst} className="acty-link">
                           {r.titel ?? r.slug ?? "—"}
                         </Link>
                       ) : (
@@ -95,7 +79,7 @@ export default async function ActiviteitPage() {
                       )}
                     </div>
                     <div className="t-sub">
-                      {TYPE_LABEL[r.content_type] ?? r.content_type}
+                      {pad?.label ?? r.content_type}
                       {r.slug ? ` · /${r.slug}` : ""}
                     </div>
                   </td>

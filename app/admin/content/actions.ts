@@ -10,6 +10,7 @@ import { FIELD_SCHEMAS, isStructured } from "@/lib/cms/schema";
 import { paginaVelden } from "@/lib/cms/pages";
 import { revalidateContent } from "@/lib/cms/revalidate";
 import { logAudit } from "@/lib/cms/audit";
+import { ADMIN_PADEN } from "@/lib/cms/admin-paden";
 
 /** Bitmapformaten die sharp betrouwbaar naar WebP omzet. Bewust zonder SVG. */
 const BEELD_TYPES = ["image/jpeg", "image/png", "image/webp", "image/avif", "image/gif"];
@@ -21,19 +22,6 @@ function gebruikerNaam(user: {
 }): string | null {
   return (user.user_metadata?.naam as string) || user.email?.split("@")[0] || null;
 }
-
-/** Adminlijst per contenttype (voor terugnavigatie + revalidatie). */
-const LIST_PATH: Record<ContentType, string> = {
-  paginas: "/admin/paginas",
-  cases: "/admin/cases",
-  diensten: "/admin/diensten",
-  sectoren: "/admin/sectoren",
-  artikelen: "/admin/inzichten",
-  vacatures: "/admin/vacatures",
-  teamleden: "/admin/teamleden",
-  proposities: "/admin/proposities",
-  services: "/admin/services",
-};
 
 function isType(v: string): v is ContentType {
   return v in CONTENT_TABLE;
@@ -141,9 +129,9 @@ export async function saveContent(_prev: SaveState, formData: FormData): Promise
     titel,
   });
 
-  revalidatePath(LIST_PATH[type]);
+  revalidatePath(ADMIN_PADEN[type].lijst);
   revalidateContent();
-  redirect(`${LIST_PATH[type]}?ok=${bestaat ? "bijgewerkt" : "aangemaakt"}`);
+  redirect(`${ADMIN_PADEN[type].lijst}?ok=${bestaat ? "bijgewerkt" : "aangemaakt"}`);
 }
 
 /** Upload een afbeelding naar de Supabase Storage-bucket 'content' en geef de publieke URL + afmetingen terug. */
@@ -188,6 +176,53 @@ export async function uploadImage(
 }
 
 /** Sla een nieuwe handmatige volgorde op: elk id krijgt zijn positie als `volgorde`. */
+/**
+ * Zet één item live vanaf het dashboard.
+ *
+ * Bewust smal: alleen de status, geen andere velden. Het dashboard toont de
+ * concepten over alle typen heen en dit is de knop ernaast; wie meer wil
+ * veranderen gaat naar de editor.
+ *
+ * `.select()` erbij om dezelfde reden als bij de inzendingen: zonder passende
+ * RLS-policy raakt een update nul rijen zónder fout, en dan zou een stille
+ * mislukking als succes gemeld worden.
+ */
+export async function publiceerContent(
+  type: string,
+  id: string,
+): Promise<{ ok: boolean; error?: string }> {
+  const user = await requireAdmin();
+  if (!isType(type)) return { ok: false, error: "Onbekend contenttype." };
+
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .from(CONTENT_TABLE[type])
+    .update({
+      status: "live",
+      bijgewerkt_op: new Date().toISOString(),
+      bewerkt_door: user.email ?? null,
+    })
+    .eq("id", id)
+    .select("slug, titel");
+  if (error) return { ok: false, error: error.message };
+  const rij = data?.[0];
+  if (!rij) return { ok: false, error: "Niet gevonden of geen rechten." };
+
+  await logAudit({
+    gebruiker_email: user.email ?? null,
+    gebruiker_naam: gebruikerNaam(user),
+    actie: "bijgewerkt",
+    content_type: type,
+    slug: rij.slug,
+    titel: rij.titel,
+  });
+
+  revalidatePath("/admin");
+  revalidatePath(ADMIN_PADEN[type].lijst);
+  revalidateContent();
+  return { ok: true };
+}
+
 export async function reorderContent(type: string, orderedIds: string[]): Promise<{ ok: boolean }> {
   await requireAdmin();
   if (!isType(type) || orderedIds.length === 0) return { ok: false };
@@ -199,7 +234,7 @@ export async function reorderContent(type: string, orderedIds: string[]): Promis
     if (error) return { ok: false };
   }
 
-  revalidatePath(LIST_PATH[type]);
+  revalidatePath(ADMIN_PADEN[type].lijst);
   revalidateContent();
   return { ok: true };
 }
@@ -228,7 +263,7 @@ export async function deleteContent(formData: FormData): Promise<void> {
     titel: (bestaand as { titel?: string } | null)?.titel ?? null,
   });
 
-  revalidatePath(LIST_PATH[type]);
+  revalidatePath(ADMIN_PADEN[type].lijst);
   revalidateContent();
-  redirect(`${LIST_PATH[type]}?ok=verwijderd`);
+  redirect(`${ADMIN_PADEN[type].lijst}?ok=verwijderd`);
 }
