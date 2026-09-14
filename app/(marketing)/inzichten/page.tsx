@@ -52,7 +52,11 @@ export default async function InzichtenPage() {
         </div>
       </section>
 
-      <LeadCta titel={t.leadTitel} tekst={t.leadTekst} />
+      <LeadCta
+        titel={t.leadTitel}
+        tekst={t.leadTekst}
+        tk={{ leadHint: a.leadHint, leadKnop: a.leadKnop, leadKnopBezig: a.leadKnopBezig }}
+      />
     </div>
   );
 }

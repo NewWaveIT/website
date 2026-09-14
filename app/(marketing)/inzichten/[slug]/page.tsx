@@ -106,7 +106,11 @@ export default async function ArtikelPage({ params }: { params: Promise<{ slug: 
         </div>
       </article>
 
-      <LeadCta titel={t.artikelLeadTitel} tekst={t.artikelLeadTekst} />
+      <LeadCta
+        titel={t.artikelLeadTitel}
+        tekst={t.artikelLeadTekst}
+        tk={{ leadHint: alg.leadHint, leadKnop: alg.leadKnop, leadKnopBezig: alg.leadKnopBezig }}
+      />
     </div>
   );
 }

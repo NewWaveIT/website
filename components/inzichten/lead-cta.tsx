@@ -9,10 +9,18 @@ const INIT: LeadState = { ok: false, message: "" };
  * Eén sterke afsluiter op de inzichten-pagina's: e-mailcapture die als lead in
  * het aanvragen-systeem landt. Vervangt de losse nieuwsbrief- en gesprek-CTA's.
  */
+export interface LeadTeksten {
+  leadHint: string;
+  leadKnop: string;
+  leadKnopBezig: string;
+}
+
 export function LeadCta({
+  tk,
   titel = "Blijf voorop met onze inzichten",
   tekst = "Eén mail per maand met onze scherpste inzichten over technologie in jouw sector. Geen sales, uitschrijven kan altijd.",
 }: {
+  tk: LeadTeksten;
   titel?: string;
   tekst?: string;
 }) {
@@ -50,13 +58,13 @@ export function LeadCta({
                 type="email"
                 name="email"
                 required
-                placeholder="naam@organisatie.nl"
+                placeholder={tk.leadHint}
                 aria-label="E-mailadres"
                 aria-invalid={invalid ? true : undefined}
                 aria-describedby={invalid ? "lead-err" : undefined}
               />
               <button type="submit" className="btn btn-primary" disabled={pending}>
-                {pending ? "Versturen…" : "Aanmelden"}
+                {pending ? tk.leadKnopBezig : tk.leadKnop}
               </button>
             </form>
             {state.message && (
