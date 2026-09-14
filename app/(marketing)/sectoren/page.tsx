@@ -38,7 +38,7 @@ export default async function SectorenPage() {
 
       <PaginaHero
         kruimels={[{ naam: "Sectoren", pad: "/sectoren" }]}
-        kicker="Sectoren"
+        kicker={t.heroKicker}
         titel={t.heroTitleStart ?? ""}
         accent={t.heroAccent}
         staart="."
@@ -50,9 +50,9 @@ export default async function SectorenPage() {
         <div className="wrap-wide">
           <SectorSplit
             big
-            kicker="Vijf focusmarkten"
-            titel="Kies jouw sector."
-            intro="Beweeg over een sector om het beeld te wisselen, of klik door naar de volledige sectoroplossing."
+            kicker={t.keuzeKicker}
+            titel={t.keuzeTitel}
+            intro={t.keuzeIntro}
             items={sectoren.map((s) => ({
               naam: s.naam,
               href: s.href,
@@ -63,7 +63,7 @@ export default async function SectorenPage() {
               cap: s.naam,
             }))}
             moreHref="/contact"
-            moreTitel="Jouw sector er niet bij?"
+            moreTitel={t.keuzeMeer}
             moreChal="Onze aanpak, businessvraagstuk eerst en technologie als middel, werkt ook daarbuiten. Leg je vraagstuk voor en we vertellen eerlijk of we de juiste partner zijn."
           />
         </div>

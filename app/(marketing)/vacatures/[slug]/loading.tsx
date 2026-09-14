@@ -7,6 +7,9 @@ import "./vacature.css";
  * pas bij het request, dus de bezoeker krijgt eerst de shell. Zonder deze
  * plaatshouder is dat een lege pagina die daarna volschiet; nu staat de
  * paginastructuur er meteen.
+ *
+ * Deze zin staat bewust niet in het CMS: hij rendert vóór er data is, dus een
+ * leesactie zou precies het wachten toevoegen dat hij moet opvangen.
  */
 export default function Laden() {
   return (

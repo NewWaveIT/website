@@ -58,7 +58,7 @@ export default async function ContactPage() {
       <PaginaHero
         toon="licht"
         kruimels={[{ naam: "Contact", pad: "/contact" }]}
-        kicker="Contact"
+        kicker={t.heroKicker}
         titel={t.heroTitleStart ?? ""}
         accent={t.heroAccent}
         staart="?"
@@ -182,7 +182,7 @@ export default async function ContactPage() {
                 <div className="links">
                   <a href={telHref(salesTel)}>{salesTel}</a>
                   <a href={salesLinkedin} target="_blank" rel="noopener noreferrer">
-                    LinkedIn
+                    {t.linkedinLabel}
                   </a>
                 </div>
               </div>
@@ -201,7 +201,7 @@ export default async function ContactPage() {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <Linkedin /> Volg ons op LinkedIn
+                <Linkedin /> {t.linkedinKnop}
               </a>
             </div>
           </aside>
@@ -212,7 +212,7 @@ export default async function ContactPage() {
         <div className="wrap-wide">
           <h2>{t.ctaTitel}</h2>
           <Link href="/klantverhalen" className="btn btn-on">
-            Bekijk klantverhalen <ArrowRight />
+            {t.casesKnop} <ArrowRight />
           </Link>
         </div>
       </section>

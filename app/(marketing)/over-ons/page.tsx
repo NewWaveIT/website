@@ -62,7 +62,7 @@ export default async function OverOnsPage() {
 
       <PaginaHero
         kruimels={[{ naam: "Over ons", pad: "/over-ons" }]}
-        kicker="Over ons"
+        kicker={t.heroKicker}
         titel={t.heroTitleStart ?? ""}
         accent={t.heroAccent}
         staart="."
@@ -96,7 +96,7 @@ export default async function OverOnsPage() {
         <div className="wrap-wide">
           <div className="grid">
             <div>
-              <div className="kicker">Onze missie</div>
+              <div className="kicker">{t.missieKicker}</div>
               <h2>{t.missieTitel}</h2>
               <p>{t.missieP1}</p>
               <p>{t.missieP2}</p>
@@ -145,12 +145,12 @@ export default async function OverOnsPage() {
               />
             </div>
             <div>
-              <div className="kicker">Het team</div>
+              <div className="kicker">{t.teamKicker}</div>
               <h2>{t.teamTitel}</h2>
               <p>{t.teamP1}</p>
               <p>{t.teamP2}</p>
               <Link href="/contact" className="btn btn-outline btn-sm">
-                Kom kennismaken
+                {t.teamKnop}
               </Link>
             </div>
           </div>

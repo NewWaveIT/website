@@ -28,7 +28,7 @@ function initials(naam: string): string {
 }
 
 /** Klantverhalen-carrousel: één verhaal tegelijk, met pijlen, dots en swipe. */
-export function CasesCarousel({ items }: { items: CaseCard[] }) {
+export function CasesCarousel({ items, lees }: { items: CaseCard[]; lees: string }) {
   const [i, setI] = useState(0);
   const [touch, setTouch] = useState<number | null>(null);
   if (items.length === 0) return null;
@@ -86,7 +86,7 @@ export function CasesCarousel({ items }: { items: CaseCard[] }) {
               </>
             )}
             <Link href={`/klantverhalen/${c.slug}`} className="btn btn-outline btn-sm">
-              Lees het verhaal
+              {lees}
             </Link>
           </div>
         </div>

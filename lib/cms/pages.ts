@@ -16,6 +16,14 @@ export const PAGE_FIELDS = {
     { key: "mensenTitel", label: "Mensen — titel", type: "text" },
     { key: "mensenP1", label: "Mensen — alinea 1", type: "textarea" },
     { key: "mensenP2", label: "Mensen — alinea 2", type: "textarea" },
+    { key: "proofKop", label: "Klantenband — kopje", type: "text" },
+    { key: "sectorenMeer", label: "Sectoren — regel onder de lijst", type: "text" },
+    { key: "casesAlle", label: "Klantverhalen — link naar het overzicht", type: "text" },
+    { key: "mensenAward", label: "Mensen — zin over de award", type: "textarea" },
+    { key: "mensenKnop", label: "Mensen — eerste knop", type: "text" },
+    { key: "mensenLink", label: "Mensen — tweede link", type: "text" },
+    { key: "inzichtenAlle", label: "Inzichten — link naar het overzicht", type: "text" },
+    { key: "inzichtenMeer", label: "Inzichten — link per artikel", type: "text" },
     { key: "dienstenKicker", label: "Diensten — kicker", type: "text" },
     { key: "dienstenTitel", label: "Diensten — titel", type: "text" },
     { key: "dienstenIntro", label: "Diensten — introtekst", type: "textarea" },
@@ -31,6 +39,10 @@ export const PAGE_FIELDS = {
     { key: "heroTitleStart", label: "Hero — titel (begin)", type: "text" },
     { key: "heroAccent", label: "Hero — accentwoord", type: "text" },
     { key: "heroLead", label: "Hero — introtekst", type: "textarea" },
+    { key: "heroKicker", label: "Hero — kicker", type: "text" },
+    { key: "missieKicker", label: "Missie — kicker", type: "text" },
+    { key: "teamKicker", label: "Team — kicker", type: "text" },
+    { key: "teamKnop", label: "Team — knoptekst", type: "text" },
     { key: "missieTitel", label: "Missie — titel", type: "text" },
     { key: "missieP1", label: "Missie — alinea 1", type: "textarea" },
     { key: "missieP2", label: "Missie — alinea 2", type: "textarea" },
@@ -84,6 +96,10 @@ export const PAGE_FIELDS = {
     { key: "adresTitel", label: "Bezoekadres — titel", type: "text" },
     { key: "adresRegel", label: "Bezoekadres — regel", type: "text" },
     { key: "ctaTitel", label: "Slot-CTA — titel", type: "text" },
+    { key: "heroKicker", label: "Hero — kicker", type: "text" },
+    { key: "linkedinLabel", label: "Sociale kaart — titel", type: "text" },
+    { key: "linkedinKnop", label: "Sociale kaart — knoptekst", type: "text" },
+    { key: "casesKnop", label: "Sociale kaart — link naar klantverhalen", type: "text" },
     { key: "formTitel", label: "Formulier — titel", type: "text" },
     {
       key: "formSubDienst",
@@ -140,6 +156,9 @@ export const PAGE_FIELDS = {
     { key: "heroTitleEnd", label: "Hero — titel (eind)", type: "text" },
     { key: "heroLead", label: "Hero — introtekst", type: "textarea" },
 
+    { key: "heroKicker", label: "Hero — kicker", type: "text" },
+    { key: "kaartInstap", label: "Dienstkaart — chip bij een instapdienst", type: "text" },
+    { key: "kaartMeer", label: "Dienstkaart — link", type: "text" },
     { key: "basisKicker", label: "Basisdienst — kicker", type: "text" },
     { key: "basisTitel", label: "Basisdienst — titel", type: "text" },
     { key: "basisTekst", label: "Basisdienst — tekst", type: "textarea" },
@@ -228,6 +247,11 @@ export const PAGE_FIELDS = {
     { key: "heroTitleStart", label: "Hero — titel (begin)", type: "text" },
     { key: "heroAccent", label: "Hero — accentwoord", type: "text" },
     { key: "heroLead", label: "Hero — introtekst", type: "textarea" },
+    { key: "heroKicker", label: "Hero — kicker", type: "text" },
+    { key: "keuzeKicker", label: "Sectorkiezer — kicker", type: "text" },
+    { key: "keuzeTitel", label: "Sectorkiezer — titel", type: "text" },
+    { key: "keuzeIntro", label: "Sectorkiezer — introtekst", type: "textarea" },
+    { key: "keuzeMeer", label: "Sectorkiezer — regel onder de lijst", type: "text" },
     { key: "werkwijzeKicker", label: "Waarom sectorfocus — kicker", type: "text" },
     { key: "werkwijzeTitel", label: "Waarom sectorfocus — titel", type: "text" },
     { key: "wijze1Titel", label: "Reden 1 — titel", type: "text" },
@@ -277,6 +301,11 @@ export const PAGE_FIELDS = {
       type: "text",
       help: "{naam} en {telefoon} worden vervangen door de recruitmentcontactpersoon.",
     },
+    { key: "heroKicker", label: "Hero — kicker", type: "text" },
+    { key: "heroKnopTwee", label: "Hero — tweede knop", type: "text" },
+    { key: "vacaturesKicker", label: "Vacatures — kicker", type: "text" },
+    { key: "vacaturesTitel", label: "Vacatures — titel", type: "text" },
+    { key: "ctaKnop", label: "Slot-CTA — knoptekst", type: "text" },
     { key: "openSollKop", label: "Open sollicitatie — kop", type: "text" },
     { key: "openSollIntro", label: "Open sollicitatie — intro", type: "textarea" },
     {
@@ -456,6 +485,7 @@ export const PAGE_FIELDS = {
     { key: "routeKnop", label: "Route — knoptekst", type: "text" },
   ],
   klantverhalen: [
+    { key: "kaartLink", label: "Kaart — linktekst", type: "text" },
     { key: "metaTitle", label: "Meta-titel", type: "text" },
     { key: "metaDescription", label: "Meta-omschrijving", type: "textarea" },
     { key: "heroKicker", label: "Hero — kicker", type: "text" },
@@ -501,6 +531,23 @@ export const PAGE_FIELDS = {
     { key: "leadTekst", label: "E-mailblok — tekst", type: "textarea" },
     { key: "artikelLeadTitel", label: "E-mailblok onder een artikel — titel", type: "text" },
     { key: "artikelLeadTekst", label: "E-mailblok onder een artikel — tekst", type: "textarea" },
+  ],
+  algemeen: [
+    { key: "footerBlurb", label: "Voettekst — omschrijving", type: "textarea" },
+    { key: "footerKopSectoren", label: "Voettekst — kop kolom 1", type: "text" },
+    { key: "footerKopBedrijf", label: "Voettekst — kop kolom 2", type: "text" },
+    { key: "footerKopContact", label: "Voettekst — kop kolom 3", type: "text" },
+    { key: "footerPrivacy", label: "Voettekst — link privacybeleid", type: "text" },
+    { key: "cookieTekst", label: "Cookiemelding — tekst", type: "textarea" },
+    { key: "cookieLink", label: "Cookiemelding — linktekst", type: "text" },
+    { key: "cookieWeiger", label: "Cookiemelding — knop weigeren", type: "text" },
+    { key: "cookieAccepteer", label: "Cookiemelding — knop accepteren", type: "text" },
+    { key: "inzichtenLeeg", label: "Inzichten — tekst als er niets staat", type: "textarea" },
+    { key: "inzichtenMeer", label: "Inzichten — linktekst per artikel", type: "text" },
+    { key: "caseLees", label: "Klantverhaal-carrousel — linktekst", type: "text" },
+    { key: "heroKnop", label: "Homepage-hero — eerste knop", type: "text" },
+    { key: "heroKnopTwee", label: "Homepage-hero — tweede knop", type: "text" },
+    { key: "artikelDoor", label: "Artikel — woord voor de auteur", type: "text" },
   ],
   privacy: [
     { key: "metaTitle", label: "Meta-titel", type: "text" },
@@ -556,6 +603,7 @@ export const PAGE_PATH = {
   klantverhalen: "/klantverhalen",
   "klantverhaal-detail": "/klantverhalen",
   inzichten: "/inzichten",
+  algemeen: "/",
   privacy: "/privacy",
 } satisfies Record<PaginaSlug, string>;
 
@@ -573,6 +621,15 @@ export const PAGE_DEFAULTS = {
     mensenTitel: "Je werkt met mensen, niet met een leverancier.",
     mensenP1:
       "Geen anonieme delivery-machine: bij ons ken je de mensen die jouw vraagstuk oplossen. Gepassioneerde consultants en engineers die naast je team staan, van eerste sessie tot livegang en daarna. Van wekelijkse Wavetime-sessies tot onze jaarlijkse Company week, we investeren structureel in hoe we sámen werken, niet alleen in wat we opleveren.",
+    proofKop: "Vertrouwd door",
+    sectorenMeer: "Niet jouw sector? Plan een verkenning",
+    casesAlle: "Alle klantverhalen",
+    mensenAward:
+      "Dat onze mensen hier met plezier werken, blijkt ook extern: The New Wave IT is bekroond in de Computable Werkgevers Awards 2025.",
+    mensenKnop: "Ontmoet ons team",
+    mensenLink: "Werken bij The New Wave IT",
+    inzichtenAlle: "Alle inzichten",
+    inzichtenMeer: "Lees meer",
     dienstenKicker: "Hoe wij het doen",
     dienstenTitel: "Jouw uitdaging, drie richtingen naar de oplossing.",
     dienstenIntro:
@@ -593,6 +650,10 @@ export const PAGE_DEFAULTS = {
     heroAccent: "vooruitgang",
     heroLead:
       "Wij geloven dat succesvolle verandering begint bij mensen. Daarom verzorgen wij alle randvoorwaarden voor onze Wavers, en helpen zij onze partners maximaal digitaal versnellen. Zo staat jouw organisatie klaar voor de dag van overmorgen.",
+    heroKicker: "Over ons",
+    missieKicker: "Onze missie",
+    teamKicker: "Het team",
+    teamKnop: "Kom kennismaken",
     missieTitel: "Maximale digitale impact, met de mens als maat.",
     missieP1:
       "We richtten The New Wave IT op vanuit één overtuiging: technologie is het middel, de mens is de maat. Wij zijn geen anonieme delivery-machine. Je werkt met mensen die je vraagstuk écht doorgronden, van de eerste sessie tot livegang en daarna.",
@@ -629,6 +690,10 @@ export const PAGE_DEFAULTS = {
     adresRegel: "Ganzenmarkt 6, 3512 GD Utrecht",
   },
   contact: {
+    heroKicker: "Contact",
+    linkedinLabel: "LinkedIn",
+    linkedinKnop: "Volg ons op LinkedIn",
+    casesKnop: "Bekijk klantverhalen",
     formTitel: "Plan een gesprek",
     formSubDienst:
       "Je vraag gaat over {dienst}. Vul je gegevens in, dan komen we binnen één werkdag met een voorstel terug.",
@@ -703,6 +768,9 @@ export const PAGE_DEFAULTS = {
     heroLead:
       "Onze basis is capaciteit: consultants die in jouw team meebouwen aan Mendix en AI. Wil je eerst richting, snelheid of een fundering, dan hebben we daar afgebakende diensten voor, met een vaste scope en een prijs vooraf.",
 
+    heroKicker: "Diensten",
+    kaartInstap: "Instap",
+    kaartMeer: "Meer over deze dienst →",
     basisKicker: "Onze basisdienstverlening · doorlopend",
     basisTitel: "Consultant inhuren",
     basisTekst:
@@ -802,6 +870,12 @@ export const PAGE_DEFAULTS = {
     heroAccent: "jouw sector",
     heroLead:
       "Wij kiezen bewust voor vijf sectoren in plaats van generiek IT-advies: publieke sector, mobiliteit, banken, zorg en manufacturing. In elke sector kennen we de regels, de systemen en de druk waaronder jouw organisatie werkt. Daardoor leveren we sneller iets dat écht past, in plaats van een generieke oplossing die overal een beetje werkt.",
+    heroKicker: "Sectoren",
+    keuzeKicker: "Vijf focusmarkten",
+    keuzeTitel: "Kies jouw sector.",
+    keuzeIntro:
+      "Beweeg over een sector om het beeld te wisselen, of klik door naar de volledige sectoroplossing.",
+    keuzeMeer: "Jouw sector er niet bij?",
     werkwijzeKicker: "Waarom sectorfocus",
     werkwijzeTitel: "Wat sectorkennis je oplevert",
     wijze1Titel: "Geen inwerktijd",
@@ -861,6 +935,11 @@ export const PAGE_DEFAULTS = {
       "Op dit moment staan er geen vacatures open. We spreken sowieso graag met Mendix- en AI-consultants die bij ons passen.",
     openSollLink: "Stuur hieronder een open sollicitatie",
     belRegel: "of bel {naam}: {telefoon}.",
+    heroKicker: "Werken bij The New Wave IT",
+    heroKnopTwee: "Leer ons eerst kennen",
+    vacaturesKicker: "Vacatures",
+    vacaturesTitel: "Kom de golf versterken.",
+    ctaKnop: "Kom kennismaken",
     openSollKop: "Open sollicitatie",
     openSollIntro:
       "Geen passende vacature? Laat je gegevens achter, we kijken graag of er een match is.",
@@ -985,6 +1064,7 @@ export const PAGE_DEFAULTS = {
     routeKnop: "Begin hier",
   },
   klantverhalen: {
+    kaartLink: "Lees het volledige verhaal →",
     metaTitle: "Klantverhalen: resultaat dat je kunt navragen",
     metaDescription:
       "Verhalen van organisaties in de publieke sector, mobiliteit, banken, zorg en manufacturing, verteld met de cijfers erbij.",
@@ -1037,6 +1117,25 @@ export const PAGE_DEFAULTS = {
     artikelLeadTitel: "Dit soort inzichten, één keer per maand",
     artikelLeadTekst:
       "Laat je e-mail achter en ontvang onze scherpste inzichten over technologie in jouw sector. Geen sales, uitschrijven kan altijd.",
+  },
+  algemeen: {
+    footerBlurb:
+      "De business-specialist in publieke sector, mobiliteit, banken, zorg en manufacturing. Technologie als middel, jouw resultaat als doel.",
+    footerKopSectoren: "Sectoren",
+    footerKopBedrijf: "Bedrijf",
+    footerKopContact: "Contact",
+    footerPrivacy: "Privacybeleid",
+    cookieTekst:
+      "We gebruiken alleen functionele cookies. Met jouw toestemming plaatsen we ook analytische cookies om de site te verbeteren. Zie ons",
+    cookieLink: "privacybeleid",
+    cookieWeiger: "Alleen functioneel",
+    cookieAccepteer: "Accepteren",
+    inzichtenLeeg: "Er staan nog geen inzichten online. Kom binnenkort terug.",
+    inzichtenMeer: "Lees meer",
+    caseLees: "Lees het verhaal",
+    heroKnop: "Plan een gesprek",
+    heroKnopTwee: "Klantverhalen",
+    artikelDoor: "door",
   },
   privacy: {
     metaTitle: "Privacybeleid",

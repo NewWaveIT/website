@@ -1,7 +1,9 @@
 import { cacheLife } from "next/cache";
 import { getContactgegevens } from "@/lib/contact-data";
+import { getPagina } from "@/lib/paginas-data";
 import { Footer } from "./footer";
 import { MobileShell } from "./mobile-shell";
+import { Consent } from "@/components/consent/consent";
 
 /**
  * De twee schil-onderdelen die een CMS-waarde nodig hebben, elk in hun eigen
@@ -24,6 +26,33 @@ export async function MobileShellMetContact() {
 export async function FooterMetContact() {
   "use cache";
   cacheLife("content");
-  const contact = await getContactgegevens();
-  return <Footer email={contact.email} />;
+  const [contact, t] = await Promise.all([getContactgegevens(), getPagina("algemeen")]);
+  return (
+    <Footer
+      email={contact.email}
+      tk={{
+        footerBlurb: t.footerBlurb,
+        footerKopSectoren: t.footerKopSectoren,
+        footerKopBedrijf: t.footerKopBedrijf,
+        footerKopContact: t.footerKopContact,
+        footerPrivacy: t.footerPrivacy,
+      }}
+    />
+  );
+}
+
+export async function ConsentMetCms() {
+  "use cache";
+  cacheLife("content");
+  const t = await getPagina("algemeen");
+  return (
+    <Consent
+      tk={{
+        cookieTekst: t.cookieTekst,
+        cookieLink: t.cookieLink,
+        cookieWeiger: t.cookieWeiger,
+        cookieAccepteer: t.cookieAccepteer,
+      }}
+    />
+  );
 }

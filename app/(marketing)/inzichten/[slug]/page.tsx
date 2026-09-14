@@ -39,7 +39,11 @@ export default async function ArtikelPage({ params }: { params: Promise<{ slug: 
   cacheLife("content");
 
   const { slug } = await params;
-  const [a, t] = await Promise.all([getArtikelBySlug(slug), getPagina("inzichten")]);
+  const [a, t, alg] = await Promise.all([
+    getArtikelBySlug(slug),
+    getPagina("inzichten"),
+    getPagina("algemeen"),
+  ]);
   if (!a) notFound();
 
   const jsonLd = {
@@ -76,7 +80,7 @@ export default async function ArtikelPage({ params }: { params: Promise<{ slug: 
               <Image className="av" src={a.auteurFoto} alt={a.auteur} width={40} height={40} />
             )}
             <span>
-              door <strong>{a.auteur}</strong>
+              {alg.artikelDoor} <strong>{a.auteur}</strong>
               <span className="sub">
                 {a.leestijd} leestijd · {a.datum}
               </span>

@@ -94,7 +94,7 @@ export default async function DienstenPage() {
       {/* 1 · Hero */}
       <PaginaHero
         kruimels={[{ naam: "Diensten", pad: "/diensten" }]}
-        kicker="Diensten"
+        kicker={t.heroKicker}
         titel={t.heroTitleStart ?? ""}
         accent={t.heroAccent}
         staart={t.heroTitleEnd}
@@ -183,7 +183,7 @@ export default async function DienstenPage() {
                 return (
                   <article className="cat-card" key={s.slug}>
                     <div className="top">
-                      <span className="fase">Instap</span>
+                      <span className="fase">{t.kaartInstap}</span>
                       <span className="spoor">{spoor}</span>
                     </div>
                     <h3>{s.naam}</h3>
@@ -205,7 +205,7 @@ export default async function DienstenPage() {
                       className="more"
                       aria-label={`Meer over ${s.naam}`}
                     >
-                      Meer over deze dienst →
+                      {t.kaartMeer}
                     </Link>
                   </article>
                 );

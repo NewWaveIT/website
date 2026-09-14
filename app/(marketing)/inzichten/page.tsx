@@ -26,7 +26,11 @@ export default async function InzichtenPage() {
   "use cache";
   cacheLife("content");
 
-  const [t, artikelen] = await Promise.all([getPagina("inzichten"), getArtikelen()]);
+  const [t, artikelen, a] = await Promise.all([
+    getPagina("inzichten"),
+    getArtikelen(),
+    getPagina("algemeen"),
+  ]);
   return (
     <div className="p-inzichten">
       <PaginaHero
@@ -41,7 +45,10 @@ export default async function InzichtenPage() {
 
       <section className="block">
         <div className="wrap-wide">
-          <InzichtenList artikelen={artikelen} />
+          <InzichtenList
+            artikelen={artikelen}
+            tk={{ inzichtenLeeg: a.inzichtenLeeg, inzichtenMeer: a.inzichtenMeer }}
+          />
         </div>
       </section>
 

@@ -14,7 +14,14 @@ type Choice = "granted" | "denied" | null;
  * (opt-in, AVG/ePrivacy) én alleen als NEXT_PUBLIC_GA_ID is ingesteld.
  * Functionele (inlog-)cookies vallen hier niet onder.
  */
-export function Consent() {
+export interface CookieTeksten {
+  cookieTekst: string;
+  cookieLink: string;
+  cookieWeiger: string;
+  cookieAccepteer: string;
+}
+
+export function Consent({ tk }: { tk: CookieTeksten }) {
   const [choice, setChoice] = useState<Choice>(null);
   const [mounted, setMounted] = useState(false);
 
@@ -60,23 +67,22 @@ export function Consent() {
         <div className="cookie-banner" role="dialog" aria-label="Cookie-toestemming">
           <div className="cookie-inner">
             <p>
-              We gebruiken alleen functionele cookies. Met jouw toestemming plaatsen we ook
-              analytische cookies om de site te verbeteren. Zie ons{" "}
+              {tk.cookieTekst}{" "}
               <Link href="/privacy" prefetch={false}>
-                privacybeleid
+                {tk.cookieLink}
               </Link>
               .
             </p>
             <div className="cookie-actions">
               <button type="button" className="cookie-btn ghost" onClick={() => decide("denied")}>
-                Alleen functioneel
+                {tk.cookieWeiger}
               </button>
               <button
                 type="button"
                 className="cookie-btn primary"
                 onClick={() => decide("granted")}
               >
-                Accepteren
+                {tk.cookieAccepteer}
               </button>
             </div>
           </div>

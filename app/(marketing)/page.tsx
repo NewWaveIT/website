@@ -55,13 +55,14 @@ export default async function HomePage() {
   "use cache";
   cacheLife("content");
 
-  const [t, instap, catalogus, sectoren, klantverhalen, artikelen] = await Promise.all([
+  const [t, instap, catalogus, sectoren, klantverhalen, artikelen, a] = await Promise.all([
     getPagina("home"),
     getInstapPerRichting(),
     getCatalogus(),
     getSectorKaarten(),
     getKlantverhalen(),
     getArtikelen(),
+    getPagina("algemeen"),
   ]);
   const inzichten = artikelen.slice(0, 3);
   const cases = klantverhalen.map((k) => ({
@@ -83,13 +84,15 @@ export default async function HomePage() {
         accent={t.heroAccent}
         staart={t.heroTitleEnd}
         lead={t.heroLead}
+        knop={a.heroKnop}
+        knopTwee={a.heroKnopTwee}
       />
 
       {/* Klantenband */}
       <div className="proof">
         <div className="wrap-wide">
           <div className="proof-head">
-            <span className="cap">Vertrouwd door</span>
+            <span className="cap">{t.proofKop}</span>
             <a className="award" href={AWARD.url} target="_blank" rel="noopener noreferrer">
               <Award /> {AWARD.label}
             </a>
@@ -214,7 +217,7 @@ export default async function HomePage() {
               kpi: s.kpiLabel,
             }))}
             moreHref="/sectoren"
-            moreTitel="Niet jouw sector? Plan een verkenning"
+            moreTitel={t.sectorenMeer}
           />
         </div>
       </section>
@@ -228,10 +231,10 @@ export default async function HomePage() {
               <h2>{t.casesTitel}</h2>
             </div>
             <Link href="/klantverhalen" className="btn btn-ghost-on btn-sm">
-              Alle klantverhalen <ArrowRight />
+              {t.casesAlle} <ArrowRight />
             </Link>
           </div>
-          <CasesCarousel items={cases} />
+          <CasesCarousel items={cases} lees={a.caseLees} />
         </div>
       </section>
 
@@ -244,10 +247,7 @@ export default async function HomePage() {
               <h2>{t.mensenTitel}</h2>
               <p>{t.mensenP1}</p>
               <p>{t.mensenP2}</p>
-              <p>
-                Dat onze mensen hier met plezier werken, blijkt ook extern: The New Wave IT is
-                bekroond in de Computable Werkgevers Awards 2025.
-              </p>
+              <p>{t.mensenAward}</p>
               <a
                 className="award-badge on-light"
                 href={AWARD.url}
@@ -258,10 +258,10 @@ export default async function HomePage() {
               </a>
               <div className="acties">
                 <Link href="/over-ons" className="btn btn-primary">
-                  Ontmoet ons team
+                  {t.mensenKnop}
                 </Link>
                 <Link href="/werken-bij" className="tekstlink">
-                  Werken bij The New Wave IT <ArrowRight />
+                  {t.mensenLink} <ArrowRight />
                 </Link>
               </div>
             </div>
@@ -309,7 +309,7 @@ export default async function HomePage() {
                 <h2>{t.inzichtenTitel}</h2>
               </div>
               <Link href="/inzichten" className="btn btn-outline btn-sm">
-                Alle inzichten <ArrowRight />
+                {t.inzichtenAlle} <ArrowRight />
               </Link>
             </div>
             <div className="cards3">
@@ -326,7 +326,7 @@ export default async function HomePage() {
                     <h3>{a.titel}</h3>
                     <p>{a.intro}</p>
                     <Link href={`/inzichten/${a.slug}`} className="more">
-                      Lees meer <ArrowRight />
+                      {t.inzichtenMeer} <ArrowRight />
                     </Link>
                   </div>
                 </article>

@@ -39,7 +39,7 @@ export default async function WerkenBijPage() {
     <div className="p-werken">
       <PaginaHero
         kruimels={[{ naam: "Werken bij", pad: "/werken-bij" }]}
-        kicker="Werken bij The New Wave IT"
+        kicker={t.heroKicker}
         titel={t.heroTitleStart ?? ""}
         accent={t.heroAccent}
         staart="."
@@ -67,7 +67,7 @@ export default async function WerkenBijPage() {
             {vacatures.length ? "Bekijk vacatures" : "Stuur een open sollicitatie"} <ArrowRight />
           </a>
           <Link href="/over-ons" className="btn btn-ghost-on">
-            Leer ons eerst kennen
+            {t.heroKnopTwee}
           </Link>
         </div>
       </PaginaHero>
@@ -139,8 +139,8 @@ export default async function WerkenBijPage() {
       <section className="block vacatures" id="vacatures">
         <div className="wrap-wide">
           <div className="sec-head">
-            <div className="kicker on-dark">Vacatures</div>
-            <h2>Kom de golf versterken.</h2>
+            <div className="kicker on-dark">{t.vacaturesKicker}</div>
+            <h2>{t.vacaturesTitel}</h2>
           </div>
           {vacatures.length > 0 && (
             <div className="list">
@@ -204,7 +204,7 @@ export default async function WerkenBijPage() {
         </div>
       </section>
 
-      <SlotCta titel={t.ctaTitel} knop="Kom kennismaken" />
+      <SlotCta titel={t.ctaTitel} knop={t.ctaKnop} />
     </div>
   );
 }

@@ -18,7 +18,12 @@ const CATEGORIEEN = [
   "Manufacturing",
 ];
 
-export function InzichtenList({ artikelen }: { artikelen: Artikel[] }) {
+export interface LijstTeksten {
+  inzichtenLeeg: string;
+  inzichtenMeer: string;
+}
+
+export function InzichtenList({ artikelen, tk }: { artikelen: Artikel[]; tk: LijstTeksten }) {
   const [actief, setActief] = useState(ALLE);
 
   // Alleen filters tonen waarvoor er artikelen zijn.
@@ -43,7 +48,7 @@ export function InzichtenList({ artikelen }: { artikelen: Artikel[] }) {
   if (artikelen.length === 0) {
     return (
       <p className="leeg" role="status">
-        Er staan nog geen inzichten online. Kom binnenkort terug.
+        {tk.inzichtenLeeg}
       </p>
     );
   }
@@ -97,7 +102,7 @@ export function InzichtenList({ artikelen }: { artikelen: Artikel[] }) {
               </div>
               <h3>{a.titel}</h3>
               <span className="more">
-                Lees meer <ArrowRight />
+                {tk.inzichtenMeer} <ArrowRight />
               </span>
             </div>
           </Link>

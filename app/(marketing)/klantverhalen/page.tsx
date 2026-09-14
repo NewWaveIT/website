@@ -109,7 +109,7 @@ export default async function KlantverhalenPage() {
                   <strong>{featured.quoteNaam}</strong>, {featured.quoteRol}
                   <br />
                   <Link href={`/klantverhalen/${featured.slug}`} className="lees-meer">
-                    Lees het volledige verhaal →
+                    {t.kaartLink}
                   </Link>
                 </div>
               </div>

@@ -87,11 +87,15 @@ export function HeroSector({
   accent,
   staart,
   lead,
+  knop,
+  knopTwee,
 }: {
   titel: string;
   accent: string;
   staart: string;
   lead: string;
+  knop: string;
+  knopTwee: string;
 }) {
   // i en vorige zitten in één state-object: de vorige scene blijft als
   // onderlaag staan zolang de nieuwe infadet (anders flitst de espresso-
@@ -181,10 +185,10 @@ export function HeroSector({
         <p className="hsec-intro">{lead}</p>
         <div className="hsec-acties">
           <Link className="hsec-cta" href="/contact">
-            Plan een gesprek <span aria-hidden="true">→</span>
+            {knop} <span aria-hidden="true">→</span>
           </Link>
           <Link className="hsec-link" href="/klantverhalen">
-            Klantverhalen
+            {knopTwee}
           </Link>
         </div>
       </div>
