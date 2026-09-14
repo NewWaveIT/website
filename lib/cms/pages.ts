@@ -8,6 +8,7 @@ export const PAGE_FIELDS = {
   home: [
     { key: "heroTitleStart", label: "Hero — titel (begin)", type: "text" },
     { key: "heroAccent", label: "Hero — accentwoord", type: "text" },
+    { key: "heroTitleEnd", label: "Hero — titel (eind)", type: "text" },
     { key: "heroLead", label: "Hero — introtekst", type: "textarea" },
     { key: "ctaTitel", label: "Slot-CTA — titel", type: "text" },
     { key: "ctaKnop", label: "Slot-CTA — knoptekst", type: "text" },
@@ -310,10 +311,11 @@ export const PAGE_PATH = {
 /** Standaardteksten per pagina (fallback op de site + startwaarde in de editor). */
 export const PAGE_DEFAULTS = {
   home: {
-    heroTitleStart: "Wij maken van business en IT ",
+    heroTitleStart: "Business en IT als ",
     heroAccent: "één beweging",
+    heroTitleEnd: ".",
     heroLead:
-      "The New Wave IT combineert diepgaande sectorkennis met Mendix, AI en strategie. Zo vertalen we jouw ambitie naar oplossingen die werken voor de mensen die ermee moeten werken.",
+      "Sectorkennis, Mendix en AI in één team, van eerste sessie tot werkende software voor de mensen die ermee werken.",
     ctaTitel: "Klaar om samen te bouwen aan meetbare groei?",
     ctaKnop: "Plan een gesprek",
     mensenKicker: "De mens centraal",

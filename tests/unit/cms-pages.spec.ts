@@ -34,29 +34,34 @@ function bronbestanden(map: string, uit: string[] = []): string[] {
   return uit;
 }
 
-const BRON = WORTELS.flatMap((w) => bronbestanden(w))
-  .map((p) => readFileSync(p, "utf8"))
-  .join("\n");
-
-/**
- * Sommige pagina's lezen genummerde velden in een lus: `t[`groei${n}Titel`]`.
- * Die tellen als gebruik voor elke sleutel die op het voorvoegsel begint en op
- * het achtervoegsel eindigt.
- */
-const SJABLONEN = [...BRON.matchAll(/\[`([A-Za-z]*)\$\{[^}]+\}([A-Za-z]*)`\]/g)].map((m) => ({
-  voor: m[1] ?? "",
-  na: m[2] ?? "",
+const BESTANDEN = WORTELS.flatMap((w) => bronbestanden(w)).map((pad) => ({
+  pad,
+  bron: readFileSync(pad, "utf8"),
 }));
 
-function wordtGelezen(sleutel: string): boolean {
-  // Alleen `t.sleutel`, want dat is de conventie voor paginateksten. Matchen op
-  // een losse property-naam was te ruim: `metaTitle` staat ook in
-  // lib/sectoren-detail.ts, waardoor de metavelden van de drie richting-hubs
-  // als "gebruikt" telden terwijl die pagina's hun eigen, hardgecodeerde
-  // `export const metadata` hadden.
-  if (new RegExp(`\\bt\\.${sleutel}\\b`).test(BRON)) return true;
-  return SJABLONEN.some(
-    ({ voor, na }) =>
+/**
+ * De bestanden die de teksten van één slug lezen. Per slug kijken en niet in de
+ * hele broncode, want anders telt een veldnaam mee die toevallig ook op een
+ * ándere pagina bestaat. Zo bleven `heroTitleStart`, `heroAccent` en `heroLead`
+ * op de homepage jarenlang "in gebruik" terwijl de homepage een hero-component
+ * met eigen, hardgecodeerde tekst rendert.
+ *
+ * Een sjabloonaanroep — `getPagina(`diensten-${richting}`)` — telt voor elke
+ * slug die op het voorvoegsel begint.
+ */
+function lezersVan(slug: string): string[] {
+  return BESTANDEN.filter(({ bron }) => {
+    if (bron.includes(`getPagina("${slug}")`)) return true;
+    return [...bron.matchAll(/getPagina\(`([a-z0-9-]*)\$\{[^}]+\}`\)/g)].some(([, voor = ""]) =>
+      slug.startsWith(voor),
+    );
+  }).map(({ bron }) => bron);
+}
+
+/** Een lus als t[`groei${n}Titel`] telt als gebruik van elke passende sleutel. */
+function viaSjabloon(bron: string, sleutel: string): boolean {
+  return [...bron.matchAll(/\bt\[`([A-Za-z]*)\$\{[^}]+\}([A-Za-z]*)`\]/g)].some(
+    ([, voor = "", na = ""]) =>
       voor !== "" &&
       sleutel.startsWith(voor) &&
       sleutel.endsWith(na) &&
@@ -64,10 +69,20 @@ function wordtGelezen(sleutel: string): boolean {
   );
 }
 
+function wordtGelezen(slug: string, sleutel: string): boolean {
+  // Alleen `t.sleutel`: dat is de conventie voor paginateksten. Matchen op een
+  // losse property-naam was te ruim — `metaTitle` staat ook in
+  // lib/sectoren-detail.ts, waardoor de metavelden van de drie richting-hubs
+  // als "gebruikt" telden terwijl die pagina's hun eigen, hardgecodeerde
+  // `export const metadata` hadden.
+  const patroon = new RegExp(`\\bt\\.${sleutel}\\b`);
+  return lezersVan(slug).some((bron) => patroon.test(bron) || viaSjabloon(bron, sleutel));
+}
+
 describe("elk paginaveld wordt ergens getoond", () => {
   for (const [slug, velden] of Object.entries(PAGE_FIELDS)) {
     it(slug, () => {
-      const dood = velden.map((v) => v.key).filter((k) => !wordtGelezen(k));
+      const dood = velden.map((v) => v.key).filter((k) => !wordtGelezen(slug, k));
       expect(dood, `${slug}: staat in de admin maar wordt nergens gerenderd`).toEqual([]);
     });
   }

@@ -77,7 +77,12 @@ export default async function HomePage() {
       <JsonLd data={jsonLd} />
 
       {/* Hero */}
-      <HeroSector />
+      <HeroSector
+        titel={t.heroTitleStart}
+        accent={t.heroAccent}
+        staart={t.heroTitleEnd}
+        lead={t.heroLead}
+      />
 
       {/* Klantenband */}
       <div className="proof">

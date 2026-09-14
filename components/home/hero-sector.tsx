@@ -72,7 +72,27 @@ const CYCLE_MS = 6500;
 
 const tel = (n: number) => String(n).padStart(2, "0");
 
-export function HeroSector() {
+/**
+ * De kop en de intro komen als prop binnen: dit is een client-component, dus
+ * hij kan zelf niet bij het CMS. De drie velden stonden al in PAGE_FIELDS maar
+ * werden nergens gelezen — de tekst stond hier hardgecodeerd, en wie ze in de
+ * admin invulde zag niets veranderen.
+ *
+ * Wat nog wél in dit bestand staat: de vijf scenes (sectornaam, praktijkregel,
+ * foto). Die horen bij de sectoren en niet bij de paginacopy; als die naar het
+ * CMS moeten, hoort dat bij cms_sectoren.
+ */
+export function HeroSector({
+  titel,
+  accent,
+  staart,
+  lead,
+}: {
+  titel: string;
+  accent: string;
+  staart: string;
+  lead: string;
+}) {
   // i en vorige zitten in één state-object: de vorige scene blijft als
   // onderlaag staan zolang de nieuwe infadet (anders flitst de espresso-
   // achtergrond door de crossfade heen), en zo kan hij niet uit de pas lopen
@@ -154,12 +174,11 @@ export function HeroSector() {
           </span>
         </p>
         <h1 className="hsec-h1">
-          Business en IT als <span className="hsec-h1-accent">één beweging</span>.
+          {titel}
+          <span className="hsec-h1-accent">{accent}</span>
+          {staart}
         </h1>
-        <p className="hsec-intro">
-          Sectorkennis, Mendix en AI in één team, van eerste sessie tot werkende software voor de
-          mensen die ermee werken.
-        </p>
+        <p className="hsec-intro">{lead}</p>
         <div className="hsec-acties">
           <Link className="hsec-cta" href="/contact">
             Plan een gesprek <span aria-hidden="true">→</span>
