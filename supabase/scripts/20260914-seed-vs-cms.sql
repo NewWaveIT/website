@@ -1,24 +1,28 @@
 -- Waar loopt het CMS uit de pas met de seed?
 --
 -- De seed in lib/ is de koude start, de admin is de waarheid: ze mogen
--- verschillen. Maar het is twee keer gebeurd dat een tekst in de code al was
+-- verschillen. Maar het is meermalen gebeurd dat een tekst in de code al was
 -- gecorrigeerd terwijl de rij was achtergebleven, en dat ziet niemand -- de
--- e2e draait tegen de seed, omdat CI Supabase niet bereikt. Alles wat alleen in
--- de database afwijkt blijft onzichtbaar tot iemand de live site leest.
+-- e2e draait tegen de seed, omdat CI Supabase niet bereikt.
 --
 -- Dit script wijzigt niets. Per afwijkend veld toont het het eerste blok van
--- 200 tekens waarin de twee uit elkaar lopen, uit beide versies. Zo blijft ook
--- een verschil ver in een lange tekst (de privacyverklaring is 9 kB) zichtbaar,
--- zonder dat je de hele tekst hoeft te lezen.
+-- 200 tekens waarin de twee uit elkaar lopen, uit beide versies.
+--
+-- Regelovergangen tellen niet mee. De SQL-editor maakt van elke nieuwe regel in
+-- een geplakt script een CRLF, terwijl de waarden in de database met een enkele
+-- LF zijn ingevoegd. Zonder deze normalisatie meldt het script de hele
+-- privacyverklaring als "afwijkend" op 37 onzichtbare tekens.
 --
 -- De seedwaarden staan hieronder letterlijk, uit PAGE_DEFAULTS
 -- (lib/cms/pages.ts) op het moment van genereren. Wijzigt de seed, dan hoort
--- dit script opnieuw gegenereerd te worden.
+-- dit script opnieuw gegenereerd te worden -- anders meldt het verschillen die
+-- allang zijn opgelost.
 
 with seed(slug, veld, tekst) as (values
-    ('home', 'heroTitleStart', 'Wij maken van business en IT '),
+    ('home', 'heroTitleStart', 'Business en IT als '),
     ('home', 'heroAccent', 'één beweging'),
-    ('home', 'heroLead', 'The New Wave IT combineert diepgaande sectorkennis met Mendix, AI en strategie. Zo vertalen we jouw ambitie naar oplossingen die werken voor de mensen die ermee moeten werken.'),
+    ('home', 'heroTitleEnd', '.'),
+    ('home', 'heroLead', 'Sectorkennis, Mendix en AI in één team, van eerste sessie tot werkende software voor de mensen die ermee werken.'),
     ('home', 'ctaTitel', 'Klaar om samen te bouwen aan meetbare groei?'),
     ('home', 'ctaKnop', 'Plan een gesprek'),
     ('home', 'mensenKicker', 'De mens centraal'),
@@ -267,17 +271,23 @@ with seed(slug, veld, tekst) as (values
 <p>Heb je vragen over deze Privacy Policy? Neem dan contact op met The New Wave IT via <a href="mailto:hello@thenewwaveit.com">hello@thenewwaveit.com</a>.</p>')
 ),
 verschil as (
-  select s.slug, s.veld, s.tekst as seed, p.data ->> s.veld as cms
+  select
+    s.slug,
+    s.veld,
+    translate(s.tekst, chr(13), '')            as seed,
+    translate(p.data ->> s.veld, chr(13), '')  as cms
   from seed s
   join cms_paginas p on p.slug = s.slug
   where p.data ? s.veld
-    and p.data ->> s.veld is distinct from s.tekst
+),
+afwijkend as (
+  select * from verschil where seed is distinct from cms
 ),
 blokken as (
   select v.slug, v.veld, v.seed, v.cms, i,
          substr(v.seed, (i - 1) * 200 + 1, 200) as seedblok,
          substr(v.cms,  (i - 1) * 200 + 1, 200) as cmsblok
-  from verschil v,
+  from afwijkend v,
        generate_series(1, ceil(greatest(length(v.seed), length(v.cms)) / 200.0)::int) as i
 ),
 eerste as (
