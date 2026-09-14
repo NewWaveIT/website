@@ -1,0 +1,231 @@
+{
+  "toelichting": "Gegenereerd door tests/unit/manifest.spec.ts. Niet met de hand bijwerken; draai `npm run manifest`.",
+  "contenttypen": [
+    {
+      "type": "artikelen",
+      "tabel": "cms_artikelen",
+      "velden": 8,
+      "seed": null,
+      "datalaag": null,
+      "adminLijst": "/admin/inzichten",
+      "publiekPad": "/inzichten"
+    },
+    {
+      "type": "cases",
+      "tabel": "cms_cases",
+      "velden": 20,
+      "seed": "lib/klantverhalen.ts",
+      "datalaag": "lib/klantverhalen-data.ts",
+      "adminLijst": "/admin/cases",
+      "publiekPad": "/klantverhalen"
+    },
+    {
+      "type": "diensten",
+      "tabel": "cms_diensten",
+      "velden": 27,
+      "seed": "lib/diensten-detail.ts",
+      "datalaag": "lib/diensten-detail-data.ts",
+      "adminLijst": "/admin/diensten",
+      "publiekPad": "/diensten"
+    },
+    {
+      "type": "paginas",
+      "tabel": "cms_paginas",
+      "velden": 3,
+      "seed": null,
+      "datalaag": null,
+      "adminLijst": "/admin/paginas",
+      "publiekPad": null
+    },
+    {
+      "type": "sectoren",
+      "tabel": "cms_sectoren",
+      "velden": 43,
+      "seed": "lib/sectoren-detail.ts",
+      "datalaag": "lib/sectoren-detail-data.ts",
+      "adminLijst": "/admin/sectoren",
+      "publiekPad": "/sectoren"
+    },
+    {
+      "type": "services",
+      "tabel": "cms_services",
+      "velden": 49,
+      "seed": "lib/services.ts",
+      "datalaag": "lib/services-data.ts",
+      "adminLijst": "/admin/services",
+      "publiekPad": "/diensten"
+    },
+    {
+      "type": "teamleden",
+      "tabel": "cms_teamleden",
+      "velden": 7,
+      "seed": "lib/team.ts",
+      "datalaag": "lib/team-data.ts",
+      "adminLijst": "/admin/teamleden",
+      "publiekPad": null
+    },
+    {
+      "type": "vacatures",
+      "tabel": "cms_vacatures",
+      "velden": 9,
+      "seed": "lib/vacatures.ts",
+      "datalaag": "lib/vacatures-data.ts",
+      "adminLijst": "/admin/vacatures",
+      "publiekPad": "/vacatures"
+    }
+  ],
+  "paginateksten": [
+    {
+      "slug": "algemeen",
+      "velden": 18,
+      "pad": "/",
+      "gelezenDoor": [
+        "app/(marketing)/inzichten/[slug]/page.tsx",
+        "app/(marketing)/inzichten/page.tsx",
+        "app/(marketing)/page.tsx",
+        "components/layout/schil-cms.tsx"
+      ]
+    },
+    {
+      "slug": "contact",
+      "velden": 62,
+      "pad": "/contact",
+      "gelezenDoor": ["app/(marketing)/contact/page.tsx", "lib/contact-data.ts"]
+    },
+    {
+      "slug": "dienst-detail",
+      "velden": 49,
+      "pad": "/diensten",
+      "gelezenDoor": [
+        "app/(marketing)/diensten/[slug]/page.tsx",
+        "components/diensten/fase-tijdlijn.tsx",
+        "components/diensten/richting-hub.tsx",
+        "components/diensten/secties/aanpak.tsx",
+        "components/diensten/secties/bewijs.tsx",
+        "components/diensten/secties/probleem.tsx",
+        "components/diensten/secties/verwijzingen.tsx",
+        "components/diensten/service-card.tsx"
+      ]
+    },
+    {
+      "slug": "diensten",
+      "velden": 51,
+      "pad": "/diensten",
+      "gelezenDoor": [
+        "app/(marketing)/diensten/page.tsx",
+        "components/diensten/richting-hub.tsx",
+        "lib/services-data.ts"
+      ]
+    },
+    {
+      "slug": "diensten-ai",
+      "velden": 7,
+      "pad": "/diensten/ai",
+      "gelezenDoor": ["components/diensten/richting-hub.tsx"]
+    },
+    {
+      "slug": "diensten-mendix",
+      "velden": 7,
+      "pad": "/diensten/mendix",
+      "gelezenDoor": ["components/diensten/richting-hub.tsx"]
+    },
+    {
+      "slug": "diensten-strategie",
+      "velden": 10,
+      "pad": "/diensten/strategie",
+      "gelezenDoor": ["components/diensten/richting-hub.tsx"]
+    },
+    {
+      "slug": "home",
+      "velden": 28,
+      "pad": "/",
+      "gelezenDoor": ["app/(marketing)/page.tsx"]
+    },
+    {
+      "slug": "inzichten",
+      "velden": 11,
+      "pad": "/inzichten",
+      "gelezenDoor": [
+        "app/(marketing)/inzichten/[slug]/page.tsx",
+        "app/(marketing)/inzichten/page.tsx"
+      ]
+    },
+    {
+      "slug": "klantverhaal-detail",
+      "velden": 18,
+      "pad": "/klantverhalen",
+      "gelezenDoor": ["app/(marketing)/klantverhalen/[slug]/page.tsx"]
+    },
+    {
+      "slug": "klantverhalen",
+      "velden": 13,
+      "pad": "/klantverhalen",
+      "gelezenDoor": ["app/(marketing)/klantverhalen/page.tsx"]
+    },
+    {
+      "slug": "over-ons",
+      "velden": 33,
+      "pad": "/over-ons",
+      "gelezenDoor": ["app/(marketing)/over-ons/page.tsx"]
+    },
+    {
+      "slug": "privacy",
+      "velden": 5,
+      "pad": "/privacy",
+      "gelezenDoor": ["app/(marketing)/privacy/page.tsx"]
+    },
+    {
+      "slug": "sector-detail",
+      "velden": 22,
+      "pad": "/sectoren",
+      "gelezenDoor": ["app/(marketing)/sectoren/[slug]/page.tsx"]
+    },
+    {
+      "slug": "sectoren",
+      "velden": 17,
+      "pad": "/sectoren",
+      "gelezenDoor": ["app/(marketing)/sectoren/page.tsx"]
+    },
+    {
+      "slug": "vacature-detail",
+      "velden": 36,
+      "pad": "/werken-bij",
+      "gelezenDoor": [
+        "app/(marketing)/vacatures/[slug]/page.tsx",
+        "app/(marketing)/werken-bij/page.tsx"
+      ]
+    },
+    {
+      "slug": "werken-bij",
+      "velden": 42,
+      "pad": "/werken-bij",
+      "gelezenDoor": ["app/(marketing)/werken-bij/page.tsx"]
+    }
+  ],
+  "publiekeRoutes": [
+    "/",
+    "/contact",
+    "/diensten",
+    "/diensten/[slug]",
+    "/diensten/ai",
+    "/diensten/mendix",
+    "/diensten/strategie",
+    "/inzichten",
+    "/inzichten/[slug]",
+    "/klantverhalen",
+    "/klantverhalen/[slug]",
+    "/over-ons",
+    "/privacy",
+    "/sectoren",
+    "/sectoren/[slug]",
+    "/vacatures/[slug]",
+    "/werken-bij"
+  ],
+  "aantallen": {
+    "bronbestanden": 159,
+    "clientComponenten": 37,
+    "servercomponenten": 122,
+    "unittests": 29,
+    "e2etests": 5
+  }
+}

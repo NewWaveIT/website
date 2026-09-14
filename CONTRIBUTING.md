@@ -21,6 +21,7 @@ npm run typecheck    # tsc --noEmit
 npm run lint         # ESLint, faalt bij >0 warnings
 npm run format       # Prettier: schrijf formattering
 npm run format:check # Prettier: alleen controleren (zoals CI doet)
+npm run manifest     # Genereert docs/manifest.json + docs/MANIFEST.md opnieuw uit de code
 npm run test:unit    # Vitest: unittests voor pure logica (sanitize, formuliervalidatie)
 npm run test:e2e     # Playwright-smoketests (bouwt + start op poort 3100)
 ```
@@ -31,6 +32,13 @@ daarna `npm run typecheck`, zodat een rode CI-run lokaal al wordt opgevangen. Ha
 format:check && npm run test:unit && npm run build`. CI draait exact deze checks plus de
 Playwright-smoketests op elke PR en push naar `main`, plus Dependabot (wekelijkse
 dependency-updates).
+
+## Waar staat wat
+
+`docs/MANIFEST.md` is de kaart: per contenttype de tabel, seed, datalaag en publieke
+route; per pagina-ingang de velden en welke bestanden ze lezen; en alle publieke routes.
+Hij is **gegenereerd** — `npm run manifest` — en `tests/unit/manifest.spec.ts` faalt zodra
+hij achterloopt. Werk hem dus niet met de hand bij.
 
 ## Projectstructuur
 
@@ -71,8 +79,19 @@ tests/unit/          Vitest-unittests (pure logica, geen browser/server nodig).
 
 1. SQL-migratie in `supabase/migrations/` (tabel `cms_<type>` + RLS).
 2. Schema in `lib/cms/schema.ts` (velden + label + type).
-3. Datalaag `lib/<type>-data.ts` met fallback-content.
-4. Menu-item in de admin-sidebar; publieke pagina leest via de datalaag.
+3. Zod-schema in `lib/cms/schemas.ts` en een bouwer in `lib/cms/rij.ts`.
+4. Datalaag `lib/<type>-data.ts` met `maakLezer` en fallback-content.
+5. Menu-item in `lib/admin-nav.ts` en een rij in `lib/cms/admin-paden.ts`.
+6. Publieke pagina leest via de datalaag.
+7. `npm run manifest` — anders faalt de versheidstest.
+
+## Een CMS-veld verwijderen
+
+Een veld weghalen uit `lib/cms/schema.ts` is niet genoeg: de sleutel blijft in elke
+opgeslagen rij staan en komt terug zodra iemand hem opnieuw invoert. Haal hem óók uit het
+zod-schema, de TypeScript-interface en de seed, en schrijf de SQL die hem uit de rijen
+verwijdert (`data - array['sleutel']::text[]`). `supabase/scripts/20260914-dode-velden.sql`
+is het voorbeeld.
 
 ## Git & CI
 

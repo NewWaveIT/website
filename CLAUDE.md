@@ -7,6 +7,12 @@ uit de code afleidt.
 
 ## Snel oriënteren
 
+**Begin bij [`docs/MANIFEST.md`](docs/MANIFEST.md).** Daar staat per contenttype de
+tabel, de seed, de datalaag en de publieke route; per pagina-ingang welke velden er zijn
+en welke bestanden ze lezen; en de lijst publieke routes. Dat bestand is gegenereerd uit
+de code (`npm run manifest`) en een unittest faalt zodra het achterloopt — het kan dus
+niet stilletjes wegdrijven zoals de handgeschreven routekaart in `revalidate.ts` deed.
+
 | Wat                     | Waar                                                                                                            |
 | ----------------------- | --------------------------------------------------------------------------------------------------------------- |
 | Publieke pagina         | `app/(marketing)/<pagina>/page.tsx` + eigen `<pagina>.css` (regels gescoped onder `.p-<pagina>` of `.home`)     |
@@ -70,10 +76,15 @@ uit de code afleidt.
   en komt niet terug uit de seed. Content hoort dus in de admin te staan, niet in de code.
 - **Binnen een rij: leeg is echt leeg.** `leesRijen`/`leesRij` (`lib/cms/merge.ts`)
   valideert elke rij tegen zijn zod-schema (`lib/cms/schemas.ts`) na platslaan door
-  `rijNaarRuw` (`lib/cms/rij.ts`). Een **leeg opgeslagen** veld blijft leeg; een veld dat de
-  rij **niet noemt** of **niet geldig** levert komt uit de seed van dezelfde slug (met een
-  `console.error` in de Vercel-logs); een rij die zo nóg niet compleet is valt weg — uit een
-  overzicht, of als 404 op een detailpagina. Schrijf dus geen eigen `mapRow` met per-veld-
+  `rijNaarRuw` (`lib/cms/rij.ts`). Drie gevallen, en het verschil telt:
+  een **leeg opgeslagen** veld blijft leeg; een veld dat de rij **niet noemt** wordt door
+  `vulAan` stil uit de seed aangevuld (**geen logregel** — de validatie slaagt daarna
+  gewoon); een veld met een **ongeldige waarde** komt uit de seed mét een `console.error`
+  in de Vercel-logs. Een rij die zo nóg niet compleet is valt weg — uit een overzicht,
+  of als 404 op een detailpagina. Het praktische gevolg van dat stille aanvullen: een
+  sleutel die in de rij ontbreekt geeft op de site de seedtekst en in de admin een leeg
+  veld, zonder enig spoor. `supabase/scripts/20260914-cms-volledigheid.sql` maakt dat
+  zichtbaar. Schrijf dus geen eigen `mapRow` met per-veld-
   `??`-ketens; dat compenseerde precies de rommel die dit pad zichtbaar hoort te maken.
   `lib/inzichten-data.ts` is de enige, gedocumenteerde uitzondering.
 - **Caching: Cache Components (`cacheComponents: true`).** Geen `export const revalidate`
@@ -115,6 +126,27 @@ uit de code afleidt.
   escape van `<`. Schrijf geen eigen `<script type="application/ld+json">` meer — dertien
   pagina's hadden kruimels en maar vier de bijbehorende structured data, precies omdat het
   twee losse handelingen waren.
+- **Pagina-ingangen: één per pagina, plus vier sjablonen en één algemene.** Naast de
+  echte pagina's (`home`, `contact`, …) staan in `PAGE_FIELDS` de slugs `sector-detail`,
+  `dienst-detail`, `klantverhaal-detail` en `vacature-detail` met de koppen en labels die
+  op _alle_ items van dat type tegelijk gelden, en `algemeen` met wat op elke pagina
+  staat (voettekst, cookiemelding). Ze horen niet bij één item en ook niet bij het
+  overzicht; het pad in `PAGE_PATH` wijst naar de overzichtspagina omdat revalidatie toch
+  grofmazig is.
+- **Een client component leest zelf niets uit het CMS.** Geef de teksten veld voor veld
+  door vanaf de pagina, niet als één `t`-object: `tests/unit/cms-pages.spec.ts` zoekt
+  `t.<sleutel>` in bestanden die `getPagina("<slug>")` aanroepen, en een doorgegeven
+  object is daar onzichtbaar. Doorgeven-per-veld maakt een vergeten veld een rode test
+  in plaats van een leeg plekje op de site.
+- **Geen databaseleesactie in `app/(marketing)/layout.tsx`.** De layout rendert
+  `children`, dus een `"use cache"` eromheen trekt elke pagina in dezelfde scope; zonder
+  die scope weigert Next de route statisch te bouwen ("uncached or runtime data during
+  prerendering"). Wat de schil uit het CMS nodig heeft staat in
+  `components/layout/schil-cms.tsx`, elk onderdeel met een eigen cache-scope.
+- **Contactgegevens staan op één plek.** `lib/contactgegevens.ts` houdt de terugval,
+  `lib/contact-data.ts` leest het CMS erover heen, en de WhatsApp-link wordt uit het
+  nummer afgeleid. De foutpagina en de mailtemplates gebruiken bewust de terugval: die
+  moeten het juist doen als de database onbereikbaar is.
 - **Auth/RLS.** `proxy.ts` (de Next 16-naam voor middleware) redirect ongeauthenticeerde `/admin` → login; `requireAdmin()`
   (`lib/dal.ts`) in élke admin-action en -pagina. Anon mag alleen `insert` op de
   formuliertabellen; de service-role-client (`lib/supabase/admin.ts`) is uitsluitend voor
@@ -124,6 +156,81 @@ uit de code afleidt.
 - **Dynamische contactpersonen.** Teamleden hebben een `contactrol` (Sales/Recruitment);
   `getContactpersoon(rol)` levert de juiste persoon voor contact- en vacaturepagina's.
 - **Afbeeldingen.** Uitsluitend WebP in `public/assets/` (geen PNG-foto's meer).
+
+## Zo ontstaan hier fouten
+
+Deze vijf hebben in september elk minstens één keer echt schade aangericht. Ze staan er
+met het incident erbij, want een regel zonder aanleiding leest als een dooddoener en
+wordt overgeslagen.
+
+### 1 · Bewerk met tekst die je net gelezen hebt, niet met een script dat ankers raadt
+
+Een opruimscript zocht met `rindex("/**")` het commentaar boven een interface en at
+daarmee drie buurinterfaces op. Een import werd ingevoegd "na de laatste importregel" en
+landde middenin een import die over vijftien regels liep. `tk={{…}}` werd twee keer als
+`tk={…}` geschreven en brak de JSX. Een gegenereerd SQL-bestand hield een wees-regel
+`union all select 'proposities',` over omdat de filter per regel werkte en de waarde over
+twee regels stond.
+
+- Lees het bestand, kopieer de exacte tekst, vervang die. Geen ankers op vorm.
+- Draai `npm run typecheck` **direct** na elke structurele bewerking, vóór de volgende.
+- Een script dat halverwege een `assert` faalt schrijft níéts weg. Controleer het bestand
+  in plaats van aan te nemen dat de eerste helft is gelukt.
+
+### 2 · Een SQL-update die nul rijen raakt is geen succes
+
+Drie van de zes updates in de homepage-feedback raakten niets: de sleutel `pitch` stond
+helemaal niet in de sectorrijen, dus `where data->>'pitch' = '<oud>'` matchte nooit. Dat
+is anderhalf uur lang als "gedaan" gerapporteerd.
+
+- Elk script eindigt met een controlequery die de nieuwe toestand teruggeeft.
+- Meld niets als afgerond voordat je die uitvoer hebt gezien.
+- Wil je zeker weten of een sleutel bestaat: `data ? 'sleutel'`, niet `data->>'sleutel'`
+  vergelijken. Een ontbrekende sleutel geeft `null` en dat leest als "leeg", niet als
+  "afwezig".
+
+### 3 · Beweer niets over het leespad zonder `lib/cms/merge.ts` te hebben gelezen
+
+Er is drie keer beweerd dat een ontbrekende sleutel een `console.error` per render
+oplevert. Dat klopt niet: `vulAan` vult stil aan en de validatie slaagt daarna. Alleen
+een aanwezige maar ongeldige waarde logt. Het verschil bepaalt of iets urgent is of
+alleen slordig.
+
+### 4 · Een bewaker die je niet hebt zien falen, bewaakt niets
+
+De ARIA-test zocht naar de tekst `aria-pressed` in de bron, en de toelichting boven het
+component bevatte dat woord — de regel controleerde dus niets bij precies het bestand
+dat hij moest bewaken. Een e2e-test wachtte op `networkidle`, wat op deze site nooit
+intreedt. Een locator op `"Menu"` matchte ook `"Sluit menu"`.
+
+- Breek elke nieuwe bewaker expres, kijk of hij rood wordt, zet hem terug.
+- Blank commentaar uit voordat je in broncode naar losse woorden zoekt.
+- Wacht in e2e op een zichtbaar gevolg, niet op een netwerktoestand.
+
+### 5 · Inventariseer met code, niet met het oog
+
+De vraag "staat er nog hardgecodeerde tekst" is beantwoord met een scan per bestand, en
+daardoor bleef het aanmeldformulier op de inzichten-pagina's staan: dat is geen eigen
+bestand maar een blok binnen de CTA eronder. Tel wat je zoekt, en laat de telling
+zakken naar nul in plaats van een lijst door te lezen.
+
+## Wat CI voor je bewaakt
+
+Deze tests bestaan omdat de fout die ze vangen echt is gemaakt. Zet er geen uit zonder
+te weten welke.
+
+| Test                                       | Vangt                                                                                                   |
+| ------------------------------------------ | ------------------------------------------------------------------------------------------------------- |
+| `tests/unit/manifest.spec.ts`              | Het manifest loopt achter; een pagina-ingang die niets rendert; een contenttype zonder datalaag of seed |
+| `tests/unit/cms-pages.spec.ts`             | Een paginaveld dat in de admin staat maar nergens gerenderd wordt                                       |
+| `tests/unit/cms-velden.spec.ts`            | Hetzelfde voor de contenttypen                                                                          |
+| `tests/unit/admin-aria.spec.ts`            | Icoonknop zonder naam, dialoog zonder `aria-modal`/naam/focusbeheer, schakelgroep zonder `aria-pressed` |
+| `tests/unit/admin-editor.spec.ts`          | Een veld dat zijn wijziging niet meldt (verborgen invoer zonder `VerborgenWaarde`)                      |
+| `tests/unit/admin-opmaak.spec.ts`          | Nieuwe inline styles in de admin                                                                        |
+| `tests/unit/schrijfstijl.spec.ts`          | Em-streepjes in zichtbare tekst; de u-vorm buiten de admin                                              |
+| `tests/e2e/formulieren.spec.ts`            | Foutmarkering, focussprong en bedankstaat van beide formulieren                                         |
+| `tests/e2e/admin-toegankelijkheid.spec.ts` | Contrast en horizontaal schuiven in de admin, op drie breedtes                                          |
+| `tests/e2e/schil.spec.ts`                  | Mobiel menu en cookiemelding                                                                            |
 
 ## Omgeving & valkuilen
 
