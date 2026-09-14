@@ -5,9 +5,9 @@ import { describe, expect, it } from "vitest";
 /**
  * Eén regel, met een dure aanleiding.
  *
- * Zeven velden in de editor bewaren hun waarde in een verborgen invoerveld:
- * rijke tekst, afbeelding, icoon, auteur, keuze, proposities en de
- * gestructureerde lijsten. Uit zo'n veld komt geen change-event, en React maakt
+ * Zes velden in de editor bewaren hun waarde in een verborgen invoerveld:
+ * rijke tekst, afbeelding, icoon, auteur, keuze en de gestructureerde
+ * lijsten. Uit zo'n veld komt geen change-event, en React maakt
  * er ook geen `onChange` van. Het formulier luisterde met `onChange` op het
  * `<form>`, dus wie een heel artikel herschreef en daarna wegklikte kreeg geen
  * waarschuwing: de editor dacht dat er niets gewijzigd was.

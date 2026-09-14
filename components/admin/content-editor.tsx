@@ -15,7 +15,6 @@ import { IconField } from "./icon-field";
 import { SelectField } from "./select-field";
 import { RichTextEditor } from "./rich-text-editor";
 import { AuthorField, type TeamOptie } from "./author-field";
-import { PropositiesField, type PropositieOptie } from "./proposities-field";
 import { Modal } from "./modal";
 import { VerborgenWaarde } from "./verborgen-waarde";
 import { useOkMelding } from "@/lib/hooks/use-ok-melding";
@@ -89,14 +88,12 @@ export function ContentEditor({
   listPath,
   row,
   teamleden = [],
-  proposities = [],
 }: {
   type: ContentType;
   label: string;
   listPath: string;
   row: ContentRow | null;
   teamleden?: TeamOptie[];
-  proposities?: PropositieOptie[];
 }) {
   const [state, formAction, pending] = useActionState<SaveState, FormData>(saveContent, {});
   const [okMelding] = useOkMelding();
@@ -240,15 +237,6 @@ export function ContentEditor({
         label={f.label}
         options={teamleden}
         defaultValue={initial(f)}
-      />
-    ) : f.type === "proposities" ? (
-      <PropositiesField
-        key={f.key}
-        name={`f_${f.key}`}
-        label={f.label}
-        options={proposities}
-        defaultValue={Array.isArray(data[f.key]) ? (data[f.key] as string[]) : []}
-        help={f.help}
       />
     ) : f.type === "richtext" ? (
       <RichTextEditor

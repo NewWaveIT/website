@@ -41,9 +41,10 @@ function rij(slug: string, titel: string, data: Record<string, unknown> = {}) {
   };
 }
 
-// `proposities` als drager: die bouwer neemt slug en titel uit de kolommen.
+// `sectoren` als drager: die bouwer neemt alleen de slug uit de kolom en laat
+// de rest van `data` staan, dus hij houdt de testrij intact.
 const maak = (extra: Partial<Parameters<typeof maakLezer<Ding>>[0]> = {}) =>
-  maakLezer<Ding>({ type: "proposities", schema, seed: SEED, ...extra });
+  maakLezer<Ding>({ type: "sectoren", schema, seed: SEED, ...extra });
 
 beforeEach(() => {
   state.rows = [];

@@ -18,8 +18,7 @@ export type FieldType =
   | "select" // vaste keuze uit opties (chips)
   | "author" // keuze uit teamleden (naam + foto)
   | "richtext" // volledige opmaak (koppen, beeld, quote)
-  | "richtext-lite" // lichte opmaak (vet/cursief/link/lijst)
-  | "proposities"; // meervoudige keuze van proposities (PMC-koppeling op sectoren)
+  | "richtext-lite"; // lichte opmaak (vet/cursief/link/lijst)
 
 export interface FieldDef {
   key: string;
@@ -97,7 +96,6 @@ export const FIELD_SCHEMAS: Record<ContentType, FieldDef[]> = {
       placeholder: "Publieke sector",
       panel: "side",
     },
-    { key: "metric", label: "Teaser-metric", type: "text", placeholder: "-60%", panel: "side" },
     { key: "cardTitel", label: "Titel op de kaart", type: "text", panel: "side" },
     {
       key: "org",
@@ -264,13 +262,6 @@ export const FIELD_SCHEMAS: Record<ContentType, FieldDef[]> = {
   diensten: [
     { key: "naam", label: "Naam", type: "text" },
     {
-      key: "badgeIcon",
-      label: "Badge-icoon",
-      type: "icon",
-      options: ["boxes", "brain-circuit", "route"],
-      panel: "side",
-    },
-    {
       key: "badgeLabel",
       label: "Badge-label",
       type: "text",
@@ -279,17 +270,6 @@ export const FIELD_SCHEMAS: Record<ContentType, FieldDef[]> = {
     },
     { key: "h1", label: "Titel (H1)", type: "text" },
     { key: "intro", label: "Intro", type: "richtext-lite" },
-    { key: "ctaSecondary", label: "Tweede knop", type: "text" },
-    {
-      key: "kpis",
-      label: "KPI's (hero)",
-      type: "items",
-      itemLabel: "KPI",
-      of: [
-        { key: "n", label: "Cijfer", type: "text" },
-        { key: "l", label: "Toelichting", type: "text" },
-      ],
-    },
     {
       key: "vraagstukken",
       label: "Vraagstukken",
@@ -401,26 +381,7 @@ export const FIELD_SCHEMAS: Record<ContentType, FieldDef[]> = {
       help: "Leeg = dienst-slug zelf.",
       panel: "side",
     },
-    {
-      key: "serviceSlug",
-      label: "Gekoppelde dienst (catalogus)",
-      type: "text",
-      help: "Slug uit de dienstencatalogus — vult doelgroep/duur/prijs op deze pagina.",
-      panel: "side",
-    },
     { key: "insightsTitle", label: "Inzichten-blok — titel", type: "text" },
-    {
-      key: "insights",
-      label: "Inzichten",
-      type: "items",
-      itemLabel: "Inzicht",
-      of: [
-        { key: "cat", label: "Categorie", type: "text" },
-        { key: "meta", label: "Meta", type: "text" },
-        { key: "titel", label: "Titel", type: "text" },
-      ],
-    },
-    { key: "ctaTitle", label: "Slot-CTA — titel", type: "text" },
     {
       key: "sectoren",
       label: "Sectorkoppeling — sector-slugs",
@@ -661,25 +622,6 @@ export const FIELD_SCHEMAS: Record<ContentType, FieldDef[]> = {
     { key: "linkedin", label: "LinkedIn-URL", type: "text", panel: "side" },
     { key: "bio", label: "Bio", type: "textarea", help: "Titel = de naam van het teamlid." },
   ],
-  proposities: [
-    {
-      key: "nummer",
-      label: "Nummer",
-      type: "number",
-      panel: "side",
-      help: "Volgnummer (1, 2, 3, …); bepaalt de volgorde.",
-    },
-    {
-      key: "belofte",
-      label: "Belofte (één zin)",
-      type: "textarea",
-      help: "Korte, concrete belofte — bv. 'Binnen 8 weken een werkend proces'.",
-    },
-    { key: "wat", label: "Wat het betekent", type: "list", help: "Elke regel een punt." },
-    { key: "hoe", label: "Hoe we dit doen", type: "list" },
-    { key: "onderscheid", label: "Waarom wij hierin onderscheiden", type: "list" },
-    { key: "solutions", label: "Solutions", type: "list" },
-  ],
   services: [
     { key: "naam", label: "Naam", type: "text" },
     {
@@ -737,12 +679,6 @@ export const FIELD_SCHEMAS: Record<ContentType, FieldDef[]> = {
     },
     { key: "resultaten", label: "Kaart — resultaten", type: "list", help: "Drie bullets." },
     { key: "volgendeStap", label: "Vervolg — volgende stap", type: "textarea" },
-    {
-      key: "volgendeStapSlugs",
-      label: "Vervolg — links naar andere diensten",
-      type: "list",
-      help: "Service-slugs, bv. 'fusion-team-startsprint'.",
-    },
     { key: "ctaLabel", label: "CTA — knoptekst", type: "text", panel: "side" },
     {
       key: "ctaType",
@@ -754,16 +690,6 @@ export const FIELD_SCHEMAS: Record<ContentType, FieldDef[]> = {
 
     // Diepte-inhoud voor de eigen pagina onder /diensten/<slug>. Alles optioneel:
     // een lege sectie wordt niet gerenderd.
-    {
-      key: "kpis",
-      label: "Pagina — KPI's in de hero",
-      type: "items",
-      itemLabel: "KPI",
-      of: [
-        { key: "n", label: "Cijfer", type: "text" },
-        { key: "l", label: "Toelichting", type: "text" },
-      ],
-    },
     {
       key: "vraagstukken",
       label: "Pagina — vraagstukken",

@@ -49,7 +49,6 @@ export interface Service extends CaseVerwijzing {
   /** Drie bullets: wat de klant meeneemt. */
   resultaten: string[];
   volgendeStap: string;
-  volgendeStapSlugs?: string[];
   ctaLabel: string;
   ctaType: "datum" | "kennismaking";
   volgorde: number;
@@ -59,7 +58,6 @@ export interface Service extends CaseVerwijzing {
    * zo'n pagina, maar niet elke dienst heeft (al) deze secties — daarom is alles
    * optioneel en verbergt een lege sectie zichzelf.
    */
-  kpis?: KPI[];
   vraagstukken?: Vraagstuk[];
   aanpak?: AanpakRow[];
   waarom?: WaaromItem[];
@@ -127,7 +125,6 @@ export const SERVICES: Service[] = [
     ],
     volgendeStap:
       "Doorontwikkeling van de app, of een Fusion Team Startsprint om het zelf te kunnen.",
-    volgendeStapSlugs: ["fusion-team-startsprint"],
     ctaLabel: "Vraag een datum aan",
     ctaType: "datum",
     volgorde: 1,
@@ -319,7 +316,6 @@ export const SERVICES: Service[] = [
     ],
     volgendeStap:
       "AI Opportunity Scan om de grotere kansen te prioriteren, of direct een proef op één proces.",
-    volgendeStapSlugs: ["ai-opportunity-scan"],
     ctaLabel: "Vraag een datum aan",
     ctaType: "datum",
     volgorde: 2,
@@ -667,7 +663,6 @@ export const SERVICES: Service[] = [
     ],
     volgendeStap:
       "IT-strategie op low-code en AI om de gekozen richting technisch en organisatorisch uit te werken.",
-    volgendeStapSlugs: ["it-strategie"],
     ctaLabel: "Vraag een datum aan",
     ctaType: "datum",
     volgorde: 4,
@@ -840,7 +835,6 @@ export const SERVICES: Service[] = [
     ],
     volgendeStap:
       "Het deliverymodel opzetten, capaciteit inhuren om te beginnen, of een Fusion Team Startsprint.",
-    volgendeStapSlugs: ["consultant-inhuren", "fusion-team-startsprint"],
     ctaLabel: "Plan een kennismaking (20 min)",
     ctaType: "kennismaking",
     volgorde: 5,
@@ -1014,7 +1008,6 @@ export const SERVICES: Service[] = [
     ],
     volgendeStap:
       "IT-strategie op low-code en AI voor de volledige uitwerking, of meteen capaciteit inhuren.",
-    volgendeStapSlugs: ["it-strategie", "consultant-inhuren"],
     ctaLabel: "Vraag een datum aan",
     ctaType: "datum",
     volgorde: 6,
@@ -1196,7 +1189,6 @@ export const SERVICES: Service[] = [
     ],
     volgendeStap:
       "Een Fusion Team Startsprint als jullie het daarna zelf willen kunnen, of uitbreiding naar een tweede team.",
-    volgendeStapSlugs: ["fusion-team-startsprint"],
     ctaLabel: "Plan een kennismaking (20 min)",
     ctaType: "kennismaking",
     // Staat buiten de catalogus (zie BASIS_SLUG); de volgorde telt alleen nog
@@ -1227,7 +1219,6 @@ export const SERVICES: Service[] = [
     ],
     volgendeStap:
       "Een Fusion Team Startsprint zodat je eigen mensen op de nieuwe fundering leren bouwen.",
-    volgendeStapSlugs: ["fusion-team-startsprint"],
     ctaLabel: "Plan een kennismaking (20 min)",
     ctaType: "kennismaking",
     volgorde: 7,

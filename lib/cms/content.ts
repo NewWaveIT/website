@@ -11,7 +11,6 @@ export type ContentType =
   | "artikelen"
   | "vacatures"
   | "teamleden"
-  | "proposities"
   | "services";
 
 export const CONTENT_TABLE: Record<ContentType, string> = {
@@ -22,7 +21,6 @@ export const CONTENT_TABLE: Record<ContentType, string> = {
   artikelen: "cms_artikelen",
   vacatures: "cms_vacatures",
   teamleden: "cms_teamleden",
-  proposities: "cms_proposities",
   services: "cms_services",
 };
 

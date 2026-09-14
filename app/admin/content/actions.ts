@@ -74,12 +74,6 @@ export async function saveContent(_prev: SaveState, formData: FormData): Promise
       } catch {
         return { error: `Veld "${f.label}" kon niet worden opgeslagen.` };
       }
-    } else if (f.type === "proposities") {
-      try {
-        data[f.key] = raw ? JSON.parse(raw) : [];
-      } catch {
-        data[f.key] = [];
-      }
     } else if (raw === "") {
       if (f.required) return { error: `${f.label} is verplicht.` };
       // Expliciet leeg opslaan i.p.v. de sleutel verwijderen: anders is "bewust

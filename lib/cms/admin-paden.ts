@@ -12,7 +12,7 @@ import type { ContentType } from "@/lib/cms/content";
  * ontbrekend type is nu een typefout.
  *
  * `pad` is het publieke pad; ontbreekt het, dan heeft het type geen eigen
- * pagina op de site (teamleden en proposities verschijnen ín andere pagina's).
+ * pagina op de site (teamleden verschijnen ín andere pagina's).
  */
 export interface AdminPad {
   /** Enkelvoud, zoals het in de admin voor de gebruiker staat. */
@@ -46,7 +46,6 @@ export const ADMIN_PADEN: Record<ContentType, AdminPad> = {
     lijst: "/admin/sectoren",
     pad: "/sectoren",
   },
-  proposities: { label: "Propositie", meervoud: "Proposities", lijst: "/admin/proposities" },
   artikelen: {
     label: "Inzicht",
     meervoud: "Inzichten",

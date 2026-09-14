@@ -8,7 +8,7 @@ import { revalidatePath } from "next/cache";
  * stond eerder een kaart van contenttype naar de routes die het raakt, met
  * regels als "/sectoren/[slug]:page". Die moest bij élke nieuwe pagina worden
  * bijgewerkt en dat ging mis: verwijderen ververste niets, en sorteren wees
- * naar een pagina die proposities niet eens rendert.
+ * naar pagina's die het gewijzigde type niet eens tonen.
  *
  * De kosten van grofmazig zijn hier nihil. Elke publieke pagina is al ISR met
  * `revalidate = 300`, dus hij wordt sowieso elke vijf minuten opnieuw

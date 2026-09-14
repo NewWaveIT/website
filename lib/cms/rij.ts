@@ -55,7 +55,6 @@ const BOUWERS: Record<GemapteType, Bouwer> = {
     return { ...d, slug: row.slug, functietitel: d.functietitel || row.titel };
   },
   teamleden: (row) => ({ ...(row.data as object), slug: row.slug, naam: row.titel }),
-  proposities: (row) => ({ ...(row.data as object), slug: row.slug, titel: row.titel }),
 };
 
 /** Sla één rij plat tot de vorm die het runtime-schema beschrijft. */

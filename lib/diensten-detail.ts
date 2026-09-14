@@ -14,7 +14,6 @@ import type {
   AanpakRow,
   WaaromItem,
   Expert,
-  Insight,
   CaseVerwijzing,
 } from "@/lib/content-blokken";
 
@@ -26,18 +25,14 @@ export type {
   AanpakRow,
   WaaromItem,
   Expert,
-  Insight,
 } from "@/lib/content-blokken";
 
 export interface DienstDetail extends CaseVerwijzing {
   slug: string;
   naam: string;
-  badgeIcon: "boxes" | "brain-circuit" | "route";
   badgeLabel: string;
   h1: string;
   intro: string;
-  ctaSecondary: string;
-  kpis: KPI[];
   vraagstukken: Vraagstuk[];
   pijlersIntro: string;
   pijlers: Pijler[];
@@ -56,10 +51,7 @@ export interface DienstDetail extends CaseVerwijzing {
   heroTheme?: string;
   /** Slug uit de dienstencatalogus (lib/services.ts) — vult de feitenregel (doelgroep,
    *  duur, prijs) en de primaire CTA/vervolgstap onder de hero. */
-  serviceSlug?: string;
   insightsTitle: string;
-  insights: Insight[];
-  ctaTitle: string;
   /** Sector-slugs waar deze richting het meest speelt; chips naar /sectoren/<slug>.
    *  Leeg = de sectie is verborgen. */
   sectoren?: string[];
@@ -79,17 +71,10 @@ export const DIENSTEN: Record<string, DienstDetail> = {
   mendix: {
     slug: "mendix",
     naam: "Mendix",
-    badgeIcon: "boxes",
     badgeLabel: "Mendix Premium Partner",
     h1: "Op maat gebouwd, 6–10× sneller live.",
     intro:
       "Op maat gemaakte low-code applicaties die jouw specifieke uitdaging oplossen. Vaak staat er binnen een week een eerste werkende versie, en binnen enkele maanden een live applicatie. Schaalbaar, beheerbaar en gebouwd rond je mensen.",
-    ctaSecondary: "Bekijk cases",
-    kpis: [
-      { n: "6–10×", l: "Sneller dan traditionele bouw" },
-      { n: "1 week", l: "Vaak een eerste werkende versie" },
-      { n: "100%", l: "Overdraagbaar aan je eigen team" },
-    ],
     vraagstukken: [
       {
         q: "Maatwerk",
@@ -236,7 +221,6 @@ export const DIENSTEN: Record<string, DienstDetail> = {
     caseImage: "/assets/photos/team-brainstorm-glaswand.webp",
     caseHref: "/klantverhalen/moove",
     insightsTitle: "Kennis over bouwen met low-code",
-    insights: [],
     // VOORZET — afgeleid uit de doelgroep-, duur- en beschrijvingsvelden van de
     // dienstencatalogus (lib/services.ts). Nog niet door de eigenaar geschreven:
     // herschrijf in /admin/diensten voordat de site live gaat.
@@ -252,23 +236,15 @@ export const DIENSTEN: Record<string, DienstDetail> = {
       "Je wilt een prototype om te laten zien, niet iets dat morgen in gebruik gaat.",
       "Je wilt de bouw volledig uitbesteden: al onze diensten gaan ervan uit dat jullie eigen mensen meedoen en het daarna zelf kunnen.",
     ],
-    ctaTitle: "Welke applicatie zou jouw operatie versnellen?",
   },
 
   ai: {
     slug: "ai",
     naam: "AI",
-    badgeIcon: "brain-circuit",
     badgeLabel: "AI",
     h1: "AI die je mensen versterkt.",
     intro:
       "Strategische inzet van AI binnen je bestaande IT-landschap. Geen hype, wél oplossingen die processen aantoonbaar verbeteren, uitlegbaar zijn en de mens centraal stellen.",
-    ctaSecondary: "Doe de AI-scan",
-    kpis: [
-      { n: "Minder", l: "Repetitief werk" },
-      { n: "6 weken", l: "Doorgaans tot werkend proces" },
-      { n: "100%", l: "Uitlegbaar en controleerbaar" },
-    ],
     vraagstukken: [
       {
         q: "Repetitief werk",
@@ -406,7 +382,6 @@ export const DIENSTEN: Record<string, DienstDetail> = {
       { n: "0", l: "Black boxes in productie" },
     ],
     insightsTitle: "Kennis over verantwoorde AI",
-    insights: [],
     // VOORZET — zie de toelichting bij Mendix hierboven.
     welNietTitel: "Wanneer AI wel past, en wanneer niet",
     welWanneer: [
@@ -419,23 +394,15 @@ export const DIENSTEN: Record<string, DienstDetail> = {
       "Je wilt een presentatie over de mogelijkheden; onze dagen zijn werksessies waarin je team zelf bouwt.",
       "Er is geen enkele ruimte om afspraken te maken over wat er met bedrijfsgegevens mag.",
     ],
-    ctaTitle: "Waar zou AI jouw mensen kunnen versterken?",
   },
 
   strategie: {
     slug: "strategie",
     naam: "Strategie",
-    badgeIcon: "route",
     badgeLabel: "Strategie",
     h1: "Van ambitie naar uitvoerbare roadmap.",
     intro:
       "Wij verbinden business en IT in een concreet plan en blijven aan boord tot het werkt. Geen dik rapport voor in de la, maar mijlpalen die je operatie meteen merkt.",
-    ctaSecondary: "Bekijk cases",
-    kpis: [
-      { n: "45", l: "Minuten voor het eerste gesprek" },
-      { n: "< 8", l: "Weken tot een gedragen roadmap" },
-      { n: "1", l: "Plan waar business én IT achter staan" },
-    ],
     vraagstukken: [
       {
         q: "Richting",
@@ -572,7 +539,6 @@ export const DIENSTEN: Record<string, DienstDetail> = {
       { n: "1", l: "Taal voor business en IT" },
     ],
     insightsTitle: "Kennis die je koers vooruit denkt",
-    insights: [],
     // VOORZET — zie de toelichting bij Mendix hierboven.
     welNietTitel: "Wanneer een strategietraject wel past, en wanneer niet",
     welWanneer: [
@@ -584,7 +550,6 @@ export const DIENSTEN: Record<string, DienstDetail> = {
       "De directie kan er niet zelf bij zijn; dan levert het een document op dat niemand draagt.",
       "Je wilt volgende week bouwen. Begin dan bij App in a Day of AI Agent in a Day en kom hier later terug.",
     ],
-    ctaTitle: "Klaar om van ambitie naar uitvoering te gaan?",
   },
 };
 

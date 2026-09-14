@@ -54,12 +54,6 @@ export interface Expert {
   tel: string;
 }
 
-export interface Insight {
-  cat: string;
-  meta: string;
-  titel: string;
-}
-
 /** Verwijzing naar een gepubliceerd klantverhaal. Alleen invullen als het écht
  *  bestaat — geen fictieve quotes of namen. Leeg = de sectie is verborgen. */
 export interface CaseVerwijzing {

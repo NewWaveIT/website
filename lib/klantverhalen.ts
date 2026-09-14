@@ -33,7 +33,6 @@ export interface Sectie {
 export interface Klantverhaal {
   slug: string;
   sector: string; // filterlabel, bv. "Publieke sector"
-  metric: string; // teaser-metric, bv. "-60%"
   cardTitel: string;
   org: string; // teaser org-regel
   image: string;
@@ -63,7 +62,6 @@ export const KLANTVERHALEN: Klantverhaal[] = [
   {
     slug: "moove",
     sector: "Mobiliteit",
-    metric: "30 min",
     cardTitel: "Twee Mendix-apps, twee maanden, écht in gebruik",
     org: "Moove Connected Mobility · Mendix",
     image: "/assets/photos/team-overleg-flipover.webp",

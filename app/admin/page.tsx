@@ -40,7 +40,6 @@ const OVERZICHT: ContentType[] = [
   "diensten",
   "services",
   "sectoren",
-  "proposities",
   "cases",
   "artikelen",
   "teamleden",

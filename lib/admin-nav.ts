@@ -3,9 +3,8 @@
  *
  * De groepen volgen de publieke site, niet het datamodel: wie iets wil
  * aanpassen denkt in "de sectorpagina's" of "het aanbod", niet in
- * contenttypen. Daarom staan Proposities bij Sectoren (daar verschijnen ze) en
- * Richtingen bij Diensten (de hubs waaronder ze hangen), en heet `cases` hier
- * Klantverhalen — zoals op de site.
+ * contenttypen. Daarom staan Richtingen bij Diensten (de hubs waaronder ze
+ * hangen), en heet `cases` hier Klantverhalen — zoals op de site.
  */
 
 /** De iconen die de sidebar kent. Deze lijst en de `ICONS`-map in
@@ -61,12 +60,6 @@ export const ADMIN_NAV: AdminNavGroup[] = [
         label: "Sectorpagina's",
         icon: "building-2",
         countKey: "sectoren",
-      },
-      {
-        href: "/admin/proposities",
-        label: "Proposities",
-        icon: "package",
-        countKey: "proposities",
       },
     ],
   },

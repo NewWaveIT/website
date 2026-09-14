@@ -8,7 +8,6 @@ import { SERVICES } from "@/lib/services";
 import { ARTIKELEN } from "@/lib/inzichten";
 import { VACATURES } from "@/lib/vacatures";
 import { TEAMLEDEN } from "@/lib/team";
-import { PROPOSITIES } from "@/lib/proposities";
 
 /**
  * Twee vangrails tegen de bugklasse die drie keer terugkwam: de seed, het
@@ -24,7 +23,6 @@ const SEEDS: Record<GevalideerdType, unknown[]> = {
   artikelen: ARTIKELEN,
   vacatures: VACATURES,
   teamleden: TEAMLEDEN,
-  proposities: PROPOSITIES,
 };
 
 describe("elke seed voldoet aan zijn runtime-schema", () => {
@@ -57,7 +55,6 @@ describe("elk schemaveld is te bewerken in de admin", () => {
     artikelen: ["slug", "titel", "cat", "image", "intro", "body", "inhoudHtml", "auteurFoto"],
     vacatures: ["slug"],
     teamleden: ["slug", "naam"],
-    proposities: ["slug", "titel"],
   };
 
   for (const type of GEVALIDEERDE_TYPES) {

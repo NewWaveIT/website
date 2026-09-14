@@ -5,8 +5,8 @@ import { useEffect, useRef } from "react";
 /**
  * Een verborgen veld dat zijn wijziging ook echt meldt.
  *
- * Zeven velden in de editor — rijke tekst, afbeelding, icoon, auteur, keuze,
- * proposities en de gestructureerde lijsten — bewaren hun waarde in een
+ * Zes velden in de editor — rijke tekst, afbeelding, icoon, auteur, keuze en
+ * de gestructureerde lijsten — bewaren hun waarde in een
  * `<input type="hidden">`. Daar komt geen change-event uit: de browser vuurt
  * alleen bij invoer door de gebruiker, en React maakt van een verborgen veld
  * geen `onChange`. Gevolg: je kon een heel artikel herschrijven en de editor

@@ -30,7 +30,6 @@ const faqItem = z.object({ vraag: tekst, antwoord: tekst });
 const cases = z.object({
   slug: tekst,
   sector: tekst,
-  metric: tekst,
   cardTitel: tekst,
   org: tekst,
   image: tekst,
@@ -75,12 +74,9 @@ const aanpakRij = z.object({
 const diensten = z.object({
   slug: tekst,
   naam: tekst,
-  badgeIcon: z.enum(["boxes", "brain-circuit", "route"]),
   badgeLabel: tekst,
   h1: tekst,
   intro: tekst,
-  ctaSecondary: tekst,
-  kpis: z.array(kpi),
   vraagstukken: z.array(vraagstuk),
   pijlersIntro: tekst,
   pijlers: z.array(
@@ -106,10 +102,7 @@ const diensten = z.object({
   caseHref: optTekst,
   waarborg: optTekst,
   heroTheme: optTekst,
-  serviceSlug: optTekst,
   insightsTitle: tekst,
-  insights: z.array(z.object({ cat: tekst, meta: tekst, titel: tekst })),
-  ctaTitle: tekst,
   sectoren: lijst.optional(),
   welNietTitel: optTekst,
   welWanneer: lijst.optional(),
@@ -233,12 +226,10 @@ const services = z.object({
   prijzen: z.array(z.object({ label: tekst, variant: optTekst })),
   resultaten: lijst,
   volgendeStap: tekst,
-  volgendeStapSlugs: lijst.optional(),
   ctaLabel: tekst,
   ctaType: z.enum(["datum", "kennismaking"]),
   volgorde: z.number(),
   // Diepte-inhoud voor /diensten/<slug>; optioneel, want niet elke dienst heeft die al.
-  kpis: z.array(kpi).optional(),
   vraagstukken: z.array(vraagstuk).optional(),
   aanpak: z.array(aanpakRij).optional(),
   waarom: z.array(z.object({ titel: tekst, p: tekst })).optional(),
@@ -324,17 +315,6 @@ const teamleden = z.object({
   linkedin: optTekst,
 });
 
-const proposities = z.object({
-  slug: tekst,
-  nummer: z.number(),
-  titel: tekst,
-  belofte: tekst,
-  wat: lijst,
-  hoe: lijst,
-  onderscheid: lijst,
-  solutions: lijst,
-});
-
 export const CONTENT_SCHEMAS = {
   cases,
   diensten,
@@ -343,7 +323,6 @@ export const CONTENT_SCHEMAS = {
   artikelen,
   vacatures,
   teamleden,
-  proposities,
 } satisfies Partial<Record<ContentType, z.ZodObject<z.ZodRawShape>>>;
 
 export type GevalideerdType = keyof typeof CONTENT_SCHEMAS;
