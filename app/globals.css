@@ -47,6 +47,7 @@
   /* ---- Semantic status ---- */
   --success-500: #4f7a3a;
   --success-600: #3a7d44;
+  --success-700: #2f6a38; /* AA op --success-100 (5,38:1) */
   --success-100: #e4edd9;
   --warning-500: #d9962b;
   --warning-100: #f6e9cc;

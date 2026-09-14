@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="nl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Admin-schil · testfixture</title>
+    <!--
+  De admin zit achter Supabase-auth, dus axe kan er in CI niet bij. Deze pagina
+  zet dezelfde markup naast dezelfde CSS, zodat contrast, focus en koppen wél
+  gemeten worden. Wat hier staat is opmaak; of de componenten de juiste ARIA
+  meegeven bewaakt tests/unit/admin-aria.spec.ts, die de bron leest.
+
+  Verandert een component van vorm, werk dan deze fixture bij. Hij is bewust
+  klein gehouden: één van elk patroon, geen tweede exemplaar.
+-->
+    <link rel="stylesheet" href="../../../app/globals.css" />
+    <link rel="stylesheet" href="../../../app/admin/admin.css" />
+    <style>
+      body {
+        margin: 0;
+      }
+      /* lucide levert in de app echte SVG's; hier volstaan lege vierkanten */
+      svg {
+        width: 18px;
+        height: 18px;
+        stroke: currentColor;
+        fill: none;
+        stroke-width: 2;
+      }
+    </style>
+  </head>
+  <body class="cms">
+    <header class="cms-top">
+      <strong class="cms-top-logo" style="color: var(--eggshell)">TNW</strong
+      ><span class="env">CMS</span>
+      <button class="burger" aria-label="Menu" aria-expanded="false" aria-controls="cms-nav">
+        <svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16" /></svg>
+      </button>
+    </header>
+    <div class="side-overlay" aria-hidden="true"></div>
+    <div class="app">
+      <aside class="side" id="cms-nav">
+        <div class="logo">
+          <strong style="color: var(--eggshell)">The New Wave IT</strong
+          ><span class="env">CMS</span>
+        </div>
+        <nav aria-label="Beheer">
+          <div>
+            <div class="grp">Overzicht</div>
+            <a class="nav-item active" href="#" aria-current="page"
+              ><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="9" /></svg>Dashboard</a
+            >
+            <a class="nav-item" href="#"
+              ><svg viewBox="0 0 24 24"><path d="M4 3h10l6 6v12H4z" /></svg>Pagina's<span
+                class="cnt"
+                >12</span
+              ></a
+            >
+          </div>
+          <div>
+            <div class="grp">Opvolging</div>
+            <a class="nav-item" href="#"
+              ><svg viewBox="0 0 24 24"><path d="M22 12h-6l-2 3h-4l-2-3H2" /></svg>Aanvragen<span
+                class="cnt"
+                >6</span
+              ></a
+            >
+          </div>
+        </nav>
+        <div class="foot">
+          <div class="av">MW</div>
+          <div>
+            <div class="nm">Mitchel Wallaart</div>
+            <div class="rl">Beheerder</div>
+          </div>
+          <button class="logout" aria-label="Uitloggen">
+            <svg viewBox="0 0 24 24">
+              <path d="M9 21H5V3h4" />
+              <path d="m16 17 5-5-5-5" />
+            </svg>
+          </button>
+        </div>
+      </aside>
+
+      <main class="main">
+        <div class="crumb">Overzicht</div>
+        <div class="page-head">
+          <div>
+            <h1>Goedendag, Mitchel</h1>
+            <p class="sub">3 items vragen om actie · 4 concepten wachten op publicatie</p>
+          </div>
+          <div class="quick">
+            <a href="#"
+              ><svg viewBox="0 0 24 24"><path d="M5 12h14M12 5v14" /></svg> Klantverhaal</a
+            >
+          </div>
+        </div>
+
+        <div class="kpis">
+          <a class="card kpi" href="#"
+            ><div class="lbl">Nieuwe aanvragen</div>
+            <div class="val">2</div>
+            <div class="delta">nog niet opgepakt</div></a
+          >
+          <a class="card kpi" href="#"
+            ><div class="lbl">Concepten</div>
+            <div class="val">4</div>
+            <div class="delta">wachten op publicatie</div></a
+          >
+        </div>
+
+        <div class="dash2">
+          <div class="dash-col">
+            <div class="card">
+              <div class="chead">
+                <h2>Vraagt om jouw actie</h2>
+                <a href="#">Alle aanvragen →</a>
+              </div>
+              <a class="act" href="#">
+                <span class="ic" data-kind="lead"
+                  ><svg viewBox="0 0 24 24"><path d="M22 12h-6l-2 3h-4l-2-3H2" /></svg
+                ></span>
+                <span class="bd"
+                  ><span class="t">Annemiek Vos · Stichting ZorgSaam</span
+                  ><span class="s">Wij zoeken een partner voor een cliëntportaal.</span></span
+                >
+                <span class="age">Vandaag 08:41</span>
+                <button class="go">Oppakken</button>
+              </a>
+            </div>
+            <div class="card">
+              <div class="chead">
+                <h2>Klaar om te publiceren</h2>
+                <span class="age">4 concepten</span>
+              </div>
+              <a class="act" href="#">
+                <span class="ic" data-kind="concept"
+                  ><svg viewBox="0 0 24 24"><path d="M11 4H4v16h16v-7" /></svg
+                ></span>
+                <span class="bd"
+                  ><span class="t">Datafundament</span
+                  ><span class="s">Dienst · bewerkt gisteren</span></span
+                >
+                <button class="go">Publiceer</button>
+              </a>
+            </div>
+          </div>
+          <div class="dash-col">
+            <div class="card">
+              <div class="chead"><h2>Wat staat er op de site</h2></div>
+              <div class="clist">
+                <a class="crow" href="#"
+                  ><span class="cnm">Diensten</span><span class="cct">8 live · 2 concept</span>
+                  <span class="track" aria-hidden="true"
+                    ><i style="width: 80%"></i><i class="draft" style="width: 20%"></i></span
+                ></a>
+              </div>
+              <div class="legend">
+                <span><b></b> Live</span><span><b class="draft"></b> Concept</span>
+              </div>
+            </div>
+            <div class="card">
+              <div class="chead"><h2>Recente activiteit</h2></div>
+              <div class="tl">
+                <div class="ev">
+                  <span class="when">Vandaag 08:41</span>merel werkte <strong>Diensten</strong> bij
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- lijstpagina -->
+        <div class="page-head">
+          <div>
+            <h2>Pagina's</h2>
+            <p class="sub">Beheer de vaste pagina's.</p>
+          </div>
+          <a class="btn btn-primary" href="#"
+            ><svg viewBox="0 0 24 24"><path d="M5 12h14M12 5v14" /></svg> Nieuw</a
+          >
+        </div>
+        <div class="card">
+          <table>
+            <caption class="sr-only">
+              Pagina's
+            </caption>
+            <thead>
+              <tr>
+                <th scope="col">Titel</th>
+                <th scope="col">Status</th>
+                <th scope="col">Bijgewerkt</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <div class="t-title">Home</div>
+                  <div class="t-sub">/</div>
+                </td>
+                <td>
+                  <span class="chip live"><span class="dot"></span>Live</span>
+                </td>
+                <td>12 sep · merel</td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="t-title">Over ons</div>
+                  <div class="t-sub">/over-ons</div>
+                </td>
+                <td>
+                  <span class="chip concept"><span class="dot"></span>Concept</span>
+                </td>
+                <td>8 sep · sanne</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- editor -->
+        <div class="ce-grid">
+          <div class="ce-main">
+            <div class="card">
+              <div class="fld">
+                <label for="fx-titel">Titel</label><input id="fx-titel" type="text" value="Home" />
+              </div>
+              <div class="fld">
+                <label for="fx-lead">Hero — introtekst</label
+                ><textarea id="fx-lead" rows="3">Sectorkennis, Mendix en AI in één team.</textarea>
+                <p class="t-sub">Verschijnt onder de kop.</p>
+              </div>
+            </div>
+          </div>
+          <aside class="ce-side">
+            <div class="card ce-actions">
+              <button type="submit" class="btn btn-primary">Opslaan</button>
+              <div class="ce-actions-row"><a class="btn btn-outline" href="#">Annuleren</a></div>
+            </div>
+            <div class="card">
+              <h3>Publicatie</h3>
+              <div class="fld">
+                <span class="lbl-als-label">Status</span>
+                <div class="seg" role="group" aria-label="Status">
+                  <button type="button" aria-pressed="false">Concept</button>
+                  <button type="button" class="on live" aria-pressed="true">Live</button>
+                </div>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </main>
+    </div>
+  </body>
+</html>

@@ -10,9 +10,13 @@
   width: 18px;
   height: 18px;
 }
+/* `1fr` betekent `minmax(auto, 1fr)`, en die auto is de mínimale inhoud van de
+   kolom. Die was 864px, dus de kolom kon niet krimpen en de hele admin schoof
+   opzij: 296px op 768, 689px op 375. `minmax(0, 1fr)` haalt die bodem weg. Elk
+   rooster hieronder dat een kolom moet kunnen laten krimpen doet hetzelfde. */
 .cms .app {
   display: grid;
-  grid-template-columns: 248px 1fr;
+  grid-template-columns: 248px minmax(0, 1fr);
   min-height: 100vh;
 }
 
@@ -38,7 +42,8 @@
   height: 26px;
   width: auto;
 }
-.cms .side .logo .env {
+/* Ook in de mobiele bovenbalk, die buiten .side staat. */
+.cms .env {
   font-family: var(--font-mono);
   font-size: 10px;
   text-transform: uppercase;
@@ -59,7 +64,9 @@
   font-size: 10px;
   text-transform: uppercase;
   letter-spacing: var(--tracking-kicker);
-  color: var(--ink-500);
+  /* ink-500 haalde 4,19:1 op ink-950 en dat is te weinig voor 10px; ink-400
+     haalt 6,49:1 en blijft duidelijk rustiger dan de menu-items zelf (9,2:1). */
+  color: var(--ink-400);
   padding: var(--space-4) 12px 6px;
 }
 .cms .side .nav-item {
@@ -86,8 +93,12 @@
   background: rgba(255, 255, 255, 0.05);
   color: var(--eggshell);
 }
+/* Wit op flame haalt 3,41:1. Op de site is dat een bewuste merkkeuze voor
+   grote displaytekst; hier gaat het om een menulabel van 14px in een balk waar
+   iemand de hele dag naar kijkt, en dan telt leesbaarheid zwaarder. Een
+   donkerder oranje uit dezelfde schaal haalt 5,98:1 en houdt het accent. */
 .cms .side .nav-item.active {
-  background: var(--color-primary);
+  background: var(--orange-700);
   color: var(--white);
 }
 .cms .side .nav-item .cnt {
@@ -113,7 +124,7 @@
   width: 34px;
   height: 34px;
   border-radius: 50%;
-  background: var(--color-primary);
+  background: var(--orange-700);
   color: var(--white);
   display: flex;
   align-items: center;
@@ -129,7 +140,7 @@
 }
 .cms .side .foot .rl {
   font-size: 11px;
-  color: var(--ink-500);
+  color: var(--ink-400);
 }
 .cms .side .foot form {
   margin-left: auto;
@@ -149,6 +160,19 @@
 }
 
 /* Main */
+.cms .side-logo {
+  height: 26px;
+  width: auto;
+}
+/* De sluitknop en de bovenbalk bestaan alleen op smal scherm. */
+.cms .side-sluit,
+.cms .cms-top {
+  display: none;
+}
+.cms .side-overlay {
+  display: none;
+}
+
 .cms .main {
   padding: var(--space-6) var(--space-7) var(--space-9);
   max-width: 1200px;
@@ -474,12 +498,17 @@
   color: var(--text-subtle);
   margin-right: 4px;
 }
+/* Wit op flame haalt 3,41:1. Op de publieke site is dat een vastgelegde
+   merkkeuze en die blijft; hier niet. De admin is geen etalage maar gereedschap
+   waar iemand een werkdag in zit, en dan hoort een knoplabel gewoon leesbaar te
+   zijn. --orange-700 komt uit dezelfde schaal en haalt 5,98:1. Deze regels
+   staan onder `.cms`, dus de site verandert er niet van. */
 .cms .btn-primary {
-  background: var(--color-primary);
+  background: var(--orange-700);
   color: var(--white);
 }
 .cms .btn-primary:hover {
-  background: var(--color-primary-hover);
+  background: var(--orange-800);
 }
 .cms .btn-outline {
   background: var(--white);
@@ -501,7 +530,7 @@
 }
 .cms .kpis {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: var(--space-4);
   margin-bottom: var(--space-6);
 }
@@ -641,7 +670,8 @@
 }
 .cms .chip.live {
   background: var(--success-100);
-  color: var(--success-600);
+  /* success-600 haalde 4,15:1 op deze achtergrond, net te weinig voor 11px. */
+  color: var(--success-700);
 }
 .cms .chip.concept {
   background: rgba(46, 37, 26, 0.07);
@@ -725,12 +755,12 @@
 /* Pipeline board */
 .cms .pipe {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: var(--space-4);
   align-items: start;
 }
 .cms .pipe.cols4 {
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(4, minmax(0, 1fr));
 }
 .cms .pcol .phead {
   display: flex;
@@ -952,7 +982,7 @@
 }
 .cms .frow2 {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: var(--space-4);
 }
 .cms .statusbar {
@@ -1223,7 +1253,7 @@
 
 .cms .dash2 {
   display: grid;
-  grid-template-columns: 1.4fr 1fr;
+  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
   gap: var(--space-4);
   align-items: start;
 }
@@ -1564,13 +1594,13 @@
   padding: 13px 24px;
   border-radius: var(--radius-md);
   cursor: pointer;
-  border: 1px solid var(--color-primary);
-  background: var(--color-primary);
+  border: 1px solid var(--orange-700);
+  background: var(--orange-700);
   color: var(--white);
   margin-top: var(--space-2);
 }
 .cms-login .btn:hover {
-  background: var(--color-primary-hover);
+  background: var(--orange-800);
 }
 .cms .err {
   font-size: var(--text-sm);
@@ -1653,22 +1683,125 @@
 
 @media (max-width: 1024px) {
   .cms .kpis {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
   .cms .pipe,
   .cms .pipe.cols4 {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
   .cms .dash2 {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
   .cms .app {
-    grid-template-columns: 200px 1fr;
+    grid-template-columns: 200px minmax(0, 1fr);
   }
   .cms .ce-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
   .cms .ce-side {
     position: static;
   }
+}
+
+/* ---- Smal scherm ----
+   Onder 900px past een vaste zijbalk van 200px niet meer: op een telefoon van
+   375 bleef er 175px over voor het werk zelf. De balk gaat hier uit de flow en
+   schuift in over de pagina, met dezelfde afspraken als het mobiele menu op de
+   publieke site: Escape sluit, de focus gaat mee naar binnen en komt terug op
+   de openknop, en de pagina eronder scrollt niet mee. */
+@media (max-width: 900px) {
+  .cms .app {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .cms .cms-top {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    position: sticky;
+    top: 0;
+    z-index: 40;
+    padding: 10px var(--space-5);
+    background: var(--ink-950);
+    border-bottom: 1px solid var(--border-dark);
+  }
+  .cms .cms-top-logo {
+    height: 22px;
+    width: auto;
+  }
+  .cms .cms-top .burger {
+    margin-left: auto;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border: 1px solid var(--border-dark);
+    border-radius: var(--radius-md);
+    background: none;
+    color: var(--eggshell);
+    cursor: pointer;
+  }
+  .cms .cms-top .burger:hover {
+    border-color: var(--orange-400);
+    color: var(--orange-400);
+  }
+
+  .cms .side {
+    position: fixed;
+    inset: 0 auto 0 0;
+    z-index: 60;
+    width: min(300px, 86vw);
+    height: 100dvh;
+    transform: translateX(-100%);
+    transition: transform 180ms ease;
+    box-shadow: var(--shadow-lg);
+  }
+  .cms .side.open {
+    transform: translateX(0);
+  }
+  .cms .side-sluit {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: auto;
+    width: 40px;
+    height: 40px;
+    border: 0;
+    background: none;
+    color: var(--eggshell);
+    cursor: pointer;
+  }
+
+  .cms .side-overlay {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 50;
+    background: color-mix(in srgb, var(--ink-950) 55%, transparent);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 180ms ease;
+  }
+  .cms .side-overlay.open {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .cms .main {
+    padding: var(--space-5) var(--space-5) var(--space-8);
+  }
+  .cms .kpis {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  /* Tabellen zijn het enige dat breder mag zijn dan het scherm; ze krijgen hun
+     eigen schuifbalk in plaats van de hele pagina mee te trekken. */
+  .cms .card > table {
+    display: block;
+    overflow-x: auto;
+  }
+}
+
+body.cms-menu-open {
+  overflow: hidden;
 }
