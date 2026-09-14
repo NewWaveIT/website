@@ -2,10 +2,10 @@
 
 import { useEffect, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
-import { X, Mail, AlertTriangle, Check } from "lucide-react";
+import { Mail, AlertTriangle, Check } from "lucide-react";
 import { updateLead } from "@/app/admin/aanvragen/actions";
 import { LEAD_STATUSSEN, STATUS_LABEL, type Lead } from "@/lib/cms/inzendingen-types";
-import { cn } from "@/lib/utils";
+import { Drawer, Statusbalk } from "@/components/admin/drawer";
 
 // Terugvallijst als er (nog) geen gebruikers uit de database komen.
 const EIGENAREN_FALLBACK = ["Merel", "Ruben", "Fatima", "Sanne", "Mitchel"];
@@ -45,16 +45,6 @@ export function AanvragenBoard({ leads, eigenaren = [] }: { leads: Lead[]; eigen
     const t = setTimeout(() => setOkMsg(null), 1800);
     return () => clearTimeout(t);
   }, [okMsg]);
-
-  // Sluit de detail-drawer met Escape.
-  useEffect(() => {
-    if (!selectedId) return;
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setSelectedId(null);
-    };
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [selectedId]);
 
   // Eigenaar-opties: echte gebruikers (of terugval), plus altijd de huidige waarde.
   const eigenaarOpties = (huidige: string | null) =>
@@ -134,87 +124,74 @@ export function AanvragenBoard({ leads, eigenaren = [] }: { leads: Lead[]; eigen
         })}
       </div>
 
-      <div className={cn("drawer-wrap", selected && "open")}>
-        <div className="overlay" onClick={() => setSelectedId(null)} />
-        <aside className="drawer">
-          {selected && (
-            <>
-              <div className="dhead">
-                <div style={{ flex: 1 }}>
-                  <h2>{selected.naam}</h2>
-                  <div className="sub">
-                    {[selected.bedrijf, selected.email].filter(Boolean).join(" · ")}
-                  </div>
-                </div>
-                <button className="x" onClick={() => setSelectedId(null)} aria-label="Sluiten">
-                  <X />
-                </button>
+      <Drawer
+        open={selected !== null}
+        titel={selected?.naam ?? ""}
+        subtitel={[selected?.bedrijf, selected?.email].filter(Boolean).join(" · ")}
+        onClose={() => setSelectedId(null)}
+        footer={
+          <>
+            <button type="button" className="btn btn-outline" onClick={() => setSelectedId(null)}>
+              Sluiten
+            </button>
+            <a className="btn btn-primary" href={`mailto:${selected?.email}`}>
+              <Mail /> Beantwoorden
+            </a>
+          </>
+        }
+      >
+        {selected && (
+          <>
+            <Statusbalk
+              label="Status"
+              opties={LEAD_STATUSSEN}
+              labels={STATUS_LABEL}
+              waarde={selected.status}
+              onKies={(status) => patch(selected.id, { status })}
+            />
+            <div className="fld">
+              <span className="lbl">Bericht</span>
+              <div className="ro">{selected.bericht}</div>
+            </div>
+            <div className="frow2">
+              <div className="fld">
+                <span className="lbl">Type / bron</span>
+                <div className="ro">{selected.type}</div>
               </div>
-              <div className="dbody">
-                <div className="fld">
-                  <label>Status</label>
-                  <div className="statusbar">
-                    {LEAD_STATUSSEN.map((s) => (
-                      <button
-                        key={s}
-                        className={cn(s === selected.status && "on")}
-                        onClick={() => patch(selected.id, { status: s })}
-                      >
-                        {STATUS_LABEL[s]}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-                <div className="fld">
-                  <label>Bericht</label>
-                  <div className="ro">{selected.bericht}</div>
-                </div>
-                <div className="frow2">
-                  <div className="fld">
-                    <label>Type / bron</label>
-                    <div className="ro">{selected.type}</div>
-                  </div>
-                  <div className="fld">
-                    <label>Ontvangen</label>
-                    <div className="ro">{fmt(selected.created_at)}</div>
-                  </div>
-                </div>
-                <div className="fld">
-                  <label>Eigenaar</label>
-                  <select
-                    value={selected.toegewezen_aan ?? "—"}
-                    onChange={(e) =>
-                      patch(selected.id, {
-                        toegewezen_aan: e.target.value === "—" ? null : e.target.value,
-                      })
-                    }
-                  >
-                    {eigenaarOpties(selected.toegewezen_aan).map((o) => (
-                      <option key={o}>{o}</option>
-                    ))}
-                  </select>
-                </div>
-                <div className="fld">
-                  <label>Interne notitie</label>
-                  <textarea
-                    defaultValue={selected.interne_notitie ?? ""}
-                    placeholder="Interne notitie bij deze aanvraag…"
-                    onBlur={(e) => patch(selected.id, { interne_notitie: e.target.value })}
-                  />
-                </div>
+              <div className="fld">
+                <span className="lbl">Ontvangen</span>
+                <div className="ro">{fmt(selected.created_at)}</div>
               </div>
-              <div className="dfoot">
-                <button className="btn btn-outline" onClick={() => setSelectedId(null)}>
-                  Sluiten
-                </button>
-                <a className="btn btn-primary" href={`mailto:${selected.email}`}>
-                  <Mail /> Beantwoorden
-                </a>
-              </div>
-            </>
-          )}
-        </aside>
-      </div>
+            </div>
+            <div className="fld">
+              <label htmlFor="lead-eigenaar">Eigenaar</label>
+              <select
+                id="lead-eigenaar"
+                value={selected.toegewezen_aan ?? "—"}
+                onChange={(e) =>
+                  patch(selected.id, {
+                    toegewezen_aan: e.target.value === "—" ? null : e.target.value,
+                  })
+                }
+              >
+                {eigenaarOpties(selected.toegewezen_aan).map((o) => (
+                  <option key={o}>{o}</option>
+                ))}
+              </select>
+            </div>
+            <div className="fld">
+              <label htmlFor="lead-notitie">Interne notitie</label>
+              <textarea
+                id="lead-notitie"
+                key={selected.id}
+                defaultValue={selected.interne_notitie ?? ""}
+                placeholder="Interne notitie bij deze aanvraag…"
+                onBlur={(e) => patch(selected.id, { interne_notitie: e.target.value })}
+              />
+            </div>
+          </>
+        )}
+      </Drawer>
     </>
   );
 }

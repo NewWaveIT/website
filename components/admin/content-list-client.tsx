@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useId, useMemo, useState } from "react";
 import Link from "next/link";
 import { Search, X, Check, AlertTriangle, GripVertical } from "lucide-react";
 import { reorderContent } from "@/app/admin/content/actions";
@@ -45,6 +45,7 @@ export function ContentListClient({
   const [dragId, setDragId] = useState<string | null>(null);
   const [overId, setOverId] = useState<string | null>(null);
 
+  const greepHintId = useId();
   const [toast, setToast] = useState<string | null>(null);
   const [toastErr, setToastErr] = useState<string | null>(null);
 
@@ -117,14 +118,9 @@ export function ContentListClient({
   const dragEnabled = orderable && !active && items.length > 1;
   const cols = dragEnabled ? 4 : 3;
 
-  async function handleDrop(targetId: string) {
-    const id = dragId;
-    setDragId(null);
-    setOverId(null);
-    if (!id || id === targetId) return;
-    const from = items.findIndex((i) => i.id === id);
-    const to = items.findIndex((i) => i.id === targetId);
-    if (from < 0 || to < 0) return;
+  /** Verplaatst één rij van `from` naar `to` en bewaart de nieuwe volgorde. */
+  async function verplaats(from: number, to: number, melding: (positie: number) => string) {
+    if (from < 0 || to < 0 || from === to || to >= items.length) return;
 
     const vorige = items;
     const next = items.slice();
@@ -142,12 +138,44 @@ export function ContentListClient({
         setItems(vorige);
         setToastErr("Volgorde kon niet worden opgeslagen.");
       } else {
-        setToast("Volgorde opgeslagen.");
+        setToast(melding(to + 1));
       }
     } catch {
       setItems(vorige);
       setToastErr("Volgorde kon niet worden opgeslagen.");
     }
+  }
+
+  function handleDrop(targetId: string) {
+    const id = dragId;
+    setDragId(null);
+    setOverId(null);
+    if (!id || id === targetId) return;
+    void verplaats(
+      items.findIndex((i) => i.id === id),
+      items.findIndex((i) => i.id === targetId),
+      () => "Volgorde opgeslagen.",
+    );
+  }
+
+  /**
+   * Slepen is met een muis prima en met een toetsenbord onmogelijk: de HTML5
+   * drag-and-drop-API kent geen toetsenbordequivalent. De greep is daarom een
+   * knop, en pijltje omhoog/omlaag verzet de rij één plek. De bevestiging noemt
+   * de nieuwe positie, want anders hoort een schermlezergebruiker alleen dat er
+   * íets is opgeslagen.
+   */
+  function opGreepToets(e: React.KeyboardEvent<HTMLButtonElement>, index: number, titel: string) {
+    const stap = e.key === "ArrowUp" ? -1 : e.key === "ArrowDown" ? 1 : 0;
+    if (stap === 0) return;
+    e.preventDefault();
+    // React verplaatst de <tr> met `insertBefore`, en daar raakt de browser de
+    // focus bij kwijt. De knop zelf is hetzelfde DOM-element gebleven, dus na
+    // de commit kunnen we 'm gewoon terugzetten — anders staat de gebruiker na
+    // één pijltje weer bovenaan de pagina.
+    const greep = e.currentTarget;
+    void verplaats(index, index + stap, (positie) => `${titel} staat nu op plek ${positie}.`);
+    requestAnimationFrame(() => greep.focus());
   }
 
   return (
@@ -215,12 +243,22 @@ export function ContentListClient({
       {orderable && active && (
         <p className="reorder-hint">Wis de filters om de volgorde te kunnen aanpassen.</p>
       )}
+      {dragEnabled && (
+        <p className="reorder-hint" id={greepHintId}>
+          Sleep een rij aan het greepje om de volgorde te wijzigen, of zet de focus op een greepje
+          en gebruik de pijltjes omhoog en omlaag.
+        </p>
+      )}
 
       <div className="card">
         <table>
           <thead>
             <tr>
-              {dragEnabled && <th aria-hidden="true" style={{ width: 36 }} />}
+              {dragEnabled && (
+                <th className="t-grip-cell">
+                  <span className="sr-only">Volgorde</span>
+                </th>
+              )}
               <th>Titel</th>
               <th>Status</th>
               <th style={{ textAlign: "right" }}>Laatst bewerkt</th>
@@ -257,8 +295,16 @@ export function ContentListClient({
                 }
               >
                 {dragEnabled && (
-                  <td className="t-grip-cell" aria-hidden="true">
-                    <GripVertical className="t-grip" />
+                  <td className="t-grip-cell">
+                    <button
+                      type="button"
+                      className="t-grip-btn"
+                      aria-label={`Verplaats ${r.titel}`}
+                      aria-describedby={greepHintId}
+                      onKeyDown={(e) => opGreepToets(e, items.indexOf(r), r.titel)}
+                    >
+                      <GripVertical className="t-grip" />
+                    </button>
                   </td>
                 )}
                 <td>

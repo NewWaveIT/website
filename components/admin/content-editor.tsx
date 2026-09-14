@@ -427,10 +427,11 @@ export function ContentEditor({
             <div className="card">
               <h3>Publicatie</h3>
               <div className="fld">
-                <label>Status</label>
+                <span className="lbl">Status</span>
                 <div className="seg" role="group" aria-label="Status">
                   <button
                     type="button"
+                    aria-pressed={status === "concept"}
                     className={status === "concept" ? "on" : ""}
                     onClick={() => setStatus("concept")}
                   >
@@ -438,6 +439,7 @@ export function ContentEditor({
                   </button>
                   <button
                     type="button"
+                    aria-pressed={status === "live"}
                     className={status === "live" ? "on live" : ""}
                     onClick={() => setStatus("live")}
                   >

@@ -180,6 +180,10 @@
             ><svg viewBox="0 0 24 24"><path d="M5 12h14M12 5v14" /></svg> Nieuw</a
           >
         </div>
+        <p class="reorder-hint">
+          Sleep een rij aan het greepje om de volgorde te wijzigen, of zet de focus op een greepje
+          en gebruik de pijltjes omhoog en omlaag.
+        </p>
         <div class="card">
           <table>
             <caption class="sr-only">
@@ -187,6 +191,7 @@
             </caption>
             <thead>
               <tr>
+                <th scope="col" class="t-grip-cell"><span class="sr-only">Volgorde</span></th>
                 <th scope="col">Titel</th>
                 <th scope="col">Status</th>
                 <th scope="col">Bijgewerkt</th>
@@ -194,6 +199,13 @@
             </thead>
             <tbody>
               <tr>
+                <td class="t-grip-cell">
+                  <button type="button" class="t-grip-btn" aria-label="Verplaats Home">
+                    <svg class="t-grip" viewBox="0 0 24 24">
+                      <path d="M9 6h.01M9 12h.01M9 18h.01" />
+                    </svg>
+                  </button>
+                </td>
                 <td>
                   <div class="t-title">Home</div>
                   <div class="t-sub">/</div>
@@ -204,6 +216,13 @@
                 <td>12 sep · merel</td>
               </tr>
               <tr>
+                <td class="t-grip-cell">
+                  <button type="button" class="t-grip-btn" aria-label="Verplaats Over ons">
+                    <svg class="t-grip" viewBox="0 0 24 24">
+                      <path d="M9 6h.01M9 12h.01M9 18h.01" />
+                    </svg>
+                  </button>
+                </td>
                 <td>
                   <div class="t-title">Over ons</div>
                   <div class="t-sub">/over-ons</div>
@@ -239,7 +258,7 @@
             <div class="card">
               <h3>Publicatie</h3>
               <div class="fld">
-                <span class="lbl-als-label">Status</span>
+                <span class="lbl">Status</span>
                 <div class="seg" role="group" aria-label="Status">
                   <button type="button" aria-pressed="false">Concept</button>
                   <button type="button" class="on live" aria-pressed="true">Live</button>
@@ -249,6 +268,50 @@
           </aside>
         </div>
       </main>
+    </div>
+
+    <!-- detaildrawer, open getekend zodat axe de kleuren erin meeneemt -->
+    <div class="drawer-wrap open">
+      <div class="overlay" aria-hidden="true"></div>
+      <aside
+        class="drawer"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="fx-dtitel"
+        tabindex="-1"
+      >
+        <div class="dhead">
+          <div class="dtitel">
+            <h2 id="fx-dtitel">Voorbeeldaanvraag</h2>
+            <div class="sub">Voorbeeld BV · voorbeeld@example.com</div>
+          </div>
+          <button type="button" class="x" aria-label="Sluiten">
+            <svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18" /></svg>
+          </button>
+        </div>
+        <div class="dbody">
+          <div class="fld">
+            <span class="lbl" id="fx-status">Status</span>
+            <div class="statusbar" role="group" aria-labelledby="fx-status">
+              <button type="button" class="on" aria-pressed="true">Nieuw</button>
+              <button type="button" aria-pressed="false">In gesprek</button>
+              <button type="button" aria-pressed="false">Afgerond</button>
+            </div>
+          </div>
+          <div class="fld">
+            <span class="lbl">Bericht</span>
+            <div class="ro">Graag een gesprek over een Mendix-scan.</div>
+          </div>
+          <div class="fld">
+            <label for="fx-notitie">Interne notitie</label>
+            <textarea id="fx-notitie" placeholder="Interne notitie bij deze aanvraag…"></textarea>
+          </div>
+        </div>
+        <div class="dfoot">
+          <button type="button" class="btn btn-outline">Sluiten</button>
+          <a class="btn btn-primary" href="#">Beantwoorden</a>
+        </div>
+      </aside>
     </div>
   </body>
 </html>

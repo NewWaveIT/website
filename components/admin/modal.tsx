@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect } from "react";
+import { useId } from "react";
 import { X } from "lucide-react";
+import { useDialoog } from "@/lib/hooks/use-dialoog";
 
 /** Nette, in-stijl modal voor de CMS. Sluit op Esc, kruisje en klik buiten. */
 export function Modal({
@@ -17,13 +18,8 @@ export function Modal({
   footer?: React.ReactNode;
   width?: number;
 }) {
-  useEffect(() => {
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose();
-    };
-    document.addEventListener("keydown", onKey);
-    return () => document.removeEventListener("keydown", onKey);
-  }, [onClose]);
+  const titelId = useId();
+  const paneelRef = useDialoog<HTMLDivElement>(true, onClose);
 
   return (
     <div
@@ -34,13 +30,15 @@ export function Modal({
     >
       <div
         className="modal"
+        ref={paneelRef}
         role="dialog"
         aria-modal="true"
-        aria-label={title}
+        aria-labelledby={titelId}
+        tabIndex={-1}
         style={width ? { maxWidth: width } : undefined}
       >
         <div className="mhead">
-          <h2>{title}</h2>
+          <h2 id={titelId}>{title}</h2>
           <button type="button" className="x" onClick={onClose} aria-label="Sluiten">
             <X />
           </button>

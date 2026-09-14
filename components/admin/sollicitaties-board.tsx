@@ -2,10 +2,10 @@
 
 import { useEffect, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
-import { X, Search, Calendar, AlertTriangle, Check } from "lucide-react";
+import { Search, Calendar, AlertTriangle, Check } from "lucide-react";
 import { updateSollicitatie, getCvUrl } from "@/app/admin/sollicitaties/actions";
 import { SOL_STATUSSEN, STATUS_LABEL, type Sollicitatie } from "@/lib/cms/inzendingen-types";
-import { cn } from "@/lib/utils";
+import { Drawer, Statusbalk } from "@/components/admin/drawer";
 
 function fmt(iso: string) {
   try {
@@ -42,16 +42,6 @@ export function SollicitatiesBoard({ sols }: { sols: Sollicitatie[] }) {
     const t = setTimeout(() => setOkMsg(null), 1800);
     return () => clearTimeout(t);
   }, [okMsg]);
-
-  // Sluit de detail-drawer met Escape.
-  useEffect(() => {
-    if (!selectedId) return;
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setSelectedId(null);
-    };
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [selectedId]);
 
   async function openCv(path: string) {
     // Open synchroon een tab (voorkomt popup-blokkade) en vul 'm daarna met de
@@ -141,116 +131,102 @@ export function SollicitatiesBoard({ sols }: { sols: Sollicitatie[] }) {
         })}
       </div>
 
-      <div className={cn("drawer-wrap", selected && "open")}>
-        <div className="overlay" onClick={() => setSelectedId(null)} />
-        <aside className="drawer">
-          {selected && (
-            <>
-              <div className="dhead">
-                <div style={{ flex: 1 }}>
-                  <h2>{selected.naam}</h2>
-                  <div className="sub">
-                    {[selected.vacature_slug, selected.email].filter(Boolean).join(" · ")}
-                  </div>
-                </div>
-                <button className="x" onClick={() => setSelectedId(null)} aria-label="Sluiten">
-                  <X />
-                </button>
+      <Drawer
+        open={selected !== null}
+        titel={selected?.naam ?? ""}
+        subtitel={[selected?.vacature_slug, selected?.email].filter(Boolean).join(" · ")}
+        onClose={() => setSelectedId(null)}
+        footer={
+          <>
+            <button type="button" className="btn btn-outline" onClick={() => setSelectedId(null)}>
+              Sluiten
+            </button>
+            <a className="btn btn-primary" href={`mailto:${selected?.email}`}>
+              <Calendar /> Plan gesprek
+            </a>
+          </>
+        }
+      >
+        {selected && (
+          <>
+            <Statusbalk
+              label="Fase"
+              opties={SOL_STATUSSEN}
+              labels={STATUS_LABEL}
+              waarde={selected.status}
+              onKies={(status) => patch(selected.id, { status })}
+            />
+            <div className="frow2">
+              <div className="fld">
+                <span className="lbl">Ontvangen</span>
+                <div className="ro">{fmt(selected.created_at)}</div>
               </div>
-              <div className="dbody">
-                <div className="fld">
-                  <label>Fase</label>
-                  <div className="statusbar">
-                    {SOL_STATUSSEN.map((s) => (
-                      <button
-                        key={s}
-                        className={cn(s === selected.status && "on")}
-                        onClick={() => patch(selected.id, { status: s })}
-                      >
-                        {STATUS_LABEL[s]}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-                <div className="frow2">
-                  <div className="fld">
-                    <label>Ontvangen</label>
-                    <div className="ro">{fmt(selected.created_at)}</div>
-                  </div>
-                  <div className="fld">
-                    <label>CV</label>
-                    <div className="ro">
-                      {selected.cv_url ? (
-                        <button
-                          type="button"
-                          className="linklike"
-                          onClick={() => openCv(selected.cv_url as string)}
-                        >
-                          CV openen
-                        </button>
-                      ) : (
-                        "—"
-                      )}
-                    </div>
-                  </div>
-                </div>
-                {selected.telefoon && (
-                  <div className="fld">
-                    <label>Telefoon</label>
-                    <div className="ro">{selected.telefoon}</div>
-                  </div>
-                )}
-                {selected.motivatie && (
-                  <div className="fld">
-                    <label>Motivatie</label>
-                    <div className="ro">{selected.motivatie}</div>
-                  </div>
-                )}
-                {selected.motivatie_url && (
-                  <div className="fld">
-                    <label>Motivatie (bestand)</label>
-                    <div className="ro">
-                      <button
-                        type="button"
-                        className="linklike"
-                        onClick={() => openCv(selected.motivatie_url as string)}
-                      >
-                        Motivatie openen
-                      </button>
-                    </div>
-                  </div>
-                )}
-                {selected.link_url && (
-                  <div className="fld">
-                    <label>LinkedIn / portfolio</label>
-                    <div className="ro">
-                      <a href={selected.link_url} target="_blank" rel="noopener noreferrer">
-                        {selected.link_url}
-                      </a>
-                    </div>
-                  </div>
-                )}
-                <div className="fld">
-                  <label>Interne notitie</label>
-                  <textarea
-                    defaultValue={selected.interne_notitie ?? ""}
-                    placeholder="Notitie bij deze kandidaat…"
-                    onBlur={(e) => patch(selected.id, { interne_notitie: e.target.value })}
-                  />
+              <div className="fld">
+                <span className="lbl">CV</span>
+                <div className="ro">
+                  {selected.cv_url ? (
+                    <button
+                      type="button"
+                      className="linklike"
+                      onClick={() => openCv(selected.cv_url as string)}
+                    >
+                      CV openen
+                    </button>
+                  ) : (
+                    "—"
+                  )}
                 </div>
               </div>
-              <div className="dfoot">
-                <button className="btn btn-outline" onClick={() => setSelectedId(null)}>
-                  Sluiten
-                </button>
-                <a className="btn btn-primary" href={`mailto:${selected.email}`}>
-                  <Calendar /> Plan gesprek
-                </a>
+            </div>
+            {selected.telefoon && (
+              <div className="fld">
+                <span className="lbl">Telefoon</span>
+                <div className="ro">{selected.telefoon}</div>
               </div>
-            </>
-          )}
-        </aside>
-      </div>
+            )}
+            {selected.motivatie && (
+              <div className="fld">
+                <span className="lbl">Motivatie</span>
+                <div className="ro">{selected.motivatie}</div>
+              </div>
+            )}
+            {selected.motivatie_url && (
+              <div className="fld">
+                <span className="lbl">Motivatie (bestand)</span>
+                <div className="ro">
+                  <button
+                    type="button"
+                    className="linklike"
+                    onClick={() => openCv(selected.motivatie_url as string)}
+                  >
+                    Motivatie openen
+                  </button>
+                </div>
+              </div>
+            )}
+            {selected.link_url && (
+              <div className="fld">
+                <span className="lbl">LinkedIn / portfolio</span>
+                <div className="ro">
+                  <a href={selected.link_url} target="_blank" rel="noopener noreferrer">
+                    {selected.link_url}
+                  </a>
+                </div>
+              </div>
+            )}
+            <div className="fld">
+              <label htmlFor="sol-notitie">Interne notitie</label>
+              <textarea
+                id="sol-notitie"
+                key={selected.id}
+                defaultValue={selected.interne_notitie ?? ""}
+                placeholder="Notitie bij deze kandidaat…"
+                onBlur={(e) => patch(selected.id, { interne_notitie: e.target.value })}
+              />
+            </div>
+          </>
+        )}
+      </Drawer>
     </>
   );
 }

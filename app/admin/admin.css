@@ -886,10 +886,14 @@
   align-items: flex-start;
   gap: var(--space-4);
 }
+.cms .drawer .dhead .dtitel {
+  flex: 1;
+  min-width: 0;
+}
 .cms .drawer .dhead h2 {
   font-size: var(--text-lg);
   font-weight: var(--fw-bold);
-  flex: 1;
+  overflow-wrap: anywhere;
 }
 .cms .drawer .dhead .sub {
   font-size: var(--text-xs);
@@ -919,7 +923,8 @@
 .cms .fld {
   margin-bottom: var(--space-5);
 }
-.cms .fld label {
+.cms .fld label,
+.cms .fld .lbl {
   display: block;
   font-family: var(--font-mono);
   font-size: 11px;
@@ -1668,6 +1673,22 @@
 }
 .cms tr[draggable="true"]:active {
   cursor: grabbing;
+}
+.cms .t-grip-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 32px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  cursor: grab;
+  border-radius: var(--radius-sm);
+}
+.cms .t-grip-btn:hover {
+  color: var(--text-body);
 }
 .cms .t-grip {
   width: 16px;
