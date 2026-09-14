@@ -77,18 +77,12 @@ export default async function OverOnsPage() {
           <Award /> {AWARD.label}
         </a>
         <div className="kpis">
-          <div>
-            <div className="n">2023</div>
-            <div className="l">Opgericht, kantoor in Utrecht</div>
-          </div>
-          <div>
-            <div className="n">100%</div>
-            <div className="l">De mens centraal, op elk project</div>
-          </div>
-          <div>
-            <div className="n">2030</div>
-            <div className="l">Doel: CO2-neutraal businessmodel</div>
-          </div>
+          {(["1", "2", "3"] as const).map((n) => (
+            <div key={n}>
+              <div className="n">{t[`kpi${n}Getal`]}</div>
+              <div className="l">{t[`kpi${n}Label`]}</div>
+            </div>
+          ))}
         </div>
       </PaginaHero>
 
@@ -104,7 +98,7 @@ export default async function OverOnsPage() {
             <div className="media-img">
               <Image
                 src="/assets/photos/team-brainstorm-postits.webp"
-                alt="Wavers in gesprek met een klant"
+                alt={t.missieFotoAlt}
                 fill
                 sizes="(max-width: 900px) 100vw, 45vw"
               />
@@ -139,7 +133,7 @@ export default async function OverOnsPage() {
             <div className="media-img">
               <Image
                 src="/assets/photos/founders-trio.webp"
-                alt="Het team achter The New Wave IT"
+                alt={t.teamFotoAlt}
                 fill
                 sizes="(max-width: 900px) 100vw, 40vw"
               />
@@ -162,7 +156,7 @@ export default async function OverOnsPage() {
         <div className="wrap-wide">
           <div className="row">
             <span className="f">
-              <MapPin /> Ganzenmarkt 6, 3512 GD Utrecht
+              <MapPin /> {t.adresRegel}
             </span>
             <span className="f">
               <Mail /> hello@thenewwaveit.com

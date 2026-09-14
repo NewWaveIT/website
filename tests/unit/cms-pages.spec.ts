@@ -49,7 +49,12 @@ const SJABLONEN = [...BRON.matchAll(/\[`([A-Za-z]*)\$\{[^}]+\}([A-Za-z]*)`\]/g)]
 }));
 
 function wordtGelezen(sleutel: string): boolean {
-  if (new RegExp(`[.["']${sleutel}\\b`).test(BRON)) return true;
+  // Alleen `t.sleutel`, want dat is de conventie voor paginateksten. Matchen op
+  // een losse property-naam was te ruim: `metaTitle` staat ook in
+  // lib/sectoren-detail.ts, waardoor de metavelden van de drie richting-hubs
+  // als "gebruikt" telden terwijl die pagina's hun eigen, hardgecodeerde
+  // `export const metadata` hadden.
+  if (new RegExp(`\\bt\\.${sleutel}\\b`).test(BRON)) return true;
   return SJABLONEN.some(
     ({ voor, na }) =>
       voor !== "" &&

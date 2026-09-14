@@ -1,3 +1,5 @@
+import type { Metadata } from "next";
+import { cacheLife } from "next/cache";
 import Link from "next/link";
 import { PaginaHero } from "@/components/layout/pagina-hero";
 import { Boxes, BrainCircuit, Route } from "lucide-react";
@@ -30,6 +32,27 @@ const RICHTING_NAAM: Record<ServiceRichting, string> = {
   ai: "AI",
   strategie: "Strategie",
 };
+
+/**
+ * Meta-titel en -omschrijving van een hubpagina, uit het CMS.
+ *
+ * `metaTitle` en `metaDescription` stonden al als bewerkbaar veld in de admin,
+ * maar de drie pagina's hadden daarnaast een eigen `export const metadata` met
+ * dezelfde tekst erin. Wie het in de admin aanpaste zag niets veranderen. Nu is
+ * er één bron; het canonieke pad blijft in de route staan, want dat is geen
+ * tekst maar een routefeit.
+ */
+export async function richtingMetadata(richting: ServiceRichting): Promise<Metadata> {
+  "use cache";
+  cacheLife("content");
+
+  const t = await getPagina(`diensten-${richting}`);
+  return {
+    title: t.metaTitle,
+    description: t.metaDescription,
+    alternates: { canonical: `/diensten/${richting}` },
+  };
+}
 
 /**
  * Gedeelde body voor de 3 richting-hubpagina's (/diensten/mendix, /ai, /strategie).

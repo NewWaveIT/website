@@ -1,6 +1,7 @@
 import { readFileSync, readdirSync, statSync } from "node:fs";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
+import { PAGE_DEFAULTS } from "@/lib/cms/pages";
 
 /**
  * Twee schrijfafspraken die alleen met een test blijven staan.
@@ -97,10 +98,11 @@ describe("de site spreekt de bezoeker aan met je", () => {
   }
 
   // Zonder deze test heeft de suite geen enkele `it` zodra alles schoon is, en
-  // dan valt vitest over een leeg blok. Meteen de pagina die het probleem wás.
-  it("/privacy spreekt de bezoeker aan met je", () => {
-    const bron = readFileSync("app/(marketing)/privacy/page.tsx", "utf8");
-    expect(bron).toMatch(/\bje\b/);
-    expect(bron.match(U_VORM), "u-vorm terug op de privacypagina").toBeNull();
+  // dan valt vitest over een leeg blok. Meteen de tekst die het probleem wás:
+  // de privacyverklaring, die sinds C3/C4 als richtext in het CMS staat.
+  it("de privacyverklaring spreekt de bezoeker aan met je", () => {
+    const { body } = PAGE_DEFAULTS.privacy;
+    expect(body).toMatch(/\bje\b/);
+    expect(body.match(U_VORM), "u-vorm terug in de privacyverklaring").toBeNull();
   });
 });

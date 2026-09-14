@@ -112,7 +112,7 @@ export default async function WerkenBijPage() {
             <div className="media-img">
               <Image
                 src="/assets/photos/team-borrel.webp"
-                alt="Wavers tijdens een kennissessie"
+                alt={t.cultuurFotoAlt}
                 fill
                 sizes="(max-width: 900px) 100vw, 45vw"
               />
@@ -152,19 +152,12 @@ export default async function WerkenBijPage() {
             </div>
           )}
           <p className="geen-match">
-            {vacatures.length > 0 ? (
-              <>Staat jouw rol er niet tussen? </>
-            ) : (
-              <>
-                Op dit moment staan er geen vacatures open. We spreken sowieso graag met Mendix- en
-                AI-consultants die bij ons passen.{" "}
-              </>
-            )}
+            {vacatures.length > 0 ? t.geenMatchVoor : t.geenVacatures}{" "}
             {/* Onderstreept: als tekstlink binnen een alinea is kleur alleen niet
                 genoeg om hem te herkennen (WCAG 1.4.1) — het verschil met de
                 omringende tekst haalt de 3:1 niet. */}
-            <a href="#open-sollicitatie">Stuur hieronder een open sollicitatie</a>, of bel{" "}
-            {recVoornaam}: {recTel}.
+            <a href="#open-sollicitatie">{t.openSollLink}</a>{" "}
+            {t.belRegel.replace("{naam}", recVoornaam).replace("{telefoon}", recTel)}
           </p>
         </div>
       </section>
@@ -174,19 +167,16 @@ export default async function WerkenBijPage() {
           <div className="open-soll-wrap">
             <SollicitatieForm
               vacatureSlug=""
-              vacatureTitel="Open sollicitatie"
-              heading="Open sollicitatie"
-              intro="Geen passende vacature? Laat je gegevens achter, we kijken graag of er een match is."
+              vacatureTitel={t.openSollKop}
+              heading={t.openSollKop}
+              intro={t.openSollIntro}
             />
-            <p className="open-soll-note">
-              Na je sollicitatie neemt {recVoornaam} binnen twee werkdagen contact op. Een echt
-              mens, geen automatische afwijzing.
-            </p>
+            <p className="open-soll-note">{t.openSollNoot.replace("{naam}", recVoornaam)}</p>
           </div>
         </div>
       </section>
 
-      <SlotCta titel={t.ctaTitel ?? ""} knop="Kom kennismaken" />
+      <SlotCta titel={t.ctaTitel} knop="Kom kennismaken" />
     </div>
   );
 }

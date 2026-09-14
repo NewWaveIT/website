@@ -23,6 +23,8 @@ export function sanitizeFull(html: string): string {
       "ol",
       "li",
       "blockquote",
+      // Het postadres in de privacyverklaring; semantisch, zonder attributen.
+      "address",
       "a",
       "br",
       "code",

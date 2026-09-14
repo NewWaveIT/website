@@ -10,14 +10,20 @@ import { getSectorKaarten } from "@/lib/sectoren-detail-data";
 import { SECTOR_ICONEN } from "@/components/sector-iconen";
 import { SectorHeroAnim } from "@/components/sector-hero-anim";
 import { SlotCta } from "@/components/layout/slot-cta";
+import { getPagina } from "@/lib/paginas-data";
 import "./klantverhalen.css";
 
-export const metadata: Metadata = {
-  title: "Klantverhalen: resultaat dat je kunt navragen",
-  description:
-    "Verhalen van organisaties in de publieke sector, mobiliteit, banken, zorg en manufacturing, verteld met de cijfers erbij.",
-  alternates: { canonical: "/klantverhalen" },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  "use cache";
+  cacheLife("content");
+
+  const t = await getPagina("klantverhalen");
+  return {
+    title: t.metaTitle,
+    description: t.metaDescription,
+    alternates: { canonical: "/klantverhalen" },
+  };
+}
 
 /**
  * De drie cijfers per sector. Alleen deze staan nog in de pagina: naam, icoon en
@@ -62,17 +68,21 @@ export default async function KlantverhalenPage() {
   "use cache";
   cacheLife("content");
 
-  const [verhalen, sectoren] = await Promise.all([getKlantverhalen(), getSectorKaarten()]);
+  const [t, verhalen, sectoren] = await Promise.all([
+    getPagina("klantverhalen"),
+    getKlantverhalen(),
+    getSectorKaarten(),
+  ]);
   const featured = verhalen[0];
   return (
     <div className="p-klanten">
       <PaginaHero
         kruimels={[{ naam: "Klantverhalen", pad: "/klantverhalen" }]}
-        kicker="Klantverhalen"
-        titel="Resultaat dat je kunt "
-        accent="navragen"
-        staart="."
-        lead="Business-impact, geen technische anekdote. Hier laten we zien wat er daadwerkelijk verandert bij een klant als strategie, Mendix en AI samenkomen: minder handwerk, snellere processen, meetbaar resultaat."
+        kicker={t.heroKicker}
+        titel={t.heroTitleStart}
+        accent={t.heroAccent}
+        staart={t.heroTitleEnd}
+        lead={t.heroLead}
         achtergrond={<SectorHeroAnim theme="klantverhalen" />}
       />
 
@@ -80,7 +90,7 @@ export default async function KlantverhalenPage() {
         <section className="block uitgelicht">
           <div className="wrap-wide">
             <div className="sec-head">
-              <div className="kicker">Uitgelicht</div>
+              <div className="kicker">{t.uitgelichtKicker}</div>
               <h2>{featured.cardTitel}</h2>
             </div>
             <div className="case-mini">
@@ -111,13 +121,9 @@ export default async function KlantverhalenPage() {
       <section className="block">
         <div className="wrap-wide">
           <div className="sec-head">
-            <div className="kicker">Onze sectoren</div>
-            <h2>Nog geen klantverhaal in jouw sector? Dit is wat je kunt verwachten.</h2>
-            <p>
-              We werken pas kort genoeg samen met organisaties als Moove om al hun verhaal te kunnen
-              delen. De rest volgt. Hieronder alvast het type resultaat dat we per sector al
-              aantoonbaar leveren.
-            </p>
+            <div className="kicker">{t.beloftesKicker}</div>
+            <h2>{t.beloftesTitel}</h2>
+            <p>{t.beloftesIntro}</p>
           </div>
           <div className="belofte-grid">
             {sectoren.map((s) => {
@@ -147,7 +153,7 @@ export default async function KlantverhalenPage() {
         </div>
       </section>
 
-      <SlotCta titel="Herken je jouw vraagstuk in deze verhalen?" />
+      <SlotCta titel={t.ctaTitel} />
     </div>
   );
 }

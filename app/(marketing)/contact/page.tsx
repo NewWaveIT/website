@@ -68,15 +68,15 @@ export default async function ContactPage() {
           {/* Het ontwerp heeft hier geen zichtbare kop; zonder deze h2 springt de
               koppenstructuur van h1 naar h3. */}
           <h2 id="manieren" className="sr-only">
-            Manieren om contact op te nemen
+            {t.manierenKop}
           </h2>
           <div className="opts">
             <a href="tel:+31610751254" className="opt">
               <span className="ic">
                 <Phone />
               </span>
-              <h3>Bel ons direct</h3>
-              <p>Op werkdagen tussen 9 en 17 uur krijg je meteen iemand aan de lijn.</p>
+              <h3>{t.manier1Titel}</h3>
+              <p>{t.manier1Tekst}</p>
               <span className="go">
                 06–10751254 <ArrowRight />
               </span>
@@ -85,8 +85,8 @@ export default async function ContactPage() {
               <span className="ic">
                 <Mail />
               </span>
-              <h3>Stuur een mail</h3>
-              <p>Stel je vraag, hoe klein ook. Binnen één werkdag een reactie van een echt mens.</p>
+              <h3>{t.manier2Titel}</h3>
+              <p>{t.manier2Tekst}</p>
               <span className="go">
                 hello@thenewwaveit.com <ArrowRight />
               </span>
@@ -100,23 +100,20 @@ export default async function ContactPage() {
               <span className="ic">
                 <MessageCircle />
               </span>
-              <h3>App met ons</h3>
-              <p>Liever appen? Stuur een berichtje via WhatsApp, we reageren snel.</p>
+              <h3>{t.manier3Titel}</h3>
+              <p>{t.manier3Tekst}</p>
               <span className="go">
-                Start een chat <ArrowRight />
+                {t.manier3Knop} <ArrowRight />
               </span>
             </a>
             <a href="#gesprek" className="opt">
               <span className="ic">
                 <CalendarCheck />
               </span>
-              <h3>Plan een gesprek</h3>
-              <p>
-                20 tot 45 minuten met een practice lead, afhankelijk van je vraag. Vrijblijvend en
-                zonder verkooppraatje.
-              </p>
+              <h3>{t.manier4Titel}</h3>
+              <p>{t.manier4Tekst}</p>
               <span className="go">
-                Plan het gesprek <ArrowRight />
+                {t.manier4Knop} <ArrowRight />
               </span>
             </a>
           </div>
@@ -149,7 +146,7 @@ export default async function ContactPage() {
                 height={76}
               />
               <div>
-                <div className="role">Je spreekt met o.a.</div>
+                <div className="role">{t.expertKop}</div>
                 <h4>{salesNaam}</h4>
                 <div className="links">
                   <a href={telHref(salesTel)}>{salesTel}</a>
@@ -160,13 +157,13 @@ export default async function ContactPage() {
               </div>
             </div>
             <div className="direct">
-              <h3>Bezoekadres</h3>
+              <h3>{t.adresTitel}</h3>
               <a
                 href="https://maps.google.com/?q=Ganzenmarkt+6+Utrecht"
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <MapPin /> Ganzenmarkt 6, Utrecht. Koffie staat klaar
+                <MapPin /> {t.adresRegel}
               </a>
               <a
                 href="https://www.linkedin.com/company/the-new-wave-it"

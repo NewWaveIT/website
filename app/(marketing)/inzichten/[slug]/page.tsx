@@ -7,6 +7,7 @@ import { notFound } from "next/navigation";
 import { getArtikelen, getArtikelBySlug, isoDatum } from "@/lib/inzichten-data";
 import { ArticleContent } from "@/components/article-content";
 import { LeadCta } from "@/components/inzichten/lead-cta";
+import { getPagina } from "@/lib/paginas-data";
 import { SITE_URL } from "@/lib/site";
 import "./article.css";
 
@@ -38,7 +39,7 @@ export default async function ArtikelPage({ params }: { params: Promise<{ slug: 
   cacheLife("content");
 
   const { slug } = await params;
-  const a = await getArtikelBySlug(slug);
+  const [a, t] = await Promise.all([getArtikelBySlug(slug), getPagina("inzichten")]);
   if (!a) notFound();
 
   const jsonLd = {
@@ -101,10 +102,7 @@ export default async function ArtikelPage({ params }: { params: Promise<{ slug: 
         </div>
       </article>
 
-      <LeadCta
-        titel="Dit soort inzichten, één keer per maand"
-        tekst="Laat je e-mail achter en ontvang onze scherpste inzichten over technologie in jouw sector. Geen sales, uitschrijven kan altijd."
-      />
+      <LeadCta titel={t.artikelLeadTitel} tekst={t.artikelLeadTekst} />
     </div>
   );
 }
