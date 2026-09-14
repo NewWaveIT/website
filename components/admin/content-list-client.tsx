@@ -6,6 +6,7 @@ import { Search, X, Check, AlertTriangle, GripVertical } from "lucide-react";
 import { reorderContent } from "@/app/admin/content/actions";
 import type { ContentRow, ContentType } from "@/lib/cms/content";
 import type { Facet } from "@/lib/cms/admin-lijst";
+import { useOkMelding } from "@/lib/hooks/use-ok-melding";
 
 function fmt(iso: string) {
   try {
@@ -46,34 +47,9 @@ export function ContentListClient({
   const [overId, setOverId] = useState<string | null>(null);
 
   const greepHintId = useId();
-  const [toast, setToast] = useState<string | null>(null);
+  const [toast, setToast] = useOkMelding();
   const [toastErr, setToastErr] = useState<string | null>(null);
 
-  // Bevestigings-toast na opslaan/verwijderen: de action redirect hierheen met
-  // ?ok=… — we lezen 'm eenmalig, tonen 'm en halen 'm uit de URL.
-  useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const ok = params.get("ok");
-    if (!ok) return;
-    // Leest de ?ok=…-query (extern systeem: de URL na een server-redirect) —
-    // kan niet tijdens render.
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setToast(
-      ok === "aangemaakt"
-        ? "Item aangemaakt."
-        : ok === "verwijderd"
-          ? "Item verwijderd."
-          : "Wijzigingen opgeslagen.",
-    );
-    params.delete("ok");
-    const qs = params.toString();
-    window.history.replaceState(null, "", window.location.pathname + (qs ? `?${qs}` : ""));
-  }, []);
-  useEffect(() => {
-    if (!toast) return;
-    const t = setTimeout(() => setToast(null), 2600);
-    return () => clearTimeout(t);
-  }, [toast]);
   useEffect(() => {
     if (!toastErr) return;
     const t = setTimeout(() => setToastErr(null), 4000);

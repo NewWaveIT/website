@@ -26,6 +26,7 @@ import {
 import { uploadImage } from "@/app/admin/content/actions";
 import { FigureImage } from "./tiptap-figure";
 import { Modal } from "./modal";
+import { VerborgenWaarde } from "./verborgen-waarde";
 
 /** Actieve modal-status binnen de werkbalk. */
 type RtePrompt =
@@ -407,7 +408,7 @@ export function RichTextEditor({
   return (
     <div className="fld">
       <label>{label}</label>
-      <input type="hidden" name={name} value={html} />
+      <VerborgenWaarde name={name} value={html} />
       <div className={`rte${lite ? " rte-lite" : ""}`}>
         {editor && (
           <>

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { VerborgenWaarde } from "./verborgen-waarde";
 
 export type PropositieOptie = { slug: string; titel: string; nummer?: number };
 
@@ -28,7 +29,7 @@ export function PropositiesField({
   return (
     <div className="fld">
       <label>{label}</label>
-      <input type="hidden" name={name} value={JSON.stringify(sel)} />
+      <VerborgenWaarde name={name} value={JSON.stringify(sel)} />
       {options.length === 0 ? (
         <p className="t-sub">
           Nog geen proposities aangemaakt. Voeg ze eerst toe onder ‘Proposities’.

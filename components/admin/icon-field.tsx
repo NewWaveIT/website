@@ -13,6 +13,7 @@ import {
   HelpCircle,
   type LucideIcon,
 } from "lucide-react";
+import { VerborgenWaarde } from "./verborgen-waarde";
 
 const REGISTRY: Record<string, LucideIcon> = {
   boxes: Boxes,
@@ -41,7 +42,7 @@ export function IconField({
   return (
     <div className="fld">
       <label>{label}</label>
-      <input type="hidden" name={name} value={value} />
+      <VerborgenWaarde name={name} value={value} />
       <div className="iconpick">
         {options.map((opt) => {
           const Icon = REGISTRY[opt] ?? HelpCircle;

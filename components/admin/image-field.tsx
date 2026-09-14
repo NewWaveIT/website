@@ -3,6 +3,7 @@
 import { useRef, useState, type ChangeEvent } from "react";
 import { Upload } from "lucide-react";
 import { uploadImage } from "@/app/admin/content/actions";
+import { VerborgenWaarde } from "./verborgen-waarde";
 
 /** Gecontroleerd upload-veld (preview + bestand kiezen + pad). Herbruikbaar, ook genest. */
 export function ImageControl({
@@ -100,7 +101,7 @@ export function ImageField({
   return (
     <div className="fld">
       <label>{label}</label>
-      <input type="hidden" name={name} value={url} />
+      <VerborgenWaarde name={name} value={url} />
       <ImageControl value={url} onChange={setUrl} />
     </div>
   );

@@ -7,9 +7,6 @@ import { updateLead } from "@/app/admin/aanvragen/actions";
 import { LEAD_STATUSSEN, STATUS_LABEL, type Lead } from "@/lib/cms/inzendingen-types";
 import { Drawer, Statusbalk } from "@/components/admin/drawer";
 
-// Terugvallijst als er (nog) geen gebruikers uit de database komen.
-const EIGENAREN_FALLBACK = ["Merel", "Ruben", "Fatima", "Sanne", "Mitchel"];
-
 function fmt(iso: string) {
   try {
     return new Date(iso).toLocaleString("nl-NL", {
@@ -46,13 +43,11 @@ export function AanvragenBoard({ leads, eigenaren = [] }: { leads: Lead[]; eigen
     return () => clearTimeout(t);
   }, [okMsg]);
 
-  // Eigenaar-opties: echte gebruikers (of terugval), plus altijd de huidige waarde.
+  // Eigenaar-opties: de echte gebruikers, plus altijd de huidige waarde. Hier
+  // stond een terugvallijst met vijf verzonnen voornamen; die kwamen op een
+  // verse installatie gewoon in beeld alsof het collega's waren.
   const eigenaarOpties = (huidige: string | null) =>
-    Array.from(
-      new Set(
-        ["—", ...(eigenaren.length ? eigenaren : EIGENAREN_FALLBACK), huidige].filter(Boolean),
-      ),
-    ) as string[];
+    Array.from(new Set(["—", ...eigenaren, huidige].filter(Boolean))) as string[];
 
   function patch(id: string, p: Partial<Lead>) {
     const vorige = items;
@@ -178,6 +173,9 @@ export function AanvragenBoard({ leads, eigenaren = [] }: { leads: Lead[]; eigen
                   <option key={o}>{o}</option>
                 ))}
               </select>
+              {eigenaren.length === 0 && (
+                <p className="t-sub">Nog geen gebruikers om aan toe te wijzen.</p>
+              )}
             </div>
             <div className="fld">
               <label htmlFor="lead-notitie">Interne notitie</label>

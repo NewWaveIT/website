@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Plus, Trash2, ChevronUp, ChevronDown } from "lucide-react";
 import type { FieldDef } from "@/lib/cms/schema";
 import { ImageControl } from "./image-field";
+import { VerborgenWaarde } from "./verborgen-waarde";
 
 type Obj = Record<string, unknown>;
 
@@ -219,7 +220,7 @@ export function StructuredField({ field, initial }: { field: FieldDef; initial: 
   return (
     <div className="fld">
       <label>{field.label}</label>
-      <input type="hidden" name={`f_${field.key}`} value={JSON.stringify(value)} />
+      <VerborgenWaarde name={`f_${field.key}`} value={JSON.stringify(value)} />
       <Control field={field} value={value} onChange={setValue} />
       {field.help && (
         <p className="t-sub" style={{ marginTop: 6 }}>

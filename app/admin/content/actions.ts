@@ -10,7 +10,7 @@ import { FIELD_SCHEMAS, isStructured } from "@/lib/cms/schema";
 import { paginaVelden } from "@/lib/cms/pages";
 import { revalidateContent } from "@/lib/cms/revalidate";
 import { logAudit } from "@/lib/cms/audit";
-import { ADMIN_PADEN } from "@/lib/cms/admin-paden";
+import { ADMIN_PADEN, bewerkPad } from "@/lib/cms/admin-paden";
 
 /** Bitmapformaten die sharp betrouwbaar naar WebP omzet. Bewust zonder SVG. */
 const BEELD_TYPES = ["image/jpeg", "image/png", "image/webp", "image/avif", "image/gif"];
@@ -108,16 +108,20 @@ export async function saveContent(_prev: SaveState, formData: FormData): Promise
   const table = CONTENT_TABLE[type];
 
   const bestaat = Boolean(id && id !== "new");
+  let rijId = id;
   if (bestaat) {
     const { error } = await supabase.from(table).update(record).eq("id", id);
     if (error) return { error: error.message };
   } else {
-    const { error } = await supabase.from(table).insert(record);
+    // `.select("id")` erbij omdat "Opslaan en doorgaan" bij een nieuw item
+    // terug moet naar de editor van precies deze rij.
+    const { data, error } = await supabase.from(table).insert(record).select("id").single();
     if (error) {
       return {
         error: error.code === "23505" ? "Deze slug bestaat al." : error.message,
       };
     }
+    rijId = (data as { id: string }).id;
   }
 
   await logAudit({
@@ -131,7 +135,11 @@ export async function saveContent(_prev: SaveState, formData: FormData): Promise
 
   revalidatePath(ADMIN_PADEN[type].lijst);
   revalidateContent();
-  redirect(`${ADMIN_PADEN[type].lijst}?ok=${bestaat ? "bijgewerkt" : "aangemaakt"}`);
+
+  const melding = bestaat ? "bijgewerkt" : "aangemaakt";
+  // "Opslaan en doorgaan": terug naar dezelfde editor in plaats van de lijst.
+  if (formData.get("blijf") === "1") redirect(`${bewerkPad(type, rijId)}?ok=${melding}`);
+  redirect(`${ADMIN_PADEN[type].lijst}?ok=${melding}`);
 }
 
 /** Upload een afbeelding naar de Supabase Storage-bucket 'content' en geef de publieke URL + afmetingen terug. */
@@ -175,7 +183,6 @@ export async function uploadImage(
   return { url: data.publicUrl, width, height };
 }
 
-/** Sla een nieuwe handmatige volgorde op: elk id krijgt zijn positie als `volgorde`. */
 /**
  * Zet één item live vanaf het dashboard.
  *
@@ -223,6 +230,7 @@ export async function publiceerContent(
   return { ok: true };
 }
 
+/** Sla een nieuwe handmatige volgorde op: elk id krijgt zijn positie als `volgorde`. */
 export async function reorderContent(type: string, orderedIds: string[]): Promise<{ ok: boolean }> {
   await requireAdmin();
   if (!isType(type) || orderedIds.length === 0) return { ok: false };

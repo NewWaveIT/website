@@ -2,7 +2,7 @@
 
 import { useActionState, useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { Trash2, ExternalLink } from "lucide-react";
+import { Trash2, ExternalLink, Check } from "lucide-react";
 import { saveContent, deleteContent, type SaveState } from "@/app/admin/content/actions";
 import type { ContentRow, ContentType } from "@/lib/cms/content";
 import { FIELD_SCHEMAS, extraData, isStructured, type FieldDef } from "@/lib/cms/schema";
@@ -16,6 +16,8 @@ import { RichTextEditor } from "./rich-text-editor";
 import { AuthorField, type TeamOptie } from "./author-field";
 import { PropositiesField, type PropositieOptie } from "./proposities-field";
 import { Modal } from "./modal";
+import { VerborgenWaarde } from "./verborgen-waarde";
+import { useOkMelding } from "@/lib/hooks/use-ok-melding";
 
 /** Maakt een net webadres van een titel (kleine letters, koppeltekens). */
 function slugify(s: string): string {
@@ -112,8 +114,10 @@ export function ContentEditor({
   proposities?: PropositieOptie[];
 }) {
   const [state, formAction, pending] = useActionState<SaveState, FormData>(saveContent, {});
+  const [okMelding] = useOkMelding();
   const [dirty, setDirty] = useState(false);
   const submitting = useRef(false);
+  const formRef = useRef<HTMLFormElement>(null);
   const errRef = useRef<HTMLDivElement>(null);
   const [status, setStatus] = useState(row?.status === "live" ? "live" : "concept");
   const [titel, setTitel] = useState(row?.titel ?? "");
@@ -128,6 +132,23 @@ export function ContentEditor({
     setTitel(v);
     if (isNew) setSlug(slugify(v));
   };
+
+  // Elke wijziging in het formulier markeert het als vuil. Met een gewone
+  // DOM-listener op het formulier, niet met React's `onChange`: die slaat
+  // verborgen velden over, en juist daarin bewaren de rijke tekst, de
+  // afbeeldingen en de gestructureerde lijsten hun waarde. Zie
+  // components/admin/verborgen-waarde.tsx, dat het event omhoog stuurt.
+  useEffect(() => {
+    const form = formRef.current;
+    if (!form) return;
+    const vuil = () => setDirty(true);
+    form.addEventListener("input", vuil);
+    form.addEventListener("change", vuil);
+    return () => {
+      form.removeEventListener("input", vuil);
+      form.removeEventListener("change", vuil);
+    };
+  }, []);
 
   // Waarschuw bij het verlaten van de pagina met niet-opgeslagen wijzigingen
   // (herladen, tabblad sluiten, browser-terug). Slaat over tijdens het opslaan zelf.
@@ -303,6 +324,11 @@ export function ContentEditor({
 
   return (
     <>
+      {okMelding && (
+        <div className="toast ok" role="status">
+          <Check /> {okMelding}
+        </div>
+      )}
       <div className="crumb">Content · {label}</div>
       <div className="page-head">
         <div>
@@ -316,15 +342,15 @@ export function ContentEditor({
       </div>
 
       <form
+        ref={formRef}
         action={formAction}
-        onChange={() => setDirty(true)}
         onSubmit={() => {
           submitting.current = true;
         }}
       >
         <input type="hidden" name="type" value={type} />
         <input type="hidden" name="id" value={row?.id ?? "new"} />
-        <input type="hidden" name="status" value={status} />
+        <VerborgenWaarde name="status" value={status} />
         {!isNew && <input type="hidden" name="slug" value={slug} />}
         {!showOrder && <input type="hidden" name="volgorde" value={row?.volgorde ?? 0} />}
 
@@ -406,11 +432,26 @@ export function ContentEditor({
               <button type="submit" className="btn btn-primary" disabled={pending}>
                 {pending ? "Opslaan…" : "Opslaan"}
               </button>
+              {/* Opslaan zonder de editor te verlaten. Bij een lang
+                  pagina-formulier is tussendoor bewaren anders alleen mogelijk
+                  door naar de lijst te gaan en het item weer open te klikken. */}
+              <button
+                type="submit"
+                name="blijf"
+                value="1"
+                className="btn btn-outline"
+                disabled={pending}
+              >
+                Opslaan en doorgaan
+              </button>
               <div className="ce-actions-row">
                 <Link href={listPath} className="btn btn-outline" onClick={onCancel}>
                   Annuleren
                 </Link>
-                {row && viewPath && (
+                {/* Alleen als de opgeslagen rij live staat. Bij een concept
+                    wees deze knop naar een adres dat de bezoeker een 404 geeft
+                    — of, erger, naar de oude seed-versie van dezelfde slug. */}
+                {row?.status === "live" && viewPath && (
                   <a
                     href={viewPath}
                     target="_blank"
@@ -421,8 +462,12 @@ export function ContentEditor({
                   </a>
                 )}
               </div>
-              {row && <DeleteButton />}
             </div>
+            {row && (
+              <div className="card ce-gevaar">
+                <DeleteButton />
+              </div>
+            )}
 
             <div className="card">
               <h3>Publicatie</h3>

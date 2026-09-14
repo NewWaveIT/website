@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import { UserRound } from "lucide-react";
+import { VerborgenWaarde } from "./verborgen-waarde";
 
 export interface TeamOptie {
   slug: string;
@@ -26,7 +27,7 @@ export function AuthorField({
   return (
     <div className="fld">
       <label>{label}</label>
-      <input type="hidden" name={name} value={value} />
+      <VerborgenWaarde name={name} value={value} />
       {options.length === 0 ? (
         <p className="t-sub">Nog geen teamleden. Voeg ze toe onder Teamleden.</p>
       ) : (

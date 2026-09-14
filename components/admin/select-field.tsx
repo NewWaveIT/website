@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { VerborgenWaarde } from "./verborgen-waarde";
 
 export function SelectField({
   name,
@@ -21,7 +22,7 @@ export function SelectField({
   return (
     <div className="fld">
       <label>{label}</label>
-      <input type="hidden" name={name} value={value} />
+      <VerborgenWaarde name={name} value={value} />
       <div className="choicechips">
         {options.map((opt) => (
           <button
