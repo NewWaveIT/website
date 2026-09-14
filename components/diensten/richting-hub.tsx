@@ -63,13 +63,14 @@ export async function richtingMetadata(richting: ServiceRichting): Promise<Metad
  * verbergt zichzelf als hij leeg is.
  */
 export async function RichtingHub({ richting }: { richting: ServiceRichting }) {
-  const [t, hub, dienstenPagina, inhoud, artikelen, alleSectoren] = await Promise.all([
+  const [t, hub, dienstenPagina, inhoud, artikelen, alleSectoren, d] = await Promise.all([
     getPagina(`diensten-${richting}`),
     getRichtingHub(richting),
     getPagina("diensten"),
     getRichtingBySlug(richting),
     getArtikelenVoorDienst(richting),
     getSectoren(),
+    getPagina("dienst-detail"),
   ]);
   const fases = getFaseItems(dienstenPagina);
   const { Icon, label } = BADGE[richting];
@@ -100,7 +101,7 @@ export async function RichtingHub({ richting }: { richting: ServiceRichting }) {
       {t.instapTitel && (
         <section className="block instap-strip">
           <div className="wrap-wide">
-            <div className="kicker">Lichte instap</div>
+            <div className="kicker">{d.instapChip}</div>
             <h2>{t.instapTitel}</h2>
             <p>{t.instapTekst}</p>
             <Link href="/contact?type=kennismaking" className="btn btn-outline btn-sm">
@@ -119,11 +120,9 @@ export async function RichtingHub({ richting }: { richting: ServiceRichting }) {
       <section className="block">
         <div className="wrap-wide">
           <div className="sec-head">
-            <div className="kicker">Jouw route</div>
-            <h2>Begin bij de instap, schaal op wanneer het werkt.</h2>
-            <p>
-              Elke stap is los te boeken. Je hoeft dus niet vooraf te kiezen hoe ver je wilt gaan.
-            </p>
+            <div className="kicker">{d.routeKicker}</div>
+            <h2>{d.routeTitel}</h2>
+            <p>{d.routeVoet}</p>
           </div>
           <div className="richting-ladder">
             {hub.tiers.map((tier) => (
@@ -132,7 +131,7 @@ export async function RichtingHub({ richting }: { richting: ServiceRichting }) {
                   <span className="num">{String(tier.niveau).padStart(2, "0")}</span>
                   <span className="label">{tier.label}</span>
                   <span className="kicker">{tier.kicker}</span>
-                  {tier.niveau === 1 && <span className="begin">Begin hier</span>}
+                  {tier.niveau === 1 && <span className="begin">{d.routeKnop}</span>}
                 </div>
                 <ServiceCard service={tier.service} compact toonFase />
               </div>

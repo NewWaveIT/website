@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { getPagina } from "@/lib/paginas-data";
 import { ChevronRight } from "lucide-react";
 import "./fase-tijdlijn.css";
 
@@ -24,7 +25,13 @@ interface FaseTijdlijnProps {
  * kaarten in de keuzematrix. Zo zijn alle vijf de fasen gelijkwaardig, ook de
  * fasen die (nog) geen eigen dienst hebben.
  */
-export function FaseTijdlijn({ fases, variant = "vol", actieveFases, cta }: FaseTijdlijnProps) {
+export async function FaseTijdlijn({
+  fases,
+  variant = "vol",
+  actieveFases,
+  cta,
+}: FaseTijdlijnProps) {
+  const t = await getPagina("dienst-detail");
   if (variant === "lite") {
     return (
       <div className="fase-tijdlijn--lite">
@@ -40,7 +47,7 @@ export function FaseTijdlijn({ fases, variant = "vol", actieveFases, cta }: Fase
           ))}
         </div>
         <Link href="/diensten#fasen" className="fase-lite-link">
-          Bekijk het volledige stappenplan <ChevronRight aria-hidden="true" />
+          {t.stappenplanLink} <ChevronRight aria-hidden="true" />
         </Link>
       </div>
     );

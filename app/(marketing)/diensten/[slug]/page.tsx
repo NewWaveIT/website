@@ -7,6 +7,8 @@ import { notFound } from "next/navigation";
 import { ArrowRight, Check, HardHat, Users } from "lucide-react";
 import { ICONEN } from "./iconen";
 import { getServices, getServiceBySlug } from "@/lib/services-data";
+import { getPagina } from "@/lib/paginas-data";
+import { vulIn } from "@/lib/utils";
 import { getArtikelenVoorDienst } from "@/lib/inzichten-data";
 import { RICHTINGEN } from "@/lib/services";
 import { BASIS_SLUG } from "@/lib/dienstenstructuur";
@@ -65,7 +67,11 @@ export default async function DienstPage({ params }: { params: Promise<{ slug: s
   cacheLife("content");
 
   const { slug } = await params;
-  const [s, alle] = await Promise.all([getServiceBySlug(slug), getServices()]);
+  const [s, alle, t] = await Promise.all([
+    getServiceBySlug(slug),
+    getServices(),
+    getPagina("dienst-detail"),
+  ]);
   if (!s) notFound();
 
   const richting = RICHTINGEN.find((r) => r.key === s.richting);
@@ -183,7 +189,7 @@ export default async function DienstPage({ params }: { params: Promise<{ slug: s
                   al om een kennismaking vraagt stond er twee keer hetzelfde. */}
               {s.ctaType === "datum" && (
                 <Link href="/contact" className="alt">
-                  Liever eerst 20 min kennismaken →
+                  {t.kennismakenLink}
                 </Link>
               )}
             </aside>
@@ -192,7 +198,7 @@ export default async function DienstPage({ params }: { params: Promise<{ slug: s
       </section>
 
       {secties.length > 1 && (
-        <nav className="subnav" aria-label="Op deze pagina">
+        <nav className="subnav" aria-label={t.subnavLabel}>
           <div className="wrap-wide">
             {secties.map((x) => (
               <a key={x.id} href={`#${x.id}`}>
@@ -209,12 +215,12 @@ export default async function DienstPage({ params }: { params: Promise<{ slug: s
         <section className="block">
           <div className="wrap-wide">
             <div className="sec-head">
-              <div className="kicker">Over deze dienst</div>
-              <h2>Wat {s.naam} inhoudt</h2>
+              <div className="kicker">{t.overKicker}</div>
+              <h2>{vulIn(t.overTitel, { naam: s.naam })}</h2>
               <p>{s.beschrijving}</p>
             </div>
             <div className="sec-head">
-              <div className="kicker">Voor wie</div>
+              <div className="kicker">{t.voorWieKicker}</div>
               <p>{s.doelgroep}</p>
             </div>
           </div>
@@ -226,8 +232,8 @@ export default async function DienstPage({ params }: { params: Promise<{ slug: s
         <section className="block" id="voor-wie">
           <div className="wrap-wide">
             <div className="sec-head">
-              <div className="kicker">Voor wie</div>
-              <h2>Herken je dit?</h2>
+              <div className="kicker">{t.herkenKicker}</div>
+              <h2>{t.herkenTitel}</h2>
               {s.herkenIntro && <p>{s.herkenIntro}</p>}
             </div>
             <div className="herken">
@@ -245,7 +251,7 @@ export default async function DienstPage({ params }: { params: Promise<{ slug: s
           <div className="wrap-wide">
             <div className="split">
               <div>
-                <div className="kicker">Wat je meeneemt</div>
+                <div className="kicker">{t.meeneemtKicker}</div>
                 {s.meeneemtTitel && <h2 className="split-h2">{s.meeneemtTitel}</h2>}
                 <ul className="take">
                   {s.meeneemt.map((m) => {
@@ -309,15 +315,15 @@ export default async function DienstPage({ params }: { params: Promise<{ slug: s
         <section className="block" id="voorbereiding">
           <div className="wrap-wide">
             <div className="sec-head">
-              <div className="kicker">Voorbereiding</div>
-              <h2>Wat wij regelen, wat jij regelt</h2>
+              <div className="kicker">{t.voorbereidingKicker}</div>
+              <h2>{t.voorbereidingTitel}</h2>
               {s.voorbereidingIntro && <p>{s.voorbereidingIntro}</p>}
             </div>
             <div className="prep">
               {s.wijZorgen && s.wijZorgen.length > 0 && (
                 <div className="prep-col">
                   <h3>
-                    <HardHat aria-hidden="true" /> Wij zorgen voor
+                    <HardHat aria-hidden="true" /> {t.wijZorgenTitel}
                   </h3>
                   <ul>
                     {s.wijZorgen.map((x) => (
@@ -329,7 +335,7 @@ export default async function DienstPage({ params }: { params: Promise<{ slug: s
               {s.jijZorgt && s.jijZorgt.length > 0 && (
                 <div className="prep-col">
                   <h3>
-                    <Users aria-hidden="true" /> Jij zorgt voor
+                    <Users aria-hidden="true" /> {t.jijZorgtTitel}
                   </h3>
                   <ul>
                     {s.jijZorgt.map((x) => (
@@ -348,8 +354,8 @@ export default async function DienstPage({ params }: { params: Promise<{ slug: s
         <section className="block op-eggshell" id="daarna">
           <div className="wrap-wide">
             <div className="sec-head">
-              <div className="kicker">Daarna</div>
-              <h2>Wat er logisch op volgt</h2>
+              <div className="kicker">{t.daarnaKicker}</div>
+              <h2>{t.daarnaTitel}</h2>
               {s.daarnaIntro && <p>{s.daarnaIntro}</p>}
             </div>
             <div className="next-grid">
@@ -373,7 +379,7 @@ export default async function DienstPage({ params }: { params: Promise<{ slug: s
         <section className="block" id="faq">
           <div className="wrap-wide">
             <div className="sec-head">
-              <div className="kicker">Veelgestelde vragen</div>
+              <div className="kicker">{t.faqKicker}</div>
               <h2>{s.faqTitel || `Wat klanten over ${s.naam} vragen`}</h2>
             </div>
             <div className="faq">
@@ -409,11 +415,11 @@ export default async function DienstPage({ params }: { params: Promise<{ slug: s
           <div className="wrap-wide">
             <div className="eyebrow-row">
               <div>
-                <div className="kicker">Diensten</div>
-                <h2>De rest van de catalogus</h2>
+                <div className="kicker">{t.catalogusKicker}</div>
+                <h2>{t.catalogusTitel}</h2>
               </div>
               <Link href="/diensten" className="btn btn-outline btn-sm">
-                Alle diensten <ArrowRight />
+                {t.catalogusAlle} <ArrowRight />
               </Link>
             </div>
             <div className="all-grid">

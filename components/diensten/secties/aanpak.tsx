@@ -2,10 +2,12 @@ import Image from "next/image";
 import { Check, Plus } from "lucide-react";
 import type { AanpakRow, Pijler } from "@/lib/content-blokken";
 import "./secties.css";
+import { vulIn } from "@/lib/utils";
+import { getPagina } from "@/lib/paginas-data";
 
 /** Wat we doen en hoe. Gedeeld door de richting-hubs en de dienstpagina's. */
 
-export function PijlersSectie({
+export async function PijlersSectie({
   pijlers,
   intro,
   naam,
@@ -15,12 +17,13 @@ export function PijlersSectie({
   naam: string;
 }) {
   if (!pijlers.length) return null;
+  const t = await getPagina("dienst-detail");
   return (
     <section className="block pijlers" id="diensten">
       <div className="wrap-wide">
         <div className="sec-head">
-          <div className="kicker">Wat we doen</div>
-          <h2 className="sectie-h2">Onze {naam}-diensten</h2>
+          <div className="kicker">{t.pijlersKicker}</div>
+          <h2 className="sectie-h2">{vulIn(t.pijlersTitel, { naam })}</h2>
           {intro && <p>{intro}</p>}
         </div>
         <div className="pillars">
@@ -45,14 +48,15 @@ export function PijlersSectie({
   );
 }
 
-export function AanpakSectie({ aanpak }: { aanpak: AanpakRow[] }) {
+export async function AanpakSectie({ aanpak }: { aanpak: AanpakRow[] }) {
   if (!aanpak.length) return null;
+  const t = await getPagina("dienst-detail");
   return (
     <section className="block sol" id="aanpak">
       <div className="wrap-wide">
         <div className="sec-head">
-          <div className="kicker">Onze aanpak</div>
-          <h2 className="sectie-h2">Zo pakken we het aan</h2>
+          <div className="kicker">{t.aanpakKicker}</div>
+          <h2 className="sectie-h2">{t.aanpakTitel}</h2>
         </div>
         {aanpak.map((row, i) => (
           <div className={i % 2 === 1 ? "sol-row rev" : "sol-row"} key={i}>

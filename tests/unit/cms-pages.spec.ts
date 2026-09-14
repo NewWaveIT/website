@@ -70,12 +70,16 @@ function viaSjabloon(bron: string, sleutel: string): boolean {
 }
 
 function wordtGelezen(slug: string, sleutel: string): boolean {
-  // Alleen `t.sleutel`: dat is de conventie voor paginateksten. Matchen op een
-  // losse property-naam was te ruim — `metaTitle` staat ook in
-  // lib/sectoren-detail.ts, waardoor de metavelden van de drie richting-hubs
-  // als "gebruikt" telden terwijl die pagina's hun eigen, hardgecodeerde
-  // `export const metadata` hadden.
-  const patroon = new RegExp(`\\bt\\.${sleutel}\\b`);
+  // Een property-toegang, niet een losse naam. Matchen op alleen de sleutel was
+  // te ruim — `metaTitle` staat ook in lib/sectoren-detail.ts, waardoor de
+  // metavelden van de drie richting-hubs als "gebruikt" telden terwijl die
+  // pagina's hun eigen, hardgecodeerde `export const metadata` hadden.
+  //
+  // Wél elke variabelenaam en niet alleen `t`: een component dat twee
+  // pagina-ingangen leest heeft een tweede naam nodig (de richting-hub leest
+  // `diensten-<richting>` als `t` en de gedeelde labels als `d`). De
+  // per-slug-filtering hieronder houdt het strak genoeg.
+  const patroon = new RegExp(`\\b[A-Za-z_$][\\w$]*\\.${sleutel}\\b`);
   return lezersVan(slug).some((bron) => patroon.test(bron) || viaSjabloon(bron, sleutel));
 }
 

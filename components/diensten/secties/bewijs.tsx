@@ -2,6 +2,8 @@ import Image from "next/image";
 import type { Expert, KPI, WaaromItem } from "@/lib/content-blokken";
 import { getContactgegevens } from "@/lib/contact-data";
 import "./secties.css";
+import { vulIn } from "@/lib/utils";
+import { getPagina } from "@/lib/paginas-data";
 
 /** Onderbouwing: waarom wij, met wie, en wat het oplevert. */
 
@@ -15,13 +17,13 @@ export async function WaaromSectie({
   expertsHead?: string;
 }) {
   if (!waarom.length && !experts.length) return null;
-  const contact = await getContactgegevens();
+  const [contact, t] = await Promise.all([getContactgegevens(), getPagina("dienst-detail")]);
   return (
     <section className="block why" id="waarom">
       <div className="wrap-wide">
         <div className="sec-head">
-          <div className="kicker">Waarom The New Wave IT</div>
-          <h2 className="sectie-h2">De juiste partner voor jouw traject</h2>
+          <div className="kicker">{t.waaromKicker}</div>
+          <h2 className="sectie-h2">{t.waaromTitel}</h2>
         </div>
         <div className="grid">
           {waarom.length > 0 && (
@@ -48,13 +50,13 @@ export async function WaaromSectie({
                     <h3>{e.naam}</h3>
                     <div className="links">
                       <a href={`tel:${e.tel}`}>{e.tel.replace("+31", "0")}</a>
-                      <a href={`mailto:${contact.email}`}>Mail</a>
+                      <a href={`mailto:${contact.email}`}>{t.expertMail}</a>
                       <a
                         href="https://www.linkedin.com/company/the-new-wave-it"
                         target="_blank"
                         rel="noopener noreferrer"
                       >
-                        LinkedIn
+                        {t.expertLinkedin}
                       </a>
                     </div>
                   </div>
@@ -68,12 +70,13 @@ export async function WaaromSectie({
   );
 }
 
-export function PartnersSectie({ partners }: { partners: string[] }) {
+export async function PartnersSectie({ partners }: { partners: string[] }) {
+  const t = await getPagina("dienst-detail");
   if (!partners.length) return null;
   return (
     <section className="partners-strip">
       <div className="wrap-wide">
-        <span className="plabel">Technologiepartners</span>
+        <span className="plabel">{t.partnersTitel}</span>
         {partners.map((p) => (
           <span className="plogo" key={p}>
             {p}
@@ -84,14 +87,15 @@ export function PartnersSectie({ partners }: { partners: string[] }) {
   );
 }
 
-export function OutcomesSectie({ outcomes, naam }: { outcomes: KPI[]; naam: string }) {
+export async function OutcomesSectie({ outcomes, naam }: { outcomes: KPI[]; naam: string }) {
+  const t = await getPagina("dienst-detail");
   if (!outcomes.length) return null;
   return (
     <section className="block outcomes">
       <div className="wrap-wide">
         <div className="sec-head">
-          <div className="kicker on-dark">Resultaten met {naam}</div>
-          <h2 className="sectie-h2 sectie-h2--op-donker">Wat het oplevert</h2>
+          <div className="kicker on-dark">{vulIn(t.outcomesKicker, { naam })}</div>
+          <h2 className="sectie-h2 sectie-h2--op-donker">{t.outcomesTitel}</h2>
         </div>
         <div className="grid">
           {outcomes.map((o, i) => (

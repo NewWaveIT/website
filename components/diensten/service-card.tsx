@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { getPagina } from "@/lib/paginas-data";
 import { Check, ArrowRight, Plus } from "lucide-react";
 import type { Service } from "@/lib/services";
 import "./service-card.css";
@@ -21,7 +22,12 @@ interface ServiceCardProps {
 }
 
 /** Eén kaart uit de dienstencatalogus. `id="svc-<slug>"` is het ankerdoel vanaf de fasenlijn. */
-export function ServiceCard({ service: s, toonFase = false, compact = false }: ServiceCardProps) {
+export async function ServiceCard({
+  service: s,
+  toonFase = false,
+  compact = false,
+}: ServiceCardProps) {
+  const t = await getPagina("dienst-detail");
   // Geen `type` meesturen: de server leidt 'dienstaanvraag' af uit `dienst`.
   const href = `/contact?dienst=${s.slug}`;
 
@@ -68,7 +74,7 @@ export function ServiceCard({ service: s, toonFase = false, compact = false }: S
       {compact ? (
         <details className="svc-diepte">
           <summary>
-            Wat je meeneemt <Plus aria-hidden="true" />
+            {t.kaartMeeneemt} <Plus aria-hidden="true" />
           </summary>
           {diepte}
         </details>
@@ -88,7 +94,7 @@ export function ServiceCard({ service: s, toonFase = false, compact = false }: S
           {s.ctaLabel} <ArrowRight aria-hidden="true" />
         </Link>
         <Link href={`/diensten/${s.slug}`} className="svc-meer" aria-label={`Meer over ${s.naam}`}>
-          Meer over deze dienst <ArrowRight aria-hidden="true" />
+          {t.kaartMeer} <ArrowRight aria-hidden="true" />
         </Link>
       </div>
     </div>

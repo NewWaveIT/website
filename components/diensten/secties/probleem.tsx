@@ -1,6 +1,7 @@
 import { Check, X } from "lucide-react";
 import type { Vraagstuk } from "@/lib/content-blokken";
 import "./secties.css";
+import { getPagina } from "@/lib/paginas-data";
 
 /**
  * Secties die het probleem van de bezoeker adresseren. Gedeeld door de
@@ -8,14 +9,15 @@ import "./secties.css";
  * los van elkaar kan gaan afwijken. Elke sectie rendert niets als hij leeg is.
  */
 
-export function VraagstukkenSectie({ vraagstukken }: { vraagstukken: Vraagstuk[] }) {
+export async function VraagstukkenSectie({ vraagstukken }: { vraagstukken: Vraagstuk[] }) {
   if (!vraagstukken.length) return null;
+  const t = await getPagina("dienst-detail");
   return (
     <section className="block" id="vraagstukken">
       <div className="wrap-wide">
         <div className="sec-head">
-          <div className="kicker">Wanneer zet je dit in</div>
-          <h2 className="sectie-h2">Hiervoor komen organisaties bij ons</h2>
+          <div className="kicker">{t.vraagstukkenKicker}</div>
+          <h2 className="sectie-h2">{t.vraagstukkenTitel}</h2>
         </div>
         <div className="chal-grid">
           {vraagstukken.map((v, i) => (
@@ -38,19 +40,20 @@ interface WelNietProps {
 }
 
 /** "Wanneer wel, wanneer niet" — het eerlijke nee, naast waar het juist past. */
-export function WelNietSectie({ titel, wel = [], niet = [] }: WelNietProps) {
+export async function WelNietSectie({ titel, wel = [], niet = [] }: WelNietProps) {
   if (!wel.length && !niet.length) return null;
+  const t = await getPagina("dienst-detail");
   return (
     <section className="block welniet">
       <div className="wrap-wide">
         <div className="sec-head">
-          <div className="kicker">Eerlijk over de grenzen</div>
+          <div className="kicker">{t.welNietKicker}</div>
           <h2 className="sectie-h2">{titel || "Wanneer dit past, en wanneer niet"}</h2>
         </div>
         <div className="welniet-grid">
           {wel.length > 0 && (
             <div className="welniet-kolom">
-              <h3>Dit past als…</h3>
+              <h3>{t.welTitel}</h3>
               <ul>
                 {wel.map((r) => (
                   <li key={r}>
@@ -62,7 +65,7 @@ export function WelNietSectie({ titel, wel = [], niet = [] }: WelNietProps) {
           )}
           {niet.length > 0 && (
             <div className="welniet-kolom welniet-kolom--niet">
-              <h3>Dit past niet als…</h3>
+              <h3>{t.nietTitel}</h3>
               <ul>
                 {niet.map((r) => (
                   <li key={r}>
