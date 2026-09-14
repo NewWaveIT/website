@@ -9,6 +9,7 @@ import { Check, ArrowRight, Phone } from "lucide-react";
 import { getVacatures, getVacatureBySlug } from "@/lib/vacatures-data";
 import { getContactpersoon } from "@/lib/team-data";
 import { getContactgegevens } from "@/lib/contact-data";
+import { getPagina } from "@/lib/paginas-data";
 import { stripHtml, kort } from "@/lib/cms/sanitize";
 import { SollicitatieForm } from "@/components/vacatures/sollicitatie-form";
 import "./vacature.css";
@@ -103,6 +104,7 @@ export default async function VacaturePage({ params }: { params: Promise<{ slug:
   // Recruitment-contactpersoon (dynamisch), met terugval op een standaard.
   const rec = await getContactpersoon("recruitment");
   const contact = await getContactgegevens();
+  const t = await getPagina("vacature-detail");
   const recNaam = rec?.naam || "Mitchel Wallaart";
   const recVoornaam = recNaam.split(" ")[0] || recNaam;
   const recFoto = rec?.foto || "/assets/photos/portret-3.webp";
@@ -146,10 +148,10 @@ export default async function VacaturePage({ params }: { params: Promise<{ slug:
       >
         <div className="hero-actions">
           <a href="#solliciteer" className="btn btn-primary">
-            Solliciteer direct <ArrowRight />
+            {t.knopSolliciteer} <ArrowRight />
           </a>
           <Link href="/werken-bij" className="btn btn-ghost-on">
-            Ontdek werken bij
+            {t.knopWerkenBij}
           </Link>
         </div>
         <p className="hero-note">
@@ -178,11 +180,11 @@ export default async function VacaturePage({ params }: { params: Promise<{ slug:
               <div className="rec">
                 <Image src={recFoto} alt={`${recNaam}, recruiter`} width={64} height={64} />
                 <div>
-                  <div className="role">Recruiter</div>
+                  <div className="role">{t.recruiterRol}</div>
                   <h3>{recNaam}</h3>
                   <div className="contact">
                     <a href={telHref(recTel)}>{recTel}</a>
-                    <a href={`mailto:${recMail}`}>Mail</a>
+                    <a href={`mailto:${recMail}`}>{t.recruiterMail}</a>
                   </div>
                 </div>
               </div>
@@ -194,23 +196,23 @@ export default async function VacaturePage({ params }: { params: Promise<{ slug:
             <div className="facts">
               <dl>
                 <div className="frow">
-                  <dt>Team</dt>
+                  <dt>{t.labelTeam}</dt>
                   <dd>{v.facts.team}</dd>
                 </div>
                 <div className="frow">
-                  <dt>Niveau</dt>
+                  <dt>{t.labelNiveau}</dt>
                   <dd>{v.facts.niveau}</dd>
                 </div>
                 <div className="frow">
-                  <dt>Locatie</dt>
+                  <dt>{t.labelLocatie}</dt>
                   <dd>{v.facts.locatie}</dd>
                 </div>
                 <div className="frow">
-                  <dt>Uren</dt>
+                  <dt>{t.labelUren}</dt>
                   <dd>{v.facts.uren}</dd>
                 </div>
                 <div className="frow">
-                  <dt>Salaris</dt>
+                  <dt>{t.labelSalaris}</dt>
                   <dd>{v.facts.salaris}</dd>
                 </div>
               </dl>
@@ -222,8 +224,8 @@ export default async function VacaturePage({ params }: { params: Promise<{ slug:
       <section className="block proces">
         <div className="wrap-wide">
           <div className="sec-head">
-            <div className="kicker">Zo solliciteer je</div>
-            <h2>Vier stappen, twee weken</h2>
+            <div className="kicker">{t.procedureKicker}</div>
+            <h2>{t.procedureTitel}</h2>
           </div>
           <div className="grid">
             {PROCES.map((s) => (
@@ -240,8 +242,8 @@ export default async function VacaturePage({ params }: { params: Promise<{ slug:
       <section className="block vacatures">
         <div className="wrap-wide">
           <div className="sec-head">
-            <div className="kicker on-dark">Andere vacatures</div>
-            <h2>Ook op zoek naar…</h2>
+            <div className="kicker on-dark">{t.andereKicker}</div>
+            <h2>{t.andereTitel}</h2>
           </div>
           <div className="list">
             {andere.map((a) => (

@@ -11,6 +11,7 @@ import { getKlantverhalen, getKlantverhaalBySlug } from "@/lib/klantverhalen-dat
 import type { Stap } from "@/lib/klantverhalen";
 import { SlotCta } from "@/components/layout/slot-cta";
 import { SITE_URL } from "@/lib/site";
+import { getPagina } from "@/lib/paginas-data";
 import "./case.css";
 
 /** Klein procesdiagram (bv. "de keten in drie stappen" of een sectie-flow). */
@@ -61,6 +62,7 @@ export default async function CasePage({ params }: { params: Promise<{ slug: str
   if (!k) notFound();
 
   const meer = (await getKlantverhalen()).filter((x) => x.slug !== slug).slice(0, 3);
+  const t = await getPagina("klantverhaal-detail");
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Article",
@@ -116,7 +118,7 @@ export default async function CasePage({ params }: { params: Promise<{ slug: str
       <section className="block">
         <div className="wrap-wide article">
           <div className="prose">
-            <h2>De uitdaging</h2>
+            <h2>{t.uitdagingTitel}</h2>
             <div dangerouslySetInnerHTML={{ __html: k.challenge }} />
             <p className="pull">{k.pull}</p>
 
@@ -128,23 +130,23 @@ export default async function CasePage({ params }: { params: Promise<{ slug: str
               </div>
             )}
 
-            <h2>De aanpak</h2>
+            <h2>{t.aanpakTitel}</h2>
             {k.secties?.map((sec, i) => (
               <div className="sectie" key={i}>
                 <h3>
                   <span className="num">{String(i + 1).padStart(2, "0")}</span>
                   {sec.titel}
                 </h3>
-                <h4 className="subkop">Situatie &amp; uitdaging</h4>
+                <h4 className="subkop">{t.subkopSituatie}</h4>
                 <p>{sec.situatie}</p>
-                <h4 className="subkop">Onze aanpak</h4>
+                <h4 className="subkop">{t.subkopAanpak}</h4>
                 <p>{sec.aanpak}</p>
                 {sec.stappen && sec.stappen.length > 0 && (
                   <StappenFlow stappen={sec.stappen} klein />
                 )}
                 {sec.functionaliteiten && sec.functionaliteiten.length > 0 && (
                   <>
-                    <h4 className="subkop">De functionaliteiten</h4>
+                    <h4 className="subkop">{t.subkopFunctionaliteiten}</h4>
                     <ul>
                       {sec.functionaliteiten.map((f, j) => (
                         <li key={j}>{f}</li>
@@ -154,7 +156,7 @@ export default async function CasePage({ params }: { params: Promise<{ slug: str
                 )}
                 {sec.resultaten.length > 0 && (
                   <>
-                    <h4 className="subkop">Resultaat</h4>
+                    <h4 className="subkop">{t.subkopResultaat}</h4>
                     <div className="resultaat-kaarten">
                       {sec.resultaten.map((r, j) => (
                         <div className="resultaat-kaart" key={j}>
@@ -168,7 +170,7 @@ export default async function CasePage({ params }: { params: Promise<{ slug: str
               </div>
             ))}
 
-            <h2>Het resultaat</h2>
+            <h2>{t.resultaatTitel}</h2>
             <div dangerouslySetInnerHTML={{ __html: k.resultaat }} />
             {k.eindresultaten && k.eindresultaten.length > 0 && (
               <div className="resultaat-kaarten resultaat-kaarten--eind">
@@ -185,25 +187,25 @@ export default async function CasePage({ params }: { params: Promise<{ slug: str
           </div>
           <aside>
             <div className="aside-card">
-              <h2>Over dit project</h2>
+              <h2>{t.projectTitel}</h2>
               <div className="row">
-                <span className="k">Sector</span>
+                <span className="k">{t.labelSector}</span>
                 <span className="v">{k.aside.sector}</span>
               </div>
               <div className="row">
-                <span className="k">Diensten</span>
+                <span className="k">{t.labelDiensten}</span>
                 <span className="v">{k.aside.diensten}</span>
               </div>
               <div className="row">
-                <span className="k">Doorlooptijd</span>
+                <span className="k">{t.labelDoorlooptijd}</span>
                 <span className="v">{k.aside.doorlooptijd}</span>
               </div>
               <div className="row">
-                <span className="k">Team</span>
+                <span className="k">{t.labelTeam}</span>
                 <span className="v">{k.aside.team}</span>
               </div>
               <Link href="/contact" className="btn btn-primary">
-                Vergelijkbaar vraagstuk? <ArrowRight />
+                {t.projectKnop} <ArrowRight />
               </Link>
             </div>
           </aside>
@@ -227,11 +229,11 @@ export default async function CasePage({ params }: { params: Promise<{ slug: str
           <div className="wrap-wide">
             <div className="eyebrow-row">
               <div>
-                <div className="kicker">Meer klantverhalen</div>
-                <h2>Resultaten in andere sectoren</h2>
+                <div className="kicker">{t.meerKicker}</div>
+                <h2>{t.meerTitel}</h2>
               </div>
               <Link href="/klantverhalen" className="btn btn-outline btn-sm">
-                Alle verhalen <ArrowRight />
+                {t.meerAlle} <ArrowRight />
               </Link>
             </div>
             <div className="cards3">
@@ -244,7 +246,7 @@ export default async function CasePage({ params }: { params: Promise<{ slug: str
                   <div className="pbody">
                     <h3>{m.cardTitel}</h3>
                     <span className="more">
-                      Lees het verhaal <ArrowRight />
+                      {t.meerLees} <ArrowRight />
                     </span>
                   </div>
                 </Link>
@@ -254,7 +256,7 @@ export default async function CasePage({ params }: { params: Promise<{ slug: str
         </section>
       )}
 
-      <SlotCta titel="Herken je dit vraagstuk in jouw organisatie?" />
+      <SlotCta titel={t.ctaTitel} />
     </div>
   );
 }

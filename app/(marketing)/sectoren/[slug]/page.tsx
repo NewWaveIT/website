@@ -11,6 +11,7 @@ import { SectorHeroAnim } from "@/components/sector-hero-anim";
 import { getSectorBySlug, getSectorSlugs, getSectoren } from "@/lib/sectoren-detail-data";
 import { getArtikelenVoorSector, isoDatum } from "@/lib/inzichten-data";
 import { getTeamleden } from "@/lib/team-data";
+import { getPagina } from "@/lib/paginas-data";
 import { SITE_URL } from "@/lib/site";
 import type { TeamRegel } from "@/lib/sectoren-detail";
 import { SECTOR_ICONEN } from "@/components/sector-iconen";
@@ -59,10 +60,11 @@ export default async function SectorPage({ params }: { params: Promise<{ slug: s
   const s = await getSectorBySlug(slug);
   if (!s) notFound();
 
-  const [artikelen, alleSectoren, teamleden] = await Promise.all([
+  const [artikelen, alleSectoren, teamleden, t] = await Promise.all([
     getArtikelenVoorSector(s.slug),
     getSectoren(),
     getTeamleden(),
+    getPagina("sector-detail"),
   ]);
 
   const perSlug = new Map(teamleden.map((t) => [t.slug, t]));
@@ -118,10 +120,10 @@ export default async function SectorPage({ params }: { params: Promise<{ slug: s
       >
         <div className="hero-actions">
           <Link href={`/contact?sector=${s.slug}`} className="btn btn-primary">
-            Plan een gesprek <ArrowRight />
+            {t.ctaKnop} <ArrowRight />
           </Link>
           <a href="#aanpak" className="btn btn-ghost-on">
-            Bekijk onze aanpak
+            {t.ctaKnopTwee}
           </a>
         </div>
       </PaginaHero>
@@ -131,7 +133,7 @@ export default async function SectorPage({ params }: { params: Promise<{ slug: s
         <section className="block pain">
           <div className="wrap-wide">
             <div className="sec-head">
-              <div className="kicker">Herkenning</div>
+              <div className="kicker">{t.herkenningKicker}</div>
               <h2>{s.herkenningTitel}</h2>
             </div>
             <div className="pain-grid">
@@ -157,7 +159,7 @@ export default async function SectorPage({ params }: { params: Promise<{ slug: s
             }}
           />
           <div className="txt">
-            <div className="kicker on-dark">Wie er komt</div>
+            <div className="kicker on-dark">{t.wieKomtKicker}</div>
             <h2>{s.mensenTitel}</h2>
             <p>{s.mensenTekst}</p>
             {s.mensenTags.length > 0 && (
@@ -177,7 +179,7 @@ export default async function SectorPage({ params }: { params: Promise<{ slug: s
           <div className="wrap-wide">
             <div className="why-grid">
               <div className="why-prose">
-                <div className="kicker">Waarom nu</div>
+                <div className="kicker">{t.waaromNuKicker}</div>
                 <h2>{s.waaromTitel}</h2>
                 {s.waaromAlineas.map((p) => (
                   <p key={p}>{p}</p>
@@ -226,29 +228,29 @@ export default async function SectorPage({ params }: { params: Promise<{ slug: s
         <section className="block solblock">
           <div className="wrap-wide">
             <div className="sec-head">
-              <div className="kicker">Pijn → oplossing</div>
+              <div className="kicker">{t.oplossingenKicker}</div>
               <h2>{s.oplossingenTitel}</h2>
               {s.oplossingenIntro && <p>{s.oplossingenIntro}</p>}
             </div>
             <div className="solhead" aria-hidden="true">
-              <div>Pijnpunt</div>
-              <div>Wat het kost</div>
-              <div>Onze oplossing</div>
-              <div>Laag</div>
+              <div>{t.kolomPijnpunt}</div>
+              <div>{t.kolomKost}</div>
+              <div>{t.kolomOplossing}</div>
+              <div>{t.kolomLaag}</div>
             </div>
             <div className="solgrid">
               {s.oplossingen.map((o) => (
                 <article className="solcard" key={o.pijn}>
                   <div>
-                    <div className="m">Pijnpunt</div>
+                    <div className="m">{t.kolomPijnpunt}</div>
                     <div className="pijn">{o.pijn}</div>
                   </div>
                   <div>
-                    <div className="m">Wat het kost</div>
+                    <div className="m">{t.kolomKost}</div>
                     <div className="kost">{o.kost}</div>
                   </div>
                   <div>
-                    <div className="m">Onze oplossing</div>
+                    <div className="m">{t.kolomOplossing}</div>
                     <div className="opl">{o.oplossing}</div>
                   </div>
                   <div>
@@ -266,7 +268,7 @@ export default async function SectorPage({ params }: { params: Promise<{ slug: s
         <section className="block">
           <div className="wrap-wide">
             <div className="sec-head">
-              <div className="kicker">Wat we bouwen</div>
+              <div className="kicker">{t.bouwenKicker}</div>
               <h2>{s.bouwenTitel}</h2>
             </div>
             <div className="ucgrid">
@@ -279,7 +281,7 @@ export default async function SectorPage({ params }: { params: Promise<{ slug: s
                     <p>{u.tekst}</p>
                     {u.sluitAanOp && (
                       <div className="link">
-                        Sluit aan op: <b>{u.sluitAanOp}</b>
+                        {t.sluitAanOpLabel} <b>{u.sluitAanOp}</b>
                       </div>
                     )}
                   </article>
@@ -295,7 +297,7 @@ export default async function SectorPage({ params }: { params: Promise<{ slug: s
         <section className="block how" id="aanpak">
           <div className="wrap-wide">
             <div className="sec-head">
-              <div className="kicker on-dark">Hoe we werken</div>
+              <div className="kicker on-dark">{t.aanpakKicker}</div>
               <h2>{s.aanpakTitel}</h2>
             </div>
             <div className="how-split">
@@ -337,7 +339,7 @@ export default async function SectorPage({ params }: { params: Promise<{ slug: s
         <section className="block">
           <div className="wrap-wide">
             <div className="sec-head">
-              <div className="kicker">Diensten</div>
+              <div className="kicker">{t.dienstenKicker}</div>
               <h2>{s.dienstenTitel}</h2>
             </div>
             <div className="svc-links">
@@ -356,7 +358,7 @@ export default async function SectorPage({ params }: { params: Promise<{ slug: s
         <section className="block faqblock">
           <div className="wrap-wide">
             <div className="sec-head">
-              <div className="kicker">Veelgestelde vragen</div>
+              <div className="kicker">{t.faqKicker}</div>
               <h2>{s.faqTitel}</h2>
             </div>
             <div className="faq">
@@ -381,11 +383,11 @@ export default async function SectorPage({ params }: { params: Promise<{ slug: s
               <>
                 <div className="eyebrow-row">
                   <div>
-                    <div className="kicker">Inzichten</div>
-                    <h2>Kennis uit deze sector</h2>
+                    <div className="kicker">{t.inzichtenKicker}</div>
+                    <h2>{t.inzichtenTitel}</h2>
                   </div>
                   <Link href="/inzichten" className="btn btn-outline btn-sm">
-                    Alle inzichten <ArrowRight />
+                    {t.inzichtenAlle} <ArrowRight />
                   </Link>
                 </div>
                 <div className="cards3">
@@ -401,7 +403,7 @@ export default async function SectorPage({ params }: { params: Promise<{ slug: s
                         </div>
                         <h3>{a.titel}</h3>
                         <span className="more">
-                          Lees meer <ArrowRight />
+                          {t.inzichtenMeer} <ArrowRight />
                         </span>
                       </div>
                     </Link>
@@ -411,7 +413,7 @@ export default async function SectorPage({ params }: { params: Promise<{ slug: s
             )}
             {andereSectoren.length > 0 && (
               <div className="sector-links">
-                <div className="kicker">Andere sectoren</div>
+                <div className="kicker">{t.andereKicker}</div>
                 <div className="sector-pills">
                   {andereSectoren.map((x) => (
                     <Link href={`/sectoren/${x.slug}`} key={x.slug}>
@@ -430,7 +432,7 @@ export default async function SectorPage({ params }: { params: Promise<{ slug: s
         <section className="block teamblock">
           <div className="wrap-wide">
             <div className="sec-head">
-              <div className="kicker">Het team</div>
+              <div className="kicker">{t.teamKicker}</div>
               <h2>{s.teamTitel}</h2>
             </div>
             <div className="team-strip">
@@ -457,16 +459,16 @@ export default async function SectorPage({ params }: { params: Promise<{ slug: s
             <p>{s.ctaTekst}</p>
             <div className="acts">
               <Link href={`/contact?sector=${s.slug}`} className="btn btn-on">
-                Plan een gesprek <ArrowRight />
+                {t.ctaKnop} <ArrowRight />
               </Link>
               <a href="#aanpak" className="btn btn-ghost-on">
-                Bekijk onze aanpak
+                {t.ctaKnopTwee}
               </a>
             </div>
           </div>
           {ctaPersoon && (
             <div className="who-card">
-              <div className="k">Wie je spreekt</div>
+              <div className="k">{t.ctaPersoonLabel}</div>
               <div className="row">
                 {ctaPersoon.foto && <Image src={ctaPersoon.foto} alt="" width={64} height={64} />}
                 <div>
