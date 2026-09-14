@@ -1,16 +1,19 @@
 -- Waar loopt het CMS uit de pas met de seed?
 --
 -- De seed in lib/ is de koude start, de admin is de waarheid: ze mogen
--- verschillen. Maar twee keer bleek een tekst in de code al gecorrigeerd
--- terwijl de rij was achtergebleven, en dat ziet niemand -- de e2e draait tegen
--- de seed, omdat CI Supabase niet bereikt.
+-- verschillen. Maar het is twee keer gebeurd dat een tekst in de code al was
+-- gecorrigeerd terwijl de rij was achtergebleven, en dat ziet niemand -- de
+-- e2e draait tegen de seed, omdat CI Supabase niet bereikt. Alles wat alleen in
+-- de database afwijkt blijft onzichtbaar tot iemand de live site leest.
 --
--- Dit script wijzigt niets. Het legt per veld de twee versies naast elkaar,
--- zodat je per regel kunt zien: is dit een bewuste redactie, of een restant?
+-- Dit script wijzigt niets. Per afwijkend veld toont het het eerste blok van
+-- 200 tekens waarin de twee uit elkaar lopen, uit beide versies. Zo blijft ook
+-- een verschil ver in een lange tekst (de privacyverklaring is 9 kB) zichtbaar,
+-- zonder dat je de hele tekst hoeft te lezen.
 --
--- De seedwaarden hieronder komen uit PAGE_DEFAULTS (lib/cms/pages.ts) op het
--- moment van genereren. Wijzigt de seed, dan hoort dit script opnieuw
--- gegenereerd te worden.
+-- De seedwaarden staan hieronder letterlijk, uit PAGE_DEFAULTS
+-- (lib/cms/pages.ts) op het moment van genereren. Wijzigt de seed, dan hoort
+-- dit script opnieuw gegenereerd te worden.
 
 with seed(slug, veld, tekst) as (values
     ('home', 'heroTitleStart', 'Wij maken van business en IT '),
@@ -262,14 +265,35 @@ with seed(slug, veld, tekst) as (values
 <p>The New Wave IT kan deze Privacy Policy van tijd tot tijd aanpassen. Raadpleeg hem daarom regelmatig. Een aanpassing treedt in werking op het moment dat wij hem op deze pagina publiceren.</p>
 <h2>Contact</h2>
 <p>Heb je vragen over deze Privacy Policy? Neem dan contact op met The New Wave IT via <a href="mailto:hello@thenewwaveit.com">hello@thenewwaveit.com</a>.</p>')
+),
+verschil as (
+  select s.slug, s.veld, s.tekst as seed, p.data ->> s.veld as cms
+  from seed s
+  join cms_paginas p on p.slug = s.slug
+  where p.data ? s.veld
+    and p.data ->> s.veld is distinct from s.tekst
+),
+blokken as (
+  select v.slug, v.veld, v.seed, v.cms, i,
+         substr(v.seed, (i - 1) * 200 + 1, 200) as seedblok,
+         substr(v.cms,  (i - 1) * 200 + 1, 200) as cmsblok
+  from verschil v,
+       generate_series(1, ceil(greatest(length(v.seed), length(v.cms)) / 200.0)::int) as i
+),
+eerste as (
+  select slug, veld, min(i) as i
+  from blokken
+  where seedblok is distinct from cmsblok
+  group by slug, veld
 )
 select
-  s.slug,
-  s.veld,
-  left(s.tekst, 160)               as seed,
-  left(p.data ->> s.veld, 160)     as cms
-from seed s
-join cms_paginas p on p.slug = s.slug
-where p.data ? s.veld
-  and p.data ->> s.veld is distinct from s.tekst
-order by s.slug, s.veld;
+  b.slug,
+  b.veld,
+  length(b.seed) as seed_len,
+  length(b.cms)  as cms_len,
+  (e.i - 1) * 200 + 1 as vanaf_teken,
+  b.seedblok as seed,
+  b.cmsblok  as cms
+from eerste e
+join blokken b on b.slug = e.slug and b.veld = e.veld and b.i = e.i
+order by b.slug, b.veld;
