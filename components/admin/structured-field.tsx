@@ -26,15 +26,14 @@ function Control({
   if (field.type === "list") {
     const list = arr(value).map(str);
     return (
-      <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+      <div className="sf-lijst">
         {list.map((item, i) => (
-          <div key={i} style={{ display: "flex", gap: 8 }}>
+          <div key={i} className="sf-regel">
             <input
               type="text"
               value={item}
               placeholder={field.placeholder}
               onChange={(e) => onChange(list.map((x, j) => (j === i ? e.target.value : x)))}
-              style={{ flex: 1 }}
             />
             <button
               type="button"
@@ -48,8 +47,7 @@ function Control({
         ))}
         <button
           type="button"
-          className="btn btn-outline"
-          style={{ alignSelf: "flex-start" }}
+          className="btn btn-outline sf-toevoegen"
           onClick={() => onChange([...list, ""])}
         >
           <Plus /> Regel toevoegen
@@ -90,22 +88,14 @@ function Control({
       set(next);
     };
     return (
-      <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+      <div className="sf-items">
         {rows.map((row, i) => (
-          <div
-            key={i}
-            style={{
-              border: "1px solid var(--border-default)",
-              borderRadius: "var(--radius-md)",
-              padding: "var(--space-4)",
-              background: "var(--paper)",
-            }}
-          >
-            <div style={{ display: "flex", alignItems: "center", marginBottom: 10 }}>
-              <span className="t-sub" style={{ fontWeight: "var(--fw-semibold)" }}>
+          <div key={i} className="sf-item">
+            <div className="sf-item-kop">
+              <span className="t-sub sf-item-titel">
                 {itemLabel} {i + 1}
               </span>
-              <div style={{ marginLeft: "auto", display: "flex", gap: 6 }}>
+              <div className="sf-item-acties">
                 <button
                   type="button"
                   className="btn btn-outline iconbtn"
@@ -124,8 +114,7 @@ function Control({
                 </button>
                 <button
                   type="button"
-                  className="btn btn-outline iconbtn"
-                  style={{ color: "var(--danger-500)" }}
+                  className="btn btn-outline iconbtn sf-verwijder"
                   aria-label="Verwijderen"
                   onClick={() => set(rows.filter((_, j) => j !== i))}
                 >
@@ -133,7 +122,7 @@ function Control({
                 </button>
               </div>
             </div>
-            <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+            <div className="sf-velden">
               {(field.of ?? []).map((sub) => (
                 <SubLabelled
                   key={sub.key}
@@ -147,8 +136,7 @@ function Control({
         ))}
         <button
           type="button"
-          className="btn btn-outline"
-          style={{ alignSelf: "flex-start" }}
+          className="btn btn-outline sf-toevoegen"
           onClick={() => set([...rows, {}])}
         >
           <Plus /> {itemLabel} toevoegen
@@ -167,7 +155,7 @@ function Control({
         value={str(value)}
         placeholder={field.placeholder}
         onChange={(e) => onChange(e.target.value)}
-        style={{ minHeight: 70 }}
+        className="sf-tekst"
       />
     );
   }
@@ -192,18 +180,8 @@ function SubLabelled({
   onChange: (v: unknown) => void;
 }) {
   return (
-    <div>
-      <label
-        style={{
-          fontSize: "var(--text-xs)",
-          textTransform: "none",
-          letterSpacing: 0,
-          display: "block",
-          marginBottom: 5,
-        }}
-      >
-        {field.label}
-      </label>
+    <div className="sf-sub">
+      <label>{field.label}</label>
       <Control field={field} value={value} onChange={onChange} />
     </div>
   );
@@ -222,11 +200,7 @@ export function StructuredField({ field, initial }: { field: FieldDef; initial: 
       <label>{field.label}</label>
       <VerborgenWaarde name={`f_${field.key}`} value={JSON.stringify(value)} />
       <Control field={field} value={value} onChange={setValue} />
-      {field.help && (
-        <p className="t-sub" style={{ marginTop: 6 }}>
-          {field.help}
-        </p>
-      )}
+      {field.help && <p className="veldhulp">{field.help}</p>}
     </div>
   );
 }

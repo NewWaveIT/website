@@ -49,9 +49,7 @@ export function PropositiesField({
           ))}
         </div>
       )}
-      <p className="t-sub" style={{ marginTop: 8 }}>
-        {help ?? "Leeg = alle proposities tonen op deze sectorpagina."}
-      </p>
+      <p className="veldhulp">{help ?? "Leeg = alle proposities tonen op deze sectorpagina."}</p>
     </div>
   );
 }

@@ -237,7 +237,7 @@ export function ContentListClient({
               )}
               <th>Titel</th>
               <th>Status</th>
-              <th style={{ textAlign: "right" }}>Laatst bewerkt</th>
+              <th className="t-rechts">Laatst bewerkt</th>
             </tr>
           </thead>
           <tbody>
@@ -299,7 +299,7 @@ export function ContentListClient({
                     {r.status === "live" ? "Live" : "Concept"}
                   </span>
                 </td>
-                <td style={{ textAlign: "right" }}>
+                <td className="t-rechts">
                   {fmt(r.bijgewerkt_op)}
                   {r.bewerkt_door ? ` · ${r.bewerkt_door}` : ""}
                 </td>
@@ -319,10 +319,7 @@ export function ContentListClient({
                 <td colSpan={cols}>
                   <div className="empty">
                     Nog geen items. Klik op ‘Nieuw’ om er een aan te maken, of ga naar het{" "}
-                    <Link
-                      href="/admin"
-                      style={{ color: "var(--color-primary)", fontWeight: "var(--fw-semibold)" }}
-                    >
+                    <Link href="/admin" className="tekstlink">
                       dashboard
                     </Link>{" "}
                     en klik op ‘Importeer bestaande content’ om de huidige website-content in te

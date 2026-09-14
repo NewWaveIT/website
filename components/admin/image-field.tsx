@@ -35,20 +35,9 @@ export function ImageControl({
     <>
       {value ? (
         // eslint-disable-next-line @next/next/no-img-element
-        <img
-          src={value}
-          alt=""
-          style={{
-            maxHeight: 120,
-            maxWidth: "100%",
-            borderRadius: "var(--radius-md)",
-            border: "1px solid var(--border-default)",
-            display: "block",
-            marginBottom: 10,
-          }}
-        />
+        <img src={value} alt="" className="if-voorbeeld" />
       ) : null}
-      <div style={{ display: "flex", gap: 10, alignItems: "center", flexWrap: "wrap" }}>
+      <div className="if-knoppen">
         <button
           type="button"
           className="btn btn-outline"
@@ -63,7 +52,7 @@ export function ImageControl({
           type="file"
           accept="image/*"
           onChange={onFile}
-          style={{ display: "none" }}
+          className="if-bestand"
         />
       </div>
       <input
@@ -71,18 +60,9 @@ export function ImageControl({
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder="of plak een pad/URL"
-        style={{
-          marginTop: 8,
-          fontSize: "var(--text-xs)",
-          color: "var(--text-subtle)",
-          padding: "7px 10px",
-        }}
+        className="if-pad"
       />
-      {err && (
-        <p className="t-sub" style={{ marginTop: 6, color: "var(--danger-500)" }}>
-          {err}
-        </p>
-      )}
+      {err && <p className="veldhulp veldfout">{err}</p>}
     </>
   );
 }

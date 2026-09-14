@@ -1659,6 +1659,242 @@
   }
 }
 
+/* ---- Gestructureerde velden (lijst, groep, items) ----
+   Stond als inline `style`-objecten in components/admin/structured-field.tsx.
+   Daar konden ze geen designtoken erven, geen hover of focus krijgen en niet
+   meebewegen met een mediaquery — en ze wonnen het van elke regel hier. */
+.cms .sf-lijst {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.cms .sf-regel {
+  display: flex;
+  gap: 8px;
+}
+.cms .sf-regel > input {
+  flex: 1;
+  min-width: 0;
+}
+.cms .sf-toevoegen {
+  align-self: flex-start;
+}
+.cms .sf-items {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.cms .sf-item {
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+  background: var(--paper);
+}
+.cms .sf-item-kop {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.cms .sf-item-titel {
+  font-weight: var(--fw-semibold);
+}
+.cms .sf-item-acties {
+  margin-left: auto;
+  display: flex;
+  gap: 6px;
+}
+.cms .sf-verwijder {
+  color: var(--danger-600);
+}
+.cms .sf-velden {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.cms .sf-tekst {
+  min-height: 70px;
+}
+.cms .sf-sub > label {
+  display: block;
+  font-size: var(--text-xs);
+  text-transform: none;
+  letter-spacing: 0;
+  margin-bottom: 5px;
+}
+
+/* Toelichting onder een veld. Overal `class="t-sub"` plus een inline
+   `marginTop`, dus nu één klasse. */
+.cms .veldhulp {
+  font-size: var(--text-xs);
+  color: var(--text-subtle);
+  line-height: 1.5;
+  margin: 6px 0 0;
+}
+
+/* ---- Afbeeldingsveld ---- */
+.cms .if-voorbeeld {
+  display: block;
+  max-height: 120px;
+  max-width: 100%;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  margin-bottom: 10px;
+}
+.cms .if-knoppen {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.cms .if-bestand,
+.cms .rte-bestand {
+  display: none;
+}
+.cms .if-pad {
+  margin-top: 8px;
+  padding: 7px 10px;
+  font-size: var(--text-xs);
+  color: var(--text-subtle);
+}
+.cms .rte-voorbeeld {
+  display: block;
+  max-width: 100%;
+  border-radius: var(--radius-md);
+}
+/* Laatste veld in een kaart of dialoog: geen witruimte onderaan. */
+.cms .fld-laatste {
+  margin-bottom: 0;
+}
+.cms .veldfout {
+  color: var(--danger-600);
+}
+
+/* ---- Kleine, hergebruikte opmaak ----
+   Stond verspreid als inline `style`-objecten. Inline styles winnen het van
+   elke regel hier, erven geen designtoken en kunnen niet reageren op hover,
+   focus of schermbreedte — en de CSP moest er `style-src-attr 'unsafe-inline'`
+   voor openhouden. */
+.cms .t-rechts {
+  text-align: right;
+}
+.cms .t-nowrap {
+  white-space: nowrap;
+}
+.cms .m-0 {
+  margin: 0;
+}
+.cms .tekstlink {
+  color: var(--orange-text);
+  font-weight: var(--fw-semibold);
+}
+.cms .inline-code {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  background: var(--ink-50);
+  padding: 2px 6px;
+  border-radius: var(--radius-sm);
+}
+.cms .modal-tekst {
+  margin: 0;
+  font-size: var(--text-sm);
+  color: var(--text-body);
+  line-height: 1.6;
+}
+.cms .af-foto {
+  object-fit: cover;
+}
+.cms-login-logo {
+  height: 30px;
+  width: auto;
+}
+
+/* Uitlegkaart op /admin/gebruikers als de service-role-sleutel ontbreekt. */
+.cms .melding {
+  padding: var(--space-6);
+  max-width: 660px;
+}
+.cms .melding > h3 {
+  font-size: var(--text-base);
+  font-weight: var(--fw-bold);
+  margin-bottom: var(--space-3);
+}
+.cms .melding-tekst {
+  font-size: var(--text-sm);
+  color: var(--text-body);
+  line-height: 1.7;
+}
+
+/* Foutvangnet van de admin (app/admin/error.tsx). */
+.cms .admin-fout {
+  max-width: 640px;
+}
+.cms .admin-fout > .card {
+  padding: var(--space-6);
+}
+.cms .admin-fout h1 {
+  font-size: var(--text-xl);
+  font-weight: var(--fw-extrabold);
+  margin-bottom: var(--space-3);
+}
+.cms .admin-fout p {
+  font-size: var(--text-sm);
+  color: var(--text-body);
+  line-height: 1.7;
+  margin: 0 0 var(--space-4);
+}
+.cms .admin-fout p.t-sub {
+  font-size: var(--text-xs);
+  color: var(--text-subtle);
+}
+
+/* Gebruikersbeheer. */
+.cms .gb-fout {
+  margin-bottom: var(--space-4);
+}
+.cms .gb-wachtwoord {
+  margin-bottom: var(--space-5);
+}
+.cms .gb-modalknoppen {
+  display: flex;
+  gap: var(--space-3);
+  justify-content: flex-end;
+}
+.cms .gb-rijacties {
+  display: flex;
+  gap: 6px;
+  justify-content: flex-end;
+}
+.cms .gb-jij {
+  margin-left: 8px;
+}
+.cms .gb-uitzetten {
+  color: var(--danger-600);
+}
+
+/* Editor: het JSON-uitklapje en de codevelden. */
+.cms .ce-json {
+  margin-top: var(--space-2);
+}
+.cms .ce-json > summary {
+  cursor: pointer;
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+}
+.cms .ce-code {
+  min-height: 140px;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  line-height: 1.6;
+}
+.cms .ce-code-lang {
+  min-height: 220px;
+  line-height: 1.7;
+}
+.cms .ce-fout {
+  margin-bottom: var(--space-5);
+  outline: none;
+}
+
 /* Handmatig sorteren (drag-and-drop) in contentlijsten */
 .cms .reorder-hint {
   font-size: var(--text-xs);

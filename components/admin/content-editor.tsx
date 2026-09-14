@@ -8,6 +8,7 @@ import type { ContentRow, ContentType } from "@/lib/cms/content";
 import { FIELD_SCHEMAS, extraData, isStructured, type FieldDef } from "@/lib/cms/schema";
 import { paginaPad, paginaStandaard, paginaVelden } from "@/lib/cms/pages";
 import { ADMIN_PADEN } from "@/lib/cms/admin-paden";
+import { slugify } from "@/lib/cms/slug";
 import { ImageField } from "./image-field";
 import { StructuredField } from "./structured-field";
 import { IconField } from "./icon-field";
@@ -18,16 +19,7 @@ import { PropositiesField, type PropositieOptie } from "./proposities-field";
 import { Modal } from "./modal";
 import { VerborgenWaarde } from "./verborgen-waarde";
 import { useOkMelding } from "@/lib/hooks/use-ok-melding";
-
-/** Maakt een net webadres van een titel (kleine letters, koppeltekens). */
-function slugify(s: string): string {
-  return s
-    .toLowerCase()
-    .normalize("NFD")
-    .replace(/[̀-ͯ]/g, "")
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-+|-+$/g, "");
-}
+import { cn } from "@/lib/utils";
 
 /**
  * Groepeert velden op het deel vóór " — " in hun label (bv. "Hero — kicker"
@@ -81,14 +73,7 @@ function DeleteButton() {
             </>
           }
         >
-          <p
-            style={{
-              margin: 0,
-              fontSize: "var(--text-sm)",
-              color: "var(--text-body)",
-              lineHeight: 1.6,
-            }}
-          >
+          <p className="modal-tekst">
             Weet je zeker dat je dit item definitief wilt verwijderen? Dit kan niet ongedaan worden
             gemaakt.
           </p>
@@ -293,16 +278,7 @@ export function ContentEditor({
             placeholder={f.placeholder}
             required={f.required}
             spellCheck={f.type === "markdown" ? false : undefined}
-            style={
-              f.type === "markdown"
-                ? {
-                    minHeight: 220,
-                    fontFamily: "var(--font-mono)",
-                    fontSize: "var(--text-xs)",
-                    lineHeight: 1.7,
-                  }
-                : undefined
-            }
+            className={f.type === "markdown" ? "ce-code ce-code-lang" : undefined}
           />
         ) : (
           <input
@@ -314,11 +290,7 @@ export function ContentEditor({
             required={f.required}
           />
         )}
-        {f.help && (
-          <p className="t-sub" style={{ marginTop: 6 }}>
-            {f.help}
-          </p>
-        )}
+        {f.help && <p className="veldhulp">{f.help}</p>}
       </div>
     );
 
@@ -355,13 +327,7 @@ export function ContentEditor({
         {!showOrder && <input type="hidden" name="volgorde" value={row?.volgorde ?? 0} />}
 
         {state.error && (
-          <div
-            className="err"
-            role="alert"
-            tabIndex={-1}
-            ref={errRef}
-            style={{ marginBottom: "var(--space-5)", outline: "none" }}
-          >
+          <div className="err ce-fout" role="alert" tabIndex={-1} ref={errRef}>
             {state.error}
           </div>
         )}
@@ -394,32 +360,17 @@ export function ContentEditor({
                 : mainFields.map(renderField)}
 
               {extraInitial && (
-                <details style={{ marginTop: "var(--space-2)" }}>
-                  <summary
-                    style={{
-                      cursor: "pointer",
-                      fontSize: "var(--text-sm)",
-                      color: "var(--text-muted)",
-                    }}
-                  >
-                    Geavanceerd: overige velden (JSON)
-                  </summary>
-                  <div className="fld" style={{ marginTop: "var(--space-3)", marginBottom: 0 }}>
+                <details className="ce-json">
+                  <summary>Geavanceerd: overige velden (JSON)</summary>
+                  <div className="fld fld-laatste">
                     <textarea
                       name="extra"
                       defaultValue={extraInitial}
                       spellCheck={false}
                       placeholder="{ }"
-                      style={{
-                        minHeight: 140,
-                        fontFamily: "var(--font-mono)",
-                        fontSize: "var(--text-xs)",
-                        lineHeight: 1.6,
-                      }}
+                      className="ce-code"
                     />
-                    <p className="t-sub" style={{ marginTop: 6 }}>
-                      Sleutels zonder eigen veld. Moet geldige JSON zijn.
-                    </p>
+                    <p className="veldhulp">Sleutels zonder eigen veld. Moet geldige JSON zijn.</p>
                   </div>
                 </details>
               )}
@@ -491,7 +442,7 @@ export function ContentEditor({
                     Live
                   </button>
                 </div>
-                <p className="t-sub" style={{ marginTop: 8 }}>
+                <p className="veldhulp">
                   {status === "live"
                     ? "Zichtbaar op de website."
                     : "Nog niet zichtbaar op de website."}
@@ -499,7 +450,7 @@ export function ContentEditor({
               </div>
 
               {isNew ? (
-                <div className="fld" style={{ marginBottom: showOrder ? undefined : 0 }}>
+                <div className={cn("fld", !showOrder && "fld-laatste")}>
                   <label htmlFor="ce-slug">Webadres</label>
                   <input
                     id="ce-slug"
@@ -510,12 +461,10 @@ export function ContentEditor({
                     pattern="[a-z0-9\-]+"
                     required
                   />
-                  <p className="t-sub" style={{ marginTop: 6 }}>
-                    Wordt automatisch gemaakt van de titel.
-                  </p>
+                  <p className="veldhulp">Wordt automatisch gemaakt van de titel.</p>
                 </div>
               ) : !isPaginas ? (
-                <div className="fld" style={{ marginBottom: showOrder ? undefined : 0 }}>
+                <div className={cn("fld", !showOrder && "fld-laatste")}>
                   <label htmlFor="ce-slug">Webadres</label>
                   <div className="ce-perma">
                     <code>
@@ -526,7 +475,7 @@ export function ContentEditor({
               ) : null}
 
               {showOrder && (
-                <div className="fld" style={{ marginBottom: 0 }}>
+                <div className="fld fld-laatste">
                   <label htmlFor="ce-volgorde">Volgorde</label>
                   <input
                     id="ce-volgorde"
@@ -534,9 +483,7 @@ export function ContentEditor({
                     type="number"
                     defaultValue={row?.volgorde ?? 0}
                   />
-                  <p className="t-sub" style={{ marginTop: 6 }}>
-                    Lager = hoger in lijsten.
-                  </p>
+                  <p className="veldhulp">Lager = hoger in lijsten.</p>
                 </div>
               )}
             </div>

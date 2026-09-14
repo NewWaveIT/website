@@ -36,11 +36,7 @@ export function SelectField({
           </button>
         ))}
       </div>
-      {help && (
-        <p className="t-sub" style={{ marginTop: 8 }}>
-          {help}
-        </p>
-      )}
+      {help && <p className="veldhulp">{help}</p>}
     </div>
   );
 }

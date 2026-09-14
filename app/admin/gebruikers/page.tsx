@@ -12,36 +12,16 @@ function Notice({ titel, children }: { titel: string; children: React.ReactNode 
           <p className="sub">Beheer wie toegang heeft tot het CMS.</p>
         </div>
       </div>
-      <div className="card" style={{ padding: "var(--space-6)", maxWidth: 660 }}>
-        <h3
-          style={{
-            fontSize: "var(--text-base)",
-            fontWeight: "var(--fw-bold)",
-            marginBottom: "var(--space-3)",
-          }}
-        >
-          {titel}
-        </h3>
-        <div style={{ fontSize: "var(--text-sm)", color: "var(--text-body)", lineHeight: 1.7 }}>
-          {children}
-        </div>
+      <div className="card melding">
+        <h3>{titel}</h3>
+        <div className="melding-tekst">{children}</div>
       </div>
     </>
   );
 }
 
 const Code = ({ children }: { children: React.ReactNode }) => (
-  <code
-    style={{
-      fontFamily: "var(--font-mono)",
-      fontSize: "var(--text-xs)",
-      background: "var(--ink-50)",
-      padding: "2px 6px",
-      borderRadius: "var(--radius-sm)",
-    }}
-  >
-    {children}
-  </code>
+  <code className="inline-code">{children}</code>
 );
 
 export default async function GebruikersPage() {
@@ -50,7 +30,7 @@ export default async function GebruikersPage() {
   if (!gebruikersBeschikbaar()) {
     return (
       <Notice titel="Nog één stap nodig">
-        <p style={{ margin: 0 }}>
+        <p className="m-0">
           Gebruikersbeheer gebruikt de Supabase Auth Admin API. Stel daarvoor de
           server-omgevingsvariabele <Code>SUPABASE_SERVICE_ROLE_KEY</Code> in. Lokaal in{" "}
           <Code>.env.local</Code> en in Vercel bij de projectinstellingen. Herstart daarna de
@@ -80,7 +60,7 @@ export default async function GebruikersPage() {
         }
       >
         {sleutelProbleem ? (
-          <p style={{ margin: 0 }}>
+          <p className="m-0">
             Supabase gaf terug: <Code>{fout}</Code>. Controleer of{" "}
             <Code>SUPABASE_SERVICE_ROLE_KEY</Code> exact de <strong>service_role</strong>-sleutel is
             (níet de <em>anon</em>-sleutel), volledig gekopieerd en zonder aanhalingstekens. Te
@@ -88,7 +68,7 @@ export default async function GebruikersPage() {
             server na het wijzigen.
           </p>
         ) : (
-          <p style={{ margin: 0 }}>
+          <p className="m-0">
             Foutmelding: <Code>{fout}</Code>
           </p>
         )}

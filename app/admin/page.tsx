@@ -47,18 +47,33 @@ const OVERZICHT: ContentType[] = [
   "vacatures",
 ];
 
+/**
+ * Wat er staat als de database de dashboardfuncties niet kent. Beter dan negen
+ * regels "0 live": dat leest als een lege site.
+ */
+const ONBEKEND =
+  "De aantallen zijn nu niet op te halen. Draai supabase/scripts/20260914-admin-dashboard.sql in de SQL Editor als dit blijft staan.";
+
 /** Waar een snelknop een nieuw item aanmaakt. */
 const SNELKNOPPEN: ContentType[] = ["cases", "artikelen", "vacatures"];
 
 export default async function AdminDashboard() {
   const user = await requireAdmin();
-  const [leads, sols, tellingen, concepten, audit] = await Promise.all([
+  const [leads, sols, tellingenOfNiets, conceptenOfNiets, audit] = await Promise.all([
     getLeads(),
     getSollicitaties(),
     getStatusTellingen(),
     getConcepten(6),
     listAudit(5),
   ]);
+
+  // De twee dashboardfuncties in de database geven `null` als ze er niet zijn.
+  // Dan weten we het niet, en dat is iets anders dan nul — zonder dit
+  // onderscheid meldde het dashboard doodleuk dat er geen enkele pagina live
+  // stond terwijl de site gewoon draaide.
+  const tellingenOnbekend = tellingenOfNiets === null;
+  const tellingen = tellingenOfNiets ?? {};
+  const concepten = conceptenOfNiets ?? [];
 
   const naam = (user.user_metadata?.naam as string) || user.email?.split("@")[0] || "";
   const nieuweLeads = leads.filter((l) => l.status === "nieuw");
@@ -69,8 +84,9 @@ export default async function AdminDashboard() {
   const wachtrij = nieuweLeads.length + nieuweSols.length;
   const conceptTotaal = OVERZICHT.reduce((n, t) => n + (tellingen[t]?.concept ?? 0), 0);
 
-  const samenvatting =
-    wachtrij === 0 && conceptTotaal === 0
+  const samenvatting = tellingenOnbekend
+    ? "De contentaantallen zijn nu niet op te halen."
+    : wachtrij === 0 && conceptTotaal === 0
       ? "Alles is opgepakt. Geen openstaande acties."
       : [
           wachtrij > 0 && `${wachtrij} ${wachtrij === 1 ? "item vraagt" : "items vragen"} om actie`,
@@ -190,11 +206,15 @@ export default async function AdminDashboard() {
           <div className="card">
             <div className="chead">
               <h3>Klaar om te publiceren</h3>
-              <span className="age">
-                {conceptTotaal} {conceptTotaal === 1 ? "concept" : "concepten"}
-              </span>
+              {!tellingenOnbekend && (
+                <span className="age">
+                  {conceptTotaal} {conceptTotaal === 1 ? "concept" : "concepten"}
+                </span>
+              )}
             </div>
-            {concepten.length === 0 ? (
+            {tellingenOnbekend ? (
+              <div className="empty">{ONBEKEND}</div>
+            ) : concepten.length === 0 ? (
               <div className="empty">Geen concepten. Alles staat live.</div>
             ) : (
               concepten.map((c) => (
@@ -228,35 +248,39 @@ export default async function AdminDashboard() {
             <div className="chead">
               <h3>Wat staat er op de site</h3>
             </div>
+            {tellingenOnbekend && <div className="empty">{ONBEKEND}</div>}
             <div className="clist">
-              {OVERZICHT.map((t) => {
-                const { live = 0, concept = 0 } = tellingen[t] ?? {};
-                const totaal = live + concept;
-                return (
-                  <Link className="crow" key={t} href={ADMIN_PADEN[t].lijst}>
-                    <span className="cnm">{ADMIN_PADEN[t].meervoud}</span>
-                    <span className="cct">
-                      {live} live{concept ? ` · ${concept} concept` : ""}
-                    </span>
-                    <span className="track" aria-hidden="true">
-                      <i style={{ width: totaal ? `${(live / totaal) * 100}%` : 0 }} />
-                      <i
-                        className="draft"
-                        style={{ width: totaal ? `${(concept / totaal) * 100}%` : 0 }}
-                      />
-                    </span>
-                  </Link>
-                );
-              })}
+              {!tellingenOnbekend &&
+                OVERZICHT.map((t) => {
+                  const { live = 0, concept = 0 } = tellingen[t] ?? {};
+                  const totaal = live + concept;
+                  return (
+                    <Link className="crow" key={t} href={ADMIN_PADEN[t].lijst}>
+                      <span className="cnm">{ADMIN_PADEN[t].meervoud}</span>
+                      <span className="cct">
+                        {live} live{concept ? ` · ${concept} concept` : ""}
+                      </span>
+                      <span className="track" aria-hidden="true">
+                        <i style={{ width: totaal ? `${(live / totaal) * 100}%` : 0 }} />
+                        <i
+                          className="draft"
+                          style={{ width: totaal ? `${(concept / totaal) * 100}%` : 0 }}
+                        />
+                      </span>
+                    </Link>
+                  );
+                })}
             </div>
-            <div className="legend">
-              <span>
-                <b /> Live
-              </span>
-              <span>
-                <b className="draft" /> Concept
-              </span>
-            </div>
+            {!tellingenOnbekend && (
+              <div className="legend">
+                <span>
+                  <b /> Live
+                </span>
+                <span>
+                  <b className="draft" /> Concept
+                </span>
+              </div>
+            )}
           </div>
 
           <div className="card">

@@ -221,7 +221,7 @@ function Toolbar({ editor, lite }: { editor: Editor; lite: boolean }) {
             type="file"
             accept="image/*"
             onChange={onFile}
-            style={{ display: "none" }}
+            className="rte-bestand"
           />
         </>
       )}
@@ -295,7 +295,7 @@ function Toolbar({ editor, lite }: { editor: Editor; lite: boolean }) {
           }
         >
           {prompt.kind === "link" ? (
-            <div className="fld" style={{ marginBottom: 0 }}>
+            <div className="fld fld-laatste">
               <label htmlFor="rte-link">Link-URL</label>
               <input
                 id="rte-link"
@@ -306,20 +306,14 @@ function Toolbar({ editor, lite }: { editor: Editor; lite: boolean }) {
                 onKeyDown={(e) => e.key === "Enter" && (e.preventDefault(), applyPrompt())}
                 placeholder="https://"
               />
-              <p className="t-sub" style={{ marginTop: 6 }}>
-                Laat leeg (of “https://”) om de link te verwijderen.
-              </p>
+              <p className="veldhulp">Laat leeg (of “https://”) om de link te verwijderen.</p>
             </div>
           ) : prompt.kind === "image" ? (
             <>
               <div className="fld">
                 {/* Voorbeeld van een net-geüploade blob/URL in de editor — geen next/image nodig. */}
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={prompt.url}
-                  alt=""
-                  style={{ maxWidth: "100%", borderRadius: "var(--radius-md)", display: "block" }}
-                />
+                <img src={prompt.url} alt="" className="rte-voorbeeld" />
               </div>
               <div className="fld">
                 <label htmlFor="rte-alt">Omschrijving (alt-tekst)</label>
@@ -332,7 +326,7 @@ function Toolbar({ editor, lite }: { editor: Editor; lite: boolean }) {
                   placeholder="Wat is er te zien? (voor SEO en schermlezers)"
                 />
               </div>
-              <div className="fld" style={{ marginBottom: 0 }}>
+              <div className="fld fld-laatste">
                 <label htmlFor="rte-cap">Bijschrift (optioneel)</label>
                 <input
                   id="rte-cap"
@@ -356,7 +350,7 @@ function Toolbar({ editor, lite }: { editor: Editor; lite: boolean }) {
                   placeholder="Wat is er te zien? (voor SEO en schermlezers)"
                 />
               </div>
-              <div className="fld" style={{ marginBottom: 0 }}>
+              <div className="fld fld-laatste">
                 <label htmlFor="rte-cap2">Bijschrift (optioneel)</label>
                 <input
                   id="rte-cap2"
@@ -417,11 +411,7 @@ export function RichTextEditor({
           </>
         )}
       </div>
-      {help && (
-        <p className="t-sub" style={{ marginTop: 6 }}>
-          {help}
-        </p>
-      )}
+      {help && <p className="veldhulp">{help}</p>}
     </div>
   );
 }

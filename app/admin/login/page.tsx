@@ -26,7 +26,7 @@ export default function LoginPage() {
           alt="The New Wave IT"
           width={180}
           height={30}
-          style={{ height: 30, width: "auto" }}
+          className="cms-login-logo"
         />
         <h1>CMS-login</h1>
         <p>Log in om content en inzendingen te beheren.</p>

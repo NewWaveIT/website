@@ -44,7 +44,7 @@ export function AuthorField({
               >
                 <span className="av">
                   {o.foto ? (
-                    <Image src={o.foto} alt="" fill sizes="44px" style={{ objectFit: "cover" }} />
+                    <Image src={o.foto} alt="" fill sizes="44px" className="af-foto" />
                   ) : (
                     <UserRound size={18} />
                   )}

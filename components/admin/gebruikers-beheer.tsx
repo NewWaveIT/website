@@ -10,6 +10,7 @@ import {
   type GebruikerState,
 } from "@/app/admin/gebruikers/actions";
 import type { Gebruiker } from "@/lib/cms/gebruikers";
+import { cn } from "@/lib/utils";
 
 function fmtDateTime(iso: string | null): string {
   if (!iso) return "Nog niet ingelogd";
@@ -49,11 +50,7 @@ function GebruikerForm({
   return (
     <form action={formAction}>
       {mode === "edit" && user && <input type="hidden" name="id" value={user.id} />}
-      {state.error && (
-        <div className="err" style={{ marginBottom: "var(--space-4)" }}>
-          {state.error}
-        </div>
-      )}
+      {state.error && <div className="err gb-fout">{state.error}</div>}
 
       <div className="fld">
         <label htmlFor="g-naam">Naam</label>
@@ -84,7 +81,7 @@ function GebruikerForm({
         )}
       </div>
 
-      <div className="fld" style={{ marginBottom: "var(--space-5)" }}>
+      <div className="fld gb-wachtwoord">
         <label htmlFor="g-pw">{mode === "new" ? "Beginwachtwoord" : "Nieuw wachtwoord"}</label>
         <input
           id="g-pw"
@@ -94,14 +91,14 @@ function GebruikerForm({
           placeholder="Minimaal 8 tekens"
           required={mode === "new"}
         />
-        <p className="t-sub" style={{ marginTop: 6 }}>
+        <p className="veldhulp">
           {mode === "new"
             ? "De gebruiker kan dit later zelf wijzigen. Deel het veilig."
             : "Laat leeg om het huidige wachtwoord te behouden."}
         </p>
       </div>
 
-      <div style={{ display: "flex", gap: "var(--space-3)", justifyContent: "flex-end" }}>
+      <div className="gb-modalknoppen">
         <button type="button" className="btn btn-outline" onClick={onCancel}>
           Annuleren
         </button>
@@ -145,7 +142,7 @@ export function GebruikersBeheer({
               <th>E-mail</th>
               <th>Laatste login</th>
               <th>Status</th>
-              <th style={{ textAlign: "right" }}>Acties</th>
+              <th className="t-rechts">Acties</th>
             </tr>
           </thead>
           <tbody>
@@ -156,11 +153,7 @@ export function GebruikersBeheer({
                   <td>
                     <div className="t-title">
                       {u.naam}
-                      {self && (
-                        <span className="t-sub" style={{ marginLeft: 8 }}>
-                          (jij)
-                        </span>
-                      )}
+                      {self && <span className="t-sub gb-jij">(jij)</span>}
                     </div>
                   </td>
                   <td>{u.email}</td>
@@ -172,7 +165,7 @@ export function GebruikersBeheer({
                     </span>
                   </td>
                   <td>
-                    <div style={{ display: "flex", gap: 6, justifyContent: "flex-end" }}>
+                    <div className="gb-rijacties">
                       <button
                         type="button"
                         className="btn btn-outline iconbtn"
@@ -188,8 +181,7 @@ export function GebruikersBeheer({
                           <input type="hidden" name="actief" value={u.actief ? "false" : "true"} />
                           <button
                             type="submit"
-                            className="btn btn-outline iconbtn"
-                            style={u.actief ? { color: "var(--danger-500)" } : undefined}
+                            className={cn("btn btn-outline iconbtn", u.actief && "gb-uitzetten")}
                             aria-label={u.actief ? `Deactiveer ${u.naam}` : `Activeer ${u.naam}`}
                             title={u.actief ? "Deactiveren" : "Activeren"}
                           >
