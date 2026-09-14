@@ -78,7 +78,7 @@ export const KLANTVERHALEN: Klantverhaal[] = [
       { n: "Auditproof", l: "Met volledige logging" },
     ],
     challenge:
-      "Moove had een bestaand Mendix-platform. De uitdaging was niet het platform zelf, maar de ontbrekende schakels: een betrouwbare verwerking van voertuiginstallaties en een moderne manier om handmatige ritregistratie te vervangen. Moove verwerkte voertuiginstallaties via meerdere losse systemen: foutgevoelig, arbeidsintensief en moeilijk te auditen. Tegelijk deden chauffeurs ritregistratie zoals dat twintig jaar geleden ook ging: handmatig in een notitieboekje of via generieke tools. GPS maakt dat notitieboekje overbodig: Geotab registreert elke rit automatisch. Maar de stap van rijdata naar een compliant rittenrapport dat een chauffeur zelf beheert, ontbrak nog. Daarvoor moest Moove installaties eerst correct en gestandaardiseerd in MyGeotab verwerken.",
+      "Moove had al een bestaand Mendix-platform. De uitdaging zat niet in het platform zelf, maar in de ontbrekende schakels: een betrouwbare verwerking van voertuiginstallaties, en een moderne manier om handmatige ritregistratie te vervangen. Installaties liepen via meerdere losse systemen: foutgevoelig, arbeidsintensief en moeilijk te auditen. Chauffeurs deden hun ritregistratie nog zoals twintig jaar geleden: handmatig, in een notitieboekje of via generieke tools. Geotab registreerde elke rit al automatisch, maar de stap van rijdata naar een compliant rittenrapport dat een chauffeur zelf kan beheren, ontbrak nog.",
     pull: "“Het voelt alsof je samenwerkt met goed ingewerkte en enthousiaste collega's.”",
     ketenTitel: "De keten in drie stappen",
     ketenStappen: [
