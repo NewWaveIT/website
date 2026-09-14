@@ -1,0 +1,53 @@
+import type { FieldDef } from "../schema";
+
+/** De velden die de editor voor deze pagina toont. */
+export const VELDEN = [
+  { key: "herkenningKicker", label: "Herkenning — kicker", type: "text" },
+  { key: "wieKomtKicker", label: "Wie er komt — kicker", type: "text" },
+  { key: "waaromNuKicker", label: "Waarom nu — kicker", type: "text" },
+  { key: "oplossingenKicker", label: "Pijn en oplossing — kicker", type: "text" },
+  { key: "kolomPijnpunt", label: "Pijn en oplossing — kolom 1", type: "text" },
+  { key: "kolomKost", label: "Pijn en oplossing — kolom 2", type: "text" },
+  { key: "kolomOplossing", label: "Pijn en oplossing — kolom 3", type: "text" },
+  { key: "kolomLaag", label: "Pijn en oplossing — kolom 4", type: "text" },
+  { key: "bouwenKicker", label: "Wat we bouwen — kicker", type: "text" },
+  { key: "sluitAanOpLabel", label: "Wat we bouwen — label bij de koppeling", type: "text" },
+  { key: "aanpakKicker", label: "Hoe we werken — kicker", type: "text" },
+  { key: "dienstenKicker", label: "Diensten — kicker", type: "text" },
+  { key: "faqKicker", label: "Veelgestelde vragen — kicker", type: "text" },
+  { key: "inzichtenKicker", label: "Inzichten — kicker", type: "text" },
+  { key: "inzichtenTitel", label: "Inzichten — titel", type: "text" },
+  { key: "inzichtenAlle", label: "Inzichten — link naar het overzicht", type: "text" },
+  { key: "inzichtenMeer", label: "Inzichten — link per artikel", type: "text" },
+  { key: "andereKicker", label: "Andere sectoren — kicker", type: "text" },
+  { key: "teamKicker", label: "Het team — kicker", type: "text" },
+  { key: "ctaPersoonLabel", label: "Slot-CTA — label boven de contactpersoon", type: "text" },
+  { key: "ctaKnop", label: "Slot-CTA — eerste knop", type: "text" },
+  { key: "ctaKnopTwee", label: "Slot-CTA — tweede knop", type: "text" },
+] as const satisfies readonly FieldDef[];
+
+/** Standaardtekst per veld: de startwaarde in de editor en de terugval op de site. */
+export const TEKSTEN = {
+  herkenningKicker: "Herkenning",
+  wieKomtKicker: "Wie er komt",
+  waaromNuKicker: "Waarom nu",
+  oplossingenKicker: "Pijn → oplossing",
+  kolomPijnpunt: "Pijnpunt",
+  kolomKost: "Wat het kost",
+  kolomOplossing: "Onze oplossing",
+  kolomLaag: "Laag",
+  bouwenKicker: "Wat we bouwen",
+  sluitAanOpLabel: "Sluit aan op:",
+  aanpakKicker: "Hoe we werken",
+  dienstenKicker: "Diensten",
+  faqKicker: "Veelgestelde vragen",
+  inzichtenKicker: "Inzichten",
+  inzichtenTitel: "Kennis uit deze sector",
+  inzichtenAlle: "Alle inzichten",
+  inzichtenMeer: "Lees meer",
+  andereKicker: "Andere sectoren",
+  teamKicker: "Het team",
+  ctaPersoonLabel: "Wie je spreekt",
+  ctaKnop: "Plan een gesprek",
+  ctaKnopTwee: "Bekijk onze aanpak",
+} satisfies Record<(typeof VELDEN)[number]["key"], string>;
