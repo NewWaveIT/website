@@ -31,6 +31,7 @@ niet stilletjes wegdrijven zoals de handgeschreven routekaart in `revalidate.ts`
 | Migraties               | `supabase/migrations/` (chronologisch geprefixt)                                                                |
 | Unit tests              | `tests/unit/` (Vitest) — pure logica: sanitize, formuliervalidatie                                              |
 | Schermafdrukken         | `npm run shots` → `docs/shots/<breedte>/<pagina>.png` (twaalf pagina's × drie breedtes, niet in git)            |
+| CMS tegen code          | `/admin/baseline` — ontbrekende sleutels, weessleutels, en waar het CMS van de seed afwijkt                     |
 
 ## Werkwijze bij elke wijziging
 
@@ -54,6 +55,10 @@ niet stilletjes wegdrijven zoals de handgeschreven routekaart in `revalidate.ts`
   verzonnen klantverhalen die live bleven, `secties` in de oude vorm, dode `samen*`-velden,
   onbereikbare dienstrijen. Het leespad hieronder maakt zulke resten zichtbaar in de
   Vercel-logs in plaats van ze stil te compenseren; negeer die regels niet.
+- **Meet het daarna, raad niet.** `/admin/baseline` zet elke rij naast het veldschema en de
+  seed en telt wat er niet klopt. Draai hem na elke contentmodelwijziging en na elke
+  SQL-actie: dat is het verschil tussen "de update is uitgevoerd" en "de update heeft
+  gedaan wat hij moest doen". Een `update` die nul rijen raakt meldt zichzelf niet.
 
 ## Kernpatronen
 
@@ -154,6 +159,15 @@ niet stilletjes wegdrijven zoals de handgeschreven routekaart in `revalidate.ts`
   `lib/contact-data.ts` leest het CMS erover heen, en de WhatsApp-link wordt uit het
   nummer afgeleid. De foutpagina en de mailtemplates gebruiken bewust de terugval: die
   moeten het juist doen als de database onbereikbaar is.
+- **De nulmeting is de bron van waarheid over de data, niet je geheugen.**
+  `/admin/baseline` (`lib/cms/baseline.ts`, puur en getest) vergelijkt elke rij met
+  `FIELD_SCHEMAS`/`PAGE_FIELDS` en met de seed. Vier categorieën moeten naar nul: een
+  sleutel die de rij mist (site toont de seed, admin een leeg veld), een sleutel die het
+  schema niet kent (dode data), een leeg veld waar de seed tekst heeft, en een tekst die
+  van de seed afwijkt. Bij dat laatste wint het CMS: de knop vult alleen aan, hij
+  overschrijft nooit — de seed in de code trekt bij, met de JSON-export van die pagina.
+  Schrijf hier geen nieuw SQL-controlescript voor; de oude in `supabase/scripts/` zijn
+  precies daarom verouderd.
 - **Auth/RLS.** `proxy.ts` (de Next 16-naam voor middleware) redirect ongeauthenticeerde `/admin` → login; `requireAdmin()`
   (`lib/dal.ts`) in élke admin-action en -pagina. Anon mag alleen `insert` op de
   formuliertabellen; de service-role-client (`lib/supabase/admin.ts`) is uitsluitend voor

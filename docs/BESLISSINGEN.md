@@ -78,6 +78,29 @@ uitzondering in `tests/unit/manifest.spec.ts`.
 
 ## Werkwijze
 
+**De nulmeting staat in de admin, niet in een SQL-script** — 15 september 2026
+Er lagen negen losse controlescripts in `supabase/scripts/` die elk op één moment met de
+hand waren gegenereerd, en die daarna stil verouderden: `20260914-cms-volledigheid.sql`
+vraagt nog naar `cms_proposities`, `20260914-seed-vs-cms.sql` meldt een homepagetekst die
+allang is gecorrigeerd. Een script dat onzin meldt wordt niet meer gedraaid. `/admin/baseline`
+leest het schema en de seed rechtstreeks uit de code van dezelfde build en kan daardoor
+niet achterlopen. De oude scripts blijven staan als naslag van wat er toen speelde; draai
+ze niet meer.
+
+**Bij een verschil tussen CMS en seed wint het CMS** — 15 september 2026
+De eigenaar wil dat de fallback niet van het CMS afwijkt. De richting is dan: de tekst in
+de admin is de waarheid, en de seed in de code trekt bij. Daarom heeft de nulmeting wél
+een knop voor ontbrekende sleutels (die voegt alleen toe) en géén knop die een CMS-tekst
+overschrijft met de seed. De JSON-export levert de CMS-waarden die nodig zijn om de seed
+in de code bij te werken.
+
+**Nieuwe content alleen in het CMS is geen fout, maar wel een verschil** — 15 september 2026
+CLAUDE.md zegt: content hoort in de admin, niet in de code. Een klantverhaal dat alleen in
+het CMS staat is dus normaal — en tegelijk verdwijnt het van de site zodra Supabase
+onbereikbaar is. De nulmeting toont die rijen daarom als "ter info" in plaats van als
+afwijking. Wil je ook dáár geen verschil, dan hoort het item in de seed; dat is een keuze
+per item, geen regel.
+
 **Direct naar `main`, geen PR** — 14 september 2026
 De eigenaar werkt alleen aan dit project en heeft gevraagd om rechtstreekse merges. CI
 draait wel op elke push. Maak geen PR aan tenzij erom gevraagd wordt.

@@ -33,3 +33,11 @@ export async function requireAdmin() {
   if (!user) redirect("/admin/login");
   return user;
 }
+
+/** Weergavenaam van een ingelogde gebruiker (voor audit + `bewerkt_door`). */
+export function gebruikerNaam(user: {
+  user_metadata?: Record<string, unknown>;
+  email?: string | null;
+}): string | null {
+  return (user.user_metadata?.naam as string) || user.email?.split("@")[0] || null;
+}

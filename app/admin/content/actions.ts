@@ -3,7 +3,7 @@
 import sharp from "sharp";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import { requireAdmin } from "@/lib/dal";
+import { gebruikerNaam, requireAdmin } from "@/lib/dal";
 import { createClient } from "@/lib/supabase/server";
 import { CONTENT_TABLE, type ContentType } from "@/lib/cms/content";
 import { FIELD_SCHEMAS, isStructured } from "@/lib/cms/schema";
@@ -14,14 +14,6 @@ import { ADMIN_PADEN, bewerkPad } from "@/lib/cms/admin-paden";
 
 /** Bitmapformaten die sharp betrouwbaar naar WebP omzet. Bewust zonder SVG. */
 const BEELD_TYPES = ["image/jpeg", "image/png", "image/webp", "image/avif", "image/gif"];
-
-/** Weergavenaam van de ingelogde gebruiker (voor audit + bewerkt_door). */
-function gebruikerNaam(user: {
-  user_metadata?: Record<string, unknown>;
-  email?: string | null;
-}): string | null {
-  return (user.user_metadata?.naam as string) || user.email?.split("@")[0] || null;
-}
 
 function isType(v: string): v is ContentType {
   return v in CONTENT_TABLE;

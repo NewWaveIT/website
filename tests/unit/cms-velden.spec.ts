@@ -20,12 +20,22 @@ import { FIELD_SCHEMAS } from "@/lib/cms/schema";
  * legitieme indirecte toegang af te keuren.
  */
 
-/** Waar een veldnaam alleen maar gedefinieerd wordt, niet gelezen. */
-const DEFINITIE = new Set([
+/**
+ * Waar een veldnaam alleen maar gedefinieerd wordt, niet gelezen.
+ *
+ * Mappen staan er als voorvoegsel in, want de seeds zijn opgesplitst: het stond
+ * hier als `lib/services.ts`, en toen dat bestand tien bestanden onder
+ * `lib/seeds/services/` werd, telde de seed opeens als gebruik. Een dood veld
+ * bleef daardoor groen — bewezen met een nepveld dat alleen in een seedbestand
+ * stond. Een voorvoegsel dekt de volgende splitsing ook af.
+ */
+const DEFINITIE = [
   "lib/cms/schema.ts",
   "lib/cms/schemas.ts",
   "lib/cms/pages.ts",
+  "lib/cms/paginas/",
   "lib/cms/rij.ts",
+  "lib/seeds/",
   "lib/services.ts",
   "lib/sectoren-detail.ts",
   "lib/diensten-detail.ts",
@@ -33,15 +43,20 @@ const DEFINITIE = new Set([
   "lib/klantverhalen.ts",
   "lib/inzichten.ts",
   "lib/vacatures.ts",
-  "lib/proposities.ts",
   "lib/content-blokken.ts",
-]);
+];
+
+/** Normaliseert Windows-scheidingstekens, zodat de voorvoegsels overal werken. */
+function isDefinitie(pad: string): boolean {
+  const p = pad.split("\\").join("/");
+  return DEFINITIE.some((d) => (d.endsWith("/") ? p.startsWith(d) : p === d));
+}
 
 function bronbestanden(map: string, uit: string[] = []): string[] {
   for (const naam of readdirSync(map)) {
     const pad = join(map, naam);
     if (statSync(pad).isDirectory()) bronbestanden(pad, uit);
-    else if ((naam.endsWith(".ts") || naam.endsWith(".tsx")) && !DEFINITIE.has(pad)) uit.push(pad);
+    else if ((naam.endsWith(".ts") || naam.endsWith(".tsx")) && !isDefinitie(pad)) uit.push(pad);
   }
   return uit;
 }

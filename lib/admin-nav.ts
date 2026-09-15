@@ -24,7 +24,8 @@ export type AdminNavIcon =
   | "inbox"
   | "user-check"
   | "shield"
-  | "history";
+  | "history"
+  | "git-compare";
 
 export interface AdminNavItem {
   href: string;
@@ -92,6 +93,7 @@ export const ADMIN_NAV: AdminNavGroup[] = [
   {
     groep: "Beheer",
     items: [
+      { href: "/admin/baseline", label: "Baseline", icon: "git-compare" },
       { href: "/admin/gebruikers", label: "Gebruikers", icon: "shield" },
       { href: "/admin/activiteit", label: "Activiteit", icon: "history" },
     ],

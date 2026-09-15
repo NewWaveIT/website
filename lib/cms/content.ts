@@ -134,6 +134,31 @@ export async function listContent<T = Record<string, unknown>>(
   }
 }
 
+/**
+ * Als `listContent`, maar met het verschil tussen "leeg" en "onbereikbaar".
+ *
+ * `listContent` slikt elke fout en geeft `[]` terug, en dat is voor een lijst
+ * prima: een lege tabel en een weigerende database zien er voor een redacteur
+ * hetzelfde uit. Voor de nulmeting is het gif — die zou "geen afwijkingen"
+ * melden terwijl hij niets heeft kunnen lezen.
+ */
+export async function listContentOfFout<T = Record<string, unknown>>(
+  type: ContentType,
+): Promise<{ rijen: ContentRow<T>[]; fout: string | null }> {
+  try {
+    const supabase = await createClient();
+    const { data, error } = await supabase
+      .from(CONTENT_TABLE[type])
+      .select("*")
+      .order("volgorde", { ascending: true })
+      .abortSignal(AbortSignal.timeout(QUERY_TIMEOUT_MS));
+    if (error) return { rijen: [], fout: error.message };
+    return { rijen: (data as ContentRow<T>[]) ?? [], fout: null };
+  } catch (e) {
+    return { rijen: [], fout: (e as Error).message };
+  }
+}
+
 export async function getContentBySlug<T = Record<string, unknown>>(
   type: ContentType,
   slug: string,

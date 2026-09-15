@@ -18,6 +18,7 @@ import {
   Inbox,
   UserCheck,
   Shield,
+  GitCompare,
   History,
   LogOut,
   Menu,
@@ -44,6 +45,7 @@ const ICONS: Record<AdminNavIcon, React.ComponentType> = {
   "user-check": UserCheck,
   shield: Shield,
   history: History,
+  "git-compare": GitCompare,
 };
 
 export function Sidebar({

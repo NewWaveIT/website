@@ -40,6 +40,9 @@ route; per pagina-ingang de velden en welke bestanden ze lezen; en alle publieke
 Hij is **gegenereerd** — `npm run manifest` — en `tests/unit/manifest.spec.ts` faalt zodra
 hij achterloopt. Werk hem dus niet met de hand bij.
 
+`/admin/baseline` is de tegenhanger voor de data: die zet elke CMS-rij naast het veldschema
+en de seed en telt de verschillen. Draai hem na elke contentmodelwijziging.
+
 ## Projectstructuur
 
 ```
@@ -89,9 +92,11 @@ tests/unit/          Vitest-unittests (pure logica, geen browser/server nodig).
 
 Een veld weghalen uit `lib/cms/schema.ts` is niet genoeg: de sleutel blijft in elke
 opgeslagen rij staan en komt terug zodra iemand hem opnieuw invoert. Haal hem óók uit het
-zod-schema, de TypeScript-interface en de seed, en schrijf de SQL die hem uit de rijen
-verwijdert (`data - array['sleutel']::text[]`). `supabase/scripts/20260914-dode-velden.sql`
-is het voorbeeld.
+zod-schema, de TypeScript-interface en de seed. De sleutel uit de rijen halen doe je
+daarna op `/admin/baseline`: hij verschijnt daar als weessleutel, met een knop die hem in
+alle tabellen tegelijk opruimt. Met de hand kan ook
+(`data - array['sleutel']::text[]`, zie `supabase/scripts/20260914-dode-velden.sql`), maar
+dan mis je de controle achteraf.
 
 ## Git & CI
 
