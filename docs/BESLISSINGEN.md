@@ -78,6 +78,24 @@ uitzondering in `tests/unit/manifest.spec.ts`.
 
 ## Werkwijze
 
+**De cijfers op de dienstenpagina's zijn van de eigenaar** — 15 september 2026
+`-40%` minder repetitief werk, `+3×` snellere verwerking, `-60%` lagere ontwikkelkosten,
+`6–10×` snellere oplevering: die staan in `outcomes` op /diensten/ai en /diensten/mendix, en
+in `waarom`, `pijlers` en `intro` staan de bijbehorende ongenuanceerde claims ("productie in
+weken, niet maanden", "werkende pilots binnen zes weken"). Een eerdere sessie had die in de
+code afgezwakt naar "Minder", "Lager", "vaak" en "doorgaans", terwijl het CMS de cijfers
+hield. Bij de nulmeting van 15 september is dat voorgelegd en koos de eigenaar voor de
+cijfers. **Zwak ze niet opnieuw af.** De regel "verzin geen getallen" blijft gelden voor
+nieuwe tekst; deze getallen zijn niet verzonnen maar bevestigd.
+
+**Sanne Willems en Jesse de Boer bestonden niet** — 15 september 2026
+Het veld `experts` op de drie richting-hubs noemde een "Lead Data & Fundament", een "Lead
+Business Consulting" en een "Practice Lead Mendix" die in geen enkele teamtabel voorkwamen,
+met een telefoonnummer dat één cijfer van dat van Koen verschilde. Ze stonden live. De code
+kende daar alleen Koen Wijsman; het CMS was nooit meegegaan met die opschoning. De rijen zijn
+op 15 september teruggezet naar de code-versie. Komt er zo'n naam terug, controleer hem dan
+eerst tegen `cms_teamleden` voordat je hem als waarheid behandelt.
+
 **De nulmeting staat in de admin, niet in een SQL-script** — 15 september 2026
 Er lagen negen losse controlescripts in `supabase/scripts/` die elk op één moment met de
 hand waren gegenereerd, en die daarna stil verouderden: `20260914-cms-volledigheid.sql`

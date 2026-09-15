@@ -74,7 +74,7 @@ export const DIENSTEN: Record<string, DienstDetail> = {
     badgeLabel: "Mendix Premium Partner",
     h1: "Op maat gebouwd, 6–10× sneller live.",
     intro:
-      "Op maat gemaakte low-code applicaties die jouw specifieke uitdaging oplossen. Vaak staat er binnen een week een eerste werkende versie, en binnen enkele maanden een live applicatie. Schaalbaar, beheerbaar en gebouwd rond je mensen.",
+      "Op maat gemaakte low-code applicaties die jouw specifieke uitdaging oplossen, van proof-of-concept tot productie in weken, niet maanden. Schaalbaar, beheerbaar en gebouwd rond je mensen.",
     vraagstukken: [
       {
         q: "Maatwerk",
@@ -117,7 +117,7 @@ export const DIENSTEN: Record<string, DienstDetail> = {
       {
         num: "02",
         titel: "Bouwen",
-        p: "Vaak van proof-of-concept naar productie in enkele maanden, niet in een jaar.",
+        p: "Van proof-of-concept naar productie in weken, niet maanden.",
         items: [
           {
             summary: "Van PoC naar productie",
@@ -184,7 +184,7 @@ export const DIENSTEN: Record<string, DienstDetail> = {
       },
       {
         titel: "6–10× sneller live",
-        p: "Vaak geen jarenlange trajecten: werkende software vanaf sprint één, doorgaans live binnen enkele maanden.",
+        p: "Geen maandenlange trajecten: werkende software vanaf sprint één, productie in weken.",
       },
       {
         titel: "Kennis blijft bij jou",
@@ -208,7 +208,7 @@ export const DIENSTEN: Record<string, DienstDetail> = {
     partners: ["Mendix", "Siemens", "Microsoft Azure", "AWS"],
     outcomes: [
       { n: "6–10×", l: "Snellere oplevering" },
-      { n: "Lager", l: "Ontwikkelkosten dan traditionele bouw" },
+      { n: "-60%", l: "Lagere ontwikkelkosten" },
       { n: "100%", l: "Gebouwd binnen je kaders" },
       { n: "1", l: "Team van business tot bouw" },
     ],
@@ -353,7 +353,7 @@ export const DIENSTEN: Record<string, DienstDetail> = {
         p: "We starten bij jouw sectorvraagstuk en rekenen elke use-case door op businesswaarde, met een eerlijk nee waar AI niet past.",
       },
       {
-        titel: "Doorgaans een werkend proces binnen 6 weken",
+        titel: "Werkende pilots binnen zes weken",
         p: "Geen rapporten die in een la verdwijnen: we bouwen in je eigen omgeving en schalen wat bewezen werkt.",
       },
       {
@@ -376,8 +376,8 @@ export const DIENSTEN: Record<string, DienstDetail> = {
     ],
     partners: ["Mendix", "Microsoft Azure", "OpenAI", "Databricks"],
     outcomes: [
-      { n: "Minder", l: "Repetitief werk" },
-      { n: "Sneller", l: "Verwerking van aanvragen" },
+      { n: "-40%", l: "Minder repetitief werk" },
+      { n: "+3×", l: "Snellere verwerking van aanvragen" },
       { n: "100%", l: "Uitlegbare besluiten" },
       { n: "0", l: "Black boxes in productie" },
     ],
