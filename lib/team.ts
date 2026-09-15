@@ -69,12 +69,6 @@ export const TEAMLEDEN: Teamlid[] = [
     bio: "",
   },
   {
-    slug: "furkan-karacaer",
-    naam: "Furkan Karacaer",
-    rol: "Mendix Consultant",
-    bio: "",
-  },
-  {
     slug: "naufal-el-amrani",
     naam: "Naufal el Amrani",
     rol: "Marketing stagiair",
