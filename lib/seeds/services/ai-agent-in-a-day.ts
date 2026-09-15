@@ -141,7 +141,7 @@ export const AI_AGENT_IN_A_DAY: Service = {
   vervolg: [
     {
       slug: "ai-opportunity-scan",
-      reden: "Waar levert AI bij jullie echt geld op, en waar niet.",
+      reden: "Waar levert AI bij jullie echt geld op en waar niet.",
     },
     {
       slug: "ai-strategie",

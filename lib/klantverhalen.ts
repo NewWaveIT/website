@@ -68,12 +68,12 @@ export const KLANTVERHALEN: Klantverhaal[] = [
     tag: "Mobiliteit · Moove Connected Mobility",
     h1: "Twee schakels in de keten: hoe Moove installaties en ritregistratie automatiseerde.",
     intro:
-      "Moove groeit. De vloot van hun klanten in de last-mile delivery ook. Twee ontbrekende schakels remden die groei: betrouwbare installatieverwerking en automatische ritregistratie voor chauffeurs. The New Wave IT bouwde beide, in nauwe samenwerking met Moove, van scratch naar productie.",
+      "Moove levert fleet performance als service. The New Wave IT werd ingeschakeld als Mendix-partner om twee applicaties te bouwen die direct aansluiten op hoe installateurs, chauffeurs en operations écht werken.",
     impact: [
       { n: "30 min", l: "Sneller per voertuig on-boarding" },
       { n: "2 mnd", l: "Van scratch naar werkende applicatie" },
       { n: "2", l: "Mendix-apps, dagelijks in gebruik" },
-      { n: "Auditproof", l: "Met volledige logging" },
+      { n: "100%", l: "Auditproof met volledige logging" },
     ],
     challenge:
       "Moove had al een bestaand Mendix-platform. De uitdaging zat niet in het platform zelf, maar in de ontbrekende schakels: een betrouwbare verwerking van voertuiginstallaties, en een moderne manier om handmatige ritregistratie te vervangen. Installaties liepen via meerdere losse systemen: foutgevoelig, arbeidsintensief en moeilijk te auditen. Chauffeurs deden hun ritregistratie nog zoals twintig jaar geleden: handmatig, in een notitieboekje of via generieke tools. Geotab registreerde elke rit al automatisch, maar de stap van rijdata naar een compliant rittenrapport dat een chauffeur zelf kan beheren, ontbrak nog.",
@@ -215,7 +215,7 @@ export const KLANTVERHALEN: Klantverhaal[] = [
       },
     ],
     resultaat:
-      "MooveInstaller en MooveTrips zijn geen losstaande projecten, maar twee schakels in dezelfde keten: MooveInstaller verwerkt voertuiginstallaties correct en gestandaardiseerd, en MooveTrips maakt de data die daaruit komt bruikbaar voor de chauffeur. The New Wave IT bouwde beide applicaties, in nauwe samenwerking met het team van Moove.",
+      "MooveInstaller en MooveTrips zijn geen losstaande projecten, maar twee schakels in dezelfde keten: installaties worden correct en gestandaardiseerd verwerkt, en de resulterende data wordt via MooveTrips bruikbaar gemaakt voor de chauffeur.",
     eindresultaten: [
       {
         titel: "Snellere voertuig-onboarding",
@@ -250,7 +250,7 @@ export const KLANTVERHALEN: Klantverhaal[] = [
       team: "Plan-build-run",
     },
     quote:
-      "“Samenwerken met The New Wave IT voelt alsof je samenwerkt met goed ingewerkte en enthousiaste collega's.”",
+      "“Samenwerken met The New Wave IT voelt alsof je samenwerkt met goed ingewerkte en enthousiaste collega's. De samenwerking verliep direct soepel, we hebben efficiënt gewerkt en hebben in de gestelde termijn twee prachtige applicaties opgeleverd die daadwerkelijk gebruikt worden.”",
     quoteNaam: "Nina Klooster",
     quoteRol: "Product Manager, Moove",
   },

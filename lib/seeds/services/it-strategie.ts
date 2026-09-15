@@ -19,7 +19,7 @@ export const IT_STRATEGIE: Service = {
     "Het passende deliverymodel, en waar AI in dat landschap landt",
   ],
   volgendeStap:
-    "Het deliverymodel opzetten, capaciteit inhuren om te beginnen, of een Fusion Team Startsprint.",
+    "Inrichting van de fundering, opzetten van het deliverymodel, of een Fusion Team Startsprint.",
   ctaLabel: "Plan een kennismaking (20 min)",
   ctaType: "kennismaking",
   volgorde: 5,
@@ -90,7 +90,7 @@ export const IT_STRATEGIE: Service = {
       tijd: "Week 1",
       titel: "Landschap in kaart",
       tekst:
-        "Applicaties, koppelingen, kosten en eigenaarschap, inclusief wat er buiten IT om loopt.",
+        "Applicaties, koppelingen, kosten en eigenaarschap inclusief wat er buiten IT om loopt.",
     },
     {
       tijd: "Week 2",

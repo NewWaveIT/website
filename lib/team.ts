@@ -32,10 +32,10 @@ export const TEAMLEDEN: Teamlid[] = [
     slug: "mitchel-wallaart",
     naam: "Mitchel Wallaart",
     rol: "Operations lead",
-    foto: "/assets/photos/portret-3.webp",
+    foto: "https://fkjiyepnuerifqqldvkn.supabase.co/storage/v1/object/public/content/4840aeb2-1fb8-4d2a-8e8d-4873d5c27e41.webp",
     bio: "Zorgt dat opdrachten soepel lopen en dat nieuwe Wavers zich thuis voelen.",
     contactrol: "Recruitment",
-    telefoon: "+31 6 83 17 09 76",
+    telefoon: "0683170976",
     email: "hello@thenewwaveit.com",
   },
   {
