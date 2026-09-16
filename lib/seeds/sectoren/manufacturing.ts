@@ -132,7 +132,7 @@ export const MANUFACTURING: SectorDetail = {
   ],
 
   aanpakTitel: "Van het proces met de meeste pijn naar een app op de vloer",
-  aanpakFoto: "/assets/photos/team-presentatie-scherm.webp",
+  aanpakFoto: "/assets/photos/team-presentatie-ai.webp",
   aanpakFotoPositie: "50% 35%",
   stappen: [
     "We komen langs en lopen de vloer op. Samen kiezen we het proces met de meeste pijn en de snelste terugverdientijd.",

@@ -75,7 +75,7 @@ export const IT_STRATEGIE: Service = {
       tekst: "Dezelfde inhoud, in de taal waarin budget wordt toegekend.",
     },
   ],
-  meeneemtFoto: "/assets/photos/klantgesprek-tafel.webp",
+  meeneemtFoto: "/assets/photos/portret-6.webp",
   dagLabel: "De weken",
   dagTitel: "Interviews, analyse, keuzes",
   dagIntro:

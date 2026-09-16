@@ -64,7 +64,7 @@ export const KLANTVERHALEN: Klantverhaal[] = [
     sector: "Mobiliteit",
     cardTitel: "Twee Mendix-apps, twee maanden, écht in gebruik",
     org: "Moove Connected Mobility · Mendix",
-    image: "/assets/photos/team-overleg-flipover.webp",
+    image: "/assets/photos/team-driegesprek-lounge.webp",
     tag: "Mobiliteit · Moove Connected Mobility",
     h1: "Twee schakels in de keten: hoe Moove installaties en ritregistratie automatiseerde.",
     intro:

@@ -75,7 +75,7 @@ export const FUSION_TEAM_STARTSPRINT: Service = {
         "Wat je expert wél en niet zelf moet doen, en wanneer je er beter een developer bij haalt.",
     },
   ],
-  meeneemtFoto: "/assets/photos/overleg-laptop.webp",
+  meeneemtFoto: "/assets/photos/portret-7.webp",
   dagLabel: "De vier weken",
   dagTitel: "Elke week een stuk meer op eigen benen",
   dagIntro:

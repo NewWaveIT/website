@@ -77,7 +77,7 @@ export const APP_IN_A_DAY: Service = {
         "Ook als het antwoord “low-code is hier niet het juiste gereedschap” is. Dat zeggen we dan gewoon.",
     },
   ],
-  meeneemtFoto: "/assets/photos/team-overleg-scherm.webp",
+  meeneemtFoto: "/assets/photos/portret-4.webp",
   dagLabel: "De dag zelf",
   dagTitel: "Van proces op tafel naar app in productieomgeving",
   dagIntro:

@@ -35,7 +35,7 @@ export const ARTIKELEN: Artikel[] = [
     leestijd: "4 min",
     titel: "Waarom een security-audit geen alarmsignaal is, maar goed onderhoud",
     auteur: "The New Wave IT",
-    image: "/assets/photos/team-brainstorm-glaswand.webp",
+    image: "/assets/photos/team-glaswand-brainstorm.webp",
     intro:
       "Hoe een periodieke security- en compliancecheck bij XXImo leidde tot concrete verbeterstappen, zonder de organisatie te vertragen.",
     body: [
@@ -53,7 +53,7 @@ export const ARTIKELEN: Artikel[] = [
     leestijd: "8 min",
     titel: "Van 0 naar 100 apps in een bank: de 5 fases die wél werken",
     auteur: "Koen Wijsman",
-    image: "/assets/photos/team-overleg-cafe.webp",
+    image: "/assets/photos/team-flipover-sessie.webp",
     intro:
       "Waarom schalen in een bank sneller complex wordt dan elders, en welke keuzes bepalen of je portfolio beheersbaar blijft of ontspoort.",
     body: [
@@ -72,7 +72,7 @@ export const ARTIKELEN: Artikel[] = [
     leestijd: "4 min",
     titel: "Novi: de AI-collega die overheidsteams grip geeft op digitalisering",
     auteur: "The New Wave IT",
-    image: "/assets/photos/project-parkeergarage-rotterdam.webp",
+    image: "/assets/photos/team-presentatie-intro.webp",
     intro:
       "Hoe een zelflerende AI-assistent nieuwe medewerkers sneller inwerkt en 24/7 antwoord geeft op IT-vragen bij (semi)overheidsorganisaties.",
     body: [
@@ -90,7 +90,7 @@ export const ARTIKELEN: Artikel[] = [
     leestijd: "4 min",
     titel: "Security & Mendix in de zorg: hoe bouw je bewustwording, geen blok aan het been",
     auteur: "The New Wave IT",
-    image: "/assets/photos/team-overleg-flipover.webp",
+    image: "/assets/photos/team-presentatie-klant.webp",
     intro:
       "Waarom security in Mendix-applicaties een mindset moet zijn, van developer tot zorgverlener, en hoe je dat organiseert zonder de innovatie te vertragen.",
     body: [

@@ -74,7 +74,7 @@ export const TRAINING_ENABLEMENT: Service = {
       tekst: "Kennis zakt weg. We komen terug op de momenten dat het ertoe doet.",
     },
   ],
-  meeneemtFoto: "/assets/photos/team-presentatie-breed.webp",
+  meeneemtFoto: "/assets/photos/portret-5.webp",
   dagLabel: "De blokken",
   dagTitel: "Kies de blokken die je nodig hebt",
   dagIntro:

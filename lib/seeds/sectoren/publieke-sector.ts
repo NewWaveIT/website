@@ -129,7 +129,7 @@ export const PUBLIEKE_SECTOR: SectorDetail = {
   ],
 
   aanpakTitel: "Van wetswijziging naar werkende uitvoering",
-  aanpakFoto: "/assets/photos/team-gesprek-lounge.webp",
+  aanpakFoto: "/assets/photos/team-groep-atrium.webp",
   aanpakFotoPositie: "50% 30%",
   stappen: [
     "We kijken eerst mee. Wat betekent die wetswijziging concreet voor de mensen die hem moeten uitvoeren?",
