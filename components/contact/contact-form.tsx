@@ -37,8 +37,10 @@ export interface FormTeksten {
   veldEmail: string;
   hintEmail: string;
   veldOrganisatie: string;
+  veldOrganisatieBij: string;
   hintOrganisatie: string;
   veldRol: string;
+  veldRolBij: string;
   hintRol: string;
   veldDienst: string;
   optieKies: string;
@@ -48,7 +50,9 @@ export interface FormTeksten {
   hintGroep: string;
   vragenKicker: string;
   veldSector: string;
+  veldSectorBij: string;
   veldOnderwerp: string;
+  veldOnderwerpBij: string;
   veldToelichting: string;
   veldToelichtingBij: string;
   hintToelichting: string;
@@ -189,11 +193,15 @@ export function ContactForm({ diensten = [], tk }: { diensten?: DienstOptie[]; t
 
       <div className="frow2">
         <div className="field">
-          <label htmlFor="f-org">{tk.veldOrganisatie}</label>
+          <label htmlFor="f-org">
+            {tk.veldOrganisatie} <span className="veld-optioneel">{tk.veldOrganisatieBij}</span>
+          </label>
           <input id="f-org" name="organisatie" type="text" placeholder={tk.hintOrganisatie} />
         </div>
         <div className="field">
-          <label htmlFor="f-rol">{tk.veldRol}</label>
+          <label htmlFor="f-rol">
+            {tk.veldRol} <span className="veld-optioneel">{tk.veldRolBij}</span>
+          </label>
           <input id="f-rol" name="rol" type="text" placeholder={tk.hintRol} />
         </div>
       </div>
@@ -306,7 +314,9 @@ export function ContactForm({ diensten = [], tk }: { diensten?: DienstOptie[]; t
       )}
 
       <div className="field" role="group" aria-labelledby="lbl-sector">
-        <label id="lbl-sector">{tk.veldSector}</label>
+        <label id="lbl-sector">
+          {tk.veldSector} <span className="veld-optioneel">{tk.veldSectorBij}</span>
+        </label>
         <div className="chips">
           {SECTOREN.map((s) => (
             <label className="chip" key={s}>
@@ -318,7 +328,9 @@ export function ContactForm({ diensten = [], tk }: { diensten?: DienstOptie[]; t
       </div>
 
       <div className="field" role="group" aria-labelledby="lbl-onderwerp">
-        <label id="lbl-onderwerp">{tk.veldOnderwerp}</label>
+        <label id="lbl-onderwerp">
+          {tk.veldOnderwerp} <span className="veld-optioneel">{tk.veldOnderwerpBij}</span>
+        </label>
         <div className="chips">
           {ONDERWERPEN.map((o) => (
             <label className="chip" key={o}>
