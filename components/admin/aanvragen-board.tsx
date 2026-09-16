@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState, useTransition } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { Mail, AlertTriangle, Check } from "lucide-react";
 import { deleteLead, updateLead } from "@/app/admin/aanvragen/actions";
 import { LEAD_STATUSSEN, STATUS_LABEL, type Lead } from "@/lib/cms/inzendingen-types";
@@ -23,7 +23,11 @@ function fmt(iso: string) {
 
 export function AanvragenBoard({ leads, eigenaren = [] }: { leads: Lead[]; eigenaren?: string[] }) {
   const [items, setItems] = useState(leads);
-  const [selectedId, setSelectedId] = useState<string | null>(null);
+  const searchParams = useSearchParams();
+  // Opent de rij die de e-mailknop "Oppakken in CMS" meegeeft (?open=<id>);
+  // alleen bij het eerste render gelezen, zodat een klik in de kolommen daarna
+  // niet telkens wordt overschreven door de URL.
+  const [selectedId, setSelectedId] = useState<string | null>(() => searchParams.get("open"));
   const [err, setErr] = useState<string | null>(null);
   const [okMsg, setOkMsg] = useState<string | null>(null);
   const [bezig, startTransition] = useTransition();

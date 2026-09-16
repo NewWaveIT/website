@@ -4,6 +4,7 @@ import { inzendingClient } from "@/lib/supabase/inzendingen";
 import { sendSollicitatieNotificatie, sendSollicitatieBevestiging } from "@/lib/email";
 import { getContactpersoon } from "@/lib/team-data";
 import { magDoor } from "@/lib/rate-limit";
+import { SITE_URL } from "@/lib/site";
 
 type DbClient = ReturnType<typeof inzendingClient>;
 
@@ -135,16 +136,21 @@ export async function submitSollicitatie(
     if (!motivatiePath) return uploadFout;
   }
 
+  let id: string | null = null;
   try {
-    const { error } = await supabase.from("sollicitaties").insert({
-      vacature_slug: vacatureSlug || "open-sollicitatie",
-      naam,
-      email,
-      telefoon: telefoon || null,
-      motivatie_url: motivatiePath,
-      link_url: link || null,
-      cv_url: cvPath,
-    });
+    const { data, error } = await supabase
+      .from("sollicitaties")
+      .insert({
+        vacature_slug: vacatureSlug || "open-sollicitatie",
+        naam,
+        email,
+        telefoon: telefoon || null,
+        motivatie_url: motivatiePath,
+        link_url: link || null,
+        cv_url: cvPath,
+      })
+      .select("id")
+      .single();
     if (error) {
       return {
         ok: false,
@@ -152,6 +158,7 @@ export async function submitSollicitatie(
           "Er ging iets mis bij het versturen. Probeer het later opnieuw of mail people@thenewwaveit.com.",
       };
     }
+    id = data.id;
   } catch {
     return {
       ok: false,
@@ -161,10 +168,6 @@ export async function submitSollicitatie(
   }
 
   const vacatureNaam = vacatureTitel || vacatureSlug || "Open sollicitatie";
-  const cvStatus = "Bijgevoegd: cv + motivatiebrief";
-  const motivatieTekst = link
-    ? `Motivatiebrief bijgevoegd; zie de admin.\n\nLink: ${link}`
-    : "Motivatiebrief bijgevoegd; zie de admin.";
 
   // Interne notificatie (fail-safe: breekt de sollicitatie nooit).
   await sendSollicitatieNotificatie({
@@ -172,25 +175,28 @@ export async function submitSollicitatie(
     email,
     telefoon,
     vacature: vacatureNaam,
-    cvStatus,
-    motivatie: motivatieTekst,
+    linkedinUrl: link,
+    bron: vacatureSlug ? "Vacaturepagina" : "Open sollicitatie",
+    cmsUrl: `${SITE_URL}/admin/sollicitaties?open=${id}`,
   });
 
   // Recruitment-contactpersoon (dynamisch): reply-to op de bevestiging + ondertekening.
   const rec = await getContactpersoon("recruitment");
+  const recNaam = rec?.naam || "Mitchel Wallaart";
+  const recEmail = rec?.email || "people@thenewwaveit.com";
 
   // Bevestiging naar de sollicitant zelf (fail-safe).
   await sendSollicitatieBevestiging({
     to: email,
     voornaam: naam.split(" ")[0] || naam,
     vacature: vacatureNaam,
-    cvStatus,
-    replyTo: rec?.email || undefined,
+    recruiterNaam: recNaam,
+    recruiterEmail: recEmail,
   });
 
-  const recVoornaam = (rec?.naam || "Mitchel Wallaart").split(" ")[0] || "Mitchel";
+  const recVoornaam = recNaam.split(" ")[0] || "Mitchel";
   return {
     ok: true,
-    message: `Bedankt, je sollicitatie staat bij ons binnen. Je ontvangt zo een bevestiging per mail, en je hoort binnen twee werkdagen van ons, meestal van ${recVoornaam} zelf.`,
+    message: `Bedankt, je sollicitatie staat bij ons binnen. Je ontvangt zo een bevestiging per mail, en je hoort binnen drie werkdagen van ons, meestal van ${recVoornaam} zelf.`,
   };
 }

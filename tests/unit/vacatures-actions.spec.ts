@@ -1,12 +1,17 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 type UploadResult = { error: { message: string } | null };
-type InsertResult = { error: { message: string } | null };
+type SingleResult = { data: { id: string } | null; error: { message: string } | null };
 type RpcResult = { data: boolean | null; error: { message: string } | null };
 
 const uploadMock = vi.fn(async (): Promise<UploadResult> => ({ error: null }));
 const storageFromMock = vi.fn(() => ({ upload: uploadMock }));
-const insertMock = vi.fn(async (): Promise<InsertResult> => ({ error: null }));
+const singleMock = vi.fn<() => Promise<SingleResult>>(async () => ({
+  data: { id: "test-id" },
+  error: null,
+}));
+const selectMock = vi.fn(() => ({ single: singleMock }));
+const insertMock = vi.fn(() => ({ select: selectMock }));
 const fromMock = vi.fn(() => ({ insert: insertMock }));
 const rpcMock = vi.fn(async (): Promise<RpcResult> => ({ data: true, error: null }));
 const createClientMock = vi.fn(async () => ({
@@ -60,6 +65,8 @@ beforeEach(() => {
   uploadMock.mockClear().mockResolvedValue({ error: null });
   storageFromMock.mockClear();
   insertMock.mockClear();
+  selectMock.mockClear();
+  singleMock.mockClear().mockResolvedValue({ data: { id: "test-id" }, error: null });
   fromMock.mockClear();
   rpcMock.mockClear().mockResolvedValue({ data: true, error: null });
   createClientMock.mockClear();

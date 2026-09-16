@@ -1,5 +1,6 @@
 "use server";
 import { CONTACT_TERUGVAL } from "@/lib/contactgegevens";
+import { SITE_URL } from "@/lib/site";
 
 import { inzendingClient } from "@/lib/supabase/inzendingen";
 import { sendAanvraagNotificatie, sendAanvraagBevestiging } from "@/lib/email";
@@ -116,16 +117,21 @@ export async function submitContact(
     [toelichting, antwoordenBlok].filter(Boolean).join("\n\n") ||
     `Aanvraag via het contactformulier. ${onderwerpLabel || "Geen extra toelichting."}`;
 
+  let id: string | null = null;
   try {
     const supabase = inzendingClient();
-    const { error } = await supabase.from("contact_aanvragen").insert({
-      naam,
-      email,
-      bedrijf: bedrijf || null,
-      onderwerp: onderwerpLabel || null,
-      bericht,
-      type,
-    });
+    const { data, error } = await supabase
+      .from("contact_aanvragen")
+      .insert({
+        naam,
+        email,
+        bedrijf: bedrijf || null,
+        onderwerp: onderwerpLabel || null,
+        bericht,
+        type,
+      })
+      .select("id")
+      .single();
 
     if (error) {
       return {
@@ -133,6 +139,7 @@ export async function submitContact(
         message: `Er ging iets mis bij het versturen. Probeer het later opnieuw of mail ${CONTACT_TERUGVAL.email}.`,
       };
     }
+    id = data.id;
   } catch {
     return {
       ok: false,
@@ -145,16 +152,20 @@ export async function submitContact(
     naam,
     organisatie: bedrijf,
     email,
-    telefoon: "",
-    onderwerp: onderwerpLabel,
-    bericht,
+    rol,
+    dienst: serviceNaam,
+    sector,
+    vraagstuk: onderwerpen,
+    aantalDeelnemers: groepsgrootte,
+    toelichting: [toelichting, antwoordenBlok].filter(Boolean).join("\n\n"),
+    cmsUrl: `${SITE_URL}/admin/aanvragen?open=${id}`,
   });
 
   await sendAanvraagBevestiging({
     to: email,
     voornaam: naam.split(" ")[0] || naam,
-    onderwerp: onderwerpLabel,
-    bericht,
+    dienst: onderwerpLabel,
+    toelichting,
   });
 
   return {

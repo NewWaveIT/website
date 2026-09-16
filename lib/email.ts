@@ -3,34 +3,31 @@ import { SITE_URL } from "@/lib/site";
 
 /**
  * Transactionele mail in huisstijl (tabelgebaseerd, 600px, inline gestyled).
- * Templates komen uit het Claude Design-project (ui_kits/website/mailtemplates.html).
+ * Templates komen uit het Claude Design-project (ui_kits/website/email-templates.html).
  * Alle verzendfuncties zijn fail-safe: ze gooien nooit en slaan over zonder
  * RESEND_API_KEY — een inzending mag er nooit op stuklopen.
  *
  * Env:
- *   RESEND_API_KEY        Server-only API-key van Resend.
- *   NOTIFY_EMAIL          Interne ontvanger voor sollicitaties (default people@thenewwaveit.com).
+ *   RESEND_API_KEY          Server-only API-key van Resend.
+ *   NOTIFY_EMAIL            Interne ontvanger voor sollicitaties (default people@thenewwaveit.com).
  *   NOTIFY_EMAIL_AANVRAGEN  Interne ontvanger voor contactaanvragen (default orders@thenewwaveit.com).
- *   MAIL_FROM             Afzender interne notificaties (default notificaties@…).
- *   MAIL_FROM_PUBLIC      Afzender bevestigingen naar bezoekers (default hello@…).
- *   NEXT_PUBLIC_SITE_URL  Basis-URL voor logo + links (default www.thenewwaveit.com).
+ *   MAIL_FROM               Afzender interne notificaties (default notificaties@…).
+ *   MAIL_FROM_PUBLIC        Afzender bevestigingen naar bezoekers (default hello@…).
+ *   NEXT_PUBLIC_SITE_URL    Basis-URL voor logo + links (default www.thenewwaveit.com).
  */
 
 const RESEND_ENDPOINT = "https://api.resend.com/emails";
 import { CONTACT_TERUGVAL } from "@/lib/contactgegevens";
 const SITE = SITE_URL;
-const LOGO = `${SITE}/assets/logos/logo-horizontal-white.png`;
+// Espresso-logo: de bevestigingsmails hebben een lichte achtergrond, geen
+// donkere header meer — een wit logo zou daar onzichtbaar zijn.
+const LOGO = `${SITE}/assets/logos/logo-horizontal-espresso.png`;
 const FROM_ADMIN = process.env.MAIL_FROM || "The New Wave IT <notificaties@thenewwaveit.com>";
 const FROM_PUBLIC = process.env.MAIL_FROM_PUBLIC || `The New Wave IT <${CONTACT_TERUGVAL.email}>`;
 // Twee aparte postbussen: sollicitaties horen bij recruitment, aanvragen bij
 // de rest van de business — vandaar niet één gedeelde NOTIFY-constante.
 const NOTIFY_SOLLICITATIES = process.env.NOTIFY_EMAIL || "people@thenewwaveit.com";
 const NOTIFY_AANVRAGEN = process.env.NOTIFY_EMAIL_AANVRAGEN || "orders@thenewwaveit.com";
-// De terugval en niet het CMS: een mail wordt verstuurd op het moment dat een
-// inzending net is opgeslagen, en mag daar geen tweede databaseleesactie bij
-// krijgen die kan mislukken. Zie lib/contactgegevens.ts.
-const TEL = CONTACT_TERUGVAL.telefoon;
-const TEL_DISPLAY = CONTACT_TERUGVAL.telefoonWeergave;
 
 function escapeHtml(s: string): string {
   return s
@@ -40,17 +37,19 @@ function escapeHtml(s: string): string {
     .replace(/"/g, "&quot;");
 }
 
-/** Escape + regels naar <br> voor vrije-tekstblokken (motivatie, bericht). */
+/** Escape + regels naar <br> voor vrije-tekstblokken (toelichting, motivatie). */
 function tekst(s: string): string {
   return escapeHtml(s).replace(/\n/g, "<br>");
 }
 
-function datumNu(): string {
-  return new Date().toLocaleDateString("nl-NL", {
+function datumTijdNu(): string {
+  return new Date().toLocaleString("nl-NL", {
     timeZone: "Europe/Amsterdam",
     day: "numeric",
-    month: "long",
+    month: "short",
     year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
   });
 }
 
@@ -86,306 +85,263 @@ async function verstuur(payload: {
   }
 }
 
-/** Preheader (verborgen inbox-preview) + 600px-omhulsel rond de inner-rijen. */
+/** Preheader (verborgen inbox-preview) + het 600px-kader rond elke mail. */
 function omhulsel(preheader: string, inner: string): string {
   return `<!doctype html><html lang="nl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light dark"></head><body style="margin:0;padding:0;background:#ECE6DB;">
 <span style="display:none;font-size:1px;color:#ECE6DB;line-height:1px;max-height:0;max-width:0;opacity:0;overflow:hidden;">${escapeHtml(preheader)}</span>
-<table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="border-collapse:collapse;background:#ECE6DB;"><tr><td align="center" style="padding:32px 16px;">
-<table role="presentation" cellpadding="0" cellspacing="0" border="0" width="600" style="width:600px;max-width:600px;border-collapse:collapse;background:#FFFDF9;">
+<table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="border-collapse:collapse;background:#ECE6DB;"><tr><td align="center" style="padding:24px 12px;">
+<table role="presentation" cellpadding="0" cellspacing="0" border="0" width="600" style="width:600px;max-width:600px;border-collapse:collapse;background:#FFFFFF;border:1px solid #E0D8C9;">
 ${inner}
 </table></td></tr></table></body></html>`;
 }
 
-/** De golfbalk onder de header. */
-const GOLFBALK = `<tr><td style="font-size:0;line-height:0;">
-  <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="border-collapse:collapse;">
-    <tr>
-      <td height="4" width="42%" style="height:4px;background:#F15822;font-size:0;line-height:0;">&nbsp;</td>
-      <td height="4" width="16%" style="height:4px;background:#D9812F;font-size:0;line-height:0;">&nbsp;</td>
-      <td height="4" width="42%" style="height:4px;background:#8B7B64;font-size:0;line-height:0;">&nbsp;</td>
-    </tr>
-  </table>
-</td></tr>`;
-
-const LOGO_ROW = `<tr><td style="padding-bottom:20px;"><img src="${LOGO}" alt="The New Wave IT" width="164" style="display:block;width:164px;height:auto;border:0;outline:none;text-decoration:none;"></td></tr>`;
-
-/** Donkere header voor de admin-notificaties (kicker + titel + metaregel). */
-function adminHeader(titel: string, meta: string): string {
-  return `<tr><td style="background:#2E251A;padding:30px 36px 26px 36px;">
-  <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="border-collapse:collapse;">
-    ${LOGO_ROW}
-    <tr><td style="font-family:'Courier New',Courier,monospace;font-size:11px;letter-spacing:2.4px;text-transform:uppercase;color:#F15822;padding-bottom:10px;mso-line-height-rule:exactly;line-height:14px;">Admin &nbsp;·&nbsp; Notificatie</td></tr>
-    <tr><td style="font-family:Arial,Helvetica,sans-serif;font-size:27px;font-weight:bold;color:#FFFDF9;letter-spacing:-0.4px;mso-line-height-rule:exactly;line-height:32px;">${escapeHtml(titel)}</td></tr>
-    <tr><td style="font-family:Arial,Helvetica,sans-serif;font-size:14px;color:#AC9D85;padding-top:8px;mso-line-height-rule:exactly;line-height:20px;">${escapeHtml(meta)}</td></tr>
-  </table>
-</td></tr>`;
+/** Logo + dunne oranje regel: alleen de twee bevestigingen naar de afzender. */
+function logoRij(): string {
+  return `<tr><td style="padding:28px 32px 0 32px;">
+    <img src="${LOGO}" alt="The New Wave IT" width="180" style="display:block;width:180px;height:auto;border:0;">
+  </td></tr>
+  <tr><td style="padding:22px 32px 0 32px;">
+    <div style="height:3px;background:#F15822;font-size:0;line-height:0;">&nbsp;</div>
+  </td></tr>`;
 }
 
-/** Donkere header voor de bevestigingen (groot, tweeregelig). */
-function bevestigingHeader(titelHtml: string): string {
-  return `<tr><td style="background:#2E251A;padding:34px 36px 30px 36px;">
-  <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="border-collapse:collapse;">
-    <tr><td style="padding-bottom:24px;"><img src="${LOGO}" alt="The New Wave IT" width="164" style="display:block;width:164px;height:auto;border:0;outline:none;text-decoration:none;"></td></tr>
-    <tr><td style="font-family:Arial,Helvetica,sans-serif;font-size:30px;font-weight:bold;color:#FFFDF9;letter-spacing:-0.5px;mso-line-height-rule:exactly;line-height:36px;">${titelHtml}</td></tr>
-  </table>
-</td></tr>`;
+/** Titel (met optionele kicker erboven) voor een bevestiging. `kickerHtml` is al veilig. */
+function titelBlok(kickerHtml: string | null, titel: string): string {
+  const kicker = kickerHtml
+    ? `<div style="font-family:'Courier New',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#8B7B64;padding-bottom:10px;">${kickerHtml}</div>`
+    : "";
+  return `<tr><td style="padding:26px 32px 0 32px;font-family:Arial,Helvetica,sans-serif;">
+    ${kicker}
+    <div style="font-size:22px;line-height:29px;font-weight:bold;color:#2E251A;letter-spacing:-0.3px;">${escapeHtml(titel)}</div>
+  </td></tr>`;
 }
 
-/** Label/waarde-rij in het gegevensblok. */
-function rij(label: string, valueHtml: string, sterk = false): string {
-  const kleur = sterk ? "#2E251A" : "#4E4030";
-  const gewicht = sterk ? "font-weight:bold;" : "";
-  return `<tr>
-    <td width="120" style="width:120px;padding:0 0 14px 0;vertical-align:top;font-family:'Courier New',Courier,monospace;font-size:11px;letter-spacing:1.4px;text-transform:uppercase;color:#8B7B64;mso-line-height-rule:exactly;line-height:20px;">${escapeHtml(label)}</td>
-    <td style="padding:0 0 14px 0;vertical-align:top;font-size:15px;color:${kleur};${gewicht}mso-line-height-rule:exactly;line-height:22px;">${valueHtml}</td>
-  </tr>`;
+/** Lopende tekst in een bevestiging. `html` is al veilig (escapeHtml is al toegepast). */
+function paragraaf(html: string, topPad = 14): string {
+  return `<tr><td style="padding:${topPad}px 32px 0 32px;font-family:Arial,Helvetica,sans-serif;font-size:15px;line-height:24px;color:#4E4030;">${html}</td></tr>`;
 }
 
-/** Geaccentueerd blok met oranje linkerbalk (motivatie / vraag). */
-function accentBlok(label: string, inhoudHtml: string): string {
-  return `<tr><td style="padding:8px 36px 0 36px;">
-    <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="width:100%;border-collapse:collapse;background:#F4F1EA;">
+/** Geaccentueerd blok met oranje linkerbalk (toelichting / samenvatting). */
+function accentBox(kicker: string, contentHtml: string, pad = "24px 32px 0 32px"): string {
+  return `<tr><td style="padding:${pad};">
+    <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="border-collapse:collapse;background:#F4F1EA;border-left:3px solid #F15822;">
+      <tr><td style="padding:18px 20px;font-family:Arial,Helvetica,sans-serif;">
+        <div style="font-family:'Courier New',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#8B7B64;padding-bottom:10px;">${escapeHtml(kicker)}</div>
+        <div style="font-size:14px;line-height:22px;color:#4E4030;">${contentHtml}</div>
+      </td></tr>
+    </table>
+  </td></tr>`;
+}
+
+/** Simpele voettekst in de bevestigingen — geen donker blok meer, één regel. */
+function footerAfzender(): string {
+  return `<tr><td style="padding:26px 32px 28px 32px;">
+    <div style="border-top:1px solid #E0D8C9;padding-top:16px;font-family:Arial,Helvetica,sans-serif;font-size:12px;line-height:20px;color:#8B7B64;">
+      The New Wave IT · Ganzenmarkt 6, Utrecht · <a href="${SITE}" style="color:#8B7B64;text-decoration:underline;">thenewwaveit.com</a>
+    </div>
+  </td></tr>`;
+}
+
+/** Donkere kopbalk van een interne melding. Geen logo: dit gaat naar het eigen team. */
+function donkereBalk(titelHtml: string): string {
+  return `<tr><td style="padding:18px 24px;background:#2E251A;font-family:'Courier New',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#ECE6DB;">
+    ${titelHtml}
+  </td></tr>`;
+}
+
+/** Naam + optioneel subregel, direct onder de donkere balk. */
+function naamBlok(naam: string, subtitelHtml: string): string {
+  return `<tr><td style="padding:26px 24px 0 24px;font-family:Arial,Helvetica,sans-serif;">
+    <div style="font-size:21px;line-height:28px;font-weight:bold;color:#2E251A;letter-spacing:-0.3px;">${escapeHtml(naam)}</div>
+    ${subtitelHtml ? `<div style="font-size:14px;line-height:22px;color:#6B5B47;padding-top:2px;">${subtitelHtml}</div>` : ""}
+  </td></tr>`;
+}
+
+/** Label/waarde-tabel in een interne melding. `waarde` mag al opgemaakt HTML zijn. */
+function gegevensTabel(rijen: { label: string; waarde: string; laatste?: boolean }[]): string {
+  const rows = rijen
+    .map((r) => {
+      const rand = `border-top:1px solid #E0D8C9;${r.laatste ? "border-bottom:1px solid #E0D8C9;" : ""}`;
+      return `<tr>
+        <td width="130" style="padding:8px 0;${rand}color:#8B7B64;vertical-align:top;">${escapeHtml(r.label)}</td>
+        <td style="padding:8px 0;${rand}color:#4E4030;">${r.waarde}</td>
+      </tr>`;
+    })
+    .join("");
+  return `<tr><td style="padding:20px 24px 0 24px;">
+    <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="border-collapse:collapse;font-family:Arial,Helvetica,sans-serif;font-size:14px;line-height:22px;">
+      ${rows}
+    </table>
+  </td></tr>`;
+}
+
+/** Twee knoppen naast elkaar: de hoofdactie (CMS) en een snelle reactie (mailto). */
+function knoppenRij(
+  primaireHref: string,
+  primaireLabel: string,
+  secundaireHref: string,
+  secundaireLabel: string,
+): string {
+  return `<tr><td style="padding:24px 24px 30px 24px;">
+    <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;">
       <tr>
-        <td width="4" style="width:4px;background:#F15822;font-size:0;line-height:0;">&nbsp;</td>
-        <td style="padding:20px 24px;font-family:Arial,Helvetica,sans-serif;">
-          <div style="font-family:'Courier New',Courier,monospace;font-size:11px;letter-spacing:1.4px;text-transform:uppercase;color:#8B7B64;padding-bottom:8px;">${escapeHtml(label)}</div>
-          <div style="font-size:15px;color:#4E4030;mso-line-height-rule:exactly;line-height:24px;">${inhoudHtml}</div>
+        <td style="background:#F15822;">
+          <a href="${primaireHref}" style="display:inline-block;padding:13px 24px;font-family:Arial,Helvetica,sans-serif;font-size:14px;font-weight:bold;color:#FFFFFF;text-decoration:none;">${escapeHtml(primaireLabel)}</a>
+        </td>
+        <td style="padding-left:12px;">
+          <a href="${secundaireHref}" style="display:inline-block;padding:12px 22px;border:1px solid #C9BCA6;font-family:Arial,Helvetica,sans-serif;font-size:14px;font-weight:bold;color:#2E251A;text-decoration:none;">${escapeHtml(secundaireLabel)}</a>
         </td>
       </tr>
     </table>
   </td></tr>`;
 }
 
-/** Oranje call-to-action-knop. */
-function knop(href: string, label: string, padding = "28px 36px 36px 36px"): string {
-  return `<tr><td style="padding:${padding};">
-    <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;">
-      <tr><td bgcolor="#F15822" style="background:#F15822;border-radius:4px;"><a href="${href}" style="display:block;padding:15px 30px;font-family:Arial,Helvetica,sans-serif;font-size:15px;font-weight:bold;color:#FFFFFF;text-decoration:none;letter-spacing:0.2px;">${label}</a></td></tr>
-    </table>
-  </td></tr>`;
+// ── 1. Contactformulier · bevestiging aan de afzender ─────────────────────────
+export async function sendAanvraagBevestiging(a: {
+  to: string;
+  voornaam: string;
+  dienst: string;
+  toelichting: string;
+  replyTo?: string;
+}): Promise<void> {
+  const inner = `
+${logoRij()}
+${titelBlok(null, "We hebben je bericht ontvangen")}
+${paragraaf(
+  `Hallo ${escapeHtml(a.voornaam)},<br><br>Bedankt voor je interesse in The New Wave IT. We lezen je aanvraag en nemen <strong style="color:#2E251A;">binnen één werkdag</strong> contact met je op om een gesprek te plannen.`,
+)}
+${accentBox(
+  "Jouw aanvraag",
+  `<strong style="color:#2E251A;">${escapeHtml(a.dienst || "Algemeen contact")}</strong><br>${tekst(a.toelichting || "Geen extra toelichting.")}`,
+)}
+${paragraaf(`Met vriendelijke groet,<br><strong style="color:#2E251A;">Team The New Wave IT</strong>`, 26)}
+${footerAfzender()}`;
+  await verstuur({
+    from: FROM_PUBLIC,
+    to: a.to,
+    replyTo: a.replyTo || NOTIFY_AANVRAGEN,
+    subject: "We hebben je bericht ontvangen",
+    html: omhulsel("We hebben je bericht ontvangen. Binnen één werkdag hoor je van ons.", inner),
+  });
 }
 
-const FOOTER_ADMIN = `<tr><td style="background:#2E251A;padding:22px 36px;">
-  <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="border-collapse:collapse;">
-    <tr><td style="font-family:'Courier New',Courier,monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#AC9D85;mso-line-height-rule:exactly;line-height:16px;">Automatische melding vanaf thenewwaveit.com</td></tr>
-  </table>
-</td></tr>`;
-
-function footerPubliek(redenHtml: string): string {
-  return `<tr><td style="background:#2E251A;padding:26px 36px;">
-    <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="border-collapse:collapse;">
-      <tr><td style="font-family:'Courier New',Courier,monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#F15822;padding-bottom:10px;mso-line-height-rule:exactly;line-height:16px;">De nieuwe golf in IT-consultancy</td></tr>
-      <tr><td style="font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#AC9D85;mso-line-height-rule:exactly;line-height:20px;">
-        The New Wave IT &nbsp;·&nbsp; <a href="${SITE}" style="color:#AC9D85;text-decoration:underline;">thenewwaveit.com</a><br>
-        ${redenHtml}. <a href="${SITE}/privacy" style="color:#AC9D85;text-decoration:underline;">privacyverklaring</a>.
-      </td></tr>
-    </table>
-  </td></tr>`;
+// ── 2. Contactformulier · interne melding ─────────────────────────────────────
+export async function sendAanvraagNotificatie(a: {
+  naam: string;
+  organisatie: string;
+  email: string;
+  rol: string;
+  dienst: string;
+  sector: string;
+  vraagstuk: string;
+  aantalDeelnemers: string;
+  toelichting: string;
+  cmsUrl: string;
+}): Promise<void> {
+  const rijen = [
+    {
+      label: "E-mail",
+      waarde: `<a href="mailto:${escapeHtml(a.email)}" style="color:#F15822;text-decoration:none;">${escapeHtml(a.email)}</a>`,
+    },
+    ...(a.rol ? [{ label: "Rol", waarde: escapeHtml(a.rol) }] : []),
+    ...(a.dienst ? [{ label: "Dienst", waarde: escapeHtml(a.dienst) }] : []),
+    ...(a.sector ? [{ label: "Sector", waarde: escapeHtml(a.sector) }] : []),
+    ...(a.vraagstuk ? [{ label: "Vraagstuk", waarde: escapeHtml(a.vraagstuk) }] : []),
+    ...(a.aantalDeelnemers
+      ? [{ label: "Deelnemers", waarde: escapeHtml(a.aantalDeelnemers) }]
+      : []),
+    { label: "Ontvangen", waarde: escapeHtml(datumTijdNu()), laatste: true },
+  ];
+  const inner = `
+${donkereBalk(`Nieuwe aanvraag &nbsp;·&nbsp; <span style="color:#F15822;">Contactformulier</span>`)}
+${naamBlok(a.naam, a.organisatie ? escapeHtml(a.organisatie) : "")}
+${gegevensTabel(rijen)}
+${a.toelichting ? accentBox("Toelichting", tekst(a.toelichting), "22px 24px 0 24px") : ""}
+${knoppenRij(a.cmsUrl, "Oppakken in CMS", `mailto:${a.email}`, "Direct antwoorden")}`;
+  await verstuur({
+    from: FROM_ADMIN,
+    to: NOTIFY_AANVRAGEN,
+    replyTo: a.email,
+    subject: `Nieuwe aanvraag van ${a.organisatie || a.naam} via Contactformulier`,
+    html: omhulsel(
+      `Nieuwe aanvraag van ${a.naam}${a.organisatie ? ` (${a.organisatie})` : ""}. Pak op binnen één werkdag.`,
+      inner,
+    ),
+  });
 }
 
-/** Stappen 01/02/03 ("Hoe het verder gaat"). */
-function stappen(label: string, items: string[]): string {
-  const rows = items
-    .map((it, i) => {
-      const last = i === items.length - 1;
-      const pad = last ? "0" : "0 0 14px 0";
-      return `<tr>
-        <td width="34" style="width:34px;vertical-align:top;padding:${pad};font-family:'Courier New',Courier,monospace;font-size:13px;font-weight:bold;color:#F15822;mso-line-height-rule:exactly;line-height:24px;">0${i + 1}</td>
-        <td style="padding:${pad};font-size:15px;color:#4E4030;mso-line-height-rule:exactly;line-height:24px;">${escapeHtml(it)}</td>
-      </tr>`;
-    })
-    .join("");
-  return `<tr><td style="padding:32px 36px 0 36px;font-family:Arial,Helvetica,sans-serif;">
-    <div style="font-family:'Courier New',Courier,monospace;font-size:11px;letter-spacing:1.4px;text-transform:uppercase;color:#8B7B64;padding-bottom:14px;">${escapeHtml(label)}</div>
-    <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="border-collapse:collapse;">${rows}</table>
-  </td></tr>`;
+// ── 3. Sollicitatie · bevestiging aan de sollicitant ──────────────────────────
+export async function sendSollicitatieBevestiging(a: {
+  to: string;
+  voornaam: string;
+  vacature: string;
+  recruiterNaam: string;
+  recruiterEmail: string;
+}): Promise<void> {
+  const inner = `
+${logoRij()}
+${titelBlok(`Sollicitatie · ${escapeHtml(a.vacature)}`, "We hebben je sollicitatie ontvangen")}
+${paragraaf(
+  `Hallo ${escapeHtml(a.voornaam)},<br><br>Bedankt voor je sollicitatie op <strong style="color:#2E251A;">${escapeHtml(a.vacature)}</strong>. We hebben je cv en motivatiebrief ontvangen en lezen ze zelf.`,
+)}
+${paragraaf(
+  `Je hoort <strong style="color:#2E251A;">binnen drie werkdagen</strong> van ons. Heb je een vraag? Mail <a href="mailto:${escapeHtml(a.recruiterEmail)}" style="color:#F15822;text-decoration:none;font-weight:bold;">${escapeHtml(a.recruiterNaam)}</a>.<br><br>Met vriendelijke groet,<br><strong style="color:#2E251A;">Team The New Wave IT</strong>`,
+  24,
+)}
+${footerAfzender()}`;
+  await verstuur({
+    from: FROM_PUBLIC,
+    to: a.to,
+    replyTo: a.recruiterEmail,
+    subject: `We hebben je sollicitatie voor ${a.vacature} ontvangen`,
+    html: omhulsel(
+      `We hebben je sollicitatie op ${a.vacature} goed ontvangen. Binnen drie werkdagen hoor je van ons.`,
+      inner,
+    ),
+  });
 }
 
-// ── 1. Interne notificatie · nieuwe sollicitatie ──────────────────────────────
+// ── 4. Sollicitatie · interne melding ──────────────────────────────────────────
 export async function sendSollicitatieNotificatie(a: {
   naam: string;
   email: string;
   telefoon: string;
   vacature: string;
-  cvStatus: string;
-  motivatie: string;
+  linkedinUrl: string;
+  bron: string;
+  cmsUrl: string;
 }): Promise<void> {
-  const datum = datumNu();
+  const rijen = [
+    {
+      label: "E-mail",
+      waarde: `<a href="mailto:${escapeHtml(a.email)}" style="color:#F15822;text-decoration:none;">${escapeHtml(a.email)}</a>`,
+    },
+    ...(a.telefoon ? [{ label: "Telefoon", waarde: escapeHtml(a.telefoon) }] : []),
+    { label: "Via", waarde: `${escapeHtml(a.bron)} · ${escapeHtml(datumTijdNu())}` },
+    ...(a.linkedinUrl
+      ? [
+          {
+            label: "LinkedIn",
+            waarde: `<a href="${escapeHtml(a.linkedinUrl)}" style="color:#F15822;text-decoration:none;">${escapeHtml(a.linkedinUrl)}</a>`,
+          },
+        ]
+      : []),
+    {
+      label: "Bijlagen",
+      waarde: "Cv en motivatiebrief, te openen via de knop hieronder",
+      laatste: true,
+    },
+  ];
   const inner = `
-${adminHeader("Nieuwe sollicitatie", `${a.vacature} · binnengekomen ${datum}`)}
-${GOLFBALK}
-<tr><td style="padding:34px 36px 8px 36px;">
-  <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="width:100%;border-collapse:collapse;font-family:Arial,Helvetica,sans-serif;">
-    ${rij("Naam", escapeHtml(a.naam), true)}
-    ${rij("E-mail", `<a href="mailto:${escapeHtml(a.email)}" style="color:#4E4030;text-decoration:underline;">${escapeHtml(a.email)}</a>`)}
-    ${a.telefoon ? rij("Telefoon", `<a href="tel:${escapeHtml(a.telefoon)}" style="color:#4E4030;text-decoration:none;">${escapeHtml(a.telefoon)}</a>`) : ""}
-    ${rij("CV", escapeHtml(a.cvStatus))}
-  </table>
-</td></tr>
-${accentBlok("Motivatie", tekst(a.motivatie))}
-${knop(`${SITE}/admin/sollicitaties`, "Open in de admin &nbsp;&rarr;")}
-${FOOTER_ADMIN}`;
+${donkereBalk(`Nieuwe sollicitatie &nbsp;·&nbsp; <span style="color:#F15822;">${escapeHtml(a.vacature)}</span>`)}
+${naamBlok(a.naam, "")}
+${gegevensTabel(rijen)}
+${knoppenRij(a.cmsUrl, "Naar screening", `mailto:${a.email}`, "Kandidaat mailen")}`;
   await verstuur({
     from: FROM_ADMIN,
     to: NOTIFY_SOLLICITATIES,
-    subject: `Nieuwe sollicitatie · ${a.vacature} · ${a.naam}`,
-    html: omhulsel(
-      `Nieuwe sollicitatie van ${a.naam} op de vacature ${a.vacature}. Bekijk het dossier in de admin.`,
-      inner,
-    ),
-  });
-}
-
-// ── 2. Bevestiging aan de sollicitant ─────────────────────────────────────────
-export async function sendSollicitatieBevestiging(a: {
-  to: string;
-  voornaam: string;
-  vacature: string;
-  cvStatus: string;
-  replyTo?: string;
-}): Promise<void> {
-  const datum = datumNu();
-  const inner = `
-${bevestigingHeader("Je sollicitatie<br>is binnen")}
-${GOLFBALK}
-<tr><td style="padding:36px 36px 4px 36px;font-family:Arial,Helvetica,sans-serif;font-size:16px;color:#4E4030;mso-line-height-rule:exactly;line-height:27px;">
-  Hoi ${escapeHtml(a.voornaam)},
-  <div style="height:16px;line-height:16px;font-size:0;">&nbsp;</div>
-  Bedankt voor je sollicitatie op <strong style="color:#2E251A;">${escapeHtml(a.vacature)}</strong>. We hebben alles goed ontvangen.
-  <div style="height:16px;line-height:16px;font-size:0;">&nbsp;</div>
-  We nemen 'm zorgvuldig door en je hoort <strong style="color:#2E251A;">binnen vijf werkdagen</strong> van ons, ook als het deze keer geen match is.
-</td></tr>
-<tr><td style="padding:28px 36px 0 36px;">
-  <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="width:100%;border-collapse:collapse;background:#F4F1EA;">
-    <tr>
-      <td width="4" style="width:4px;background:#F15822;font-size:0;line-height:0;">&nbsp;</td>
-      <td style="padding:22px 24px;font-family:Arial,Helvetica,sans-serif;">
-        <div style="font-family:'Courier New',Courier,monospace;font-size:11px;letter-spacing:1.4px;text-transform:uppercase;color:#8B7B64;padding-bottom:12px;">Wat we ontvingen</div>
-        <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="border-collapse:collapse;">
-          <tr><td width="110" style="width:110px;padding:0 0 8px 0;font-size:14px;color:#8B7B64;line-height:20px;">Vacature</td><td style="padding:0 0 8px 0;font-size:14px;color:#2E251A;font-weight:bold;line-height:20px;">${escapeHtml(a.vacature)}</td></tr>
-          <tr><td width="110" style="width:110px;padding:0 0 8px 0;font-size:14px;color:#8B7B64;line-height:20px;">Ingediend op</td><td style="padding:0 0 8px 0;font-size:14px;color:#4E4030;line-height:20px;">${escapeHtml(datum)}</td></tr>
-          <tr><td width="110" style="width:110px;padding:0;font-size:14px;color:#8B7B64;line-height:20px;">Bijlage</td><td style="padding:0;font-size:14px;color:#4E4030;line-height:20px;">${escapeHtml(a.cvStatus)}</td></tr>
-        </table>
-      </td>
-    </tr>
-  </table>
-</td></tr>
-${stappen("Hoe het verder gaat", [
-  "We lezen je sollicitatie en koppelen binnen vijf werkdagen terug.",
-  "Klikt het? Dan plannen we een kennismaking van een half uur, bij ons of digitaal.",
-  "Daarna een verdiepend gesprek met het team waar je terechtkomt.",
-])}
-${knop(`${SITE}/over-ons`, "Maak vast kennis met het team", "32px 36px 0 36px")}
-<tr><td style="padding:30px 36px 36px 36px;font-family:Arial,Helvetica,sans-serif;font-size:15px;color:#4E4030;mso-line-height-rule:exactly;line-height:24px;">
-  Vragen in de tussentijd? Antwoord gerust op deze mail of bel <a href="tel:${TEL}" style="color:#F15822;text-decoration:none;font-weight:bold;">${TEL_DISPLAY}</a>.
-  <div style="height:18px;line-height:18px;font-size:0;">&nbsp;</div>
-  Tot snel,<br><strong style="color:#2E251A;">Team The New Wave IT</strong>
-</td></tr>
-${footerPubliek("Je ontvangt deze mail omdat je hebt gesolliciteerd via onze website. Je gegevens bewaren we maximaal vier weken na afronding van de procedure")}`;
-  await verstuur({
-    from: FROM_PUBLIC,
-    to: a.to,
-    replyTo: a.replyTo || NOTIFY_SOLLICITATIES,
-    subject: `We hebben je sollicitatie ontvangen · ${a.vacature}`,
-    html: omhulsel(
-      `We hebben je sollicitatie op ${a.vacature} goed ontvangen. Binnen vijf werkdagen hoor je van ons.`,
-      inner,
-    ),
-  });
-}
-
-// ── 3. Interne notificatie · nieuwe aanvraag ──────────────────────────────────
-export async function sendAanvraagNotificatie(a: {
-  naam: string;
-  organisatie: string;
-  email: string;
-  telefoon: string;
-  onderwerp: string;
-  bericht: string;
-}): Promise<void> {
-  const datum = datumNu();
-  const meta = `${a.organisatie || a.naam} · binnengekomen ${datum}`;
-  const inner = `
-${adminHeader("Nieuwe aanvraag", meta)}
-${GOLFBALK}
-<tr><td style="padding:34px 36px 8px 36px;">
-  <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="width:100%;border-collapse:collapse;font-family:Arial,Helvetica,sans-serif;">
-    ${rij("Naam", escapeHtml(a.naam), true)}
-    ${a.organisatie ? rij("Organisatie", escapeHtml(a.organisatie)) : ""}
-    ${rij("E-mail", `<a href="mailto:${escapeHtml(a.email)}" style="color:#4E4030;text-decoration:underline;">${escapeHtml(a.email)}</a>`)}
-    ${a.telefoon ? rij("Telefoon", `<a href="tel:${escapeHtml(a.telefoon)}" style="color:#4E4030;text-decoration:none;">${escapeHtml(a.telefoon)}</a>`) : ""}
-    ${a.onderwerp ? rij("Onderwerp", escapeHtml(a.onderwerp)) : ""}
-  </table>
-</td></tr>
-${accentBlok("Vraag", tekst(a.bericht))}
-${knop(`${SITE}/admin/aanvragen`, "Open in de admin &nbsp;&rarr;")}
-${FOOTER_ADMIN}`;
-  await verstuur({
-    from: FROM_ADMIN,
-    to: NOTIFY_AANVRAGEN,
-    subject: `Nieuwe aanvraag · ${a.organisatie || a.naam}${a.onderwerp ? ` · ${a.onderwerp}` : ""}`,
-    html: omhulsel(
-      `Nieuwe aanvraag van ${a.organisatie || a.naam}${a.onderwerp ? ` over ${a.onderwerp}` : ""}. Pak op binnen één werkdag.`,
-      inner,
-    ),
-  });
-}
-
-// ── 4. Bevestiging aan de aanvrager ───────────────────────────────────────────
-export async function sendAanvraagBevestiging(a: {
-  to: string;
-  voornaam: string;
-  onderwerp: string;
-  bericht: string;
-  replyTo?: string;
-}): Promise<void> {
-  const datum = datumNu();
-  const onderwerp = a.onderwerp || "je aanvraag";
-  const inner = `
-${bevestigingHeader("Je aanvraag<br>is binnen")}
-${GOLFBALK}
-<tr><td style="padding:36px 36px 4px 36px;font-family:Arial,Helvetica,sans-serif;font-size:16px;color:#4E4030;mso-line-height-rule:exactly;line-height:27px;">
-  Hoi ${escapeHtml(a.voornaam)},
-  <div style="height:16px;line-height:16px;font-size:0;">&nbsp;</div>
-  Bedankt voor je bericht. We hebben je aanvraag over <strong style="color:#2E251A;">${escapeHtml(onderwerp)}</strong> ontvangen en leggen 'm bij de juiste collega neer.
-  <div style="height:16px;line-height:16px;font-size:0;">&nbsp;</div>
-  Je hoort <strong style="color:#2E251A;">binnen één werkdag</strong> van ons.
-</td></tr>
-<tr><td style="padding:28px 36px 0 36px;">
-  <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="width:100%;border-collapse:collapse;background:#F4F1EA;">
-    <tr>
-      <td width="4" style="width:4px;background:#F15822;font-size:0;line-height:0;">&nbsp;</td>
-      <td style="padding:22px 24px;font-family:Arial,Helvetica,sans-serif;">
-        <div style="font-family:'Courier New',Courier,monospace;font-size:11px;letter-spacing:1.4px;text-transform:uppercase;color:#8B7B64;padding-bottom:12px;">Je aanvraag</div>
-        <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="border-collapse:collapse;">
-          <tr><td width="110" style="width:110px;padding:0 0 8px 0;vertical-align:top;font-size:14px;color:#8B7B64;line-height:20px;">Onderwerp</td><td style="padding:0 0 8px 0;font-size:14px;color:#2E251A;font-weight:bold;line-height:20px;">${escapeHtml(onderwerp)}</td></tr>
-          <tr><td width="110" style="width:110px;padding:0 0 8px 0;vertical-align:top;font-size:14px;color:#8B7B64;line-height:20px;">Ingediend op</td><td style="padding:0 0 8px 0;font-size:14px;color:#4E4030;line-height:20px;">${escapeHtml(datum)}</td></tr>
-          <tr><td width="110" style="width:110px;padding:0;vertical-align:top;font-size:14px;color:#8B7B64;line-height:20px;">Je bericht</td><td style="padding:0;font-size:14px;color:#4E4030;line-height:20px;">${tekst(a.bericht)}</td></tr>
-        </table>
-      </td>
-    </tr>
-  </table>
-</td></tr>
-${stappen("Hoe het verder gaat", [
-  "Een consultant met de juiste ervaring pakt je vraag op, binnen één werkdag.",
-  "In een kort gesprek scherpen we samen de vraag en de scope aan.",
-  "Je krijgt een concreet voorstel met aanpak, team en doorlooptijd.",
-])}
-${knop(`${SITE}/klantverhalen`, "Bekijk hoe we dit voor anderen deden", "32px 36px 0 36px")}
-<tr><td style="padding:30px 36px 36px 36px;font-family:Arial,Helvetica,sans-serif;font-size:15px;color:#4E4030;mso-line-height-rule:exactly;line-height:24px;">
-  Kan het niet wachten? Bel <a href="tel:${TEL}" style="color:#F15822;text-decoration:none;font-weight:bold;">${TEL_DISPLAY}</a>.
-  <div style="height:18px;line-height:18px;font-size:0;">&nbsp;</div>
-  Tot snel,<br><strong style="color:#2E251A;">Team The New Wave IT</strong>
-</td></tr>
-${footerPubliek("Je ontvangt deze mail omdat je een aanvraag hebt gedaan via onze website")}`;
-  await verstuur({
-    from: FROM_PUBLIC,
-    to: a.to,
-    replyTo: a.replyTo || NOTIFY_AANVRAGEN,
-    subject: "We hebben je aanvraag ontvangen · The New Wave IT",
-    html: omhulsel(
-      "Je aanvraag is binnen. Binnen één werkdag neemt een van ons persoonlijk contact met je op.",
-      inner,
-    ),
+    replyTo: a.email,
+    subject: `Nieuwe sollicitatie van ${a.naam} voor ${a.vacature}`,
+    html: omhulsel(`Nieuwe sollicitatie van ${a.naam} op de vacature ${a.vacature}.`, inner),
   });
 }

@@ -1,11 +1,16 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-type InsertResult = { error: { message: string } | null };
+type SingleResult = { data: { id: string } | null; error: { message: string } | null };
 type RpcResult = { data: boolean | null; error: { message: string } | null };
 
-const insertMock = vi.fn<(record: Record<string, unknown>) => Promise<InsertResult>>(async () => ({
+const singleMock = vi.fn<() => Promise<SingleResult>>(async () => ({
+  data: { id: "test-id" },
   error: null,
 }));
+const selectMock = vi.fn(() => ({ single: singleMock }));
+const insertMock = vi.fn<(record: Record<string, unknown>) => { select: typeof selectMock }>(
+  () => ({ select: selectMock }),
+);
 const fromMock = vi.fn(() => ({ insert: insertMock }));
 const rpcMock = vi.fn(async (): Promise<RpcResult> => ({ data: true, error: null }));
 const createClientMock = vi.fn(async () => ({ from: fromMock, rpc: rpcMock }));
@@ -47,6 +52,8 @@ const initialState = { ok: false, message: "" };
 
 beforeEach(() => {
   insertMock.mockClear();
+  selectMock.mockClear();
+  singleMock.mockClear().mockResolvedValue({ data: { id: "test-id" }, error: null });
   fromMock.mockClear();
   rpcMock.mockClear().mockResolvedValue({ data: true, error: null });
   createClientMock.mockClear();
@@ -269,7 +276,7 @@ describe("submitContact", () => {
   });
 
   it("geeft een foutmelding terug als de insert faalt, zonder mails te versturen", async () => {
-    insertMock.mockResolvedValueOnce({ error: { message: "db down" } });
+    singleMock.mockResolvedValueOnce({ data: null, error: { message: "db down" } });
     const result = await submitContact(
       initialState,
       formData({ naam: "Jane Doe", email: "jane@example.com" }),

@@ -20,9 +20,13 @@ const AANVRAAG = {
   naam: "Jane Doe",
   organisatie: "Acme",
   email: "jane@example.com",
-  telefoon: "0612345678",
-  onderwerp: "Mendix",
-  bericht: "Graag contact.",
+  rol: "CIO",
+  dienst: "Mendix Scale Sessie",
+  sector: "Banken",
+  vraagstuk: "Mendix / applicaties",
+  aantalDeelnemers: "8",
+  toelichting: "Graag contact.",
+  cmsUrl: "https://www.thenewwaveit.com/admin/aanvragen?open=test-id",
 };
 
 let fetchMock: ReturnType<typeof vi.fn>;
@@ -78,6 +82,7 @@ describe("met RESEND_API_KEY", () => {
     expect(body.to).toBe("aanvragen@test.nl");
     expect(body.from).toBe("Test Admin <admin@test.nl>");
     expect(body.subject).toContain("Acme");
+    expect(body.reply_to).toBe(AANVRAAG.email);
   });
 
   it("gooit niet als Resend een fout teruggeeft", async () => {
@@ -93,15 +98,15 @@ describe("met RESEND_API_KEY", () => {
   });
 
   /**
-   * De naam, het bericht en de preheader komen rechtstreeks van een bezoeker en
-   * landen in HTML die een collega in zijn mailclient opent.
+   * De naam, de toelichting en de preheader komen rechtstreeks van een bezoeker
+   * en landen in HTML die een collega in zijn mailclient opent.
    */
   it("escapet invoer van de bezoeker in de HTML", async () => {
     await sendAanvraagNotificatie({
       ...AANVRAAG,
       naam: '<script>alert("xss")</script>',
       organisatie: "",
-      bericht: "Regel 1\nRegel 2 <b>vet</b>",
+      toelichting: "Regel 1\nRegel 2 <b>vet</b>",
     });
     const html = verzonden().html ?? "";
     expect(html).not.toContain("<script>");

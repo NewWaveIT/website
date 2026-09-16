@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState, useTransition } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { Search, Calendar, AlertTriangle, Check } from "lucide-react";
 import {
   deleteSollicitatie,
@@ -25,7 +25,11 @@ function fmt(iso: string) {
 
 export function SollicitatiesBoard({ sols }: { sols: Sollicitatie[] }) {
   const [items, setItems] = useState(sols);
-  const [selectedId, setSelectedId] = useState<string | null>(null);
+  const searchParams = useSearchParams();
+  // Opent de rij die de e-mailknop "Naar screening" meegeeft (?open=<id>);
+  // alleen bij het eerste render gelezen, zodat een klik in de kolommen
+  // daarna niet telkens wordt overschreven door de URL.
+  const [selectedId, setSelectedId] = useState<string | null>(() => searchParams.get("open"));
   const [q, setQ] = useState("");
   const [err, setErr] = useState<string | null>(null);
   const [okMsg, setOkMsg] = useState<string | null>(null);
