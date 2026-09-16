@@ -1,8 +1,8 @@
 "use client";
 
-import { useActionState, useEffect } from "react";
+import { useActionState, useEffect, useRef, useState } from "react";
 import { useFormStatus } from "react-dom";
-import { ArrowRight, Check } from "lucide-react";
+import { ArrowRight, Check, Upload } from "lucide-react";
 import {
   submitSollicitatie,
   type SollicitatieState,
@@ -19,9 +19,6 @@ export interface SolTeksten {
   solHintEmail: string;
   solVeldTelefoon: string;
   solHintTelefoon: string;
-  solVeldMotivatie: string;
-  solHintMotivatie: string;
-  solMotivatieUitleg: string;
   solVeldMotivatieBestand: string;
   solBijMotivatieBestand: string;
   solVeldCv: string;
@@ -35,6 +32,9 @@ export interface SolTeksten {
   solPrivacyLink: string;
 }
 
+const DOC_ACCEPT =
+  ".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document";
+
 const initial: SollicitatieState = { ok: false, message: "" };
 
 function SubmitButton({ knop, bezig }: { knop: string; bezig: string }) {
@@ -43,6 +43,62 @@ function SubmitButton({ knop, bezig }: { knop: string; bezig: string }) {
     <button type="submit" className="btn btn-primary" disabled={pending}>
       {pending ? bezig : knop} <ArrowRight />
     </button>
+  );
+}
+
+/** Bestandsveld met een eigen knop in plaats van de rommelige browserstandaard. */
+function FileField({
+  id,
+  name,
+  label,
+  bij,
+  error,
+}: {
+  id: string;
+  name: string;
+  label: string;
+  bij?: string;
+  error?: string;
+}) {
+  const [bestandsnaam, setBestandsnaam] = useState("");
+  const inputRef = useRef<HTMLInputElement>(null);
+  const errId = `${id}-err`;
+
+  return (
+    <div className="field">
+      <label htmlFor={id}>
+        {label} {bij && <span className="veld-optioneel">{bij}</span>}
+      </label>
+      <div className={`file-kiezer${error ? " heeft-fout" : ""}`}>
+        <button
+          type="button"
+          className="btn btn-outline file-knop"
+          onClick={() => inputRef.current?.click()}
+        >
+          <Upload /> Bestand kiezen
+        </button>
+        <span className={`file-naam${bestandsnaam ? "" : " is-leeg"}`}>
+          {bestandsnaam || "Nog geen bestand gekozen"}
+        </span>
+      </div>
+      <input
+        ref={inputRef}
+        id={id}
+        name={name}
+        type="file"
+        required
+        accept={DOC_ACCEPT}
+        className="file-input-verborgen"
+        aria-invalid={error ? true : undefined}
+        aria-describedby={error ? errId : undefined}
+        onChange={(e) => setBestandsnaam(e.target.files?.[0]?.name ?? "")}
+      />
+      {error && (
+        <p className="field-err" id={errId}>
+          {error}
+        </p>
+      )}
+    </div>
   );
 }
 
@@ -155,63 +211,15 @@ export function SollicitatieForm({
         )}
       </div>
 
-      <div className="field">
-        <label htmlFor="s-mot">
-          {tk.solVeldMotivatie} <span className="veld-optioneel">{tk.solOptioneel}</span>
-        </label>
-        <textarea
-          id="s-mot"
-          name="motivatie"
-          placeholder={tk.solHintMotivatie}
-          aria-invalid={err("motivatie") ? true : undefined}
-          aria-describedby={err("motivatie") ? "serr-mot" : "s-mot-help"}
-        />
-        {err("motivatie") ? (
-          <p className="field-err" id="serr-mot">
-            {err("motivatie")}
-          </p>
-        ) : (
-          <p className="field-help" id="s-mot-help">
-            {tk.solMotivatieUitleg}
-          </p>
-        )}
-      </div>
+      <FileField id="s-cv" name="cv" label={tk.solVeldCv} bij={tk.solBijCv} error={err("cv")} />
 
-      <div className="field">
-        <label htmlFor="s-mot-file">{tk.solVeldMotivatieBestand}</label>
-        <input
-          id="s-mot-file"
-          name="motivatie_bestand"
-          type="file"
-          required
-          accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-          aria-invalid={err("motivatie_bestand") ? true : undefined}
-          aria-describedby={err("motivatie_bestand") ? "serr-motfile" : undefined}
-        />
-        {err("motivatie_bestand") && (
-          <p className="field-err" id="serr-motfile">
-            {err("motivatie_bestand")}
-          </p>
-        )}
-      </div>
-
-      <div className="field">
-        <label htmlFor="s-cv">{tk.solVeldCv}</label>
-        <input
-          id="s-cv"
-          name="cv"
-          type="file"
-          required
-          accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-          aria-invalid={err("cv") ? true : undefined}
-          aria-describedby={err("cv") ? "serr-cv" : undefined}
-        />
-        {err("cv") && (
-          <p className="field-err" id="serr-cv">
-            {err("cv")}
-          </p>
-        )}
-      </div>
+      <FileField
+        id="s-mot-file"
+        name="motivatie_bestand"
+        label={tk.solVeldMotivatieBestand}
+        bij={tk.solBijMotivatieBestand}
+        error={err("motivatie_bestand")}
+      />
 
       <div className="field">
         <label htmlFor="s-link">

@@ -188,7 +188,7 @@
     },
     {
       "slug": "vacature-detail",
-      "velden": 36,
+      "velden": 33,
       "pad": "/werken-bij",
       "gelezenDoor": [
         "app/(marketing)/vacatures/[slug]/page.tsx",

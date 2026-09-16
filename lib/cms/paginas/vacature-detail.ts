@@ -11,16 +11,9 @@ export const VELDEN = [
   { key: "solHintEmail", label: "Sollicitatieformulier — hint e-mailadres", type: "text" },
   { key: "solVeldTelefoon", label: "Sollicitatieformulier — label telefoon", type: "text" },
   { key: "solHintTelefoon", label: "Sollicitatieformulier — hint telefoon", type: "text" },
-  { key: "solVeldMotivatie", label: "Sollicitatieformulier — label motivatie", type: "text" },
-  { key: "solHintMotivatie", label: "Sollicitatieformulier — hint motivatie", type: "textarea" },
-  {
-    key: "solMotivatieUitleg",
-    label: "Sollicitatieformulier — uitleg onder motivatie",
-    type: "textarea",
-  },
   {
     key: "solVeldMotivatieBestand",
-    label: "Sollicitatieformulier — label motivatiebestand",
+    label: "Sollicitatieformulier — label motivatiebrief",
     type: "text",
   },
   {
@@ -91,15 +84,10 @@ export const TEKSTEN = {
   solHintEmail: "naam@voorbeeld.nl",
   solVeldTelefoon: "Telefoon",
   solHintTelefoon: "06–12345678",
-  solVeldMotivatie: "Motivatie",
-  solHintMotivatie:
-    "Een paar zinnen waarom deze rol je aanspreekt is genoeg. Wat je écht leuk lijkt, hoe je bij ons terechtkwam: zeg het op je eigen manier.",
-  solMotivatieUitleg:
-    "Liever niet typen? Upload je motivatie hieronder als bestand. Allebei mag, geen van beide moet.",
-  solVeldMotivatieBestand: "Motivatie als bestand",
-  solBijMotivatieBestand: "(optioneel · pdf of Word)",
+  solVeldMotivatieBestand: "Motivatiebrief",
+  solBijMotivatieBestand: "(pdf of Word)",
   solVeldCv: "Je cv",
-  solBijCv: "(optioneel · pdf of Word, max. 8 MB)",
+  solBijCv: "(pdf of Word, max. 8 MB)",
   solVeldLink: "LinkedIn of portfolio",
   solBijLink: "(optioneel)",
   solHintLink: "linkedin.com/in/jouwnaam",

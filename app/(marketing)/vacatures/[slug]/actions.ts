@@ -27,7 +27,8 @@ function str(formData: FormData, key: string): string {
   return typeof v === "string" ? v.trim() : "";
 }
 
-/** Valideert een optioneel bijgevoegd document; zet een foutmelding of geeft het bestand terug. */
+/** Valideert een bijgevoegd document; zet een foutmelding of geeft het bestand terug. Geen
+ *  bestand levert geen fout op — de aanroeper bepaalt zelf of ontbreken verplicht is. */
 function pickDoc(formData: FormData, key: string, errors: Record<string, string>): File | null {
   const f = formData.get(key);
   if (!(f instanceof File) || f.size === 0) return null;
@@ -87,7 +88,6 @@ export async function submitSollicitatie(
   const naam = str(formData, "naam");
   const email = str(formData, "email");
   const telefoon = str(formData, "telefoon");
-  const motivatie = str(formData, "motivatie");
   let link = str(formData, "link");
 
   // Validatie — verzamel álle fouten tegelijk.
@@ -97,7 +97,6 @@ export async function submitSollicitatie(
   if (!EMAIL_RE.test(email)) errors.email = "Vul een geldig e-mailadres in.";
   else if (email.length > 320) errors.email = "E-mailadres is te lang.";
   if (telefoon.length > 40) errors.telefoon = "Telefoonnummer is te lang.";
-  if (motivatie.length > 5000) errors.motivatie = "Motivatie is te lang (max. 5000 tekens).";
   if (link.length > 500) errors.link = "De link is te lang.";
   // Normaliseer: zonder schema toch een werkende URL maken.
   if (link && !/^https?:\/\//i.test(link)) link = `https://${link}`;
@@ -142,7 +141,6 @@ export async function submitSollicitatie(
       naam,
       email,
       telefoon: telefoon || null,
-      motivatie: motivatie || null,
       motivatie_url: motivatiePath,
       link_url: link || null,
       cv_url: cvPath,
@@ -163,16 +161,10 @@ export async function submitSollicitatie(
   }
 
   const vacatureNaam = vacatureTitel || vacatureSlug || "Open sollicitatie";
-  const bijlagen = [cvPath ? "cv" : null, motivatiePath ? "motivatiebrief" : null].filter(Boolean);
-  const cvStatus = bijlagen.length
-    ? `Bijgevoegd: ${bijlagen.join(" + ")}`
-    : link
-      ? "Link meegestuurd"
-      : "Niet bijgevoegd";
-  let motivatieTekst =
-    motivatie || (motivatiePath ? "Motivatie als bestand bijgevoegd; zie de admin." : "");
-  if (link) motivatieTekst += `${motivatieTekst ? "\n\n" : ""}Link: ${link}`;
-  if (!motivatieTekst) motivatieTekst = "—";
+  const cvStatus = "Bijgevoegd: cv + motivatiebrief";
+  const motivatieTekst = link
+    ? `Motivatiebrief bijgevoegd; zie de admin.\n\nLink: ${link}`
+    : "Motivatiebrief bijgevoegd; zie de admin.";
 
   // Interne notificatie (fail-safe: breekt de sollicitatie nooit).
   await sendSollicitatieNotificatie({
