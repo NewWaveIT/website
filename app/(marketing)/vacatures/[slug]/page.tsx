@@ -154,9 +154,7 @@ export default async function VacaturePage({ params }: { params: Promise<{ slug:
             {t.knopWerkenBij}
           </Link>
         </div>
-        <p className="hero-note">
-          Binnen twee werkdagen reactie, meestal van {recVoornaam} zelf. Geen motivatiebrief nodig.
-        </p>
+        <p className="hero-note">Binnen twee werkdagen reactie, meestal van {recVoornaam} zelf.</p>
       </PaginaHero>
 
       <section className="block">

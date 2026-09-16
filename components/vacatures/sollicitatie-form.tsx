@@ -51,7 +51,7 @@ export function SollicitatieForm({
   vacatureTitel,
   tk,
   heading = "Solliciteren? Zo gepiept.",
-  intro = "Naam en e-mail is genoeg om te beginnen. Voeg toe wat je makkelijk bij de hand hebt; een motivatiebrief hoeft niet. We lezen elke sollicitatie zelf.",
+  intro = "Naam, e-mail, je cv en een motivatiebrief: dan kunnen we aan de slag. We lezen elke sollicitatie zelf.",
 }: {
   vacatureSlug: string;
   vacatureTitel: string;
@@ -61,10 +61,6 @@ export function SollicitatieForm({
 }) {
   const [state, formAction] = useActionState(submitSollicitatie, initial);
   const err = (k: string) => state.errors?.[k];
-  // De open sollicitatie op /werken-bij heeft geen vacatureSlug; daar zijn cv
-  // en motivatiebrief verplicht. Bij een echte vacature blijven ze optioneel
-  // ("Geen motivatiebrief nodig" staat letterlijk in de hero van die pagina).
-  const verplichteBijlagen = !vacatureSlug;
 
   // Bij validatiefouten: focus op het eerste gemarkeerde veld.
   useEffect(() => {
@@ -182,17 +178,12 @@ export function SollicitatieForm({
       </div>
 
       <div className="field">
-        <label htmlFor="s-mot-file">
-          {tk.solVeldMotivatieBestand}{" "}
-          {!verplichteBijlagen && (
-            <span className="veld-optioneel">{tk.solBijMotivatieBestand}</span>
-          )}
-        </label>
+        <label htmlFor="s-mot-file">{tk.solVeldMotivatieBestand}</label>
         <input
           id="s-mot-file"
           name="motivatie_bestand"
           type="file"
-          required={verplichteBijlagen}
+          required
           accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
           aria-invalid={err("motivatie_bestand") ? true : undefined}
           aria-describedby={err("motivatie_bestand") ? "serr-motfile" : undefined}
@@ -205,15 +196,12 @@ export function SollicitatieForm({
       </div>
 
       <div className="field">
-        <label htmlFor="s-cv">
-          {tk.solVeldCv}{" "}
-          {!verplichteBijlagen && <span className="veld-optioneel">{tk.solBijCv}</span>}
-        </label>
+        <label htmlFor="s-cv">{tk.solVeldCv}</label>
         <input
           id="s-cv"
           name="cv"
           type="file"
-          required={verplichteBijlagen}
+          required
           accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
           aria-invalid={err("cv") ? true : undefined}
           aria-describedby={err("cv") ? "serr-cv" : undefined}

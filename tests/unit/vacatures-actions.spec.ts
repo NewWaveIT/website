@@ -113,13 +113,25 @@ describe("submitSollicitatie", () => {
     expect(result.errors?.cv).toBe("Bestand is te groot (max. 8 MB).");
   });
 
-  it("uploadt een geldig cv, slaat de sollicitatie op en verstuurt beide mails", async () => {
+  it("verplicht een motivatiebrief naast het cv", async () => {
     const cv = new File(["%PDF-1.4"], "cv.pdf", { type: "application/pdf" });
     const result = await submitSollicitatie(initialState, formData(basicFields, { cv }));
+    expect(result.ok).toBe(false);
+    expect(result.errors?.motivatie_bestand).toBe("Voeg een motivatiebrief toe.");
+    expect(insertMock).not.toHaveBeenCalled();
+  });
+
+  it("uploadt een geldig cv + motivatiebrief, slaat de sollicitatie op en verstuurt beide mails", async () => {
+    const cv = new File(["%PDF-1.4"], "cv.pdf", { type: "application/pdf" });
+    const motivatie_bestand = new File(["%PDF-1.4"], "brief.pdf", { type: "application/pdf" });
+    const result = await submitSollicitatie(
+      initialState,
+      formData(basicFields, { cv, motivatie_bestand }),
+    );
 
     expect(result.ok).toBe(true);
     expect(storageFromMock).toHaveBeenCalledWith("sollicitaties");
-    expect(uploadMock).toHaveBeenCalledTimes(1);
+    expect(uploadMock).toHaveBeenCalledTimes(2);
     expect(fromMock).toHaveBeenCalledWith("sollicitaties");
     expect(insertMock).toHaveBeenCalledWith(
       expect.objectContaining({
@@ -135,7 +147,11 @@ describe("submitSollicitatie", () => {
   it("geeft een uploadfout terug als de storage-upload faalt", async () => {
     uploadMock.mockResolvedValueOnce({ error: { message: "storage down" } });
     const cv = new File(["%PDF-1.4"], "cv.pdf", { type: "application/pdf" });
-    const result = await submitSollicitatie(initialState, formData(basicFields, { cv }));
+    const motivatie_bestand = new File(["%PDF-1.4"], "brief.pdf", { type: "application/pdf" });
+    const result = await submitSollicitatie(
+      initialState,
+      formData(basicFields, { cv, motivatie_bestand }),
+    );
     expect(result.ok).toBe(false);
     expect(insertMock).not.toHaveBeenCalled();
   });
