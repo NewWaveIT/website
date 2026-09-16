@@ -279,7 +279,8 @@ te weten welke.
 - `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY`
 - `NEXT_PUBLIC_SITE_URL` = `https://www.thenewwaveit.com` (mails gebruiken dit voor logo + links)
 - `RESEND_API_KEY` (+ geverifieerd domein), `MAIL_FROM` (notificaties@), `MAIL_FROM_PUBLIC`
-  (hello@), `NOTIFY_EMAIL` (people@)
+  (hello@), `NOTIFY_EMAIL` (people@ — sollicitaties), `NOTIFY_EMAIL_AANVRAGEN` (orders@ —
+  contactaanvragen)
 - **Signup uit** in Supabase Auth: elke ingelogde gebruiker is volledig admin — gebruikers
   alleen aanmaken via `/admin/gebruikers`.
 

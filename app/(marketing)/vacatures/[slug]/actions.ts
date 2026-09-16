@@ -105,6 +105,16 @@ export async function submitSollicitatie(
   const cvFile = pickDoc(formData, "cv", errors);
   const motivatieFile = pickDoc(formData, "motivatie_bestand", errors);
 
+  // De open sollicitatie op /werken-bij stuurt geen vacature_slug mee; daar
+  // zijn cv en motivatiebrief verplicht. Bij een echte vacature (wél een
+  // slug) blijven ze optioneel.
+  if (!ruweSlug) {
+    if (!cvFile && !errors.cv) errors.cv = "Voeg je cv toe.";
+    if (!motivatieFile && !errors.motivatie_bestand) {
+      errors.motivatie_bestand = "Voeg een motivatiebrief toe.";
+    }
+  }
+
   if (Object.keys(errors).length > 0) {
     return { ok: false, message: "Controleer de gemarkeerde velden.", errors };
   }

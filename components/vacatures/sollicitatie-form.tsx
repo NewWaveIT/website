@@ -61,6 +61,10 @@ export function SollicitatieForm({
 }) {
   const [state, formAction] = useActionState(submitSollicitatie, initial);
   const err = (k: string) => state.errors?.[k];
+  // De open sollicitatie op /werken-bij heeft geen vacatureSlug; daar zijn cv
+  // en motivatiebrief verplicht. Bij een echte vacature blijven ze optioneel
+  // ("Geen motivatiebrief nodig" staat letterlijk in de hero van die pagina).
+  const verplichteBijlagen = !vacatureSlug;
 
   // Bij validatiefouten: focus op het eerste gemarkeerde veld.
   useEffect(() => {
@@ -180,12 +184,15 @@ export function SollicitatieForm({
       <div className="field">
         <label htmlFor="s-mot-file">
           {tk.solVeldMotivatieBestand}{" "}
-          <span className="veld-optioneel">{tk.solBijMotivatieBestand}</span>
+          {!verplichteBijlagen && (
+            <span className="veld-optioneel">{tk.solBijMotivatieBestand}</span>
+          )}
         </label>
         <input
           id="s-mot-file"
           name="motivatie_bestand"
           type="file"
+          required={verplichteBijlagen}
           accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
           aria-invalid={err("motivatie_bestand") ? true : undefined}
           aria-describedby={err("motivatie_bestand") ? "serr-motfile" : undefined}
@@ -199,12 +206,14 @@ export function SollicitatieForm({
 
       <div className="field">
         <label htmlFor="s-cv">
-          {tk.solVeldCv} <span className="veld-optioneel">{tk.solBijCv}</span>
+          {tk.solVeldCv}{" "}
+          {!verplichteBijlagen && <span className="veld-optioneel">{tk.solBijCv}</span>}
         </label>
         <input
           id="s-cv"
           name="cv"
           type="file"
+          required={verplichteBijlagen}
           accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
           aria-invalid={err("cv") ? true : undefined}
           aria-describedby={err("cv") ? "serr-cv" : undefined}

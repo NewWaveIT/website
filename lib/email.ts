@@ -8,10 +8,11 @@ import { SITE_URL } from "@/lib/site";
  * RESEND_API_KEY — een inzending mag er nooit op stuklopen.
  *
  * Env:
- *   RESEND_API_KEY    Server-only API-key van Resend.
- *   NOTIFY_EMAIL      Interne ontvanger (default people@thenewwaveit.com).
- *   MAIL_FROM         Afzender interne notificaties (default notificaties@…).
- *   MAIL_FROM_PUBLIC  Afzender bevestigingen naar bezoekers (default hello@…).
+ *   RESEND_API_KEY        Server-only API-key van Resend.
+ *   NOTIFY_EMAIL          Interne ontvanger voor sollicitaties (default people@thenewwaveit.com).
+ *   NOTIFY_EMAIL_AANVRAGEN  Interne ontvanger voor contactaanvragen (default orders@thenewwaveit.com).
+ *   MAIL_FROM             Afzender interne notificaties (default notificaties@…).
+ *   MAIL_FROM_PUBLIC      Afzender bevestigingen naar bezoekers (default hello@…).
  *   NEXT_PUBLIC_SITE_URL  Basis-URL voor logo + links (default www.thenewwaveit.com).
  */
 
@@ -21,7 +22,10 @@ const SITE = SITE_URL;
 const LOGO = `${SITE}/assets/logos/logo-horizontal-white.png`;
 const FROM_ADMIN = process.env.MAIL_FROM || "The New Wave IT <notificaties@thenewwaveit.com>";
 const FROM_PUBLIC = process.env.MAIL_FROM_PUBLIC || `The New Wave IT <${CONTACT_TERUGVAL.email}>`;
-const NOTIFY = process.env.NOTIFY_EMAIL || "people@thenewwaveit.com";
+// Twee aparte postbussen: sollicitaties horen bij recruitment, aanvragen bij
+// de rest van de business — vandaar niet één gedeelde NOTIFY-constante.
+const NOTIFY_SOLLICITATIES = process.env.NOTIFY_EMAIL || "people@thenewwaveit.com";
+const NOTIFY_AANVRAGEN = process.env.NOTIFY_EMAIL_AANVRAGEN || "orders@thenewwaveit.com";
 // De terugval en niet het CMS: een mail wordt verstuurd op het moment dat een
 // inzending net is opgeslagen, en mag daar geen tweede databaseleesactie bij
 // krijgen die kan mislukken. Zie lib/contactgegevens.ts.
@@ -223,7 +227,7 @@ ${knop(`${SITE}/admin/sollicitaties`, "Open in de admin &nbsp;&rarr;")}
 ${FOOTER_ADMIN}`;
   await verstuur({
     from: FROM_ADMIN,
-    to: NOTIFY,
+    to: NOTIFY_SOLLICITATIES,
     subject: `Nieuwe sollicitatie · ${a.vacature} · ${a.naam}`,
     html: omhulsel(
       `Nieuwe sollicitatie van ${a.naam} op de vacature ${a.vacature}. Bekijk het dossier in de admin.`,
@@ -281,7 +285,7 @@ ${footerPubliek("Je ontvangt deze mail omdat je hebt gesolliciteerd via onze web
   await verstuur({
     from: FROM_PUBLIC,
     to: a.to,
-    replyTo: a.replyTo || NOTIFY,
+    replyTo: a.replyTo || NOTIFY_SOLLICITATIES,
     subject: `We hebben je sollicitatie ontvangen · ${a.vacature}`,
     html: omhulsel(
       `We hebben je sollicitatie op ${a.vacature} goed ontvangen. Binnen vijf werkdagen hoor je van ons.`,
@@ -318,7 +322,7 @@ ${knop(`${SITE}/admin/aanvragen`, "Open in de admin &nbsp;&rarr;")}
 ${FOOTER_ADMIN}`;
   await verstuur({
     from: FROM_ADMIN,
-    to: NOTIFY,
+    to: NOTIFY_AANVRAGEN,
     subject: `Nieuwe aanvraag · ${a.organisatie || a.naam}${a.onderwerp ? ` · ${a.onderwerp}` : ""}`,
     html: omhulsel(
       `Nieuwe aanvraag van ${a.organisatie || a.naam}${a.onderwerp ? ` over ${a.onderwerp}` : ""}. Pak op binnen één werkdag.`,
@@ -377,7 +381,7 @@ ${footerPubliek("Je ontvangt deze mail omdat je een aanvraag hebt gedaan via onz
   await verstuur({
     from: FROM_PUBLIC,
     to: a.to,
-    replyTo: a.replyTo || NOTIFY,
+    replyTo: a.replyTo || NOTIFY_AANVRAGEN,
     subject: "We hebben je aanvraag ontvangen · The New Wave IT",
     html: omhulsel(
       "Je aanvraag is binnen. Binnen één werkdag neemt een van ons persoonlijk contact met je op.",

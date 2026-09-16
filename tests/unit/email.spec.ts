@@ -12,6 +12,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 process.env.MAIL_FROM = "Test Admin <admin@test.nl>";
 process.env.MAIL_FROM_PUBLIC = "Test Publiek <hallo@test.nl>";
 process.env.NOTIFY_EMAIL = "intern@test.nl";
+process.env.NOTIFY_EMAIL_AANVRAGEN = "aanvragen@test.nl";
 
 const { sendAanvraagNotificatie } = await import("@/lib/email");
 
@@ -71,10 +72,10 @@ describe("met RESEND_API_KEY", () => {
     expect((init.headers as Record<string, string>).Authorization).toBe("Bearer re_test123");
   });
 
-  it("stuurt de interne notificatie naar NOTIFY_EMAIL", async () => {
+  it("stuurt de interne notificatie naar NOTIFY_EMAIL_AANVRAGEN", async () => {
     await sendAanvraagNotificatie(AANVRAAG);
     const body = verzonden();
-    expect(body.to).toBe("intern@test.nl");
+    expect(body.to).toBe("aanvragen@test.nl");
     expect(body.from).toBe("Test Admin <admin@test.nl>");
     expect(body.subject).toContain("Acme");
   });
