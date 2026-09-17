@@ -47,12 +47,6 @@ export const VELDEN = [
   { key: "ctaKnop", label: "Slot-CTA — knoptekst", type: "text" },
   { key: "openSollKop", label: "Open sollicitatie — kop", type: "text" },
   { key: "openSollIntro", label: "Open sollicitatie — intro", type: "textarea" },
-  {
-    key: "openSollNoot",
-    label: "Open sollicitatie — regel eronder",
-    type: "textarea",
-    help: "{naam} wordt vervangen door de recruitmentcontactpersoon.",
-  },
   { key: "cultuurFotoAlt", label: "Cultuur — alt-tekst bij de foto", type: "text" },
 ] as const satisfies readonly FieldDef[];
 
@@ -111,7 +105,5 @@ export const TEKSTEN = {
   openSollKop: "Open sollicitatie",
   openSollIntro:
     "Geen passende vacature? Laat je gegevens achter, we kijken graag of er een match is.",
-  openSollNoot:
-    "Na je sollicitatie neemt {naam} binnen twee werkdagen contact op. Een echt mens, geen automatische afwijzing.",
   cultuurFotoAlt: "Wavers tijdens een kennissessie",
 } satisfies Record<(typeof VELDEN)[number]["key"], string>;

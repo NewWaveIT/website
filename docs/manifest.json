@@ -197,7 +197,7 @@
     },
     {
       "slug": "werken-bij",
-      "velden": 42,
+      "velden": 41,
       "pad": "/werken-bij",
       "gelezenDoor": ["app/(marketing)/werken-bij/page.tsx"]
     }

@@ -196,7 +196,6 @@ export default async function WerkenBijPage() {
                 solPrivacyLink: vd.solPrivacyLink,
               }}
             />
-            <p className="open-soll-note">{t.openSollNoot.replace("{naam}", recVoornaam)}</p>
           </div>
         </div>
       </section>
