@@ -68,6 +68,32 @@ const nextConfig: NextConfig = {
   async headers() {
     return [{ source: "/:path*", headers: securityHeaders }];
   },
+  // Livegang-redirects van de oude WordPress-site (volledige sitemap
+  // opgehaald 17 sep, 16 URL's — geen aparte post-sitemap, dus geen losse
+  // blogposts om te redirecten). `/linked-in-feed-test/` en `/home-copy/`
+  // waren testpagina's en krijgen bewust geen redirect.
+  async redirects() {
+    return [
+      { source: "/onze-diensten", destination: "/diensten", permanent: true },
+      { source: "/join-us", destination: "/werken-bij", permanent: true },
+      { source: "/solliciteren", destination: "/werken-bij", permanent: true },
+      { source: "/jouw-carriere", destination: "/werken-bij", permanent: true },
+      { source: "/inschrijfformulier-nieuwsbrief", destination: "/inzichten", permanent: true },
+      { source: "/contact-opnemen", destination: "/contact", permanent: true },
+      { source: "/blog", destination: "/inzichten", permanent: true },
+      {
+        source: "/manufacturing-logistiek",
+        destination: "/sectoren/manufacturing",
+        permanent: true,
+      },
+      { source: "/semi-overheid", destination: "/sectoren/publieke-sector", permanent: true },
+      // Geen equivalent op de nieuwe site; tijdelijke bestemming totdat er een
+      // eigen voorwaardenpagina komt.
+      { source: "/algemene-voorwaarden", destination: "/privacy", permanent: false },
+      { source: "/privacy-policy", destination: "/privacy", permanent: true },
+      { source: "/cookie-policy-eu", destination: "/privacy", permanent: true },
+    ];
+  },
 };
 
 export default nextConfig;
