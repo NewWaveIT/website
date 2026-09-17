@@ -229,9 +229,9 @@
     "/werken-bij"
   ],
   "aantallen": {
-    "bronbestanden": 205,
+    "bronbestanden": 206,
     "clientComponenten": 40,
-    "servercomponenten": 165,
+    "servercomponenten": 166,
     "unittests": 30,
     "e2etests": 5
   }
