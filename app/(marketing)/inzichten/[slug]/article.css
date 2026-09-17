@@ -1,18 +1,5 @@
 /* Inzicht-artikel detail (.p-artikel) — layout in de huisstijl (design leverde geen artikelbody) */
 
-.p-artikel .crumbs {
-  font-family: var(--font-mono);
-  font-size: var(--text-xs);
-  color: var(--ink-400);
-  padding: var(--space-5) 0;
-}
-.p-artikel .crumbs a {
-  color: var(--ink-400);
-}
-.p-artikel .crumbs a:hover {
-  color: var(--orange-400);
-}
-
 .p-artikel .ahero {
   background: var(--ink-900);
   color: var(--eggshell);

@@ -146,7 +146,8 @@
 
 .hsec-sector {
   display: inline-block;
-  color: var(--orange-500);
+  /* Op de donkere hero: --orange-500 haalt 4.41:1, net te weinig voor 12px. */
+  color: var(--orange-text-on-dark);
   animation: hsecSlide 0.6s cubic-bezier(0.16, 0.8, 0.24, 1) both;
 }
 

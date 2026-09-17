@@ -12,6 +12,7 @@ import { SlotCta } from "@/components/layout/slot-cta";
 import { SollicitatieForm } from "@/components/vacatures/sollicitatie-form";
 import { getContactpersoon } from "@/lib/team-data";
 import "./werken-bij.css";
+import { SectieKop } from "@/components/sectie-kop";
 
 export const metadata: Metadata = {
   title: "Werken bij: word een Waver",
@@ -74,11 +75,7 @@ export default async function WerkenBijPage() {
 
       <section className="block groei">
         <div className="wrap-wide">
-          <div className="sec-head">
-            <div className="kicker">{t.groeiKicker}</div>
-            <h2>{t.groeiTitel}</h2>
-            <p>{t.groeiIntro}</p>
-          </div>
+          <SectieKop kicker={t.groeiKicker} titel={t.groeiTitel} intro={t.groeiIntro} />
           <div className="grid">
             {(["1", "2", "3"] as const).map((n) => (
               <div className="gcard" key={n}>
@@ -93,11 +90,7 @@ export default async function WerkenBijPage() {
 
       <section className="block totalpeople">
         <div className="wrap-wide">
-          <div className="sec-head">
-            <div className="kicker">{t.tpKicker}</div>
-            <h2>{t.tpTitel}</h2>
-            <p>{t.tpIntro}</p>
-          </div>
+          <SectieKop kicker={t.tpKicker} titel={t.tpTitel} intro={t.tpIntro} />
           <div className="grid">
             {(["1", "2", "3"] as const).map((n) => (
               <div className="tp" key={n}>
@@ -138,10 +131,7 @@ export default async function WerkenBijPage() {
 
       <section className="block vacatures" id="vacatures">
         <div className="wrap-wide">
-          <div className="sec-head">
-            <div className="kicker on-dark">{t.vacaturesKicker}</div>
-            <h2>{t.vacaturesTitel}</h2>
-          </div>
+          <SectieKop kicker={t.vacaturesKicker} titel={t.vacaturesTitel} opDonker />
           {vacatures.length > 0 && (
             <div className="list">
               {vacatures.map((v) => (

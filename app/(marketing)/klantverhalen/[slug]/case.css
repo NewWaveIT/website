@@ -9,19 +9,6 @@
 
 /* Klantverhaal detail — geport uit ui_kits/website/case.html (.p-case) */
 
-.p-case .crumbs {
-  font-family: var(--font-mono);
-  font-size: var(--text-xs);
-  color: var(--ink-400);
-  padding: var(--space-5) 0;
-}
-.p-case .crumbs a {
-  color: var(--ink-400);
-}
-.p-case .crumbs a:hover {
-  color: var(--orange-400);
-}
-
 .p-case .pkop .tag {
   display: inline-flex;
   align-items: center;
@@ -333,65 +320,8 @@
   color: var(--text-strong);
 }
 
-.p-case .cards3 {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: var(--space-6);
-}
-.p-case .post {
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-  border: 1px solid var(--border-default);
-  background: var(--white);
-  transition:
-    transform 160ms,
-    box-shadow 160ms;
-}
-.p-case .post:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-lg);
-}
-.p-case .post .cover {
-  position: relative;
-  height: 160px;
-  background-color: var(--ink-200);
-  overflow: hidden;
-}
-.p-case .video img,
-.p-case .post .cover img {
+.p-case .video img {
   object-fit: cover;
-}
-.p-case .post .cover .cat {
-  position: absolute;
-  top: 14px;
-  left: 14px;
-  background: var(--color-primary);
-  color: var(--white);
-  font-weight: var(--fw-semibold);
-  font-size: var(--text-xs);
-  padding: 5px 12px;
-  border-radius: var(--radius-pill);
-}
-.p-case .post .pbody {
-  padding: var(--space-5) var(--space-6) var(--space-6);
-}
-.p-case .post h3 {
-  font-size: var(--text-md);
-  font-weight: var(--fw-bold);
-  line-height: var(--leading-snug);
-  margin: 0 0 var(--space-3);
-}
-.p-case .post .more {
-  font-size: var(--text-sm);
-  font-weight: var(--fw-semibold);
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  color: var(--orange-text);
-}
-.p-case .post .more .lucide {
-  width: 15px;
-  height: 15px;
 }
 
 @media (max-width: 900px) {
@@ -407,9 +337,6 @@
   .p-case .qblock .wrap-wide {
     flex-direction: column;
     align-items: flex-start;
-  }
-  .p-case .cards3 {
-    grid-template-columns: 1fr;
   }
   .p-case .resultaat-kaarten {
     grid-template-columns: 1fr;

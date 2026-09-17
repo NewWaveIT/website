@@ -20,6 +20,8 @@ import { getSectorKaarten } from "@/lib/sectoren-detail-data";
 import type { ServiceRichting } from "@/lib/services";
 import { SITE_URL } from "@/lib/site";
 import "./home.css";
+import { ArtikelKaart } from "@/components/artikel-kaart";
+import { SectieKop, SectieKopMetKnop } from "@/components/sectie-kop";
 
 export const metadata: Metadata = {
   title: "Business-specialist in Mendix, AI en strategie",
@@ -105,11 +107,7 @@ export default async function HomePage() {
       {/* Diensten — instapdienst per richting, rechtstreeks uit de catalogus */}
       <section className="block diensten" id="diensten">
         <div className="wrap-wide">
-          <div className="sec-head">
-            <div className="kicker">{t.dienstenKicker}</div>
-            <h2>{t.dienstenTitel}</h2>
-            <p>{t.dienstenIntro}</p>
-          </div>
+          <SectieKop kicker={t.dienstenKicker} titel={t.dienstenTitel} intro={t.dienstenIntro} />
           <div className="tabs" role="tablist">
             {instap.map(({ richting, naam }, i) => (
               <button
@@ -225,15 +223,13 @@ export default async function HomePage() {
       {/* Klantverhalen */}
       <section className="block featured">
         <div className="wrap-wide">
-          <div className="eyebrow-row">
-            <div>
-              <div className="kicker on-dark">{t.casesKicker}</div>
-              <h2>{t.casesTitel}</h2>
-            </div>
-            <Link href="/klantverhalen" className="btn btn-ghost-on btn-sm">
-              {t.casesAlle} <ArrowRight />
-            </Link>
-          </div>
+          <SectieKopMetKnop
+            kicker={t.casesKicker}
+            titel={t.casesTitel}
+            href="/klantverhalen"
+            knop={t.casesAlle}
+            opDonker
+          />
           <CasesCarousel items={cases} lees={a.caseLees} />
         </div>
       </section>
@@ -303,33 +299,21 @@ export default async function HomePage() {
       {inzichten.length > 0 && (
         <section className="block" id="inzichten">
           <div className="wrap-wide">
-            <div className="eyebrow-row">
-              <div>
-                <div className="kicker">{t.inzichtenKicker}</div>
-                <h2>{t.inzichtenTitel}</h2>
-              </div>
-              <Link href="/inzichten" className="btn btn-outline btn-sm">
-                {t.inzichtenAlle} <ArrowRight />
-              </Link>
-            </div>
+            <SectieKopMetKnop
+              kicker={t.inzichtenKicker}
+              titel={t.inzichtenTitel}
+              href="/inzichten"
+              knop={t.inzichtenAlle}
+            />
             <div className="cards3">
               {inzichten.map((a) => (
-                <article className="post" key={a.slug}>
-                  <Link href={`/inzichten/${a.slug}`} className="cover">
-                    <Image src={a.image} alt="" fill sizes="(max-width: 900px) 100vw, 33vw" />
-                    <span className="cat">{a.cat}</span>
-                  </Link>
-                  <div className="pbody">
-                    <div className="meta">
-                      Leestijd {a.leestijd} · {a.datum}
-                    </div>
-                    <h3>{a.titel}</h3>
-                    <p>{a.intro}</p>
-                    <Link href={`/inzichten/${a.slug}`} className="more">
-                      {t.inzichtenMeer} <ArrowRight />
-                    </Link>
-                  </div>
-                </article>
+                <ArtikelKaart
+                  key={a.slug}
+                  artikel={a}
+                  meerLabel={t.inzichtenMeer}
+                  metIntro
+                  sizes="(max-width: 900px) 100vw, 33vw"
+                />
               ))}
             </div>
           </div>

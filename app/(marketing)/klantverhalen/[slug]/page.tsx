@@ -13,6 +13,7 @@ import { SlotCta } from "@/components/layout/slot-cta";
 import { SITE_URL } from "@/lib/site";
 import { getPagina } from "@/lib/paginas-data";
 import "./case.css";
+import { SectieKopMetKnop } from "@/components/sectie-kop";
 
 /** Klein procesdiagram (bv. "de keten in drie stappen" of een sectie-flow). */
 function StappenFlow({ stappen, klein = false }: { stappen: Stap[]; klein?: boolean }) {
@@ -227,15 +228,12 @@ export default async function CasePage({ params }: { params: Promise<{ slug: str
       {meer.length > 0 && (
         <section className="block">
           <div className="wrap-wide">
-            <div className="eyebrow-row">
-              <div>
-                <div className="kicker">{t.meerKicker}</div>
-                <h2>{t.meerTitel}</h2>
-              </div>
-              <Link href="/klantverhalen" className="btn btn-outline btn-sm">
-                {t.meerAlle} <ArrowRight />
-              </Link>
-            </div>
+            <SectieKopMetKnop
+              kicker={t.meerKicker}
+              titel={t.meerTitel}
+              href="/klantverhalen"
+              knop={t.meerAlle}
+            />
             <div className="cards3">
               {meer.map((m) => (
                 <Link href={`/klantverhalen/${m.slug}`} className="post" key={m.slug}>

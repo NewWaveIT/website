@@ -6,19 +6,6 @@
 
 /* Over ons — geport uit ui_kits/website/over-ons.html (gescoopt onder .p-over) */
 
-.p-over .crumbs {
-  font-family: var(--font-mono);
-  font-size: var(--text-xs);
-  color: var(--ink-400);
-  padding: var(--space-5) 0 0;
-}
-.p-over .crumbs a {
-  color: var(--ink-400);
-}
-.p-over .crumbs a:hover {
-  color: var(--orange-400);
-}
-
 .p-over .pkop .badge-img {
   position: absolute;
   right: 0;

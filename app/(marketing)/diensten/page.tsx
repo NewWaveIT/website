@@ -14,6 +14,7 @@ import { SERVICE_FAMILIES } from "@/lib/dienstenstructuur";
 import type { Service } from "@/lib/services";
 import { SITE_URL } from "@/lib/site";
 import "./diensten.css";
+import { SectieKop } from "@/components/sectie-kop";
 
 /* Dienstenoverzicht — geport uit ui_kits/website/diensten.html (Claude Design).
    De pagina zet de doorlopende basisdienst apart bovenaan en verdeelt de
@@ -172,11 +173,7 @@ export default async function DienstenPage() {
       {instapDiensten.length > 0 && (
         <section className="block cat">
           <div className="wrap-wide">
-            <div className="sec-head">
-              <div className="kicker">{t.instapKicker}</div>
-              <h2>{t.instapTitel}</h2>
-              <p>{t.instapIntro}</p>
-            </div>
+            <SectieKop kicker={t.instapKicker} titel={t.instapTitel} intro={t.instapIntro} />
             <div className="instap-grid">
               {instapDiensten.map(({ service: s, spoor }) => {
                 const prijs = prijsRegel(s);
@@ -218,11 +215,11 @@ export default async function DienstenPage() {
       {/* 4 · Verder in het traject */}
       <section className="block">
         <div className="wrap-wide">
-          <div className="sec-head">
-            <div className="kicker">{t.verdiepingKicker}</div>
-            <h2>{t.verdiepingTitel}</h2>
-            <p>{t.verdiepingIntro}</p>
-          </div>
+          <SectieKop
+            kicker={t.verdiepingKicker}
+            titel={t.verdiepingTitel}
+            intro={t.verdiepingIntro}
+          />
           {verdieping.map((blok) => (
             <div className="fase-block" key={blok.key}>
               <div className="fase-head">

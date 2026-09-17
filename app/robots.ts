@@ -6,7 +6,9 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: "*",
       allow: "/",
-      disallow: ["/admin", "/api"],
+      // /medewerkerspakket is intern gereedschap: geen geheim, maar het hoort niet
+      // tussen de zoekresultaten van klanten. De pagina zet zelf ook noindex.
+      disallow: ["/admin", "/api", "/medewerkerspakket"],
     },
     sitemap: `${SITE_URL}/sitemap.xml`,
     host: SITE_URL,

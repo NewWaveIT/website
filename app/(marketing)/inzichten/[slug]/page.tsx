@@ -72,7 +72,10 @@ export default async function ArtikelPage({ params }: { params: Promise<{ slug: 
 
       <section className="ahero">
         <div className="wrap">
-          <Kruimelpad kruimels={[{ naam: "Inzichten", pad: "/inzichten" }, { naam: a.cat }]} />
+          <Kruimelpad
+            opDonker
+            kruimels={[{ naam: "Inzichten", pad: "/inzichten" }, { naam: a.cat }]}
+          />
           <div className="kicker on-dark">{`// ${a.cat}`}</div>
           <h1>{a.titel}</h1>
           <div className="byline">

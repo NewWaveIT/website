@@ -10,19 +10,6 @@
    Twaalf secties: hero, herkenning, mensen, waarom nu, pijn → oplossing,
    wat we bouwen, hoe we werken, diensten, FAQ, inzichten, team en CTA. */
 
-.p-sector .crumbs {
-  font-family: var(--font-mono);
-  font-size: var(--text-xs);
-  color: var(--text-subtle);
-  padding: var(--space-5) 0 0;
-}
-.p-sector .crumbs a {
-  color: var(--text-subtle);
-}
-.p-sector .crumbs a:hover {
-  color: var(--color-primary);
-}
-
 /* 1 · Hero */
 .p-sector .shero-anim {
   width: 48%;
@@ -53,7 +40,7 @@
 .p-sector .pain-item .i {
   font-family: var(--font-mono);
   font-size: var(--text-xs);
-  color: var(--color-primary);
+  color: var(--orange-text);
   padding-top: 7px;
   flex: none;
 }
@@ -282,7 +269,7 @@
 }
 .p-sector .laag-toekomst {
   background: var(--info-100);
-  color: var(--info-500);
+  color: var(--info-700);
   border: 1px solid color-mix(in srgb, var(--info-500) 30%, var(--info-100));
 }
 
@@ -431,7 +418,7 @@
     transform 140ms;
 }
 .p-sector .svc-link:hover {
-  border-color: var(--color-primary);
+  border-color: var(--orange-text);
   color: var(--color-primary);
   transform: translateX(3px);
 }
@@ -470,12 +457,12 @@
   display: none;
 }
 .p-sector .faq summary:hover {
-  color: var(--color-primary);
+  color: var(--orange-text);
 }
 .p-sector .faq summary .pm {
   font-family: var(--font-mono);
   font-size: var(--text-lg);
-  color: var(--color-primary);
+  color: var(--orange-text);
   line-height: 1;
   flex: none;
   transition: transform 160ms;
@@ -518,7 +505,7 @@
   color: var(--text-body);
 }
 .p-sector .sector-pills a:hover {
-  border-color: var(--color-primary);
+  border-color: var(--orange-text);
   color: var(--color-primary);
 }
 .p-sector .sector-pills svg {
@@ -731,72 +718,3 @@
    en legde zich over de halve pagina heen — inclusief de h1 en de sectiekoppen.
    Zelfde regels als .dienst-secties in components/diensten/secties/secties.css;
    die twee horen op termijn één gedeelde kaartcomponent te worden. */
-.p-sector .cards3 {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: var(--space-6);
-}
-.p-sector .post {
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-  border: 1px solid var(--border-default);
-  background: var(--white);
-  transition:
-    transform 160ms,
-    box-shadow 160ms;
-}
-.p-sector .post:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-lg);
-}
-.p-sector .post .cover {
-  position: relative;
-  height: 170px;
-  background-color: var(--ink-200);
-}
-.p-sector .post .cover img {
-  object-fit: cover;
-}
-.p-sector .post .cover .cat {
-  position: absolute;
-  z-index: 1;
-  top: 14px;
-  left: 14px;
-  background: var(--color-primary);
-  color: var(--white);
-  font-weight: var(--fw-semibold);
-  font-size: var(--text-xs);
-  padding: 5px 12px;
-  border-radius: var(--radius-pill);
-}
-.p-sector .post .pbody {
-  padding: var(--space-5) var(--space-6) var(--space-6);
-}
-.p-sector .post .meta {
-  font-family: var(--font-mono);
-  font-size: var(--text-xs);
-  color: var(--text-subtle);
-}
-.p-sector .post h3 {
-  font-size: var(--text-md);
-  font-weight: var(--fw-bold);
-  line-height: var(--leading-snug);
-  margin: var(--space-3) 0;
-}
-.p-sector .post .more {
-  font-size: var(--text-sm);
-  font-weight: var(--fw-semibold);
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-}
-.p-sector .post .more .lucide {
-  width: 15px;
-  height: 15px;
-}
-
-@media (max-width: 980px) {
-  .p-sector .cards3 {
-    grid-template-columns: 1fr;
-  }
-}

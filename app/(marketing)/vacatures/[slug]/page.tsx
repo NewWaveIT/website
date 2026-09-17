@@ -13,6 +13,7 @@ import { getPagina } from "@/lib/paginas-data";
 import { stripHtml, kort } from "@/lib/cms/sanitize";
 import { SollicitatieForm } from "@/components/vacatures/sollicitatie-form";
 import "./vacature.css";
+import { SectieKop } from "@/components/sectie-kop";
 
 /** Alleen cijfers/+ voor een tel:-URI. */
 function telHref(t: string): string {
@@ -246,10 +247,7 @@ export default async function VacaturePage({ params }: { params: Promise<{ slug:
 
       <section className="block proces">
         <div className="wrap-wide">
-          <div className="sec-head">
-            <div className="kicker">{t.procedureKicker}</div>
-            <h2>{t.procedureTitel}</h2>
-          </div>
+          <SectieKop kicker={t.procedureKicker} titel={t.procedureTitel} />
           <div className="grid">
             {PROCES.map((s) => (
               <div className="step" key={s.num}>
@@ -264,10 +262,7 @@ export default async function VacaturePage({ params }: { params: Promise<{ slug:
 
       <section className="block vacatures">
         <div className="wrap-wide">
-          <div className="sec-head">
-            <div className="kicker on-dark">{t.andereKicker}</div>
-            <h2>{t.andereTitel}</h2>
-          </div>
+          <SectieKop kicker={t.andereKicker} titel={t.andereTitel} opDonker />
           <div className="list">
             {andere.map((a) => (
               <Link href={`/vacatures/${a.slug}`} className="vrow" key={a.slug}>

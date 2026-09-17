@@ -68,19 +68,6 @@
 
 /* Dienstdetail — geport uit ui_kits/website/dienst-*.html (gescoopt onder .p-dienst) */
 
-.dienst-secties .crumbs {
-  font-family: var(--font-mono);
-  font-size: var(--text-xs);
-  color: var(--ink-400);
-  padding: var(--space-5) 0 0;
-}
-.dienst-secties .crumbs a {
-  color: var(--ink-400);
-}
-.dienst-secties .crumbs a:hover {
-  color: var(--orange-400);
-}
-
 .dienst-secties .subnav {
   position: sticky;
   top: 76px;
@@ -371,7 +358,8 @@
   font-family: var(--font-display);
   font-weight: var(--fw-bold);
   font-size: var(--text-lg);
-  color: var(--ink-400);
+  /* --ink-400 haalt hier maar 2.54:1; --text-subtle doet 5.01:1. */
+  color: var(--text-subtle);
 }
 
 .dienst-secties .outcomes {
@@ -412,7 +400,6 @@
   display: inline-block;
   margin-top: 14px;
 }
-.dienst-secties .post .cover img,
 .dienst-secties .case-mini .media img,
 .dienst-secties .sol-row .ph img {
   object-fit: cover;
@@ -447,74 +434,6 @@
 }
 .dienst-secties .case-mini .body .who strong {
   color: var(--text-strong);
-}
-
-.dienst-secties .cards3 {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: var(--space-6);
-}
-.dienst-secties .post {
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-  border: 1px solid var(--border-default);
-  background: var(--white);
-  transition:
-    transform 160ms,
-    box-shadow 160ms;
-}
-.dienst-secties .post:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-lg);
-}
-.dienst-secties .post .cover {
-  position: relative;
-  height: 170px;
-  background-color: var(--ink-200);
-  background-image: repeating-linear-gradient(
-    45deg,
-    transparent,
-    transparent 12px,
-    rgba(46, 37, 26, 0.06) 12px,
-    rgba(46, 37, 26, 0.06) 24px
-  );
-}
-.dienst-secties .post .cover .cat {
-  position: absolute;
-  z-index: 1;
-  top: 14px;
-  left: 14px;
-  background: var(--color-primary);
-  color: var(--white);
-  font-weight: var(--fw-semibold);
-  font-size: var(--text-xs);
-  padding: 5px 12px;
-  border-radius: var(--radius-pill);
-}
-.dienst-secties .post .pbody {
-  padding: var(--space-5) var(--space-6) var(--space-6);
-}
-.dienst-secties .post .meta {
-  font-family: var(--font-mono);
-  font-size: var(--text-xs);
-  color: var(--text-subtle);
-}
-.dienst-secties .post h3 {
-  font-size: var(--text-md);
-  font-weight: var(--fw-bold);
-  line-height: var(--leading-snug);
-  margin: var(--space-3) 0;
-}
-.dienst-secties .post .more {
-  font-size: var(--text-sm);
-  font-weight: var(--fw-semibold);
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-}
-.dienst-secties .post .more .lucide {
-  width: 15px;
-  height: 15px;
 }
 
 /* Feitenregel onder de hero-intro (doelgroep · duur · prijs, uit de gekoppelde service) */
@@ -586,9 +505,6 @@
     order: 0;
   }
   .dienst-secties .case-mini {
-    grid-template-columns: 1fr;
-  }
-  .dienst-secties .cards3 {
     grid-template-columns: 1fr;
   }
 }

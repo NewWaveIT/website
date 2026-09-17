@@ -20,6 +20,7 @@ import { WaaromSectie, PartnersSectie, OutcomesSectie } from "./secties/bewijs";
 import { KlantverhaalSectie, SectorkoppelingSectie, InzichtenSectie } from "./secties/verwijzingen";
 import "./secties/secties.css";
 import "./richting-hub.css";
+import { SectieKop } from "@/components/sectie-kop";
 
 const BADGE: Record<ServiceRichting, { Icon: typeof Boxes; label: string }> = {
   mendix: { Icon: Boxes, label: "Mendix" },
@@ -119,11 +120,7 @@ export async function RichtingHub({ richting }: { richting: ServiceRichting }) {
 
       <section className="block">
         <div className="wrap-wide">
-          <div className="sec-head">
-            <div className="kicker">{d.routeKicker}</div>
-            <h2>{d.routeTitel}</h2>
-            <p>{d.routeVoet}</p>
-          </div>
+          <SectieKop kicker={d.routeKicker} titel={d.routeTitel} intro={d.routeVoet} />
           <div className="richting-ladder">
             {hub.tiers.map((tier) => (
               <div className="ladder-stap" key={tier.service.slug}>

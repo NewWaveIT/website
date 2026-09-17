@@ -28,9 +28,30 @@ function str(formData: FormData, key: string): string {
   return typeof v === "string" ? v.trim() : "";
 }
 
+/**
+ * Herkenningsbytes per toegestaan formaat. `file.type` komt van de browser en
+ * is dus door de indiener te kiezen: een html-bestand dat zich als pdf
+ * voordoet kwam door de oude check, werd met dat content-type opgeslagen en
+ * later via een signed URL geopend in de browser van een collega. Deze lijst
+ * kijkt naar wat er werkelijk in het bestand staat.
+ */
+const MAGISCHE_BYTES: [naam: string, bytes: number[]][] = [
+  ["pdf", [0x25, 0x50, 0x44, 0x46]], // %PDF
+  ["docx", [0x50, 0x4b, 0x03, 0x04]], // zip-container
+  ["doc", [0xd0, 0xcf, 0x11, 0xe0]], // OLE2
+];
+
+function heeftGeldigeKop(buffer: Buffer): boolean {
+  return MAGISCHE_BYTES.some(([, bytes]) => bytes.every((b, i) => buffer[i] === b));
+}
+
 /** Valideert een bijgevoegd document; zet een foutmelding of geeft het bestand terug. Geen
  *  bestand levert geen fout op — de aanroeper bepaalt zelf of ontbreken verplicht is. */
-function pickDoc(formData: FormData, key: string, errors: Record<string, string>): File | null {
+async function pickDoc(
+  formData: FormData,
+  key: string,
+  errors: Record<string, string>,
+): Promise<{ file: File; buffer: Buffer } | null> {
   const f = formData.get(key);
   if (!(f instanceof File) || f.size === 0) return null;
   if (!DOC_TYPES.includes(f.type)) {
@@ -41,24 +62,29 @@ function pickDoc(formData: FormData, key: string, errors: Record<string, string>
     errors[key] = "Bestand is te groot (max. 8 MB).";
     return null;
   }
-  return f;
+  // Pas hierna inlezen: een te groot bestand hoeft niet eerst in het geheugen.
+  const buffer = Buffer.from(await f.arrayBuffer());
+  if (!heeftGeldigeKop(buffer)) {
+    errors[key] = "Dit lijkt geen pdf of Word-document. Controleer het bestand.";
+    return null;
+  }
+  return { file: f, buffer };
 }
 
 /** Upload een document naar de privébucket 'sollicitaties'; geeft het pad terug (of null bij fout). */
 async function uploadDoc(
   supabase: DbClient,
-  file: File,
+  doc: { file: File; buffer: Buffer },
   vacatureSlug: string,
   soort: string,
 ): Promise<string | null> {
   const ext =
-    (file.name.split(".").pop() ?? "pdf").toLowerCase().replace(/[^a-z0-9]/g, "") || "pdf";
+    (doc.file.name.split(".").pop() ?? "pdf").toLowerCase().replace(/[^a-z0-9]/g, "") || "pdf";
   const path = `${vacatureSlug || "open"}/${soort}-${crypto.randomUUID()}.${ext}`;
   try {
-    const buffer = Buffer.from(await file.arrayBuffer());
     const { error } = await supabase.storage
       .from("sollicitaties")
-      .upload(path, buffer, { contentType: file.type, upsert: false });
+      .upload(path, doc.buffer, { contentType: doc.file.type, upsert: false });
     return error ? null : path;
   } catch {
     return null;
@@ -102,8 +128,8 @@ export async function submitSollicitatie(
   // Normaliseer: zonder schema toch een werkende URL maken.
   if (link && !/^https?:\/\//i.test(link)) link = `https://${link}`;
 
-  const cvFile = pickDoc(formData, "cv", errors);
-  const motivatieFile = pickDoc(formData, "motivatie_bestand", errors);
+  const cvFile = await pickDoc(formData, "cv", errors);
+  const motivatieFile = await pickDoc(formData, "motivatie_bestand", errors);
 
   // Cv en motivatiebrief zijn altijd verplicht, of het nu de open sollicitatie
   // op /werken-bij is of een sollicitatie op een specifieke vacature.
@@ -136,6 +162,19 @@ export async function submitSollicitatie(
     if (!motivatiePath) return uploadFout;
   }
 
+  /**
+   * Ruimt de zojuist geüploade bestanden op. Mislukt de insert daarna, dan
+   * blijven cv en motivatiebrief anders als weesbestanden in de privébucket
+   * staan: niemand kan er nog bij, niemand weet meer van wie ze zijn, en ze
+   * tellen wel mee voor de bewaartermijn.
+   */
+  const ruimBestandenOp = async () => {
+    const paden = [cvPath, motivatiePath].filter((p): p is string => Boolean(p));
+    if (paden.length === 0) return;
+    const { error } = await supabase.storage.from("sollicitaties").remove(paden);
+    if (error) console.error("[sollicitatie] weesbestanden niet opgeruimd:", error.message);
+  };
+
   let id: string | null = null;
   try {
     const { data, error } = await supabase
@@ -152,6 +191,7 @@ export async function submitSollicitatie(
       .select("id")
       .single();
     if (error) {
+      await ruimBestandenOp();
       return {
         ok: false,
         message:
@@ -160,6 +200,7 @@ export async function submitSollicitatie(
     }
     id = data.id;
   } catch {
+    await ruimBestandenOp();
     return {
       ok: false,
       message:

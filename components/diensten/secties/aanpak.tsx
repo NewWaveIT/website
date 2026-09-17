@@ -4,6 +4,7 @@ import type { AanpakRow, Pijler } from "@/lib/content-blokken";
 import "./secties.css";
 import { vulIn } from "@/lib/utils";
 import { getPagina } from "@/lib/paginas-data";
+import { SectieKop } from "@/components/sectie-kop";
 
 /** Wat we doen en hoe. Gedeeld door de richting-hubs en de dienstpagina's. */
 
@@ -21,11 +22,12 @@ export async function PijlersSectie({
   return (
     <section className="block pijlers" id="diensten">
       <div className="wrap-wide">
-        <div className="sec-head">
-          <div className="kicker">{t.pijlersKicker}</div>
-          <h2 className="sectie-h2">{vulIn(t.pijlersTitel, { naam })}</h2>
-          {intro && <p>{intro}</p>}
-        </div>
+        <SectieKop
+          kicker={t.pijlersKicker}
+          titel={vulIn(t.pijlersTitel, { naam })}
+          intro={intro}
+          groot
+        />
         <div className="pillars">
           {pijlers.map((p) => (
             <div className="pillar" key={p.num}>
@@ -54,10 +56,7 @@ export async function AanpakSectie({ aanpak }: { aanpak: AanpakRow[] }) {
   return (
     <section className="block sol" id="aanpak">
       <div className="wrap-wide">
-        <div className="sec-head">
-          <div className="kicker">{t.aanpakKicker}</div>
-          <h2 className="sectie-h2">{t.aanpakTitel}</h2>
-        </div>
+        <SectieKop kicker={t.aanpakKicker} titel={t.aanpakTitel} groot />
         {aanpak.map((row, i) => (
           <div className={i % 2 === 1 ? "sol-row rev" : "sol-row"} key={i}>
             <div className="txt">

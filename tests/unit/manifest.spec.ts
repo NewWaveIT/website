@@ -1,5 +1,5 @@
 import { existsSync, mkdirSync, readFileSync, readdirSync, statSync, writeFileSync } from "node:fs";
-import { dirname, join } from "node:path";
+import { dirname } from "node:path";
 import { describe, expect, it } from "vitest";
 import { FIELD_SCHEMAS } from "@/lib/cms/schema";
 import { CONTENT_TABLE, type ContentType } from "@/lib/cms/content";
@@ -27,7 +27,10 @@ function bestanden(map: string, uit: string[] = [], negeer = new Set([".next", "
   if (!existsSync(map)) return uit;
   for (const naam of readdirSync(map)) {
     if (negeer.has(naam)) continue;
-    const pad = join(map, naam);
+    // Bewust niet join(): die geeft op Windows backslashes, terwijl de rest van
+    // deze test (en het manifest) met POSIX-paden vergelijkt. Zonder dit faalt
+    // de suite alleen op Windows — het platform waarop hier ontwikkeld wordt.
+    const pad = `${map}/${naam}`;
     if (statSync(pad).isDirectory()) bestanden(pad, uit, negeer);
     else if (naam.endsWith(".ts") || naam.endsWith(".tsx")) uit.push(pad);
   }
