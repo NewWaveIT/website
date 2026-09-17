@@ -98,16 +98,8 @@ const LINKEDIN: Uiting[] = [
     hoogte: 396,
   },
   {
-    bestand: "linkedin-02-eigen-rol.png",
-    naam: "02 · Eigen rol",
-    maat: "1584 × 396",
-    waarom: "Met een eigen vakgebied op de bovenste regel.",
-    breedte: 1584,
-    hoogte: 396,
-  },
-  {
     bestand: "linkedin-03-licht.png",
-    naam: "03 · Licht",
+    naam: "02 · Licht",
     maat: "1584 × 396",
     waarom: "Zelfde opbouw op eggshell, voor wie een lichte profielfoto heeft.",
     breedte: 1584,

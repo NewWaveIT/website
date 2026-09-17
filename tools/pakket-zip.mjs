@@ -52,7 +52,6 @@ Meer toevoegen -> kies het bestand.
 LINKEDIN-BANNER (1584 x 396)
 ----------------------------
 linkedin-01-bedrijf.png       de bedrijfsbanner
-linkedin-02-eigen-rol.png     met eigen vakgebied
 linkedin-03-licht.png         lichte variant
 
 Profiel -> potloodje bij je omslagfoto -> Afbeelding uploaden.
