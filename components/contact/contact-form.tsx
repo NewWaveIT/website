@@ -43,11 +43,9 @@ export interface FormTeksten {
   veldRolBij: string;
   hintRol: string;
   veldDienst: string;
+  veldDienstToggle: string;
   optieKies: string;
   optieWeetNiet: string;
-  veldGroep: string;
-  veldGroepBij: string;
-  hintGroep: string;
   vragenKicker: string;
   veldSector: string;
   veldSectorBij: string;
@@ -100,7 +98,12 @@ export function ContactForm({ diensten = [], tk }: { diensten?: DienstOptie[]; t
 
   // De keuze van de bezoeker wint zodra hij er een maakt; daarvoor telt de URL.
   const [keuze, setDienst] = useState<string | null>(null);
-  const dienst = keuze ?? (diensten.some((d) => d.slug === dienstUitUrl) ? dienstUitUrl : "");
+  const dienstRuw = keuze ?? (diensten.some((d) => d.slug === dienstUitUrl) ? dienstUitUrl : "");
+  // De dienstkeuze staat standaard ingeklapt: "plan een gesprek" moet zonder
+  // dienst net zo simpel zijn als ermee. Kwam de bezoeker via een dienstpagina
+  // binnen, dan staat 'm meteen open.
+  const [toonDienst, setToonDienst] = useState(() => !!dienstRuw);
+  const dienst = toonDienst ? dienstRuw : "";
 
   // Bij validatiefouten: zet focus op het eerste gemarkeerde veld.
   useEffect(() => {
@@ -207,58 +210,54 @@ export function ContactForm({ diensten = [], tk }: { diensten?: DienstOptie[]; t
       </div>
 
       {diensten.length > 0 && (
-        <div className="frow2">
+        <>
           <div className="field">
-            <label htmlFor="f-dienst">{tk.veldDienst}</label>
-            <select
-              id="f-dienst"
-              name="dienst"
-              value={dienst}
-              onChange={(e) => setDienst(e.target.value)}
-              aria-invalid={err("dienst") ? true : undefined}
-              aria-describedby={err("dienst") ? "err-dienst" : undefined}
-            >
-              <option value="">{tk.optieKies}</option>
-              {SERVICE_FAMILIES.map((f) => {
-                const opties = diensten.filter((d) => d.familie === f.key);
-                if (opties.length === 0) return null;
-                return (
-                  <optgroup label={f.kicker} key={f.key}>
-                    {opties.map((d) => (
-                      <option value={d.slug} key={d.slug}>
-                        {d.naam}
-                      </option>
-                    ))}
-                  </optgroup>
-                );
-              })}
-              <option value="weet-ik-niet">{tk.optieWeetNiet}</option>
-            </select>
-            {err("dienst") && (
-              <p className="field-err" id="err-dienst">
-                {err("dienst")}
-              </p>
-            )}
+            <div className="chips">
+              <label className="chip">
+                <input
+                  type="checkbox"
+                  checked={toonDienst}
+                  onChange={(e) => setToonDienst(e.target.checked)}
+                />
+                {tk.veldDienstToggle}
+              </label>
+            </div>
           </div>
-          <div className="field">
-            <label htmlFor="f-groep">
-              {tk.veldGroep} <span className="veld-optioneel">{tk.veldGroepBij}</span>
-            </label>
-            <input
-              id="f-groep"
-              name="groepsgrootte"
-              type="text"
-              placeholder={tk.hintGroep}
-              aria-invalid={err("groepsgrootte") ? true : undefined}
-              aria-describedby={err("groepsgrootte") ? "err-groep" : undefined}
-            />
-            {err("groepsgrootte") && (
-              <p className="field-err" id="err-groep">
-                {err("groepsgrootte")}
-              </p>
-            )}
-          </div>
-        </div>
+          {toonDienst && (
+            <div className="field">
+              <label htmlFor="f-dienst">{tk.veldDienst}</label>
+              <select
+                id="f-dienst"
+                name="dienst"
+                value={dienstRuw}
+                onChange={(e) => setDienst(e.target.value)}
+                aria-invalid={err("dienst") ? true : undefined}
+                aria-describedby={err("dienst") ? "err-dienst" : undefined}
+              >
+                <option value="">{tk.optieKies}</option>
+                {SERVICE_FAMILIES.map((f) => {
+                  const opties = diensten.filter((d) => d.familie === f.key);
+                  if (opties.length === 0) return null;
+                  return (
+                    <optgroup label={f.kicker} key={f.key}>
+                      {opties.map((d) => (
+                        <option value={d.slug} key={d.slug}>
+                          {d.naam}
+                        </option>
+                      ))}
+                    </optgroup>
+                  );
+                })}
+                <option value="weet-ik-niet">{tk.optieWeetNiet}</option>
+              </select>
+              {err("dienst") && (
+                <p className="field-err" id="err-dienst">
+                  {err("dienst")}
+                </p>
+              )}
+            </div>
+          )}
+        </>
       )}
 
       {vraagKeys.length > 0 && (

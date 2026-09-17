@@ -24,7 +24,6 @@ const AANVRAAG = {
   dienst: "Mendix Scale Sessie",
   sector: "Banken",
   vraagstuk: "Mendix / applicaties",
-  aantalDeelnemers: "8",
   toelichting: "Graag contact.",
   cmsUrl: "https://www.thenewwaveit.com/admin/aanvragen?open=test-id",
 };

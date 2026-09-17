@@ -51,7 +51,6 @@ export async function submitContact(
   const toelichting = str(formData, "toelichting");
   const onderwerpen = formData.getAll("onderwerp").filter(Boolean).join(", ");
   const dienst = str(formData, "dienst");
-  const groepsgrootte = str(formData, "groepsgrootte");
 
   // Validatie — verzamel álle fouten tegelijk, zodat de bezoeker in één keer
   // ziet wat er nog mist of niet klopt (i.p.v. veld voor veld).
@@ -61,7 +60,6 @@ export async function submitContact(
   if (!EMAIL_RE.test(email)) errors.email = "Vul een geldig e-mailadres in.";
   else if (email.length > 320) errors.email = "E-mailadres is te lang.";
   if (toelichting.length > 5000) errors.toelichting = "Toelichting is te lang (max. 5000 tekens).";
-  if (groepsgrootte.length > 100) errors.groepsgrootte = "Dat is wel erg lang voor een aantal.";
   // Deze velden komen uit chips/selects en horen kort te zijn; zonder cap kan één
   // request megabytes de tabel in schrijven.
   if (bedrijf.length > 200) errors.organisatie = "Organisatie is te lang (max. 200 tekens).";
@@ -109,9 +107,7 @@ export async function submitContact(
     dienst && (!gekozenType || gekozenType === "gesprek")
       ? "dienstaanvraag"
       : gekozenType || "gesprek";
-  const onderwerpLabel = [serviceNaam, rol, groepsgrootte, sector, onderwerpen]
-    .filter(Boolean)
-    .join(" · ");
+  const onderwerpLabel = [serviceNaam, rol, sector, onderwerpen].filter(Boolean).join(" · ");
   const antwoordenBlok = antwoorden.map((a) => `${a.label}: ${a.waarde}`).join("\n");
   const bericht =
     [toelichting, antwoordenBlok].filter(Boolean).join("\n\n") ||
@@ -156,7 +152,6 @@ export async function submitContact(
     dienst: serviceNaam,
     sector,
     vraagstuk: onderwerpen,
-    aantalDeelnemers: groepsgrootte,
     toelichting: [toelichting, antwoordenBlok].filter(Boolean).join("\n\n"),
     cmsUrl: `${SITE_URL}/admin/aanvragen?open=${id}`,
   });

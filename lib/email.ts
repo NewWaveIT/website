@@ -234,7 +234,6 @@ export async function sendAanvraagNotificatie(a: {
   dienst: string;
   sector: string;
   vraagstuk: string;
-  aantalDeelnemers: string;
   toelichting: string;
   cmsUrl: string;
 }): Promise<void> {
@@ -247,9 +246,6 @@ export async function sendAanvraagNotificatie(a: {
     ...(a.dienst ? [{ label: "Dienst", waarde: escapeHtml(a.dienst) }] : []),
     ...(a.sector ? [{ label: "Sector", waarde: escapeHtml(a.sector) }] : []),
     ...(a.vraagstuk ? [{ label: "Vraagstuk", waarde: escapeHtml(a.vraagstuk) }] : []),
-    ...(a.aantalDeelnemers
-      ? [{ label: "Deelnemers", waarde: escapeHtml(a.aantalDeelnemers) }]
-      : []),
     { label: "Ontvangen", waarde: escapeHtml(datumTijdNu()), laatste: true },
   ];
   const inner = `

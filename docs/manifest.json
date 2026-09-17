@@ -88,7 +88,7 @@
     },
     {
       "slug": "contact",
-      "velden": 66,
+      "velden": 64,
       "pad": "/contact",
       "gelezenDoor": ["app/(marketing)/contact/page.tsx", "lib/contact-data.ts"]
     },
