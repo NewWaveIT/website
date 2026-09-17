@@ -22,6 +22,7 @@ import {
   History,
   LogOut,
   Menu,
+  Mail,
   X,
 } from "lucide-react";
 import { ADMIN_NAV, type AdminNavIcon } from "@/lib/admin-nav";
@@ -46,6 +47,7 @@ const ICONS: Record<AdminNavIcon, React.ComponentType> = {
   shield: Shield,
   history: History,
   "git-compare": GitCompare,
+  mail: Mail,
 };
 
 export function Sidebar({

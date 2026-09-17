@@ -1,6 +1,8 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-const insertMock = vi.fn(async () => ({ error: null }));
+const insertMock = vi.fn(async (): Promise<{ error: { message: string } | null }> => ({
+  error: null,
+}));
 const fromMock = vi.fn(() => ({ insert: insertMock }));
 const rpcMock = vi.fn(async () => ({
   data: true as boolean | null,
@@ -23,6 +25,16 @@ vi.mock("next/headers", () => ({
   headers: vi.fn(async () => ({ get: () => "203.0.113.1" })),
 }));
 
+const { sendInzichtenNotificatie, sendInzichtenBevestiging } = vi.hoisted(() => ({
+  sendInzichtenNotificatie: vi.fn(async () => {}),
+  sendInzichtenBevestiging: vi.fn(async () => {}),
+}));
+
+vi.mock("@/lib/email", () => ({
+  sendInzichtenNotificatie,
+  sendInzichtenBevestiging,
+}));
+
 const { subscribeLead } = await import("@/app/(marketing)/inzichten/actions");
 
 function formData(fields: Record<string, string>): FormData {
@@ -38,6 +50,8 @@ beforeEach(() => {
   fromMock.mockClear();
   rpcMock.mockClear().mockResolvedValue({ data: true, error: null });
   createClientMock.mockClear();
+  sendInzichtenNotificatie.mockClear();
+  sendInzichtenBevestiging.mockClear();
 });
 
 describe("subscribeLead", () => {
@@ -64,13 +78,25 @@ describe("subscribeLead", () => {
     expect(insertMock).not.toHaveBeenCalled();
   });
 
-  it("slaat een geldig e-mailadres op als lead", async () => {
+  it("slaat een geldig e-mailadres op als lead en verstuurt beide mails", async () => {
     const result = await subscribeLead(initialState, formData({ email: "jane@example.com" }));
     expect(result.ok).toBe(true);
     expect(fromMock).toHaveBeenCalledWith("contact_aanvragen");
     expect(insertMock).toHaveBeenCalledWith(
       expect.objectContaining({ email: "jane@example.com", type: "inzichten" }),
     );
+    expect(sendInzichtenNotificatie).toHaveBeenCalledTimes(1);
+    expect(sendInzichtenBevestiging).toHaveBeenCalledWith(
+      expect.objectContaining({ to: "jane@example.com" }),
+    );
+  });
+
+  it("geeft een foutmelding terug als de insert faalt, zonder mails te versturen", async () => {
+    insertMock.mockResolvedValueOnce({ error: { message: "db down" } });
+    const result = await subscribeLead(initialState, formData({ email: "jane@example.com" }));
+    expect(result.ok).toBe(false);
+    expect(sendInzichtenNotificatie).not.toHaveBeenCalled();
+    expect(sendInzichtenBevestiging).not.toHaveBeenCalled();
   });
 
   it("zet het e-mailadres als naam, want het formulier vraagt er geen", async () => {

@@ -1,8 +1,8 @@
 import "server-only";
 import { createClient } from "@/lib/supabase/server";
-import type { Lead, Sollicitatie } from "@/lib/cms/inzendingen-types";
+import type { Lead, Sollicitatie, InzichtenLead } from "@/lib/cms/inzendingen-types";
 
-export type { Lead, Sollicitatie } from "@/lib/cms/inzendingen-types";
+export type { Lead, Sollicitatie, InzichtenLead } from "@/lib/cms/inzendingen-types";
 export { LEAD_STATUSSEN, SOL_STATUSSEN, STATUS_LABEL } from "@/lib/cms/inzendingen-types";
 
 /**
@@ -33,6 +33,26 @@ export async function getLeads(): Promise<Lead[]> {
       .order("created_at", { ascending: false })
       .limit(MAX_RIJEN);
     return (data as unknown as Lead[]) ?? [];
+  } catch {
+    return [];
+  }
+}
+
+const INZICHTEN_KOLOMMEN = "id, created_at, email";
+
+/** Aanmeldingen voor de inzichten-nieuwsbrief: dezelfde tabel als de aanvragen,
+ *  maar met `type = 'inzichten'` en zonder het opvolgings-gedoe (status,
+ *  eigenaar) dat bij een echte aanvraag hoort — het is gewoon een lijst. */
+export async function getInzichtenLeads(): Promise<InzichtenLead[]> {
+  try {
+    const supabase = await createClient();
+    const { data } = await supabase
+      .from("contact_aanvragen")
+      .select(INZICHTEN_KOLOMMEN)
+      .eq("type", "inzichten")
+      .order("created_at", { ascending: false })
+      .limit(MAX_RIJEN);
+    return (data as unknown as InzichtenLead[]) ?? [];
   } catch {
     return [];
   }

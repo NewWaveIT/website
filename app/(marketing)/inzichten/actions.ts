@@ -1,8 +1,10 @@
 "use server";
 import { CONTACT_TERUGVAL } from "@/lib/contactgegevens";
+import { SITE_URL } from "@/lib/site";
 
 import { inzendingClient } from "@/lib/supabase/inzendingen";
 import { magDoor } from "@/lib/rate-limit";
+import { sendInzichtenBevestiging, sendInzichtenNotificatie } from "@/lib/email";
 
 export interface LeadState {
   ok: boolean;
@@ -58,6 +60,10 @@ export async function subscribeLead(_prev: LeadState, formData: FormData): Promi
       message: `Er ging iets mis. Probeer het later opnieuw of mail ${CONTACT_TERUGVAL.email}.`,
     };
   }
+
+  // Interne notificatie + bevestiging aan de aanmelder (beide fail-safe).
+  await sendInzichtenNotificatie({ email, cmsUrl: `${SITE_URL}/admin/nieuwsbrief` });
+  await sendInzichtenBevestiging({ to: email });
 
   return { ok: true, message: "Gelukt! Je ontvangt binnenkort onze scherpste inzichten." };
 }

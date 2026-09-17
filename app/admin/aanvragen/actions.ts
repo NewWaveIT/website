@@ -47,6 +47,7 @@ export async function deleteLead(id: string): Promise<{ ok: boolean; error?: str
   if (!data?.length) return { ok: false, error: "Niet gevonden of geen rechten." };
 
   revalidatePath("/admin/aanvragen");
+  revalidatePath("/admin/nieuwsbrief");
   revalidatePath("/admin");
   return { ok: true };
 }

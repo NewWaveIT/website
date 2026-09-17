@@ -341,3 +341,46 @@ ${knoppenRij(a.cmsUrl, "Naar screening", `mailto:${a.email}`, "Kandidaat mailen"
     html: omhulsel(`Nieuwe sollicitatie van ${a.naam} op de vacature ${a.vacature}.`, inner),
   });
 }
+
+// ── 5. Inzichten-nieuwsbrief · bevestiging aan de aanmelder ───────────────────
+export async function sendInzichtenBevestiging(a: { to: string }): Promise<void> {
+  const inner = `
+${logoRij()}
+${titelBlok(null, "Je staat op de lijst")}
+${paragraaf(
+  `Bedankt voor je aanmelding. Eén keer per maand sturen we onze scherpste inzichten over technologie in jouw sector. Geen sales, uitschrijven kan altijd.`,
+)}
+${paragraaf(`Met vriendelijke groet,<br><strong style="color:#2E251A;">Team The New Wave IT</strong>`, 24)}
+${footerAfzender()}`;
+  await verstuur({
+    from: FROM_PUBLIC,
+    to: a.to,
+    subject: "Je staat op de lijst",
+    html: omhulsel("Je ontvangt voortaan onze inzichten, één keer per maand.", inner),
+  });
+}
+
+// ── 6. Inzichten-nieuwsbrief · interne melding ─────────────────────────────────
+export async function sendInzichtenNotificatie(a: {
+  email: string;
+  cmsUrl: string;
+}): Promise<void> {
+  const rijen = [
+    {
+      label: "E-mail",
+      waarde: `<a href="mailto:${escapeHtml(a.email)}" style="color:#F15822;text-decoration:none;">${escapeHtml(a.email)}</a>`,
+    },
+    { label: "Ontvangen", waarde: escapeHtml(datumTijdNu()), laatste: true },
+  ];
+  const inner = `
+${donkereBalk(`Nieuwe aanmelding &nbsp;·&nbsp; <span style="color:#F15822;">Nieuwsbrief</span>`)}
+${gegevensTabel(rijen)}
+${knoppenRij(a.cmsUrl, "Bekijk in CMS", `mailto:${a.email}`, "Mail deze aanmelder")}`;
+  await verstuur({
+    from: FROM_ADMIN,
+    to: NOTIFY_AANVRAGEN,
+    replyTo: a.email,
+    subject: `Nieuwe nieuwsbrief-aanmelding: ${a.email}`,
+    html: omhulsel(`Nieuwe aanmelding voor de inzichten-nieuwsbrief: ${a.email}.`, inner),
+  });
+}

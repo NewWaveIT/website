@@ -14,7 +14,8 @@ process.env.MAIL_FROM_PUBLIC = "Test Publiek <hallo@test.nl>";
 process.env.NOTIFY_EMAIL = "intern@test.nl";
 process.env.NOTIFY_EMAIL_AANVRAGEN = "aanvragen@test.nl";
 
-const { sendAanvraagNotificatie } = await import("@/lib/email");
+const { sendAanvraagNotificatie, sendInzichtenNotificatie, sendInzichtenBevestiging } =
+  await import("@/lib/email");
 
 const AANVRAAG = {
   naam: "Jane Doe",
@@ -113,5 +114,22 @@ describe("met RESEND_API_KEY", () => {
     expect(html).not.toContain("<b>vet</b>");
     // Vrije tekst houdt wel zijn regelovergangen.
     expect(html).toContain("Regel 1<br>Regel 2");
+  });
+
+  it("stuurt de nieuwsbrief-notificatie naar NOTIFY_EMAIL_AANVRAGEN", async () => {
+    await sendInzichtenNotificatie({
+      email: "lezer@example.com",
+      cmsUrl: "https://www.thenewwaveit.com/admin/nieuwsbrief",
+    });
+    const body = verzonden();
+    expect(body.to).toBe("aanvragen@test.nl");
+    expect(body.subject).toContain("lezer@example.com");
+  });
+
+  it("stuurt de nieuwsbrief-bevestiging naar de aanmelder", async () => {
+    await sendInzichtenBevestiging({ to: "lezer@example.com" });
+    const body = verzonden();
+    expect(body.to).toBe("lezer@example.com");
+    expect(body.from).toBe("Test Publiek <hallo@test.nl>");
   });
 });

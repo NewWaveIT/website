@@ -14,6 +14,12 @@ export interface Lead {
   interne_notitie: string | null;
 }
 
+export interface InzichtenLead {
+  id: string;
+  created_at: string;
+  email: string;
+}
+
 export interface Sollicitatie {
   id: string;
   created_at: string;
