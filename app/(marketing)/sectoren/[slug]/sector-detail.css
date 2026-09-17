@@ -10,19 +10,6 @@
    Twaalf secties: hero, herkenning, mensen, waarom nu, pijn → oplossing,
    wat we bouwen, hoe we werken, diensten, FAQ, inzichten, team en CTA. */
 
-.p-sector .crumbs {
-  font-family: var(--font-mono);
-  font-size: var(--text-xs);
-  color: var(--text-subtle);
-  padding: var(--space-5) 0 0;
-}
-.p-sector .crumbs a {
-  color: var(--text-subtle);
-}
-.p-sector .crumbs a:hover {
-  color: var(--color-primary);
-}
-
 /* 1 · Hero */
 .p-sector .shero-anim {
   width: 48%;
@@ -53,7 +40,7 @@
 .p-sector .pain-item .i {
   font-family: var(--font-mono);
   font-size: var(--text-xs);
-  color: var(--color-primary);
+  color: var(--orange-text);
   padding-top: 7px;
   flex: none;
 }
@@ -282,7 +269,7 @@
 }
 .p-sector .laag-toekomst {
   background: var(--info-100);
-  color: var(--info-500);
+  color: var(--info-700);
   border: 1px solid color-mix(in srgb, var(--info-500) 30%, var(--info-100));
 }
 
@@ -431,7 +418,7 @@
     transform 140ms;
 }
 .p-sector .svc-link:hover {
-  border-color: var(--color-primary);
+  border-color: var(--orange-text);
   color: var(--color-primary);
   transform: translateX(3px);
 }
@@ -470,12 +457,12 @@
   display: none;
 }
 .p-sector .faq summary:hover {
-  color: var(--color-primary);
+  color: var(--orange-text);
 }
 .p-sector .faq summary .pm {
   font-family: var(--font-mono);
   font-size: var(--text-lg);
-  color: var(--color-primary);
+  color: var(--orange-text);
   line-height: 1;
   flex: none;
   transition: transform 160ms;
@@ -518,7 +505,7 @@
   color: var(--text-body);
 }
 .p-sector .sector-pills a:hover {
-  border-color: var(--color-primary);
+  border-color: var(--orange-text);
   color: var(--color-primary);
 }
 .p-sector .sector-pills svg {

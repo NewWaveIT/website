@@ -9,19 +9,6 @@
 
 /* Klantverhaal detail — geport uit ui_kits/website/case.html (.p-case) */
 
-.p-case .crumbs {
-  font-family: var(--font-mono);
-  font-size: var(--text-xs);
-  color: var(--ink-400);
-  padding: var(--space-5) 0;
-}
-.p-case .crumbs a {
-  color: var(--ink-400);
-}
-.p-case .crumbs a:hover {
-  color: var(--orange-400);
-}
-
 .p-case .pkop .tag {
   display: inline-flex;
   align-items: center;

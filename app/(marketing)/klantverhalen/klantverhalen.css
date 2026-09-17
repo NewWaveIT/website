@@ -1,15 +1,5 @@
 /* Klantverhalen overzicht — geport uit ui_kits/website/klantverhalen.html (.p-klanten) */
 
-.p-klanten .crumbs {
-  font-family: var(--font-mono);
-  font-size: var(--text-xs);
-  color: var(--ink-400);
-  padding: var(--space-5) 0 0;
-}
-.p-klanten .crumbs a {
-  color: var(--ink-400);
-}
-
 .p-klanten .uitgelicht {
   background: var(--eggshell);
 }

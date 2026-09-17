@@ -126,7 +126,7 @@
 }
 .sol-form .form-status.err {
   background: var(--danger-100);
-  color: var(--danger-500);
+  color: var(--danger-700);
 }
 .sol-form .sol-privacy {
   font-size: var(--text-xs);

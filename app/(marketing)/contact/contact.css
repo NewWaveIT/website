@@ -1,18 +1,5 @@
 /* Contactpagina — geport uit ui_kits/website/contact.html */
 
-.crumbs {
-  font-family: var(--font-mono);
-  font-size: var(--text-xs);
-  color: var(--text-subtle);
-  padding: var(--space-5) 0 0;
-}
-.crumbs a {
-  color: var(--text-subtle);
-}
-.crumbs a:hover {
-  color: var(--orange-text);
-}
-
 /* De sectie met de vier contactmanieren loopt door in het formulier eronder;
    daar hoort geen dubbele witruimte tussen. */
 .p-contact .manieren {
@@ -220,7 +207,7 @@
 }
 .form-status.err {
   background: var(--danger-100);
-  color: var(--danger-500);
+  color: var(--danger-700);
 }
 .field input[aria-invalid="true"],
 .field select[aria-invalid="true"],

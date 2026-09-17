@@ -1,5 +1,4 @@
 import { readFileSync, readdirSync, statSync } from "node:fs";
-import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 
 /**
@@ -31,7 +30,10 @@ const MAPPEN = ["app/admin", "components/admin"];
 
 function bronbestanden(map: string, uit: string[] = []): string[] {
   for (const naam of readdirSync(map)) {
-    const pad = join(map, naam);
+    // Bewust niet join(): die geeft op Windows backslashes, terwijl de rest van
+    // deze test (en het manifest) met POSIX-paden vergelijkt. Zonder dit faalt
+    // de suite alleen op Windows — het platform waarop hier ontwikkeld wordt.
+    const pad = `${map}/${naam}`;
     if (statSync(pad).isDirectory()) bronbestanden(pad, uit);
     else if (naam.endsWith(".tsx")) uit.push(pad);
   }

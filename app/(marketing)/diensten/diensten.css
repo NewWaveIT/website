@@ -11,19 +11,6 @@
    gescoopt onder .p-diensten. De structuurklassen die het ontwerp deelt met de
    rest van de site (.block, .sec-head, .kicker, .btn) komen uit globals.css. */
 
-.p-diensten .crumbs {
-  font-family: var(--font-mono);
-  font-size: var(--text-xs);
-  color: var(--ink-400);
-  padding: var(--space-5) 0 0;
-}
-.p-diensten .crumbs a {
-  color: var(--ink-400);
-}
-.p-diensten .crumbs a:hover {
-  color: var(--orange-400);
-}
-
 /* ---- 1 · Hero ---- */
 
 /* ---- 2 · Basisdienst ---- */
@@ -71,7 +58,7 @@
   font-size: 10px;
   text-transform: uppercase;
   letter-spacing: var(--tracking-kicker);
-  color: var(--color-primary);
+  color: var(--orange-text);
 }
 .p-diensten .rollen .v {
   font-size: var(--text-base);
@@ -114,7 +101,7 @@
   font-size: 10px;
   text-transform: uppercase;
   letter-spacing: var(--tracking-kicker);
-  color: var(--color-primary);
+  color: var(--orange-text);
 }
 .p-diensten .basis-card .pic .n {
   font-size: var(--text-md);

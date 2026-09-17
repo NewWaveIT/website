@@ -28,18 +28,45 @@ const PAGINATYPEN: [naam: string, pad: string][] = [
 
 /**
  * Witte tekst op flame (#f15822) haalt bewust geen AA — dat is een merkkeuze,
- * vastgelegd in CLAUDE.md. Zou contrast hier meedoen, dan is de test permanent
- * rood en kijkt niemand er meer naar. De rest van WCAG geldt onverkort.
+ * vastgelegd in CLAUDE.md.
+ *
+ * Die uitzondering stond eerder als `disableRules(["color-contrast"])`, dus
+ * regelbreed. Daarmee glipte álles wat verder niet haalde er ook doorheen:
+ * oranje tekst op wit (3,4:1), het kruimelpad op de donkere hero (2,9:1),
+ * partnerlogo's op wit (2,65:1). De regel staat nu aan en alleen déze ene
+ * combinatie wordt achteraf weggefilterd, op de gemeten kleuren zelf.
  */
-const UITGEZONDERD = ["color-contrast"];
+const MERKUITZONDERING = { voorgrond: "#ffffff", achtergrond: "#f15822" };
+
+/** Is deze melding de merkcombinatie wit-op-flame? */
+function isMerkuitzondering(node: { any?: { message?: string }[] }): boolean {
+  const m = node.any?.[0]?.message ?? "";
+  return (
+    m.includes(`foreground color: ${MERKUITZONDERING.voorgrond}`) &&
+    m.includes(`background color: ${MERKUITZONDERING.achtergrond}`)
+  );
+}
+
+/** Laat alleen contrastfouten over die niet onder de merkuitzondering vallen. */
+function zonderMerkuitzondering<
+  T extends { id: string; nodes: { any?: { message?: string }[] }[] },
+>(violations: T[]): T[] {
+  return violations
+    .map((v) =>
+      v.id === "color-contrast"
+        ? { ...v, nodes: v.nodes.filter((n) => !isMerkuitzondering(n)) }
+        : v,
+    )
+    .filter((v) => v.nodes.length > 0);
+}
 
 for (const [naam, pad] of PAGINATYPEN) {
   test(`${naam} (${pad}) voldoet aan WCAG 2.1 AA`, async ({ page }) => {
     await page.goto(pad);
-    const { violations } = await new AxeBuilder({ page })
+    const rapport = await new AxeBuilder({ page })
       .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"])
-      .disableRules(UITGEZONDERD)
       .analyze();
+    const violations = zonderMerkuitzondering(rapport.violations);
 
     // Bij een fout wil je weten wélk element, niet alleen hoeveel er zijn.
     const melding = violations
@@ -58,9 +85,8 @@ test("het contactformulier blijft toegankelijk als het fouten toont", async ({ p
   await page.getByRole("button", { name: /verstuur|plan|verzend|vraag/i }).click();
   await expect(page.locator("[aria-invalid='true']").first()).toBeVisible();
 
-  const { violations } = await new AxeBuilder({ page })
+  const rapport = await new AxeBuilder({ page })
     .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"])
-    .disableRules(UITGEZONDERD)
     .analyze();
-  expect(violations.map((v) => v.id)).toEqual([]);
+  expect(zonderMerkuitzondering(rapport.violations).map((v) => v.id)).toEqual([]);
 });

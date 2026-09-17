@@ -1,15 +1,5 @@
 /* Inzichten overzicht — geport uit ui_kits/website/inzichten.html (.p-inzichten) */
 
-.p-inzichten .crumbs {
-  font-family: var(--font-mono);
-  font-size: var(--text-xs);
-  color: var(--ink-400);
-  padding: var(--space-5) 0 0;
-}
-.p-inzichten .crumbs a {
-  color: var(--ink-400);
-}
-
 .p-inzichten .filters {
   display: flex;
   gap: 8px;

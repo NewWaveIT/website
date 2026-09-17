@@ -21,6 +21,9 @@
   --orange-400: #f47c4d;
   --orange-500: #f15822; /* brand Flame Orange */
   --orange-text: #c2410c; /* AA-veilig oranje voor kleine tekst op licht (5.18:1) */
+  /* Tegenhanger voor donkere secties: --orange-text haalt op espresso maar 2.91:1.
+     Deze doet 5.61:1 op #2e251a en 6.42:1 op ink-950. */
+  --orange-text-on-dark: #f47c4d;
   --orange-600: #d8481a;
   --orange-700: #b23a15;
   --orange-800: #8a2d11;
@@ -52,9 +55,15 @@
   --warning-500: #d9962b;
   --warning-100: #f6e9cc;
   --danger-500: #c4392a;
+  /* Tekstvariant: --danger-500 op --danger-100 haalt 4.00:1. Een foutmelding
+     is juist de tekst die gelezen móét worden, dus die mag niet net zakken. */
+  --danger-700: #a82f22;
   --danger-600: #b42318;
   --danger-100: #f5dad4;
   --info-500: #3e6e8c;
+  /* Tekstvariant: --info-500 op --info-100 haalt 4.32:1, net te weinig.
+     Deze doet 6.84:1. */
+  --info-700: #2b4f66;
   --info-100: #d9e6ee;
 
   /* ---- Semantic aliases ---- */
@@ -437,7 +446,11 @@ footer :focus-visible,
 }
 .btn-ghost-on {
   background: transparent;
-  color: var(--eggshell);
+  /* Wit, niet eggshell: op de flame-band is de rest van de tekst ook wit, en
+     eggshell zakt daar naar 3.02:1 tegenover 3.41:1 voor wit. Daarmee valt de
+     knop onder dezelfde merkuitzondering als de rest in plaats van een tweede,
+     nét andere combinatie te zijn. */
+  color: var(--white);
   /* Wit met alfa in plaats van een inkttoken: dit moet zowel op espresso als
      op flame een rand zijn en geen vlek. */
   border-color: color-mix(in srgb, var(--white) 45%, transparent);
@@ -948,6 +961,33 @@ footer.site-footer {
   margin: var(--space-3) 0 0;
 }
 
+/* Kruimelpad (components/kruimelpad.tsx)
+
+   Stond in tien pagina-CSS-bestanden, telkens met een andere kleur en padding.
+   Twee daarvan haalden geen AA: --ink-400 doet 2.54:1 op paper, en
+   --text-subtle 2.88:1 op espresso. De component kende al een `on-dark`-klasse
+   maar die had nergens opmaak, dus de donkere hero's kregen stilzwijgend de
+   lichte variant. Hier staat hij één keer, met per ondergrond een kleur die
+   wél haalt. */
+.crumbs {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--text-subtle); /* 5.01:1 op paper */
+  padding: var(--space-5) 0 0;
+}
+.crumbs a {
+  color: inherit;
+}
+.crumbs a:hover {
+  color: var(--orange-text);
+}
+.crumbs.on-dark {
+  color: var(--ink-300); /* 8.04:1 op espresso */
+}
+.crumbs.on-dark a:hover {
+  color: var(--orange-text-on-dark);
+}
+
 /* Scroll-reveal */
 .rv {
   opacity: 0;
@@ -1346,7 +1386,8 @@ footer.site-footer {
     font-size: 11px;
     text-transform: uppercase;
     letter-spacing: var(--tracking-kicker);
-    color: var(--ink-500);
+    /* --ink-500 haalt op ink-950 maar 4.19:1; deze doet 6.49:1. */
+    color: var(--ink-400);
     text-align: center;
   }
 

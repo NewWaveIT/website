@@ -140,6 +140,7 @@ export default async function DienstPage({ params }: { params: Promise<{ slug: s
       <section className="dhero">
         <div className="wrap-wide">
           <Kruimelpad
+            opDonker
             kruimels={[
               { naam: "Diensten", pad: "/diensten" },
               ...(richting ? [{ naam: richting.naam, pad: richting.href }] : []),
