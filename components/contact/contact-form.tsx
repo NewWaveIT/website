@@ -101,8 +101,12 @@ export function ContactForm({ diensten = [], tk }: { diensten?: DienstOptie[]; t
   const dienstRuw = keuze ?? (diensten.some((d) => d.slug === dienstUitUrl) ? dienstUitUrl : "");
   // De dienstkeuze staat standaard ingeklapt: "plan een gesprek" moet zonder
   // dienst net zo simpel zijn als ermee. Kwam de bezoeker via een dienstpagina
-  // binnen, dan staat 'm meteen open.
-  const [toonDienst, setToonDienst] = useState(() => !!dienstRuw);
+  // binnen, dan staat 'm meteen open — maar `dienstUitUrl` komt pas ná hydratatie
+  // binnen (useBrowserwaarde), dus een bevroren `useState(() => !!dienstRuw)` mist
+  // 'm nog. Zolang de bezoeker de toggle niet zelf heeft aangeraakt (`null`),
+  // volgt hij gewoon `dienstRuw` op elke render mee.
+  const [dienstToggleOverride, setDienstToggleOverride] = useState<boolean | null>(null);
+  const toonDienst = dienstToggleOverride ?? !!dienstRuw;
   const dienst = toonDienst ? dienstRuw : "";
 
   // Bij validatiefouten: zet focus op het eerste gemarkeerde veld.
@@ -217,7 +221,7 @@ export function ContactForm({ diensten = [], tk }: { diensten?: DienstOptie[]; t
                 <input
                   type="checkbox"
                   checked={toonDienst}
-                  onChange={(e) => setToonDienst(e.target.checked)}
+                  onChange={(e) => setDienstToggleOverride(e.target.checked)}
                 />
                 {tk.veldDienstToggle}
               </label>
