@@ -1,0 +1,49 @@
+/* De lead op een juridische pagina mag breder dan de standaard 52ch. */
+.p-algemene-voorwaarden .pkop {
+  --pkop-lead: 60ch;
+}
+
+.p-algemene-voorwaarden {
+  background: var(--surface-page);
+}
+
+.p-algemene-voorwaarden .legal-body {
+  padding: var(--space-8) 0 var(--space-9);
+}
+.p-algemene-voorwaarden .prose {
+  max-width: 72ch;
+}
+.p-algemene-voorwaarden .prose h2 {
+  font-size: var(--text-xl);
+  font-weight: var(--fw-extrabold);
+  color: var(--text-strong);
+  margin: var(--space-7) 0 var(--space-3);
+}
+.p-algemene-voorwaarden .prose p {
+  font-size: var(--text-base);
+  line-height: var(--leading-relaxed);
+  color: var(--text-body);
+  margin: 0 0 var(--space-4);
+}
+.p-algemene-voorwaarden .prose ul {
+  margin: 0 0 var(--space-4) var(--space-5);
+}
+.p-algemene-voorwaarden .prose li {
+  font-size: var(--text-base);
+  line-height: var(--leading-relaxed);
+  color: var(--text-body);
+  margin-bottom: var(--space-2);
+}
+.p-algemene-voorwaarden .prose a {
+  color: var(--orange-text);
+  font-weight: var(--fw-medium);
+}
+.p-algemene-voorwaarden .prose address {
+  font-style: normal;
+  background: var(--white);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  padding: var(--space-4) var(--space-5);
+  margin: var(--space-4) 0;
+  line-height: var(--leading-relaxed);
+}

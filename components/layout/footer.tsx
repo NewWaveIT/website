@@ -20,6 +20,7 @@ const STANDAARD: FooterTeksten = {
   footerKopBedrijf: "Bedrijf",
   footerKopContact: "Contact",
   footerPrivacy: "Privacybeleid",
+  footerVoorwaarden: "Algemene voorwaarden",
 };
 
 export interface FooterTeksten {
@@ -28,6 +29,7 @@ export interface FooterTeksten {
   footerKopBedrijf: string;
   footerKopContact: string;
   footerPrivacy: string;
+  footerVoorwaarden: string;
 }
 
 export function Footer({
@@ -88,9 +90,12 @@ export function Footer({
           <span>
             © <CopyrightJaar /> The New Wave IT
           </span>
-          <span>
+          <span className="foot-links">
             <Link href="/privacy" prefetch={false}>
               {tk.footerPrivacy}
+            </Link>
+            <Link href="/algemene-voorwaarden" prefetch={false}>
+              {tk.footerVoorwaarden}
             </Link>
           </span>
         </div>

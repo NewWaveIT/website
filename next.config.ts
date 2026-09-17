@@ -87,9 +87,8 @@ const nextConfig: NextConfig = {
         permanent: true,
       },
       { source: "/semi-overheid", destination: "/sectoren/publieke-sector", permanent: true },
-      // Geen equivalent op de nieuwe site; tijdelijke bestemming totdat er een
-      // eigen voorwaardenpagina komt.
-      { source: "/algemene-voorwaarden", destination: "/privacy", permanent: false },
+      // /algemene-voorwaarden heeft nu een eigen pagina op exact hetzelfde
+      // pad, dus die oude URL heeft geen redirect nodig.
       { source: "/privacy-policy", destination: "/privacy", permanent: true },
       { source: "/cookie-policy-eu", destination: "/privacy", permanent: true },
     ];

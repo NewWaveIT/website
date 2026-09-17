@@ -36,6 +36,7 @@ export async function FooterMetContact() {
         footerKopBedrijf: t.footerKopBedrijf,
         footerKopContact: t.footerKopContact,
         footerPrivacy: t.footerPrivacy,
+        footerVoorwaarden: t.footerVoorwaarden,
       }}
     />
   );

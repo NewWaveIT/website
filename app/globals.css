@@ -718,8 +718,10 @@ footer.site-footer {
 }
 .foot-bottom {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
+  gap: var(--space-2) var(--space-4);
   padding-top: var(--space-5);
   font-size: var(--text-xs);
   color: var(--ink-400); /* AA op donker (≥5.6:1) */
@@ -731,6 +733,10 @@ footer.site-footer {
 }
 .foot-bottom a:hover {
   color: var(--orange-300);
+}
+.foot-links {
+  display: flex;
+  gap: var(--space-4);
 }
 
 /* CTA band */

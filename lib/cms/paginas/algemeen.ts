@@ -7,6 +7,7 @@ export const VELDEN = [
   { key: "footerKopBedrijf", label: "Voettekst — kop kolom 2", type: "text" },
   { key: "footerKopContact", label: "Voettekst — kop kolom 3", type: "text" },
   { key: "footerPrivacy", label: "Voettekst — link privacybeleid", type: "text" },
+  { key: "footerVoorwaarden", label: "Voettekst — link algemene voorwaarden", type: "text" },
   { key: "cookieTekst", label: "Cookiemelding — tekst", type: "textarea" },
   { key: "cookieLink", label: "Cookiemelding — linktekst", type: "text" },
   { key: "cookieWeiger", label: "Cookiemelding — knop weigeren", type: "text" },
@@ -30,6 +31,7 @@ export const TEKSTEN = {
   footerKopBedrijf: "Bedrijf",
   footerKopContact: "Contact",
   footerPrivacy: "Privacybeleid",
+  footerVoorwaarden: "Algemene voorwaarden",
   cookieTekst:
     "We gebruiken alleen functionele cookies. Met jouw toestemming plaatsen we ook analytische cookies om de site te verbeteren. Zie ons",
   cookieLink: "privacybeleid",

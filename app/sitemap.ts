@@ -28,6 +28,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     "/werken-bij",
     "/contact",
     "/privacy",
+    "/algemene-voorwaarden",
   ];
 
   const entries: MetadataRoute.Sitemap = staticPaths.map((path) => ({

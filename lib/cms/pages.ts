@@ -28,6 +28,7 @@ import * as klantverhaalDetail from "./paginas/klantverhaal-detail";
 import * as inzichten from "./paginas/inzichten";
 import * as algemeen from "./paginas/algemeen";
 import * as privacy from "./paginas/privacy";
+import * as algemeneVoorwaarden from "./paginas/algemene-voorwaarden";
 
 export const PAGE_FIELDS = {
   home: home.VELDEN,
@@ -47,6 +48,7 @@ export const PAGE_FIELDS = {
   inzichten: inzichten.VELDEN,
   algemeen: algemeen.VELDEN,
   privacy: privacy.VELDEN,
+  "algemene-voorwaarden": algemeneVoorwaarden.VELDEN,
 } as const satisfies Record<string, readonly FieldDef[]>;
 
 /**
@@ -91,6 +93,7 @@ export const PAGE_PATH = {
   inzichten: "/inzichten",
   algemeen: "/",
   privacy: "/privacy",
+  "algemene-voorwaarden": "/algemene-voorwaarden",
 } satisfies Record<PaginaSlug, string>;
 
 /** Standaardteksten per pagina (fallback op de site + startwaarde in de editor). */
@@ -112,6 +115,7 @@ export const PAGE_DEFAULTS = {
   inzichten: inzichten.TEKSTEN,
   algemeen: algemeen.TEKSTEN,
   privacy: privacy.TEKSTEN,
+  "algemene-voorwaarden": algemeneVoorwaarden.TEKSTEN,
 } satisfies { [S in PaginaSlug]: Record<PaginaVeld<S>, string> };
 
 /**
