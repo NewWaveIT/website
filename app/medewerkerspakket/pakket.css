@@ -1,0 +1,244 @@
+/* Medewerkerspakket — interne pagina, buiten de marketing-layout.
+
+   Geen sitekop en geen voettekst: dit is gereedschap voor collega's, geen
+   verkooppagina. De opmaak volgt wel de tokens uit globals.css, zodat het
+   herkenbaar blijft als onze eigen omgeving. */
+
+.p-pakket {
+  max-width: 1040px;
+  margin: 0 auto;
+  padding-inline: 24px;
+  padding-block: 56px 96px;
+  font-family: var(--font-sans);
+  color: var(--text-body);
+}
+
+.pak-kop {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding-bottom: 8px;
+}
+.pak-kicker {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-kicker);
+  text-transform: uppercase;
+  color: var(--text-subtle);
+  margin: 0;
+}
+.p-pakket h1 {
+  font-family: var(--font-display);
+  font-weight: var(--fw-extrabold);
+  font-size: clamp(30px, 5vw, 42px);
+  line-height: 1.06;
+  letter-spacing: -1px;
+  color: var(--text-strong);
+  margin: 0;
+  text-wrap: balance;
+}
+.pak-intro {
+  font-size: var(--text-md);
+  line-height: var(--leading-relaxed);
+  color: var(--text-muted);
+  margin: 0;
+  max-width: 62ch;
+}
+
+.pak-sectie {
+  margin-top: 72px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.p-pakket h2 {
+  font-family: var(--font-display);
+  font-weight: var(--fw-bold);
+  font-size: var(--text-2xl);
+  letter-spacing: -0.4px;
+  color: var(--text-strong);
+  margin: 0;
+}
+.pak-meta {
+  font-size: var(--text-base);
+  line-height: var(--leading-relaxed);
+  color: var(--text-muted);
+  margin: 0;
+  max-width: 62ch;
+}
+
+/* ---- Galerij ---- */
+
+.pak-grid {
+  display: grid;
+  gap: 28px;
+}
+.pak-grid--twee {
+  grid-template-columns: repeat(2, 1fr);
+}
+.pak-grid--een {
+  grid-template-columns: 1fr;
+}
+
+.pak-item {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.pak-beeld {
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: var(--eggshell);
+}
+.pak-beeld img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.pak-item figcaption {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.pak-naam {
+  font-family: var(--font-display);
+  font-size: var(--text-base);
+  font-weight: var(--fw-bold);
+  color: var(--text-strong);
+}
+.pak-maat {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: var(--tracking-kicker);
+  text-transform: uppercase;
+  color: var(--text-subtle);
+}
+.pak-item figcaption p {
+  font-size: var(--text-sm);
+  line-height: var(--leading-relaxed);
+  color: var(--text-muted);
+  margin: 4px 0 0;
+}
+.pak-download {
+  align-self: flex-start;
+  margin-top: 8px;
+  font-size: var(--text-sm);
+  font-weight: var(--fw-semibold);
+  color: var(--orange-text);
+  text-decoration: none;
+  border-bottom: 2px solid color-mix(in srgb, var(--orange-text) 35%, transparent);
+  padding-bottom: 2px;
+}
+.pak-download:hover {
+  border-bottom-color: var(--orange-text);
+}
+
+/* ---- Instructieblok ---- */
+
+.pak-hoe {
+  background: var(--eggshell);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  padding: 20px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.pak-hoe p {
+  font-size: var(--text-sm);
+  line-height: var(--leading-relaxed);
+  color: var(--text-body);
+  margin: 0;
+  max-width: 70ch;
+}
+
+.pak-slot {
+  border-top: 1px solid var(--border-default);
+  padding-top: 40px;
+}
+
+@media (max-width: 760px) {
+  .pak-grid--twee {
+    grid-template-columns: 1fr;
+  }
+  .pak-sectie {
+    margin-top: 56px;
+  }
+}
+
+/* ---- Download van het hele pakket ---- */
+
+.pak-alles {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 16px;
+  margin-top: 10px;
+}
+.pak-zipnoot {
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+  max-width: 44ch;
+  line-height: var(--leading-snug);
+}
+
+/* ---- Het logo uit de handtekening ---- */
+
+.pak-logos {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.pak-logos h3 {
+  font-family: var(--font-display);
+  font-size: var(--text-md);
+  font-weight: var(--fw-bold);
+  color: var(--text-strong);
+  margin: 0;
+}
+.pak-logos > p {
+  font-size: var(--text-sm);
+  line-height: var(--leading-relaxed);
+  color: var(--text-muted);
+  margin: 0;
+  max-width: 66ch;
+}
+.pak-logorij {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  margin-top: 6px;
+}
+.pak-logo {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.pak-logodoek {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 210px;
+  padding: 18px 30px;
+  background: var(--white);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+}
+/* Het witte logo is op wit niet te beoordelen. */
+.pak-logodoek--donker {
+  background: var(--ink-900);
+  border-color: var(--ink-700);
+}
+.pak-logodoek img {
+  display: block;
+  width: 150px;
+  height: auto;
+}
+.pak-logo figcaption {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}

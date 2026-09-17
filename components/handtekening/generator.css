@@ -1,0 +1,134 @@
+/* Handtekeninggenerator — formulier links, levend voorbeeld rechts. */
+
+.hgen {
+  display: grid;
+  grid-template-columns: minmax(0, 340px) minmax(0, 1fr);
+  gap: 32px;
+  align-items: start;
+}
+
+.hgen h2 {
+  font-family: var(--font-display);
+  font-size: var(--text-md);
+  font-weight: var(--fw-bold);
+  color: var(--text-strong);
+  margin: 0 0 4px;
+}
+
+.hgen-form,
+.hgen-voorbeeld {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.hgen-veld {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.hgen-veld label {
+  font-size: var(--text-sm);
+  font-weight: var(--fw-semibold);
+  color: var(--text-strong);
+}
+.hgen-veld input {
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  color: var(--text-body);
+  background: var(--white);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-md);
+  padding: 10px 12px;
+}
+.hgen-veld input:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 1px;
+  border-color: var(--color-primary);
+}
+
+.hgen-hint {
+  font-size: var(--text-xs);
+  line-height: var(--leading-relaxed);
+  color: var(--text-subtle);
+  display: block;
+}
+
+.hgen-schakel {
+  display: grid;
+  grid-template-columns: 18px 1fr;
+  gap: 10px;
+  align-items: start;
+  padding-top: 4px;
+}
+.hgen-schakel input {
+  margin-top: 3px;
+  accent-color: var(--color-primary);
+  width: 18px;
+  height: 18px;
+}
+.hgen-schakel label {
+  font-size: var(--text-sm);
+  font-weight: var(--fw-semibold);
+  color: var(--text-strong);
+  line-height: var(--leading-snug);
+}
+.hgen-schakel label .hgen-hint {
+  font-weight: var(--fw-regular);
+  margin-top: 3px;
+}
+
+.hgen-acties {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding-top: 8px;
+}
+
+/* ---- Voorbeeld ---- */
+
+.hgen-doek {
+  background: var(--white);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  padding: 28px;
+  overflow-x: auto;
+}
+/* Voor wie het witte logo kiest: laat het voorbeeld die achtergrond ook zien,
+   anders beoordeel je wit-op-wit. */
+.hgen-doek--donker {
+  background: var(--ink-900);
+  border-color: var(--ink-700);
+}
+
+.hgen-bronknop {
+  align-self: flex-start;
+  background: none;
+  border: 0;
+  padding: 0;
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  font-weight: var(--fw-semibold);
+  color: var(--orange-text);
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.hgen-bron {
+  background: var(--ink-950);
+  color: var(--ink-100);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  overflow-x: auto;
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  line-height: 1.6;
+  margin: 0;
+  max-height: 340px;
+}
+
+@media (max-width: 860px) {
+  .hgen {
+    grid-template-columns: 1fr;
+  }
+}
