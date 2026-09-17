@@ -21,6 +21,7 @@ import type { ServiceRichting } from "@/lib/services";
 import { SITE_URL } from "@/lib/site";
 import "./home.css";
 import { ArtikelKaart } from "@/components/artikel-kaart";
+import { SectieKop } from "@/components/sectie-kop";
 
 export const metadata: Metadata = {
   title: "Business-specialist in Mendix, AI en strategie",
@@ -106,11 +107,7 @@ export default async function HomePage() {
       {/* Diensten — instapdienst per richting, rechtstreeks uit de catalogus */}
       <section className="block diensten" id="diensten">
         <div className="wrap-wide">
-          <div className="sec-head">
-            <div className="kicker">{t.dienstenKicker}</div>
-            <h2>{t.dienstenTitel}</h2>
-            <p>{t.dienstenIntro}</p>
-          </div>
+          <SectieKop kicker={t.dienstenKicker} titel={t.dienstenTitel} intro={t.dienstenIntro} />
           <div className="tabs" role="tablist">
             {instap.map(({ richting, naam }, i) => (
               <button

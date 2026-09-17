@@ -14,6 +14,7 @@ import { SlotCta } from "@/components/layout/slot-cta";
 import { TeamCarousel } from "@/components/team-carousel";
 import { SITE_URL } from "@/lib/site";
 import "./over-ons.css";
+import { SectieKop } from "@/components/sectie-kop";
 
 export const metadata: Metadata = {
   title: "Over ons: de mens als maat",
@@ -115,10 +116,7 @@ export default async function OverOnsPage() {
 
       <section className="block waarden">
         <div className="wrap-wide">
-          <div className="sec-head">
-            <div className="kicker">{t.waardenKicker}</div>
-            <h2>{t.waardenTitel}</h2>
-          </div>
+          <SectieKop kicker={t.waardenKicker} titel={t.waardenTitel} />
           <div className="grid">
             {WAARDEN.map(({ nr, Icon }) => (
               <div className="vcard" key={nr}>

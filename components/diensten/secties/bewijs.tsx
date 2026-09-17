@@ -4,6 +4,7 @@ import { getContactgegevens } from "@/lib/contact-data";
 import "./secties.css";
 import { vulIn } from "@/lib/utils";
 import { getPagina } from "@/lib/paginas-data";
+import { SectieKop } from "@/components/sectie-kop";
 
 /** Onderbouwing: waarom wij, met wie, en wat het oplevert. */
 
@@ -21,10 +22,7 @@ export async function WaaromSectie({
   return (
     <section className="block why" id="waarom">
       <div className="wrap-wide">
-        <div className="sec-head">
-          <div className="kicker">{t.waaromKicker}</div>
-          <h2 className="sectie-h2">{t.waaromTitel}</h2>
-        </div>
+        <SectieKop kicker={t.waaromKicker} titel={t.waaromTitel} groot />
         <div className="grid">
           {waarom.length > 0 && (
             <div>
@@ -93,10 +91,12 @@ export async function OutcomesSectie({ outcomes, naam }: { outcomes: KPI[]; naam
   return (
     <section className="block outcomes">
       <div className="wrap-wide">
-        <div className="sec-head">
-          <div className="kicker on-dark">{vulIn(t.outcomesKicker, { naam })}</div>
-          <h2 className="sectie-h2 sectie-h2--op-donker">{t.outcomesTitel}</h2>
-        </div>
+        <SectieKop
+          kicker={vulIn(t.outcomesKicker, { naam })}
+          titel={t.outcomesTitel}
+          opDonker
+          groot
+        />
         <div className="grid">
           {outcomes.map((o, i) => (
             <div className="oc" key={i}>

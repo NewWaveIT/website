@@ -19,6 +19,7 @@ import { InzichtenSectie } from "@/components/diensten/secties/verwijzingen";
 import { SITE_URL } from "@/lib/site";
 import "@/components/diensten/secties/secties.css";
 import "./dienst.css";
+import { SectieKop } from "@/components/sectie-kop";
 
 /* Dienstdetailpagina — geport uit ui_kits/website/dienst-*.html (Claude
    Design). Alle negen diensten delen dit sjabloon; wat per dienst verschilt
@@ -215,15 +216,12 @@ export default async function DienstPage({ params }: { params: Promise<{ slug: s
       {!geport && (
         <section className="block">
           <div className="wrap-wide">
-            <div className="sec-head">
-              <div className="kicker">{t.overKicker}</div>
-              <h2>{vulIn(t.overTitel, { naam: s.naam })}</h2>
-              <p>{s.beschrijving}</p>
-            </div>
-            <div className="sec-head">
-              <div className="kicker">{t.voorWieKicker}</div>
-              <p>{s.doelgroep}</p>
-            </div>
+            <SectieKop
+              kicker={t.overKicker}
+              titel={vulIn(t.overTitel, { naam: s.naam })}
+              intro={s.beschrijving}
+            />
+            <SectieKop kicker={t.voorWieKicker} intro={s.doelgroep} />
           </div>
         </section>
       )}
@@ -232,11 +230,7 @@ export default async function DienstPage({ params }: { params: Promise<{ slug: s
       {s.herken && s.herken.length > 0 && (
         <section className="block" id="voor-wie">
           <div className="wrap-wide">
-            <div className="sec-head">
-              <div className="kicker">{t.herkenKicker}</div>
-              <h2>{t.herkenTitel}</h2>
-              {s.herkenIntro && <p>{s.herkenIntro}</p>}
-            </div>
+            <SectieKop kicker={t.herkenKicker} titel={t.herkenTitel} intro={s.herkenIntro} />
             <div className="herken">
               {s.herken.map((q) => (
                 <blockquote key={q}>{`“${q}”`}</blockquote>
@@ -291,11 +285,12 @@ export default async function DienstPage({ params }: { params: Promise<{ slug: s
       {s.dagSlots && s.dagSlots.length > 0 && (
         <section className="block day" id="programma">
           <div className="wrap-wide">
-            <div className="sec-head">
-              <div className="kicker on-dark">{s.dagLabel || "Programma"}</div>
-              {s.dagTitel && <h2>{s.dagTitel}</h2>}
-              {s.dagIntro && <p>{s.dagIntro}</p>}
-            </div>
+            <SectieKop
+              kicker={s.dagLabel || "Programma"}
+              titel={s.dagTitel}
+              intro={s.dagIntro}
+              opDonker
+            />
             <div className="day-grid">
               {s.dagSlots.map((d) => (
                 <div className="slot" key={`${d.tijd}-${d.titel}`}>
@@ -315,11 +310,11 @@ export default async function DienstPage({ params }: { params: Promise<{ slug: s
       {(s.wijZorgen?.length || s.jijZorgt?.length) && (
         <section className="block" id="voorbereiding">
           <div className="wrap-wide">
-            <div className="sec-head">
-              <div className="kicker">{t.voorbereidingKicker}</div>
-              <h2>{t.voorbereidingTitel}</h2>
-              {s.voorbereidingIntro && <p>{s.voorbereidingIntro}</p>}
-            </div>
+            <SectieKop
+              kicker={t.voorbereidingKicker}
+              titel={t.voorbereidingTitel}
+              intro={s.voorbereidingIntro}
+            />
             <div className="prep">
               {s.wijZorgen && s.wijZorgen.length > 0 && (
                 <div className="prep-col">
@@ -354,11 +349,7 @@ export default async function DienstPage({ params }: { params: Promise<{ slug: s
       {vervolg.length > 0 && (
         <section className="block op-eggshell" id="daarna">
           <div className="wrap-wide">
-            <div className="sec-head">
-              <div className="kicker">{t.daarnaKicker}</div>
-              <h2>{t.daarnaTitel}</h2>
-              {s.daarnaIntro && <p>{s.daarnaIntro}</p>}
-            </div>
+            <SectieKop kicker={t.daarnaKicker} titel={t.daarnaTitel} intro={s.daarnaIntro} />
             <div className="next-grid">
               {vervolg.map(({ dienst, reden }) => (
                 <Link className="next" href={`/diensten/${dienst.slug}`} key={dienst.slug}>
@@ -379,10 +370,10 @@ export default async function DienstPage({ params }: { params: Promise<{ slug: s
       {s.faq && s.faq.length > 0 && (
         <section className="block" id="faq">
           <div className="wrap-wide">
-            <div className="sec-head">
-              <div className="kicker">{t.faqKicker}</div>
-              <h2>{s.faqTitel || `Wat klanten over ${s.naam} vragen`}</h2>
-            </div>
+            <SectieKop
+              kicker={t.faqKicker}
+              titel={s.faqTitel || `Wat klanten over ${s.naam} vragen`}
+            />
             <div className="faq">
               {s.faq.map((f) => (
                 <details key={f.vraag}>

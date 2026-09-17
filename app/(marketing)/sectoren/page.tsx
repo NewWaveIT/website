@@ -9,6 +9,7 @@ import { getPagina } from "@/lib/paginas-data";
 import { getSectorKaarten } from "@/lib/sectoren-detail-data";
 import { SITE_URL } from "@/lib/site";
 import "./sectoren.css";
+import { SectieKop } from "@/components/sectie-kop";
 
 export const metadata: Metadata = {
   title: "Sectoren: vijf markten die we echt kennen",
@@ -71,10 +72,7 @@ export default async function SectorenPage() {
 
       <section className="block werkwijze">
         <div className="wrap-wide">
-          <div className="sec-head">
-            <div className="kicker on-dark">{t.werkwijzeKicker}</div>
-            <h2>{t.werkwijzeTitel}</h2>
-          </div>
+          <SectieKop kicker={t.werkwijzeKicker} titel={t.werkwijzeTitel} opDonker />
           <div className="grid">
             {(["1", "2", "3"] as const).map((n) => (
               <div className="wcard" key={n}>

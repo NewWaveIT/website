@@ -2,6 +2,7 @@ import { Check, X } from "lucide-react";
 import type { Vraagstuk } from "@/lib/content-blokken";
 import "./secties.css";
 import { getPagina } from "@/lib/paginas-data";
+import { SectieKop } from "@/components/sectie-kop";
 
 /**
  * Secties die het probleem van de bezoeker adresseren. Gedeeld door de
@@ -15,10 +16,7 @@ export async function VraagstukkenSectie({ vraagstukken }: { vraagstukken: Vraag
   return (
     <section className="block" id="vraagstukken">
       <div className="wrap-wide">
-        <div className="sec-head">
-          <div className="kicker">{t.vraagstukkenKicker}</div>
-          <h2 className="sectie-h2">{t.vraagstukkenTitel}</h2>
-        </div>
+        <SectieKop kicker={t.vraagstukkenKicker} titel={t.vraagstukkenTitel} groot />
         <div className="chal-grid">
           {vraagstukken.map((v, i) => (
             <div className="chal-card" key={i}>
@@ -46,10 +44,11 @@ export async function WelNietSectie({ titel, wel = [], niet = [] }: WelNietProps
   return (
     <section className="block welniet">
       <div className="wrap-wide">
-        <div className="sec-head">
-          <div className="kicker">{t.welNietKicker}</div>
-          <h2 className="sectie-h2">{titel || "Wanneer dit past, en wanneer niet"}</h2>
-        </div>
+        <SectieKop
+          kicker={t.welNietKicker}
+          titel={titel || "Wanneer dit past, en wanneer niet"}
+          groot
+        />
         <div className="welniet-grid">
           {wel.length > 0 && (
             <div className="welniet-kolom">

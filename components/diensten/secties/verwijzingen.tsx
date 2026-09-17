@@ -6,6 +6,7 @@ import type { Artikel } from "@/lib/inzichten";
 import "./secties.css";
 import { getPagina } from "@/lib/paginas-data";
 import { ArtikelKaart } from "@/components/artikel-kaart";
+import { SectieKop } from "@/components/sectie-kop";
 
 /** Doorverwijzingen: klantverhaal, sectoren en inzichten. */
 
@@ -31,10 +32,7 @@ export async function KlantverhaalSectie({ waarborg, ...c }: KlantverhaalProps) 
   return (
     <section className="block featured" id="klantverhaal">
       <div className="wrap-wide">
-        <div className="sec-head">
-          <div className="kicker">{t.caseKicker}</div>
-          <h2 className="sectie-h2">{c.caseTitle}</h2>
-        </div>
+        <SectieKop kicker={t.caseKicker} titel={c.caseTitle} groot />
         <div className="case-mini">
           <div className="media">
             {c.caseImage && (
@@ -69,10 +67,7 @@ export async function SectorkoppelingSectie({
   return (
     <section className="block sect-strip">
       <div className="wrap-wide">
-        <div className="sec-head">
-          <div className="kicker">{t.sectorenKicker}</div>
-          <h2 className="sectie-h2">{t.sectorenTitel}</h2>
-        </div>
+        <SectieKop kicker={t.sectorenKicker} titel={t.sectorenTitel} groot />
         <div className="row">
           {sectoren.map((s) => (
             <Link href={`/sectoren/${s.slug}`} className="sect-chip" key={s.slug}>

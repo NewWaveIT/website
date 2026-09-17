@@ -12,6 +12,7 @@ import { SectorHeroAnim } from "@/components/sector-hero-anim";
 import { SlotCta } from "@/components/layout/slot-cta";
 import { getPagina } from "@/lib/paginas-data";
 import "./klantverhalen.css";
+import { SectieKop } from "@/components/sectie-kop";
 
 export async function generateMetadata(): Promise<Metadata> {
   "use cache";
@@ -89,10 +90,7 @@ export default async function KlantverhalenPage() {
       {featured && (
         <section className="block uitgelicht">
           <div className="wrap-wide">
-            <div className="sec-head">
-              <div className="kicker">{t.uitgelichtKicker}</div>
-              <h2>{featured.cardTitel}</h2>
-            </div>
+            <SectieKop kicker={t.uitgelichtKicker} titel={featured.cardTitel} />
             <div className="case-mini">
               <div className="media">
                 <Image
@@ -120,11 +118,7 @@ export default async function KlantverhalenPage() {
 
       <section className="block">
         <div className="wrap-wide">
-          <div className="sec-head">
-            <div className="kicker">{t.beloftesKicker}</div>
-            <h2>{t.beloftesTitel}</h2>
-            <p>{t.beloftesIntro}</p>
-          </div>
+          <SectieKop kicker={t.beloftesKicker} titel={t.beloftesTitel} intro={t.beloftesIntro} />
           <div className="belofte-grid">
             {sectoren.map((s) => {
               const Icon = SECTOR_ICONEN[s.icon];

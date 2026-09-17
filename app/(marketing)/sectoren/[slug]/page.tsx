@@ -18,6 +18,7 @@ import { SECTOR_ICONEN } from "@/components/sector-iconen";
 import type { Teamlid } from "@/lib/team";
 import "./sector-detail.css";
 import { ArtikelKaart } from "@/components/artikel-kaart";
+import { SectieKop } from "@/components/sectie-kop";
 
 /** De lucide-iconen die het ontwerp gebruikt. Compleet per constructie: een
  *  ontbrekend icoon is een typefout, geen lege plek op de pagina. */
@@ -133,10 +134,7 @@ export default async function SectorPage({ params }: { params: Promise<{ slug: s
       {s.herkenning.length > 0 && (
         <section className="block pain">
           <div className="wrap-wide">
-            <div className="sec-head">
-              <div className="kicker">{t.herkenningKicker}</div>
-              <h2>{s.herkenningTitel}</h2>
-            </div>
+            <SectieKop kicker={t.herkenningKicker} titel={s.herkenningTitel} />
             <div className="pain-grid">
               {s.herkenning.map((p, i) => (
                 <div className="pain-item" key={p}>
@@ -228,11 +226,11 @@ export default async function SectorPage({ params }: { params: Promise<{ slug: s
       {s.oplossingen.length > 0 && (
         <section className="block solblock">
           <div className="wrap-wide">
-            <div className="sec-head">
-              <div className="kicker">{t.oplossingenKicker}</div>
-              <h2>{s.oplossingenTitel}</h2>
-              {s.oplossingenIntro && <p>{s.oplossingenIntro}</p>}
-            </div>
+            <SectieKop
+              kicker={t.oplossingenKicker}
+              titel={s.oplossingenTitel}
+              intro={s.oplossingenIntro}
+            />
             <div className="solhead" aria-hidden="true">
               <div>{t.kolomPijnpunt}</div>
               <div>{t.kolomKost}</div>
@@ -268,10 +266,7 @@ export default async function SectorPage({ params }: { params: Promise<{ slug: s
       {s.useCases.length > 0 && (
         <section className="block">
           <div className="wrap-wide">
-            <div className="sec-head">
-              <div className="kicker">{t.bouwenKicker}</div>
-              <h2>{s.bouwenTitel}</h2>
-            </div>
+            <SectieKop kicker={t.bouwenKicker} titel={s.bouwenTitel} />
             <div className="ucgrid">
               {s.useCases.map((u) => {
                 const Icoon = SECTOR_ICONEN[u.icon];
@@ -297,10 +292,7 @@ export default async function SectorPage({ params }: { params: Promise<{ slug: s
       {s.stappen.length > 0 && (
         <section className="block how" id="aanpak">
           <div className="wrap-wide">
-            <div className="sec-head">
-              <div className="kicker on-dark">{t.aanpakKicker}</div>
-              <h2>{s.aanpakTitel}</h2>
-            </div>
+            <SectieKop kicker={t.aanpakKicker} titel={s.aanpakTitel} opDonker />
             <div className="how-split">
               {s.aanpakFoto && (
                 <figure className="pic">
@@ -339,10 +331,7 @@ export default async function SectorPage({ params }: { params: Promise<{ slug: s
       {s.dienstLinks.length > 0 && (
         <section className="block">
           <div className="wrap-wide">
-            <div className="sec-head">
-              <div className="kicker">{t.dienstenKicker}</div>
-              <h2>{s.dienstenTitel}</h2>
-            </div>
+            <SectieKop kicker={t.dienstenKicker} titel={s.dienstenTitel} />
             <div className="svc-links">
               {s.dienstLinks.map((d) => (
                 <Link className="svc-link" href={d.href} key={d.label}>
@@ -358,10 +347,7 @@ export default async function SectorPage({ params }: { params: Promise<{ slug: s
       {s.faq.length > 0 && (
         <section className="block faqblock">
           <div className="wrap-wide">
-            <div className="sec-head">
-              <div className="kicker">{t.faqKicker}</div>
-              <h2>{s.faqTitel}</h2>
-            </div>
+            <SectieKop kicker={t.faqKicker} titel={s.faqTitel} />
             <div className="faq">
               {s.faq.map((f) => (
                 <details key={f.vraag}>
@@ -418,10 +404,7 @@ export default async function SectorPage({ params }: { params: Promise<{ slug: s
       {teamRegels.length > 0 && (
         <section className="block teamblock">
           <div className="wrap-wide">
-            <div className="sec-head">
-              <div className="kicker">{t.teamKicker}</div>
-              <h2>{s.teamTitel}</h2>
-            </div>
+            <SectieKop kicker={t.teamKicker} titel={s.teamTitel} />
             <div className="team-strip">
               {teamRegels.map(({ regel, persoon }) => (
                 <div className="person" key={persoon.slug}>
