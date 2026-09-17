@@ -18,7 +18,7 @@ import { SECTOR_ICONEN } from "@/components/sector-iconen";
 import type { Teamlid } from "@/lib/team";
 import "./sector-detail.css";
 import { ArtikelKaart } from "@/components/artikel-kaart";
-import { SectieKop } from "@/components/sectie-kop";
+import { SectieKop, SectieKopMetKnop } from "@/components/sectie-kop";
 
 /** De lucide-iconen die het ontwerp gebruikt. Compleet per constructie: een
  *  ontbrekend icoon is een typefout, geen lege plek op de pagina. */
@@ -368,15 +368,12 @@ export default async function SectorPage({ params }: { params: Promise<{ slug: s
           <div className="wrap-wide">
             {artikelen.length > 0 && (
               <>
-                <div className="eyebrow-row">
-                  <div>
-                    <div className="kicker">{t.inzichtenKicker}</div>
-                    <h2>{t.inzichtenTitel}</h2>
-                  </div>
-                  <Link href="/inzichten" className="btn btn-outline btn-sm">
-                    {t.inzichtenAlle} <ArrowRight />
-                  </Link>
-                </div>
+                <SectieKopMetKnop
+                  kicker={t.inzichtenKicker}
+                  titel={t.inzichtenTitel}
+                  href="/inzichten"
+                  knop={t.inzichtenAlle}
+                />
                 <div className="cards3">
                   {artikelen.slice(0, 3).map((a) => (
                     <ArtikelKaart key={a.slug} artikel={a} meerLabel={t.inzichtenMeer} />

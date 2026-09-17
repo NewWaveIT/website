@@ -1,3 +1,5 @@
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 /**
@@ -38,6 +40,41 @@ export function SectieKop({
         </h2>
       )}
       {intro && <p>{intro}</p>}
+    </div>
+  );
+}
+
+/**
+ * Dezelfde kop, maar met een knop ernaast die naar het overzicht wijst —
+ * "Alle klantverhalen", "Alle diensten". Stond zes keer uitgeschreven, telkens
+ * gelijk: een <div> met kicker en titel, en daarnaast een knop met pijl.
+ *
+ * Op een donkere sectie verandert niet alleen de kicker maar ook de knop: daar
+ * hoort `btn-ghost-on` en niet `btn-outline`. Dat stond op elke plek apart en
+ * kon dus uit de pas lopen; nu volgt het uit één vlag.
+ */
+export function SectieKopMetKnop({
+  kicker,
+  titel,
+  href,
+  knop,
+  opDonker = false,
+}: {
+  kicker: string;
+  titel: string;
+  href: string;
+  knop: string;
+  opDonker?: boolean;
+}) {
+  return (
+    <div className="eyebrow-row">
+      <div>
+        <div className={cn("kicker", opDonker && "on-dark")}>{kicker}</div>
+        <h2>{titel}</h2>
+      </div>
+      <Link href={href} className={cn("btn btn-sm", opDonker ? "btn-ghost-on" : "btn-outline")}>
+        {knop} <ArrowRight />
+      </Link>
     </div>
   );
 }

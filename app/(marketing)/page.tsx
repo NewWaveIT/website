@@ -21,7 +21,7 @@ import type { ServiceRichting } from "@/lib/services";
 import { SITE_URL } from "@/lib/site";
 import "./home.css";
 import { ArtikelKaart } from "@/components/artikel-kaart";
-import { SectieKop } from "@/components/sectie-kop";
+import { SectieKop, SectieKopMetKnop } from "@/components/sectie-kop";
 
 export const metadata: Metadata = {
   title: "Business-specialist in Mendix, AI en strategie",
@@ -223,15 +223,13 @@ export default async function HomePage() {
       {/* Klantverhalen */}
       <section className="block featured">
         <div className="wrap-wide">
-          <div className="eyebrow-row">
-            <div>
-              <div className="kicker on-dark">{t.casesKicker}</div>
-              <h2>{t.casesTitel}</h2>
-            </div>
-            <Link href="/klantverhalen" className="btn btn-ghost-on btn-sm">
-              {t.casesAlle} <ArrowRight />
-            </Link>
-          </div>
+          <SectieKopMetKnop
+            kicker={t.casesKicker}
+            titel={t.casesTitel}
+            href="/klantverhalen"
+            knop={t.casesAlle}
+            opDonker
+          />
           <CasesCarousel items={cases} lees={a.caseLees} />
         </div>
       </section>
@@ -301,15 +299,12 @@ export default async function HomePage() {
       {inzichten.length > 0 && (
         <section className="block" id="inzichten">
           <div className="wrap-wide">
-            <div className="eyebrow-row">
-              <div>
-                <div className="kicker">{t.inzichtenKicker}</div>
-                <h2>{t.inzichtenTitel}</h2>
-              </div>
-              <Link href="/inzichten" className="btn btn-outline btn-sm">
-                {t.inzichtenAlle} <ArrowRight />
-              </Link>
-            </div>
+            <SectieKopMetKnop
+              kicker={t.inzichtenKicker}
+              titel={t.inzichtenTitel}
+              href="/inzichten"
+              knop={t.inzichtenAlle}
+            />
             <div className="cards3">
               {inzichten.map((a) => (
                 <ArtikelKaart

@@ -1,12 +1,11 @@
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight } from "lucide-react";
 import type { CaseVerwijzing } from "@/lib/content-blokken";
 import type { Artikel } from "@/lib/inzichten";
 import "./secties.css";
 import { getPagina } from "@/lib/paginas-data";
 import { ArtikelKaart } from "@/components/artikel-kaart";
-import { SectieKop } from "@/components/sectie-kop";
+import { SectieKop, SectieKopMetKnop } from "@/components/sectie-kop";
 
 /** Doorverwijzingen: klantverhaal, sectoren en inzichten. */
 
@@ -92,15 +91,12 @@ export async function InzichtenSectie({
   return (
     <section className="block">
       <div className="wrap-wide">
-        <div className="eyebrow-row">
-          <div>
-            <div className="kicker">{t.inzichtenKicker}</div>
-            <h2>{titel || "Kennis over dit onderwerp"}</h2>
-          </div>
-          <Link href="/inzichten" className="btn btn-outline btn-sm">
-            {t.inzichtenAlle} <ArrowRight />
-          </Link>
-        </div>
+        <SectieKopMetKnop
+          kicker={t.inzichtenKicker}
+          titel={titel || "Kennis over dit onderwerp"}
+          href="/inzichten"
+          knop={t.inzichtenAlle}
+        />
         <div className="cards3">
           {artikelen.slice(0, 3).map((a) => (
             <ArtikelKaart key={a.slug} artikel={a} meerLabel={t.inzichtenMeer} />

@@ -19,7 +19,7 @@ import { InzichtenSectie } from "@/components/diensten/secties/verwijzingen";
 import { SITE_URL } from "@/lib/site";
 import "@/components/diensten/secties/secties.css";
 import "./dienst.css";
-import { SectieKop } from "@/components/sectie-kop";
+import { SectieKop, SectieKopMetKnop } from "@/components/sectie-kop";
 
 /* Dienstdetailpagina — geport uit ui_kits/website/dienst-*.html (Claude
    Design). Alle negen diensten delen dit sjabloon; wat per dienst verschilt
@@ -405,15 +405,12 @@ export default async function DienstPage({ params }: { params: Promise<{ slug: s
       {rest.length > 0 && (
         <section className="block op-eggshell">
           <div className="wrap-wide">
-            <div className="eyebrow-row">
-              <div>
-                <div className="kicker">{t.catalogusKicker}</div>
-                <h2>{t.catalogusTitel}</h2>
-              </div>
-              <Link href="/diensten" className="btn btn-outline btn-sm">
-                {t.catalogusAlle} <ArrowRight />
-              </Link>
-            </div>
+            <SectieKopMetKnop
+              kicker={t.catalogusKicker}
+              titel={t.catalogusTitel}
+              href="/diensten"
+              knop={t.catalogusAlle}
+            />
             <div className="all-grid">
               {rest.map((d) => (
                 <Link className="mini" href={`/diensten/${d.slug}`} key={d.slug}>
