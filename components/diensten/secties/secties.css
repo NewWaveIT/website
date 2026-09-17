@@ -436,12 +436,6 @@
   color: var(--text-strong);
 }
 
-.dienst-secties .cards3 {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: var(--space-6);
-}
-
 /* Feitenregel onder de hero-intro (doelgroep · duur · prijs, uit de gekoppelde service) */
 .dienst-secties .feiten-strip {
   font-family: var(--font-mono);
@@ -511,9 +505,6 @@
     order: 0;
   }
   .dienst-secties .case-mini {
-    grid-template-columns: 1fr;
-  }
-  .dienst-secties .cards3 {
     grid-template-columns: 1fr;
   }
 }

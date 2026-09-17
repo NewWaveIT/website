@@ -320,12 +320,6 @@
   color: var(--text-strong);
 }
 
-.p-case .cards3 {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: var(--space-6);
-}
-
 .p-case .video img {
   object-fit: cover;
 }
@@ -343,9 +337,6 @@
   .p-case .qblock .wrap-wide {
     flex-direction: column;
     align-items: flex-start;
-  }
-  .p-case .cards3 {
-    grid-template-columns: 1fr;
   }
   .p-case .resultaat-kaarten {
     grid-template-columns: 1fr;

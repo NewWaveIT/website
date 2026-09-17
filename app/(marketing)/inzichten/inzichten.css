@@ -71,12 +71,6 @@
   color: var(--ink-400);
 }
 
-.p-inzichten .cards3 {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: var(--space-6);
-}
-
 .p-inzichten .nieuwsbrief {
   background: var(--eggshell);
 }
@@ -121,11 +115,6 @@
   box-shadow: 0 0 0 3px rgba(241, 88, 34, 0.15);
 }
 
-@media (max-width: 1024px) {
-  .p-inzichten .cards3 {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
 @media (max-width: 900px) {
   .p-inzichten .feat {
     grid-template-columns: 1fr;
@@ -138,11 +127,6 @@
   }
   .p-inzichten .nieuwsbrief form {
     flex-direction: column;
-  }
-}
-@media (max-width: 640px) {
-  .p-inzichten .cards3 {
-    grid-template-columns: 1fr;
   }
 }
 

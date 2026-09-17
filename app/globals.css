@@ -961,6 +961,28 @@ footer.site-footer {
   margin: var(--space-3) 0 0;
 }
 
+/* Drie kaarten naast elkaar (artikelkaarten, sectorkaarten, dienstkaarten).
+
+   Stond in vier CSS-bestanden met dezelfde drie kolommen maar verschillende
+   breekpunten: één ging via twee kolommen naar één, de rest sprong meteen naar
+   één, op 980 of 700px. Hier één keer, met de trap uit het inzichtenoverzicht:
+   drie, twee, één. */
+.cards3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-6);
+}
+@media (max-width: 1024px) {
+  .cards3 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 640px) {
+  .cards3 {
+    grid-template-columns: 1fr;
+  }
+}
+
 /* Artikelkaart (components/artikel-kaart.tsx)
 
    Stond in vijf CSS-bestanden, waarvan één ongescoopt in home.css. Ze waren

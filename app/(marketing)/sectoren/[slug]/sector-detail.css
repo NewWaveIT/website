@@ -718,14 +718,3 @@
    en legde zich over de halve pagina heen — inclusief de h1 en de sectiekoppen.
    Zelfde regels als .dienst-secties in components/diensten/secties/secties.css;
    die twee horen op termijn één gedeelde kaartcomponent te worden. */
-.p-sector .cards3 {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: var(--space-6);
-}
-
-@media (max-width: 980px) {
-  .p-sector .cards3 {
-    grid-template-columns: 1fr;
-  }
-}
