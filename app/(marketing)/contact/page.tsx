@@ -3,15 +3,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { PaginaHero } from "@/components/layout/pagina-hero";
 import Image from "next/image";
-import {
-  Phone,
-  Mail,
-  MessageCircle,
-  CalendarCheck,
-  ArrowRight,
-  MapPin,
-  Linkedin,
-} from "lucide-react";
+import { Phone, Mail, MessageCircle, CalendarCheck, ArrowRight, MapPin } from "lucide-react";
+import { LinkedinIcoon } from "@/components/icons/linkedin";
 import { ContactForm } from "@/components/contact/contact-form";
 import { getPagina } from "@/lib/paginas-data";
 import { getContactgegevens } from "@/lib/contact-data";
@@ -203,7 +196,7 @@ export default async function ContactPage() {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <Linkedin /> {t.linkedinKnop}
+                <LinkedinIcoon /> {t.linkedinKnop}
               </a>
             </div>
           </aside>
