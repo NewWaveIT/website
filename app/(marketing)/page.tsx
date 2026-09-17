@@ -20,6 +20,7 @@ import { getSectorKaarten } from "@/lib/sectoren-detail-data";
 import type { ServiceRichting } from "@/lib/services";
 import { SITE_URL } from "@/lib/site";
 import "./home.css";
+import { ArtikelKaart } from "@/components/artikel-kaart";
 
 export const metadata: Metadata = {
   title: "Business-specialist in Mendix, AI en strategie",
@@ -314,22 +315,13 @@ export default async function HomePage() {
             </div>
             <div className="cards3">
               {inzichten.map((a) => (
-                <article className="post" key={a.slug}>
-                  <Link href={`/inzichten/${a.slug}`} className="cover">
-                    <Image src={a.image} alt="" fill sizes="(max-width: 900px) 100vw, 33vw" />
-                    <span className="cat">{a.cat}</span>
-                  </Link>
-                  <div className="pbody">
-                    <div className="meta">
-                      Leestijd {a.leestijd} · {a.datum}
-                    </div>
-                    <h3>{a.titel}</h3>
-                    <p>{a.intro}</p>
-                    <Link href={`/inzichten/${a.slug}`} className="more">
-                      {t.inzichtenMeer} <ArrowRight />
-                    </Link>
-                  </div>
-                </article>
+                <ArtikelKaart
+                  key={a.slug}
+                  artikel={a}
+                  meerLabel={t.inzichtenMeer}
+                  metIntro
+                  sizes="(max-width: 900px) 100vw, 33vw"
+                />
               ))}
             </div>
           </div>

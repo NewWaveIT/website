@@ -9,7 +9,7 @@ import { PaginaHero } from "@/components/layout/pagina-hero";
 import { JsonLd } from "@/components/json-ld";
 import { SectorHeroAnim } from "@/components/sector-hero-anim";
 import { getSectorBySlug, getSectorSlugs, getSectoren } from "@/lib/sectoren-detail-data";
-import { getArtikelenVoorSector, isoDatum } from "@/lib/inzichten-data";
+import { getArtikelenVoorSector } from "@/lib/inzichten-data";
 import { getTeamleden } from "@/lib/team-data";
 import { getPagina } from "@/lib/paginas-data";
 import { SITE_URL } from "@/lib/site";
@@ -17,6 +17,7 @@ import type { TeamRegel } from "@/lib/sectoren-detail";
 import { SECTOR_ICONEN } from "@/components/sector-iconen";
 import type { Teamlid } from "@/lib/team";
 import "./sector-detail.css";
+import { ArtikelKaart } from "@/components/artikel-kaart";
 
 /** De lucide-iconen die het ontwerp gebruikt. Compleet per constructie: een
  *  ontbrekend icoon is een typefout, geen lege plek op de pagina. */
@@ -392,21 +393,7 @@ export default async function SectorPage({ params }: { params: Promise<{ slug: s
                 </div>
                 <div className="cards3">
                   {artikelen.slice(0, 3).map((a) => (
-                    <Link href={`/inzichten/${a.slug}`} className="post" key={a.slug}>
-                      <div className="cover">
-                        <Image src={a.image} alt="" fill sizes="(max-width: 980px) 100vw, 33vw" />
-                        <span className="cat">{a.cat}</span>
-                      </div>
-                      <div className="pbody">
-                        <div className="meta">
-                          {a.leestijd} · <time dateTime={isoDatum(a.datum)}>{a.datum}</time>
-                        </div>
-                        <h3>{a.titel}</h3>
-                        <span className="more">
-                          {t.inzichtenMeer} <ArrowRight />
-                        </span>
-                      </div>
-                    </Link>
+                    <ArtikelKaart key={a.slug} artikel={a} meerLabel={t.inzichtenMeer} />
                   ))}
                 </div>
               </>

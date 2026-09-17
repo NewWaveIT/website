@@ -3,8 +3,8 @@
 import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight } from "lucide-react";
 import type { Artikel } from "@/lib/inzichten";
+import { ArtikelKaart } from "@/components/artikel-kaart";
 
 const ALLE = "Alle";
 const CATEGORIEEN = [
@@ -91,21 +91,7 @@ export function InzichtenList({ artikelen, tk }: { artikelen: Artikel[]; tk: Lij
 
       <div className="cards3">
         {grid.map((a) => (
-          <Link href={`/inzichten/${a.slug}`} className="post" key={a.slug}>
-            <div className="cover">
-              <Image src={a.image} alt={a.titel} fill sizes="(max-width: 980px) 100vw, 33vw" />
-              <span className="cat">{a.cat}</span>
-            </div>
-            <div className="pbody">
-              <div className="meta">
-                {a.leestijd} · {a.datum}
-              </div>
-              <h3>{a.titel}</h3>
-              <span className="more">
-                {tk.inzichtenMeer} <ArrowRight />
-              </span>
-            </div>
-          </Link>
+          <ArtikelKaart key={a.slug} artikel={a} meerLabel={tk.inzichtenMeer} />
         ))}
       </div>
     </>

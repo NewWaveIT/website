@@ -5,6 +5,7 @@ import type { CaseVerwijzing } from "@/lib/content-blokken";
 import type { Artikel } from "@/lib/inzichten";
 import "./secties.css";
 import { getPagina } from "@/lib/paginas-data";
+import { ArtikelKaart } from "@/components/artikel-kaart";
 
 /** Doorverwijzingen: klantverhaal, sectoren en inzichten. */
 
@@ -107,21 +108,7 @@ export async function InzichtenSectie({
         </div>
         <div className="cards3">
           {artikelen.slice(0, 3).map((a) => (
-            <Link href={`/inzichten/${a.slug}`} className="post" key={a.slug}>
-              <div className="cover">
-                <Image src={a.image} alt={a.titel} fill sizes="(max-width: 980px) 100vw, 33vw" />
-                <span className="cat">{a.cat}</span>
-              </div>
-              <div className="pbody">
-                <div className="meta">
-                  {a.leestijd} · {a.datum}
-                </div>
-                <h3>{a.titel}</h3>
-                <span className="more">
-                  {t.inzichtenMeer} <ArrowRight />
-                </span>
-              </div>
-            </Link>
+            <ArtikelKaart key={a.slug} artikel={a} meerLabel={t.inzichtenMeer} />
           ))}
         </div>
       </div>
