@@ -140,25 +140,41 @@ function Galerij({ items, kolommen }: { items: Uiting[]; kolommen: "twee" | "een
 export default function MedewerkerspakketPagina() {
   return (
     <div className="p-pakket">
+      {/* De hero is een donkere band met de foto rechts. De scrim loopt van de
+          tekstkant het beeld in, zodat er geen harde naad tussen de twee zit en
+          de kop leesbaar blijft ook als de foto verschuift. Zelfde principe als
+          de homepage-hero, maar zonder de wisselende beelden: dit is één pagina
+          met één boodschap. */}
       <header className="pak-kop">
-        <p className="pak-kicker">{"// Medewerkerspakket"}</p>
-        <h1>
-          Jouw eigen uitingen,
-          <br />
-          in onze huisstijl
-        </h1>
-        <p className="pak-intro">
-          Alles wat je zelf instelt: je bureaubladachtergrond, je Teams-achtergrond, je
-          LinkedIn-banner en je e-mailhandtekening. Kies een variant, download of kopieer, klaar.
-        </p>
-        <div className="pak-alles">
-          <a className="btn btn-primary" href="/medewerkerspakket/medewerkerspakket.zip" download>
-            Download het hele pakket
-          </a>
-          <span className="pak-zipnoot">
-            Zip met alle negen afbeeldingen, beide handtekeninglogo&apos;s en een leesmij. Losse
-            bestanden staan hieronder.
-          </span>
+        <div className="pak-kop-tekst">
+          <p className="pak-kicker">{"// Medewerkerspakket"}</p>
+          <h1>
+            Jouw eigen uitingen,
+            <br />
+            in onze huisstijl
+          </h1>
+          <p className="pak-intro">
+            Alles wat je zelf instelt: je bureaubladachtergrond, je Teams-achtergrond, je
+            LinkedIn-banner en je e-mailhandtekening. Kies een variant, download of kopieer, klaar.
+          </p>
+          <div className="pak-alles">
+            <a className="btn btn-primary" href="/medewerkerspakket/medewerkerspakket.zip" download>
+              Download het hele pakket
+            </a>
+            <span className="pak-zipnoot">
+              Zip met alle negen afbeeldingen, beide handtekeninglogo&apos;s en een leesmij. Losse
+              bestanden staan hieronder.
+            </span>
+          </div>
+        </div>
+        <div className="pak-kop-beeld">
+          <Image
+            src="/assets/photos/team-hart-handen.webp"
+            alt=""
+            fill
+            sizes="(max-width: 860px) 100vw, 50vw"
+            priority
+          />
         </div>
       </header>
 

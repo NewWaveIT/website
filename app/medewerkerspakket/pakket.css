@@ -13,11 +13,56 @@
   color: var(--text-body);
 }
 
+/* ---- Hero ----
+   Donkere band met de foto rechts en een scrim die van de tekstkant het beeld
+   in loopt. Geen harde naad, en de kop blijft leesbaar ook als de uitsnede
+   verschuift. De foto staat in een eigen kolom en niet als achtergrond over de
+   volle breedte: zo blijft hij op elke maat herkenbaar in plaats van tot een
+   streep te worden geknepen. */
 .pak-kop {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1.02fr) minmax(0, 0.98fr);
+  align-items: stretch;
+  border-radius: var(--radius-2xl);
+  overflow: hidden;
+  background: var(--ink-900);
+  color: var(--text-on-dark);
+  min-height: 440px;
+}
+
+.pak-kop-tekst {
+  position: relative;
+  z-index: 2;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   gap: 14px;
-  padding-bottom: 8px;
+  padding: var(--space-9) var(--space-8);
+}
+
+.pak-kop-beeld {
+  position: relative;
+  overflow: hidden;
+}
+.pak-kop-beeld img {
+  object-fit: cover;
+  /* Hij staat net rechts van het midden en de handen zitten hoog in beeld. */
+  object-position: 56% 28%;
+}
+/* De overgang: espresso dat over de linkerhelft van de foto uitloopt. Een
+   losse laag en geen achtergrond op het beeld zelf, want een gradient onder een
+   <img> zie je niet. */
+.pak-kop-beeld::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    var(--ink-900) 0%,
+    color-mix(in srgb, var(--ink-900) 55%, transparent) 28%,
+    transparent 62%
+  );
 }
 .pak-kicker {
   font-family: var(--font-mono);
@@ -37,12 +82,23 @@
   margin: 0;
   text-wrap: balance;
 }
+/* In de hero staat de kop op espresso. */
+.pak-kop h1 {
+  color: var(--white);
+}
+.pak-kop .pak-kicker {
+  color: var(--orange-400);
+}
 .pak-intro {
   font-size: var(--text-md);
   line-height: var(--leading-relaxed);
   color: var(--text-muted);
   margin: 0;
   max-width: 62ch;
+}
+.pak-kop .pak-intro {
+  color: var(--text-on-dark-muted);
+  max-width: 40ch;
 }
 
 .pak-sectie {
@@ -183,6 +239,38 @@
   color: var(--text-muted);
   max-width: 44ch;
   line-height: var(--leading-snug);
+}
+.pak-kop .pak-zipnoot {
+  color: var(--ink-300);
+  max-width: 38ch;
+}
+
+/* Onder 860px past de foto niet meer naast de tekst: hij gaat erboven, met een
+   vaste verhouding zodat het geen streep wordt, en de scrim draait mee van
+   links-naar-rechts naar boven-naar-onder. */
+@media (max-width: 860px) {
+  .pak-kop {
+    grid-template-columns: minmax(0, 1fr);
+    min-height: 0;
+  }
+  .pak-kop-beeld {
+    order: -1;
+    aspect-ratio: 16 / 10;
+  }
+  .pak-kop-beeld img {
+    object-position: 56% 22%;
+  }
+  .pak-kop-beeld::after {
+    background: linear-gradient(
+      180deg,
+      transparent 40%,
+      color-mix(in srgb, var(--ink-900) 60%, transparent) 78%,
+      var(--ink-900) 100%
+    );
+  }
+  .pak-kop-tekst {
+    padding: var(--space-6) var(--pad-kaart) var(--space-8);
+  }
 }
 
 /* ---- Het logo uit de handtekening ---- */
