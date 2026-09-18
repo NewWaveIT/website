@@ -1,7 +1,7 @@
 "use server";
 
 import sharp from "sharp";
-import { MIN_BREEDTE } from "@/lib/beeld-eisen";
+import { uploadWaarschuwing } from "@/lib/beeld-eisen";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { gebruikerNaam, requireAdmin } from "@/lib/dal";
@@ -173,15 +173,12 @@ export async function uploadImage(formData: FormData): Promise<{
   const { data } = supabase.storage.from("content").getPublicUrl(path);
 
   // Een waarschuwing, geen weigering: soms is een kleine schermafdruk het enige
-  // dat er is, en dan is een onscherp beeld beter dan geen beeld. Het beeld
-  // wordt sowieso nooit opgeschaald (zie components/beeld-kader.tsx), dus het
-  // blijft scherp -- het staat alleen kleiner op de pagina dan de bedoeling is.
+  // dat er is, en dan is een onscherp beeld beter dan geen beeld. Op de
+  // detailpagina wordt het beeld sowieso niet bijgesneden en niet opgeschaald
+  // (zie components/beeld-kader.tsx); de melding gaat over wat een redacteur in
+  // de editor niet kan zien -- scherpte, en de hap die de kaart eruit neemt.
   const soort = formData.get("soort") === "cover" ? "cover" : "inline";
-  const ondergrens = MIN_BREEDTE[soort];
-  const waarschuwing =
-    width && width < ondergrens
-      ? `Deze afbeelding is ${width}px breed. Voor een scherp resultaat is minstens ${ondergrens}px nodig; hij wordt nu kleiner getoond dan de volle breedte.`
-      : undefined;
+  const waarschuwing = uploadWaarschuwing(soort, width, height);
 
   return { url: data.publicUrl, width, height, waarschuwing };
 }
