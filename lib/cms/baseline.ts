@@ -156,6 +156,15 @@ function typeKlopt(f: FieldDef, v: unknown): boolean {
     return f.type === "group" ? typeof v === "object" && !Array.isArray(v) : Array.isArray(v);
   }
   if (f.type === "number") return typeof v === "number" || v === "";
+  /* Een keuzelijst met cijfers mag ook een getal bevatten. De editor schrijft de
+     gekozen optie als tekst weg, maar de seed zet er een getal neer en
+     `rijNaarRuw` maakt er sowieso weer een getal van voordat zod ernaar kijkt --
+     zie de fase-regel daar. Zonder deze uitzondering meldde de nulmeting alle
+     tien de dienstrijen als ongeldig, mét de conclusie dat ze een console.error
+     per render opleveren, terwijl het leespad ze gewoon accepteert. */
+  if (f.type === "select" && typeof v === "number") {
+    return (f.options ?? []).includes(String(v));
+  }
   return typeof v === "string";
 }
 

@@ -21,6 +21,14 @@
 }
 
 /* Sidebar */
+/* De balk is precies zo hoog als het scherm en plakt bovenaan. Zonder een
+   scrollgebied erin liep de inhoud er onderuit zodra hij niet paste: bij acht
+   groepen en zeventien items eindigde de donkere achtergrond halverwege
+   "Beheer", stonden Gebruikers en Activiteit op de lichte pagina eronder, en
+   was er geen manier om erbij te komen -- de balk plakt immers. Dus: logo en
+   voetregel staan vast, de navigatie ertussen schuift. `min-height: 0` hoort
+   erbij, anders weigert een flexkind kleiner te worden dan zijn inhoud en
+   scrollt er alsnog niets. */
 .cms .side {
   background: var(--ink-950);
   color: var(--text-on-dark-muted);
@@ -29,7 +37,11 @@
   padding: var(--space-5) 0;
   position: sticky;
   top: 0;
-  height: 100vh;
+  height: 100dvh;
+}
+.cms .side .logo,
+.cms .side .foot {
+  flex: none;
 }
 .cms .side .logo {
   padding: 4px var(--space-5) var(--space-5);
@@ -58,6 +70,13 @@
   flex-direction: column;
   gap: 2px;
   padding: var(--space-4) var(--space-3);
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  /* Aan het einde van de lijst niet doorschuiven naar de pagina erachter. */
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: var(--ink-700) transparent;
 }
 .cms .side .grp {
   font-family: var(--font-mono);

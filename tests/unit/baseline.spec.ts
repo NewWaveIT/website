@@ -86,6 +86,37 @@ describe("nulmeting", () => {
     ]);
   });
 
+  /* De nulmeting meldde alle tien de dienstrijen als ongeldig omdat `fase` als
+     getal in de data staat terwijl het veldtype een keuzelijst is. Het leespad
+     accepteert dat juist: `rijNaarRuw` maakt er een getal van en het zod-schema
+     wil er een. De melding was dus onterecht, inclusief de conclusie dat elke
+     render een console.error oplevert. */
+  it("accepteert een getal in een keuzelijst met cijfers, maar niet zomaar elk getal", () => {
+    const velden: FieldDef[] = [
+      { key: "fase", label: "Fase", type: "select", options: ["(geen)", "1", "2", "3"] },
+    ];
+    const meet = (waarde: unknown) =>
+      vergelijk(
+        [
+          {
+            soort: "test",
+            velden: () => velden,
+            rijen: [{ slug: "a", status: "live", data: { fase: waarde } }],
+            seed: {},
+            vergelijkWaarden: false,
+          },
+        ],
+        NORM,
+      ).filter((b) => b.categorie === "ongeldig");
+
+    expect(meet(2), "2 staat in de opties").toEqual([]);
+    expect(meet("2"), "tekst blijft gewoon goed").toEqual([]);
+    expect(
+      meet(9).map((b) => b.veld),
+      "9 staat er niet in",
+    ).toEqual(["fase"]);
+  });
+
   it("meldt een slug die alleen aan één kant bestaat", () => {
     const alleenSeed = vergelijk(invoer([], ZAAD), NORM);
     expect(alleenSeed.map((b) => b.categorie)).toEqual(["alleen-seed"]);

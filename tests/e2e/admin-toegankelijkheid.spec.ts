@@ -66,6 +66,43 @@ test("de admin schuift op geen enkele breedte horizontaal", async ({ page }) => 
   });
 });
 
+/**
+ * De zijbalk plakt bovenaan en is precies zo hoog als het scherm. Past de
+ * navigatie daar niet in, dan moet zij scrollen -- anders loopt de inhoud er
+ * onderuit: de donkere achtergrond eindigt halverwege, de laatste items staan
+ * op de lichte pagina eronder, en je kunt er niet bij omdat de balk niet
+ * meescrollt. Op 700px hoog past hij niet; op 1200 wel, en dan hoort er geen
+ * schuifbalk te zijn.
+ */
+for (const [naam, hoogte, moetScrollen] of [
+  ["een laptopscherm", 700, true],
+  ["een hoog scherm", 1200, false],
+] as const) {
+  test(`de zijbalk houdt zijn navigatie binnenboord op ${naam}`, async ({ page }) => {
+    await page.setViewportSize({ width: 1440, height: hoogte });
+    await page.goto(FIXTURE);
+
+    const gemeten = await page.evaluate(() => {
+      const balk = document.querySelector<HTMLElement>(".side")!;
+      const nav = balk.querySelector<HTMLElement>("nav")!;
+      const voet = balk.querySelector<HTMLElement>(".foot")!;
+      return {
+        balkOnder: Math.round(balk.getBoundingClientRect().bottom),
+        voetOnder: Math.round(voet.getBoundingClientRect().bottom),
+        navScrollt: nav.scrollHeight > nav.clientHeight,
+        navOverflow: getComputedStyle(nav).overflowY,
+      };
+    });
+
+    expect(
+      gemeten.voetOnder,
+      `de voetregel steekt ${gemeten.voetOnder - gemeten.balkOnder}px onder de zijbalk uit`,
+    ).toBeLessThanOrEqual(gemeten.balkOnder);
+    expect(gemeten.navScrollt, `navigatie scrollt op ${hoogte}px hoog`).toBe(moetScrollen);
+    if (moetScrollen) expect(gemeten.navOverflow).toMatch(/auto|scroll/);
+  });
+}
+
 /** De enige admin-pagina die zonder sessie te bereiken is. */
 test("de loginpagina voldoet aan WCAG 2.1 AA", async ({ page }) => {
   await page.goto("/admin/login");
