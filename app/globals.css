@@ -1061,10 +1061,16 @@ footer.site-footer {
   box-shadow: var(--shadow-lg);
   color: var(--text-body);
 }
+/* Een vaste hoogte van 180px maakte het beeldvlak 2,12 breed-op-hoog, terwijl de
+   omslagen 1,13 tot 1,94 zijn. Twee van de vijf inzichten verloren daarmee 47%
+   van hun omslag, een diagram 32%. Een kaart in een raster moet één vorm houden,
+   dus bijsnijden hoort erbij -- maar 3:2 is de verhouding waar de meeste foto's
+   al in staan, en daarmee zakt het verlies naar 0 tot 24%. De hoogte volgt nu de
+   kolombreedte, dus in een smalle kolom wordt de kaart vanzelf lager. */
 .post .cover {
   display: block;
   position: relative;
-  height: 180px;
+  aspect-ratio: 3 / 2;
   background-color: var(--ink-200);
   overflow: hidden;
   flex: none;
