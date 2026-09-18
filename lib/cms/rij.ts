@@ -44,7 +44,14 @@ const BOUWERS: Record<GemapteType, Bouwer> = {
     // tweede springt de seed bij. Zie `vulAan` in lib/cms/merge.ts.
     for (const veld of ["richting", "hubTier", "fase"]) {
       const v = uit[veld];
-      if (typeof v === "string" && SENTINELS.has(v.trim())) uit[veld] = undefined;
+      // Ook de lege tekst, en niet alleen de expliciete 'leeg'-optie: het
+      // zod-schema is hier een enum, dus "" zakt erdoor en dan valt de hele rij
+      // terug op de seed mét een console.error per render. Zo'n lege tekst komt
+      // er echt in -- "Ontbrekende sleutels aanvullen" op /admin/baseline zet
+      // die neer voor elk keuzeveld dat de seed niet kent.
+      if (typeof v === "string" && (v.trim() === "" || SENTINELS.has(v.trim()))) {
+        uit[veld] = undefined;
+      }
     }
     // `fase` staat als tekst in een select maar is in het schema een getal.
     if (typeof uit.fase === "string" && uit.fase.trim()) uit.fase = Number(uit.fase);
