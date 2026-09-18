@@ -55,7 +55,7 @@
 }
 .p-diensten .rollen .l {
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: var(--text-3xs);
   text-transform: uppercase;
   letter-spacing: var(--tracking-kicker);
   color: var(--orange-text);
@@ -98,7 +98,7 @@
 }
 .p-diensten .basis-card .pic .r {
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: var(--text-3xs);
   text-transform: uppercase;
   letter-spacing: var(--tracking-kicker);
   color: var(--orange-text);
@@ -117,7 +117,7 @@
 }
 .p-diensten .basis-card .l {
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: var(--text-3xs);
   text-transform: uppercase;
   letter-spacing: var(--tracking-kicker);
   color: var(--text-subtle);
@@ -199,7 +199,7 @@
 }
 .p-diensten .cat-card .fase {
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: var(--text-3xs);
   text-transform: uppercase;
   letter-spacing: var(--tracking-kicker);
   background: var(--orange-50);
@@ -209,7 +209,7 @@
 }
 .p-diensten .cat-card .spoor {
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: var(--text-3xs);
   text-transform: uppercase;
   letter-spacing: var(--tracking-kicker);
   color: var(--text-subtle);
@@ -228,7 +228,7 @@
 }
 .p-diensten .cat-card .meta {
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: var(--text-3xs);
   text-transform: uppercase;
   letter-spacing: var(--tracking-kicker);
   color: var(--text-subtle);
@@ -312,7 +312,7 @@
 }
 .p-diensten .lite-row .sp {
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: var(--text-3xs);
   text-transform: uppercase;
   letter-spacing: var(--tracking-kicker);
   color: var(--text-subtle);

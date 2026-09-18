@@ -38,6 +38,10 @@
   color: var(--orange-text);
   font-weight: var(--fw-medium);
 }
+.p-algemene-voorwaarden .prose address a {
+  display: inline-block;
+  padding: 6px 0;
+}
 .p-algemene-voorwaarden .prose address {
   font-style: normal;
   background: var(--white);

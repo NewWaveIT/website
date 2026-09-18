@@ -47,8 +47,17 @@ export function SectorSplit({
   // Op touch (geen hover) werkt onMouseEnter niet. Eerste tik toont de preview,
   // een tweede tik op het al-actieve item navigeert. Op desktop navigeert een
   // klik meteen (de preview is er al via hover).
+  //
+  // Alleen vanaf 900px: daaronder klapt .sec-split naar één kolom en staat de
+  // preview bóven de lijst. Een tik op "Zorg" verderop in die lijst veranderde
+  // dan een afbeelding buiten beeld en deed verder niets -- een dode tik. Daar
+  // navigeert de eerste tik dus gewoon.
   const onSelect = (e: React.MouseEvent, k: number | "more") => {
-    if (typeof window !== "undefined" && window.matchMedia("(hover: none)").matches && key !== k) {
+    if (
+      typeof window !== "undefined" &&
+      window.matchMedia("(hover: none) and (min-width: 900px)").matches &&
+      key !== k
+    ) {
       e.preventDefault();
       setKey(k);
     }

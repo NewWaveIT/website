@@ -26,7 +26,7 @@
 }
 .p-klanten .case-mini .body {
   background: var(--white);
-  padding: var(--space-8);
+  padding: var(--pad-kaart-ruim);
   display: flex;
   flex-direction: column;
 }
@@ -63,7 +63,7 @@
   border: 1px solid var(--border-default);
   border-radius: var(--radius-lg);
   background: var(--white);
-  padding: var(--space-7);
+  padding: var(--pad-kaart);
   color: var(--text-body);
   transition:
     transform 160ms,

@@ -8,7 +8,7 @@
   border-top: 1px solid var(--border-dark);
 }
 .proof .wrap-wide {
-  padding: var(--space-7) var(--space-6);
+  padding: var(--space-7) var(--gutter);
 }
 .clientband {
   display: flex;
@@ -17,7 +17,7 @@
 }
 .clientband .cap {
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: var(--text-2xs);
   text-transform: uppercase;
   letter-spacing: var(--tracking-kicker);
   color: var(--ink-400);
@@ -159,7 +159,7 @@
   background: var(--white);
   border: 1px solid var(--border-default);
   border-radius: var(--radius-lg);
-  padding: var(--space-7);
+  padding: var(--pad-kaart);
   min-height: 280px;
   transition:
     transform 160ms,
@@ -355,7 +355,7 @@
   border-radius: var(--radius-md);
 }
 .fcase .body {
-  padding: var(--space-9) var(--space-8);
+  padding: var(--space-9) var(--pad-kaart-ruim);
   display: flex;
   flex-direction: column;
 }
@@ -483,6 +483,9 @@
   background: none;
   border: none;
   padding: 0 0 16px;
+  /* "AI" is precies twee tekens en werd daarmee een knop van 22px breed op een
+     telefoon van 320. Een aanraakdoel hoort minstens 24 te zijn. */
+  min-width: 44px;
   margin-bottom: -1px;
   font-family: var(--font-sans);
   font-size: var(--text-lg);
@@ -806,7 +809,7 @@
   border-bottom: 1px solid var(--border-subtle);
 }
 .statement .wrap-wide {
-  padding: var(--space-10) var(--space-6);
+  padding: var(--space-10) var(--gutter);
   display: grid;
   grid-template-columns: 1.4fr 1fr;
   gap: var(--space-9);
@@ -954,6 +957,36 @@
   .sec-grid,
   .waarom .grid {
     grid-template-columns: 1fr;
+  }
+  /* Drie cijfers naast elkaar in een kaart van 287px: met 40px tussenruimte
+     en het cijfer op 28px brak "30 min" over twee regels en het label eronder
+     middenin een woord. Een raster verdeelt de ruimte gelijk in plaats van naar
+     inhoud, en het cijfer een maat kleiner laat het passen. */
+  .fcase .metrics {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-4);
+  }
+  .fcase .metrics .m .n {
+    font-size: var(--text-lg);
+  }
+  .fcase .metrics .m .l {
+    max-width: none;
+  }
+  /* Drie losse items in een flexrij van 311px: de award-pil viel op een eigen
+     regel en de pauzeknop dáár weer onder, met een gat ernaast. Naast elkaar
+     persen werkt ook niet -- dan breekt "Computable" middenin. Dus: label en
+     knop samen op de eerste regel, de pil eronder over de volle breedte. */
+  .proof-head .cap {
+    order: 1;
+  }
+  .proof-head .marquee-knop {
+    order: 2;
+  }
+  .proof .award {
+    order: 3;
+    flex: 1 1 100%;
+    border-radius: var(--radius-lg);
   }
 }
 
@@ -1133,4 +1166,13 @@
 .marquee-knop .lucide {
   width: 13px;
   height: 13px;
+}
+
+/* Met een duim: 28px is te klein. Dit blok staat achter de basisregel, want op
+   gelijke specificiteit wint de laatste -- ervoor deed het niets. */
+@media (max-width: 640px) {
+  .marquee-knop {
+    width: 44px;
+    height: 44px;
+  }
 }

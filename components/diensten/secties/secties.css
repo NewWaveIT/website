@@ -415,7 +415,7 @@
 }
 .dienst-secties .case-mini .body {
   background: var(--white);
-  padding: var(--space-8);
+  padding: var(--pad-kaart-ruim);
   display: flex;
   flex-direction: column;
 }
@@ -451,7 +451,7 @@
   border: 1px solid var(--border-default);
   border-radius: var(--radius-xl);
   box-shadow: var(--shadow-lg);
-  padding: var(--space-8);
+  padding: var(--pad-kaart-ruim);
   max-width: 760px;
 }
 .dienst-secties .waarborg-card p {

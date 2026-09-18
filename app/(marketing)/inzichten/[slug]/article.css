@@ -4,9 +4,13 @@
   background: var(--ink-900);
   color: var(--eggshell);
 }
+/* De zijmarge stond hier op 0. Op desktop viel dat niet op — de .wrap is daar
+   smaller dan het scherm — maar op een telefoon plakten het kruimelpad en de
+   kop tegen de linkerrand terwijl de foto eronder wél inspringt. De max-width
+   telt de marge erbij op, zodat de tekstkolom op desktop 820px blijft. */
 .p-artikel .ahero .wrap {
-  padding: var(--space-6) 0 var(--space-9);
-  max-width: 820px;
+  padding: var(--space-6) var(--gutter) var(--space-9);
+  max-width: calc(820px + 2 * var(--gutter));
 }
 .p-artikel .ahero h1 {
   font-family: var(--font-display-expanded);

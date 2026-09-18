@@ -87,12 +87,18 @@ export function MobileShell({ email }: { email: string }) {
     const sticky = document.querySelector<HTMLElement>(".stickycta");
     if (!sticky) return;
     let ticking = false;
+    const inBeeld = (el: HTMLElement | null) =>
+      el ? el.getBoundingClientRect().top < window.innerHeight : false;
     const draw = () => {
       ticking = false;
+      // Negen pagina's hebben geen .cta-sectie (de vijf sectorpagina's, beide
+      // inzichtenpagina's en de twee juridische). Daar verdween de balk dus
+      // nooit en dekte hij onderaan de links in de voettekst af. De voettekst
+      // is het tweede stopteken.
       const cta = document.querySelector<HTMLElement>(".cta");
+      const voet = document.querySelector<HTMLElement>("footer.site-footer");
       const past = window.scrollY > 420;
-      const nearCta = cta ? cta.getBoundingClientRect().top < window.innerHeight : false;
-      sticky.classList.toggle("show", past && !nearCta);
+      sticky.classList.toggle("show", past && !inBeeld(cta) && !inBeeld(voet));
     };
     const onScroll = () => {
       if (!ticking) {
