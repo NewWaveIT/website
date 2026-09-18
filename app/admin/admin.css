@@ -1821,6 +1821,11 @@
 .cms .veldfout {
   color: var(--danger-600);
 }
+/* Geen fout maar een signaal: het beeld is geplaatst en te klein. --warning-500
+   op paper haalt geen AA voor tekst, vandaar de donkere variant. */
+.cms .veldwaarschuwing {
+  color: var(--orange-text);
+}
 
 /* ---- Kleine, hergebruikte opmaak ----
    Stond verspreid als inline `style`-objecten. Inline styles winnen het van

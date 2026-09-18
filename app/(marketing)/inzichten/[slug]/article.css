@@ -26,17 +26,11 @@
   color: var(--text-on-dark-muted);
 }
 
+/* Het kader zelf komt uit components/beeld-kader.css: dat voegt zich naar de
+   verhouding van het beeld en vergroot nooit. Hier staat alleen waar het hangt:
+   met de bovenkant over de donkere hero heen. */
 .p-artikel .acover {
-  max-width: 980px;
-  margin: calc(-1 * var(--space-8)) auto 0;
-  position: relative;
-  height: 420px;
-  border-radius: var(--radius-xl);
-  overflow: hidden;
-  border: 1px solid var(--border-default);
-}
-.p-artikel .acover img {
-  object-fit: cover;
+  margin-top: calc(-1 * var(--space-8));
 }
 
 .p-artikel .aprose {
@@ -62,18 +56,43 @@
   line-height: var(--leading-relaxed);
   margin: 0 0 var(--space-5);
 }
-/* Opgemaakte inhoud uit de rich-text editor */
+/* De eerste alinea na de lead krijgt wat meer gewicht: hij is de aanloop, en
+   zonder dat verschil begint een artikel van vijftig gelijke alinea's als een
+   muur. Puur typografisch -- de redactie hoeft er niets voor te doen. */
+.p-artikel .aprose > p:first-of-type {
+  font-size: var(--text-lg);
+  color: var(--text-strong);
+  line-height: var(--leading-relaxed);
+}
+
+/* Opgemaakte inhoud uit de rich-text editor.
+
+   h2 en h3 stonden op 2xl en xl met bijna hetzelfde gewicht, waardoor de
+   hiërarchie in de tekst wegviel. De h2 krijgt nu een lijn boven zich als
+   sectiegrens; de h3 blijft een kop binnen die sectie. */
 .p-artikel .aprose h2 {
+  font-family: var(--font-display);
   font-size: var(--text-2xl);
-  font-weight: var(--fw-bold);
+  font-weight: var(--fw-extrabold);
   line-height: var(--leading-snug);
-  margin: var(--space-7) 0 var(--space-3);
+  color: var(--text-strong);
+  margin: var(--space-9) 0 var(--space-4);
+  padding-top: var(--space-6);
+  border-top: 1px solid var(--border-default);
+}
+/* Staat de h2 bovenaan, dan is er niets om van te scheiden. */
+.p-artikel .aprose h2:first-child {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: 0;
 }
 .p-artikel .aprose h3 {
+  font-family: var(--font-display);
   font-size: var(--text-xl);
   font-weight: var(--fw-bold);
   line-height: var(--leading-snug);
-  margin: var(--space-6) 0 var(--space-3);
+  color: var(--text-strong);
+  margin: var(--space-7) 0 var(--space-3);
 }
 .p-artikel .aprose ul,
 .p-artikel .aprose ol {
@@ -178,8 +197,23 @@
   .p-artikel .ahero h1 {
     font-size: var(--text-3xl);
   }
+  /* Geen vaste hoogte meer: die zou de verhouding van het beeld overrulen en
+     op een telefoon opnieuw gaan bijsnijden. Alleen de overlap wordt kleiner. */
   .p-artikel .acover {
-    height: 260px;
     margin-top: calc(-1 * var(--space-6));
   }
+}
+
+/* ---- Verwante artikelen ---- */
+
+.p-artikel .verwant {
+  background: var(--eggshell);
+  border-top: 1px solid var(--border-subtle);
+}
+.p-artikel .verwant-kop {
+  font-family: var(--font-display);
+  font-size: var(--text-2xl);
+  font-weight: var(--fw-extrabold);
+  color: var(--text-strong);
+  margin: 0 0 var(--space-6);
 }

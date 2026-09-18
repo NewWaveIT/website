@@ -6,6 +6,9 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 import { getArtikelen, getArtikelBySlug, isoDatum } from "@/lib/inzichten-data";
 import { ArticleContent } from "@/components/article-content";
+import { BeeldKader } from "@/components/beeld-kader";
+import { AuteurBlok } from "@/components/inzichten/auteur-blok";
+import { kiesVerwant, VerwanteArtikelen } from "@/components/inzichten/verwante-artikelen";
 import { LeadCta } from "@/components/inzichten/lead-cta";
 import { getPagina } from "@/lib/paginas-data";
 import { SITE_URL } from "@/lib/site";
@@ -39,12 +42,15 @@ export default async function ArtikelPage({ params }: { params: Promise<{ slug: 
   cacheLife("content");
 
   const { slug } = await params;
-  const [a, t, alg] = await Promise.all([
+  const [a, t, alg, alle] = await Promise.all([
     getArtikelBySlug(slug),
     getPagina("inzichten"),
     getPagina("algemeen"),
+    getArtikelen(),
   ]);
   if (!a) notFound();
+
+  const verwant = kiesVerwant(alle, a);
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -76,7 +82,6 @@ export default async function ArtikelPage({ params }: { params: Promise<{ slug: 
             opDonker
             kruimels={[{ naam: "Inzichten", pad: "/inzichten" }, { naam: a.cat }]}
           />
-          <div className="kicker on-dark">{`// ${a.cat}`}</div>
           <h1>{a.titel}</h1>
           <div className="byline">
             {a.auteurFoto && (
@@ -84,8 +89,13 @@ export default async function ArtikelPage({ params }: { params: Promise<{ slug: 
             )}
             <span>
               {alg.artikelDoor} <strong>{a.auteur}</strong>
+              {/* Het label hing eerder onvoorwaardelijk aan de waarde, dus een
+                  leeg leestijdveld gaf letterlijk " leestijd · 18 sep 2026".
+                  De leestijd wordt nu afgeleid uit de tekst, maar de rij blijft
+                  ook kloppen als er ooit toch niets is. */}
               <span className="sub">
-                {a.leestijd} leestijd · {a.datum}
+                {a.leestijd ? `${a.leestijd} leestijd · ` : ""}
+                {a.datum}
               </span>
             </span>
           </div>
@@ -93,21 +103,33 @@ export default async function ArtikelPage({ params }: { params: Promise<{ slug: 
       </section>
 
       <div className="wrap">
-        <div className="acover">
-          <Image src={a.image} alt={a.titel} fill sizes="(max-width: 980px) 100vw, 980px" />
-        </div>
+        <BeeldKader className="acover" src={a.image} alt={a.titel} maxBreedte={980} priority />
       </div>
 
       <article className="block">
         <div className="wrap aprose">
-          <p className="lead">{a.intro}</p>
+          {/* Een lege samenvatting leverde een lege alinea van 22px op. */}
+          {a.intro && <p className="lead">{a.intro}</p>}
           {a.inhoudHtml ? (
             <ArticleContent html={a.inhoudHtml} />
           ) : (
             a.body.map((p, i) => <p key={i}>{p}</p>)
           )}
+          <AuteurBlok
+            naam={a.auteur}
+            rol={a.auteurRol}
+            foto={a.auteurFoto}
+            label={t.artikelAuteurLabel}
+            cta={t.artikelAuteurCta}
+          />
         </div>
       </article>
+
+      <VerwanteArtikelen
+        artikelen={verwant}
+        titel={t.artikelVerwantTitel}
+        meerLabel={alg.inzichtenMeer}
+      />
 
       <LeadCta
         titel={t.artikelLeadTitel}

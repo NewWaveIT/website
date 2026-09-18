@@ -15,6 +15,8 @@ export interface Artikel {
   inhoudHtml?: string;
   /** Profielfoto van de auteur (als die een teamlid is). */
   auteurFoto?: string;
+  /** Functie van de auteur (als die een teamlid is), voor het auteursblok. */
+  auteurRol?: string;
   /** Koppeling: 'Algemeen' = niet gekoppeld. */
   discipline?: string;
   sector?: string;

@@ -1,0 +1,33 @@
+/* Zie components/beeld-kader.tsx voor het waarom. */
+
+.beeldkader {
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  overflow: hidden;
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--border-default);
+  /* Een lichte ondergrond in plaats van niets: staat het beeld niet precies in
+     de verhouding van het kader, dan leest de rand eromheen als een passe-partout
+     en niet als een gat. */
+  background: var(--eggshell);
+
+  /* Terugval als de maten onbekend zijn. De component overschrijft allebei
+     zodra hij het beeld heeft kunnen meten. */
+  --kader-verhouding: 16 / 9;
+  --kader-max: 980px;
+
+  aspect-ratio: var(--kader-verhouding);
+  max-width: var(--kader-max);
+  /* Een staand beeld mag de pagina niet vullen. 660 en niet lager, want een
+     liggende foto van 3:2 is op de volle 980px precies 653 hoog -- met een
+     lagere grens zou juist het gewone geval gaan krimpen. */
+  max-height: 660px;
+}
+
+.beeldkader img {
+  /* `scale-down` en niet `cover`: nooit bijsnijden, en nooit groter tonen dan
+     het beeld zelf is. Klopt de verhouding van het kader (het normale geval),
+     dan vult het beeld hem precies en is er geen verschil met `cover`. */
+  object-fit: scale-down;
+}

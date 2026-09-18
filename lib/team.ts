@@ -22,7 +22,7 @@ export const TEAMLEDEN: Teamlid[] = [
     slug: "koen-wijsman",
     naam: "Koen Wijsman",
     rol: "CEO & founder",
-    foto: "/assets/photos/portret-blauw.webp",
+    foto: "/assets/photos/portret-koen-wijsman.webp",
     bio: "Verbindt business en IT en staat directies bij in hun digitale koers.",
     contactrol: "Sales",
     telefoon: "06–10751254",
@@ -42,12 +42,14 @@ export const TEAMLEDEN: Teamlid[] = [
     slug: "jeroen-plooij",
     naam: "Jeroen Plooij",
     rol: "Mendix Consultant",
+    foto: "/assets/photos/portret-jeroen-plooij.webp",
     bio: "",
   },
   {
     slug: "sonny-van-rein",
     naam: "Sonny van Rein",
     rol: "Mendix Consultant",
+    foto: "/assets/photos/portret-sonny-van-rein.webp",
     bio: "",
   },
   {

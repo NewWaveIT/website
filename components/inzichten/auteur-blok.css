@@ -1,0 +1,83 @@
+/* Auteursblok onder een artikel — zie auteur-blok.tsx. */
+
+.auteurblok {
+  display: flex;
+  align-items: center;
+  gap: var(--space-5);
+  margin: var(--space-9) 0 0;
+  padding: var(--pad-kaart) 0 0;
+  border-top: 1px solid var(--border-default);
+}
+
+.auteurblok-foto {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: 50% 20%;
+  flex: none;
+  background: var(--ink-100);
+}
+
+.auteurblok-tekst {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.auteurblok-label {
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-kicker);
+  color: var(--text-subtle);
+  margin-bottom: 4px;
+}
+
+.auteurblok-naam {
+  font-family: var(--font-display);
+  font-size: var(--text-md);
+  font-weight: var(--fw-bold);
+  color: var(--text-strong);
+}
+
+.auteurblok-rol {
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+.auteurblok-link {
+  margin-left: auto;
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: var(--text-sm);
+  font-weight: var(--fw-semibold);
+  color: var(--orange-text);
+}
+
+.auteurblok-link .lucide {
+  width: 16px;
+  height: 16px;
+  transition: transform 180ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.auteurblok-link:hover .lucide {
+  transform: translateX(4px);
+}
+
+/* Onder 640px past de link niet meer naast de naam; hij zakt eronder en de
+   marge links vervalt, anders staat hij tegen de rand. */
+@media (max-width: 640px) {
+  .auteurblok {
+    flex-wrap: wrap;
+    gap: var(--space-4);
+  }
+  .auteurblok-link {
+    margin-left: 0;
+    padding-top: 11px;
+    padding-bottom: 11px;
+  }
+}

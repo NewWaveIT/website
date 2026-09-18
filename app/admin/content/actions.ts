@@ -1,6 +1,7 @@
 "use server";
 
 import sharp from "sharp";
+import { MIN_BREEDTE } from "@/lib/beeld-eisen";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { gebruikerNaam, requireAdmin } from "@/lib/dal";
@@ -129,9 +130,13 @@ export async function saveContent(_prev: SaveState, formData: FormData): Promise
 }
 
 /** Upload een afbeelding naar de Supabase Storage-bucket 'content' en geef de publieke URL + afmetingen terug. */
-export async function uploadImage(
-  formData: FormData,
-): Promise<{ url?: string; width?: number; height?: number; error?: string }> {
+export async function uploadImage(formData: FormData): Promise<{
+  url?: string;
+  width?: number;
+  height?: number;
+  error?: string;
+  waarschuwing?: string;
+}> {
   await requireAdmin();
 
   const file = formData.get("file");
@@ -166,7 +171,19 @@ export async function uploadImage(
   if (error) return { error: error.message };
 
   const { data } = supabase.storage.from("content").getPublicUrl(path);
-  return { url: data.publicUrl, width, height };
+
+  // Een waarschuwing, geen weigering: soms is een kleine schermafdruk het enige
+  // dat er is, en dan is een onscherp beeld beter dan geen beeld. Het beeld
+  // wordt sowieso nooit opgeschaald (zie components/beeld-kader.tsx), dus het
+  // blijft scherp -- het staat alleen kleiner op de pagina dan de bedoeling is.
+  const soort = formData.get("soort") === "cover" ? "cover" : "inline";
+  const ondergrens = MIN_BREEDTE[soort];
+  const waarschuwing =
+    width && width < ondergrens
+      ? `Deze afbeelding is ${width}px breed. Voor een scherp resultaat is minstens ${ondergrens}px nodig; hij wordt nu kleiner getoond dan de volle breedte.`
+      : undefined;
+
+  return { url: data.publicUrl, width, height, waarschuwing };
 }
 
 /**

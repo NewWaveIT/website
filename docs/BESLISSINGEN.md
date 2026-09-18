@@ -93,6 +93,23 @@ tweede balk telt er `scroll-margin-top` op de sectie zelf bovenop (nu alleen
 `.p-dienst section[id]`, voor de subnavigatie). Ze stapelen, dus zet niet allebei de
 volle hoogte. Zonder dit landde de sectiekop op y=48 terwijl de balken tot y=113 lopen.
 
+**Het kader volgt het beeld, niet andersom** — 18 september 2026
+Een coverbeeld stond in een kader van 980x420 met `object-fit: cover`. Dat werkt voor een
+foto in ongeveer die verhouding en sloopt al het andere: een diagram van 417x290 werd
+opgeschaald naar 978 breed (2,3x, dus wazig) en verloor 262px aan hoogte, precies de
+bovenste rij. In de editor is daar niets van te zien, dus een redacteur kan het niet
+voorkomen. `components/beeld-kader.tsx` draait het om. De afmetingen worden tijdens de
+build gemeten (`lib/beeldmaten.ts`) en niet opgeslagen: dat werkt met terugwerkende kracht
+voor alles wat er al staat en vraagt geen enkele handeling. Zet er geen vaste hoogte meer
+op, ook niet in een media query — dat was de regel die op mobiel opnieuw ging bijsnijden.
+
+**Leestijd wordt afgeleid, niet ingevuld** — 18 september 2026
+Het veld bestaat nog en wint als het gevuld is, maar leeg laten geeft nu een leestijd uit
+het aantal woorden (200 per minuut, minimaal één). Daarvóór hing het label
+onvoorwaardelijk aan de waarde en stond er letterlijk " leestijd - 18 sep 2026" op een
+live artikel. Dat geldt breder: een veld dat de redactie kan vergeten en dat af te leiden
+valt, leiden we af.
+
 **`lib/inzichten-data.ts` gebruikt geen `maakLezer`**
 De enige uitzondering op het gedeelde leespad. Artikelen worden verrijkt met auteur
 (uit teamleden) en dienst, en passen daarom niet in de standaardvorm. Staat als

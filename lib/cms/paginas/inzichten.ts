@@ -13,6 +13,9 @@ export const VELDEN = [
   { key: "leadTekst", label: "E-mailblok — tekst", type: "textarea" },
   { key: "artikelLeadTitel", label: "E-mailblok onder een artikel — titel", type: "text" },
   { key: "artikelLeadTekst", label: "E-mailblok onder een artikel — tekst", type: "textarea" },
+  { key: "artikelAuteurLabel", label: "Artikel — kopje boven de auteur", type: "text" },
+  { key: "artikelAuteurCta", label: "Artikel — link in het auteursblok", type: "text" },
+  { key: "artikelVerwantTitel", label: "Artikel — kop boven verwante artikelen", type: "text" },
 ] as const satisfies readonly FieldDef[];
 
 /** Standaardtekst per veld: de startwaarde in de editor en de terugval op de site. */
@@ -32,4 +35,7 @@ export const TEKSTEN = {
   artikelLeadTitel: "Dit soort inzichten, één keer per maand",
   artikelLeadTekst:
     "Laat je e-mail achter en ontvang onze scherpste inzichten over technologie in jouw sector. Geen sales, uitschrijven kan altijd.",
+  artikelAuteurLabel: "Geschreven door",
+  artikelAuteurCta: "Stel je vraag",
+  artikelVerwantTitel: "Meer over dit onderwerp",
 } satisfies Record<(typeof VELDEN)[number]["key"], string>;

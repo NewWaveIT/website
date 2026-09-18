@@ -183,6 +183,14 @@ niet stilletjes wegdrijven zoals de handgeschreven routekaart in `revalidate.ts`
 - **Dynamische contactpersonen.** Teamleden hebben een `contactrol` (Sales/Recruitment);
   `getContactpersoon(rol)` levert de juiste persoon voor contact- en vacaturepagina's.
 - **Afbeeldingen.** Uitsluitend WebP in `public/assets/` (geen PNG-foto's meer).
+- **Redactioneel beeld gaat door `<BeeldKader>`** (`components/beeld-kader.tsx`). Twee
+  regels die samen gelden: het kader voegt zich naar de verhouding van het beeld (dus
+  geen vaste hoogte met `object-fit: cover`, dat sneed diagrammen af) en een beeld wordt
+  nooit breder getoond dan het zelf is (een schermafdruk van 417px werd uitgerekt naar
+  978 en was wazig). De maten komen uit `lib/beeldmaten.ts`, dat tijdens de build meet —
+  lokaal van schijf, op afstand via één fetch. Lukt dat niet, dan valt het kader terug op
+  `object-fit: scale-down`, dat óók niet afsnijdt en niet opschaalt.
+  `tests/e2e/artikel.spec.ts` legt alle drie vast.
 
 ## Zo ontstaan hier fouten
 
@@ -246,19 +254,20 @@ zakken naar nul in plaats van een lijst door te lezen.
 Deze tests bestaan omdat de fout die ze vangen echt is gemaakt. Zet er geen uit zonder
 te weten welke.
 
-| Test                                       | Vangt                                                                                                             |
-| ------------------------------------------ | ----------------------------------------------------------------------------------------------------------------- |
-| `tests/unit/manifest.spec.ts`              | Het manifest loopt achter; een pagina-ingang die niets rendert; een contenttype zonder datalaag of seed           |
-| `tests/unit/cms-pages.spec.ts`             | Een paginaveld dat in de admin staat maar nergens gerenderd wordt                                                 |
-| `tests/unit/cms-velden.spec.ts`            | Hetzelfde voor de contenttypen                                                                                    |
-| `tests/unit/admin-aria.spec.ts`            | Icoonknop zonder naam, dialoog zonder `aria-modal`/naam/focusbeheer, schakelgroep zonder `aria-pressed`           |
-| `tests/unit/admin-editor.spec.ts`          | Een veld dat zijn wijziging niet meldt (verborgen invoer zonder `VerborgenWaarde`)                                |
-| `tests/unit/admin-opmaak.spec.ts`          | Nieuwe inline styles in de admin                                                                                  |
-| `tests/unit/schrijfstijl.spec.ts`          | Em-streepjes in zichtbare tekst; de u-vorm buiten de admin                                                        |
-| `tests/e2e/formulieren.spec.ts`            | Foutmarkering, focussprong en bedankstaat van beide formulieren                                                   |
-| `tests/e2e/admin-toegankelijkheid.spec.ts` | Contrast en horizontaal schuiven in de admin, op drie breedtes                                                    |
-| `tests/e2e/schil.spec.ts`                  | Mobiel menu en cookiemelding                                                                                      |
-| `tests/e2e/mobiel.spec.ts`                 | Horizontaal schuiven op 320px, een ankersprong achter de vaste balk, een menu dat niet scrollt, contrast op 375px |
+| Test                                       | Vangt                                                                                                                        |
+| ------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------- |
+| `tests/unit/manifest.spec.ts`              | Het manifest loopt achter; een pagina-ingang die niets rendert; een contenttype zonder datalaag of seed                      |
+| `tests/unit/cms-pages.spec.ts`             | Een paginaveld dat in de admin staat maar nergens gerenderd wordt                                                            |
+| `tests/unit/cms-velden.spec.ts`            | Hetzelfde voor de contenttypen                                                                                               |
+| `tests/unit/admin-aria.spec.ts`            | Icoonknop zonder naam, dialoog zonder `aria-modal`/naam/focusbeheer, schakelgroep zonder `aria-pressed`                      |
+| `tests/unit/admin-editor.spec.ts`          | Een veld dat zijn wijziging niet meldt (verborgen invoer zonder `VerborgenWaarde`)                                           |
+| `tests/unit/admin-opmaak.spec.ts`          | Nieuwe inline styles in de admin                                                                                             |
+| `tests/unit/schrijfstijl.spec.ts`          | Em-streepjes in zichtbare tekst; de u-vorm buiten de admin                                                                   |
+| `tests/e2e/formulieren.spec.ts`            | Foutmarkering, focussprong en bedankstaat van beide formulieren                                                              |
+| `tests/e2e/admin-toegankelijkheid.spec.ts` | Contrast en horizontaal schuiven in de admin, op drie breedtes                                                               |
+| `tests/e2e/schil.spec.ts`                  | Mobiel menu en cookiemelding                                                                                                 |
+| `tests/e2e/mobiel.spec.ts`                 | Horizontaal schuiven op 320px, een ankersprong achter de vaste balk, een menu dat niet scrollt, contrast op 375px            |
+| `tests/e2e/artikel.spec.ts`                | Een coverbeeld dat bijgesneden of opgeschaald wordt; auteursblok en verwante artikelen; een label zonder waarde in de byline |
 
 ## Omgeving & valkuilen
 
