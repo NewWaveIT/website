@@ -71,6 +71,28 @@ een inzending en hoort daar geen tweede leesactie bij te krijgen die kan mislukk
 `app/(marketing)/vacatures/[slug]/loading.tsx` rendert vóór er data is. Een leesactie zou
 daar precies het wachten toevoegen dat die zin moet opvangen.
 
+**Mobiele marges lopen via tokens, niet via losse media queries** — 18 september 2026
+`--gutter` (paginamarge) en `--pad-kaart` / `--pad-kaart-ruim` (binnenmarge van een kaart
+met lopende tekst) staan in `:root` en krijgen onder 640px een kleinere waarde. Ze zien
+eruit als overbodige omwegen om `var(--space-6)` en zijn dat niet: de paginamarge en de
+kaartmarge stápelen, en met de vaste waardes bleef er op een telefoon 198 tot 263px tekst
+over — ongeveer twintig tekens per regel, met een woordafbreking op bijna elke regel. Het
+citaat op de homepage besloeg zo vijftien regels met acht afbrekingen. Met de tokens is
+dat 287px. Zet een nieuwe kaart met tekst dus op `--pad-kaart`, niet op `--space-7`, en
+laat elke `.wrap-wide` die zijn eigen zijmarge zet `--gutter` gebruiken; anders schuift de
+ene sectie wel mee en de andere niet.
+
+**`--text-3xs` en `--text-2xs` bestaan omdat 10px op een telefoon te klein is** — 18 september 2026
+Er stonden 26 handgeschreven `font-size: 10px` en `11px` verspreid over dertien
+bestanden. Als token schalen ze onder 640px een trap omhoog (10 → 11, 11 → 12). Schrijf
+geen nieuwe vaste waarde onder `--text-xs`.
+
+**De ankersprong telt twee offsets op** — 18 september 2026
+`html { scroll-padding-top }` in `globals.css` dekt de vaste balk; een pagina met een
+tweede balk telt er `scroll-margin-top` op de sectie zelf bovenop (nu alleen
+`.p-dienst section[id]`, voor de subnavigatie). Ze stapelen, dus zet niet allebei de
+volle hoogte. Zonder dit landde de sectiekop op y=48 terwijl de balken tot y=113 lopen.
+
 **`lib/inzichten-data.ts` gebruikt geen `maakLezer`**
 De enige uitzondering op het gedeelde leespad. Artikelen worden verrijkt met auteur
 (uit teamleden) en dienst, en passen daarom niet in de standaardvorm. Staat als

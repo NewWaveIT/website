@@ -17,7 +17,7 @@
 .p-dienst .dhero .wrap-wide {
   position: relative;
   z-index: 2;
-  padding: var(--space-7) var(--space-6) var(--space-9);
+  padding: var(--space-7) var(--gutter) var(--space-9);
 }
 .p-dienst .dhero-grid {
   display: grid;
@@ -34,7 +34,7 @@
 }
 .p-dienst .tag {
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: var(--text-3xs);
   text-transform: uppercase;
   letter-spacing: var(--tracking-kicker);
   border-radius: var(--radius-pill);
@@ -75,7 +75,7 @@
 }
 .p-dienst .facts .l {
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: var(--text-3xs);
   text-transform: uppercase;
   letter-spacing: var(--tracking-kicker);
   color: var(--ink-400);
@@ -100,7 +100,7 @@
 .p-dienst .book .fase {
   display: inline-flex;
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: var(--text-3xs);
   text-transform: uppercase;
   letter-spacing: var(--tracking-kicker);
   background: var(--orange-50);
@@ -174,6 +174,23 @@
   height: 52px;
   align-items: center;
   overflow-x: auto;
+  /* Zes items zijn samen 748px breed; op een telefoon zijn er vier onzichtbaar
+     en niets liet zien dat de balk schuift -- hij brak gewoon af midden in een
+     woord. De vervaging rechts laat dat wel zien. Bewust een vaste vervaging en
+     geen die meebeweegt met de scrollpositie: dat vraagt een scroll-timeline en
+     die heeft Safari 15.4 niet. */
+  scrollbar-width: none;
+  mask-image: linear-gradient(to right, #000 calc(100% - 32px), transparent);
+  -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 32px), transparent);
+}
+.p-dienst .subnav .wrap-wide::-webkit-scrollbar {
+  display: none;
+}
+/* De subnavigatie plakt onder de hoofdbalk, dus een anker moet 52px lager
+   landen dan `html { scroll-padding-top }` alleen zou doen. De twee tellen bij
+   elkaar op. */
+.p-dienst section[id] {
+  scroll-margin-top: 56px;
 }
 .p-dienst .subnav a {
   font-family: var(--font-mono);
@@ -182,6 +199,9 @@
   letter-spacing: var(--tracking-kicker);
   color: var(--text-muted);
   white-space: nowrap;
+  /* Kaal is de link 18px hoog. De marge telt mee voor het aanraakdoel en niet
+     voor de regelhoogte, dus de balk blijft 52px. */
+  padding: 17px 0;
 }
 .p-dienst .subnav a:hover {
   color: var(--orange-text);
@@ -396,7 +416,7 @@
 }
 .p-dienst .next .m {
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: var(--text-3xs);
   text-transform: uppercase;
   letter-spacing: var(--tracking-kicker);
   color: var(--text-subtle);
@@ -497,7 +517,7 @@
 }
 .p-dienst .mini .sp {
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: var(--text-3xs);
   text-transform: uppercase;
   letter-spacing: var(--tracking-kicker);
   color: var(--orange-text);
@@ -569,5 +589,19 @@
   }
   .p-dienst .subnav {
     top: 60px;
+  }
+  /* De tijdkolom van 76px plus de tussenruimte kostte een kwart van de breedte
+     van een tekstkolom die er nog 211 had. Boven de tekst kost hij niets. */
+  .p-dienst .slot {
+    grid-template-columns: 1fr;
+    gap: var(--space-2);
+  }
+  .p-dienst .prep-col {
+    padding: var(--pad-kaart);
+  }
+  /* Rechts stond 48px marge om het antwoord smal te houden naast de plusknop.
+     Op een telefoon is dat 48px van 311. */
+  .p-dienst .faq .a {
+    padding-right: 0;
   }
 }

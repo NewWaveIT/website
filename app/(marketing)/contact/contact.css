@@ -80,7 +80,7 @@
   background: var(--white);
   border: 1px solid var(--border-default);
   border-radius: var(--radius-xl);
-  padding: var(--space-7);
+  padding: var(--pad-kaart);
   box-shadow: var(--shadow-md);
 }
 .form-card h2 {

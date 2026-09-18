@@ -56,16 +56,17 @@
 
 .hgen-schakel {
   display: grid;
-  grid-template-columns: 18px 1fr;
+  grid-template-columns: 24px 1fr;
   gap: 10px;
   align-items: start;
   padding-top: 4px;
 }
+/* 18x18 was onder de 24px die WCAG 2.5.8 als ondergrens voor een aanraakdoel
+   aanhoudt. */
 .hgen-schakel input {
-  margin-top: 3px;
   accent-color: var(--color-primary);
-  width: 18px;
-  height: 18px;
+  width: 24px;
+  height: 24px;
 }
 .hgen-schakel label {
   font-size: var(--text-sm);
@@ -94,6 +95,18 @@
   padding: 28px;
   overflow-x: auto;
 }
+/* De handtekening is e-mail-HTML met een vaste opmaak. Op een telefoon perste
+   `overflow-wrap: anywhere` (uit globals.css, bedoeld tegen horizontaal
+   schuiven) de tabelcel tot 144px, waardoor adressen en URL's midden in het
+   woord braken: "voornaam.achternaa / m@thenewwaveit.co / m". Juist dit stuk
+   moet je kunnen controleren voordat je het kopieert, dus het houdt zijn eigen
+   breedte en de doek eromheen schuift. */
+.hgen-doek > * {
+  min-width: 340px;
+  overflow-wrap: normal;
+  word-break: normal;
+  hyphens: manual;
+}
 /* Voor wie het witte logo kiest: laat het voorbeeld die achtergrond ook zien,
    anders beoordeel je wit-op-wit. */
 .hgen-doek--donker {
@@ -105,7 +118,8 @@
   align-self: flex-start;
   background: none;
   border: 0;
-  padding: 0;
+  /* Kaal 21px hoog; met een duim te weinig. */
+  padding: 11px 0;
   font-family: var(--font-sans);
   font-size: var(--text-sm);
   font-weight: var(--fw-semibold);
@@ -128,7 +142,11 @@
 }
 
 @media (max-width: 860px) {
+  /* minmax(0, 1fr) en niet 1fr: een 1fr-spoor heeft als automatisch minimum de
+     min-content-breedte van zijn inhoud, en het voorbeeld hieronder houdt
+     bewust 340px aan. Met `1fr` groeide het spoor daarnaar mee en liep het
+     formulier ernaast de pagina uit. */
   .hgen {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 }

@@ -44,7 +44,7 @@
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: var(--space-6);
-  padding: var(--space-8) var(--space-6);
+  padding: var(--space-8) var(--gutter);
 }
 .p-case .impact .m .n {
   font-family: var(--font-mono);
@@ -127,7 +127,7 @@
 }
 .p-case .article .prose .subkop {
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: var(--text-2xs);
   letter-spacing: var(--tracking-kicker);
   text-transform: uppercase;
   color: var(--text-subtle);
@@ -176,7 +176,7 @@
 }
 .p-case .stap-label {
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: var(--text-2xs);
   letter-spacing: var(--tracking-kicker);
   text-transform: uppercase;
   color: var(--orange-text);
@@ -251,7 +251,7 @@
 }
 .p-case .aside-card h2 {
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: var(--text-2xs);
   text-transform: uppercase;
   letter-spacing: var(--tracking-kicker);
   color: var(--text-subtle);

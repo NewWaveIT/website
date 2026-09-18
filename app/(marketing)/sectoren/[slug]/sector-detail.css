@@ -66,7 +66,7 @@
   background-size: cover;
 }
 .p-sector .people-band .txt {
-  padding: var(--space-9) var(--space-8);
+  padding: var(--space-9) var(--pad-kaart-ruim);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -139,7 +139,7 @@
   background: var(--ink-900);
   color: var(--eggshell);
   border-radius: var(--radius-xl);
-  padding: var(--space-7);
+  padding: var(--pad-kaart);
 }
 .p-sector .why-quote blockquote {
   font-family: var(--font-display);
@@ -240,7 +240,7 @@
 .p-sector .solcard .m {
   display: none;
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: var(--text-3xs);
   text-transform: uppercase;
   letter-spacing: var(--tracking-kicker);
   color: var(--text-subtle);
@@ -249,7 +249,7 @@
 .p-sector .laag {
   justify-self: start;
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: var(--text-2xs);
   text-transform: uppercase;
   letter-spacing: var(--tracking-kicker);
   padding: 6px 12px;
@@ -565,7 +565,7 @@
   color: var(--white);
 }
 .p-sector .cta-sector .wrap-wide {
-  padding: var(--space-10) var(--space-6);
+  padding: var(--space-10) var(--gutter);
   display: grid;
   grid-template-columns: 1.4fr 1fr;
   gap: var(--space-9);
@@ -690,6 +690,18 @@
   .p-sector .hero-actions .btn {
     width: 100%;
     justify-content: center;
+  }
+  /* Het icoon naast de tekst kostte met de tussenruimte samen 48px van een
+     kolom die er nog 198 had. Boven de tekst kost het niets. */
+  .p-sector .belofte {
+    flex-direction: column;
+    gap: var(--space-3);
+    padding: var(--space-5);
+  }
+  /* Rechts stond 48px marge om het antwoord smal te houden naast de plusknop.
+     Op een telefoon is dat 48px van 311. */
+  .p-sector .faq .a {
+    padding-right: 0;
   }
 }
 

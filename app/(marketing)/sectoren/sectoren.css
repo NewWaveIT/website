@@ -11,7 +11,7 @@
   background: var(--white);
   border: 1px solid var(--border-default);
   border-radius: var(--radius-lg);
-  padding: var(--space-7);
+  padding: var(--pad-kaart);
   transition:
     transform 160ms,
     box-shadow 160ms,

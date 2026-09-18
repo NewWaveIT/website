@@ -100,6 +100,11 @@
   --focus-ring: var(--orange-500);
 
   /* ---- Type scale ---- */
+  /* Onder --text-xs stonden 27 handmatige waarden van 10 en 11px verspreid over
+     dertien bestanden. Op een telefoon is 10px onder de grens van comfortabel
+     lezen; als token schalen ze mee (zie de media query hieronder). */
+  --text-3xs: 0.625rem;
+  --text-2xs: 0.6875rem;
   --text-xs: 0.75rem;
   --text-sm: 0.875rem;
   --text-base: 1rem;
@@ -143,9 +148,22 @@
   --space-11: 6rem;
   --space-12: 8rem;
 
+  /* Paginamarge links/rechts. Eigen token omdat hij op een telefoon kleiner
+     moet zijn dan op desktop: 32px marge plus de binnenmarge van een kaart
+     liet op 375px nog 215px tekst over, oftewel twintig tekens per regel. Elke
+     .wrap-wide die zijn eigen padding zet gebruikt dit token, anders schuift de
+     ene sectie wel mee en de andere niet. */
+  --gutter: var(--space-6);
+
+  /* Binnenmarge van een kaart met lopende tekst erin. Zelfde reden als
+     --gutter, en ze stapelen: paginamarge plus kaartmarge liet in het citaat op
+     de homepage 215px over. Twee tokens omdat de kaarten op desktop twee maten
+     hebben (40 en 48px); op een telefoon worden ze allebei 24px. */
+  --pad-kaart: var(--space-7);
+  --pad-kaart-ruim: var(--space-8);
+
   --container-max: 1200px;
   --container-wide: 1440px;
-  --gutter: var(--space-5);
   --section-y: var(--space-11);
 
   /* ---- Radii ---- */
@@ -179,6 +197,9 @@
     --text-2xl: 1.75rem;
     --text-3xl: 2.25rem;
     --text-4xl: 3rem;
+    /* Andere kant op: de kleinste maten juist een trap omhoog. */
+    --text-3xs: 0.6875rem;
+    --text-2xs: 0.75rem;
   }
   /* Nederlandse samenstellingen -- "Zeggenschapswijziging",
      "applicatieontwikkeling", "Auditproof" -- zijn op 320px breder dan de kolom
@@ -197,6 +218,24 @@
     hyphens: auto;
     overflow-wrap: anywhere;
   }
+  /* ...maar niet in koppen en citaten. Daar valt een koppelteken midden in een
+     woord op ("Mensen die naast de zorg-professional staan") en het scheelt
+     daar ook niets: die staan kort genoeg om zonder te passen. `anywhere`
+     blijft er wel onder liggen, want dat is de eigenschap die het horizontaal
+     schuiven tegenhoudt. */
+  h1,
+  h2,
+  h3,
+  blockquote,
+  .hsec-h1 {
+    hyphens: manual;
+  }
+  /* Smallere pagina- en kaartmarge: zie de toelichting bij --gutter. */
+  :root {
+    --gutter: 1.25rem;
+    --pad-kaart: var(--space-5);
+    --pad-kaart-ruim: var(--space-5);
+  }
 }
 
 /* ============================================================
@@ -209,6 +248,18 @@
 
 html {
   -webkit-text-size-adjust: 100%;
+  /* Een ankerlink zette de kop van de sectie op y=0 en dus onder de vaste
+     balk: op een telefoon stond de kop op y=48 terwijl de balk tot y=61 loopt.
+     Dit is de balkhoogte plus wat lucht. Pagina's met een tweede balk
+     (de subnavigatie op een dienstpagina) tellen er zelf `scroll-margin-top`
+     bovenop. */
+  scroll-padding-top: 96px;
+}
+
+@media (max-width: 1040px) {
+  html {
+    scroll-padding-top: 76px;
+  }
 }
 
 body {
@@ -361,12 +412,12 @@ footer :focus-visible,
 .wrap {
   max-width: var(--container-max);
   margin: 0 auto;
-  padding: 0 var(--space-6);
+  padding: 0 var(--gutter);
 }
 .wrap-wide {
   max-width: var(--container-wide);
   margin: 0 auto;
-  padding: 0 var(--space-6);
+  padding: 0 var(--gutter);
 }
 
 .kicker {
@@ -704,7 +755,7 @@ footer.site-footer {
   font-family: var(--font-mono);
   text-transform: uppercase;
   letter-spacing: var(--tracking-kicker);
-  font-size: 11px;
+  font-size: var(--text-2xs);
   color: var(--ink-400);
   margin: 0 0 var(--space-4);
   font-weight: var(--fw-medium);
@@ -751,6 +802,10 @@ footer.site-footer {
   display: flex;
   gap: var(--space-4);
 }
+/* Zelfde reden als bij .crumbs: 18px hoog is geen aanraakdoel. */
+.foot-bottom a {
+  padding: 7px 0;
+}
 
 /* CTA band */
 .cta {
@@ -762,7 +817,7 @@ footer.site-footer {
   align-items: center;
   justify-content: space-between;
   gap: var(--space-7);
-  padding: var(--space-10) var(--space-6);
+  padding: var(--space-10) var(--gutter);
 }
 .cta h2 {
   color: var(--white);
@@ -803,7 +858,7 @@ footer.site-footer {
 .notfound .wrap-wide {
   max-width: 720px;
   margin: 0 auto;
-  padding: var(--space-10) var(--space-6);
+  padding: var(--space-10) var(--gutter);
   text-align: center;
 }
 .notfound .nf-code {
@@ -884,7 +939,7 @@ footer.site-footer {
   color: var(--eggshell);
 }
 .lead-cta .wrap-wide {
-  padding: var(--space-9) var(--space-6);
+  padding: var(--space-9) var(--gutter);
   text-align: center;
 }
 .lead-cta h2 {
@@ -1063,6 +1118,27 @@ footer.site-footer {
   gap: 6px;
   color: var(--orange-text);
 }
+
+/* ---- Aanraakdoelen onder 1041px ----------------------------------------
+   Vanaf hier bedien je de site met een duim. Deze tekstlinks waren 21px hoog;
+   de richtlijn voor comfortabel bedienen is 44 (WCAG 2.5.5). Ze staan hier bij
+   elkaar en niet in zes paginabestanden omdat het één patroon is dat onder zes
+   namen bestaat -- dat samenvoegen is een apart punt uit de component-audit.
+   De marge komt boven en onder, zodat de regelval niet verandert. */
+@media (max-width: 1040px) {
+  .post .more,
+  .svc-meer,
+  .lees-meer,
+  .tekstlink,
+  .cat-card .more,
+  .basis-card .alt,
+  .book .alt,
+  .fase-lite-link,
+  .expert .links a {
+    padding-top: 11px;
+    padding-bottom: 11px;
+  }
+}
 .post .more .lucide {
   width: 15px;
   height: 15px;
@@ -1088,6 +1164,20 @@ footer.site-footer {
 }
 .crumbs a {
   color: inherit;
+}
+/* Met een duim was de kruimel met zijn 15px nauwelijks te raken. Verticale
+   marge op de link telt mee voor het aanraakdoel maar niet voor de regelhoogte,
+   dus hij wordt 31px zonder dat er iets verschuift; de ruimere regelhoogte
+   houdt de doelen uit elkaar als het kruimelpad over twee regels valt. Alleen
+   op de breedtes waar je met een duim bedient -- op desktop hoeft de regel niet
+   ruimer. */
+@media (max-width: 1040px) {
+  .crumbs {
+    line-height: 2.4;
+  }
+  .crumbs a {
+    padding: 8px 0;
+  }
 }
 .crumbs a:hover {
   color: var(--orange-text);
@@ -1426,7 +1516,15 @@ footer.site-footer {
     background: var(--ink-950);
     color: var(--eggshell);
     flex-direction: column;
-    padding: 0 20px 32px;
+    padding: 0 20px calc(32px + env(safe-area-inset-bottom));
+    /* Zes menu-items van 75px plus de knop zijn samen 599px hoog. Op een
+       iPhone SE (568px) en op elke telefoon in liggende stand viel "Plan een
+       gesprek" daarmee buiten beeld -- en omdat de body tegelijk op
+       `m-menu-open` staat, kon je er ook niet naartoe scrollen. `contain`
+       houdt het scrollen in het paneel in plaats van het door te geven aan de
+       pagina eronder. */
+    overflow-y: auto;
+    overscroll-behavior: contain;
     opacity: 0;
     pointer-events: none;
     transition: opacity 240ms ease;
@@ -1484,6 +1582,9 @@ footer.site-footer {
     display: flex;
     flex-direction: column;
     gap: 12px;
+    /* Zonder dit perst flexbox het blok samen zodra het paneel scrollt. */
+    flex: none;
+    padding-top: var(--space-5);
   }
   .m-menu.open .mfoot {
     animation: riseIn 0.45s cubic-bezier(0.22, 1, 0.36, 1) 0.3s both;
@@ -1494,7 +1595,7 @@ footer.site-footer {
   }
   .m-menu .mfoot .sub {
     font-family: var(--font-mono);
-    font-size: 11px;
+    font-size: var(--text-2xs);
     text-transform: uppercase;
     letter-spacing: var(--tracking-kicker);
     /* --ink-500 haalt op ink-950 maar 4.19:1; deze doet 6.49:1. */

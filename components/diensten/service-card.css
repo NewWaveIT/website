@@ -30,7 +30,7 @@
 .svc-fase,
 .svc-richting {
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: var(--text-2xs);
   text-transform: uppercase;
   letter-spacing: var(--tracking-kicker);
   color: var(--text-subtle);
@@ -64,7 +64,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 6px 12px;
-  font-size: 11px;
+  font-size: var(--text-2xs);
   color: var(--text-subtle);
   font-family: var(--font-mono);
   text-transform: uppercase;
