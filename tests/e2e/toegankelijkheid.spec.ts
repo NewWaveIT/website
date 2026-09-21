@@ -27,6 +27,17 @@ const PAGINATYPEN: [naam: string, pad: string][] = [
   ["contact", "/contact"],
 ];
 
+/**
+ * Met bewegingsvoorkeur "reduce": de homepage heeft twee blokken die vanzelf
+ * doorwisselen (de hero-crossfade en de klantverhalen-carrousel). Meet axe
+ * midden in zo'n overgang, dan leest hij een kleur op een half doorzichtige
+ * ondergrond en meldt contrast dat er in geen enkele eindstand is -- twee keer
+ * een rode test zonder bevinding. De site zet die animaties zelf uit bij deze
+ * voorkeur, dus dit meet een stand die bezoekers ook echt krijgen. Beweging op
+ * zich is een eigen eis (WCAG 2.2.2) en wordt bewaakt door de pauzeknoppen.
+ */
+test.use({ reducedMotion: "reduce" });
+
 for (const [naam, pad] of PAGINATYPEN) {
   test(`${naam} (${pad}) voldoet aan WCAG 2.1 AA`, async ({ page }) => {
     await page.goto(pad);

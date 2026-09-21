@@ -103,6 +103,9 @@ test.describe("mobiel", () => {
     ["dienstpagina", "/diensten/app-in-a-day"],
   ] as const) {
     test(`${naam} voldoet op telefoonbreedte aan WCAG 2.1 AA`, async ({ page }) => {
+      // Zie de toelichting in toegankelijkheid.spec.ts: zonder dit meet axe af
+      // en toe midden in een crossfade op de homepage.
+      await page.emulateMedia({ reducedMotion: "reduce" });
       await page.goto(pad);
       const rapport = await new AxeBuilder({ page })
         .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"])

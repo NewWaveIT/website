@@ -149,7 +149,7 @@
     },
     {
       "slug": "inzichten",
-      "velden": 14,
+      "velden": 15,
       "pad": "/inzichten",
       "gelezenDoor": [
         "app/(marketing)/inzichten/[slug]/page.tsx",
@@ -229,10 +229,10 @@
     "/werken-bij"
   ],
   "aantallen": {
-    "bronbestanden": 213,
+    "bronbestanden": 215,
     "clientComponenten": 41,
-    "servercomponenten": 172,
-    "unittests": 34,
+    "servercomponenten": 174,
+    "unittests": 35,
     "e2etests": 8
   }
 }

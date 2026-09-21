@@ -30,7 +30,7 @@ faalt de unittest.
 | diensten-mendix      | 7      | /diensten/mendix      | `components/diensten/richting-hub.tsx`                                                                                                                                                                                                                                                                                                                            |
 | diensten-strategie   | 10     | /diensten/strategie   | `components/diensten/richting-hub.tsx`                                                                                                                                                                                                                                                                                                                            |
 | home                 | 28     | /                     | `app/(marketing)/page.tsx`                                                                                                                                                                                                                                                                                                                                        |
-| inzichten            | 14     | /inzichten            | `app/(marketing)/inzichten/[slug]/page.tsx`<br>`app/(marketing)/inzichten/page.tsx`                                                                                                                                                                                                                                                                               |
+| inzichten            | 15     | /inzichten            | `app/(marketing)/inzichten/[slug]/page.tsx`<br>`app/(marketing)/inzichten/page.tsx`                                                                                                                                                                                                                                                                               |
 | klantverhaal-detail  | 18     | /klantverhalen        | `app/(marketing)/klantverhalen/[slug]/page.tsx`                                                                                                                                                                                                                                                                                                                   |
 | klantverhalen        | 13     | /klantverhalen        | `app/(marketing)/klantverhalen/page.tsx`                                                                                                                                                                                                                                                                                                                          |
 | over-ons             | 33     | /over-ons             | `app/(marketing)/over-ons/page.tsx`                                                                                                                                                                                                                                                                                                                               |
@@ -63,8 +63,8 @@ faalt de unittest.
 
 ## Aantallen
 
-- bronbestanden: 213
+- bronbestanden: 215
 - clientComponenten: 41
-- servercomponenten: 172
-- unittests: 34
+- servercomponenten: 174
+- unittests: 35
 - e2etests: 8

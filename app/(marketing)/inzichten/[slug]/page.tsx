@@ -8,6 +8,8 @@ import { getArtikelen, getArtikelBySlug, isoDatum } from "@/lib/inzichten-data";
 import { ArticleContent } from "@/components/article-content";
 import { BeeldKader } from "@/components/beeld-kader";
 import { AuteurBlok } from "@/components/inzichten/auteur-blok";
+import { ArtikelZijkolom } from "@/components/inzichten/artikel-zijkolom";
+import { koppenUit } from "@/lib/artikel-koppen";
 import { kiesVerwant, VerwanteArtikelen } from "@/components/inzichten/verwante-artikelen";
 import { LeadCta } from "@/components/inzichten/lead-cta";
 import { getPagina } from "@/lib/paginas-data";
@@ -51,6 +53,8 @@ export default async function ArtikelPage({ params }: { params: Promise<{ slug: 
   if (!a) notFound();
 
   const verwant = kiesVerwant(alle, a);
+  // De inhoudsopgave komt uit de tekst zelf; geen h2's ⇒ geen lijst.
+  const koppen = a.inhoudHtml ? koppenUit(a.inhoudHtml) : [];
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -106,21 +110,34 @@ export default async function ArtikelPage({ params }: { params: Promise<{ slug: 
         <BeeldKader className="acover" src={a.image} alt={a.titel} maxBreedte={980} priority />
       </div>
 
+      {/* Twee kolommen vanaf 1100px: de tekst smaller (66 tekens in plaats van
+          80) en de leegte ernaast gevuld met de inhoudsopgave. Daaronder valt
+          de zijkolom weg en blijft alleen de tekst over. */}
       <article className="block">
-        <div className="wrap aprose">
-          {/* Een lege samenvatting leverde een lege alinea van 22px op. */}
-          {a.intro && <p className="lead">{a.intro}</p>}
-          {a.inhoudHtml ? (
-            <ArticleContent html={a.inhoudHtml} />
-          ) : (
-            a.body.map((p, i) => <p key={i}>{p}</p>)
-          )}
-          <AuteurBlok
-            naam={a.auteur}
-            rol={a.auteurRol}
-            foto={a.auteurFoto}
-            label={t.artikelAuteurLabel}
-            cta={t.artikelAuteurCta}
+        <div className="wrap artikel-grid">
+          <div className="aprose">
+            {/* Een lege samenvatting leverde een lege alinea van 22px op. */}
+            {a.intro && <p className="lead">{a.intro}</p>}
+            {a.inhoudHtml ? (
+              <ArticleContent html={a.inhoudHtml} />
+            ) : (
+              a.body.map((p, i) => <p key={i}>{p}</p>)
+            )}
+            <AuteurBlok
+              naam={a.auteur}
+              rol={a.auteurRol}
+              foto={a.auteurFoto}
+              label={t.artikelAuteurLabel}
+              cta={t.artikelAuteurCta}
+            />
+          </div>
+          <ArtikelZijkolom
+            koppen={koppen}
+            titel={t.artikelInhoudTitel}
+            leestijd={a.leestijd}
+            datum={a.datum}
+            auteur={a.auteur}
+            doorLabel={alg.artikelDoor}
           />
         </div>
       </article>

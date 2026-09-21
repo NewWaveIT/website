@@ -72,6 +72,40 @@ test.describe("coverbeeld", () => {
     await expect(page.locator(`.verwant a[href="${ARTIKEL}"]`)).toHaveCount(0);
   });
 
+  /**
+   * De zijkolom bestaat om twee gemeten redenen: op 1440 was de tekstkolom
+   * 720px (80 tekens per regel, te lang) met 360px leegte aan weerszijden, en
+   * de pagina was 7.612px hoog zonder manier om ergens heen te springen.
+   *
+   * Hij mag alleen bestaan waar er ruimte voor is. Onder 1100px hoort hij weg,
+   * anders knijpt hij de tekst waar het juist al krap is.
+   */
+  test("heeft een zijkolom op een breed scherm en niet op een smal", async ({ page }) => {
+    await page.setViewportSize({ width: 1440, height: 900 });
+    await page.goto(ARTIKEL);
+    await wegMetDeCookiemelding(page);
+
+    const breed = await page.evaluate(() => {
+      const zij = document.querySelector<HTMLElement>(".artikel-zij");
+      const tekst = document.querySelector<HTMLElement>(".aprose")!;
+      return {
+        zijZichtbaar: zij ? getComputedStyle(zij).display !== "none" : false,
+        kolom: tekst.clientWidth,
+      };
+    });
+    expect(breed.zijZichtbaar, "zijkolom op 1440").toBe(true);
+    // 660px bij 18px tekst is ongeveer 66 tekens; boven de 700 wordt het weer
+    // te lang om prettig te lezen.
+    expect(breed.kolom, "breedte van de tekstkolom").toBeLessThanOrEqual(700);
+
+    await page.setViewportSize({ width: 1024, height: 900 });
+    const smal = await page.evaluate(() => {
+      const zij = document.querySelector<HTMLElement>(".artikel-zij");
+      return zij ? getComputedStyle(zij).display !== "none" : false;
+    });
+    expect(smal, "zijkolom op 1024").toBe(false);
+  });
+
   /* Het label hing onvoorwaardelijk aan de waarde, dus een leeg leestijdveld
      gaf letterlijk " leestijd · 18 sep 2026". De leestijd komt nu uit de tekst. */
   test("zet geen label zonder waarde in de byline", async ({ page }) => {

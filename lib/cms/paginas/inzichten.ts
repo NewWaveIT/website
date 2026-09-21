@@ -16,6 +16,7 @@ export const VELDEN = [
   { key: "artikelAuteurLabel", label: "Artikel — kopje boven de auteur", type: "text" },
   { key: "artikelAuteurCta", label: "Artikel — link in het auteursblok", type: "text" },
   { key: "artikelVerwantTitel", label: "Artikel — kop boven verwante artikelen", type: "text" },
+  { key: "artikelInhoudTitel", label: "Artikel — kop boven de inhoudsopgave", type: "text" },
 ] as const satisfies readonly FieldDef[];
 
 /** Standaardtekst per veld: de startwaarde in de editor en de terugval op de site. */
@@ -38,4 +39,5 @@ export const TEKSTEN = {
   artikelAuteurLabel: "Geschreven door",
   artikelAuteurCta: "Stel je vraag",
   artikelVerwantTitel: "Meer over dit onderwerp",
+  artikelInhoudTitel: "In dit artikel",
 } satisfies Record<(typeof VELDEN)[number]["key"], string>;

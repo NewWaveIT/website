@@ -33,9 +33,37 @@
   margin-top: calc(-1 * var(--space-8));
 }
 
+/* Twee kolommen vanaf 1100px. Gemeten aanleiding op een venster van 1440: de
+   tekst was 720px breed (80 tekens per regel, te lang om prettig te lezen) en
+   aan weerszijden stond 360px leeg, terwijl de pagina 7.612px hoog was zonder
+   enige manier om ergens heen te springen. De tekst gaat naar 660 (66 tekens)
+   en de ruimte rechts wordt de inhoudsopgave.
+
+   Het paar staat als geheel gecentreerd, niet de tekstkolom apart: anders
+   staat de omslagfoto erboven uit het lood. */
+.p-artikel .artikel-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 660px);
+  justify-content: center;
+}
+.p-artikel .artikel-zij {
+  display: none;
+}
+
+@media (min-width: 1100px) {
+  .p-artikel .artikel-grid {
+    grid-template-columns: minmax(0, 660px) minmax(0, 280px);
+    column-gap: var(--space-9);
+    align-items: start;
+  }
+  .p-artikel .artikel-zij {
+    display: block;
+  }
+}
+
 .p-artikel .aprose {
   max-width: 720px;
-  margin: 0 auto;
+  min-width: 0;
 }
 /* Beeld in de artikeltekst: next/image krijgt vaste maten mee uit de HTML,
    maar moet meeschalen met de kolom. */
@@ -50,11 +78,14 @@
   margin: 0 0 var(--space-6);
   font-weight: var(--fw-medium);
 }
+/* 16 en niet 24px: de alinea's in deze artikelen zijn kort (mediaan anderhalve
+   regel), dus met 24px ertussen werd het een stapel losse blokjes op gelijke
+   afstand in plaats van tekst onder een kop. */
 .p-artikel .aprose p {
   font-size: var(--text-md);
   color: var(--text-body);
   line-height: var(--leading-relaxed);
-  margin: 0 0 var(--space-5);
+  margin: 0 0 var(--space-4);
 }
 /* De eerste alinea na de lead krijgt wat meer gewicht: hij is de aanloop, en
    zonder dat verschil begint een artikel van vijftig gelijke alinea's als een

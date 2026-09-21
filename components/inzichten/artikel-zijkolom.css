@@ -1,0 +1,82 @@
+/* Zie artikel-zijkolom.tsx voor het waarom. De kolom bestaat alleen vanaf
+   1100px; daaronder is er geen ruimte naast de tekst en verbergt
+   .p-artikel .artikel-grid hem. */
+
+.artikel-zij {
+  min-width: 0;
+}
+
+/* Meelopen met de tekst, onder de vaste balk door. 96px is dezelfde waarde als
+   `scroll-padding-top` in globals.css, zodat een aangeklikte kop en de
+   inhoudsopgave op dezelfde hoogte uitkomen. */
+.artikel-zij-plak {
+  position: sticky;
+  top: 96px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.artikel-zij-kop {
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-kicker);
+  color: var(--text-subtle);
+  margin: 0 0 var(--space-4);
+}
+
+.artikel-inhoud ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  /* Een dunne lijn links bindt de items tot één lijst in plaats van losse
+     regels; hetzelfde idee als de streep bij een citaat. */
+  border-left: 2px solid var(--border-default);
+}
+
+.artikel-inhoud li {
+  margin: 0;
+}
+
+.artikel-inhoud a {
+  display: block;
+  padding: 9px var(--space-4);
+  margin-left: -2px;
+  border-left: 2px solid transparent;
+  font-size: var(--text-sm);
+  line-height: var(--leading-snug);
+  color: var(--text-muted);
+  text-decoration: none;
+  text-wrap: pretty;
+}
+
+.artikel-inhoud a:hover {
+  color: var(--text-strong);
+  border-left-color: var(--color-primary);
+}
+
+.artikel-feiten {
+  margin: 0;
+  padding-top: var(--space-5);
+  border-top: 1px solid var(--border-default);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.artikel-feiten dt {
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-kicker);
+  color: var(--text-subtle);
+}
+
+.artikel-feiten dd {
+  margin: 2px 0 0;
+  font-size: var(--text-sm);
+  color: var(--text-body);
+}
