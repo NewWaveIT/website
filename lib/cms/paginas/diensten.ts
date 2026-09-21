@@ -67,7 +67,7 @@ export const VELDEN = [
 
 /** Standaardtekst per veld: de startwaarde in de editor en de terugval op de site. */
 export const TEKSTEN = {
-  heroTitleStart: "Mensen die meebouwen, of ",
+  heroTitleStart: "Een extra consultant in jouw team, of ",
   heroAccent: "een dienst met vaste scope",
   heroTitleEnd: ".",
   heroLead:

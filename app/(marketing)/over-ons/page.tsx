@@ -84,12 +84,16 @@ export default async function OverOnsPage() {
           <Award /> {AWARD.label}
         </a>
         <div className="kpis">
-          {(["1", "2", "3"] as const).map((n) => (
-            <div key={n}>
-              <div className="n">{t[`kpi${n}Getal`]}</div>
-              <div className="l">{t[`kpi${n}Label`]}</div>
-            </div>
-          ))}
+          {/* Leeggemaakt in de admin is echt leeg: een feit zonder getal hoort
+              geen leeg vakje in de hero achter te laten. */}
+          {(["1", "2"] as const)
+            .filter((n) => t[`kpi${n}Getal`] || t[`kpi${n}Label`])
+            .map((n) => (
+              <div key={n}>
+                <div className="n">{t[`kpi${n}Getal`]}</div>
+                <div className="l">{t[`kpi${n}Label`]}</div>
+              </div>
+            ))}
         </div>
       </PaginaHero>
 

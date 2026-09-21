@@ -166,6 +166,22 @@ onbereikbaar is. De nulmeting toont die rijen daarom als "ter info" in plaats va
 afwijking. Wil je ook dáár geen verschil, dan hoort het item in de seed; dat is een keuze
 per item, geen regel.
 
+**Het CO2-doel voor 2030 staat niet meer op de site** — 21 september 2026
+"In 2030 is ons businessmodel 100% CO2-neutraal" stond in de waarde 'Duurzaam ondernemen'
+op /over-ons en als derde feit in de hero. De eigenaar: "dat heeft nu de focus niet meer".
+De velden `kpi3Getal` en `kpi3Label` zijn daarom uit `PAGE_FIELDS.over-ons` verwijderd en
+de rij is opgeschoond (`supabase/scripts/20260921-redactieronde.sql`). Zet de belofte niet
+terug uit een oude export of schermafdruk: het is een ingetrokken doel, geen vergeten
+tekst. De waarde zelf bleef staan, nu met alleen de eerste zin.
+
+**Tegenstellingen van het type "X, niet Y" zijn hier een AI-tic** — 21 september 2026
+De eigenaar wees drie zinnen aan die "erg AI-created" klonken, alle drie met dezelfde
+vorm: "in weken aanpasbaar, niet in jaren", "mensen die de uitvoering kennen, niet alleen
+de techniek", "mensen die naast je team staan, niet ernaast zitten". De vuistregel die
+daaruit volgt: zet de bewering neer en laat het contrast weg. Ook "bouwen" werd
+"ontwikkelen". Dit is smaak van de eigenaar, geen taalregel — schrijf nieuwe koppen in
+deze vorm en draai bestaande niet terug.
+
 **Direct naar `main`, geen PR** — 14 september 2026
 De eigenaar werkt alleen aan dit project en heeft gevraagd om rechtstreekse merges. CI
 draait wel op elke push. Maak geen PR aan tenzij erom gevraagd wordt.

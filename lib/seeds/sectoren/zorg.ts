@@ -14,7 +14,7 @@ export const ZORG: SectorDetail = {
     "Wij digitaliseren processen en verbinden systemen, zodat zorgverleners tijd terugkrijgen voor patiënt en cliënt.",
   kpiLabel: "Minder registratielast",
 
-  h1: "Meer tijd voor zorg, minder tijd voor systemen",
+  h1: "Meer tijd voor zorg, minder tijd voor registratie",
   intro:
     "De zorgvraag groeit, de handen worden schaarser en de administratie blijft. Wij digitaliseren processen en verbinden systemen, zodat zorgverleners tijd terugkrijgen voor de patiënt en de cliënt.",
 

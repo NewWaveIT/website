@@ -15,9 +15,9 @@ export const PUBLIEKE_SECTOR: SectorDetail = {
 
   h1: "Software die meebeweegt met veranderende wet- en regelgeving",
   intro:
-    "Gemeenten en uitvoeringsorganisaties lopen vast op systemen die nieuw beleid niet aankunnen. Wij bouwen applicaties die in weken aanpasbaar zijn, niet in jaren.",
+    "Gemeenten, uitvoeringsorganisaties en de centrale overheid lopen vast op systemen die nieuw beleid niet aankunnen. Wij ontwikkelen applicaties die in weken aanpasbaar zijn.",
 
-  herkenningTitel: "Waar het bij gemeenten en uitvoerders vastloopt",
+  herkenningTitel: "Waar het in de publieke sector vastloopt",
   herkenning: [
     "“Nieuw beleid is er, het systeem kan het pas volgend jaar aan.”",
     "“De dienstverlening moet 24/7 werken, maar de systemen erachter zijn van kantooruren.”",
@@ -25,7 +25,7 @@ export const PUBLIEKE_SECTOR: SectorDetail = {
     "“Het budget krimpt, de opgave groeit en de mensen zijn er niet.”",
   ],
 
-  mensenTitel: "Mensen die de uitvoering kennen, niet alleen de techniek",
+  mensenTitel: "Mensen die de publieke sector kennen",
   mensenTekst:
     "We komen naar de afdeling, luisteren naar de mensen die het werk doen en bouwen samen met hen. Beleid, uitvoering en IT zitten bij ons aan dezelfde tafel.",
   mensenFoto: "/assets/photos/team-overleg-flipover.webp",
@@ -34,7 +34,7 @@ export const PUBLIEKE_SECTOR: SectorDetail = {
 
   waaromTitel: "Beleid verandert sneller dan software",
   waaromAlineas: [
-    "Beleid verandert sneller dan software. Ondertussen verwachten inwoners dat alles digitaal kan, groeit de opgave en krimpt het team. Bij gemeenten en uitvoerders zien we steeds hetzelfde: mensen die het met workarounds draaiend houden, terwijl de wet alweer verder is.",
+    "Beleid verandert sneller dan software. Ondertussen verwachten inwoners dat alles digitaal kan, groeit de opgave en krimpt het team. Bij gemeenten, uitvoeringsorganisaties en de centrale overheid zien we steeds hetzelfde: mensen die het met workarounds draaiend houden, terwijl de wet alweer verder is.",
     "Je hoeft daar je hele landschap niet voor om te gooien. We bouwen bovenop wat er staat, met bouwblokken die je met andere organisaties kunt delen. Beleid en IT zitten bij ons aan dezelfde tafel, zodat de oplossing klopt met de regels én met het werk.",
   ],
   waaromFoto: "/assets/photos/team-overleg-scherm.webp",

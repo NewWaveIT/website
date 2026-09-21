@@ -170,7 +170,7 @@
     },
     {
       "slug": "over-ons",
-      "velden": 33,
+      "velden": 31,
       "pad": "/over-ons",
       "gelezenDoor": ["app/(marketing)/over-ons/page.tsx"]
     },
@@ -233,6 +233,6 @@
     "clientComponenten": 41,
     "servercomponenten": 174,
     "unittests": 35,
-    "e2etests": 8
+    "e2etests": 9
   }
 }

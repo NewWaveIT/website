@@ -7,16 +7,16 @@ export const BANKEN: SectorDetail = {
   heroTheme: "banken",
   metaTitle: "Mendix en AI opschalen in financial services",
   metaDescription:
-    "Van tien apps naar honderd, met kwaliteit, beheer en governance op orde. Voor banken en verzekeraars die Mendix breed inzetten.",
+    "Van tien apps naar honderd, met kwaliteit, beheer en governance op orde. Voor banken en verzekeraars die Mendix en AI breed inzetten.",
 
   hook: "“Elke innovatie strandt op compliance.”",
   pitch:
-    "Wij helpen banken en verzekeraars opschalen met governance die snelheid en controle samen laat gaan.",
+    "Wij helpen banken en verzekeraars Mendix en AI opschalen met governance die snelheid en controle samen laat gaan.",
   kpiLabel: "Audit-proof",
 
-  h1: "Van tien apps naar honderd, zonder de controle te verliezen",
+  h1: "Mendix en AI opschalen, zonder de controle te verliezen",
   intro:
-    "Met twintig Mendix-apps red je het op discipline. Bij honderd niet meer. Wij helpen banken en verzekeraars opschalen met governance die de snelheid niet in de weg zit.",
+    "Met twintig Mendix-apps red je het op discipline. Bij honderd niet meer, en voor AI geldt hetzelfde. Wij helpen banken en verzekeraars allebei opschalen met governance die de snelheid niet in de weg zit.",
 
   herkenningTitel: "Waar het gaat schuiven als low-code doorgroeit",
   herkenning: [
@@ -24,6 +24,7 @@ export const BANKEN: SectorDetail = {
     "“Elk team bouwt zijn eigen oplossing voor hetzelfde probleem.”",
     "“De business bouwt door, buiten IT om, en niemand weet waar.”",
     "“Governance is er wel, maar hij remt vooral en helpt weinig.”",
+    "“Iedereen wil iets met AI, maar wat, en binnen welke kaders?”",
   ],
 
   mensenTitel: "Mensen die naast je team gaan staan, niet ernaast zitten",
@@ -44,7 +45,7 @@ export const BANKEN: SectorDetail = {
     "Wij geloven dat de mens de centrale factor is in het behalen van business doelstellingen.",
   quoteTeamlid: "koen-wijsman",
 
-  oplossingenTitel: "Vier vraagstukken bij het opschalen van Mendix en AI",
+  oplossingenTitel: "Vijf vraagstukken bij het opschalen van Mendix en AI",
   oplossingenIntro:
     "Geen productmarktcombinatie per sector, maar één vraagstuk: beheerst opschalen. Per vraagstuk waaraan je het herkent en wat wij doen.",
   oplossingen: [
@@ -68,6 +69,13 @@ export const BANKEN: SectorDetail = {
       oplossing:
         "Fusion teams met een product owner uit de business, plus duidelijke spelregels voor wat business zelf mag bouwen",
       laag: "delivery",
+    },
+    {
+      pijn: "AI opzetten en opschalen",
+      kost: "Losse pilots blijven hangen: geen zicht op welke use-cases waarde opleveren en of ze door de toezichthouder komen",
+      oplossing:
+        "AI-maturity scan, een geprioriteerde roadmap met businesscase, en AI-governance waarin AVG en de AI Act ontwerpeis zijn in plaats van eindcontrole",
+      laag: "strategie",
     },
     {
       pijn: "AI-enabled development",

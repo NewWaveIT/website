@@ -25,17 +25,30 @@
 .p-sector .pain {
   background: var(--eggshell);
 }
+/* Dit waren rijen in een tweekolomslijst met alleen een dunne scheidingslijn,
+   op een eggshell-achtergrond. Daardoor viel de sectie weg tussen de hero en
+   de rest van de pagina, terwijl dit juist het blok is waarin een bezoeker
+   zichzelf moet herkennen. Nu witte kaarten met een rand: dezelfde vorm als
+   .solcard en .uccard verderop, dus geen nieuwe variant. Geen hover-effect,
+   want er valt niets te klikken. */
 .p-sector .pain-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  column-gap: var(--space-8);
-  border-top: 1px solid var(--border-strong);
+  gap: var(--space-5);
 }
 .p-sector .pain-item {
   display: flex;
   gap: var(--space-5);
-  padding: var(--space-6) var(--space-5) var(--space-6) 0;
-  border-bottom: 1px solid var(--border-default);
+  background: var(--white);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  padding: var(--pad-kaart);
+}
+/* Banken heeft er vijf, de rest vier. Als losse rijen viel een oneven aantal
+   niet op; als kaarten staat de laatste dan met een gat ernaast. Over de
+   volle breedte leest hij als slot in plaats van als restje. */
+.p-sector .pain-item:last-child:nth-child(odd) {
+  grid-column: 1 / -1;
 }
 .p-sector .pain-item .i {
   font-family: var(--font-mono);
