@@ -58,7 +58,16 @@ test.describe("mobiel · 320px", () => {
 
   for (const [naam, pad] of PAGINAS) {
     test(`${naam} schuift niet horizontaal`, async ({ page }) => {
-      await page.goto(pad);
+      // `domcontentloaded` en niet de standaard `load`: deze test meet de
+      // layoutbreedte, en die staat vast zodra de CSS is toegepast -- elk beeld
+      // heeft een vaste verhouding of een min-hoogte, dus de bytes veranderen
+      // er niets aan. Wachten tot het laatste plaatje binnen is maakte de test
+      // afhankelijk van hoe druk de server het heeft: in CI hing hij twee keer
+      // de volle zestig seconden op /klantverhalen/moove, de langste pagina van
+      // de site, terwijl diezelfde pagina in drie andere tests gewoon laadde.
+      // Lokaal is dat niet te reproduceren, dus dit haalt de afhankelijkheid
+      // weg in plaats van de grens te verhogen.
+      await page.goto(pad, { waitUntil: "domcontentloaded" });
       await wegMetDeCookiemelding(page);
       const gemeten = await page.evaluate(() => ({
         // Niet tegen window.innerWidth afzetten: onder mobiele emulatie is dat

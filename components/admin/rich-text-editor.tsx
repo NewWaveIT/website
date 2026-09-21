@@ -1,6 +1,6 @@
 "use client";
 
-import { useEditor, EditorContent, type Editor } from "@tiptap/react";
+import { useEditor, useEditorState, EditorContent, type Editor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import Link from "@tiptap/extension-link";
 import { useRef, useState } from "react";
@@ -63,6 +63,10 @@ function Btn({
       disabled={disabled}
       title={title}
       aria-label={title}
+      /* Alleen op de schakelknoppen: een knop die iets doet (uploaden,
+         verwijderen) heeft geen aan-stand, en `aria-pressed` daarop zou een
+         schermlezer iets beloven dat er niet is. */
+      aria-pressed={active === undefined ? undefined : active}
     >
       {children}
     </button>
@@ -74,8 +78,40 @@ function Toolbar({ editor, lite }: { editor: Editor; lite: boolean }) {
   const beeld = useBeeldUpload("inline");
   const busy = beeld.bezig;
   const [prompt, setPrompt] = useState<RtePrompt | null>(null);
-  const imgSelected = editor.isActive("figureImage");
-  const align = (editor.getAttributes("figureImage").align as string) ?? "center";
+
+  /**
+   * De werkbalk moet laten zien waar de cursor ín staat. Dat ging mis: in
+   * TipTap 3 hertekent `useEditor` de component niet meer bij elke transactie,
+   * alleen als de inhoud verandert. `editor.isActive(...)` werd dus één keer
+   * uitgelezen en daarna niet meer. Zichtbaar gevolg: je klikte op Kop, de
+   * knop sprong aan (de inhoud veranderde immers), en hij bleef aan zodra je
+   * de cursor naar een gewone alinea verplaatste -- want verplaatsen is geen
+   * inhoudswijziging.
+   *
+   * `useEditorState` abonneert wél op elke transactie, inclusief een
+   * verplaatsing van de selectie. Alles wat de werkbalk over de editor toont
+   * hoort hier binnen te komen; leest een knop rechtstreeks van `editor`, dan
+   * loopt hij weer achter.
+   */
+  const staat = useEditorState({
+    editor,
+    selector: ({ editor: e }) => ({
+      kop: e.isActive("heading", { level: 2 }),
+      subkop: e.isActive("heading", { level: 3 }),
+      vet: e.isActive("bold"),
+      cursief: e.isActive("italic"),
+      opsomming: e.isActive("bulletList"),
+      genummerd: e.isActive("orderedList"),
+      link: e.isActive("link"),
+      citaat: e.isActive("blockquote"),
+      beeldGeselecteerd: e.isActive("figureImage"),
+      uitlijning: (e.getAttributes("figureImage").align as string) ?? "center",
+      kanTerug: e.can().undo(),
+      kanVooruit: e.can().redo(),
+    }),
+  });
+  const imgSelected = staat.beeldGeselecteerd;
+  const align = staat.uitlijning;
 
   const openLink = () => {
     const prev = (editor.getAttributes("link").href as string | undefined) ?? "";
@@ -155,56 +191,52 @@ function Toolbar({ editor, lite }: { editor: Editor; lite: boolean }) {
         <>
           <Btn
             title="Kop"
-            active={editor.isActive("heading", { level: 2 })}
+            active={staat.kop}
             onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
           >
             <Heading2 />
           </Btn>
           <Btn
             title="Subkop"
-            active={editor.isActive("heading", { level: 3 })}
+            active={staat.subkop}
             onClick={() => editor.chain().focus().toggleHeading({ level: 3 }).run()}
           >
             <Heading3 />
           </Btn>
         </>
       )}
-      <Btn
-        title="Vet"
-        active={editor.isActive("bold")}
-        onClick={() => editor.chain().focus().toggleBold().run()}
-      >
+      <Btn title="Vet" active={staat.vet} onClick={() => editor.chain().focus().toggleBold().run()}>
         <Bold />
       </Btn>
       <Btn
         title="Cursief"
-        active={editor.isActive("italic")}
+        active={staat.cursief}
         onClick={() => editor.chain().focus().toggleItalic().run()}
       >
         <Italic />
       </Btn>
       <Btn
         title="Opsomming"
-        active={editor.isActive("bulletList")}
+        active={staat.opsomming}
         onClick={() => editor.chain().focus().toggleBulletList().run()}
       >
         <List />
       </Btn>
       <Btn
         title="Genummerd"
-        active={editor.isActive("orderedList")}
+        active={staat.genummerd}
         onClick={() => editor.chain().focus().toggleOrderedList().run()}
       >
         <ListOrdered />
       </Btn>
-      <Btn title="Link" active={editor.isActive("link")} onClick={openLink}>
+      <Btn title="Link" active={staat.link} onClick={openLink}>
         <LinkIcon />
       </Btn>
       {!lite && (
         <>
           <Btn
             title="Citaat"
-            active={editor.isActive("blockquote")}
+            active={staat.citaat}
             onClick={() => editor.chain().focus().toggleBlockquote().run()}
           >
             <Quote />
@@ -228,14 +260,14 @@ function Toolbar({ editor, lite }: { editor: Editor; lite: boolean }) {
       <span className="rte-sep" />
       <Btn
         title="Ongedaan maken"
-        disabled={!editor.can().undo()}
+        disabled={!staat.kanTerug}
         onClick={() => editor.chain().focus().undo().run()}
       >
         <Undo />
       </Btn>
       <Btn
         title="Opnieuw"
-        disabled={!editor.can().redo()}
+        disabled={!staat.kanVooruit}
         onClick={() => editor.chain().focus().redo().run()}
       >
         <Redo />
