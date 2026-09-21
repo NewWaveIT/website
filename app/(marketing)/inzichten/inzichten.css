@@ -28,29 +28,14 @@
   color: var(--eggshell);
 }
 
+/* De vorm komt uit .beeldkaart in globals.css; hier staat alleen wat er in de
+   tekstkolom gebeurt. De oude regel groepeerde `.media img` per ongeluk met
+   `.body`, waardoor de binnenmarge van de tekst óók op de foto landde en die
+   ingesprongen in de kaart stond. */
 .p-inzichten .feat {
-  display: grid;
-  grid-template-columns: 1.1fr 1fr;
-  gap: 0;
-  border-radius: var(--radius-xl);
-  overflow: hidden;
-  box-shadow: var(--shadow-lg);
+  --beeldkaart-h: 340px;
+  --beeldkaart-h-smal: 220px;
   margin-bottom: var(--space-9);
-  color: inherit;
-}
-.p-inzichten .feat .media {
-  position: relative;
-  min-height: 340px;
-  background-color: var(--ink-200);
-  overflow: hidden;
-}
-.p-inzichten .feat .media img,
-.p-inzichten .feat .body {
-  background: var(--ink-900);
-  color: var(--eggshell);
-  padding: var(--pad-kaart-ruim);
-  display: flex;
-  flex-direction: column;
 }
 .p-inzichten .feat .body h2 {
   color: var(--white);
@@ -116,12 +101,6 @@
 }
 
 @media (max-width: 900px) {
-  .p-inzichten .feat {
-    grid-template-columns: 1fr;
-  }
-  .p-inzichten .feat .media {
-    min-height: 220px;
-  }
   .p-inzichten .nieuwsbrief .inner {
     grid-template-columns: 1fr;
   }

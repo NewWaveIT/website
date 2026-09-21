@@ -1154,6 +1154,62 @@ footer.site-footer {
   transform: translateX(3px);
 }
 
+/* Uitgelichte kaart: beeld links, tekst rechts.
+
+   Deze vorm stond vier keer in de codebase met net andere waarden: de
+   klantverhalen-carrousel op de homepage (.fcase), het uitgelichte klantverhaal
+   op /klantverhalen en in de dienstsecties (.case-mini, twee kopieën) en het
+   uitgelichte artikel op /inzichten (.feat). Vier keer hetzelfde raster met
+   kolommen van 1.05fr, 1fr en 1.1fr, en vier keer een andere hoogte -- dus op
+   de site vier blokken die op elkaar lijken zonder hetzelfde te zijn. Bij de
+   artikelvariant was bovendien de selector verschoven, waardoor de binnenmarge
+   van de tekstkolom óók op de <img> landde en de foto ingesprongen stond.
+
+   Hier staat de vorm één keer. Wat elk blok in de tekstkolom zet (citaat,
+   cijfers, kop) blijft in zijn eigen bestand; dat verschilt echt.
+
+   De hoogte van het beeld is een variabele en geen vaste waarde: de kaart op de
+   homepage mag forser zijn dan die in een dienstsectie, en dat is het enige wat
+   er tussen de vier verschilde dat de moeite van behouden waard was. */
+.beeldkaart {
+  display: grid;
+  grid-template-columns: 1fr 1.1fr;
+  gap: 0;
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+  color: inherit;
+}
+.beeldkaart > .media {
+  position: relative;
+  overflow: hidden;
+  min-height: var(--beeldkaart-h, 380px);
+  background-color: var(--ink-200);
+}
+.beeldkaart > .media img {
+  object-fit: cover;
+}
+.beeldkaart > .body {
+  background: var(--white);
+  padding: var(--pad-kaart-ruim);
+  display: flex;
+  flex-direction: column;
+}
+/* Donkere variant, voor een uitgelicht artikel. */
+.beeldkaart.op-donker > .body {
+  background: var(--ink-900);
+  color: var(--text-on-dark);
+}
+
+@media (max-width: 900px) {
+  .beeldkaart {
+    grid-template-columns: 1fr;
+  }
+  .beeldkaart > .media {
+    min-height: var(--beeldkaart-h-smal, 240px);
+  }
+}
+
 /* Kruimelpad (components/kruimelpad.tsx)
 
    Stond in tien pagina-CSS-bestanden, telkens met een andere kleur en padding.

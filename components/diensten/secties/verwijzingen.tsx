@@ -32,7 +32,7 @@ export async function KlantverhaalSectie({ waarborg, ...c }: KlantverhaalProps) 
     <section className="block featured" id="klantverhaal">
       <div className="wrap-wide">
         <SectieKop kicker={t.caseKicker} titel={c.caseTitle} groot />
-        <div className="case-mini">
+        <div className="case-mini beeldkaart">
           <div className="media">
             {c.caseImage && (
               <Image src={c.caseImage} alt="" fill sizes="(max-width: 980px) 100vw, 45vw" />

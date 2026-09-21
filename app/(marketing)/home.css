@@ -242,13 +242,11 @@
 .featured .eyebrow-row h2 {
   color: var(--white);
 }
+/* Vorm: .beeldkaart in globals.css. Deze staat vooraan op de homepage en mag
+   forser zijn dan de kaart in een dienstsectie. */
 .fcase {
-  display: grid;
-  grid-template-columns: 1.05fr 1fr;
-  border-radius: var(--radius-xl);
-  overflow: hidden;
-  box-shadow: var(--shadow-lg);
-  background: var(--white);
+  --beeldkaart-h: 460px;
+  --beeldkaart-h-smal: 300px;
 }
 /* Klantverhalen-carrousel */
 .fcase-nav {
@@ -313,11 +311,8 @@
   background: var(--color-primary);
   transform: scale(1.25);
 }
+/* Alleen wat de Ken Burns-inzoom nodig heeft; de rest staat in .uitgelicht. */
 .fcase .media {
-  position: relative;
-  min-height: 460px;
-  background-color: var(--ink-200);
-  overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -354,10 +349,10 @@
   padding: 8px 16px;
   border-radius: var(--radius-md);
 }
+/* Ruimer van boven en onder dan de gedeelde vorm; de rest komt daaruit. */
 .fcase .body {
-  padding: var(--space-9) var(--pad-kaart-ruim);
-  display: flex;
-  flex-direction: column;
+  padding-top: var(--space-9);
+  padding-bottom: var(--space-9);
 }
 /* De knop zakt naar de onderkant van de kaart, ongeacht de lengte van het
    citaat erboven. */
@@ -930,12 +925,6 @@
   .statement .wrap-wide {
     grid-template-columns: 1fr;
     gap: var(--space-6);
-  }
-  .fcase {
-    grid-template-columns: 1fr;
-  }
-  .fcase .media {
-    min-height: 300px;
   }
   .panel.active {
     grid-template-columns: 1fr;

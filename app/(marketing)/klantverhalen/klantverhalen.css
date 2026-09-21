@@ -4,31 +4,9 @@
   background: var(--eggshell);
 }
 
+/* Vorm: .beeldkaart in globals.css. */
 .p-klanten .case-mini {
-  display: grid;
-  grid-template-columns: 1fr 1.1fr;
-  gap: 0;
-  border-radius: var(--radius-xl);
-  overflow: hidden;
-  box-shadow: var(--shadow-lg);
-}
-.p-klanten .case-mini .media img {
-  object-fit: cover;
-}
-.p-klanten .case-mini .media {
-  min-height: 380px;
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-size: cover;
-  background-position: center;
-}
-.p-klanten .case-mini .body {
-  background: var(--white);
-  padding: var(--pad-kaart-ruim);
-  display: flex;
-  flex-direction: column;
+  --beeldkaart-h: 380px;
 }
 .p-klanten .case-mini .body blockquote {
   font-family: var(--font-display);
@@ -148,12 +126,6 @@
   }
 }
 @media (max-width: 900px) {
-  .p-klanten .case-mini {
-    grid-template-columns: 1fr;
-  }
-  .p-klanten .case-mini .media {
-    min-height: 240px;
-  }
 }
 @media (max-width: 640px) {
   .p-klanten .belofte-grid {

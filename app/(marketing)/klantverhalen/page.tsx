@@ -91,7 +91,7 @@ export default async function KlantverhalenPage() {
         <section className="block uitgelicht">
           <div className="wrap-wide">
             <SectieKop kicker={t.uitgelichtKicker} titel={featured.cardTitel} />
-            <div className="case-mini">
+            <div className="case-mini beeldkaart">
               <div className="media">
                 <Image
                   src={featured.image}

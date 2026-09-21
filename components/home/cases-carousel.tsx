@@ -50,7 +50,7 @@ export function CasesCarousel({ items, lees }: { items: CaseCard[]; lees: string
         setTouch(null);
       }}
     >
-      <div className="fcase">
+      <div className="fcase beeldkaart">
         <div className="media">
           <div className="kbwrap">
             <Image

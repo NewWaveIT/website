@@ -69,7 +69,7 @@ export function InzichtenList({ artikelen, tk }: { artikelen: Artikel[]; tk: Lij
       </div>
 
       {featured && (
-        <Link href={`/inzichten/${featured.slug}`} className="feat">
+        <Link href={`/inzichten/${featured.slug}`} className="feat beeldkaart op-donker">
           <div className="media">
             <Image
               src={featured.image}

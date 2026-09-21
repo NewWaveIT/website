@@ -183,6 +183,13 @@ niet stilletjes wegdrijven zoals de handgeschreven routekaart in `revalidate.ts`
 - **Dynamische contactpersonen.** Teamleden hebben een `contactrol` (Sales/Recruitment);
   `getContactpersoon(rol)` levert de juiste persoon voor contact- en vacaturepagina's.
 - **Afbeeldingen.** Uitsluitend WebP in `public/assets/` (geen PNG-foto's meer).
+- **De uitgelichte kaart is `.beeldkaart`** (in `globals.css`): beeld links, tekst
+  rechts. Hij staat op vier plekken — de klantverhalen-carrousel op de homepage, het
+  uitgelichte klantverhaal op `/klantverhalen` en in een dienstsectie, en het uitgelichte
+  artikel op `/inzichten`. Die vorm stond eerder vier keer los, met drie verschillende
+  kolomverhoudingen. Voeg geen vijfde kopie toe: zet `beeldkaart` op je wrapper en stel
+  hooguit `--beeldkaart-h` in. Wat er in de tekstkolom staat blijft van de pagina zelf.
+  `tests/e2e/beeldkaart.spec.ts` bewaakt het.
 - **Redactioneel beeld gaat door `<BeeldKader>`** (`components/beeld-kader.tsx`). Twee
   regels die samen gelden: het kader voegt zich naar de verhouding van het beeld (dus
   geen vaste hoogte met `object-fit: cover`, dat sneed diagrammen af) en een beeld wordt
@@ -268,6 +275,7 @@ te weten welke.
 | `tests/e2e/schil.spec.ts`                  | Mobiel menu en cookiemelding                                                                                                 |
 | `tests/e2e/mobiel.spec.ts`                 | Horizontaal schuiven op 320px, een ankersprong achter de vaste balk, een menu dat niet scrollt, contrast op 375px            |
 | `tests/e2e/artikel.spec.ts`                | Een coverbeeld dat bijgesneden of opgeschaald wordt; auteursblok en verwante artikelen; een label zonder waarde in de byline |
+| `tests/e2e/beeldkaart.spec.ts`             | Een vijfde variant van de uitgelichte kaart (beeld links, tekst rechts), of een foto die binnenmarge krijgt                  |
 
 ## Omgeving & valkuilen
 
