@@ -662,7 +662,13 @@ header.nav {
 }
 
 /* Section scaffolding */
-section.block {
+/* Op de klasse en niet op `section`: de artikeltekst staat in een `<article>`
+   en dat is het enige `.block` op de site dat geen sectie is. Die kreeg
+   daardoor nul padding, waardoor de tekst pal tegen de omslagfoto erboven
+   begon en het auteursblok tegen de volgende sectie aan liep -- de foto van de
+   auteur werd zelfs doorsneden. (`fase-block` is een andere klasse en valt hier
+   niet onder.) */
+.block {
   padding: var(--section-y) 0;
 }
 .sec-head {
@@ -1284,7 +1290,7 @@ footer.site-footer {
   .foot-top {
     grid-template-columns: 1fr;
   }
-  section.block {
+  .block {
     padding: var(--space-8) 0;
   }
   .cta .wrap-wide {

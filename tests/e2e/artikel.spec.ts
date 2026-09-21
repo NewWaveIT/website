@@ -106,6 +106,40 @@ test.describe("coverbeeld", () => {
     expect(smal, "zijkolom op 1024").toBe(false);
   });
 
+  /**
+   * De sectiepadding stond op `section.block`, en de artikeltekst staat in een
+   * `<article class="block">` -- het enige .block op de site dat geen sectie
+   * is. Die kreeg dus nul padding: de tekst begon pal tegen de omslagfoto en
+   * het auteursblok liep tegen de volgende sectie aan, waarbij de foto van de
+   * auteur werd doorsneden.
+   */
+  test("het artikelblok heeft ruimte boven en onder", async ({ page }) => {
+    await page.setViewportSize({ width: 1440, height: 900 });
+    await page.goto(ARTIKEL);
+    await wegMetDeCookiemelding(page);
+
+    const gemeten = await page.evaluate(() => {
+      const art = document.querySelector<HTMLElement>("article.block")!;
+      const cover = document.querySelector<HTMLElement>(".acover")!;
+      const eerste = document.querySelector<HTMLElement>(".aprose > *")!;
+      const auteur = document.querySelector<HTMLElement>(".auteurblok");
+      const verwant = document.querySelector<HTMLElement>(".verwant");
+      const cs = getComputedStyle(art);
+      const r = (el: Element) => el.getBoundingClientRect();
+      return {
+        boven: parseFloat(cs.paddingTop),
+        onder: parseFloat(cs.paddingBottom),
+        coverNaarTekst: Math.round(r(eerste).top - r(cover).bottom),
+        auteurNaarSectie: auteur && verwant ? Math.round(r(verwant).top - r(auteur).bottom) : null,
+      };
+    });
+
+    expect(gemeten.boven, "padding boven het artikelblok").toBeGreaterThan(40);
+    expect(gemeten.onder, "padding onder het artikelblok").toBeGreaterThan(40);
+    expect(gemeten.coverNaarTekst, "ruimte tussen omslag en tekst").toBeGreaterThan(40);
+    expect(gemeten.auteurNaarSectie, "ruimte onder het auteursblok").toBeGreaterThan(40);
+  });
+
   /* Het label hing onvoorwaardelijk aan de waarde, dus een leeg leestijdveld
      gaf letterlijk " leestijd · 18 sep 2026". De leestijd komt nu uit de tekst. */
   test("zet geen label zonder waarde in de byline", async ({ page }) => {
