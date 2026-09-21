@@ -23,6 +23,29 @@
  */
 export const MIN_BREEDTE = { cover: 1200, inline: 720 } as const;
 
+/**
+ * De grootste upload die we aannemen.
+ *
+ * Dit getal moet onder `serverActions.bodySizeLimit` in next.config.ts blijven.
+ * Dat stond er niet, en de standaard van Next is 1 MB: een foto van 1,12 MB
+ * sneuvelde daardoor in het transport met een 500, vóórdat de controle
+ * hieronder ook maar draaide. De melding "Maximaal 5 MB" was dus niet waar en
+ * niemand kon zien waarom. `tests/unit/beeld-eisen.spec.ts` houdt de twee
+ * getallen tegen elkaar aan.
+ */
+export const MAX_UPLOAD_BYTES = 5 * 1024 * 1024;
+
+/** Voor een melding: "1,12 MB". */
+export function alsMb(bytes: number): string {
+  return `${(bytes / (1024 * 1024)).toFixed(2).replace(".", ",")} MB`;
+}
+
+/** De melding bij een te groot bestand, of `undefined`. */
+export function teGroot(bytes: number): string | undefined {
+  if (bytes <= MAX_UPLOAD_BYTES) return undefined;
+  return `Dit bestand is ${alsMb(bytes)}. Maximaal ${alsMb(MAX_UPLOAD_BYTES)}. Verklein het en probeer opnieuw.`;
+}
+
 export type BeeldSoort = keyof typeof MIN_BREEDTE;
 
 /**

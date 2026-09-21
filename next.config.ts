@@ -47,6 +47,17 @@ const nextConfig: NextConfig = {
   // route-config `revalidate`, en wat per request moet gebeuren staat in een
   // <Suspense>. Levert ook Partial Prerendering: een statische shell die
   // meteen geserveerd wordt terwijl het dynamische deel binnenstroomt.
+  experimental: {
+    serverActions: {
+      // Next maximeert een server action standaard op 1 MB. De beeldupload in
+      // de admin laat 5 MB toe, dus een foto van 1,12 MB gaf een 500 in het
+      // transport -- vóór de eigen controle, dus zonder bruikbare melding.
+      // Ruimer dan die 5 MB, want multipart-overhead en de andere velden tellen
+      // mee. Zie MAX_UPLOAD_BYTES in lib/beeld-eisen.ts; een unittest bewaakt
+      // dat deze twee niet uit elkaar lopen.
+      bodySizeLimit: "6mb",
+    },
+  },
   cacheComponents: true,
   cacheLife: {
     // Eén profiel voor alle publieke pagina's, zodat er nergens losse getallen

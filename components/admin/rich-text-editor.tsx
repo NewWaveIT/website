@@ -23,7 +23,7 @@ import {
   Undo,
   Redo,
 } from "lucide-react";
-import { uploadImage } from "@/app/admin/content/actions";
+import { useBeeldUpload } from "./use-beeld-upload";
 import { FigureImage } from "./tiptap-figure";
 import { Modal } from "./modal";
 import { VerborgenWaarde } from "./verborgen-waarde";
@@ -71,7 +71,8 @@ function Btn({
 
 function Toolbar({ editor, lite }: { editor: Editor; lite: boolean }) {
   const fileRef = useRef<HTMLInputElement>(null);
-  const [busy, setBusy] = useState(false);
+  const beeld = useBeeldUpload("inline");
+  const busy = beeld.bezig;
   const [prompt, setPrompt] = useState<RtePrompt | null>(null);
   const imgSelected = editor.isActive("figureImage");
   const align = (editor.getAttributes("figureImage").align as string) ?? "center";
@@ -84,22 +85,21 @@ function Toolbar({ editor, lite }: { editor: Editor; lite: boolean }) {
   const onFile = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
-    setBusy(true);
-    const fd = new FormData();
-    fd.append("file", file);
-    const res = await uploadImage(fd);
-    setBusy(false);
+    // Zelfde pad als het coverveld: verkleinen, meten, versturen. Zie
+    // components/admin/use-beeld-upload.ts voor het waarom van die volgorde.
+    const uit = await beeld.verwerk(file);
     if (fileRef.current) fileRef.current.value = "";
-    if (res.error || !res.url) {
+    if (!uit) {
       setPrompt(null);
-      window.alert(res.error ?? "Uploaden mislukt.");
+      window.alert(beeld.fout || "Uploaden mislukt.");
       return;
     }
+    if (beeld.melding) window.alert(beeld.melding);
     setPrompt({
       kind: "image",
-      url: res.url,
-      width: res.width ?? null,
-      height: res.height ?? null,
+      url: uit.url,
+      width: uit.breedte ?? null,
+      height: uit.hoogte ?? null,
       alt: "",
       caption: "",
     });

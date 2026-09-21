@@ -1,7 +1,7 @@
 "use server";
 
 import sharp from "sharp";
-import { uploadWaarschuwing } from "@/lib/beeld-eisen";
+import { teGroot, uploadWaarschuwing } from "@/lib/beeld-eisen";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { gebruikerNaam, requireAdmin } from "@/lib/dal";
@@ -146,7 +146,8 @@ export async function uploadImage(formData: FormData): Promise<{
   if (!BEELD_TYPES.includes(file.type)) {
     return { error: "Alleen JPG, PNG, WebP, AVIF of GIF." };
   }
-  if (file.size > 5 * 1024 * 1024) return { error: "Maximaal 5 MB." };
+  const teGrootMelding = teGroot(file.size);
+  if (teGrootMelding) return { error: teGrootMelding };
 
   // Alles gaat als WebP de bucket in. Lukt de conversie niet, dan weigeren we —
   // het origineel doorlaten zou de allow-list hierboven alsnog omzeilen.

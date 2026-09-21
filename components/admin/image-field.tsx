@@ -2,7 +2,8 @@
 
 import { useRef, useState, type ChangeEvent } from "react";
 import { Upload } from "lucide-react";
-import { uploadImage } from "@/app/admin/content/actions";
+import type { BeeldSoort } from "@/lib/beeld-eisen";
+import { useBeeldUpload } from "./use-beeld-upload";
 import { VerborgenWaarde } from "./verborgen-waarde";
 
 /** Gecontroleerd upload-veld (preview + bestand kiezen + pad). Herbruikbaar, ook genest. */
@@ -14,29 +15,16 @@ export function ImageControl({
   value: string;
   onChange: (v: string) => void;
   /** 'cover' hanteert een hogere ondergrens voor de breedte (zie MIN_BREEDTE). */
-  soort?: "cover" | "inline";
+  soort?: BeeldSoort;
 }) {
-  const [busy, setBusy] = useState(false);
-  const [err, setErr] = useState("");
-  const [waarschuwing, setWaarschuwing] = useState("");
+  const { bezig: busy, fout: err, melding: waarschuwing, verwerk } = useBeeldUpload(soort);
   const fileRef = useRef<HTMLInputElement>(null);
 
   async function onFile(e: ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
     if (!file) return;
-    setBusy(true);
-    setErr("");
-    setWaarschuwing("");
-    const fd = new FormData();
-    fd.append("file", file);
-    fd.append("soort", soort);
-    const res = await uploadImage(fd);
-    setBusy(false);
-    if (res.error) setErr(res.error);
-    else if (res.url) onChange(res.url);
-    // Een te kleine afbeelding is geen fout: hij komt er gewoon in, maar je
-    // hoort het hier te lezen en niet pas op de site te zien.
-    setWaarschuwing(res.waarschuwing ?? "");
+    const uit = await verwerk(file);
+    if (uit) onChange(uit.url);
     if (fileRef.current) fileRef.current.value = "";
   }
 
