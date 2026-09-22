@@ -17,7 +17,7 @@ teruggedraaid, laat het staan en schrijf eronder waarom.
 
 **De LinkedIn-banner "eigen rol" staat bewust niet op het medewerkerspakket** — 21 september 2026
 `linkedin-02-eigen-rol.png` ("Ik bouw AI-native organisaties") is op 18 september van de
-pagina gehaald en op 21 september opnieuw geweigerd. Let op: hij zit wél in elke export
+pagina gehaald en op 21 en 22 september opnieuw geweigerd. Let op: hij zit wél in elke export
 uit het ontwerpproject, dus bij een volgende levering staat hij gewoon weer in de zip.
 Plaats hem niet omdat hij in de map zit; alleen als de eigenaar er opnieuw om vraagt.
 De andere twee (`linkedin-01-bedrijf`, `linkedin-03-licht`) worden wél steeds vervangen

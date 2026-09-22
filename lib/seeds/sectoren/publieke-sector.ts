@@ -84,7 +84,7 @@ export const PUBLIEKE_SECTOR: SectorDetail = {
     },
   ],
 
-  bouwenTitel: "Applicaties die we hier het vaakst bouwen",
+  bouwenTitel: "Voorbeeldcases",
   useCases: [
     {
       icon: "monitor-smartphone",

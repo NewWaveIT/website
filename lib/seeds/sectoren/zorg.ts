@@ -9,7 +9,7 @@ export const ZORG: SectorDetail = {
   metaDescription:
     "Applicaties en integraties bovenop je bestaande zorgsystemen. Minder registratielast, betere planning, live binnen weken.",
 
-  hook: "“Onze mensen registreren meer dan ze zorgen.”",
+  hook: "“Onze mensen zijn meer tijd kwijt aan registratie dan aan zorgtaken.”",
   pitch:
     "Wij digitaliseren processen en verbinden systemen, zodat zorgverleners tijd terugkrijgen voor patiënt en cliënt.",
   kpiLabel: "Minder registratielast",
@@ -90,7 +90,7 @@ export const ZORG: SectorDetail = {
     },
   ],
 
-  bouwenTitel: "Applicaties die we hier het vaakst bouwen",
+  bouwenTitel: "Voorbeeldcases",
   useCases: [
     {
       icon: "user-round",

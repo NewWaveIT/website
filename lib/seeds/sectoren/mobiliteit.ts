@@ -96,7 +96,7 @@ export const MOBILITEIT: SectorDetail = {
     },
   ],
 
-  bouwenTitel: "Applicaties die we hier het vaakst bouwen",
+  bouwenTitel: "Voorbeeldcases",
   useCases: [
     {
       icon: "calendar-check",

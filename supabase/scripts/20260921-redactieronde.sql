@@ -9,7 +9,7 @@
 -- doet de tweede keer niets. Raakt een update nul rijen, dan wijkt de CMS-tekst af
 -- van de seed en is hij daar in de admin aangepast. Dat is geen fout, maar het
 -- betekent wel dat die ene regel met de hand moet. Stap 1 laat zien om welke het gaat,
--- stap 7 telt na afloop na wat er wel en niet is geland.
+-- stap 8 telt na afloop na wat er wel en niet is geland.
 
 -- ---------------------------------------------------------------------------
 -- 1 - Diagnose: wat staat er nu? Draai dit eerst en bewaar de uitvoer.
@@ -44,6 +44,15 @@ from public.cms_sectoren where slug = 'publieke-sector'
 union all
 select 'sector', slug, 'waaromAlineas[0]', data->'waaromAlineas'->>0
 from public.cms_sectoren where slug = 'publieke-sector'
+union all
+select 'sector', slug, 'hook', data->>'hook'
+from public.cms_sectoren where slug = 'zorg'
+union all
+select 'sector', slug, 'bouwenTitel', data->>'bouwenTitel'
+from public.cms_sectoren where slug in ('zorg', 'publieke-sector', 'manufacturing', 'mobiliteit')
+union all
+select 'pagina', slug, 'bouwenKicker', data->>'bouwenKicker'
+from public.cms_paginas where slug = 'sector-detail'
 union all
 select 'pagina', slug, 'heroTitleStart', data->>'heroTitleStart'
 from public.cms_paginas where slug = 'diensten'
@@ -90,6 +99,13 @@ update public.cms_sectoren set data = jsonb_set(data, '{h1}', to_jsonb(
   'Meer tijd voor zorg, minder tijd voor registratie'::text))
 where slug = 'zorg'
   and data->>'h1' = 'Meer tijd voor zorg, minder tijd voor systemen';
+
+-- De hook staat ook op de homepage en op /sectoren; het is hetzelfde veld,
+-- dus deze ene update verandert alle drie de plekken.
+update public.cms_sectoren set data = jsonb_set(data, '{hook}', to_jsonb(
+  '“Onze mensen zijn meer tijd kwijt aan registratie dan aan zorgtaken.”'::text))
+where slug = 'zorg'
+  and data->>'hook' = '“Onze mensen registreren meer dan ze zorgen.”';
 
 -- ---------------------------------------------------------------------------
 -- 4 - Banken: AI erbij, bovenaan de pagina
@@ -141,7 +157,23 @@ where slug = 'banken'
   and not (data->'oplossingen' @> '[{"pijn":"AI opzetten en opschalen"}]'::jsonb);
 
 -- ---------------------------------------------------------------------------
--- 5 - Dienstenpagina: concrete hero in plaats van 'Mensen die meebouwen'
+-- 5 - 'Applicaties die we hier het vaakst bouwen' wordt 'Voorbeeldcases'
+--
+-- Vier sectoren hebben deze kop; banken heeft er geen use-cases onder staan en
+-- laat hem leeg. De kicker erboven zei 'Wat we bouwen' en staat nu op
+-- 'Wat we ontwikkelen', in lijn met dezelfde woordkeuze in de publieke sector.
+-- ---------------------------------------------------------------------------
+
+update public.cms_sectoren set data = jsonb_set(data, '{bouwenTitel}', to_jsonb('Voorbeeldcases'::text))
+where slug in ('zorg', 'publieke-sector', 'manufacturing', 'mobiliteit')
+  and data->>'bouwenTitel' = 'Applicaties die we hier het vaakst bouwen';
+
+update public.cms_paginas set data = jsonb_set(data, '{bouwenKicker}', to_jsonb('Wat we ontwikkelen'::text))
+where slug = 'sector-detail'
+  and data->>'bouwenKicker' = 'Wat we bouwen';
+
+-- ---------------------------------------------------------------------------
+-- 6 - Dienstenpagina: concrete hero in plaats van 'Mensen die meebouwen'
 -- ---------------------------------------------------------------------------
 
 update public.cms_paginas set data = jsonb_set(data, '{heroTitleStart}', to_jsonb(
@@ -150,7 +182,7 @@ where slug = 'diensten'
   and data->>'heroTitleStart' = 'Mensen die meebouwen, of ';
 
 -- ---------------------------------------------------------------------------
--- 6 - Over ons: het CO2-doel voor 2030 heeft de focus niet meer
+-- 7 - Over ons: het CO2-doel voor 2030 heeft de focus niet meer
 --
 -- kpi3Getal en kpi3Label zijn uit PAGE_FIELDS gehaald, dus ze zijn dode data
 -- geworden. Weg uit de rij, anders meldt /admin/baseline ze voortaan als
@@ -167,7 +199,7 @@ where slug = 'over-ons'
   and (data ? 'kpi3Getal' or data ? 'kpi3Label');
 
 -- ---------------------------------------------------------------------------
--- 7 - Controle. Verwacht: elke regel staat op 'nieuw'.
+-- 8 - Controle. Verwacht: elke regel staat op 'nieuw'.
 -- ---------------------------------------------------------------------------
 
 select veld, waarde,
@@ -230,5 +262,15 @@ from (
   union all
   select 'zorg.h1', data->>'h1', data->>'h1' = 'Meer tijd voor zorg, minder tijd voor registratie'
   from public.cms_sectoren where slug = 'zorg'
+  union all
+  select 'zorg.hook', data->>'hook', data->>'hook' like '%registratie dan aan zorgtaken%'
+  from public.cms_sectoren where slug = 'zorg'
+  union all
+  select 'sector-detail.bouwenKicker', data->>'bouwenKicker',
+         data->>'bouwenKicker' = 'Wat we ontwikkelen'
+  from public.cms_paginas where slug = 'sector-detail'
+  union all
+  select slug || '.bouwenTitel', data->>'bouwenTitel', data->>'bouwenTitel' = 'Voorbeeldcases'
+  from public.cms_sectoren where slug in ('zorg', 'publieke-sector', 'manufacturing', 'mobiliteit')
 ) t
 order by veld;
