@@ -26,7 +26,7 @@ export const TEAMLEDEN: Teamlid[] = [
     bio: "Verbindt business en IT en staat directies bij in hun digitale koers.",
     contactrol: "Sales",
     telefoon: "06–10751254",
-    linkedin: "https://www.linkedin.com/company/the-new-wave-it",
+    linkedin: "https://www.linkedin.com/in/koen-wijsman-338ba968/",
   },
   {
     slug: "mitchel-wallaart",
@@ -36,7 +36,7 @@ export const TEAMLEDEN: Teamlid[] = [
     bio: "Zorgt dat opdrachten soepel lopen en dat nieuwe Wavers zich thuis voelen.",
     contactrol: "Recruitment",
     telefoon: "0683170976",
-    email: "hello@thenewwaveit.com",
+    email: "mitchel.wallaart@thenewwaveit.com",
   },
   {
     slug: "jeroen-plooij",

@@ -18,7 +18,7 @@
  * telefoonnummer nodig heeft.
  */
 export const CONTACT_TERUGVAL = {
-  email: "hello@thenewwaveit.com",
+  email: "orders@thenewwaveit.com",
   /** Voor `tel:`- en `wa.me`-links: internationaal, zonder opmaak. */
   telefoon: "+31610751254",
   /** Zoals het op het scherm staat. */

@@ -125,7 +125,7 @@ export const TEKSTEN = {
   privacyTekst:
     "We gebruiken je gegevens alleen om dit gesprek te plannen. Geen nieuwsbrief, geen belrondes. Zie ons",
   privacyLink: "privacybeleid",
-  emailAdres: "hello@thenewwaveit.com",
+  emailAdres: "orders@thenewwaveit.com",
   telefoonNummer: "+31610751254",
   telefoonWeergave: "06–10751254",
   heroTitleStart: "Waar kunnen we je ",

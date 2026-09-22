@@ -12,7 +12,7 @@ import { SITE_URL } from "@/lib/site";
  *   NOTIFY_EMAIL            Interne ontvanger voor sollicitaties (default people@thenewwaveit.com).
  *   NOTIFY_EMAIL_AANVRAGEN  Interne ontvanger voor contactaanvragen (default orders@thenewwaveit.com).
  *   MAIL_FROM               Afzender interne notificaties (default notificaties@…).
- *   MAIL_FROM_PUBLIC        Afzender bevestigingen naar bezoekers (default hello@…).
+ *   MAIL_FROM_PUBLIC        Afzender bevestigingen naar bezoekers (default orders@…).
  *   NEXT_PUBLIC_SITE_URL    Basis-URL voor logo + links (default www.thenewwaveit.com).
  */
 

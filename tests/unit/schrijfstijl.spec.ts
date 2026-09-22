@@ -2,6 +2,7 @@ import { readFileSync, readdirSync, statSync } from "node:fs";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 import { PAGE_DEFAULTS } from "@/lib/cms/pages";
+import { CONTACT_TERUGVAL } from "@/lib/contactgegevens";
 
 /**
  * Twee schrijfafspraken die alleen met een test blijven staan.
@@ -104,5 +105,38 @@ describe("de site spreekt de bezoeker aan met je", () => {
     const { body } = PAGE_DEFAULTS.privacy;
     expect(body).toMatch(/\bje\b/);
     expect(body.match(U_VORM), "u-vorm terug in de privacyverklaring").toBeNull();
+  });
+});
+
+/**
+ * hello@thenewwaveit.com is geen bestaande postbus: mail die erheen gaat komt
+ * nergens aan. De eigenaar heeft hem op 22 september van de site laten halen.
+ * Alles gaat naar orders@ (aanvragen, en het algemene adres in de voettekst en
+ * op /contact) of people@ (recruitment, en de twee juridische pagina's).
+ *
+ * Hier stond het adres op zes plekken, waaronder acht keer in de
+ * privacyverklaring. Het komt terug zodra iemand een blok tekst kopieert, dus
+ * de telling moet op nul blijven -- ook in commentaar, want daar leest een
+ * volgende sessie het als geldend adres.
+ */
+describe("hello@ staat nergens meer", () => {
+  const DOOD = ["hello", "thenewwaveit.com"].join("@");
+  for (const { pad } of BESTANDEN) {
+    const bron = readFileSync(pad, "utf8");
+    if (!bron.includes(DOOD)) continue;
+    it(pad, () => {
+      const regels = bron
+        .split("\n")
+        .map((r, i) => ({ nr: i + 1, tekst: r.trim() }))
+        .filter((r) => r.tekst.includes(DOOD))
+        .map((r) => `r${r.nr}: ${r.tekst.slice(0, 90)}`);
+      expect(regels, `${pad}: gebruik orders@ of people@`).toEqual([]);
+    });
+  }
+
+  it("het adres staat ook niet in de terugval of de contactpagina", () => {
+    expect(CONTACT_TERUGVAL.email).not.toContain("hello");
+    expect(PAGE_DEFAULTS.contact.emailAdres).not.toContain("hello");
+    expect(PAGE_DEFAULTS.privacy.body).not.toContain(DOOD);
   });
 });
