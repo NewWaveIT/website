@@ -120,3 +120,83 @@ export const VOORBEELD_LEADS: Lead[] = [
 export function voorbeeldToegestaan(): boolean {
   return process.env.NODE_ENV === "development" || process.env.ADMIN_VOORBEELD === "1";
 }
+
+/* ---- De vier andere admintabellen ---------------------------------------
+ * Ook hier: alles verzonnen. Zie de toelichting bovenaan dit bestand.
+ */
+
+export const VOORBEELD_AUDIT = [
+  {
+    id: "a1",
+    tijdstip: NU,
+    gebruiker_email: "voorbeeld@example.com",
+    gebruiker_naam: "Voorbeeld",
+    actie: "bijgewerkt" as const,
+    content_type: "paginas",
+    slug: "home",
+    titel: "Home",
+  },
+  {
+    id: "a2",
+    tijdstip: "2026-09-19T16:40:00.000Z",
+    gebruiker_email: "tweede@example.com",
+    gebruiker_naam: "Tweede Voorbeeld",
+    actie: "verwijderd" as const,
+    content_type: "sollicitaties",
+    slug: "8f1c2d3e",
+    titel: null,
+  },
+  {
+    id: "a3",
+    tijdstip: "2026-09-18T11:05:00.000Z",
+    gebruiker_email: "voorbeeld@example.com",
+    gebruiker_naam: "Voorbeeld",
+    actie: "aangemaakt" as const,
+    content_type: "artikelen",
+    slug: "een-voorbeeldartikel",
+    titel: "Een voorbeeldartikel met een wat langere titel",
+  },
+];
+
+export const VOORBEELD_GEBRUIKERS = [
+  {
+    id: "g1",
+    email: "voorbeeld@example.com",
+    naam: "Voorbeeld Beheerder",
+    laatsteLogin: NU,
+    aangemaakt: "2026-01-10T09:00:00.000Z",
+    actief: true,
+  },
+  {
+    id: "g2",
+    email: "tweede@example.com",
+    naam: "Tweede Voorbeeld",
+    laatsteLogin: null,
+    aangemaakt: "2026-06-01T09:00:00.000Z",
+    actief: false,
+  },
+];
+
+export const VOORBEELD_NIEUWSBRIEF = [
+  { id: "n1", created_at: NU, email: "aanmelding@example.com" },
+  { id: "n2", created_at: "2026-09-15T12:00:00.000Z", email: "een.heel.lang.adres@example.com" },
+];
+
+export const VOORBEELD_BEVINDINGEN = [
+  {
+    categorie: "ontbrekend" as const,
+    soort: "paginas",
+    slug: "inzichten",
+    veld: "artikelAuteurCta",
+    cms: "—",
+    seed: "Stel je vraag",
+  },
+  {
+    categorie: "afwijkend" as const,
+    soort: "teamleden",
+    slug: "voorbeeld-teamlid",
+    veld: "linkedin",
+    cms: "https://www.linkedin.com/in/voorbeeld/",
+    seed: "https://www.linkedin.com/company/the-new-wave-it",
+  },
+];

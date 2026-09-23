@@ -226,8 +226,8 @@ export function ContentListClient({
         </p>
       )}
 
-      <div className="card tabel-stapel">
-        <table>
+      <div className="card">
+        <table className="tabel-stapel">
           <thead>
             <tr>
               {dragEnabled && (

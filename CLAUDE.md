@@ -183,6 +183,11 @@ niet stilletjes wegdrijven zoals de handgeschreven routekaart in `revalidate.ts`
   veranderde. Staat aan in ontwikkeling en met `ADMIN_VOORBEELD=1` (die zet
   `playwright.config.ts`); op Vercel is het een 404. Nieuw scherm: voeg hem toe aan
   `app/ontwerp/schermen.ts` en render het echte component, geen nagebouwde markup.
+- **Een admintabel op een telefoon stapelt: `tabel-stapel` op het `<table>`.** Alle vijf
+  hielden op 390px hun kolommen, en de contentlijst brak "Laatst bewerkt" daardoor af tot
+  één letter per regel. De markup blijft een tabel, want het slepen hangt aan die
+  structuur. De kolomkoppen verdwijnen; waar een waarde zonder kop niet te plaatsen is
+  ("In het CMS" naast "In de seed") zet je `data-kop` op de cel.
 - **Een adminscherm dat je wil kunnen tonen, scheidt ophalen van tekenen.**
   `AdminContentList` haalt de rijen op en geeft ze aan `ContentListScherm`. De eerste
   versie van /ontwerp tekende de paginakop zelf na en liet daarmee precies de knop weg
@@ -297,27 +302,27 @@ zakken naar nul in plaats van een lijst door te lezen.
 Deze tests bestaan omdat de fout die ze vangen echt is gemaakt. Zet er geen uit zonder
 te weten welke.
 
-| Test                                       | Vangt                                                                                                                            |
-| ------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------- |
-| `tests/unit/manifest.spec.ts`              | Het manifest loopt achter; een pagina-ingang die niets rendert; een contenttype zonder datalaag of seed                          |
-| `tests/unit/cms-pages.spec.ts`             | Een paginaveld dat in de admin staat maar nergens gerenderd wordt                                                                |
-| `tests/unit/cms-velden.spec.ts`            | Hetzelfde voor de contenttypen                                                                                                   |
-| `tests/unit/admin-aria.spec.ts`            | Icoonknop zonder naam, dialoog zonder `aria-modal`/naam/focusbeheer, schakelgroep zonder `aria-pressed`                          |
-| `tests/unit/admin-editor.spec.ts`          | Een veld dat zijn wijziging niet meldt (verborgen invoer zonder `VerborgenWaarde`)                                               |
-| `tests/unit/admin-opmaak.spec.ts`          | Nieuwe inline styles in de admin                                                                                                 |
-| `tests/unit/schrijfstijl.spec.ts`          | Em-streepjes in zichtbare tekst; de u-vorm buiten de admin                                                                       |
-| `tests/e2e/formulieren.spec.ts`            | Foutmarkering, focussprong en bedankstaat van beide formulieren                                                                  |
-| `tests/e2e/admin-toegankelijkheid.spec.ts` | Contrast en horizontaal schuiven in de admin, op drie breedtes                                                                   |
-| `tests/e2e/schil.spec.ts`                  | Mobiel menu en cookiemelding                                                                                                     |
-| `tests/e2e/mobiel.spec.ts`                 | Horizontaal schuiven op 320px, een ankersprong achter de vaste balk, een menu dat niet scrollt, contrast op 375px                |
-| `tests/e2e/artikel.spec.ts`                | Een coverbeeld dat bijgesneden of opgeschaald wordt; auteursblok en verwante artikelen; een label zonder waarde in de byline     |
-| `tests/e2e/beeldkaart.spec.ts`             | Een vijfde variant van de uitgelichte kaart (beeld links, tekst rechts), of een foto die binnenmarge krijgt                      |
-| `tests/e2e/langvorm.spec.ts`               | Doorlopende tekst breder dan 80 tekens per regel; een kop midden in de tekst zonder sectiegrens                                  |
-| `tests/e2e/sector.spec.ts`                 | Herkenningspunten die als losse regels wegvallen; een gat naast een oneven laatste kaart                                         |
-| `tests/unit/gedeelde-opmaak.spec.ts`       | Een kaart, "meer"-link of kicker met de hand nagebouwd in plaats van `.kaart`, `.meer-link` of `.kicker`                         |
-| `tests/unit/handtekening.spec.ts`          | Een donkere e-mailhandtekening zonder eigen achtergrond (wit op wit in Outlook); een naam die de tabel openbreekt                |
-| `tests/e2e/admin-editor.spec.ts`           | Een knop van de editorbalk buiten beeld, een balk die het laatste veld afdekt, een contentlijst die op een telefoon niet stapelt |
-| `tests/unit/handtekening.spec.ts`          | Een donkere e-mailhandtekening zonder eigen achtergrond (wit op wit in Outlook); een naam die de tabel openbreekt                |
+| Test                                       | Vangt                                                                                                                                         |
+| ------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------- |
+| `tests/unit/manifest.spec.ts`              | Het manifest loopt achter; een pagina-ingang die niets rendert; een contenttype zonder datalaag of seed                                       |
+| `tests/unit/cms-pages.spec.ts`             | Een paginaveld dat in de admin staat maar nergens gerenderd wordt                                                                             |
+| `tests/unit/cms-velden.spec.ts`            | Hetzelfde voor de contenttypen                                                                                                                |
+| `tests/unit/admin-aria.spec.ts`            | Icoonknop zonder naam, dialoog zonder `aria-modal`/naam/focusbeheer, schakelgroep zonder `aria-pressed`                                       |
+| `tests/unit/admin-editor.spec.ts`          | Een veld dat zijn wijziging niet meldt (verborgen invoer zonder `VerborgenWaarde`)                                                            |
+| `tests/unit/admin-opmaak.spec.ts`          | Nieuwe inline styles in de admin                                                                                                              |
+| `tests/unit/schrijfstijl.spec.ts`          | Em-streepjes in zichtbare tekst; de u-vorm buiten de admin                                                                                    |
+| `tests/e2e/formulieren.spec.ts`            | Foutmarkering, focussprong en bedankstaat van beide formulieren                                                                               |
+| `tests/e2e/admin-toegankelijkheid.spec.ts` | Contrast en horizontaal schuiven in de admin, op drie breedtes                                                                                |
+| `tests/e2e/schil.spec.ts`                  | Mobiel menu en cookiemelding                                                                                                                  |
+| `tests/e2e/mobiel.spec.ts`                 | Horizontaal schuiven op 320px, een ankersprong achter de vaste balk, een menu dat niet scrollt, contrast op 375px                             |
+| `tests/e2e/artikel.spec.ts`                | Een coverbeeld dat bijgesneden of opgeschaald wordt; auteursblok en verwante artikelen; een label zonder waarde in de byline                  |
+| `tests/e2e/beeldkaart.spec.ts`             | Een vijfde variant van de uitgelichte kaart (beeld links, tekst rechts), of een foto die binnenmarge krijgt                                   |
+| `tests/e2e/langvorm.spec.ts`               | Doorlopende tekst breder dan 80 tekens per regel; een kop midden in de tekst zonder sectiegrens                                               |
+| `tests/e2e/sector.spec.ts`                 | Herkenningspunten die als losse regels wegvallen; een gat naast een oneven laatste kaart                                                      |
+| `tests/unit/gedeelde-opmaak.spec.ts`       | Een kaart, "meer"-link of kicker met de hand nagebouwd in plaats van `.kaart`, `.meer-link` of `.kicker`                                      |
+| `tests/unit/handtekening.spec.ts`          | Een donkere e-mailhandtekening zonder eigen achtergrond (wit op wit in Outlook); een naam die de tabel openbreekt                             |
+| `tests/e2e/admin-editor.spec.ts`           | Een knop van de editorbalk buiten beeld, een balk die het laatste veld afdekt, een van de vijf admintabellen die op een telefoon niet stapelt |
+| `tests/unit/handtekening.spec.ts`          | Een donkere e-mailhandtekening zonder eigen achtergrond (wit op wit in Outlook); een naam die de tabel openbreekt                             |
 
 ## Omgeving & valkuilen
 

@@ -135,7 +135,7 @@ export function GebruikersBeheer({
       </div>
 
       <div className="card">
-        <table>
+        <table className="tabel-stapel">
           <thead>
             <tr>
               <th>Naam</th>
@@ -157,7 +157,9 @@ export function GebruikersBeheer({
                     </div>
                   </td>
                   <td>{u.email}</td>
-                  <td>{fmtDateTime(u.laatsteLogin)}</td>
+                  {/* Gestapeld op een telefoon is een losse datum niet te
+                      plaatsen; vandaar een kopje erboven. */}
+                  <td data-kop="Laatste login">{fmtDateTime(u.laatsteLogin)}</td>
                   <td>
                     <span className={`chip ${u.actief ? "live" : "concept"}`}>
                       <span className="dot" />

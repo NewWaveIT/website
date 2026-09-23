@@ -19,7 +19,15 @@ import AxeBuilder from "@axe-core/playwright";
  * hele dag naar kijkt telt leesbaarheid zwaarder, en daar is naar gehandeld.
  */
 
-const SCHERMEN = ["/ontwerp/lijst", "/ontwerp/editor", "/ontwerp/aanvragen"] as const;
+const SCHERMEN = [
+  "/ontwerp/lijst",
+  "/ontwerp/editor",
+  "/ontwerp/aanvragen",
+  "/ontwerp/activiteit",
+  "/ontwerp/gebruikers",
+  "/ontwerp/nieuwsbrief",
+  "/ontwerp/baseline",
+] as const;
 const FIXTURE = SCHERMEN[0];
 
 for (const [naam, breedte] of [

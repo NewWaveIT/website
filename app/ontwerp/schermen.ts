@@ -17,6 +17,10 @@ export const SCHERMEN = [
     toelichting: "Wat je ziet als je op Nieuw klikt.",
   },
   { sleutel: "aanvragen", titel: "Aanvragenbord", toelichting: "Opvolging met kaartjes en lade." },
+  { sleutel: "activiteit", titel: "Activiteit", toelichting: "Wie wat wanneer aanpaste." },
+  { sleutel: "gebruikers", titel: "Gebruikers", toelichting: "Beheerders en hun toegang." },
+  { sleutel: "nieuwsbrief", titel: "Nieuwsbrief", toelichting: "Aanmeldingen, met verwijderen." },
+  { sleutel: "baseline", titel: "Nulmeting", toelichting: "Vijf kolommen, de smalste tabel." },
 ] as const;
 
 export type SchermSleutel = (typeof SCHERMEN)[number]["sleutel"];

@@ -15,6 +15,14 @@ teruggedraaid, laat het staan en schrijf eronder waarom.
 
 ## Content en tekst
 
+**Het statuschipje "nieuw" gebruikt --orange-text, niet flame** — 23 september 2026
+`.chip.nieuw` zette `--color-primary` (#f15822) als tekstkleur op een lichte oranje
+achtergrond: 3,02:1 bij 11px tekst, waar 4,5 nodig is. Met `--orange-text` (#c2410c) is het
+4,59. Dit kwam pas boven toen de WCAG-gate de echte adminschermen ging meten in plaats van
+de handgeschreven kopie — in die kopie stond dit chipje niet. Wit op flame is een
+merkkeuze voor grote displaytekst op de site; een label van elf pixels in een werkbalk is
+dat niet.
+
 **Een verwijderde inzending laat een spoor na, maar geen persoonsgegevens** — 23 september 2026
 Het verwijderen van een contactaanvraag, een sollicitatie met cv, en het aanmaken of
 blokkeren van een beheerder stonden als enige handelingen niet in het activiteitenlogboek,

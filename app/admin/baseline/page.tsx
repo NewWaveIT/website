@@ -33,9 +33,10 @@ function Chip({ categorie }: { categorie: Categorie }) {
   );
 }
 
-function Tabel({ rijen }: { rijen: Bevinding[] }) {
+/** Los exporteerbaar zodat /ontwerp hem met verzonnen bevindingen kan tonen. */
+export function Tabel({ rijen }: { rijen: Bevinding[] }) {
   return (
-    <table>
+    <table className="tabel-stapel">
       <thead>
         <tr>
           <th>Type</th>
@@ -48,11 +49,24 @@ function Tabel({ rijen }: { rijen: Bevinding[] }) {
       <tbody>
         {rijen.slice(0, MAX_RIJEN).map((b, i) => (
           <tr key={`${b.soort}-${b.slug}-${b.veld}-${i}`}>
-            <td className="t-nowrap">{b.soort}</td>
-            <td className="t-nowrap">{b.slug}</td>
-            <td className="bl-veld">{b.veld || "—"}</td>
-            <td className="bl-waarde">{b.cms}</td>
-            <td className="bl-waarde">{b.seed}</td>
+            {/* `data-kop` zorgt op een telefoon voor een kopje boven de cel.
+                Zonder dat staan "In het CMS" en "In de seed" onder elkaar als
+                twee stukken tekst zonder te zeggen welke welke is. */}
+            <td className="t-nowrap" data-kop="Type">
+              {b.soort}
+            </td>
+            <td className="t-nowrap" data-kop="Slug">
+              {b.slug}
+            </td>
+            <td className="bl-veld" data-kop="Veld">
+              {b.veld || "—"}
+            </td>
+            <td className="bl-waarde" data-kop="In het CMS">
+              {b.cms}
+            </td>
+            <td className="bl-waarde" data-kop="In de seed">
+              {b.seed}
+            </td>
           </tr>
         ))}
       </tbody>

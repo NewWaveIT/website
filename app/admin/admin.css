@@ -675,9 +675,12 @@
   border-radius: 50%;
   background: currentColor;
 }
+/* --orange-text en niet --color-primary: flame op deze lichte achtergrond haalt
+   3,02:1 bij 11px tekst, waar 4,5 nodig is. Gevonden toen de WCAG-gate de echte
+   schermen ging meten in plaats van een handgeschreven kopie. */
 .cms .chip.nieuw {
   background: rgba(241, 88, 34, 0.1);
-  color: var(--color-primary);
+  color: var(--orange-text);
 }
 .cms .chip.bezig {
   background: rgba(46, 37, 26, 0.07);
@@ -2279,50 +2282,75 @@ body.cms-menu-open {
    Aanleiding: de contentlijst hield op 390px zijn vier kolommen. "Laatst
    bewerkt" brak daardoor af tot één letter per regel (L-A-A-T-S-T) en de datum
    werd "20 / sep / 202 / 6 · / Voor / beeld". Onleesbaar, en het is het scherm
-   waar een redacteur begint.
+   waar een redacteur begint. Dezelfde vorm hadden de vier andere admintabellen.
 
    De markup blijft een echte tabel -- het slepen en de pijltjesbediening hangen
-   aan die structuur -- alleen de weergave stapelt. De kolomkoppen verdwijnen:
-   bij één kolom per regel zegt een statuschip zelf al wat hij is, en een datum
-   ook. Zet `tabel-stapel` op de kaart eromheen. */
+   aan die structuur -- alleen de weergave stapelt. Zet `tabel-stapel` op het
+   `<table>` zelf.
+
+   De kolomkoppen verdwijnen, want bij één kolom per regel zegt een statuschip
+   zelf al wat hij is. Waar dat níét geldt -- "In het CMS" naast "In de seed"
+   zijn allebei gewoon tekst -- zet je `data-kop` op de cel; die krijgt dan zijn
+   eigen kopje. Bewust geen kicker-opmaak: een pseudo-element kan de gedeelde
+   `.kicker`-klasse niet dragen, en die drie declaraties hier overschrijven zou
+   precies de duplicatie terugbrengen die `tests/unit/gedeelde-opmaak.spec.ts`
+   tegenhoudt. Klein en gedempt doet hier hetzelfde werk. */
 @media (max-width: 640px) {
-  .cms .tabel-stapel table,
-  .cms .tabel-stapel tbody {
+  .cms table.tabel-stapel,
+  .cms table.tabel-stapel tbody {
     display: block;
   }
-  .cms .tabel-stapel thead {
+  .cms table.tabel-stapel thead {
     display: none;
   }
-  .cms .tabel-stapel tr {
+  .cms table.tabel-stapel tr {
     display: grid;
-    grid-template-columns: auto minmax(0, 1fr);
+    grid-template-columns: minmax(0, 1fr);
     align-items: start;
     gap: 0 var(--space-3);
     padding: var(--space-4) var(--space-5);
     border-bottom: 1px solid var(--border-default);
   }
-  .cms .tabel-stapel tr:last-child {
+  .cms table.tabel-stapel tr:last-child {
     border-bottom: 0;
   }
-  /* De klasse erbij omdat `.cms tbody tr.clickable td` de binnenmarge van een
-     klikbare rij op 16px zet; zonder die extra klasse wint dat op specificiteit
-     en houdt elke cel 32px lucht die niemand heeft gevraagd. */
-  .cms .tabel-stapel tbody tr.clickable td,
-  .cms .tabel-stapel td {
-    display: block;
-    border: 0;
-    padding: 0;
+  /* Alleen als het greepje vooraan staat krijgt de rij een tweede kolom; bij de
+     nieuwsbrieflijst is `.t-grip-cell` juist de laatste cel (verwijderen). */
+  .cms table.tabel-stapel tr:has(td.t-grip-cell:first-child) {
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+  .cms table.tabel-stapel tr:has(td.t-grip-cell:first-child) td {
     grid-column: 2;
   }
-  .cms .tabel-stapel td.t-grip-cell {
+  .cms table.tabel-stapel tr:has(td.t-grip-cell:first-child) td.t-grip-cell {
     grid-column: 1;
     grid-row: 1 / -1;
     align-self: center;
   }
-  .cms .tabel-stapel td + td {
+  /* De klasse erbij omdat `.cms tbody tr.clickable td` de binnenmarge van een
+     klikbare rij op 16px zet; zonder die extra klasse wint dat op specificiteit
+     en houdt elke cel 32px lucht die niemand heeft gevraagd. */
+  .cms table.tabel-stapel tbody tr.clickable td,
+  .cms table.tabel-stapel td {
+    display: block;
+    border: 0;
+    padding: 0;
+  }
+  .cms table.tabel-stapel td + td {
     margin-top: var(--space-2);
   }
-  .cms .tabel-stapel .t-rechts {
+  .cms table.tabel-stapel td[data-kop]::before {
+    content: attr(data-kop);
+    display: block;
+    font-size: var(--text-xs);
+    color: var(--text-subtle);
+    margin-bottom: 2px;
+  }
+  .cms table.tabel-stapel .t-rechts {
     text-align: left;
+  }
+  /* Een lege cel zou als een lege regel meetellen. */
+  .cms table.tabel-stapel td:empty {
+    display: none;
   }
 }

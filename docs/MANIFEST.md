@@ -63,8 +63,8 @@ faalt de unittest.
 
 ## Aantallen
 
-- bronbestanden: 220
+- bronbestanden: 221
 - clientComponenten: 41
-- servercomponenten: 179
+- servercomponenten: 180
 - unittests: 37
 - e2etests: 11

@@ -2,9 +2,17 @@ import { notFound } from "next/navigation";
 import { ContentListScherm } from "@/components/admin/content-list";
 import { ContentEditor } from "@/components/admin/content-editor";
 import { AanvragenBoard } from "@/components/admin/aanvragen-board";
+import { ActiviteitTabel } from "@/components/admin/activiteit-tabel";
+import { GebruikersBeheer } from "@/components/admin/gebruikers-beheer";
+import { NieuwsbriefLijst } from "@/components/admin/nieuwsbrief-lijst";
+import { Tabel as BaselineTabel } from "@/app/admin/baseline/page";
 import { ADMIN_PADEN } from "@/lib/cms/admin-paden";
 import {
+  VOORBEELD_AUDIT,
+  VOORBEELD_BEVINDINGEN,
+  VOORBEELD_GEBRUIKERS,
   VOORBEELD_LEADS,
+  VOORBEELD_NIEUWSBRIEF,
   VOORBEELD_RIJ,
   VOORBEELD_RIJEN,
   voorbeeldToegestaan,
@@ -45,6 +53,44 @@ export default async function OntwerpScherm({ params }: { params: Promise<{ sche
         orderable
         nieuwHref="/ontwerp/editor-nieuw"
       />
+    );
+  }
+
+  if (sleutel === "activiteit") {
+    return (
+      <>
+        <Kop sleutel={sleutel} />
+        <ActiviteitTabel rows={VOORBEELD_AUDIT} />
+      </>
+    );
+  }
+
+  if (sleutel === "gebruikers") {
+    return (
+      <>
+        <Kop sleutel={sleutel} />
+        <GebruikersBeheer gebruikers={VOORBEELD_GEBRUIKERS} currentUserId="g1" />
+      </>
+    );
+  }
+
+  if (sleutel === "nieuwsbrief") {
+    return (
+      <>
+        <Kop sleutel={sleutel} />
+        <NieuwsbriefLijst leads={VOORBEELD_NIEUWSBRIEF} />
+      </>
+    );
+  }
+
+  if (sleutel === "baseline") {
+    return (
+      <>
+        <Kop sleutel={sleutel} />
+        <div className="card">
+          <BaselineTabel rijen={VOORBEELD_BEVINDINGEN} />
+        </div>
+      </>
     );
   }
 

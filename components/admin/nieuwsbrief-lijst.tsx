@@ -69,7 +69,7 @@ export function NieuwsbriefLijst({ leads }: { leads: InzichtenLead[] }) {
         </div>
       )}
       <div className="card">
-        <table>
+        <table className="tabel-stapel">
           <thead>
             <tr>
               <th>E-mail</th>
@@ -87,7 +87,9 @@ export function NieuwsbriefLijst({ leads }: { leads: InzichtenLead[] }) {
                     {l.email}
                   </a>
                 </td>
-                <td className="t-rechts">{fmt(l.created_at)}</td>
+                <td className="t-rechts" data-kop="Aangemeld op">
+                  {fmt(l.created_at)}
+                </td>
                 <td className="t-rechts">
                   {vraagId === l.id ? (
                     <>
