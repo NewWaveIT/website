@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { bouwHandtekening, type Gegevens } from "@/components/handtekening/generator";
+import { bouwHandtekening, mailUitNaam, type Gegevens } from "@/components/handtekening/generator";
 
 /**
  * De e-mailhandtekening uit het medewerkerspakket.
@@ -93,5 +93,41 @@ describe("beide varianten", () => {
     const html = bouwHandtekening({ ...BASIS, telefoon: "06 10 75 12 54" });
     expect(html).toContain('href="tel:+31610751254"');
     expect(html, "zichtbaar blijft het nummer zoals ingevuld").toContain("06 10 75 12 54");
+  });
+});
+
+/**
+ * Het e-mailadres volgt de naam, want dat is de enige plek waar het uit af te
+ * leiden valt en niemand twee keer hetzelfde wil typen.
+ */
+describe("e-mailadres uit de naam", () => {
+  it("maakt voornaam.achternaam", () => {
+    expect(mailUitNaam("Mitchel Wallaart")).toBe("mitchel.wallaart@thenewwaveit.com");
+  });
+
+  /* Een tussenvoegsel krijgt een eigen punt: sonny.van.rein, niet sonny.vanrein. */
+  it("zet een punt tussen elk woord, ook bij een tussenvoegsel", () => {
+    expect(mailUitNaam("Sonny van Rein")).toBe("sonny.van.rein@thenewwaveit.com");
+    expect(mailUitNaam("Jan van der Berg")).toBe("jan.van.der.berg@thenewwaveit.com");
+  });
+
+  it("haalt accenten weg, want een adres heeft ze niet", () => {
+    expect(mailUitNaam("José Muñoz")).toBe("jose.munoz@thenewwaveit.com");
+  });
+
+  it("houdt een koppelteken in een dubbele naam", () => {
+    expect(mailUitNaam("Anne-Marie Jansen")).toBe("anne-marie.jansen@thenewwaveit.com");
+  });
+
+  it("negeert leestekens en dubbele spaties", () => {
+    expect(mailUitNaam("  Piet   de Vries!  ")).toBe("piet.de.vries@thenewwaveit.com");
+  });
+
+  /* Eén woord geeft niets terug: het veld houdt dan wat er stond, in plaats van
+     te flitsen terwijl iemand zijn achternaam nog typt. */
+  it("levert niets bij een naam van één woord of leeg", () => {
+    expect(mailUitNaam("Mitchel")).toBe("");
+    expect(mailUitNaam("")).toBe("");
+    expect(mailUitNaam("   ")).toBe("");
   });
 });

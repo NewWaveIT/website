@@ -23,6 +23,33 @@ function esc(s: string): string {
     .replace(/"/g, "&quot;");
 }
 
+const MAILDOMEIN = "thenewwaveit.com";
+
+/**
+ * Leidt het e-mailadres af uit de naam: voornaam.achternaam@thenewwaveit.com.
+ *
+ * Elk woord krijgt een punt, ook een tussenvoegsel: Sonny van Rein wordt
+ * sonny.van.rein. Diakrieten gaan eruit, want een e-mailadres heeft ze niet
+ * (José -> jose). Het veld blijft te overschrijven, en zodra iemand dat doet
+ * houdt deze functie op met invullen.
+ *
+ * Een naam van één woord levert niets op: een adres met alleen een voornaam is
+ * nooit goed, en het laten flitsen terwijl iemand zijn achternaam typt is
+ * onrustiger dan even niets doen.
+ */
+export function mailUitNaam(naam: string): string {
+  const delen = naam
+    .normalize("NFD")
+    // De combining marks die NFD losmaakt van hun letter.
+    .replace(/[̀-ͯ]/g, "")
+    .toLowerCase()
+    .split(/\s+/)
+    .map((d) => d.replace(/[^a-z0-9-]/g, "").replace(/^-+|-+$/g, ""))
+    .filter(Boolean);
+  if (delen.length < 2) return "";
+  return `${delen.join(".")}@${MAILDOMEIN}`;
+}
+
 /** `tel:` wil een nummer zonder spaties; de zichtbare tekst juist mét. */
 function telHref(nummer: string): string {
   const schoon = nummer.replace(/[^\d+]/g, "");
@@ -123,6 +150,9 @@ export function Generator({ siteUrl, vercelUrl }: { siteUrl: string; vercelUrl: 
   const [naam, setNaam] = useState("Voornaam Achternaam");
   const [functie, setFunctie] = useState("Functietitel");
   const [email, setEmail] = useState("voornaam.achternaam@thenewwaveit.com");
+  /* Zodra iemand het adres zelf aanpast, houdt de naam ermee op. Maakt hij het
+     veld weer leeg, dan neemt de naam het weer over. */
+  const [emailZelf, setEmailZelf] = useState(false);
   const [telefoon, setTelefoon] = useState("+31 6 00 00 00 00");
   const [donker, setDonker] = useState(false);
   const [viaVercel, setViaVercel] = useState(false);
@@ -180,7 +210,16 @@ export function Generator({ siteUrl, vercelUrl }: { siteUrl: string; vercelUrl: 
         <h2>Je gegevens</h2>
         <div className="hgen-veld">
           <label htmlFor="hg-naam">Naam</label>
-          <input id="hg-naam" value={naam} onChange={(e) => setNaam(e.target.value)} />
+          <input
+            id="hg-naam"
+            value={naam}
+            onChange={(e) => {
+              setNaam(e.target.value);
+              if (emailZelf) return;
+              const afgeleid = mailUitNaam(e.target.value);
+              if (afgeleid) setEmail(afgeleid);
+            }}
+          />
         </div>
         <div className="hgen-veld">
           <label htmlFor="hg-functie">Functietitel</label>
@@ -192,8 +231,14 @@ export function Generator({ siteUrl, vercelUrl }: { siteUrl: string; vercelUrl: 
             id="hg-email"
             type="email"
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(e) => {
+              setEmail(e.target.value);
+              setEmailZelf(e.target.value.trim() !== "");
+            }}
           />
+          <span className="hgen-hint">
+            Volgt je naam. Klopt jouw adres anders, typ het dan over; daarna blijft het staan.
+          </span>
         </div>
         <div className="hgen-veld">
           <label htmlFor="hg-tel">Telefoonnummer</label>
