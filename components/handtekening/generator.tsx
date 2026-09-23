@@ -101,10 +101,18 @@ ${regel("T", `tel:${telHref(g.telefoon)}`, g.telefoon)}
    * `bgcolor` staat er naast `background-color` omdat Outlook op Windows met de
    * Word-renderer werkt: die honoreert het attribuut betrouwbaarder dan de
    * stijlregel, en op een `<div>` vaak geen van beide. Vandaar een tabel.
+   *
+   * De ronde hoek is bewust alleen CSS. Het nieuwe Outlook, Outlook op het web,
+   * Gmail, Apple Mail en de mobiele apps tonen hem; het klassieke Outlook voor
+   * Windows negeert `border-radius` en houdt rechte hoeken. Dat is geen fout
+   * maar de ondergrens: de alternatieven (VML `roundrect` of vier hoekplaatjes)
+   * overleven het plakken in de handtekeningeditor niet, omdat Outlook de HTML
+   * daarbij door Word haalt. `border-collapse` moet hiervoor op `separate`
+   * staan; bij `collapse` laten browsers de ronding van een tabel vallen.
    */
-  return `<table cellpadding="0" cellspacing="0" border="0" role="presentation" bgcolor="${VLAK_DONKER}" style="border-collapse:collapse;background-color:${VLAK_DONKER};">
+  return `<table cellpadding="0" cellspacing="0" border="0" role="presentation" bgcolor="${VLAK_DONKER}" style="border-collapse:separate;border-spacing:0;background-color:${VLAK_DONKER};border-radius:12px;">
   <tr>
-    <td bgcolor="${VLAK_DONKER}" style="background-color:${VLAK_DONKER};padding:20px 24px;">
+    <td bgcolor="${VLAK_DONKER}" style="background-color:${VLAK_DONKER};padding:20px 24px;border-radius:12px;">
 ${kern}
     </td>
   </tr>

@@ -51,6 +51,16 @@ describe("donkere handtekening", () => {
     expect(donker).toMatch(/padding:\s*20px 24px/);
   });
 
+  /* Ronde hoeken vragen `border-collapse: separate`; bij `collapse` laten
+     browsers de ronding van een tabel vallen. Het klassieke Outlook voor
+     Windows negeert `border-radius` sowieso en houdt rechte hoeken. */
+  it("heeft ronde hoeken waar de client ze aankan", () => {
+    expect(donker).toContain("border-radius:12px");
+    expect(donker, "met border-collapse:collapse valt de ronding weg").toContain(
+      "border-collapse:separate",
+    );
+  });
+
   it("gebruikt het witte logo", () => {
     expect(donker).toContain("/handtekening/logo-wit.png");
   });
