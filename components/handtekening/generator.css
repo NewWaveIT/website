@@ -106,11 +106,6 @@
 }
 /* Voor wie het witte logo kiest: laat het voorbeeld die achtergrond ook zien,
    anders beoordeel je wit-op-wit. */
-.hgen-doek--donker {
-  background: var(--ink-900);
-  border-color: var(--ink-700);
-}
-
 .hgen-bronknop {
   align-self: flex-start;
   background: none;

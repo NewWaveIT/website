@@ -302,6 +302,7 @@ te weten welke.
 | `tests/e2e/langvorm.spec.ts`               | Doorlopende tekst breder dan 80 tekens per regel; een kop midden in de tekst zonder sectiegrens                              |
 | `tests/e2e/sector.spec.ts`                 | Herkenningspunten die als losse regels wegvallen; een gat naast een oneven laatste kaart                                     |
 | `tests/unit/gedeelde-opmaak.spec.ts`       | Een kaart, "meer"-link of kicker met de hand nagebouwd in plaats van `.kaart`, `.meer-link` of `.kicker`                     |
+| `tests/unit/handtekening.spec.ts`          | Een donkere e-mailhandtekening zonder eigen achtergrond (wit op wit in Outlook); een naam die de tabel openbreekt            |
 
 ## Omgeving & valkuilen
 

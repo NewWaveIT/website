@@ -15,6 +15,19 @@ teruggedraaid, laat het staan en schrijf eronder waarom.
 
 ## Content en tekst
 
+**De donkere handtekening neemt zijn eigen vlak mee** — 23 september 2026
+De donkere variant zette lichtere tekstkleuren en het witte logo, maar geen achtergrond.
+Op /medewerkerspakket zag dat er goed uit, want daar stond het donkere vlak in de CSS van
+de site; wat je plakte had het niet, dus in Outlook was het wit op wit. Een e-mail kan
+zich niet naar het thema van de ontvanger voegen -- Outlook voor Windows leest
+`prefers-color-scheme` in een bericht niet -- dus de enige manier waarop deze variant
+overal hetzelfde leest is met een eigen achtergrond. Gevolg: wie in een licht thema leest
+ziet een espressokleurig blok onder de mail. Dat is de keuze. De achtergrond staat als
+`bgcolor` én als `background-color` op een `<td>`, want de Word-renderer van Outlook
+honoreert het attribuut betrouwbaarder dan de stijlregel en op een `<div>` vaak geen van
+beide. Het voorbeeld op de pagina doet de achtergrond niet langer zelf na, zodat wat je
+ziet is wat je plakt.
+
 **De juridische pagina's zijn langer geworden, en dat is de prijs** — 23 september 2026
 /privacy ging van 5.568 naar 7.404 pixels op desktop en van 8.788 naar 11.092 op een
 telefoon, ruim een kwart langer. Oorzaak: de bodytekst ging van 16 naar 18px en de kolom

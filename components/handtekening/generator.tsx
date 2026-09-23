@@ -38,6 +38,11 @@ export interface Gegevens {
   basisUrl: string;
 }
 
+/** Espresso, gelijk aan --ink-900. Hier als letterlijke waarde: een e-mail
+ *  heeft geen designtokens, en een mailclient laadt de stylesheet van de site
+ *  niet. */
+const VLAK_DONKER = "#2E251A";
+
 export function bouwHandtekening(g: Gegevens): string {
   const logo = `${g.basisUrl}/handtekening/${g.donker ? "logo-wit.png" : "logo.png"}`;
   const naamKleur = g.donker ? "#F4F1EA" : "#2E251A";
@@ -47,7 +52,7 @@ export function bouwHandtekening(g: Gegevens): string {
     `<tr><td style="padding-right:8px;color:#F15822;font-weight:bold;">${letter}</td>` +
     `<td><a href="${href}" style="color:${tekstKleur};text-decoration:none;">${esc(tekst)}</a></td></tr>`;
 
-  return `<table cellpadding="0" cellspacing="0" border="0" role="presentation" style="font-family:Arial,Helvetica,sans-serif;border-collapse:collapse;">
+  const kern = `<table cellpadding="0" cellspacing="0" border="0" role="presentation" style="font-family:Arial,Helvetica,sans-serif;border-collapse:collapse;">
   <tr>
     <td style="padding:2px 0 16px 0;font-family:Arial,Helvetica,sans-serif;font-size:14px;line-height:20px;color:${tekstKleur};">Met vriendelijke groet,</td>
   </tr>
@@ -75,6 +80,32 @@ ${regel("T", `tel:${telHref(g.telefoon)}`, g.telefoon)}
   <tr>
     <td style="padding-top:16px;">
       <div style="font-family:'Courier New',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:${voetKleur};">De nieuwe golf in IT-consultancy</div>
+    </td>
+  </tr>
+</table>`;
+
+  if (!g.donker) return kern;
+
+  /*
+   * De donkere variant zette alleen lichtere tekstkleuren en het witte logo,
+   * en geen achtergrond. In Outlook kwam dat neer op wit op wit: de donkere
+   * ondergrond bestond alleen in het voorbeeld op deze pagina, niet in wat je
+   * plakte.
+   *
+   * Een e-mail kan zich niet naar het thema van de ontvanger voegen -- Outlook
+   * voor Windows leest `prefers-color-scheme` in een bericht niet -- dus de
+   * enige manier waarop deze variant overal hetzelfde leest, is door zijn eigen
+   * vlak mee te nemen. Dat betekent ook: wie in een licht thema leest ziet een
+   * espressokleurig blok onder de mail. Dat is de keuze, niet een bijwerking.
+   *
+   * `bgcolor` staat er naast `background-color` omdat Outlook op Windows met de
+   * Word-renderer werkt: die honoreert het attribuut betrouwbaarder dan de
+   * stijlregel, en op een `<div>` vaak geen van beide. Vandaar een tabel.
+   */
+  return `<table cellpadding="0" cellspacing="0" border="0" role="presentation" bgcolor="${VLAK_DONKER}" style="border-collapse:collapse;background-color:${VLAK_DONKER};">
+  <tr>
+    <td bgcolor="${VLAK_DONKER}" style="background-color:${VLAK_DONKER};padding:20px 24px;">
+${kern}
     </td>
   </tr>
 </table>`;
@@ -170,8 +201,11 @@ export function Generator({ siteUrl, vercelUrl }: { siteUrl: string; vercelUrl: 
             onChange={(e) => setDonker(e.target.checked)}
           />
           <label htmlFor="hg-donker">
-            Ik gebruik een donker thema in mijn mailprogramma
-            <span className="hgen-hint">Kiest het witte logo en lichtere tekstkleuren.</span>
+            Donkere handtekening
+            <span className="hgen-hint">
+              Wit logo op een espressokleurig vlak. Dat vlak gaat mee in de mail, dus ook wie in een
+              licht thema leest ziet het donkere blok.
+            </span>
           </label>
         </div>
 
@@ -207,7 +241,9 @@ export function Generator({ siteUrl, vercelUrl }: { siteUrl: string; vercelUrl: 
 
       <div className="hgen-voorbeeld">
         <h2>Zo ziet hij eruit</h2>
-        <div className={donker ? "hgen-doek kaart hgen-doek--donker" : "hgen-doek kaart"}>
+        {/* Geen aparte donkere doek meer: de handtekening brengt zijn eigen vlak
+            mee, dus het voorbeeld toont nu letterlijk wat je plakt. */}
+        <div className="hgen-doek kaart">
           <div dangerouslySetInnerHTML={{ __html: voorbeeldHtml }} />
         </div>
 
