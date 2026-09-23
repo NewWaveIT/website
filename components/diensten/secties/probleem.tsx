@@ -19,7 +19,7 @@ export async function VraagstukkenSectie({ vraagstukken }: { vraagstukken: Vraag
         <SectieKop kicker={t.vraagstukkenKicker} titel={t.vraagstukkenTitel} groot />
         <div className="chal-grid">
           {vraagstukken.map((v, i) => (
-            <div className="chal-card" key={i}>
+            <div className="chal-card kaart" key={i}>
               <div className="q">{v.q}</div>
               <h3>{v.titel}</h3>
               <p>{v.p}</p>
@@ -51,7 +51,7 @@ export async function WelNietSectie({ titel, wel = [], niet = [] }: WelNietProps
         />
         <div className="welniet-grid">
           {wel.length > 0 && (
-            <div className="welniet-kolom">
+            <div className="welniet-kolom kaart">
               <h3>{t.welTitel}</h3>
               <ul>
                 {wel.map((r) => (
@@ -63,7 +63,7 @@ export async function WelNietSectie({ titel, wel = [], niet = [] }: WelNietProps
             </div>
           )}
           {niet.length > 0 && (
-            <div className="welniet-kolom welniet-kolom--niet">
+            <div className="welniet-kolom welniet-kolom--niet kaart">
               <h3>{t.nietTitel}</h3>
               <ul>
                 {niet.map((r) => (

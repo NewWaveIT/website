@@ -55,7 +55,7 @@ export function ArtikelKaart({
         </div>
         <h3>{artikel.titel}</h3>
         {metIntro && artikel.intro && <p>{artikel.intro}</p>}
-        <span className="more">
+        <span className="more meer-link">
           {meerLabel} <ArrowRight />
         </span>
       </div>

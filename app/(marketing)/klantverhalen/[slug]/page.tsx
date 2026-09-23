@@ -21,7 +21,7 @@ function StappenFlow({ stappen, klein = false }: { stappen: Stap[]; klein?: bool
     <div className={`stappen-flow${klein ? " stappen-flow--klein" : ""}`}>
       {stappen.map((st, i) => (
         <div className="stap" key={i}>
-          <span className="stap-label">{st.label}</span>
+          <span className="stap-label kicker">{st.label}</span>
           <span className="stap-titel">{st.titel}</span>
           {st.tekst && <span className="stap-tekst">{st.tekst}</span>}
           {i < stappen.length - 1 && <ArrowRight className="stap-arrow" aria-hidden="true" />}
@@ -118,7 +118,7 @@ export default async function CasePage({ params }: { params: Promise<{ slug: str
 
       <section className="block">
         <div className="wrap-wide article">
-          <div className="prose">
+          <div className="prose langvorm">
             <h2>{t.uitdagingTitel}</h2>
             <div dangerouslySetInnerHTML={{ __html: k.challenge }} />
             <p className="pull">{k.pull}</p>
@@ -138,16 +138,16 @@ export default async function CasePage({ params }: { params: Promise<{ slug: str
                   <span className="num">{String(i + 1).padStart(2, "0")}</span>
                   {sec.titel}
                 </h3>
-                <h4 className="subkop">{t.subkopSituatie}</h4>
+                <h4 className="subkop kicker">{t.subkopSituatie}</h4>
                 <p>{sec.situatie}</p>
-                <h4 className="subkop">{t.subkopAanpak}</h4>
+                <h4 className="subkop kicker">{t.subkopAanpak}</h4>
                 <p>{sec.aanpak}</p>
                 {sec.stappen && sec.stappen.length > 0 && (
                   <StappenFlow stappen={sec.stappen} klein />
                 )}
                 {sec.functionaliteiten && sec.functionaliteiten.length > 0 && (
                   <>
-                    <h4 className="subkop">{t.subkopFunctionaliteiten}</h4>
+                    <h4 className="subkop kicker">{t.subkopFunctionaliteiten}</h4>
                     <ul>
                       {sec.functionaliteiten.map((f, j) => (
                         <li key={j}>{f}</li>
@@ -157,7 +157,7 @@ export default async function CasePage({ params }: { params: Promise<{ slug: str
                 )}
                 {sec.resultaten.length > 0 && (
                   <>
-                    <h4 className="subkop">{t.subkopResultaat}</h4>
+                    <h4 className="subkop kicker">{t.subkopResultaat}</h4>
                     <div className="resultaat-kaarten">
                       {sec.resultaten.map((r, j) => (
                         <div className="resultaat-kaart" key={j}>
@@ -187,7 +187,7 @@ export default async function CasePage({ params }: { params: Promise<{ slug: str
             )}
           </div>
           <aside>
-            <div className="aside-card">
+            <div className="aside-card kaart">
               <h2>{t.projectTitel}</h2>
               <div className="row">
                 <span className="k">{t.labelSector}</span>

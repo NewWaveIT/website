@@ -24,12 +24,6 @@
   grid-template-columns: 1fr 1fr;
   gap: var(--space-6);
 }
-.dienst-secties .welniet-kolom {
-  border: 1px solid var(--border-default);
-  border-radius: var(--radius-lg);
-  padding: var(--space-6);
-  background: var(--white);
-}
 .dienst-secties .welniet-kolom h3 {
   font-size: var(--text-md);
   font-weight: var(--fw-bold);
@@ -99,12 +93,6 @@
   grid-template-columns: repeat(3, 1fr);
   gap: var(--space-5);
 }
-.dienst-secties .chal-card {
-  border: 1px solid var(--border-default);
-  border-radius: var(--radius-lg);
-  padding: var(--space-6);
-  background: var(--white);
-}
 .dienst-secties .chal-card .q {
   font-family: var(--font-mono);
   font-size: var(--text-xs);
@@ -130,12 +118,6 @@
   grid-template-columns: repeat(3, 1fr);
   gap: var(--space-6);
   align-items: start;
-}
-.dienst-secties .pillar {
-  background: var(--white);
-  border: 1px solid var(--border-default);
-  border-radius: var(--radius-lg);
-  padding: var(--space-6);
 }
 .dienst-secties .pillar .num {
   font-family: var(--font-mono);
@@ -301,10 +283,6 @@
 .dienst-secties .expert {
   display: flex;
   gap: var(--space-5);
-  background: var(--white);
-  border: 1px solid var(--border-default);
-  border-radius: var(--radius-lg);
-  padding: var(--space-5);
   align-items: center;
 }
 .dienst-secties .expert img {
@@ -348,11 +326,8 @@
   justify-content: space-between;
 }
 .dienst-secties .partners-strip .plabel {
-  font-family: var(--font-mono);
-  font-size: var(--text-xs);
-  text-transform: uppercase;
-  letter-spacing: var(--tracking-kicker);
-  color: var(--text-subtle);
+  --kicker-maat: var(--text-xs);
+  --kicker-kleur: var(--text-subtle);
 }
 .dienst-secties .plogo {
   font-family: var(--font-display);
@@ -447,14 +422,6 @@
   flex-wrap: wrap;
   gap: var(--space-5);
   margin-top: var(--space-5);
-}
-.dienst-secties .waarborg-card .more {
-  font-size: var(--text-sm);
-  font-weight: var(--fw-semibold);
-  color: var(--orange-text);
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
 }
 .dienst-secties .waarborg-card .more .lucide {
   width: 15px;

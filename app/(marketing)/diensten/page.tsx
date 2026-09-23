@@ -178,10 +178,10 @@ export default async function DienstenPage() {
               {instapDiensten.map(({ service: s, spoor }) => {
                 const prijs = prijsRegel(s);
                 return (
-                  <article className="cat-card" key={s.slug}>
+                  <article className="cat-card kaart" key={s.slug}>
                     <div className="top">
                       <span className="fase">{t.kaartInstap}</span>
-                      <span className="spoor">{spoor}</span>
+                      <span className="spoor kicker">{spoor}</span>
                     </div>
                     <h3>{s.naam}</h3>
                     <p className="q">{s.pitch}</p>
@@ -223,7 +223,7 @@ export default async function DienstenPage() {
           {verdieping.map((blok) => (
             <div className="fase-block" key={blok.key}>
               <div className="fase-head">
-                <span className="n">{String(blok.niveau).padStart(2, "0")}</span>
+                <span className="n nummer-badge">{String(blok.niveau).padStart(2, "0")}</span>
                 <div>
                   <h3>{blok.kicker}</h3>
                   {blok.tekst && <p>{blok.tekst}</p>}

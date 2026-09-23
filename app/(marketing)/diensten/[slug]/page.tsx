@@ -233,7 +233,7 @@ export default async function DienstPage({ params }: { params: Promise<{ slug: s
             <SectieKop kicker={t.herkenKicker} titel={t.herkenTitel} intro={s.herkenIntro} />
             <div className="herken">
               {s.herken.map((q) => (
-                <blockquote key={q}>{`“${q}”`}</blockquote>
+                <blockquote className="kaart" key={q}>{`“${q}”`}</blockquote>
               ))}
             </div>
           </div>
@@ -317,7 +317,7 @@ export default async function DienstPage({ params }: { params: Promise<{ slug: s
             />
             <div className="prep">
               {s.wijZorgen && s.wijZorgen.length > 0 && (
-                <div className="prep-col">
+                <div className="prep-col kaart">
                   <h3>
                     <HardHat aria-hidden="true" /> {t.wijZorgenTitel}
                   </h3>
@@ -329,7 +329,7 @@ export default async function DienstPage({ params }: { params: Promise<{ slug: s
                 </div>
               )}
               {s.jijZorgt && s.jijZorgt.length > 0 && (
-                <div className="prep-col">
+                <div className="prep-col kaart">
                   <h3>
                     <Users aria-hidden="true" /> {t.jijZorgtTitel}
                   </h3>
@@ -352,11 +352,11 @@ export default async function DienstPage({ params }: { params: Promise<{ slug: s
             <SectieKop kicker={t.daarnaKicker} titel={t.daarnaTitel} intro={s.daarnaIntro} />
             <div className="next-grid">
               {vervolg.map(({ dienst, reden }) => (
-                <Link className="next" href={`/diensten/${dienst.slug}`} key={dienst.slug}>
+                <Link className="next kaart" href={`/diensten/${dienst.slug}`} key={dienst.slug}>
                   <span className="m">{soortLabel(dienst)}</span>
                   <h3>{dienst.naam}</h3>
                   <p>{reden}</p>
-                  <span className="go">
+                  <span className="go meer-link">
                     {prijsRegel(dienst)} <ArrowRight />
                   </span>
                 </Link>

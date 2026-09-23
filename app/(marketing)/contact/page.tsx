@@ -66,43 +66,48 @@ export default async function ContactPage() {
             {t.manierenKop}
           </h2>
           <div className="opts">
-            <a href={`tel:${contact.telefoon}`} className="opt">
+            <a href={`tel:${contact.telefoon}`} className="opt kaart">
               <span className="ic">
                 <Phone />
               </span>
               <h3>{t.manier1Titel}</h3>
               <p>{t.manier1Tekst}</p>
-              <span className="go">
+              <span className="go meer-link">
                 {contact.telefoonWeergave} <ArrowRight />
               </span>
             </a>
-            <a href={`mailto:${contact.email}`} className="opt">
+            <a href={`mailto:${contact.email}`} className="opt kaart">
               <span className="ic">
                 <Mail />
               </span>
               <h3>{t.manier2Titel}</h3>
               <p>{t.manier2Tekst}</p>
-              <span className="go">
+              <span className="go meer-link">
                 {contact.email} <ArrowRight />
               </span>
             </a>
-            <a href={contact.whatsapp} target="_blank" rel="noopener noreferrer" className="opt">
+            <a
+              href={contact.whatsapp}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="opt kaart"
+            >
               <span className="ic">
                 <MessageCircle />
               </span>
               <h3>{t.manier3Titel}</h3>
               <p>{t.manier3Tekst}</p>
-              <span className="go">
+              <span className="go meer-link">
                 {t.manier3Knop} <ArrowRight />
               </span>
             </a>
-            <a href="#gesprek" className="opt">
+            <a href="#gesprek" className="opt kaart">
               <span className="ic">
                 <CalendarCheck />
               </span>
               <h3>{t.manier4Titel}</h3>
               <p>{t.manier4Tekst}</p>
-              <span className="go">
+              <span className="go meer-link">
                 {t.manier4Knop} <ArrowRight />
               </span>
             </a>
@@ -163,7 +168,7 @@ export default async function ContactPage() {
                 ))}
               </ol>
             </div>
-            <div className="expert">
+            <div className="expert kaart">
               <Image
                 className="avatar"
                 src={salesFoto}

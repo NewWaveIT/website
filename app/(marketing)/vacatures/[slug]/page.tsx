@@ -175,7 +175,7 @@ export default async function VacaturePage({ params }: { params: Promise<{ slug:
             ))}
           </div>
           <aside className="vac-aside" id="solliciteer">
-            <div className="apply-card">
+            <div className="apply-card kaart">
               <div className="rec">
                 <Image src={recFoto} alt={`${recNaam}, recruiter`} width={64} height={64} />
                 <div>

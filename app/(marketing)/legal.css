@@ -1,0 +1,38 @@
+/* Juridische pagina's: /privacy en /algemene-voorwaarden.
+
+   Dit stond twee keer, in privacy.css en algemene-voorwaarden.css, byte voor
+   byte hetzelfde op de scope-class na. Twee pagina's met dezelfde tekstsoort en
+   twee losse bestanden betekent dat een correctie er maar op één landt.
+
+   De typografie zelf komt uit `.langvorm` in globals.css, gedeeld met het
+   artikel en het klantverhaal. Wat hier staat is wat deze twee pagina's
+   eigen is: de bredere lead en het adresblok. */
+
+.p-legal {
+  background: var(--surface-page);
+}
+
+/* De lead op een juridische pagina mag breder dan de standaard 52ch. */
+.p-legal .pkop {
+  --pkop-lead: 60ch;
+}
+
+.p-legal .legal-body {
+  padding: var(--space-8) 0 var(--space-9);
+}
+
+/* Een adres is geen lopende tekst: het staat als blokje apart, en de links
+   erin krijgen hoogte zodat ze op een telefoon aan te tikken zijn. */
+.p-legal .prose address {
+  font-style: normal;
+  background: var(--white);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  padding: var(--space-4) var(--space-5);
+  margin: var(--space-4) 0;
+  line-height: var(--leading-relaxed);
+}
+.p-legal .prose address a {
+  display: inline-block;
+  padding: 6px 0;
+}

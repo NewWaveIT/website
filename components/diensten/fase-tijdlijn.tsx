@@ -39,14 +39,14 @@ export async function FaseTijdlijn({
           {fases.map((f) => (
             <span
               key={f.nummer}
-              className={`fase-dot${actieveFases?.includes(f.nummer) ? " fase-dot--actief" : ""}`}
+              className={`fase-dot nummer-badge${actieveFases?.includes(f.nummer) ? " fase-dot--actief" : ""}`}
               title={f.titel}
             >
               {f.nummer}
             </span>
           ))}
         </div>
-        <Link href="/diensten#fasen" className="fase-lite-link">
+        <Link href="/diensten#fasen" className="fase-lite-link meer-link">
           {t.stappenplanLink} <ChevronRight aria-hidden="true" />
         </Link>
       </div>
@@ -66,7 +66,7 @@ export async function FaseTijdlijn({
         ))}
       </div>
       {cta && (
-        <a href="#kies-je-richting" className="fase-cta">
+        <a href="#kies-je-richting" className="fase-cta meer-link">
           {cta} <ChevronRight aria-hidden="true" />
         </a>
       )}

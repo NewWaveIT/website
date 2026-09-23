@@ -15,6 +15,21 @@ teruggedraaid, laat het staan en schrijf eronder waarom.
 
 ## Content en tekst
 
+**De juridische pagina's zijn langer geworden, en dat is de prijs** — 23 september 2026
+/privacy ging van 5.568 naar 7.404 pixels op desktop en van 8.788 naar 11.092 op een
+telefoon, ruim een kwart langer. Oorzaak: de bodytekst ging van 16 naar 18px en de kolom
+van 691 naar 660, omdat alle doorlopende tekst op de site nu dezelfde behandeling krijgt
+(`.langvorm`). Gemeten was die pagina 85 tekens per regel; nu 72. Een privacyverklaring
+lees je zoekend, niet van A tot Z, dus leesbaarheid weegt hier zwaarder dan lengte.
+Draai dit niet terug omdat de pagina "te lang" oogt.
+
+**Vloeiende maten horen buiten de typeschaal** — 23 september 2026
+Bij het opruimen van drie waarden die niet op de typeschaal stonden, leek
+`clamp(32px, 4.5vw, 68px)` op de hero-kop ook een geval van slordigheid. De ondergrens op
+`--text-3xl` (48px) zetten pinde die kop tussen 620 en 1040px vast op 48, waar hij hoorde
+mee te krimpen tot 32. Schermafdrukken op 1440 en 390 lieten dat niet zien; een meting op
+zeven breedtes wel. Een `clamp` is een bewuste keuze, geen vergeten token.
+
 **De LinkedIn-banner "eigen rol" staat bewust niet op het medewerkerspakket** — 21 september 2026
 `linkedin-02-eigen-rol.png` ("Ik bouw AI-native organisaties") is op 18 september van de
 pagina gehaald en op 21 en 22 september opnieuw geweigerd. Let op: hij zit wél in elke export

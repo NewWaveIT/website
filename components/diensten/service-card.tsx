@@ -47,16 +47,16 @@ export async function ServiceCard({
   );
 
   return (
-    <div className={`svc-card${compact ? " svc-card--compact" : ""}`} id={`svc-${s.slug}`}>
+    <div className={`svc-card kaart${compact ? " svc-card--compact" : ""}`} id={`svc-${s.slug}`}>
       {(toonFase && s.fase) || s.richting ? (
         <div className="svc-top">
-          {toonFase && s.fase && <span className="svc-fase">Fase {s.fase}</span>}
-          {s.richting && <span className="svc-richting">{RICHTING_LABEL[s.richting]}</span>}
+          {toonFase && s.fase && <span className="svc-fase kicker">Fase {s.fase}</span>}
+          {s.richting && <span className="svc-richting kicker">{RICHTING_LABEL[s.richting]}</span>}
         </div>
       ) : null}
       <h3>{s.naam}</h3>
       <p className="svc-pitch">{s.pitch}</p>
-      <div className="svc-feiten">
+      <div className="svc-feiten kicker">
         <span>{s.duur}</span>
         {s.groepsgrootte && <span>{s.groepsgrootte}</span>}
       </div>
@@ -93,7 +93,11 @@ export async function ServiceCard({
         >
           {s.ctaLabel} <ArrowRight aria-hidden="true" />
         </Link>
-        <Link href={`/diensten/${s.slug}`} className="svc-meer" aria-label={`Meer over ${s.naam}`}>
+        <Link
+          href={`/diensten/${s.slug}`}
+          className="svc-meer meer-link"
+          aria-label={`Meer over ${s.naam}`}
+        >
           {t.kaartMeer} <ArrowRight aria-hidden="true" />
         </Link>
       </div>

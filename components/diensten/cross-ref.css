@@ -14,14 +14,6 @@
   flex-direction: column;
   gap: 6px;
 }
-.crossref a {
-  font-size: var(--text-sm);
-  font-weight: var(--fw-semibold);
-  color: var(--orange-text);
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-}
 .crossref a .lucide {
   width: 15px;
   height: 15px;

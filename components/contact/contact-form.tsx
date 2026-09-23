@@ -370,7 +370,7 @@ export function ContactForm({ diensten = [], tk }: { diensten?: DienstOptie[]; t
         </p>
       )}
 
-      <p className="privacy">
+      <p className="form-privacy">
         {tk.privacyTekst} <a href="/privacy">{tk.privacyLink}</a>.
       </p>
     </form>

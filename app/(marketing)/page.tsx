@@ -139,7 +139,7 @@ export default async function HomePage() {
                 key={richting}
               >
                 <div>
-                  <div className="dienst-meta">
+                  <div className="dienst-meta kicker">
                     Instap · {s.duur}
                     {s.groepsgrootte ? ` · ${s.groepsgrootte}` : ""}
                   </div>

@@ -123,7 +123,7 @@ export default async function OverOnsPage() {
           <SectieKop kicker={t.waardenKicker} titel={t.waardenTitel} />
           <div className="grid">
             {WAARDEN.map(({ nr, Icon }) => (
-              <div className="vcard" key={nr}>
+              <div className="vcard kaart" key={nr}>
                 <div className="ic">
                   <Icon />
                 </div>

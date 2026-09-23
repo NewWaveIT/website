@@ -168,7 +168,7 @@ export function HeroSector({
       </div>
 
       <div className="hsec-copy">
-        <p className="hsec-kicker">
+        <p className="hsec-kicker kicker">
           <span className="hsec-teller">
             {tel(i + 1)} / {tel(SCENES.length)}
           </span>

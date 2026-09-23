@@ -123,7 +123,7 @@ function Galerij({ items, kolommen }: { items: Uiting[]; kolommen: "twee" | "een
           </div>
           <figcaption>
             <span className="pak-naam">{u.naam}</span>
-            <span className="pak-maat">{u.maat}</span>
+            <span className="pak-maat kicker">{u.maat}</span>
             <p>{u.waarom}</p>
             {/* Downloaden van een bestand op hetzelfde domein: `download` werkt
                 hier en levert de PNG op ware grootte op. */}
@@ -147,7 +147,7 @@ export default function MedewerkerspakketPagina() {
           met één boodschap. */}
       <header className="pak-kop">
         <div className="pak-kop-tekst">
-          <p className="pak-kicker">{"// Medewerkerspakket"}</p>
+          <p className="pak-kicker kicker">{"// Medewerkerspakket"}</p>
           <h1>
             Jouw eigen uitingen,
             <br />
@@ -259,7 +259,7 @@ export default function MedewerkerspakketPagina() {
                 </div>
                 <figcaption>
                   <span className="pak-naam">{l.label}</span>
-                  <span className="pak-maat">300 × 74 · toont op 150 × 37</span>
+                  <span className="pak-maat kicker">300 × 74 · toont op 150 × 37</span>
                   <a className="pak-download" href={`/handtekening/${l.bestand}`} download>
                     Download PNG
                   </a>

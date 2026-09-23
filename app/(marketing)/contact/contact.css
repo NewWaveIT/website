@@ -15,10 +15,6 @@
   display: flex;
   flex-direction: column;
   gap: var(--space-3);
-  background: var(--white);
-  border: 1px solid var(--border-default);
-  border-radius: var(--radius-lg);
-  padding: var(--space-6);
   transition:
     transform 160ms,
     box-shadow 160ms,
@@ -57,14 +53,6 @@
   margin: 0;
   flex: 1;
 }
-.opt .go {
-  font-size: var(--text-sm);
-  font-weight: var(--fw-semibold);
-  color: var(--orange-text);
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-}
 .opt .go .lucide {
   width: 15px;
   height: 15px;
@@ -98,55 +86,10 @@
   grid-template-columns: 1fr 1fr;
   gap: var(--space-5);
 }
-.field {
-  display: flex;
-  flex-direction: column;
-  gap: 7px;
-  margin-bottom: var(--space-5);
-}
-.field label {
-  font-size: var(--text-sm);
-  font-weight: var(--fw-semibold);
-  color: var(--text-strong);
-}
 /* Rasteritem: zonder dit wordt het spoor op de min-content van de <select>
    opgemeten en past de rij niet meer op 320px. */
 .field {
   min-width: 0;
-}
-.field input,
-.field select,
-.field textarea {
-  /* Een <select> is van zichzelf zo breed als zijn langste <option>
-     ("Low-code applicatieontwikkeling (Mendix)"), en dat telt mee als
-     min-content van de hele formulierkaart -- op 390px schoof de pagina daardoor
-     9px opzij. min-width alleen is niet genoeg: de kaart is een rasteritem en
-     dat spoor wordt op min-content opgemeten, dus de kaart krijgt hieronder
-     hetzelfde. */
-  min-width: 0;
-  max-width: 100%;
-  font-family: var(--font-sans);
-  font-size: var(--text-base);
-  color: var(--text-body);
-  background: var(--paper);
-  border: 1px solid var(--border-strong);
-  border-radius: var(--radius-md);
-  padding: 12px 14px;
-  outline: none;
-  transition:
-    border-color 140ms ease,
-    box-shadow 140ms ease;
-}
-.field input:focus-visible,
-.field select:focus-visible,
-.field textarea:focus-visible {
-  border-color: var(--color-primary);
-  outline: 2px solid var(--orange-text);
-  outline-offset: 1px;
-}
-.field textarea {
-  min-height: 120px;
-  resize: vertical;
 }
 .chips {
   display: flex;
@@ -160,6 +103,12 @@
   border: 1px solid var(--border-strong);
   border-radius: var(--radius-pill);
   padding: 8px 16px;
+  /* Was 39px hoog. WCAG 2.5.5 houdt 44 aan, en een chip is een losstaand
+     raakvlak, geen link in een zin -- de uitzondering van 2.5.8 geldt hier
+     dus niet. */
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
   cursor: pointer;
   background: var(--paper);
   position: relative;
@@ -188,47 +137,6 @@
   width: 100%;
   justify-content: center;
   margin-top: var(--space-2);
-}
-.form-card .privacy {
-  font-size: var(--text-xs);
-  color: var(--text-subtle);
-  text-align: center;
-  margin: var(--space-4) 0 0;
-}
-.form-status {
-  font-size: var(--text-sm);
-  border-radius: var(--radius-md);
-  padding: 12px 14px;
-  margin: var(--space-4) 0 0;
-}
-.form-status.ok {
-  background: var(--success-100);
-  color: var(--success-500);
-}
-.form-status.err {
-  background: var(--danger-100);
-  color: var(--danger-700);
-}
-.field input[aria-invalid="true"],
-.field select[aria-invalid="true"],
-.field textarea[aria-invalid="true"] {
-  border-color: var(--danger-500);
-}
-.field input[aria-invalid="true"]:focus,
-.field select[aria-invalid="true"]:focus,
-.field textarea[aria-invalid="true"]:focus {
-  border-color: var(--danger-500);
-  box-shadow: 0 0 0 3px rgba(196, 57, 42, 0.15);
-}
-.field-err {
-  font-size: var(--text-xs);
-  color: var(--danger-500);
-  margin: 0;
-}
-.field-help {
-  font-size: var(--text-xs);
-  color: var(--text-subtle);
-  margin: 0;
 }
 .vraag-groep {
   background: var(--eggshell);
@@ -289,10 +197,6 @@
 .expert {
   display: flex;
   gap: var(--space-5);
-  background: var(--white);
-  border: 1px solid var(--border-default);
-  border-radius: var(--radius-lg);
-  padding: var(--space-5);
   align-items: center;
 }
 .expert .avatar {

@@ -37,7 +37,7 @@ export function ArtikelZijkolom({
       <div className="artikel-zij-plak">
         {koppen.length > 0 && (
           <nav className="artikel-inhoud" aria-label={titel}>
-            <p className="artikel-zij-kop">{titel}</p>
+            <p className="artikel-zij-kop kicker">{titel}</p>
             <ol>
               {koppen.map((k) => (
                 <li key={k.id}>

@@ -43,7 +43,7 @@
    staat de omslagfoto erboven uit het lood. */
 .p-artikel .artikel-grid {
   display: grid;
-  grid-template-columns: minmax(0, 660px);
+  grid-template-columns: minmax(0, var(--leesbreedte));
   justify-content: center;
 }
 .p-artikel .artikel-zij {
@@ -52,7 +52,7 @@
 
 @media (min-width: 1100px) {
   .p-artikel .artikel-grid {
-    grid-template-columns: minmax(0, 660px) minmax(0, 280px);
+    grid-template-columns: minmax(0, var(--leesbreedte)) minmax(0, 280px);
     column-gap: var(--space-9);
     align-items: start;
   }
@@ -61,10 +61,6 @@
   }
 }
 
-.p-artikel .aprose {
-  max-width: 720px;
-  min-width: 0;
-}
 /* Beeld in de artikeltekst: next/image krijgt vaste maten mee uit de HTML,
    maar moet meeschalen met de kolom. */
 .p-artikel .aprose .artikel-beeld {
@@ -78,15 +74,6 @@
   margin: 0 0 var(--space-6);
   font-weight: var(--fw-medium);
 }
-/* 16 en niet 24px: de alinea's in deze artikelen zijn kort (mediaan anderhalve
-   regel), dus met 24px ertussen werd het een stapel losse blokjes op gelijke
-   afstand in plaats van tekst onder een kop. */
-.p-artikel .aprose p {
-  font-size: var(--text-md);
-  color: var(--text-body);
-  line-height: var(--leading-relaxed);
-  margin: 0 0 var(--space-4);
-}
 /* De eerste alinea na de lead krijgt wat meer gewicht: hij is de aanloop, en
    zonder dat verschil begint een artikel van vijftig gelijke alinea's als een
    muur. Puur typografisch -- de redactie hoeft er niets voor te doen. */
@@ -94,68 +81,6 @@
   font-size: var(--text-lg);
   color: var(--text-strong);
   line-height: var(--leading-relaxed);
-}
-
-/* Opgemaakte inhoud uit de rich-text editor.
-
-   h2 en h3 stonden op 2xl en xl met bijna hetzelfde gewicht, waardoor de
-   hiërarchie in de tekst wegviel. De h2 krijgt nu een lijn boven zich als
-   sectiegrens; de h3 blijft een kop binnen die sectie. */
-.p-artikel .aprose h2 {
-  font-family: var(--font-display);
-  font-size: var(--text-2xl);
-  font-weight: var(--fw-extrabold);
-  line-height: var(--leading-snug);
-  color: var(--text-strong);
-  margin: var(--space-9) 0 var(--space-4);
-  padding-top: var(--space-6);
-  border-top: 1px solid var(--border-default);
-}
-/* Staat de h2 bovenaan, dan is er niets om van te scheiden. */
-.p-artikel .aprose h2:first-child {
-  margin-top: 0;
-  padding-top: 0;
-  border-top: 0;
-}
-.p-artikel .aprose h3 {
-  font-family: var(--font-display);
-  font-size: var(--text-xl);
-  font-weight: var(--fw-bold);
-  line-height: var(--leading-snug);
-  color: var(--text-strong);
-  margin: var(--space-7) 0 var(--space-3);
-}
-.p-artikel .aprose ul,
-.p-artikel .aprose ol {
-  margin: 0 0 var(--space-5);
-  padding-left: 1.4em;
-}
-.p-artikel .aprose li {
-  font-size: var(--text-md);
-  color: var(--text-body);
-  line-height: var(--leading-relaxed);
-  margin: 0 0 var(--space-2);
-}
-.p-artikel .aprose a {
-  color: var(--orange-text);
-  text-decoration: underline;
-}
-/* Pull-quote */
-.p-artikel .aprose blockquote {
-  border-left: 3px solid var(--color-primary);
-  padding: var(--space-2) 0 var(--space-2) var(--space-6);
-  margin: var(--space-7) 0;
-  color: var(--text-strong);
-  font-family: var(--font-display);
-  font-weight: var(--fw-bold);
-  font-size: var(--text-2xl);
-  line-height: var(--leading-snug);
-  font-style: normal;
-}
-.p-artikel .aprose blockquote p {
-  font-size: inherit;
-  color: inherit;
-  margin: 0;
 }
 
 /* Afbeeldingen met uitlijning + bijschrift */

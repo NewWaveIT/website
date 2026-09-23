@@ -115,7 +115,7 @@ export default async function ArtikelPage({ params }: { params: Promise<{ slug: 
           de zijkolom weg en blijft alleen de tekst over. */}
       <article className="block">
         <div className="wrap artikel-grid">
-          <div className="aprose">
+          <div className="aprose langvorm">
             {/* Een lege samenvatting leverde een lege alinea van 22px op. */}
             {a.intro && <p className="lead">{a.intro}</p>}
             {a.inhoudHtml ? (

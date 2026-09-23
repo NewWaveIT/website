@@ -4,7 +4,7 @@ import { PaginaHero } from "@/components/layout/pagina-hero";
 import { ArticleContent } from "@/components/article-content";
 import { getPagina } from "@/lib/paginas-data";
 import { sanitizeFull } from "@/lib/cms/sanitize";
-import "./privacy.css";
+import "../legal.css";
 
 export async function generateMetadata(): Promise<Metadata> {
   "use cache";
@@ -38,7 +38,7 @@ export default async function PrivacyPage() {
 
       <section className="legal-body">
         <div className="wrap-wide">
-          <div className="prose">
+          <div className="prose langvorm">
             <ArticleContent html={sanitizeFull(t.body)} />
           </div>
         </div>

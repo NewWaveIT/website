@@ -41,7 +41,7 @@ export async function WaaromSectie({
             <div className="experts">
               {expertsHead && <p className="exphead">{expertsHead}</p>}
               {experts.map((e, i) => (
-                <div className="expert" key={i}>
+                <div className="expert kaart" key={i}>
                   <Image src={e.img} alt={`Portret ${e.naam}`} width={76} height={76} />
                   <div>
                     <div className="role">{e.role}</div>
@@ -74,7 +74,7 @@ export async function PartnersSectie({ partners }: { partners: string[] }) {
   return (
     <section className="partners-strip">
       <div className="wrap-wide">
-        <span className="plabel">{t.partnersTitel}</span>
+        <span className="plabel kicker">{t.partnersTitel}</span>
         {partners.map((p) => (
           <span className="plogo" key={p}>
             {p}

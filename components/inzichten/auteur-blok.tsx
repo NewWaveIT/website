@@ -30,11 +30,11 @@ export function AuteurBlok({
     <aside className="auteurblok">
       {foto && <Image className="auteurblok-foto" src={foto} alt={naam} width={72} height={72} />}
       <div className="auteurblok-tekst">
-        <span className="auteurblok-label">{label}</span>
+        <span className="auteurblok-label kicker">{label}</span>
         <strong className="auteurblok-naam">{naam}</strong>
         {rol && <span className="auteurblok-rol">{rol}</span>}
       </div>
-      <Link href="/contact" className="auteurblok-link">
+      <Link href="/contact" className="auteurblok-link meer-link">
         {cta} <ArrowRight />
       </Link>
     </aside>

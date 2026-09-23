@@ -123,7 +123,7 @@ export default async function KlantverhalenPage() {
             {sectoren.map((s) => {
               const Icon = SECTOR_ICONEN[s.icon];
               return (
-                <Link href={s.href} className="belofte-card" key={s.slug}>
+                <Link href={s.href} className="belofte-card kaart" key={s.slug}>
                   <span className="ic">
                     <Icon />
                   </span>
@@ -137,7 +137,7 @@ export default async function KlantverhalenPage() {
                       </div>
                     ))}
                   </div>
-                  <span className="more">
+                  <span className="more meer-link">
                     Bekijk {s.naam.toLowerCase()} <ArrowRight />
                   </span>
                 </Link>

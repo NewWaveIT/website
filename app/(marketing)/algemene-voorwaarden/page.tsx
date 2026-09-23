@@ -4,7 +4,7 @@ import { PaginaHero } from "@/components/layout/pagina-hero";
 import { ArticleContent } from "@/components/article-content";
 import { getPagina } from "@/lib/paginas-data";
 import { sanitizeFull } from "@/lib/cms/sanitize";
-import "./algemene-voorwaarden.css";
+import "../legal.css";
 
 export async function generateMetadata(): Promise<Metadata> {
   "use cache";
@@ -24,7 +24,7 @@ export default async function AlgemeneVoorwaardenPage() {
 
   const t = await getPagina("algemene-voorwaarden");
   return (
-    <div className="p-algemene-voorwaarden">
+    <div className="p-legal">
       <PaginaHero
         kruimels={[{ naam: "Algemene voorwaarden", pad: "/algemene-voorwaarden" }]}
         titel={t.heroTitel}
@@ -33,7 +33,7 @@ export default async function AlgemeneVoorwaardenPage() {
 
       <section className="legal-body">
         <div className="wrap-wide">
-          <div className="prose">
+          <div className="prose langvorm">
             <ArticleContent html={sanitizeFull(t.body)} />
           </div>
         </div>

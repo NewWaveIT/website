@@ -137,7 +137,7 @@ export default async function SectorPage({ params }: { params: Promise<{ slug: s
             <SectieKop kicker={t.herkenningKicker} titel={s.herkenningTitel} />
             <div className="pain-grid">
               {s.herkenning.map((p, i) => (
-                <div className="pain-item" key={p}>
+                <div className="pain-item kaart" key={p}>
                   <span className="i">{String(i + 1).padStart(2, "0")}</span>
                   <p>{p}</p>
                 </div>
@@ -231,7 +231,7 @@ export default async function SectorPage({ params }: { params: Promise<{ slug: s
               titel={s.oplossingenTitel}
               intro={s.oplossingenIntro}
             />
-            <div className="solhead" aria-hidden="true">
+            <div className="solhead kicker" aria-hidden="true">
               <div>{t.kolomPijnpunt}</div>
               <div>{t.kolomKost}</div>
               <div>{t.kolomOplossing}</div>
@@ -239,7 +239,7 @@ export default async function SectorPage({ params }: { params: Promise<{ slug: s
             </div>
             <div className="solgrid">
               {s.oplossingen.map((o) => (
-                <article className="solcard" key={o.pijn}>
+                <article className="solcard kaart" key={o.pijn}>
                   <div>
                     <div className="m">{t.kolomPijnpunt}</div>
                     <div className="pijn">{o.pijn}</div>
@@ -253,7 +253,7 @@ export default async function SectorPage({ params }: { params: Promise<{ slug: s
                     <div className="opl">{o.oplossing}</div>
                   </div>
                   <div>
-                    <span className={`laag laag-${o.laag}`}>{LAAG_LABEL[o.laag]}</span>
+                    <span className={`laag laag-${o.laag} kicker`}>{LAAG_LABEL[o.laag]}</span>
                   </div>
                 </article>
               ))}
@@ -271,7 +271,7 @@ export default async function SectorPage({ params }: { params: Promise<{ slug: s
               {s.useCases.map((u) => {
                 const Icoon = SECTOR_ICONEN[u.icon];
                 return (
-                  <article className="uccard" key={u.titel}>
+                  <article className="uccard kaart" key={u.titel}>
                     <Icoon />
                     <h3>{u.titel}</h3>
                     <p>{u.tekst}</p>
@@ -334,7 +334,7 @@ export default async function SectorPage({ params }: { params: Promise<{ slug: s
             <SectieKop kicker={t.dienstenKicker} titel={s.dienstenTitel} />
             <div className="svc-links">
               {s.dienstLinks.map((d) => (
-                <Link className="svc-link" href={d.href} key={d.label}>
+                <Link className="svc-link kaart" href={d.href} key={d.label}>
                   {d.label} <ArrowUpRight />
                 </Link>
               ))}
@@ -404,7 +404,7 @@ export default async function SectorPage({ params }: { params: Promise<{ slug: s
             <SectieKop kicker={t.teamKicker} titel={s.teamTitel} />
             <div className="team-strip">
               {teamRegels.map(({ regel, persoon }) => (
-                <div className="person" key={persoon.slug}>
+                <div className="person kaart" key={persoon.slug}>
                   {persoon.foto && <Image src={persoon.foto} alt="" width={76} height={76} />}
                   <div>
                     <div className="n">{persoon.naam}</div>

@@ -116,6 +116,10 @@
   --text-4xl: 4rem;
   --text-5xl: 5.25rem;
 
+  /* Leesbreedte voor doorlopende tekst: 18px op 660 pixels is ongeveer 66
+     tekens per regel. Zie .langvorm. */
+  --leesbreedte: 660px;
+
   --fw-regular: 400;
   --fw-medium: 500;
   --fw-semibold: 600;
@@ -216,6 +220,19 @@
        `break-word`, die meetelt in de min-content-breedte waarmee grid- en
        flexsporen worden opgemeten. */
     hyphens: auto;
+    /* ...maar alleen voor woorden die het echt nodig hebben. Zonder deze grens
+       brak de lead van een klantverhaal drie regels achter elkaar af
+       ("in-geschakeld", "di-rect", "installa-teurs") en die ladder leest
+       slechter dan de rafelrand die hij vervangt. 16 zegt: pas afbreken vanaf
+       zestien letters, en dan minstens zes ervoor en vijf erna. Dat laat
+       "uitvoeringsorganisaties" en "applicatieontwikkeling" breken en
+       "installateurs" en "ingeschakeld" met rust.
+
+       Dit maakt het horizontaal schuiven niet opnieuw mogelijk: dat wordt
+       tegengehouden door `overflow-wrap: anywhere` hieronder, niet door
+       `hyphens`. Browsers die deze eigenschap niet kennen vallen terug op het
+       gedrag van hiervoor. */
+    hyphenate-limit-chars: 16 6 5;
     overflow-wrap: anywhere;
   }
   /* ...maar niet in koppen en citaten. Daar valt een koppelteken midden in een
@@ -420,16 +437,71 @@ footer :focus-visible,
   padding: 0 var(--gutter);
 }
 
+/* Het kleine kapitaal boven een kop, op een kaart, in een tabelkop.
+
+   Deze drie regels -- mono, hoofdletters, letterafstand -- stonden 54 keer in
+   negentien bestanden. Wat er tussen die 54 echt verschilde was twee dingen:
+   de grootte (3xs, 2xs of xs) en de kleur (subtiel op licht, oranje als accent,
+   eggshell op donker). Dat zijn nu de twee knoppen; de rest komt hiervandaan.
+
+   `--kicker-maat` en `--kicker-kleur` zet je op het element zelf of op een
+   ouder. Wie zijn eigen letterafstand nodig heeft -- twee plekken doen dat,
+   met 0.08em en 0.18em -- schrijft die gewoon in de eigen regel; die wint op
+   specificiteit. */
 .kicker {
   font-family: var(--font-mono);
   text-transform: uppercase;
   letter-spacing: var(--tracking-kicker);
-  font-size: var(--text-xs);
-  color: var(--orange-text);
+  font-size: var(--kicker-maat, var(--text-xs));
+  color: var(--kicker-kleur, var(--orange-text));
   font-weight: var(--fw-medium);
 }
 .kicker.on-dark {
   color: var(--orange-400);
+}
+
+/* "Meer hierover" met een pijltje: de tekstlink onderaan een kaart.
+
+   Stond twaalf keer los, in elf bestanden, en elke keer met precies dezelfde
+   zes declaraties. Het pijltje ernaast schuift op hover; dat hoort erbij en
+   staat hier dus ook. */
+.meer-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: var(--text-sm);
+  font-weight: var(--fw-semibold);
+  color: var(--meer-link-kleur, var(--orange-text));
+}
+.meer-link .lucide {
+  width: 15px;
+  height: 15px;
+  transition: transform 180ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.meer-link:hover .lucide {
+  transform: translateX(3px);
+}
+
+/* Het ronde nummertje voor een stap of fase.
+
+   Vier keer los, met vier maten (28, 30, 30 en 34px) voor hetzelfde ding. De
+   maat is nu een knop, want een tijdlijn mag compacter zijn dan een ladder.
+   Let op: de ronde knop in de teamcarrousel en de ronde avatar in een
+   klantverhaal delen alleen `border-radius: 50%` met dit ding en zijn verder
+   iets anders; die staan bewust niet hier. */
+.nummer-badge {
+  width: var(--badge-maat, 30px);
+  height: var(--badge-maat, 30px);
+  flex: none;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-family: var(--font-mono);
+  font-size: var(--badge-tekst, var(--text-xs));
+  font-weight: var(--fw-medium);
+  color: var(--badge-kleur, var(--orange-text));
+  background: var(--badge-vlak, var(--white));
+  border: 1px solid var(--badge-rand, var(--border-strong));
 }
 
 .lucide {
@@ -1123,12 +1195,6 @@ footer.site-footer {
    dezelfde hoogte houden ook als de koppen verschillen. */
 .post .more {
   margin-top: auto;
-  font-size: var(--text-sm);
-  font-weight: var(--fw-semibold);
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  color: var(--orange-text);
 }
 
 /* ---- Aanraakdoelen onder 1041px ----------------------------------------
@@ -1214,6 +1280,217 @@ footer.site-footer {
   .beeldkaart > .media {
     min-height: var(--beeldkaart-h-smal, 240px);
   }
+}
+
+/* Formuliervelden.
+
+   Label, invoerveld, focusring, foutmarkering, hulptekst en statusregel stonden
+   twee keer: een keer kaal voor het contactformulier en een keer onder
+   `.sol-form` voor het sollicitatieformulier, met net andere binnenmarges
+   (12/14 tegen 11/13) en een andere afstand tussen de velden. Twee formulieren
+   die uit elkaar lopen terwijl ze hetzelfde moeten doen; de handtekening-
+   generator had er een derde variant van.
+
+   De afstand tussen twee velden is de enige knop: een sollicitatieformulier
+   heeft meer velden en mag dichter staan. */
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  margin-bottom: var(--veld-ruimte, var(--space-5));
+  /* Rasteritem: zonder dit wordt het spoor op de min-content van de <select>
+     opgemeten en past de rij niet meer op 320px. */
+  min-width: 0;
+}
+.field label {
+  font-size: var(--text-sm);
+  font-weight: var(--fw-semibold);
+  color: var(--text-strong);
+}
+.field input,
+.field select,
+.field textarea {
+  /* Een <select> is van zichzelf zo breed als zijn langste <option>
+     ("Low-code applicatieontwikkeling (Mendix)"), en dat telt mee als
+     min-content van de hele formulierkaart -- op 390px schoof de pagina daardoor
+     9px opzij. min-width alleen is niet genoeg: de kaart is een rasteritem en
+     dat spoor wordt op min-content opgemeten, dus de kaart krijgt hetzelfde. */
+  min-width: 0;
+  max-width: 100%;
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  color: var(--text-body);
+  background: var(--paper);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-md);
+  padding: 12px 14px;
+  outline: none;
+  transition:
+    border-color 140ms ease,
+    box-shadow 140ms ease;
+}
+.field input:focus-visible,
+.field select:focus-visible,
+.field textarea:focus-visible {
+  border-color: var(--color-primary);
+  outline: 2px solid var(--orange-text);
+  outline-offset: 1px;
+}
+.field textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+.field input[aria-invalid="true"],
+.field select[aria-invalid="true"],
+.field textarea[aria-invalid="true"] {
+  border-color: var(--danger-500);
+}
+.field input[aria-invalid="true"]:focus,
+.field select[aria-invalid="true"]:focus,
+.field textarea[aria-invalid="true"]:focus {
+  border-color: var(--danger-500);
+  box-shadow: 0 0 0 3px rgba(196, 57, 42, 0.15);
+}
+.field-err {
+  font-size: var(--text-xs);
+  color: var(--danger-500);
+  margin: 0;
+}
+.field-help {
+  font-size: var(--text-xs);
+  color: var(--text-subtle);
+  margin: 0;
+}
+.form-status {
+  font-size: var(--text-sm);
+  border-radius: var(--radius-md);
+  padding: 12px 14px;
+  margin: var(--space-4) 0 0;
+}
+.form-status.ok {
+  background: var(--success-100);
+  color: var(--success-500);
+}
+.form-status.err {
+  background: var(--danger-100);
+  color: var(--danger-700);
+}
+/* De privacyregel onder de verstuurknop. */
+.form-privacy {
+  font-size: var(--text-xs);
+  color: var(--text-subtle);
+  text-align: center;
+  margin: var(--space-4) 0 0;
+}
+
+/* De kaart: wit vlak, dunne rand, ronde hoek.
+
+   Deze vier regels stonden 23 keer los in veertien bestanden -- .opt, .cat-card,
+   .prep-col, .next, .aside-card, .vcard, .solcard, .uccard, .apply-card, .gcard,
+   .welniet-kolom, .chal-card, .pillar, .svc-card, .sol-form, .belofte-card,
+   .pain-item, .expert, .person en de blockquote op een dienstpagina. Zestien
+   ervan met `--space-6`, vier met `--pad-kaart` en drie met `--space-5`: drie
+   binnenmarges voor wat op het scherm één kaart is. Dat is hetzelfde patroon als
+   de vier bijna-gelijke uitgelichte kaarten die hierboven tot `.beeldkaart` zijn
+   teruggebracht.
+
+   De binnenmarge is nu `--pad-kaart`, zoals CONTRIBUTING voorschrijft voor een
+   kaart met lopende tekst. Dat scheelt op een telefoon: die zestien stonden op
+   een vaste 32px, wat op een scherm van 390 breed 64px aan marge kostte, en gaat
+   nu naar 24. Op desktop wordt het 40. Een kaart die echt dichter moet staan
+   zet `--kaart-pad`; dat is de enige knop.
+
+   Wat een kaart verder doet -- flex of grid worden, een hover krijgen, van
+   achtergrondkleur wisselen -- blijft in zijn eigen bestand staan. */
+.kaart {
+  background: var(--white);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  padding: var(--kaart-pad, var(--pad-kaart));
+}
+
+/* Langvorm: doorlopende tekst die je van boven naar beneden leest.
+
+   Dit stond drie keer los: het artikel (.aprose), het klantverhaal (.prose) en
+   de twee juridische pagina's. Gemeten op een venster van 1440 gaf dat drie
+   verschillende leesbreedtes -- 660, 1012 en 691 pixels -- en dus 57, 111 en 85
+   tekens per regel, waar tussen de 45 en 75 prettig leest. Het klantverhaal was
+   anderhalf keer te breed en had als enige geen enkele visuele sectiegrens: de
+   body was 10.572px hoog met vier h2's die niets markeerden.
+
+   De waarden hieronder komen van het artikel, want die zijn eerder op deze
+   tekstsoort afgestemd: 18px op 660 pixels is ongeveer 66 tekens, een h2 krijgt
+   een lijn boven zich als sectiegrens en een h3 blijft een kop binnen die
+   sectie. Wat per pagina echt verschilt -- de lead van een artikel, de
+   genummerde stappen van een klantverhaal, het adresblok op een juridische
+   pagina -- staat in het eigen bestand en wint op specificiteit. */
+.langvorm {
+  max-width: var(--leesbreedte);
+  min-width: 0;
+}
+.langvorm p {
+  font-size: var(--text-md);
+  color: var(--text-body);
+  line-height: var(--leading-relaxed);
+  margin: 0 0 var(--space-4);
+}
+.langvorm h2 {
+  font-family: var(--font-display);
+  font-size: var(--text-2xl);
+  font-weight: var(--fw-extrabold);
+  line-height: var(--leading-snug);
+  color: var(--text-strong);
+  margin: var(--space-9) 0 var(--space-4);
+  padding-top: var(--space-6);
+  border-top: 1px solid var(--border-default);
+}
+/* Staat de h2 bovenaan, dan is er niets om van te scheiden. */
+.langvorm h2:first-child {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: 0;
+}
+.langvorm h3 {
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  font-weight: var(--fw-bold);
+  line-height: var(--leading-snug);
+  color: var(--text-strong);
+  margin: var(--space-7) 0 var(--space-3);
+}
+.langvorm ul,
+.langvorm ol {
+  margin: 0 0 var(--space-5);
+  padding-left: 1.4em;
+}
+.langvorm li {
+  font-size: var(--text-md);
+  color: var(--text-body);
+  line-height: var(--leading-relaxed);
+  margin: 0 0 var(--space-2);
+}
+.langvorm a {
+  color: var(--orange-text);
+  text-decoration: underline;
+}
+/* Citaat uit de lopende tekst. `blockquote` komt uit de editor, `.pull` uit een
+   klantverhaal; het is dezelfde vorm, dus dezelfde regel. */
+.langvorm blockquote,
+.langvorm .pull {
+  border-left: 3px solid var(--color-primary);
+  padding: var(--space-2) 0 var(--space-2) var(--space-6);
+  margin: var(--space-7) 0;
+  color: var(--text-strong);
+  font-family: var(--font-display);
+  font-weight: var(--fw-bold);
+  font-size: var(--text-2xl);
+  line-height: var(--leading-snug);
+  font-style: normal;
+}
+.langvorm blockquote p {
+  font-size: inherit;
+  color: inherit;
+  margin: 0;
 }
 
 /* Kruimelpad (components/kruimelpad.tsx)

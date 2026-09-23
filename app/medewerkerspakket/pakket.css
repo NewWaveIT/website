@@ -65,11 +65,8 @@
   );
 }
 .pak-kicker {
-  font-family: var(--font-mono);
-  font-size: var(--text-xs);
-  letter-spacing: var(--tracking-kicker);
-  text-transform: uppercase;
-  color: var(--text-subtle);
+  --kicker-maat: var(--text-xs);
+  --kicker-kleur: var(--text-subtle);
   margin: 0;
 }
 .p-pakket h1 {
@@ -165,11 +162,8 @@
   color: var(--text-strong);
 }
 .pak-maat {
-  font-family: var(--font-mono);
-  font-size: var(--text-3xs);
-  letter-spacing: var(--tracking-kicker);
-  text-transform: uppercase;
-  color: var(--text-subtle);
+  --kicker-maat: var(--text-3xs);
+  --kicker-kleur: var(--text-subtle);
 }
 .pak-item figcaption p {
   font-size: var(--text-sm);

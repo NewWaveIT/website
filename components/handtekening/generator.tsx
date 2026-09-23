@@ -207,7 +207,7 @@ export function Generator({ siteUrl, vercelUrl }: { siteUrl: string; vercelUrl: 
 
       <div className="hgen-voorbeeld">
         <h2>Zo ziet hij eruit</h2>
-        <div className={donker ? "hgen-doek hgen-doek--donker" : "hgen-doek"}>
+        <div className={donker ? "hgen-doek kaart hgen-doek--donker" : "hgen-doek kaart"}>
           <div dangerouslySetInnerHTML={{ __html: voorbeeldHtml }} />
         </div>
 

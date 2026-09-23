@@ -175,11 +175,7 @@
   gap: var(--space-6);
 }
 .p-diensten .cat-card {
-  background: var(--white);
-  border: 1px solid var(--border-default);
   border-top: 3px solid var(--orange-500);
-  border-radius: var(--radius-lg);
-  padding: var(--space-6);
   display: flex;
   flex-direction: column;
   gap: var(--space-4);
@@ -208,11 +204,8 @@
   padding: 5px 11px;
 }
 .p-diensten .cat-card .spoor {
-  font-family: var(--font-mono);
-  font-size: var(--text-3xs);
-  text-transform: uppercase;
-  letter-spacing: var(--tracking-kicker);
-  color: var(--text-subtle);
+  --kicker-maat: var(--text-3xs);
+  --kicker-kleur: var(--text-subtle);
 }
 .p-diensten .cat-card h3 {
   font-size: var(--text-xl);
@@ -272,14 +265,7 @@
   margin-bottom: var(--space-4);
 }
 .p-diensten .fase-head .n {
-  width: 30px;
-  height: 30px;
-  flex: none;
-  border-radius: 50%;
-  border: 1px solid var(--border-strong);
-  color: var(--text-muted);
-  font-family: var(--font-mono);
-  font-size: var(--text-xs);
+  --badge-kleur: var(--text-muted);
   display: flex;
   align-items: center;
   justify-content: center;

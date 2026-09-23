@@ -129,7 +129,7 @@ export function SollicitatieForm({
 
   if (state.ok) {
     return (
-      <div className="sol-done" role="status">
+      <div className="sol-done kaart" role="status">
         <div className="sol-done-ic" aria-hidden="true">
           <Check />
         </div>
@@ -140,7 +140,7 @@ export function SollicitatieForm({
   }
 
   return (
-    <form className="sol-form" action={formAction} noValidate>
+    <form className="sol-form kaart" action={formAction} noValidate>
       <h3>{heading}</h3>
       <p className="sol-sub">{intro}</p>
 
@@ -253,7 +253,7 @@ export function SollicitatieForm({
         </p>
       )}
 
-      <p className="sol-privacy">
+      <p className="form-privacy">
         {tk.solPrivacyTekst} <a href="/privacy">{tk.solPrivacyLink}</a>.
       </p>
     </form>

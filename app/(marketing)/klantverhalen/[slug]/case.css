@@ -59,39 +59,15 @@
   color: var(--text-on-dark-muted);
 }
 
+/* Gemeten op 1440: de tekstkolom was 1012px, oftewel 111 tekens per regel --
+   anderhalf keer breder dan prettig leest. Nu dezelfde leesbreedte als het
+   artikel, met de aside ernaast, en het paar gecentreerd zodat de omslagfoto
+   erboven niet uit het lood staat. */
 .p-case .article {
   display: grid;
-  grid-template-columns: 1fr 300px;
+  grid-template-columns: minmax(0, var(--leesbreedte)) minmax(0, 300px);
+  justify-content: center;
   gap: var(--space-9);
-}
-.p-case .article .prose h2 {
-  font-size: var(--text-2xl);
-  font-weight: var(--fw-extrabold);
-  margin: var(--space-7) 0 var(--space-4);
-}
-.p-case .article .prose h2:first-child {
-  margin-top: 0;
-}
-.p-case .article .prose p {
-  font-size: var(--text-md);
-  color: var(--text-body);
-  line-height: var(--leading-relaxed);
-  margin: 0 0 var(--space-5);
-}
-.p-case .article .prose .pull {
-  font-family: var(--font-display);
-  font-weight: var(--fw-bold);
-  font-size: var(--text-xl);
-  color: var(--text-strong);
-  line-height: var(--leading-snug);
-  border-left: 3px solid var(--color-primary);
-  padding-left: var(--space-5);
-  margin: var(--space-7) 0;
-  letter-spacing: var(--tracking-tight);
-}
-.p-case .article .prose a {
-  color: var(--orange-text);
-  text-decoration: underline;
 }
 .p-case .article .prose .sectie {
   margin: 0 0 var(--space-7);
@@ -114,23 +90,9 @@
   color: var(--orange-text);
   flex: none;
 }
-.p-case .article .prose ul,
-.p-case .article .prose ol {
-  margin: 0 0 var(--space-5);
-  padding-left: 1.4em;
-}
-.p-case .article .prose li {
-  font-size: var(--text-md);
-  color: var(--text-body);
-  line-height: var(--leading-relaxed);
-  margin: 0 0 var(--space-2);
-}
 .p-case .article .prose .subkop {
-  font-family: var(--font-mono);
-  font-size: var(--text-2xs);
-  letter-spacing: var(--tracking-kicker);
-  text-transform: uppercase;
-  color: var(--text-subtle);
+  --kicker-maat: var(--text-2xs);
+  --kicker-kleur: var(--text-subtle);
   font-weight: var(--fw-medium);
   margin: var(--space-5) 0 var(--space-2);
 }
@@ -175,11 +137,8 @@
   background: var(--eggshell);
 }
 .p-case .stap-label {
-  font-family: var(--font-mono);
-  font-size: var(--text-2xs);
-  letter-spacing: var(--tracking-kicker);
-  text-transform: uppercase;
-  color: var(--orange-text);
+  --kicker-maat: var(--text-2xs);
+  --kicker-kleur: var(--orange-text);
 }
 .p-case .stap-titel {
   font-weight: var(--fw-bold);
@@ -242,12 +201,6 @@
   position: sticky;
   top: 100px;
   align-self: start;
-}
-.p-case .aside-card {
-  border: 1px solid var(--border-default);
-  border-radius: var(--radius-lg);
-  padding: var(--space-6);
-  background: var(--white);
 }
 .p-case .aside-card h2 {
   font-family: var(--font-mono);

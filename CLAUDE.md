@@ -190,6 +190,29 @@ niet stilletjes wegdrijven zoals de handgeschreven routekaart in `revalidate.ts`
   kolomverhoudingen. Voeg geen vijfde kopie toe: zet `beeldkaart` op je wrapper en stel
   hooguit `--beeldkaart-h` in. Wat er in de tekstkolom staat blijft van de pagina zelf.
   `tests/e2e/beeldkaart.spec.ts` bewaakt het.
+- **Vier gedeelde vormen staan in `globals.css`, niet in een pagina-CSS.** Een audit op
+  22 september telde de witte kaart 23 keer in veertien bestanden (met drie verschillende
+  binnenmarges), het kleine kapitaal 54 keer in negentien, de "meer"-link met pijltje 12
+  keer in elf, en het ronde stapnummer 4 keer. Nu: `.kaart` (knop: `--kaart-pad`),
+  `.kicker` (`--kicker-maat`, `--kicker-kleur`), `.meer-link` en `.nummer-badge`
+  (`--badge-maat`, `--badge-kleur`, `--badge-vlak`, `--badge-rand`). Zet de klasse op het
+  element en stel hooguit die variabelen in; schrijf de vorm niet opnieuw.
+  `tests/unit/gedeelde-opmaak.spec.ts` bewaakt het. **Een variant zet variabelen, geen
+  eigenschappen** -- `.fase-dot--actief { color: white }` won of verloor afhankelijk van
+  de volgorde waarin de stylesheets binnenkomen.
+- **Doorlopende tekst gaat door `.langvorm`.** Artikel, klantverhaal en de twee
+  juridische pagina's deelden geen enkele regel: gemeten op 1440 waren de kolommen 660,
+  1012 en 691px breed, oftewel 57, 111 en 85 tekens per regel. Eén breedte
+  (`--leesbreedte`), één typografie, en per pagina alleen wat er echt van die pagina is
+  (de lead van een artikel, de genummerde stappen van een klantverhaal, het adresblok van
+  een juridische pagina). `tests/e2e/langvorm.spec.ts` meet het op de pagina zelf.
+- **Formuliervelden komen uit `.field`.** Label, invoerveld, focusring, foutmarkering en
+  statusregel stonden twee keer, met net andere binnenmarges. De afstand tussen velden is
+  de enige knop (`--veld-ruimte`).
+- **Vloeiende maten (`clamp`) horen bewust niet op de discrete typeschaal.** De
+  hero-kop op de homepage op `--text-3xl` als ondergrens zetten leek netter, maar pinde
+  hem tussen 620 en 1040px vast op 48px waar hij mee hoorde te krimpen tot 32. Een
+  schermafdruk op 1440 en 390 laat dat niet zien; controleer een tussenbreedte.
 - **Redactioneel beeld gaat door `<BeeldKader>`** (`components/beeld-kader.tsx`). Twee
   regels die samen gelden: het kader voegt zich naar de verhouding van het beeld (dus
   geen vaste hoogte met `object-fit: cover`, dat sneed diagrammen af) en een beeld wordt
@@ -276,6 +299,9 @@ te weten welke.
 | `tests/e2e/mobiel.spec.ts`                 | Horizontaal schuiven op 320px, een ankersprong achter de vaste balk, een menu dat niet scrollt, contrast op 375px            |
 | `tests/e2e/artikel.spec.ts`                | Een coverbeeld dat bijgesneden of opgeschaald wordt; auteursblok en verwante artikelen; een label zonder waarde in de byline |
 | `tests/e2e/beeldkaart.spec.ts`             | Een vijfde variant van de uitgelichte kaart (beeld links, tekst rechts), of een foto die binnenmarge krijgt                  |
+| `tests/e2e/langvorm.spec.ts`               | Doorlopende tekst breder dan 80 tekens per regel; een kop midden in de tekst zonder sectiegrens                              |
+| `tests/e2e/sector.spec.ts`                 | Herkenningspunten die als losse regels wegvallen; een gat naast een oneven laatste kaart                                     |
+| `tests/unit/gedeelde-opmaak.spec.ts`       | Een kaart, "meer"-link of kicker met de hand nagebouwd in plaats van `.kaart`, `.meer-link` of `.kicker`                     |
 
 ## Omgeving & valkuilen
 

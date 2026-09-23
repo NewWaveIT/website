@@ -25,12 +25,6 @@
   grid-template-columns: repeat(3, 1fr);
   gap: var(--space-6);
 }
-.p-werken .gcard {
-  background: var(--white);
-  border: 1px solid var(--border-default);
-  border-radius: var(--radius-lg);
-  padding: var(--space-6);
-}
 .p-werken .gcard .num {
   font-family: var(--font-mono);
   font-size: var(--text-sm);

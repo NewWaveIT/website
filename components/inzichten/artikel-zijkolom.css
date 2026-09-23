@@ -18,11 +18,8 @@
 }
 
 .artikel-zij-kop {
-  font-family: var(--font-mono);
-  font-size: var(--text-2xs);
-  text-transform: uppercase;
-  letter-spacing: var(--tracking-kicker);
-  color: var(--text-subtle);
+  --kicker-maat: var(--text-2xs);
+  --kicker-kleur: var(--text-subtle);
   margin: 0 0 var(--space-4);
 }
 

@@ -26,11 +26,8 @@
 }
 
 .auteurblok-label {
-  font-family: var(--font-mono);
-  font-size: var(--text-2xs);
-  text-transform: uppercase;
-  letter-spacing: var(--tracking-kicker);
-  color: var(--text-subtle);
+  --kicker-maat: var(--text-2xs);
+  --kicker-kleur: var(--text-subtle);
   margin-bottom: 4px;
 }
 
@@ -50,12 +47,6 @@
 .auteurblok-link {
   margin-left: auto;
   flex: none;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  font-size: var(--text-sm);
-  font-weight: var(--fw-semibold);
-  color: var(--orange-text);
 }
 
 .auteurblok-link .lucide {

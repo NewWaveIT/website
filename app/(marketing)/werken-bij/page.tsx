@@ -78,7 +78,7 @@ export default async function WerkenBijPage() {
           <SectieKop kicker={t.groeiKicker} titel={t.groeiTitel} intro={t.groeiIntro} />
           <div className="grid">
             {(["1", "2", "3"] as const).map((n) => (
-              <div className="gcard" key={n}>
+              <div className="gcard kaart" key={n}>
                 <div className="num">{`0${n}`}</div>
                 <h3>{t[`groei${n}Titel`]}</h3>
                 <p>{t[`groei${n}Tekst`]}</p>

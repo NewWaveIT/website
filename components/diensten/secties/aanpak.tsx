@@ -30,7 +30,7 @@ export async function PijlersSectie({
         />
         <div className="pillars">
           {pijlers.map((p) => (
-            <div className="pillar" key={p.num}>
+            <div className="pillar kaart" key={p.num}>
               <div className="num">{p.num}</div>
               <h3>{p.titel}</h3>
               <p>{p.p}</p>

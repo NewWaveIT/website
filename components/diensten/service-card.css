@@ -3,10 +3,6 @@
 .svc-card {
   display: flex;
   flex-direction: column;
-  border: 1px solid var(--border-default);
-  border-radius: var(--radius-lg);
-  padding: var(--space-6);
-  background: var(--white);
   scroll-margin-top: 100px;
   transition:
     transform 160ms ease,
@@ -29,14 +25,11 @@
 }
 .svc-fase,
 .svc-richting {
-  font-family: var(--font-mono);
-  font-size: var(--text-2xs);
-  text-transform: uppercase;
-  letter-spacing: var(--tracking-kicker);
-  color: var(--text-subtle);
+  --kicker-maat: var(--text-2xs);
+  --kicker-kleur: var(--text-subtle);
 }
 .svc-fase {
-  color: var(--orange-text);
+  --kicker-kleur: var(--orange-text);
   background: var(--orange-50);
   border-radius: var(--radius-pill);
   padding: 3px 9px;
@@ -64,11 +57,8 @@
   display: flex;
   flex-wrap: wrap;
   gap: 6px 12px;
-  font-size: var(--text-2xs);
-  color: var(--text-subtle);
-  font-family: var(--font-mono);
-  text-transform: uppercase;
-  letter-spacing: var(--tracking-kicker);
+  --kicker-maat: var(--text-2xs);
+  --kicker-kleur: var(--text-subtle);
   margin-bottom: 10px;
 }
 
@@ -177,14 +167,6 @@
 .svc-card--compact .svc-acts .btn {
   width: 100%;
   justify-content: center;
-}
-.svc-meer {
-  font-size: var(--text-sm);
-  font-weight: var(--fw-semibold);
-  color: var(--orange-text);
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
 }
 .svc-meer .lucide {
   width: 15px;

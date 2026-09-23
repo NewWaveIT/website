@@ -89,10 +89,7 @@
 /* ---- Voorbeeld ---- */
 
 .hgen-doek {
-  background: var(--white);
-  border: 1px solid var(--border-default);
-  border-radius: var(--radius-lg);
-  padding: 28px;
+  --kaart-pad: 28px;
   overflow-x: auto;
 }
 /* De handtekening is e-mail-HTML met een vaste opmaak. Op een telefoon perste

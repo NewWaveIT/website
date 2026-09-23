@@ -38,10 +38,6 @@
 .p-klanten .belofte-card {
   display: flex;
   flex-direction: column;
-  border: 1px solid var(--border-default);
-  border-radius: var(--radius-lg);
-  background: var(--white);
-  padding: var(--pad-kaart);
   color: var(--text-body);
   transition:
     transform 160ms,
@@ -104,12 +100,6 @@
 }
 .p-klanten .belofte-card .more {
   margin-top: auto;
-  font-size: var(--text-sm);
-  font-weight: var(--fw-semibold);
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  color: var(--orange-text);
 }
 .p-klanten .belofte-card .more .lucide {
   width: 15px;

@@ -125,7 +125,7 @@ export async function RichtingHub({ richting }: { richting: ServiceRichting }) {
             {hub.tiers.map((tier) => (
               <div className="ladder-stap" key={tier.service.slug}>
                 <div className={`ladder-kop${tier.niveau === 1 ? " ladder-kop--instap" : ""}`}>
-                  <span className="num">{String(tier.niveau).padStart(2, "0")}</span>
+                  <span className="num nummer-badge">{String(tier.niveau).padStart(2, "0")}</span>
                   <span className="label">{tier.label}</span>
                   <span className="kicker">{tier.kicker}</span>
                   {tier.niveau === 1 && <span className="begin">{d.routeKnop}</span>}
