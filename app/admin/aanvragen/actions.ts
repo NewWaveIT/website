@@ -2,7 +2,8 @@
 
 import { revalidatePath } from "next/cache";
 import { createClient } from "@/lib/supabase/server";
-import { getCurrentUser } from "@/lib/dal";
+import { getCurrentUser, gebruikerNaam } from "@/lib/dal";
+import { logAudit } from "@/lib/cms/audit";
 
 export async function updateLead(
   id: string,
@@ -25,6 +26,14 @@ export async function updateLead(
 }
 
 /**
+ * Een verwijderde inzending laat een spoor na, maar geen persoonsgegevens.
+ *
+ * Wie wat wanneer weggooide hoort vastgelegd te zijn; de naam of het adres van
+ * de aanvrager erin zetten zou juist terugbrengen wat er net is verwijderd. Het
+ * kenmerk is daarom de id, en verder niets.
+ */
+
+/**
  * Verwijdert een aanvraag definitief.
  *
  * `.select()` om dezelfde reden als bij de update hierboven: zonder passende
@@ -45,6 +54,15 @@ export async function deleteLead(id: string): Promise<{ ok: boolean; error?: str
     .select("id");
   if (error) return { ok: false, error: error.message };
   if (!data?.length) return { ok: false, error: "Niet gevonden of geen rechten." };
+
+  await logAudit({
+    gebruiker_email: user.email ?? null,
+    gebruiker_naam: gebruikerNaam(user),
+    actie: "verwijderd",
+    content_type: "aanvragen",
+    slug: id,
+    titel: null,
+  });
 
   revalidatePath("/admin/aanvragen");
   revalidatePath("/admin/nieuwsbrief");

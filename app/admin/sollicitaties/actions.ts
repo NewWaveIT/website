@@ -2,7 +2,8 @@
 
 import { revalidatePath } from "next/cache";
 import { createClient } from "@/lib/supabase/server";
-import { getCurrentUser } from "@/lib/dal";
+import { getCurrentUser, gebruikerNaam } from "@/lib/dal";
+import { logAudit } from "@/lib/cms/audit";
 
 export async function updateSollicitatie(
   id: string,
@@ -71,6 +72,18 @@ export async function deleteSollicitatie(id: string): Promise<{ ok: boolean; err
       console.error("[admin] bestanden van sollicitatie niet opgeruimd:", opruimen.message);
     }
   }
+
+  /* Een spoor van de handeling, geen kopie van de gegevens die net zijn
+     weggegooid: wie wat wanneer verwijderde hoort vast te liggen, maar de naam
+     van de sollicitant erin zetten brengt precies terug wat er is gewist. */
+  await logAudit({
+    gebruiker_email: user.email ?? null,
+    gebruiker_naam: gebruikerNaam(user),
+    actie: "verwijderd",
+    content_type: "sollicitaties",
+    slug: id,
+    titel: null,
+  });
 
   revalidatePath("/admin/sollicitaties");
   revalidatePath("/admin");

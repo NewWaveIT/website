@@ -38,7 +38,13 @@ test.describe("contactformulier", () => {
     // Allebei tegelijk, niet veld voor veld: dat is de afspraak in
     // CONTRIBUTING.md. Naam en e-mail zijn de enige verplichte velden; een
     // toelichting mag ontbreken, en die mag dus ook niet meemelden.
-    await expect(page.locator("#err-naam")).toBeVisible();
+    //
+    // Ruimer dan de standaard van vijf seconden, en alleen hier: dit is in de
+    // volledige suite de eerste server action die wordt aangeroepen, en die
+    // eerste aanroep op een net gestarte server duurt langer dan alle volgende.
+    // Los draaien haalde het wel, met de hele suite erbij niet -- dat is de
+    // server die koud staat, niet iets aan het formulier.
+    await expect(page.locator("#err-naam")).toBeVisible({ timeout: 20_000 });
     await expect(page.locator("#err-mail")).toBeVisible();
     await expect(page.locator("#err-msg")).toHaveCount(0);
     await expect(page.locator(".form-card .field-err")).toHaveCount(2);

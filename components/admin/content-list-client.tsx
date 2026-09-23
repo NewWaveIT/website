@@ -226,7 +226,7 @@ export function ContentListClient({
         </p>
       )}
 
-      <div className="card">
+      <div className="card tabel-stapel">
         <table>
           <thead>
             <tr>

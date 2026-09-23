@@ -117,27 +117,10 @@ export async function listContentSamenvatting(
   }
 }
 
-export async function listContent<T = Record<string, unknown>>(
-  type: ContentType,
-): Promise<ContentRow<T>[]> {
-  try {
-    const supabase = await createClient();
-    const { data } = await supabase
-      .from(CONTENT_TABLE[type])
-      .select("*")
-      .order("volgorde", { ascending: true })
-      .order("bijgewerkt_op", { ascending: false })
-      .abortSignal(AbortSignal.timeout(QUERY_TIMEOUT_MS));
-    return (data as ContentRow<T>[]) ?? [];
-  } catch {
-    return [];
-  }
-}
-
 /**
- * Als `listContent`, maar met het verschil tussen "leeg" en "onbereikbaar".
+ * Rijen óf de reden dat ze er niet zijn.
  *
- * `listContent` slikt elke fout en geeft `[]` terug, en dat is voor een lijst
+ * De lijstquery slikt elke fout en geeft `[]` terug, en dat is voor een lijst
  * prima: een lege tabel en een weigerende database zien er voor een redacteur
  * hetzelfde uit. Voor de nulmeting is het gif — die zou "geen afwijkingen"
  * melden terwijl hij niets heeft kunnen lezen.
@@ -156,24 +139,6 @@ export async function listContentOfFout<T = Record<string, unknown>>(
     return { rijen: (data as ContentRow<T>[]) ?? [], fout: null };
   } catch (e) {
     return { rijen: [], fout: (e as Error).message };
-  }
-}
-
-export async function getContentBySlug<T = Record<string, unknown>>(
-  type: ContentType,
-  slug: string,
-): Promise<ContentRow<T> | null> {
-  try {
-    const supabase = await createClient();
-    const { data } = await supabase
-      .from(CONTENT_TABLE[type])
-      .select("*")
-      .eq("slug", slug)
-      .abortSignal(AbortSignal.timeout(QUERY_TIMEOUT_MS))
-      .maybeSingle();
-    return (data as ContentRow<T>) ?? null;
-  } catch {
-    return null;
   }
 }
 

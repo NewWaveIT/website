@@ -28,6 +28,12 @@ export default defineConfig({
   projects: [{ name: "chromium", use: { ...devices["Desktop Chrome"] } }],
   webServer: {
     command: `npm run build && npx next start -p ${PORT}`,
+    // ADMIN_VOORBEELD zet /ontwerp aan: de adminschermen met verzonnen rijen,
+    // waar de WCAG-gate en de editortests tegenaan draaien. Via `env` en niet
+    // in het commando, want een omgevingsvariabele voor een commando zetten
+    // werkt op Windows anders dan op de runner. Op Vercel staat de vlag niet,
+    // dus daar is /ontwerp een 404.
+    env: { ADMIN_VOORBEELD: "1" },
     url: baseURL,
     reuseExistingServer: !process.env.CI,
     timeout: 180_000,

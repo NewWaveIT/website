@@ -1,7 +1,8 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { requireAdmin } from "@/lib/dal";
+import { requireAdmin, gebruikerNaam } from "@/lib/dal";
+import { logAudit } from "@/lib/cms/audit";
 import { createAdminClient } from "@/lib/supabase/admin";
 
 export type GebruikerState = { error?: string; ok?: string };
@@ -13,7 +14,7 @@ export async function createGebruiker(
   _prev: GebruikerState,
   formData: FormData,
 ): Promise<GebruikerState> {
-  await requireAdmin();
+  const wie = await requireAdmin();
 
   const email = String(formData.get("email") ?? "")
     .trim()
@@ -37,6 +38,19 @@ export async function createGebruiker(
     return { error: bestaat ? "Er bestaat al een gebruiker met dit e-mailadres." : error.message };
   }
 
+  /* Rechten weggeven is de zwaarste handeling in deze admin en stond als enige
+     niet in het activiteitenlogboek, terwijl het bijwerken van een paginatitel
+     er wel in komt. Het e-mailadres van de nieuwe beheerder mag hier wél staan:
+     dat is geen gegeven van een bezoeker maar het onderwerp van de handeling. */
+  await logAudit({
+    gebruiker_email: wie.email ?? null,
+    gebruiker_naam: gebruikerNaam(wie),
+    actie: "aangemaakt",
+    content_type: "gebruikers",
+    slug: email,
+    titel: naam,
+  });
+
   revalidatePath("/admin/gebruikers");
   return { ok: `Gebruiker ${naam} aangemaakt.` };
 }
@@ -46,7 +60,7 @@ export async function updateGebruiker(
   _prev: GebruikerState,
   formData: FormData,
 ): Promise<GebruikerState> {
-  await requireAdmin();
+  const wie = await requireAdmin();
 
   const id = String(formData.get("id") ?? "").trim();
   const naam = String(formData.get("naam") ?? "").trim();
@@ -62,6 +76,15 @@ export async function updateGebruiker(
     ...(wachtwoord ? { password: wachtwoord } : {}),
   });
   if (error) return { error: error.message };
+
+  await logAudit({
+    gebruiker_email: wie.email ?? null,
+    gebruiker_naam: gebruikerNaam(wie),
+    actie: "bijgewerkt",
+    content_type: "gebruikers",
+    slug: id,
+    titel: naam,
+  });
 
   revalidatePath("/admin/gebruikers");
   return { ok: "Gebruiker bijgewerkt." };
@@ -82,6 +105,15 @@ export async function setActief(formData: FormData): Promise<void> {
     // 'none' heft de blokkade op; een lange duur deactiveert het account.
     ban_duration: actief ? "none" : "876000h",
   } as Parameters<typeof admin.auth.admin.updateUserById>[1]);
+
+  await logAudit({
+    gebruiker_email: user.email ?? null,
+    gebruiker_naam: gebruikerNaam(user),
+    actie: "bijgewerkt",
+    content_type: "gebruikers",
+    slug: id,
+    titel: actief ? "Weer toegang gegeven" : "Toegang ingetrokken",
+  });
 
   revalidatePath("/admin/gebruikers");
 }

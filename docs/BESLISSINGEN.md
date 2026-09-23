@@ -15,6 +15,22 @@ teruggedraaid, laat het staan en schrijf eronder waarom.
 
 ## Content en tekst
 
+**Een verwijderde inzending laat een spoor na, maar geen persoonsgegevens** — 23 september 2026
+Het verwijderen van een contactaanvraag, een sollicitatie met cv, en het aanmaken of
+blokkeren van een beheerder stonden als enige handelingen niet in het activiteitenlogboek,
+terwijl het bijwerken van een paginatitel er wel in kwam. Dat is nu omgedraaid. Wat er
+niet in staat is de naam of het adres van de aanvrager: dat zou terugbrengen wat er net is
+gewist. Het kenmerk is de id en verder niets. Bij een beheerder mag het e-mailadres er
+wél in, want dat is geen gegeven van een bezoeker maar het onderwerp van de handeling.
+
+**De WCAG-gate op de admin meet de echte componenten, niet een kopie** — 23 september 2026
+`tests/e2e/fixtures/admin-schil.html` was 407 regels handgeschreven markup naast de echte
+`admin.css`, omdat CI niet achter de Supabase-auth komt. Contrast en focus ving dat, maar
+niets merkte wanneer een component veranderde en de kopie achterbleef -- de bewaker die je
+niet hebt zien falen. `/ontwerp` rendert nu de echte componenten met verzonnen rijen. Die
+route is geen beveiligingsrisico maar wel een gesloten deur: alleen in ontwikkeling en met
+`ADMIN_VOORBEELD=1`, die `playwright.config.ts` zet en Vercel niet.
+
 **De donkere handtekening neemt zijn eigen vlak mee** — 23 september 2026
 De donkere variant zette lichtere tekstkleuren en het witte logo, maar geen achtergrond.
 Op /medewerkerspakket zag dat er goed uit, want daar stond het donkere vlak in de CSS van

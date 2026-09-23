@@ -24,12 +24,22 @@ const LEAD_KOLOMMEN =
 const SOLLICITATIE_KOLOMMEN =
   "id, created_at, vacature_slug, naam, email, telefoon, motivatie, motivatie_url, link_url, cv_url, status, interne_notitie";
 
+/**
+ * Aanvragen voor het opvolgbord.
+ *
+ * Zonder het filter op `type` stond elke nieuwsbriefaanmelding hier als kaartje
+ * met een statuskeuze, een eigenaar en een notitieveld -- voor iets dat alleen
+ * een e-mailadres is. Ze hebben hun eigen pagina (/admin/nieuwsbrief) en aten
+ * bovendien uit dezelfde limiet van duizend. De kolom is `not null default
+ * 'contact'`, dus `neq` laat hier geen rijen stilletjes vallen.
+ */
 export async function getLeads(): Promise<Lead[]> {
   try {
     const supabase = await createClient();
     const { data } = await supabase
       .from("contact_aanvragen")
       .select(LEAD_KOLOMMEN)
+      .neq("type", "inzichten")
       .order("created_at", { ascending: false })
       .limit(MAX_RIJEN);
     return (data as unknown as Lead[]) ?? [];

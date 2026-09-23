@@ -2113,9 +2113,45 @@
   .cms .ce-actions-row .btn {
     flex: 0 0 auto;
   }
-  /* Ruimte zodat het laatste veld niet onder de balk verdwijnt. */
+  /* Ruimte zodat het laatste veld niet onder de balk verdwijnt. Gemeten is de
+     balk hier 94px hoog; 84 was te weinig en het laatste veld verdween er voor
+     tien pixels onder. `tests/e2e/admin-editor.spec.ts` meet dit nu op zes
+     breedtes, zodat een vijfde knop zich meldt in plaats van iets af te dekken. */
   .cms .ce-grid {
-    padding-bottom: 84px;
+    padding-bottom: 104px;
+  }
+}
+
+/* Op een telefoon passen drie of vier knoppen niet naast elkaar. Gemeten op
+   390px: "Annuleren" liep van 314 tot 420, dus dertig pixels buiten beeld, en
+   de balk schuift niet -- die knop was simpelweg niet te bereiken. Bij een
+   opgeslagen live item staat er ook nog "Bekijk" bij.
+
+   Opslaan krijgt de volle breedte, de rest staat eronder en mag afbreken. De
+   ruimte onder het formulier groeit mee, anders verdwijnt het laatste veld
+   onder de balk. */
+@media (max-width: 640px) {
+  .cms .ce-actions {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--space-2);
+  }
+  .cms .ce-actions > .btn {
+    width: 100%;
+  }
+  .cms .ce-actions-row {
+    flex: none;
+    flex-wrap: wrap;
+    justify-content: stretch;
+  }
+  .cms .ce-actions-row .btn {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+  /* Gemeten 200px bij vier knoppen op 320 breed, waar "Opslaan en doorgaan"
+     alleen op een eigen regel past. */
+  .cms .ce-grid {
+    padding-bottom: 224px;
   }
 }
 
@@ -2220,4 +2256,73 @@
 
 body.cms-menu-open {
   overflow: hidden;
+}
+
+/* Wegwijzer op /ontwerp. Staat hier en niet in een eigen bestand omdat het
+   dezelfde schil is; het is één lijstje links. */
+.ontwerp-lijst {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+.ontwerp-lijst li {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+/* Een tabel die op een telefoon een stapel kaartjes wordt.
+
+   Aanleiding: de contentlijst hield op 390px zijn vier kolommen. "Laatst
+   bewerkt" brak daardoor af tot één letter per regel (L-A-A-T-S-T) en de datum
+   werd "20 / sep / 202 / 6 · / Voor / beeld". Onleesbaar, en het is het scherm
+   waar een redacteur begint.
+
+   De markup blijft een echte tabel -- het slepen en de pijltjesbediening hangen
+   aan die structuur -- alleen de weergave stapelt. De kolomkoppen verdwijnen:
+   bij één kolom per regel zegt een statuschip zelf al wat hij is, en een datum
+   ook. Zet `tabel-stapel` op de kaart eromheen. */
+@media (max-width: 640px) {
+  .cms .tabel-stapel table,
+  .cms .tabel-stapel tbody {
+    display: block;
+  }
+  .cms .tabel-stapel thead {
+    display: none;
+  }
+  .cms .tabel-stapel tr {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: start;
+    gap: 0 var(--space-3);
+    padding: var(--space-4) var(--space-5);
+    border-bottom: 1px solid var(--border-default);
+  }
+  .cms .tabel-stapel tr:last-child {
+    border-bottom: 0;
+  }
+  /* De klasse erbij omdat `.cms tbody tr.clickable td` de binnenmarge van een
+     klikbare rij op 16px zet; zonder die extra klasse wint dat op specificiteit
+     en houdt elke cel 32px lucht die niemand heeft gevraagd. */
+  .cms .tabel-stapel tbody tr.clickable td,
+  .cms .tabel-stapel td {
+    display: block;
+    border: 0;
+    padding: 0;
+    grid-column: 2;
+  }
+  .cms .tabel-stapel td.t-grip-cell {
+    grid-column: 1;
+    grid-row: 1 / -1;
+    align-self: center;
+  }
+  .cms .tabel-stapel td + td {
+    margin-top: var(--space-2);
+  }
+  .cms .tabel-stapel .t-rechts {
+    text-align: left;
+  }
 }
