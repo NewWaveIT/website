@@ -35,6 +35,9 @@
   .p-sectoren .werkwijze .grid {
     grid-template-columns: 1fr;
   }
+  .p-sectoren .shero-anim {
+    display: none;
+  }
 }
 
 /* Sectoren · split-index (overzichtsvariant) */
