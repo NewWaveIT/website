@@ -322,6 +322,7 @@ te weten welke.
 | `tests/unit/gedeelde-opmaak.spec.ts`       | Een kaart, "meer"-link of kicker met de hand nagebouwd in plaats van `.kaart`, `.meer-link` of `.kicker`                                      |
 | `tests/unit/handtekening.spec.ts`          | Een donkere e-mailhandtekening zonder eigen achtergrond (wit op wit in Outlook); een naam die de tabel openbreekt                             |
 | `tests/e2e/admin-editor.spec.ts`           | Een knop van de editorbalk buiten beeld, een balk die het laatste veld afdekt, een van de vijf admintabellen die op een telefoon niet stapelt |
+| `tests/e2e/kritieke-css.spec.ts`           | Een `<style>` in de productie-HTML: die weigert de CSP (`style-src-elem 'self'`) en de pagina komt kaal binnen                                |
 | `tests/unit/handtekening.spec.ts`          | Een donkere e-mailhandtekening zonder eigen achtergrond (wit op wit in Outlook); een naam die de tabel openbreekt                             |
 
 ## Omgeving & valkuilen

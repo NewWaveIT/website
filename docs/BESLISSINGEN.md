@@ -15,6 +15,24 @@ teruggedraaid, laat het staan en schrijf eronder waarom.
 
 ## Content en tekst
 
+**De CSS blijft in een stylesheet staan, ook al kost dat 660ms** — 24 september 2026
+PageSpeed meldde 450ms aan renderblokkerende verzoeken op de homepage. Met
+`experimental.inlineCss` zet Next de opmaak als `<style>` in de head; gemeten op 412px met
+een 4x trage cpu en traag 4G gingen FCP en LCP van 1300 naar 640ms, en een terugkerende
+bezoeker betaalde er 84ms voor. Op die cijfers alleen is dat een goede ruil.
+
+Maar de CSP zet `style-src-elem 'self'` bewust dicht, met in `next.config.ts` de
+onderbouwing dat de productie-HTML geen enkel `<style>`-element bevat en een geïnjecteerd
+blok daarmee geweigerd blijft. Met de vlag aan weigerde de browser precies dat ene blok en
+kwam de hele site kaal binnen: Times New Roman, geen enkele token opgelost. In de HTML was
+niets te zien -- alleen de console zei het.
+
+Die 660ms is dus niet gratis; hij kost een beveiligingsmaatregel. De vlag staat daarom uit.
+Wil je hem alsnog, dan hoort daar een expliciet besluit bij over `style-src-elem`, of een
+nonce -- en dat laatste vraagt de CSP uit `next.config.ts` naar `proxy.ts` te verhuizen,
+waarmee elke pagina per request gerenderd wordt en de edge-cache eraf gaat.
+`tests/e2e/kritieke-css.spec.ts` bewaakt sindsdien de aanname waar de CSP op rust.
+
 **Het statuschipje "nieuw" gebruikt --orange-text, niet flame** — 23 september 2026
 `.chip.nieuw` zette `--color-primary` (#f15822) als tekstkleur op een lichte oranje
 achtergrond: 3,02:1 bij 11px tekst, waar 4,5 nodig is. Met `--orange-text` (#c2410c) is het

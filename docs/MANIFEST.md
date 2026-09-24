@@ -67,4 +67,4 @@ faalt de unittest.
 - clientComponenten: 41
 - servercomponenten: 180
 - unittests: 37
-- e2etests: 11
+- e2etests: 12
