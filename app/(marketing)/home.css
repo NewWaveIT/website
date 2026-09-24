@@ -819,8 +819,24 @@
   .mensen .grid {
     grid-template-columns: 1fr;
   }
+  /* De 1.6fr/1fr-verdeling van de desktopcollage maakt de grote foto op een
+     smalle kolom veel te smal en te hoog: object-fit: cover sneed dan het
+     grootste deel van de foto rechts en links weg. Op mobiel dus liever de
+     grote foto losstaand bovenaan, op zijn eigen beeldverhouding (geen crop),
+     met de twee portretten ernaast eronder. */
+  .mensen .collage {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto;
+  }
   .mensen .collage .big {
-    min-height: 260px;
+    grid-row: 1;
+    grid-column: 1 / -1;
+    aspect-ratio: 1600 / 1417;
+    min-height: 0;
+  }
+  .mensen .collage .small {
+    min-height: 0;
+    aspect-ratio: 1 / 1;
   }
   .joinus .grid {
     grid-template-columns: 1fr;
