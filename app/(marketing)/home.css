@@ -701,13 +701,6 @@
   letter-spacing: var(--tracking-kicker);
 }
 
-/* Inzichten */
-.cards3 {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: var(--space-6);
-}
-
 /* Lead-gen */
 .lead-grid {
   display: grid;
