@@ -89,15 +89,18 @@
   gap: var(--space-9);
   align-items: center;
 }
+/* founders-trio.webp is een uitgeknipte (transparante) compositie, geen
+   rechthoekige foto: de container volgt zijn eigen beeldverhouding zodat er
+   nooit hoofden worden afgesneden, en de drop-shadow verankert de figuren op
+   de pagina in plaats van dat de harde uitknip-rand op het vlak zelf opvalt. */
 .p-over .team .media-img {
   position: relative;
   width: 100%;
-  min-height: 360px;
-  border-radius: var(--radius-lg);
-  overflow: hidden;
+  aspect-ratio: 1600 / 1067;
 }
 .p-over .team .media-img img {
-  object-fit: cover;
+  object-fit: contain;
+  filter: drop-shadow(0 16px 24px rgba(24, 19, 12, 0.18));
 }
 .p-over .team p {
   font-size: var(--text-md);
