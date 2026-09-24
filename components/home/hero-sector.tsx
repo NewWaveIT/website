@@ -178,8 +178,7 @@ export function HeroSector({
           </span>
         </p>
         <h1 className="hsec-h1">
-          {titel}
-          <span className="hsec-h1-accent">{accent}</span>
+          {titel} <span className="hsec-h1-accent">{accent}</span>
           {staart}
         </h1>
         <p className="hsec-intro">{lead}</p>
