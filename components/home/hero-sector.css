@@ -47,6 +47,15 @@
     hsecKen var(--hsec-cyclus) linear both;
 }
 
+/* De eerste scene: wel de inzoom, geen infade. `hsecFade` begint op opacity 0
+   en een doorzichtig element telt niet mee voor Largest Contentful Paint, dus
+   de hero stond tot 1,1 seconde lang niet als geschilderd geregistreerd. Vanaf
+   de tweede scene is de infade juist nodig, want dan is er een vorige foto om
+   overheen te komen. */
+.hsec-foto-eerst {
+  animation: hsecKen var(--hsec-cyclus) linear both;
+}
+
 /* De uitgaande foto zakt naar de onderlaag, en die heeft geen animatie. Zonder
    deze regel springt hij daar terug naar scale(1) en zie je hem één frame
    onvergroot staan voordat de nieuwe eroverheen fadet. Hij blijft dus staan
@@ -369,6 +378,7 @@
 
 @media (prefers-reduced-motion: reduce) {
   .hsec-foto-in,
+  .hsec-foto-eerst,
   .hsec-sector,
   .hsec-real {
     animation: none;

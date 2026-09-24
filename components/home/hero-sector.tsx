@@ -130,6 +130,8 @@ export function HeroSector({
   const { i } = scene;
   const s = SCENES[i]!;
   const vorigeScene = SCENES[scene.vorige]!;
+  /** De server-HTML en het eerste frame: één scene, niets om naar over te vloeien. */
+  const eersteWeergave = scene.vorige === i;
 
   return (
     <section
@@ -138,22 +140,33 @@ export function HeroSector({
       style={{ "--hsec-cyclus": `${CYCLE_MS}ms` } as CSSProperties}
     >
       <div className="hsec-beeld">
-        {/* Onderlaag: de scene waar we vandaan komen. Die staat stil op de
-            eindstand van de inzoom, anders springt hij bij de wissel terug. */}
-        <Image
-          className={`hsec-foto${scene.vorige === i ? "" : " hsec-foto-uit"}`}
-          src={vorigeScene.foto}
-          alt=""
-          fill
-          sizes="100vw"
-          aria-hidden="true"
-        />
+        {/* Bij de eerste weergave is er niets om vandaan te komen: beide lagen
+            tonen dezelfde foto. De onderlaag bleef dan als tweede <img> staan
+            met `loading="lazy"`, en dát is de afbeelding die Lighthouse als
+            LCP-element aanwees -- met precies die twee opmerkingen erbij: geen
+            lazy op de LCP-bron, en zet er fetchpriority=high op. Weglaten is
+            eenvoudiger dan hem eager maken, en scheelt een verzoek. */}
+        {!eersteWeergave && (
+          <Image
+            className="hsec-foto hsec-foto-uit"
+            src={vorigeScene.foto}
+            alt=""
+            fill
+            sizes="100vw"
+            aria-hidden="true"
+          />
+        )}
         {/* Bovenlaag: de huidige scene, fadet in en zoomt langzaam uit.
             `priority` alleen op de scene die in de server-HTML staat: dat is de
-            LCP-afbeelding. De rest komt binnen tijdens de crossfade. */}
+            LCP-afbeelding. De rest komt binnen tijdens de crossfade.
+
+            Bij de eerste weergave geen infade: die begint op doorzichtig, en een
+            element met opacity 0 telt niet mee voor LCP. De hero stond daardoor
+            tot 1,1 seconde lang niet als geschilderd geregistreerd terwijl de
+            foto er allang was. De langzame inzoom blijft wel staan. */}
         <Image
           key={s.key}
-          className="hsec-foto hsec-foto-in"
+          className={`hsec-foto ${eersteWeergave ? "hsec-foto-eerst" : "hsec-foto-in"}`}
           src={s.foto}
           alt=""
           fill
