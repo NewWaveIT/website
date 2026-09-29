@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Archivo, IBM_Plex_Sans, IBM_Plex_Mono } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
 import { SITE_URL } from "@/lib/site";
 import "./globals.css";
 
@@ -61,7 +62,19 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="nl" className={`${archivo.variable} ${plexSans.variable} ${plexMono.variable}`}>
-      <body>{children}</body>
+      <body>
+        {children}
+        {/* Vercel Web Analytics. Staat bewust niet achter de cookiemelding: hij
+            zet geen enkele cookie en leest er geen, dus de belofte in die
+            melding ("alleen functionele cookies") blijft kloppen. Google
+            Analytics staat er wél achter, want dát zet cookies — zie
+            components/consent/consent.tsx.
+
+            Ook bewust niets aan de CSP veranderd: in productie haalt hij zijn
+            script van /_vercel/insights/script.js en stuurt hij naar
+            /_vercel/insights/event, allebei op ons eigen domein. */}
+        <Analytics />
+      </body>
     </html>
   );
 }
