@@ -57,6 +57,21 @@ niet hebt zien falen. `/ontwerp` rendert nu de echte componenten met verzonnen r
 route is geen beveiligingsrisico maar wel een gesloten deur: alleen in ontwikkeling en met
 `ADMIN_VOORBEELD=1`, die `playwright.config.ts` zet en Vercel niet.
 
+**Een handtekening wijst alleen naar het eigen domein** — 5 oktober 2026
+De generator had een vinkje "Het domein staat nog niet om", dat het logo op
+`thenewwaveit.vercel.app` liet wijzen zolang www nog naar de oude site ging. In de
+toelichting stond dat dat adres "ook daarna blijft werken". Dat klopte niet: zodra het
+productiedomein was toegewezen gaf die hostnaam een 404, en stond er bij iedereen die met
+dat vinkje aan had gekopieerd een kapot logo onder elke mail. Het vinkje is weg en de
+handtekening gebruikt altijd `SITE_URL`.
+
+De les erachter is breder dan dit vinkje. Een handtekening is geen pagina die je opnieuw
+uitrolt: hij staat in andermans Outlook en is daar niet meer te repareren. Alles wat je
+erin zet moet dus het adres zijn dat blijft, ook als dat betekent dat het een paar dagen
+niet werkt. `tests/unit/handtekening.spec.ts` controleert dat het logo absoluut is, op
+`SITE_URL` staat en dat het bestand in `public/handtekening/` bestaat, en dat er geen
+tweede hostnaam in het bestand opduikt.
+
 **De donkere handtekening neemt zijn eigen vlak mee** — 23 september 2026
 De donkere variant zette lichtere tekstkleuren en het witte logo, maar geen achtergrond.
 Op /medewerkerspakket zag dat er goed uit, want daar stond het donkere vlak in de CSS van

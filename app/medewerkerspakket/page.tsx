@@ -23,8 +23,6 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
-const VERCEL_URL = "https://thenewwaveit.vercel.app";
-
 interface Uiting {
   bestand: string;
   naam: string;
@@ -233,7 +231,7 @@ export default function MedewerkerspakketPagina() {
           Vul je gegevens in, kopieer, en plak in Outlook of Gmail. Het voorbeeld hiernaast is
           precies wat er op je klembord komt.
         </p>
-        <Generator siteUrl={SITE_URL} vercelUrl={VERCEL_URL} />
+        <Generator siteUrl={SITE_URL} />
 
         <div className="pak-logos">
           <h3>Het logo uit de handtekening</h3>

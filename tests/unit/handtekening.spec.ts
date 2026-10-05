@@ -1,4 +1,7 @@
+import { existsSync, readFileSync } from "node:fs";
+import { join } from "node:path";
 import { describe, expect, it } from "vitest";
+import { SITE_URL } from "@/lib/site";
 import { bouwHandtekening, mailUitNaam, type Gegevens } from "@/components/handtekening/generator";
 
 /**
@@ -129,5 +132,41 @@ describe("e-mailadres uit de naam", () => {
     expect(mailUitNaam("Mitchel")).toBe("");
     expect(mailUitNaam("")).toBe("");
     expect(mailUitNaam("   ")).toBe("");
+  });
+});
+
+/**
+ * Het logo wijst naar het eigen domein, en dat bestand bestaat ook.
+ *
+ * Aanleiding: de generator had een vinkje "Het domein staat nog niet om" dat
+ * de handtekening op thenewwaveit.vercel.app liet wijzen, met in de toelichting
+ * de belofte dat dat adres "ook daarna blijft werken". Dat was niet waar. Zodra
+ * het productiedomein was toegewezen gaf die hostnaam een 404, en stond er bij
+ * iedereen die met dat vinkje aan had gekopieerd een kapot logo onder elke mail.
+ *
+ * Een handtekening leeft jaren in andermans mailclient en is daarna niet meer
+ * te repareren: het adres erin moet dus het adres zijn dat blijft. Het vinkje
+ * is weg; deze test houdt het weg.
+ */
+describe("het logo in de handtekening", () => {
+  for (const donker of [false, true]) {
+    it(`staat op ${SITE_URL} en bestaat (${donker ? "donker" : "licht"})`, () => {
+      const html = bouwHandtekening({ ...BASIS, donker, basisUrl: SITE_URL });
+      const src = /<img src="([^"]+)"/.exec(html)?.[1] ?? "";
+
+      expect(src, "een mailclient laadt geen relatief pad").toMatch(/^https:\/\//);
+      expect(src.startsWith(`${SITE_URL}/`), `${src} staat niet op ${SITE_URL}`).toBe(true);
+
+      const bestand = join("public", src.slice(SITE_URL.length + 1));
+      expect(existsSync(bestand), `${bestand} staat niet in de repo`).toBe(true);
+    });
+  }
+
+  it("biedt geen tweede hostnaam aan", () => {
+    const bron = readFileSync(join("components", "handtekening", "generator.tsx"), "utf8");
+    expect(
+      bron,
+      "een voorbeeld- of previewdomein verloopt; de handtekening blijft op het eigen domein",
+    ).not.toMatch(/vercel\.app|localhost|ngrok|\.test\b/);
   });
 });

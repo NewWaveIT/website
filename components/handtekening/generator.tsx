@@ -146,7 +146,7 @@ ${kern}
 </table>`;
 }
 
-export function Generator({ siteUrl, vercelUrl }: { siteUrl: string; vercelUrl: string }) {
+export function Generator({ siteUrl }: { siteUrl: string }) {
   const [naam, setNaam] = useState("Voornaam Achternaam");
   const [functie, setFunctie] = useState("Functietitel");
   const [email, setEmail] = useState("voornaam.achternaam@thenewwaveit.com");
@@ -155,14 +155,13 @@ export function Generator({ siteUrl, vercelUrl }: { siteUrl: string; vercelUrl: 
   const [emailZelf, setEmailZelf] = useState(false);
   const [telefoon, setTelefoon] = useState("+31 6 00 00 00 00");
   const [donker, setDonker] = useState(false);
-  const [viaVercel, setViaVercel] = useState(false);
   const [gekopieerd, setGekopieerd] = useState<"html" | "opmaak" | null>(null);
   const [toonBron, setToonBron] = useState(false);
 
   const velden = { naam, functie, email, telefoon, donker };
 
   /** Wat op het klembord komt: met de absolute URL die een mailclient nodig heeft. */
-  const html = bouwHandtekening({ ...velden, basisUrl: viaVercel ? vercelUrl : siteUrl });
+  const html = bouwHandtekening({ ...velden, basisUrl: siteUrl });
 
   /**
    * Wat het voorbeeld toont. Zelfde functie, zelfde opmaak, maar met een
@@ -258,22 +257,6 @@ export function Generator({ siteUrl, vercelUrl }: { siteUrl: string; vercelUrl: 
             <span className="hgen-hint">
               Wit logo op een espressokleurig vlak. Dat vlak gaat mee in de mail, dus ook wie in een
               licht thema leest ziet het donkere blok.
-            </span>
-          </label>
-        </div>
-
-        <div className="hgen-schakel">
-          <input
-            id="hg-vercel"
-            type="checkbox"
-            checked={viaVercel}
-            onChange={(e) => setViaVercel(e.target.checked)}
-          />
-          <label htmlFor="hg-vercel">
-            Het domein staat nog niet om
-            <span className="hgen-hint">
-              Zolang www.thenewwaveit.com nog naar de oude site wijst, blijft het logo leeg. Deze
-              optie gebruikt een adres dat nu al werkt, en ook daarna blijft werken.
             </span>
           </label>
         </div>
