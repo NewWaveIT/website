@@ -1476,7 +1476,8 @@ footer.site-footer {
 /* Citaat uit de lopende tekst. `blockquote` komt uit de editor, `.pull` uit een
    klantverhaal; het is dezelfde vorm, dus dezelfde regel. */
 .langvorm blockquote,
-.langvorm .pull {
+.langvorm .pull,
+.p-case .qblock blockquote {
   border-left: 3px solid var(--color-primary);
   padding: var(--space-2) 0 var(--space-2) var(--space-6);
   margin: var(--space-7) 0;

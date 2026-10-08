@@ -215,12 +215,9 @@ export default async function CasePage({ params }: { params: Promise<{ slug: str
 
       <section className="block qblock">
         <div className="wrap-wide">
-          <div className="av" />
-          <div>
-            <blockquote>{citaat(k.quote)}</blockquote>
-            <div className="who">
-              <strong>{k.quoteNaam}</strong>, {k.quoteRol}
-            </div>
+          <blockquote>{citaat(k.quote)}</blockquote>
+          <div className="who">
+            <strong>{k.quoteNaam}</strong>, {k.quoteRol}
           </div>
         </div>
       </section>

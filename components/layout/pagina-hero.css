@@ -19,6 +19,15 @@
   margin-top: var(--space-6);
 }
 
+/* Een pill die als kicker wordt meegegeven krijgt dezelfde afstand tot het
+   kruimelpad als .kicker en .badge hierboven. Alleen als direct kind: de
+   vacature- en dienstenpagina zetten hun pills in een `.tags`-rij, en die
+   draagt die marge zelf al. Zonder deze regel plakte de oranje pill op een
+   klantverhaal tegen de kruimels aan. */
+.pkop > .wrap-wide > .tag {
+  margin-top: var(--space-6);
+}
+
 .pkop h1 {
   font-family: var(--font-display-expanded);
   font-weight: var(--fw-black);

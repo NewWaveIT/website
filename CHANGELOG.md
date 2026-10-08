@@ -10,6 +10,13 @@ Welk niveau wanneer hoort, staat in [`CLAUDE.md`](CLAUDE.md#werkwijze-bij-elke-w
 Een wijziging zonder gevolg voor de site (alleen tests, documentatie, een refactor) krijgt
 geen eigen versie; die valt onder de eerstvolgende regel hieronder.
 
+## 1.0.3 — 8 oktober 2026
+
+- Klantverhaal: de oranje pill onder het kruimelpad heeft weer lucht boven zich.
+- Klantverhaal: het citaat onderaan had een lege grijze cirkel naast zich, een fotoplek die
+  nooit gevuld werd. Die is weg; het citaat staat nu gecentreerd in de huisvorm met de
+  oranje lijn ernaast.
+
 ## 1.0.2 — 8 oktober 2026
 
 - Beveiligingsupdates: Next naar 16.3.8, sharp naar 0.35.5. Daarmee zijn alle elf

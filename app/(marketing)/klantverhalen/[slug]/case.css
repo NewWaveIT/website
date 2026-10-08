@@ -239,33 +239,26 @@
 .p-case .qblock {
   background: var(--eggshell);
 }
-.p-case .qblock .wrap-wide {
-  display: flex;
-  gap: var(--space-7);
-  align-items: center;
-}
-.p-case .qblock .av {
-  width: 88px;
-  height: 88px;
-  border-radius: 50%;
-  background: var(--ink-200);
-  flex: none;
-  overflow: hidden;
-}
-.p-case .qblock .av img {
-  object-fit: cover;
-}
+/* Hier stond een lege grijze cirkel van 88px: een fotoplek die nooit een foto
+   kreeg, want een klantverhaal heeft geen portret van de spreker. Het citaat
+   draagt zichzelf nu, met de citaatvorm die in globals.css staat (flame-lijn
+   links, display-font). Die vorm stond daar al twee keer voor de lopende tekst;
+   dit is de derde, dus hij is daar gedeeld in plaats van hier nagebouwd. */
 .p-case .qblock blockquote {
-  font-family: var(--font-display);
-  font-weight: var(--fw-semibold);
-  font-size: var(--text-lg);
-  line-height: var(--leading-normal);
-  color: var(--text-strong);
-  margin: 0 0 var(--space-4);
-  max-width: 52ch;
-  text-wrap: pretty;
+  margin: 0 auto var(--space-5);
+  max-width: var(--leesbreedte);
+}
+.p-case .qblock .who,
+.p-case .qblock blockquote {
+  /* Een losse band, geen lopende tekst: de kolom staat gecentreerd in plaats
+     van tegen de linkermarge, anders hangt alles aan een kant nu de fotoplek
+     weg is. */
+  margin-inline: auto;
+  max-width: var(--leesbreedte);
 }
 .p-case .qblock .who {
+  /* Uitlijnen met de tekst in het citaat, niet met de flame-lijn. */
+  padding-left: calc(var(--space-6) + 3px);
   font-size: var(--text-sm);
   color: var(--text-muted);
 }
@@ -286,10 +279,6 @@
   }
   .p-case .article aside {
     position: static;
-  }
-  .p-case .qblock .wrap-wide {
-    flex-direction: column;
-    align-items: flex-start;
   }
   .p-case .resultaat-kaarten {
     grid-template-columns: 1fr;
