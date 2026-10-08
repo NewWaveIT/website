@@ -10,6 +10,13 @@ Welk niveau wanneer hoort, staat in [`CLAUDE.md`](CLAUDE.md#werkwijze-bij-elke-w
 Een wijziging zonder gevolg voor de site (alleen tests, documentatie, een refactor) krijgt
 geen eigen versie; die valt onder de eerstvolgende regel hieronder.
 
+## 1.0.2 — 8 oktober 2026
+
+- Beveiligingsupdates: Next naar 16.3.8, sharp naar 0.35.5. Daarmee zijn alle elf
+  kwetsbaarheden weg die GitHub op de repository meldde. De enige die ons werkelijk raakte
+  was server-side request forgery in de afbeeldingsoptimalisatie; de kritieke melding zat
+  in `next/og`, dat we nergens gebruiken.
+
 ## 1.0.1 — 8 oktober 2026
 
 - De foutpagina herkent nu de situatie waarin er een nieuwe versie is uitgerold terwijl je
