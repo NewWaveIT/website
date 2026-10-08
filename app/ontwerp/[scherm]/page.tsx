@@ -14,6 +14,7 @@ import {
   VOORBEELD_LEADS,
   VOORBEELD_NIEUWSBRIEF,
   VOORBEELD_RIJ,
+  VOORBEELD_RIJ_ITEM,
   VOORBEELD_RIJEN,
   voorbeeldToegestaan,
 } from "@/lib/cms/voorbeeldrijen";
@@ -99,6 +100,20 @@ export default async function OntwerpScherm({ params }: { params: Promise<{ sche
       <>
         <Kop sleutel={sleutel} />
         <AanvragenBoard leads={VOORBEELD_LEADS} eigenaren={["Voorbeeld", "Tweede Voorbeeld"]} />
+      </>
+    );
+  }
+
+  if (sleutel === "editor-webadres") {
+    return (
+      <>
+        <Kop sleutel={sleutel} />
+        <ContentEditor
+          type="cases"
+          label={ADMIN_PADEN.cases.label}
+          listPath="/ontwerp"
+          row={VOORBEELD_RIJ_ITEM}
+        />
       </>
     );
   }

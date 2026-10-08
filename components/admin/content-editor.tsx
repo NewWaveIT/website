@@ -109,11 +109,16 @@ export function ContentEditor({
   // Volgorde telt alleen waar lijsten handmatig geordend worden.
   const showOrder = type !== "artikelen" && type !== "paginas";
 
-  // Nieuw item: webadres volgt automatisch de titel. Bestaand item: adres blijft vast.
+  // Nieuw item: het webadres volgt automatisch de titel. Bestaand item: niet,
+  // want dan zou een titelcorrectie stilletjes de live URL verleggen. Daar pas
+  // je het adres met de hand aan, met de waarschuwing erbij.
   const onTitel = (v: string) => {
     setTitel(v);
     if (isNew) setSlug(slugify(v));
   };
+
+  /** Een bestaand item waarvan het webadres is aangepast maar nog niet opgeslagen. */
+  const slugGewijzigd = !isNew && slug !== (row?.slug ?? "");
 
   // Elke wijziging in het formulier markeert het als vuil. Met een gewone
   // DOM-listener op het formulier, niet met React's `onChange`: die slaat
@@ -311,7 +316,10 @@ export function ContentEditor({
         <input type="hidden" name="type" value={type} />
         <input type="hidden" name="id" value={row?.id ?? "new"} />
         <VerborgenWaarde name="status" value={status} />
-        {!isNew && <input type="hidden" name="slug" value={slug} />}
+        {/* Alleen voor pagina-ingangen: hun slug is geen webadres maar de sleutel
+            waarmee PAGE_FIELDS de velden opzoekt, dus die mag niet wijzigen. De
+            overige typen hebben hieronder een gewoon invoerveld. */}
+        {!isNew && isPaginas && <input type="hidden" name="slug" value={slug} />}
         {!showOrder && <input type="hidden" name="volgorde" value={row?.volgorde ?? 0} />}
 
         {state.error && (
@@ -437,7 +445,7 @@ export function ContentEditor({
                 </p>
               </div>
 
-              {isNew ? (
+              {isNew || !isPaginas ? (
                 <div className={cn("fld", !showOrder && "fld-laatste")}>
                   <label htmlFor="ce-slug">Webadres</label>
                   <input
@@ -449,16 +457,26 @@ export function ContentEditor({
                     pattern="[a-z0-9\-]+"
                     required
                   />
-                  <p className="veldhulp">Wordt automatisch gemaakt van de titel.</p>
-                </div>
-              ) : !isPaginas ? (
-                <div className={cn("fld", !showOrder && "fld-laatste")}>
-                  <label htmlFor="ce-slug">Webadres</label>
-                  <div className="ce-perma">
-                    <code>
-                      {basis ?? ""}/{slug}
-                    </code>
-                  </div>
+                  <p className="veldhulp">
+                    {isNew ? (
+                      "Wordt automatisch gemaakt van de titel."
+                    ) : (
+                      <>
+                        Komt op{" "}
+                        <code>
+                          {basis ?? ""}/{slug}
+                        </code>
+                        .
+                      </>
+                    )}
+                  </p>
+                  {slugGewijzigd && (
+                    <p className="veldhulp veldwaarschuwing" role="status">
+                      {row?.status === "live"
+                        ? `Let op: dit item staat live op ${basis ?? ""}/${row?.slug}. Dat adres geeft na het opslaan een 404, dus links en zoekresultaten die ernaar wijzen werken niet meer.`
+                        : `Je verandert het webadres van ${row?.slug} naar ${slug}.`}
+                    </p>
+                  )}
                 </div>
               ) : null}
 

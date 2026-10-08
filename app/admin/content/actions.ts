@@ -98,7 +98,11 @@ export async function saveContent(_prev: SaveState, formData: FormData): Promise
   let rijId = id;
   if (bestaat) {
     const { error } = await supabase.from(table).update(record).eq("id", id);
-    if (error) return { error: error.message };
+    // 23505 is de unieke index op (type, slug). Dat kan nu ook bij een update
+    // gebeuren, sinds het webadres van een bestaand item aanpasbaar is.
+    if (error) {
+      return { error: error.code === "23505" ? "Deze slug bestaat al." : error.message };
+    }
   } else {
     // `.select("id")` erbij omdat "Opslaan en doorgaan" bij een nieuw item
     // terug moet naar de editor van precies deze rij.

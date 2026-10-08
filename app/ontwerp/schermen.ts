@@ -12,6 +12,11 @@ export const SCHERMEN = [
     toelichting: "Een pagina openen en bewerken.",
   },
   {
+    sleutel: "editor-webadres",
+    titel: "Editor: webadres wijzigen",
+    toelichting: "Een klantverhaal, waar de slug wel aanpasbaar is.",
+  },
+  {
     sleutel: "editor-nieuw",
     titel: "Editor: nieuw item",
     toelichting: "Wat je ziet als je op Nieuw klikt.",

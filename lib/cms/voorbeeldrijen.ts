@@ -65,6 +65,21 @@ export const VOORBEELD_RIJ: ContentRow = {
   },
 };
 
+/** Een klantverhaal, voor het enige editorscherm waar het webadres te wijzigen
+ *  is. Pagina-ingangen hebben dat veld niet: hun slug is de sleutel waarmee
+ *  PAGE_FIELDS de velden opzoekt. */
+export const VOORBEELD_RIJ_ITEM: ContentRow = {
+  ...VOORBEELD_RIJEN[0]!,
+  slug: "voorbeeld-klantverhaal",
+  titel: "Voorbeeld Klantverhaal",
+  status: "live",
+  data: {
+    tag: "Mobiliteit · Voorbeeldklant",
+    h1: "Een voorbeeldkop voor een klantverhaal.",
+    intro: "Een korte inleiding onder de kop, zodat het tekstvlak niet leeg oogt.",
+  },
+};
+
 export const VOORBEELD_TELLERS: Record<string, number> = {
   paginas: 12,
   diensten: 3,

@@ -10,6 +10,13 @@ Welk niveau wanneer hoort, staat in [`CLAUDE.md`](CLAUDE.md#werkwijze-bij-elke-w
 Een wijziging zonder gevolg voor de site (alleen tests, documentatie, een refactor) krijgt
 geen eigen versie; die valt onder de eerstvolgende regel hieronder.
 
+## 1.1.0 — 8 oktober 2026
+
+- Het webadres van een klantverhaal, artikel, sector, dienst, vacature of teamlid is nu ook
+  achteraf aan te passen in de editor. Verander je het van een item dat live staat, dan
+  waarschuwt het veld dat het oude adres daarna een 404 geeft. Pagina-ingangen houden hun
+  vaste adres: daar is de slug geen webadres maar de sleutel van het veldschema.
+
 ## 1.0.3 — 8 oktober 2026
 
 - Klantverhaal: de oranje pill onder het kruimelpad heeft weer lucht boven zich.
