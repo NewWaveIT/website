@@ -10,6 +10,13 @@ Welk niveau wanneer hoort, staat in [`CLAUDE.md`](CLAUDE.md#werkwijze-bij-elke-w
 Een wijziging zonder gevolg voor de site (alleen tests, documentatie, een refactor) krijgt
 geen eigen versie; die valt onder de eerstvolgende regel hieronder.
 
+## 1.0.1 — 8 oktober 2026
+
+- De foutpagina herkent nu de situatie waarin er een nieuwe versie is uitgerold terwijl je
+  pagina openstond. Je krijgt dan een uitleg en een knop "Pagina herladen" in plaats van
+  "Opnieuw proberen", die daar niets tegen kon beginnen. Geldt voor de admin en de
+  publieke site.
+
 ## 1.0.0 — 8 oktober 2026
 
 De site zoals hij nu op www.thenewwaveit.com staat. Vanaf hier houdt dit bestand de
