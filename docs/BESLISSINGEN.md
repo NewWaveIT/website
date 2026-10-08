@@ -140,6 +140,56 @@ te vragen.
 Al het andere is "Prijs op aanvraag". Verzin nooit bedragen, tarieven, senioriteits-
 niveaus, klantnamen of teamnamen: die levert de eigenaar aan.
 
+## Opmaak en componenten
+
+**Vier gedeelde vormen staan in `globals.css`, niet in een pagina-CSS** — 22 september 2026
+Een audit over 30 stylesheets telde de witte kaart 23 keer in veertien bestanden, met drie
+verschillende binnenmarges; het kleine kapitaal boven een kop 54 keer in negentien
+bestanden; de "meer"-link met pijltje 12 keer in elf; het ronde stapnummer 4 keer. Dat is
+hetzelfde patroon als de vier bijna-gelijke uitgelichte kaarten hieronder: dezelfde vorm,
+net andere waarden, en op de site dus blokken die op elkaar lijken zonder hetzelfde te
+zijn. Ze staan nu als `.kaart`, `.kicker`, `.meer-link` en `.nummer-badge` in
+`globals.css`; `tests/unit/gedeelde-opmaak.spec.ts` houdt de telling daarbuiten op nul,
+of — voor de kicker, waar een deel niet om te zetten viel zonder de klassenamen op te
+schonen — op het aantal van die dag, zodat het alleen nog kan dalen.
+
+Daarbij hoort een tweede regel: **een variant zet variabelen, geen eigenschappen.**
+`.fase-dot--actief { color: white }` won of verloor afhankelijk van de volgorde waarin de
+stylesheets binnenkwamen. Een variant stelt `--badge-kleur` in, geen `color`.
+
+**De uitgelichte kaart is `.beeldkaart`** — 22 september 2026
+Beeld links, tekst rechts. Die vorm stond vier keer los — de klantverhalen-carrousel op de
+homepage, het uitgelichte klantverhaal op /klantverhalen en in een dienstsectie, en het
+uitgelichte artikel op /inzichten — met drie verschillende kolomverhoudingen. Nu één
+klasse plus hooguit `--beeldkaart-h`; wat er in de tekstkolom staat blijft van de pagina
+zelf. `tests/e2e/beeldkaart.spec.ts` vangt een vijfde kopie.
+
+**Doorlopende tekst gaat door `.langvorm`** — 23 september 2026
+Artikel, klantverhaal en de twee juridische pagina's deelden geen enkele regel. Gemeten op
+1440px waren de kolommen 660, 1012 en 691px breed: 57, 111 en 85 tekens per regel, waarvan
+alleen de eerste leesbaar is. Nu één breedte (`--leesbreedte`), één typografie, en per
+pagina alleen wat er echt van die pagina is: de lead van een artikel, de genummerde
+stappen van een klantverhaal, het adresblok van een juridische pagina.
+`tests/e2e/langvorm.spec.ts` meet het op de pagina zelf, niet in de CSS.
+
+**Formuliervelden komen uit `.field`** — 23 september 2026
+Label, invoerveld, focusring, foutmarkering en statusregel stonden twee keer, met net
+andere binnenmarges. De afstand tussen velden is sindsdien de enige knop
+(`--veld-ruimte`); de rest is niet per formulier in te stellen, en dat is de bedoeling.
+
+**Een admintabel stapelt op een telefoon** — 23 september 2026
+Alle vijf de admintabellen hielden op 390px hun kolommen. De contentlijst brak "Laatst
+bewerkt" daardoor af tot één letter per regel, zes regels hoog. De markup blijft een
+tabel, want het slepen hangt aan die structuur: `tabel-stapel` op het `<table>` laat de
+kolomkoppen verdwijnen en geeft elke cel de volle breedte. Waar een waarde zonder kop niet
+te plaatsen is ("In het CMS" naast "In de seed") staat `data-kop` op de cel.
+
+**Een adminscherm dat je wil kunnen tonen, scheidt ophalen van tekenen** — 23 september 2026
+De eerste versie van /ontwerp tekende de paginakop zelf na en liet daarmee precies de
+"Nieuw"-knop weg die je wilde beoordelen. `AdminContentList` haalt sindsdien de rijen op en
+geeft ze aan `ContentListScherm`; /ontwerp rendert dat echte scherm. Een nagebouwd scherm
+beoordeelt zichzelf, niet de code.
+
 ## Architectuur
 
 **Vier sjabloon-ingangen en één algemene in `PAGE_FIELDS`** — 14 september 2026
@@ -207,6 +257,63 @@ valt, leiden we af.
 De enige uitzondering op het gedeelde leespad. Artikelen worden verrijkt met auteur
 (uit teamleden) en dienst, en passen daarom niet in de standaardvorm. Staat als
 uitzondering in `tests/unit/manifest.spec.ts`.
+
+**Revalidatie is grofmazig, en dat is de bedoeling** — 14 september 2026
+`revalidateContent()` neemt geen argumenten en ververst de hele site. Hier stond een kaart
+van contenttype naar routes; die dreef weg zodra er een route bijkwam, en niemand merkte
+dat tot een pagina oud bleef. Elke pagina wordt sowieso elke vijf minuten opnieuw
+opgebouwd, dus de grofmazige variant vervroegt alleen wat toch gebeurt. Dezelfde reden
+waarom `PAGE_PATH` voor de vier sjabloon-ingangen naar de overzichtspagina wijst.
+
+**Geen databaseleesactie in `app/(marketing)/layout.tsx`** — 18 september 2026
+De layout rendert `children`, dus een `"use cache"` eromheen trekt elke pagina in dezelfde
+cache-scope; zónder die scope weigert Next de route statisch te bouwen ("uncached or
+runtime data during prerendering"). Beide kanten zijn fout, dus leest de layout niets.
+Wat de schil uit het CMS nodig heeft staat in `components/layout/schil-cms.tsx`, elk
+onderdeel met een eigen scope.
+
+**Een dynamische route zonder `generateStaticParams` kan geen echte 404 geven** — 18 september 2026
+Cache Components streamt eerst een shell; daarna staat de HTTP-status vast en verandert
+`notFound()` daar niets meer aan. Alle detailroutes hebben daarom een slug-lijst.
+`/vacatures/[slug]` is de gedocumenteerde uitzondering: er zijn geen live vacatures, dus
+die geeft een 200 met `noindex`.
+
+**Wat per request verschilt, hoort niet in een cache-scope** — 18 september 2026
+`searchParams`, `cookies()` en `new Date()` mogen niet binnen `use cache`. De verleiding is
+om de pagina dan maar dynamisch te maken; de goedkopere uitweg is de waarde in de browser
+bepalen met `useBrowserwaarde` (`lib/hooks/use-browserwaarde.ts`), want dan blijft de
+pagina volledig statisch. Zo leest het contactformulier zelf `?dienst=` en vult de footer
+zelf het jaartal in. Die hook gebruikt `useSyncExternalStore`, dus `lees` moet een
+primitieve, stabiele waarde teruggeven — een nieuw object per aanroep geeft een
+oneindige render-lus.
+
+**Een client component leest zelf niets uit het CMS** — 14 september 2026
+Geef de teksten veld voor veld door vanaf de pagina, niet als één `t`-object.
+`tests/unit/cms-pages.spec.ts` zoekt `t.<sleutel>` in bestanden die `getPagina("<slug>")`
+aanroepen; een doorgegeven object is daar onzichtbaar, dus een vergeten veld wordt een leeg
+plekje op de site in plaats van een rode test. Doorgeven-per-veld is lelijker en vangt meer.
+
+**Kruimelpad en structured data zijn één handeling** — 18 september 2026
+Dertien pagina's hadden kruimels en maar vier de bijbehorende BreadcrumbList, precies omdat
+het twee losse handelingen waren. `<Kruimelpad>` levert nu allebei, en `<JsonLd>` zet elk
+stuk structured data neer mét de escape van `<`. Schrijf geen eigen
+`<script type="application/ld+json">` meer.
+
+**Publieke formulieren schrijven met de service-rol, niet met anon** — 23 september 2026
+De anon-sleutel staat in elke browser. Daarmee kon je rechtstreeks naar de Supabase-API
+posten en de honeypot, de validatie én `magDoor()` overslaan — het formulier was de
+voordeur, maar de achterdeur stond open. `anon` heeft nu geen insert-rechten meer op
+`contact_aanvragen`, `sollicitaties` en de cv-bucket; de drie server actions gebruiken
+`inzendingClient()`. Die omzeilt RLS, dus gebruik hem uitsluitend voor de insert van een
+al gevalideerde inzending.
+
+**Haal in de admin alleen op wat je toont** — 24 september 2026
+`listContent` haalde de volledige `data`-jsonb van elke rij op: tientallen kilobytes
+bodytekst voor een tabel die alleen titels laat zien. De lijstpagina's gebruiken
+`listContentSamenvatting`, die de getoonde kolommen ophaalt plus de `data`-velden waarop
+gefilterd wordt, afgeleid uit `LIJST_FACETTEN`. Een nieuw filter voeg je daar toe; de
+query volgt dan vanzelf. Zijbalktellers komen uit één RPC (`admin_aantallen`), niet uit
+elf count-queries.
 
 ## Werkwijze
 

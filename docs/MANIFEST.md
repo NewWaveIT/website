@@ -66,5 +66,5 @@ faalt de unittest.
 - bronbestanden: 221
 - clientComponenten: 41
 - servercomponenten: 180
-- unittests: 37
+- unittests: 38
 - e2etests: 12

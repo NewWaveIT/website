@@ -24,6 +24,8 @@ npm run format:check # Prettier: alleen controleren (zoals CI doet)
 npm run manifest     # Genereert docs/manifest.json + docs/MANIFEST.md opnieuw uit de code
 npm run test:unit    # Vitest: unittests voor pure logica (sanitize, formuliervalidatie)
 npm run test:e2e     # Playwright-smoketests (bouwt + start op poort 3100)
+npm run shots        # Schermafdrukken naar docs/shots/ (niet in git)
+npm run pakket       # Zipt het medewerkerspakket
 ```
 
 Een Husky pre-commit hook draait automatisch ESLint + Prettier op staged bestanden en
@@ -100,8 +102,10 @@ dan mis je de controle achteraf.
 
 ## Git & CI
 
-- Werk op een feature-branch; open een PR naar `main`.
-- CI moet groen zijn (typecheck, lint, format, unit-tests, build, e2e) voor merge.
+- Commit rechtstreeks naar `main`; geen PR, tenzij er een reden is om er wel een te
+  openen (zie `docs/BESLISSINGEN.md`). CI draait op elke push en moet groen zijn.
+- Werk `CHANGELOG.md` bij en bump `package.json`'s `version` in dezelfde commit. Welk
+  niveau wanneer hoort, staat in `CLAUDE.md`; `tests/unit/changelog.spec.ts` bewaakt het.
 - Dependabot opent wekelijks PR's voor npm- en GitHub Actions-dependencies en meldt
   kwetsbaarheden. Geen CodeQL: code scanning vereist GitHub Code Security, wat op een
   private repo onder een persoonlijk account niet beschikbaar is.
