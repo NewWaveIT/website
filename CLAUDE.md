@@ -159,8 +159,13 @@ niet anders kan.
 
 ### Beveiliging
 
-- **`requireAdmin()` (`lib/dal.ts`) in élke admin-action en -pagina**, niet alleen in
-  `proxy.ts`. De proxy redirect, de DAL autoriseert.
+- **Elke admin-ingang autoriseert zelf, niet alleen `proxy.ts`.** De proxy stuurt door,
+  de DAL autoriseert. Twee vormen, en het verschil is bewust: een **pagina** gebruikt
+  `requireAdmin()` (`lib/dal.ts`), dat naar de login redirect; een **server action**
+  gebruikt `getCurrentUser()` met een `if (!user) return { ok: false }`, want een redirect
+  uit een action die geen navigatie is levert geen bruikbare foutmelding op. Een action
+  zónder een van beide is een publiek POST-eindpunt. Enige uitzondering: `logout`, dat
+  niets te beschermen heeft.
 - **Publieke formulieren schrijven met de service-rol, niet met anon.** De anon-sleutel
   staat in elke browser; daarmee kon je rechtstreeks posten en de honeypot, de validatie én
   `magDoor()` overslaan. De drie server actions gebruiken `inzendingClient()`
@@ -208,7 +213,9 @@ niet mee voor SEO maar een trage mutatie is evengoed een bug.
 - **Het LCP-element mag niet lui laden en niet infaden.** `loading="lazy"` diskwalificeert
   het, en `opacity: 0` stelt het uit. De eerste hero-afbeelding krijgt daarom `preload` en
   een eigen animatie zonder fade (`.hsec-foto-eerst`).
-- **Elke `<Image>` krijgt `sizes`.** Uitsluitend WebP in `public/assets/`.
+- **`<Image fill>` krijgt altijd `sizes`**, anders laadt de browser de grootste variant.
+  Bij een vaste `width` + `height` is `sizes` niet nodig en staat het er hier ook niet.
+  Uitsluitend WebP in `public/assets/`.
 - **Redactioneel beeld gaat door `<BeeldKader>`.** Het kader voegt zich naar de verhouding
   van het beeld en toont het nooit breder dan het zelf is; maten uit `lib/beeldmaten.ts`,
   gemeten tijdens de build.
