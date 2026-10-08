@@ -93,6 +93,27 @@ van 691 naar 660, omdat alle doorlopende tekst op de site nu dezelfde behandelin
 lees je zoekend, niet van A tot Z, dus leesbaarheid weegt hier zwaarder dan lengte.
 Draai dit niet terug omdat de pagina "te lang" oogt.
 
+**Een gewijzigd webadres krijgt geen omleiding** — 8 oktober 2026
+Sinds het webadres van een item in de editor aanpasbaar is, lag de vraag voor of het oude
+adres naar het nieuwe moet doorverwijzen. Nee. Er blijft niets achter dat opruiming nodig
+heeft: de slug is een kolom op de rij, dus de oude waarde is na het opslaan simpelweg weg.
+Het enige dat een omleiding zou oplossen is link rot — een oude link in een mail of een
+zoekresultaat die een 404 geeft — en dat weegt op deze site niet op tegen bewaarde oude
+slugs plus een opzoekactie in vijf detailroutes. Expliciet zo besloten met de eigenaar.
+Het vangnet is de waarschuwing in het veld, die het oude adres toont en zegt wat er
+gebeurt. Bouw hier geen redirecttabel omheen.
+
+**De homepage-hero is variant 3a, en de foto loopt onder de navigatie door** — 10 september 2026
+Gekozen uit `ui_kits/website/Hero Opties.dc.html`: "crossfade + trage zoom, scrim alleen
+links", niet 3c. Daar hoort het gedrag van de balk bij: op de homepage staat die
+`position: fixed` en is hij doorzichtig met een wit logo tot je de hero voorbij bent. Dat
+is geen los effect maar de reden dat de foto doorloopt; zet de balk hier niet ondoorzichtig.
+
+**De sectorhero heeft geen foto, alleen de animatie** — 10 september 2026
+Bewust zo, en de bijbehorende rijen zijn opgeruimd met
+`supabase/scripts/20260910-sectorhero-zonder-foto.sql`. Een foto terugzetten is dus een
+nieuwe keuze, geen herstel van iets dat per ongeluk wegviel.
+
 **Vloeiende maten horen buiten de typeschaal** — 23 september 2026
 Bij het opruimen van drie waarden die niet op de typeschaal stonden, leek
 `clamp(32px, 4.5vw, 68px)` op de hero-kop ook een geval van slordigheid. De ondergrens op
