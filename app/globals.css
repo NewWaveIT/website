@@ -1475,23 +1475,57 @@ footer.site-footer {
 }
 /* Citaat uit de lopende tekst. `blockquote` komt uit de editor, `.pull` uit een
    klantverhaal; het is dezelfde vorm, dus dezelfde regel. */
+/* Een citaat staat op zes plekken en zag er zes keer anders uit. Geteld op
+   9 oktober: twee maten (36px in de lopende tekst en in de afsluiter van een
+   klantverhaal, 22px op de homepage, het klantverhalenoverzicht, de dienst- en
+   de sectorpagina) en twee gewichten door elkaar.
+
+   Daar zat ook een echte leesfout in. De 36px-vorm is een pull-quote: een
+   uittreksel van een regel of twee midden in lopende tekst, waar groot zetten
+   werkt. De afsluiter van een klantverhaal is iets anders -- een volledige
+   klantuitspraak, in de seed 279 tekens tegen 78 voor een pull -- en die werd
+   met dezelfde vorm acht regels van 36px bold: geen citaat meer maar een muur.
+
+   Nu één vorm met twee rollen, gekozen op functie en niet op pagina. De maat is
+   de enige knop (`--citaat-maat`), plus `--citaat-kleur` voor een donkere
+   ondergrond. */
+.citaat,
 .langvorm blockquote,
-.langvorm .pull,
-.p-case .qblock blockquote {
+.langvorm .pull {
+  font-family: var(--font-display);
+  font-weight: var(--fw-semibold);
+  font-size: var(--citaat-maat, var(--text-lg));
+  line-height: var(--leading-snug);
+  color: var(--citaat-kleur, var(--text-strong));
+  font-style: normal;
+  margin: 0;
+  text-wrap: pretty;
+}
+
+/* De pull-quote: kort uittreksel in lopende tekst, met de flame-lijn ernaast. */
+.langvorm blockquote,
+.langvorm .pull {
+  --citaat-maat: var(--text-2xl);
   border-left: 3px solid var(--color-primary);
   padding: var(--space-2) 0 var(--space-2) var(--space-6);
   margin: var(--space-7) 0;
-  color: var(--text-strong);
-  font-family: var(--font-display);
-  font-weight: var(--fw-bold);
-  font-size: var(--text-2xl);
-  line-height: var(--leading-snug);
-  font-style: normal;
 }
+
 .langvorm blockquote p {
   font-size: inherit;
   color: inherit;
   margin: 0;
+}
+
+/* Wie het zei: naam, dan rol en bedrijf gedempt. */
+.citaat-bron {
+  margin: var(--space-4) 0 0;
+  font-size: var(--text-sm);
+  color: var(--citaat-bron-kleur, var(--text-muted));
+}
+.citaat-bron strong {
+  font-weight: var(--fw-semibold);
+  color: var(--citaat-kleur, var(--text-strong));
 }
 
 /* Kruimelpad (components/kruimelpad.tsx)

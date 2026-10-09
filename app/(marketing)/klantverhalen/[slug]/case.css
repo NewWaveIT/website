@@ -240,27 +240,18 @@
   background: var(--eggshell);
 }
 /* Hier stond een lege grijze cirkel van 88px: een fotoplek die nooit een foto
-   kreeg, want een klantverhaal heeft geen portret van de spreker. Het citaat
-   draagt zichzelf nu, met de citaatvorm die in globals.css staat (flame-lijn
-   links, display-font). Die vorm stond daar al twee keer voor de lopende tekst;
-   dit is de derde, dus hij is daar gedeeld in plaats van hier nagebouwd. */
-.p-case .qblock blockquote {
-  margin: 0 auto var(--space-5);
+   kreeg, want een klantverhaal heeft geen portret van de spreker.
+
+   Daarna stond het citaat los op de band in de pull-quote-vorm, en dat was de
+   volgende fout: die vorm is voor een uittreksel van twee regels, niet voor een
+   volledige klantuitspraak. Nu een witte kaart op het eggshell vlak, net als de
+   drie andere plekken waar een klantcitaat staat (homepage, overzicht,
+   dienstpagina), met `.citaat` en `.citaat-bron` uit globals.css. De kaart
+   begrenst een lange tekst vanzelf; de band hoeft dat niet te doen. */
+.p-case .qblock .kaart {
+  --kaart-pad: var(--pad-kaart-ruim);
   max-width: var(--leesbreedte);
-}
-.p-case .qblock .who,
-.p-case .qblock blockquote {
-  /* Een losse band, geen lopende tekst: de kolom staat gecentreerd in plaats
-     van tegen de linkermarge, anders hangt alles aan een kant nu de fotoplek
-     weg is. */
   margin-inline: auto;
-  max-width: var(--leesbreedte);
-}
-.p-case .qblock .who {
-  /* Uitlijnen met de tekst in het citaat, niet met de flame-lijn. */
-  padding-left: calc(var(--space-6) + 3px);
-  font-size: var(--text-sm);
-  color: var(--text-muted);
 }
 .p-case .qblock .who strong {
   color: var(--text-strong);

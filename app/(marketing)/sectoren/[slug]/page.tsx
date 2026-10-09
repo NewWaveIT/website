@@ -199,7 +199,7 @@ export default async function SectorPage({ params }: { params: Promise<{ slug: s
                 )}
                 {s.quote && quotePersoon && (
                   <div className="why-quote">
-                    <blockquote>{citaat(s.quote)}</blockquote>
+                    <blockquote className="citaat">{citaat(s.quote)}</blockquote>
                     <div className="who">
                       {quotePersoon.foto && (
                         <Image

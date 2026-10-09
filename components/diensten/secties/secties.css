@@ -375,13 +375,7 @@
   object-fit: cover;
 }
 .dienst-secties .case-mini .body blockquote {
-  font-family: var(--font-display);
-  font-weight: var(--fw-semibold);
-  font-size: var(--text-lg);
-  line-height: var(--leading-normal);
-  color: var(--text-strong);
   margin: var(--space-4) 0 var(--space-6);
-  text-wrap: pretty;
 }
 .dienst-secties .case-mini .body .who {
   margin-top: auto;

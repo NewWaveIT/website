@@ -10,6 +10,15 @@ Welk niveau wanneer hoort, staat in [`CLAUDE.md`](CLAUDE.md#werkwijze-bij-elke-w
 Een wijziging zonder gevolg voor de site (alleen tests, documentatie, een refactor) krijgt
 geen eigen versie; die valt onder de eerstvolgende regel hieronder.
 
+## 1.1.1 — 9 oktober 2026
+
+- Citaten zien er overal hetzelfde uit. Ze stonden op zeven plekken met twee maten en twee
+  gewichten door elkaar; nu één vorm met twee rollen: een kort uittreksel in lopende tekst
+  blijft groot, een volledige klantuitspraak staat op leesmaat.
+- De afsluitende quote op een klantverhaal staat in een witte kaart, net als de andere drie
+  plekken waar een klantcitaat staat. Hij was acht regels van 36px breed uitgesmeerd over
+  een lege band.
+
 ## 1.1.0 — 8 oktober 2026
 
 - Het webadres van een klantverhaal, artikel, sector, dienst, vacature of teamlid is nu ook

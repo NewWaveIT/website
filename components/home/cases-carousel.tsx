@@ -64,7 +64,7 @@ export function CasesCarousel({ items, lees }: { items: CaseCard[]; lees: string
           {c.tag && <span className="tag">{c.tag}</span>}
         </div>
         <div className="body">
-          {c.quote && <blockquote>{citaat(c.quote)}</blockquote>}
+          {c.quote && <blockquote className="citaat">{citaat(c.quote)}</blockquote>}
           {c.impact.length > 0 && (
             <div className="metrics">
               {c.impact.slice(0, 3).map((m, k) => (

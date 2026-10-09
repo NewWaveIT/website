@@ -102,7 +102,7 @@ export default async function KlantverhalenPage() {
               </div>
               <div className="body">
                 <div className="kicker">{featured.tag}</div>
-                <blockquote>{citaat(featured.quote)}</blockquote>
+                <blockquote className="citaat">{citaat(featured.quote)}</blockquote>
                 <div className="who">
                   <strong>{featured.quoteNaam}</strong>, {featured.quoteRol}
                   <br />

@@ -40,7 +40,7 @@ export async function KlantverhaalSectie({ waarborg, ...c }: KlantverhaalProps) 
           </div>
           <div className="body">
             <div className="kicker">{c.caseSector}</div>
-            <blockquote>{c.caseQuote}</blockquote>
+            <blockquote className="citaat">{c.caseQuote}</blockquote>
             <div className="who">
               <strong>{c.caseNaam}</strong>, {c.caseRol}
               <br />

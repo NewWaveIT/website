@@ -220,13 +220,7 @@
   gap: var(--space-6);
 }
 .p-dienst .herken blockquote {
-  margin: 0;
   border-left: 3px solid var(--color-primary);
-  font-family: var(--font-display);
-  font-weight: var(--fw-bold);
-  font-size: var(--text-lg);
-  line-height: var(--leading-snug);
-  color: var(--text-strong);
 }
 
 /* ---- 3 · Wat je meeneemt ---- */

@@ -287,13 +287,7 @@
   color: var(--orange-text);
 }
 .fcase .body blockquote {
-  font-family: var(--font-display);
-  font-weight: var(--fw-semibold);
-  font-size: var(--text-lg);
-  line-height: var(--leading-normal);
-  color: var(--text-strong);
   margin: var(--space-4) 0 var(--space-6);
-  text-wrap: pretty;
 }
 .fcase .metrics {
   display: flex;

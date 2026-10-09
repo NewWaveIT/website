@@ -151,13 +151,9 @@
   padding: var(--pad-kaart);
 }
 .p-sector .why-quote blockquote {
-  font-family: var(--font-display);
-  font-weight: var(--fw-bold);
-  font-size: var(--text-lg);
-  line-height: var(--leading-snug);
-  color: var(--white);
+  /* Staat op een donker vlak, dus alleen de kleur wijkt af van de huisvorm. */
+  --citaat-kleur: var(--white);
   margin: 0 0 var(--space-6);
-  text-wrap: pretty;
 }
 .p-sector .why-quote .who {
   display: flex;

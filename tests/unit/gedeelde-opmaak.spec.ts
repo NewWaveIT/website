@@ -113,4 +113,27 @@ describe("de gedeelde vormen staan op één plek", () => {
         : `mooi, er zijn er ${KICKER_PLAFOND - eigenbouw.length} minder geworden -- zet KICKER_PLAFOND op ${eigenbouw.length}`,
     ).toBe(KICKER_PLAFOND);
   });
+
+  /**
+   * Een citaat staat op zeven plekken en zag er zeven keer anders uit. Geteld op
+   * 9 oktober: twee maten en twee gewichten door elkaar, en de pull-quote-vorm
+   * (36px bold, bedoeld voor een uittreksel van twee regels) stond ook onder de
+   * afsluiter van een klantverhaal -- in de seed 279 tekens, wat acht regels
+   * van 36px opleverde.
+   *
+   * Nu komt de vorm uit `.citaat` in globals.css en is de maat de enige knop.
+   * Een pagina-CSS die zelf weer een lettertype of een maat op een citaat zet,
+   * begint de volgende uiteenloop.
+   */
+  it("geen tweede citaatvorm: lettertype en maat komen uit .citaat", () => {
+    const eigenbouw = buitenGlobals(
+      (r) =>
+        /blockquote|\.pull\b|\.citaat\b/.test(r.selector) &&
+        (r.body.includes("font-family") || r.body.includes("font-size")),
+    );
+    expect(
+      eigenbouw,
+      "zet `citaat` op het element en stel hooguit --citaat-maat of --citaat-kleur in",
+    ).toEqual([]);
+  });
 });

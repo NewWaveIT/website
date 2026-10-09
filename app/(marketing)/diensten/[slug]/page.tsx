@@ -233,7 +233,7 @@ export default async function DienstPage({ params }: { params: Promise<{ slug: s
             <SectieKop kicker={t.herkenKicker} titel={t.herkenTitel} intro={s.herkenIntro} />
             <div className="herken">
               {s.herken.map((q) => (
-                <blockquote className="kaart" key={q}>{`“${q}”`}</blockquote>
+                <blockquote className="kaart citaat" key={q}>{`“${q}”`}</blockquote>
               ))}
             </div>
           </div>
