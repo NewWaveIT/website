@@ -92,12 +92,12 @@ describe("de gedeelde vormen staan op één plek", () => {
   });
 
   /*
-   * De kicker is nog niet overal om: op vijfendertig plekken heet de klasse
+   * De kicker is nog niet overal om: op tweeendertig plekken heet de klasse
    * `.l`, `.m`, `.q` of `.sp`, en die namen komen in meerdere bestanden voor
    * met andere opmaak -- daar blind een klasse bijzetten verandert dingen die
    * geen kicker zijn. Ze mogen blijven staan, maar er mag er geen bij komen.
    */
-  const KICKER_PLAFOND = 35;
+  const KICKER_PLAFOND = 32;
 
   it(`het aantal handgemaakte kickers blijft op ${KICKER_PLAFOND} of daalt`, () => {
     const eigenbouw = buitenGlobals(

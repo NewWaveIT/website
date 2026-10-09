@@ -385,15 +385,6 @@
   color: var(--text-strong);
 }
 
-/* Feitenregel onder de hero-intro (doelgroep · duur · prijs, uit de gekoppelde service) */
-.dienst-secties .feiten-strip {
-  font-family: var(--font-mono);
-  font-size: var(--text-xs);
-  color: var(--text-on-dark-muted);
-  max-width: 54ch;
-  margin: calc(-1 * var(--space-5)) 0 var(--space-6);
-}
-
 /* Waarborg / volgende-stap-kader — i.p.v. een klantcase, of onder de pagina */
 .dienst-secties .waarborg-card {
   background: var(--white);
@@ -410,12 +401,6 @@
   line-height: var(--leading-snug);
   color: var(--text-strong);
   margin: var(--space-3) 0 0;
-}
-.dienst-secties .waarborg-card .vervolg-links {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-5);
-  margin-top: var(--space-5);
 }
 .dienst-secties .waarborg-card .more .lucide {
   width: 15px;

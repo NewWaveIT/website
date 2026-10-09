@@ -259,4 +259,3 @@ export const KLANTVERHALEN: Klantverhaal[] = [
 export const KLANTVERHAAL_MAP: Record<string, Klantverhaal> = Object.fromEntries(
   KLANTVERHALEN.map((k) => [k.slug, k]),
 );
-export const KLANTVERHAAL_SLUGS = KLANTVERHALEN.map((k) => k.slug);

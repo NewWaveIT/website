@@ -40,6 +40,3 @@ export interface Vacature {
  * daar niet voor terug.
  */
 export const VACATURES: Vacature[] = [];
-
-export const VACATURE_SLUGS = VACATURES.map((v) => v.slug);
-export const VACATURE_MAP = Object.fromEntries(VACATURES.map((v) => [v.slug, v]));

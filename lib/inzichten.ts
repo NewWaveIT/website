@@ -106,4 +106,3 @@ export const ARTIKELEN: Artikel[] = [
 export const ARTIKEL_MAP: Record<string, Artikel> = Object.fromEntries(
   ARTIKELEN.map((a) => [a.slug, a]),
 );
-export const ARTIKEL_SLUGS = ARTIKELEN.map((a) => a.slug);

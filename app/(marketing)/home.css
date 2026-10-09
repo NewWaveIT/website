@@ -10,37 +10,6 @@
 .proof .wrap-wide {
   padding: var(--space-7) var(--gutter);
 }
-.clientband {
-  display: flex;
-  align-items: center;
-  gap: var(--space-7);
-}
-.clientband .cap {
-  font-family: var(--font-mono);
-  font-size: var(--text-2xs);
-  text-transform: uppercase;
-  letter-spacing: var(--tracking-kicker);
-  color: var(--ink-400);
-  flex: none;
-}
-.clientband .track {
-  overflow: hidden;
-  flex: 1;
-  -webkit-mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
-  mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
-}
-.clientband .set {
-  display: flex;
-  gap: var(--space-8);
-  align-items: center;
-  width: max-content;
-  animation: clientScroll 30s linear infinite;
-}
-.clientband .track:hover .set,
-.clientband .track:focus-within .set,
-.marquee-pauze .clientband .track .set {
-  animation-play-state: paused;
-}
 .client {
   font-family: var(--font-display);
   font-weight: var(--fw-bold);
@@ -593,147 +562,6 @@
   min-height: 180px;
 }
 
-/* Word een Waver */
-.joinus {
-  background: var(--ink-900);
-  color: var(--eggshell);
-  position: relative;
-  overflow: hidden;
-}
-.joinus .grid {
-  display: grid;
-  grid-template-columns: 1.05fr 1fr;
-  gap: var(--space-9);
-  align-items: center;
-}
-.joinus h2 {
-  color: var(--white);
-  font-family: var(--font-display-expanded);
-  font-weight: var(--fw-black);
-  font-size: var(--text-3xl);
-  line-height: var(--leading-tight);
-  margin: var(--space-4) 0 var(--space-5);
-}
-.joinus h2 em {
-  color: var(--orange-400);
-  font-style: normal;
-}
-.joinus .lead {
-  font-size: var(--text-md);
-  color: var(--text-on-dark-muted);
-  line-height: var(--leading-relaxed);
-  margin: 0 0 var(--space-6);
-  max-width: 46ch;
-}
-.joinus .roles {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin: 0 0 var(--space-7);
-}
-.joinus .role {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  font-family: var(--font-mono);
-  font-size: var(--text-xs);
-  text-transform: uppercase;
-  letter-spacing: var(--tracking-kicker);
-  color: var(--eggshell);
-  border: 1px solid var(--border-dark);
-  border-radius: var(--radius-pill);
-  padding: 7px 14px;
-  transition:
-    border-color 0.15s ease,
-    color 0.15s ease;
-}
-.joinus .role:hover {
-  border-color: var(--color-primary);
-  color: var(--white);
-}
-.joinus .role .lucide {
-  width: 14px;
-  height: 14px;
-  color: var(--orange-400);
-}
-.joinus .actions {
-  display: flex;
-  gap: var(--space-5);
-  align-items: center;
-  flex-wrap: wrap;
-}
-.joinus .figure {
-  position: relative;
-  min-height: 340px;
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-}
-.joinus .figure img {
-  object-fit: cover;
-}
-.joinus .count {
-  position: absolute;
-  left: var(--space-5);
-  bottom: var(--space-5);
-  background: var(--color-primary);
-  color: var(--white);
-  border-radius: var(--radius-md);
-  padding: var(--space-4) var(--space-5);
-  z-index: 1;
-}
-.joinus .count .num {
-  font-family: var(--font-mono);
-  font-weight: var(--fw-bold);
-  font-size: var(--text-2xl);
-  line-height: 1;
-  display: block;
-}
-.joinus .count .lbl {
-  font-family: var(--font-mono);
-  font-size: var(--text-xs);
-  text-transform: uppercase;
-  letter-spacing: var(--tracking-kicker);
-}
-
-/* Lead-gen */
-.lead-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: var(--space-6);
-}
-
-/* Statement band */
-.statement {
-  background: var(--eggshell);
-  border-bottom: 1px solid var(--border-subtle);
-}
-.statement .wrap-wide {
-  padding: var(--space-10) var(--gutter);
-  display: grid;
-  grid-template-columns: 1.4fr 1fr;
-  gap: var(--space-9);
-  align-items: end;
-}
-.statement h2 {
-  font-family: var(--font-display-expanded);
-  font-weight: var(--fw-black);
-  font-size: var(--text-3xl);
-  line-height: var(--leading-tight);
-  letter-spacing: var(--tracking-tight);
-  max-width: 22ch;
-}
-.statement h2 em {
-  font-style: normal;
-  color: var(--orange-text);
-}
-.statement p {
-  font-size: var(--text-md);
-  color: var(--text-muted);
-  line-height: var(--leading-relaxed);
-  margin: 0;
-  max-width: 42ch;
-}
-
 /* Breathing room.
 
    Let op de specificiteit: `section.block` in globals.css is (0,1,1) en deze
@@ -805,9 +633,6 @@
     grid-template-columns: repeat(2, 1fr);
     row-gap: var(--space-7);
   }
-  .lead-grid {
-    grid-template-columns: 1fr;
-  }
 }
 @media (max-width: 900px) {
   .mensen .grid {
@@ -831,16 +656,6 @@
   .mensen .collage .small {
     min-height: 0;
     aspect-ratio: 1 / 1;
-  }
-  .joinus .grid {
-    grid-template-columns: 1fr;
-  }
-  .joinus .figure {
-    order: -1;
-  }
-  .statement .wrap-wide {
-    grid-template-columns: 1fr;
-    gap: var(--space-6);
   }
   .panel.active {
     grid-template-columns: 1fr;
@@ -891,12 +706,6 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .clientband .set,
-  .logo-set,
-  .panel.active,
-  .fcase .kb {
-    animation: none !important;
-  }
   .reveal {
     transform: none;
     transition: none;

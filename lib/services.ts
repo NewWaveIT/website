@@ -124,5 +124,3 @@ export const SERVICES: Service[] = [
   FUSION_TEAM_STARTSPRINT,
   TRAINING_ENABLEMENT,
 ];
-
-export const SERVICE_SLUGS = SERVICES.map((s) => s.slug);

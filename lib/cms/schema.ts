@@ -835,13 +835,6 @@ export const FIELD_SCHEMAS: Record<ContentType, FieldDef[]> = {
   ],
 };
 
-/** data-object → veldwaarde als string voor de invoervelden. */
-export function fieldValue(data: Record<string, unknown>, f: FieldDef): string {
-  const v = data[f.key];
-  if (v === undefined || v === null) return "";
-  return typeof v === "string" ? v : String(v);
-}
-
 /** Overige data-sleutels die niet in de gegeven velden zitten (voor de JSON-uitklap). */
 export function extraData(
   fields: readonly FieldDef[],
