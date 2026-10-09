@@ -99,3 +99,38 @@ test.describe("cookiebanner", () => {
     expect(await keuze()).toBe("granted");
   });
 });
+
+/**
+ * De schil staat er één keer, ook op een foutpagina.
+ *
+ * `app/not-found.tsx` zette altijd zelf een header, een `<main id="main">` en
+ * een voettekst neer. Binnen `app/(marketing)` doet de layout dat al, dus een
+ * onbekende marketing-URL leverde drie headers, twee voetteksten en twee
+ * elementen met hetzelfde id -- waardoor de skip-link naar de verkeerde sprong.
+ * Gemeten op /klantverhalen/bestaat-niet.
+ *
+ * De 404 telt nu hetzelfde als een gewone pagina. Twee `<header>` is correct:
+ * de navigatie en de mobiele balk, die per breedte verborgen worden.
+ */
+test("een 404 binnen de marketinggroep heeft dezelfde schil als een gewone pagina", async ({
+  page,
+}) => {
+  const tel = () =>
+    page.evaluate(() => ({
+      headers: document.querySelectorAll("header").length,
+      footers: document.querySelectorAll("footer").length,
+      main: document.querySelectorAll("#main").length,
+    }));
+
+  await page.goto("/klantverhalen");
+  const gewoon = await tel();
+
+  const antwoord = await page.goto("/klantverhalen/bestaat-niet-xyz");
+  expect(antwoord?.status(), "een onbekende slug geeft een echte 404").toBe(404);
+  const vierNulVier = await tel();
+
+  expect(vierNulVier.main, "precies één element met id=main, anders springt de skip-link mis").toBe(
+    1,
+  );
+  expect(vierNulVier, "de 404 brengt geen tweede schil mee").toEqual(gewoon);
+});

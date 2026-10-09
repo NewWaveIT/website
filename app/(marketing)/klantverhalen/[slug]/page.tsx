@@ -1,7 +1,7 @@
 import { JsonLd } from "@/components/json-ld";
 import { cacheLife } from "next/cache";
 import type { Metadata } from "next";
-import { citaat } from "@/lib/utils";
+import { citaatKaal } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
 import { PaginaHero } from "@/components/layout/pagina-hero";
@@ -216,10 +216,17 @@ export default async function CasePage({ params }: { params: Promise<{ slug: str
       <section className="block qblock">
         <div className="wrap-wide">
           <div className="kaart">
-            <blockquote className="citaat">{citaat(k.quote)}</blockquote>
-            <p className="citaat-bron">
-              <strong>{k.quoteNaam}</strong>, {k.quoteRol}
-            </p>
+            {/* Het aanhalingsteken draagt de typografie, dus de zin zelf staat
+                er kaal in -- anders zou er twee keer een aanhalingsteken staan. */}
+            <span className="qmark" aria-hidden="true">
+              &ldquo;
+            </span>
+            <div>
+              <blockquote className="citaat">{citaatKaal(k.quote)}</blockquote>
+              <p className="citaat-bron">
+                <strong>{k.quoteNaam}</strong>, {k.quoteRol}
+              </p>
+            </div>
           </div>
         </div>
       </section>

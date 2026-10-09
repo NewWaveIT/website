@@ -12,8 +12,12 @@ export function cn(...classes: ClassValue[]): string {
  * tekens erin zaten. Typte een redacteur ze er dan bij, dan stond er
  * `““…””` op de pagina. De data levert nu de zin, de weergave de typografie.
  */
+export function citaatKaal(tekst: string): string {
+  return tekst.trim().replace(/^["'“”„‟«»\s]+|["'“”„‟«»\s]+$/g, "");
+}
+
 export function citaat(tekst: string): string {
-  const kaal = tekst.trim().replace(/^["'“”„‟«»\s]+|["'“”„‟«»\s]+$/g, "");
+  const kaal = citaatKaal(tekst);
   return kaal ? `“${kaal}”` : "";
 }
 

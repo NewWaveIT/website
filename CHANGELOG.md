@@ -10,6 +10,13 @@ Welk niveau wanneer hoort, staat in [`CLAUDE.md`](CLAUDE.md#werkwijze-bij-elke-w
 Een wijziging zonder gevolg voor de site (alleen tests, documentatie, een refactor) krijgt
 geen eigen versie; die valt onder de eerstvolgende regel hieronder.
 
+## 1.1.2 — 9 oktober 2026
+
+- Een foutmelding of 404 op een marketingpagina toonde de navigatie en de voettekst twee
+  keer. Nu één keer, net als op een gewone pagina.
+- De afsluitende klantquote krijgt een fors oranje aanhalingsteken en een bredere kaart,
+  zodat het blok niet langer veel ruimte inneemt voor weinig tekst.
+
 ## 1.1.1 — 9 oktober 2026
 
 - Citaten zien er overal hetzelfde uit. Ze stonden op zeven plekken met twee maten en twee

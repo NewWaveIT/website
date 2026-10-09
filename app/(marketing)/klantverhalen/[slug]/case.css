@@ -250,8 +250,29 @@
    begrenst een lange tekst vanzelf; de band hoeft dat niet te doen. */
 .p-case .qblock .kaart {
   --kaart-pad: var(--pad-kaart-ruim);
-  max-width: var(--leesbreedte);
+  max-width: 880px;
   margin-inline: auto;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--space-6);
+  align-items: start;
+}
+
+/* Het aanhalingsteken is het anker van het blok. De kaart stond anders als een
+   smalle kolom midden in een brede band: veel ruimte voor weinig tekst. */
+.p-case .qblock .qmark {
+  font-family: var(--font-display);
+  font-weight: var(--fw-black);
+  font-size: clamp(56px, 8vw, 96px);
+  line-height: 0.78;
+  color: var(--color-primary);
+}
+
+@media (max-width: 640px) {
+  .p-case .qblock .kaart {
+    grid-template-columns: 1fr;
+    gap: var(--space-3);
+  }
 }
 .p-case .qblock .who strong {
   color: var(--text-strong);
