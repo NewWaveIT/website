@@ -33,11 +33,14 @@ export const CLIENTS: Client[] = [
   { naam: "Netradyne", logo: "/assets/logos/klanten/netradyne.svg", w: 261, h: 44 },
   { naam: "XXImo", logo: "/assets/logos/klanten/xximo.svg", w: 124, h: 37 },
   { naam: "Welcome app", logo: "/assets/logos/klanten/welcome-app.svg", w: 68, h: 42 },
-  // Nog aan te leveren officiële bestanden (schone SVG of transparante PNG):
-  // Moove is opgegaan in Netradyne (zelfde logo) — voorlopig wordmark.
-  { naam: "Moove Connected Mobility" }, // moove.svg
-  { naam: "De Derde Linden Groep" }, // derde-linden-groep.svg
-  { naam: "De Pizzabakkers" }, // pizzabakkers.svg
+  // Transparante webp van dederdelinden.com (gebruik toegestaan door de eigenaar).
+  {
+    naam: "De Derde Linden Groep",
+    logo: "/assets/logos/klanten/derde-linden-groep.webp",
+    w: 760,
+    h: 211,
+    hoogte: 44,
+  },
 ];
 
 export { AWARD } from "@/lib/award";
