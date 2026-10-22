@@ -17,7 +17,10 @@ const csp = [
   `script-src 'self' 'unsafe-inline'${isDev ? " 'unsafe-eval'" : ""} https://www.googletagmanager.com`,
   "style-src-elem 'self'",
   "style-src-attr 'unsafe-inline'",
-  "img-src 'self' data:",
+  // De CMS-editor toont geüploade beelden als gewone <img> rechtstreeks uit Supabase
+  // Storage (de publieke site gaat via next/image, dus same-origin). Alleen het
+  // publieke storage-pad, niet heel *.supabase.co.
+  "img-src 'self' data: https://*.supabase.co/storage/v1/object/public/",
   "font-src 'self' data:",
   `connect-src 'self' https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com${isDev ? " ws://localhost:*" : ""}`,
   "frame-src 'none'",
