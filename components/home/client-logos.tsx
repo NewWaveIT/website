@@ -5,13 +5,23 @@
  */
 // `w`/`h` = intrinsieke verhouding van het logobestand; nodig zodat de browser
 // de breedte reserveert vóór het laden (anders vallen de marquee-helften samen).
-export type Client = { naam: string; logo?: string; w?: number; h?: number };
+export type Client = {
+  naam: string;
+  logo?: string;
+  w?: number;
+  h?: number;
+  /** Weergavehoogte in px als de standaard (30) een logo met kleine tekst onleesbaar maakt. */
+  hoogte?: number;
+};
 
 // Zet een `logo`-pad zodra het officiële bestand in /public/assets/logos/klanten/
 // staat (SVG of transparante PNG). Zolang dat er niet is, toont de tegel een
 // nette tekst-wordmark.
 export const CLIENTS: Client[] = [
   { naam: "COA", logo: "/assets/logos/klanten/coa.svg", w: 71, h: 50 },
+  // ind.svg: CC0-logo van Wikimedia Commons, bewerkt voor de witte silhouetten op deze donkere
+  // band: het wapen is uitgesneden (anders valt het wit-op-wit weg in het blok).
+  { naam: "IND", logo: "/assets/logos/klanten/ind.svg", w: 278, h: 92, hoogte: 52 },
   {
     naam: "Gemeente Rotterdam",
     logo: "/assets/logos/klanten/gemeente-rotterdam.svg",
@@ -47,6 +57,7 @@ export function ClientLogos() {
                   className="logo-img"
                   width={c.w}
                   height={c.h}
+                  style={c.hoogte ? { height: c.hoogte } : undefined}
                   loading="lazy"
                 />
               ) : (

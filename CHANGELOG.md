@@ -10,6 +10,10 @@ Welk niveau wanneer hoort, staat in [`CLAUDE.md`](CLAUDE.md#werkwijze-bij-elke-w
 Een wijziging zonder gevolg voor de site (alleen tests, documentatie, een refactor) krijgt
 geen eigen versie; die valt onder de eerstvolgende regel hieronder.
 
+## 1.2.1 — 22 oktober 2026
+
+- De IND staat nu in de "Vertrouwd door"-band op de homepage, naast het COA.
+
 ## 1.2.0 — 22 oktober 2026
 
 - Wisselen van pagina voelt nu rustiger: bovenin loopt een dunne oranje balk zolang de
