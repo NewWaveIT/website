@@ -125,4 +125,10 @@
   .pkop h1 {
     font-size: var(--text-3xl);
   }
+  /* De decoratieve animatie beslaat de rechterhelft. Onder dit breekpunt loopt de
+     lead daar dwars doorheen (sterren en een lijn door de tekst), dus valt hij weg.
+     tests/e2e/hero-overlap.spec.ts bewaakt dat. */
+  .pkop .shero-anim {
+    display: none;
+  }
 }

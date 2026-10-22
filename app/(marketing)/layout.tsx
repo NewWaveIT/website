@@ -1,4 +1,6 @@
+import { Suspense } from "react";
 import { Header } from "@/components/layout/header";
+import { NavigatieOvergang } from "@/components/layout/navigatie-overgang";
 import {
   ConsentMetCms,
   FooterMetContact,
@@ -11,6 +13,9 @@ export default function MarketingLayout({ children }: { children: React.ReactNod
       <a href="#main" className="skip-link">
         Direct naar inhoud
       </a>
+      <Suspense fallback={null}>
+        <NavigatieOvergang />
+      </Suspense>
       <Header />
       <MobileShellMetContact />
       <main id="main">{children}</main>

@@ -240,6 +240,7 @@ een keer twee tot vijf keer los was nagebouwd; de tellingen staan in `docs/BESLI
 | Kruimels **en** BreadcrumbList                | `<Kruimelpad>` — levert allebei                                                    | Kruimels zonder structured data, of andersom                                        |
 | Structured data                               | `<JsonLd>` (escapet `<`)                                                           | Eigen `<script type="application/ld+json">`                                         |
 | Admintabel op een telefoon                    | `tabel-stapel` op het `<table>`, `data-kop` op een cel zonder duidelijke kop       | Kolommen laten staan en hopen dat het past                                          |
+| Feedback bij een paginawissel                 | `<NavigatieOvergang>` (in de marketinglayout): balk bovenin + fade van `<main>`    | Een eigen laadbalk of paginafade per pagina; een `transform` op `<main>`            |
 | Een variant van een gedeelde vorm             | De variabele overschrijven (`--badge-kleur`)                                       | De eigenschap overschrijven (`color`) — dat wint of verliest op stylesheet-volgorde |
 | Een adminscherm kunnen tonen zonder database  | Data ophalen en tekenen scheiden; het echte component in `app/ontwerp/schermen.ts` | Markup nabouwen in een fixture                                                      |
 
@@ -294,6 +295,11 @@ weten welke.
 | `tests/e2e/langvorm.spec.ts`               | Doorlopende tekst breder dan 80 tekens per regel; een kop midden in de tekst zonder sectiegrens                                                         |
 | `tests/e2e/sector.spec.ts`                 | Herkenningspunten die als losse regels wegvallen; een gat naast een oneven laatste kaart                                                                |
 | `tests/e2e/kritieke-css.spec.ts`           | Een `<style>` in de productie-HTML: die weigert de CSP en de pagina komt kaal binnen                                                                    |
+| `tests/e2e/smoke.spec.ts`                  | Een publieke route die niet rendert, een kapot beeld of een console-fout (een CSP-schending is er één)                                                  |
+| `tests/e2e/hero-overlap.spec.ts`           | De decoratieve hero-animatie die op een smal scherm door de lead heen loopt                                                                             |
+| `tests/e2e/navigatie.spec.ts`              | De paginawissel: fade draait, blijft weg bij verminderde beweging, fadet het eerste laden niet, en laat `<main>` nooit onzichtbaar achter               |
+| `tests/unit/csp.spec.ts`                   | Een CSP die het beeld uit Supabase Storage in de CMS-editor blokkeert                                                                                   |
+| `tests/unit/navigatie.spec.ts`             | Welke klik de voortgangsbalk mag starten (geen anker, geen nieuw tabblad, geen andere herkomst)                                                         |
 
 Daarnaast draait CI Dependabot (wekelijks). **Geen CodeQL:** code scanning vereist GitHub
 Code Security, niet beschikbaar op een private repo onder een persoonlijk account — de

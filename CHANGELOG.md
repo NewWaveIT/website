@@ -10,6 +10,14 @@ Welk niveau wanneer hoort, staat in [`CLAUDE.md`](CLAUDE.md#werkwijze-bij-elke-w
 Een wijziging zonder gevolg voor de site (alleen tests, documentatie, een refactor) krijgt
 geen eigen versie; die valt onder de eerstvolgende regel hieronder.
 
+## 1.2.0 — 22 oktober 2026
+
+- Wisselen van pagina voelt nu rustiger: bovenin loopt een dunne oranje balk zolang de
+  volgende pagina laadt, en de nieuwe pagina verschijnt met een korte fade in plaats van
+  met een harde wissel. Bij "verminderde beweging" in je apparaat blijft de fade weg.
+- Op de pagina's Klantverhalen en Inzichten liepen op een telefoon of tablet sterren en een
+  oranje lijn dwars door de introtekst. Op smalle schermen laten we die decoratie nu weg.
+
 ## 1.1.3 — 22 oktober 2026
 
 - Een beeld dat je in de editor toevoegt stond daar als kapot plaatje, terwijl het op de
