@@ -195,3 +195,59 @@ for (const [naam, viewport] of [
     ).toBe(true);
   });
 }
+
+/* Regressietest: de zwevende "Plan een gesprek"-knop verwijst naar /contact. Op die pagina
+   zelf dekte hij na 420px scrollen het hele formulier af, terwijl hij naar de pagina
+   linkt waar de bezoeker al is. Een formulier invullen met een knop over de velden is
+   precies het moment waarop een bezoeker niets extra's moet zien. */
+test.describe("zwevende contactknop", () => {
+  test.use({ viewport: TELEFOON });
+
+  test("verschijnt op een gewone pagina na het scrollen", async ({ page }) => {
+    await page.goto("/over-ons");
+    await wegMetDeCookiemelding(page);
+    await page.evaluate(() => window.scrollTo(0, 900));
+    await expect(page.locator(".stickycta")).toHaveClass(/show/);
+  });
+
+  test("blijft weg op de contactpagina zelf", async ({ page }) => {
+    await page.goto("/contact");
+    await wegMetDeCookiemelding(page);
+    await page.evaluate(() => window.scrollTo(0, 900));
+    await page.waitForTimeout(300);
+    await expect(page.locator(".stickycta")).not.toHaveClass(/show/);
+  });
+});
+
+/* Aanraakdoelen: het logo (24px) en "of bel …" (24px) waren te laag voor een duim. Een
+   hard getal, geen indruk: 44px is de richtlijn voor een vingertop. */
+test.describe("aanraakdoelen op een telefoon", () => {
+  test.use({ viewport: TELEFOON });
+
+  test("logo en telefoonlink zijn minstens 44px hoog", async ({ page }) => {
+    await page.goto("/over-ons");
+    await wegMetDeCookiemelding(page);
+    for (const kiezer of [".mnav-inner .logo-link", ".cta .cta-tel"]) {
+      const doel = page.locator(kiezer).first();
+      await doel.scrollIntoViewIfNeeded();
+      const doos = await doel.boundingBox();
+      expect(doos?.height ?? 0, `hoogte van ${kiezer}`).toBeGreaterThanOrEqual(44);
+    }
+  });
+});
+
+/* Regressietest: een onbekende URL valt buiten `app/(marketing)`, dus op de globale
+   404. Die toonde de desktop-header (op een telefoon verborgen) maar niet de mobiele
+   schil: een verdwaalde bezoeker had geen menu en geen logo, precies waar je navigatie
+   het hardst nodig hebt. */
+test.describe("404 op een telefoon", () => {
+  test.use({ viewport: TELEFOON });
+
+  test("heeft het menu en het logo van de mobiele schil", async ({ page }) => {
+    const res = await page.goto("/deze-pagina-bestaat-niet-42");
+    expect(res?.status()).toBe(404);
+    await wegMetDeCookiemelding(page);
+    await expect(page.getByRole("button", { name: "Menu", exact: true })).toBeVisible();
+    await expect(page.locator(".mnav .logo-link")).toBeVisible();
+  });
+});

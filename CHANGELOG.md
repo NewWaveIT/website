@@ -10,6 +10,15 @@ Welk niveau wanneer hoort, staat in [`CLAUDE.md`](CLAUDE.md#werkwijze-bij-elke-w
 Een wijziging zonder gevolg voor de site (alleen tests, documentatie, een refactor) krijgt
 geen eigen versie; die valt onder de eerstvolgende regel hieronder.
 
+## 1.2.3 — 22 oktober 2026
+
+- Op een telefoon had de pagina "niet gevonden" (een verkeerd getypte link) geen menu en
+  geen logo. Daar staan ze nu, zodat je vanaf die pagina verder kunt.
+- Op de contactpagina stond op een telefoon een zwevende "Plan een gesprek"-knop over het
+  formulier heen, terwijl hij naar diezelfde pagina verwees. Die knop blijft daar nu weg.
+- Het logo bovenin en de regel "of bel …" onderaan zijn op een telefoon groter aan te raken
+  (44 in plaats van 24 pixels hoog), zonder dat de pagina er anders uitziet.
+
 ## 1.2.2 — 22 oktober 2026
 
 - De "Vertrouwd door"-band toont nu het logo van De Derde Linden in plaats van alleen de naam.

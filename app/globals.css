@@ -914,6 +914,10 @@ footer.site-footer {
 .cta .cta-tel {
   color: var(--white);
   font-weight: var(--fw-semibold);
+  /* Aanraakdoel van 44px: de tekst zelf is maar 24px hoog, te weinig voor een duim. */
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
   /* Geen opacity: wit op flame is de bewuste brandkeuze, maar 90% wit maakt het
      contrast onnodig nog lager (2,7:1 i.p.v. 3,1:1). */
   white-space: nowrap;
@@ -1849,6 +1853,9 @@ footer.site-footer {
   }
   .mnav-inner .logo-link {
     display: flex;
+    align-items: center;
+    /* Het logo is 24px hoog; het aanraakdoel hoort 44px te zijn. */
+    min-height: 44px;
   }
   .burger {
     width: 44px;

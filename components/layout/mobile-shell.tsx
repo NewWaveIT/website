@@ -98,7 +98,9 @@ export function MobileShell({ email }: { email: string }) {
       const cta = document.querySelector<HTMLElement>(".cta");
       const voet = document.querySelector<HTMLElement>("footer.site-footer");
       const past = window.scrollY > 420;
-      sticky.classList.toggle("show", past && !inBeeld(cta) && !inBeeld(voet));
+      // Niet op /contact: de knop linkt daar naartoe en zou het formulier afdekken.
+      const opContact = window.location.pathname === "/contact";
+      sticky.classList.toggle("show", past && !opContact && !inBeeld(cta) && !inBeeld(voet));
     };
     const onScroll = () => {
       if (!ticking) {
