@@ -10,6 +10,12 @@ Welk niveau wanneer hoort, staat in [`CLAUDE.md`](CLAUDE.md#werkwijze-bij-elke-w
 Een wijziging zonder gevolg voor de site (alleen tests, documentatie, een refactor) krijgt
 geen eigen versie; die valt onder de eerstvolgende regel hieronder.
 
+## 1.1.3 — 22 oktober 2026
+
+- Een beeld dat je in de editor toevoegt stond daar als kapot plaatje, terwijl het op de
+  site wel goed te zien was. De browser blokkeerde het beeld uit de opslag; dat is nu
+  toegestaan voor het publieke opslagpad.
+
 ## 1.1.2 — 9 oktober 2026
 
 - Een foutmelding of 404 op een marketingpagina toonde de navigatie en de voettekst twee

@@ -50,6 +50,54 @@ test.describe("Publieke routes", () => {
   }
 });
 
+/* Regressietest: groen in tsc en build zegt niets over wat de browser doet. Een CSP die een
+   beeld blokkeert, een dode afbeeldings-URL of een script dat gooit zie je alleen door de
+   pagina echt te laden. Daarom per route: elk beeld laadt, en de console blijft schoon
+   (een CSP-schending is een console-fout). */
+test.describe("Publieke routes: geen kapotte beelden en geen console-fouten", () => {
+  for (const path of ROUTES) {
+    test(`${path} laadt alle beelden zonder console-fouten`, async ({ page }) => {
+      const fouten: string[] = [];
+      page.on("console", (m) => {
+        // Vercel Analytics bestaat alleen op Vercel; tegen `next start` is /_vercel/ een 404.
+        if (m.type() !== "error") return;
+        if (m.text().includes("/_vercel/") || m.location().url.includes("/_vercel/")) return;
+        fouten.push(m.text());
+      });
+      page.on("pageerror", (e) => fouten.push(e.message));
+
+      await page.goto(path);
+      // Lui geladen beelden laden pas als ze in beeld komen: eenmaal de pagina af scrollen.
+      await page.evaluate(async () => {
+        for (let y = 0; y < document.body.scrollHeight; y += 600) {
+          window.scrollTo(0, y);
+          await new Promise((r) => setTimeout(r, 40));
+        }
+      });
+      const kapot = await page.evaluate(async () => {
+        const beelden = [...document.images];
+        await Promise.all(
+          beelden.map((b) =>
+            b.complete
+              ? null
+              : new Promise((klaar) => {
+                  b.addEventListener("load", klaar, { once: true });
+                  b.addEventListener("error", klaar, { once: true });
+                  setTimeout(klaar, 5000);
+                }),
+          ),
+        );
+        return beelden
+          .filter((b) => b.complete && b.naturalWidth === 0 && b.currentSrc !== "")
+          .map((b) => b.currentSrc);
+      });
+
+      expect(kapot, `kapotte beelden op ${path}`).toEqual([]);
+      expect(fouten, `console-fouten op ${path}`).toEqual([]);
+    });
+  }
+});
+
 test("Onbekende route toont de 404-pagina", async ({ page }) => {
   const res = await page.goto("/deze-pagina-bestaat-niet-42");
   expect(res?.status()).toBe(404);

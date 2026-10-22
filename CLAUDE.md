@@ -305,9 +305,37 @@ Breek hem expres, kijk of hij rood wordt, zet hem terug. Een test die je niet he
 falen bewaakt niets. Zoek je in broncode naar een los woord, blank dan eerst het
 commentaar uit. Wacht in e2e op een zichtbaar gevolg, niet op een netwerktoestand.
 
+### Definitie van klaar
+
+Loop dit langs voordat je iets afmeldt. De commandoregel staat bij _Verificatie_ in de
+kernprincipes; dit is de inhoud eromheen.
+
+- Het doet wat gevraagd is, en niets extra's. Een nieuwe dependency alleen na akkoord.
+- **Elke bugfix krijgt een regressietest**, eerst rood, dan de fix. Zet er een
+  `// Regressietest: …` boven die uitlegt wat er misging, niet wat de test doet. Voorbeeld:
+  `tests/unit/csp.spec.ts`. Pas een falende test nooit aan om hem groen te krijgen zonder
+  de oorzaak te begrijpen: het is een regressie (fix de code) of een verouderde aanname
+  (pas hem aan, met reden).
+- **Logica met vertakkingen is een pure functie in `lib/`**, niet in een component, zodat je
+  hem test zonder Supabase of `next/headers` te mocken.
+- **Randgevallen:** leeg, `null`, heel groot, traag netwerk, dubbele klik, geen rechten.
+  Een knop die twee keer kan worden ingedrukt, is een bug.
+- **Een lichte lijstfunctie** (een `select` met minder kolommen) krijgt een test met de
+  echte consument die het resultaat daarna leest. Het compileert en bouwt ook als een
+  niet-geselecteerde kolom `undefined` blijft, en breekt dan pas in de browser.
+- **Client/server-grens.** Een functie uit een `"use client"`-bestand roep je niet aan vanuit
+  een Server Component; je rendert alleen het component. Dat faalt pas live, niet in
+  `tsc`, lint of build.
+- **Een nieuwe externe host in de CSP** komt in álle directives waar zijn soort bron onder
+  valt (`img-src` én `media-src` voor video, `connect-src`, `frame-src`), en alleen met het
+  pad dat nodig is. Zie `tests/unit/csp.spec.ts`.
+- **`<Link>` prefetcht zodra hij in beeld komt.** `prefetch={false}` op links naar een
+  andere sectie (publiek ↔ admin) en op links die permanent zichtbaar zijn in een balk.
+- Geen dode code, uitgecommentarieerde code of debugcode. `CHANGELOG.md` en `version` mee.
+
 ## Zo ontstaan hier fouten
 
-Deze vijf hebben elk minstens één keer echt schade aangericht. Ze staan er met het incident
+Deze zes hebben elk minstens één keer echt schade aangericht. Ze staan er met het incident
 erbij, want een regel zonder aanleiding leest als een dooddoener en wordt overgeslagen.
 
 **1 · Bewerk met tekst die je net gelezen hebt, niet met een script dat ankers raadt.**
@@ -339,6 +367,14 @@ ook `"Sluit menu"`.
 tekst" is beantwoord met een scan per bestand, en daardoor bleef het aanmeldformulier op de
 inzichten-pagina's staan: dat is geen eigen bestand maar een blok binnen de CTA eronder.
 Tel wat je zoekt, en laat de telling zakken naar nul in plaats van een lijst door te lezen.
+
+**6 · Groen in `tsc` en build zegt niets over wat de browser doet.** Een geüpload beeld
+stond kapot in de CMS-editor en werkte op de site: de CSP liet alleen `'self'` toe, en de
+editor toont het beeld rechtstreeks uit Supabase Storage in plaats van via `next/image`.
+Geen compilerfout, geen lintmelding. Ook een onbereikbare database valt niet op in de
+build: elke query wacht dan op zijn eigen time-out voordat de seed het overneemt (3s in
+`lib/cms/content.ts`, `QUERY_TIMEOUT_MS`). Open dus de wijziging in een browser, kijk in de
+console, en haal de afhankelijkheid expres weg.
 
 ## Omgeving en valkuilen
 
