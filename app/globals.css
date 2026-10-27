@@ -964,6 +964,10 @@ footer.site-footer {
 .notfound .nf-tel {
   font-weight: var(--fw-semibold);
   color: var(--text-body);
+  /* Aanraakdoel van 44px: de regel zelf is 24px hoog. */
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
 }
 .notfound .nf-tel:hover {
   color: var(--orange-text);
@@ -2011,4 +2015,48 @@ footer.site-footer {
 
 body.m-menu-open {
   overflow: hidden;
+}
+
+/* ============================================================
+   Aanraakdoelen en focus op een telefoon
+   ============================================================ */
+@media (max-width: 767px) {
+  /* De plakkende "Plan een gesprek"-balk is ruim 70px hoog. Zonder dit schuift de
+     browser een gefocust element of een ankerdoel tot vlak tegen de onderrand, en dan
+     ligt de balk er recht overheen (WCAG 2.4.11, focus niet afgedekt). */
+  html {
+    scroll-padding-bottom: 96px;
+  }
+  /* Voettekstlinks waren 31px hoog; 44px is een vingertop. */
+  .foot-top a {
+    display: flex;
+    align-items: center;
+    min-height: 44px;
+    padding-block: 0;
+  }
+  .award-badge,
+  .proof .award {
+    min-height: 44px;
+  }
+}
+
+/* ============================================================
+   Verminderde beweging: vangnet
+   ============================================================
+   Wie "verminderde beweging" aan heeft staan, wil geen bewegende achtergrond. Losse regels
+   per animatie liepen achter: de klantenband en de sectorillustraties op de homepage bleven
+   eindeloos bewegen. Dit zet elke animatie en overgang op één stap van een fractie van een
+   milliseconde, zodat ze meteen op hun eindstand staan. `tests/e2e/verminderde-beweging.spec.ts`
+   bewaakt dat er niets eindeloos blijft lopen. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    animation-delay: 0ms !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0ms !important;
+    scroll-behavior: auto !important;
+  }
 }

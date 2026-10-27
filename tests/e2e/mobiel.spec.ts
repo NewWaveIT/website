@@ -100,15 +100,18 @@ test.describe("mobiel", () => {
   for (const [naam, pad] of [
     ["homepage", "/"],
     ["sectorpagina", "/sectoren/publieke-sector"],
+    // De financial-services-pagina heeft eigen lagen (`.laag-platform`) die de andere vier
+    // sectorpagina's niet hebben; groen op lichtgroen haalde daar 4,16:1 op 12px.
+    ["sectorpagina met extra lagen", "/sectoren/banken"],
     ["dienstpagina", "/diensten/app-in-a-day"],
   ] as const) {
-    test(`${naam} voldoet op telefoonbreedte aan WCAG 2.1 AA`, async ({ page }) => {
+    test(`${naam} voldoet op telefoonbreedte aan WCAG 2.2 AA`, async ({ page }) => {
       // Zie de toelichting in toegankelijkheid.spec.ts: zonder dit meet axe af
       // en toe midden in een crossfade op de homepage.
       await page.emulateMedia({ reducedMotion: "reduce" });
       await page.goto(pad);
       const rapport = await new AxeBuilder({ page })
-        .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"])
+        .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa"])
         .analyze();
       const violations = zonderMerkuitzondering(rapport.violations);
       expect(
@@ -250,4 +253,49 @@ test.describe("404 op een telefoon", () => {
     await expect(page.getByRole("button", { name: "Menu", exact: true })).toBeVisible();
     await expect(page.locator(".mnav .logo-link")).toBeVisible();
   });
+});
+
+/* Regressietest (WCAG 2.4.11, focus niet afgedekt): met het toetsenbord of een schermlezer
+   scrolled de browser een gefocust element "naar het dichtstbijzijnde randje". Dat randje is
+   onderin het scherm, en daar stond de plakkende "Plan een gesprek"-balk (en op /werken-bij
+   ook een invoerveld) er recht overheen: je focuste "Alle inzichten" en zag hem niet. Dit
+   loopt alle focusbare elementen af en vraagt wat er op het middelpunt van elk ligt. */
+test.describe("toetsenbordfocus op een telefoon", () => {
+  test.use({ viewport: TELEFOON, isMobile: true, hasTouch: true });
+
+  for (const pad of ["/diensten/mendix", "/sectoren/manufacturing", "/werken-bij"]) {
+    test(`${pad}: een gefocust element ligt niet onder de vaste balken`, async ({ page }) => {
+      test.setTimeout(120_000);
+      await page.goto(pad);
+      await wegMetDeCookiemelding(page);
+      const afgedekt = await page.evaluate(async () => {
+        const VAST = ".stickycta, .cookie-banner, .mnav";
+        const lijst = [
+          ...document.querySelectorAll<HTMLElement>(
+            "main a[href], main button, main summary, main input, main select, main textarea, footer a[href]",
+          ),
+        ].filter((e) => {
+          const r = e.getBoundingClientRect();
+          // Zichtbaar verborgen invoer (bestandsknop achter een label) is geen focusdoel.
+          return r.width > 4 && r.height > 4 && getComputedStyle(e).visibility !== "hidden";
+        });
+        const fout: string[] = [];
+        for (const e of lijst) {
+          e.focus();
+          // De plakkende balk schuift met een overgang van 300ms in of uit.
+          await new Promise((klaar) => setTimeout(klaar, 360));
+          const r = e.getBoundingClientRect();
+          if (r.bottom < 0 || r.top > innerHeight) continue;
+          const x = Math.min(Math.max(r.left + r.width / 2, 0), innerWidth - 1);
+          const y = Math.min(Math.max(r.top + r.height / 2, 0), innerHeight - 1);
+          const boven = document.elementFromPoint(x, y);
+          if (boven?.closest(VAST) && !e.closest(VAST)) {
+            fout.push(`${e.tagName.toLowerCase()} "${(e.innerText || "").trim().slice(0, 30)}"`);
+          }
+        }
+        return fout;
+      });
+      expect(afgedekt, `afgedekt op ${pad}`).toEqual([]);
+    });
+  }
 });

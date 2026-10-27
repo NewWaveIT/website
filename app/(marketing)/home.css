@@ -112,6 +112,25 @@
   }
 }
 
+/* Verminderde beweging: geen scrollende band maar alle klanten naast en onder elkaar. Als
+   stilstaande marquee stond het eerste logo half onder de uitfade en liep de rij rechts
+   dood; de tweede (dubbele) set is er alleen voor de lus en hoort hier niet. */
+@media (prefers-reduced-motion: reduce) {
+  .logo-track {
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+  .logo-set {
+    flex-wrap: wrap;
+    width: auto;
+    padding-right: 0;
+    gap: var(--space-5) var(--space-8);
+  }
+  .logo-set[aria-hidden="true"] {
+    display: none;
+  }
+}
+
 /* Sectoren */
 .sectoren {
   background: var(--surface-page);

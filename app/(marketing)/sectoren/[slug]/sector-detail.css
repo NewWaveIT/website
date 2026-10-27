@@ -692,7 +692,8 @@
 /* Extra lagen uit de financial-services-pagina. */
 .p-sector .laag-platform {
   background: var(--success-100);
-  color: var(--success-500);
+  /* success-500 haalde 4,16:1 op deze achtergrond, net te weinig voor 12px; success-700 5,38:1. */
+  color: var(--success-700);
   border: 1px solid color-mix(in srgb, var(--success-500) 30%, var(--success-100));
 }
 .p-sector .laag-operating {

@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { MobileShellMetContact } from "@/components/layout/schil-cms";
@@ -11,6 +12,8 @@ import { NietGevonden } from "@/components/fout/niet-gevonden";
  * De mobiele schil hoort erbij: op een telefoon is `<Header />` verborgen, en een
  * verdwaalde bezoeker heeft dan nergens een menu of logo.
  */
+export const metadata: Metadata = { title: "Pagina niet gevonden" };
+
 export default function NotFound() {
   return (
     <>

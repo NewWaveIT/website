@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { NietGevonden } from "@/components/fout/niet-gevonden";
 
 /**
@@ -6,6 +7,8 @@ import { NietGevonden } from "@/components/fout/niet-gevonden";
  * marketing-URL terug op de 404 in de root, die de schil wél meebrengt -- en
  * dan stond alles er twee keer.
  */
+export const metadata: Metadata = { title: "Pagina niet gevonden" };
+
 export default function NotFound() {
   return <NietGevonden />;
 }

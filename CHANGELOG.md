@@ -10,6 +10,20 @@ Welk niveau wanneer hoort, staat in [`CLAUDE.md`](CLAUDE.md#werkwijze-bij-elke-w
 Een wijziging zonder gevolg voor de site (alleen tests, documentatie, een refactor) krijgt
 geen eigen versie; die valt onder de eerstvolgende regel hieronder.
 
+## 1.2.4 — 27 oktober 2026
+
+- Wie "verminderde beweging" aan heeft staan zag op de homepage nog steeds de klantenband
+  voorbijschuiven en de sectorillustraties bewegen. Nu staat alles stil, en de klantenband
+  toont dan alle klanten netjes naast en onder elkaar.
+- Op een telefoon kon de plakkende "Plan een gesprek"-balk een link of veld afdekken dat je
+  met het toetsenbord of een schermlezer selecteerde. Het scherm scrolt nu zo dat het
+  geselecteerde element erboven blijft.
+- Op de pagina Financial services was de groene tekst in het label "Platform en governance"
+  te licht (4,2 in plaats van 4,5 contrast). Donkerder gemaakt.
+- Op een telefoon zijn de links in de voettekst, de prijsbadge en "Klantverhalen" in de hero
+  groter aan te raken (44 pixels hoog).
+- De pagina "niet gevonden" heeft nu een eigen paginatitel.
+
 ## 1.2.3 — 22 oktober 2026
 
 - Op een telefoon had de pagina "niet gevonden" (een verkeerd getypte link) geen menu en

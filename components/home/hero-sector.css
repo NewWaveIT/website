@@ -209,12 +209,21 @@
 }
 
 .hsec-link {
+  /* De tekst is 29px hoog: het aanraakdoel wordt onzichtbaar uitgebreid, zodat de
+     onderstreping niet verschuift. */
+  position: relative;
   color: var(--paper);
   font-size: 16px;
   font-weight: 600;
   text-decoration: none;
   border-bottom: 2px solid color-mix(in srgb, var(--paper) 30%, transparent);
   padding-bottom: 3px;
+}
+
+.hsec-link::after {
+  content: "";
+  position: absolute;
+  inset: -9px -4px;
 }
 
 .hsec-link:hover {
