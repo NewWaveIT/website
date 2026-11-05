@@ -25,6 +25,7 @@ import {
 } from "lucide-react";
 import { useBeeldUpload } from "./use-beeld-upload";
 import { FigureImage } from "./tiptap-figure";
+import { VacatureTekst } from "./tiptap-vacature";
 import { Modal } from "./modal";
 import { VerborgenWaarde } from "./verborgen-waarde";
 
@@ -73,7 +74,12 @@ function Btn({
   );
 }
 
-function Toolbar({ editor, lite }: { editor: Editor; lite: boolean }) {
+type Variant = "full" | "lite" | "tekst";
+
+function Toolbar({ editor, variant }: { editor: Editor; variant: Variant }) {
+  // Koppen kennen de volledige editor en de vacaturetekst; beeld en citaat alleen de volledige.
+  const koppen = variant !== "lite";
+  const volledig = variant === "full";
   const fileRef = useRef<HTMLInputElement>(null);
   const beeld = useBeeldUpload("inline");
   const busy = beeld.bezig;
@@ -187,7 +193,7 @@ function Toolbar({ editor, lite }: { editor: Editor; lite: boolean }) {
 
   return (
     <div className="rte-bar">
-      {!lite && (
+      {koppen && (
         <>
           <Btn
             title="Kop"
@@ -232,7 +238,7 @@ function Toolbar({ editor, lite }: { editor: Editor; lite: boolean }) {
       <Btn title="Link" active={staat.link} onClick={openLink}>
         <LinkIcon />
       </Btn>
-      {!lite && (
+      {volledig && (
         <>
           <Btn
             title="Citaat"
@@ -273,7 +279,7 @@ function Toolbar({ editor, lite }: { editor: Editor; lite: boolean }) {
         <Redo />
       </Btn>
 
-      {!lite && imgSelected && (
+      {volledig && imgSelected && (
         <div className="rte-ctx">
           <span className="rte-ctx-lbl">Afbeelding:</span>
           <Btn
@@ -411,7 +417,7 @@ export function RichTextEditor({
   label: string;
   defaultValue: string;
   help?: string;
-  variant?: "full" | "lite";
+  variant?: Variant;
 }) {
   const lite = variant === "lite";
   const [html, setHtml] = useState(defaultValue || "");
@@ -422,12 +428,29 @@ export function RichTextEditor({
           StarterKit.configure({ link: false, heading: false }),
           Link.configure({ openOnClick: false, autolink: true }),
         ]
-      : [
-          StarterKit.configure({ link: false }),
-          Link.configure({ openOnClick: false, autolink: true }),
-          FigureImage,
-        ],
+      : variant === "tekst"
+        ? [
+            // Alleen wat de pagina kan tonen: koppen, alinea's, opsommingen, vet, cursief, link.
+            StarterKit.configure({
+              link: false,
+              heading: { levels: [2, 3] },
+              blockquote: false,
+              code: false,
+              codeBlock: false,
+              horizontalRule: false,
+              strike: false,
+            }),
+            Link.configure({ openOnClick: false, autolink: true }),
+            VacatureTekst,
+          ]
+        : [
+            StarterKit.configure({ link: false }),
+            Link.configure({ openOnClick: false, autolink: true }),
+            FigureImage,
+          ],
     content: defaultValue || "",
+    // De contenteditable heeft anders geen naam voor schermlezers.
+    editorProps: { attributes: { "aria-label": label, role: "textbox", "aria-multiline": "true" } },
     onUpdate: ({ editor }) => setHtml(editor.getHTML()),
   });
 
@@ -435,10 +458,10 @@ export function RichTextEditor({
     <div className="fld">
       <label>{label}</label>
       <VerborgenWaarde name={name} value={html} />
-      <div className={`rte${lite ? " rte-lite" : ""}`}>
+      <div className={`rte${lite ? " rte-lite" : ""}${variant === "tekst" ? " rte-tekst" : ""}`}>
         {editor && (
           <>
-            <Toolbar editor={editor} lite={lite} />
+            <Toolbar editor={editor} variant={variant} />
             <EditorContent editor={editor} />
           </>
         )}

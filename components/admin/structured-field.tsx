@@ -163,6 +163,7 @@ function Control({
     <input
       type={field.type === "number" ? "number" : "text"}
       value={str(value)}
+      aria-label={field.label}
       placeholder={field.placeholder}
       onChange={(e) => onChange(e.target.value)}
     />

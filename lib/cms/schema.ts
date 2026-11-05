@@ -18,7 +18,8 @@ export type FieldType =
   | "select" // vaste keuze uit opties (chips)
   | "author" // keuze uit teamleden (naam + foto)
   | "richtext" // volledige opmaak (koppen, beeld, quote)
-  | "richtext-lite"; // lichte opmaak (vet/cursief/link/lijst)
+  | "richtext-lite" // lichte opmaak (vet/cursief/link/lijst)
+  | "richtext-tekst"; // lopende tekst met koppen en opsommingen, zonder beeld of citaat (vacature)
 
 export interface FieldDef {
   key: string;
@@ -36,6 +37,8 @@ export interface FieldDef {
   required?: boolean;
   /** date-veld: standaard op vandaag bij een nieuw item */
   defaultToday?: boolean;
+  /** Startwaarde bij een nieuw item (een bestaand item toont wat er is opgeslagen). */
+  standaard?: string;
   /** 'side' plaatst het veld in de instellingen-rail rechts i.p.v. de contentkolom */
   panel?: "side";
 }
@@ -207,10 +210,17 @@ export const FIELD_SCHEMAS: Record<ContentType, FieldDef[]> = {
   vacatures: [
     { key: "functietitel", label: "Functietitel", type: "text" },
     {
+      key: "inhoud",
+      label: "Vacaturetekst",
+      type: "richtext-tekst",
+      help: "Plak de hele vacature in één keer. De eerste alinea komt als intro in de header; alles daaronder staat in de tekst op de pagina.",
+    },
+    {
       key: "discipline",
       label: "Discipline (lijstlabel)",
       type: "text",
       placeholder: "Mendix · Senior",
+      help: "Het korte label in het overzicht op Werken bij.",
       panel: "side",
     },
     {
@@ -218,33 +228,36 @@ export const FIELD_SCHEMAS: Record<ContentType, FieldDef[]> = {
       label: "Locatie",
       type: "text",
       placeholder: "Utrecht / hybride",
+      standaard: "Utrecht / hybride",
       panel: "side",
     },
-    { key: "intro", label: "Intro", type: "richtext-lite" },
     {
       key: "employmentType",
       label: "Type dienstverband",
       type: "select",
       options: ["FULL_TIME", "PART_TIME"],
+      standaard: "FULL_TIME",
       help: "Voltijd of deeltijd (gebruiken we voor de structured data van de vacature).",
       panel: "side",
     },
-    { key: "gepubliceerdOp", label: "Gepubliceerd op", type: "date", panel: "side" },
-    { key: "tags", label: "Tags", type: "list", help: "Bv. Mendix, Senior, Utrecht / hybride." },
     {
-      key: "secties",
-      label: "Secties",
-      type: "items",
-      itemLabel: "Sectie",
-      of: [
-        { key: "titel", label: "Titel", type: "text", placeholder: "Wat ga je doen?" },
-        { key: "items", label: "Punten", type: "list" },
-      ],
+      key: "gepubliceerdOp",
+      label: "Gepubliceerd op",
+      type: "date",
+      defaultToday: true,
+      panel: "side",
+    },
+    {
+      key: "tags",
+      label: "Tags (optioneel)",
+      type: "list",
+      help: "Bv. Mendix, Senior, Utrecht / hybride. Staan als labels boven de titel.",
     },
     {
       key: "facts",
-      label: "Feiten",
+      label: "Feiten naast de tekst (optioneel)",
       type: "group",
+      help: "Alleen invullen voor een kaartje met feiten. Staat het al in de tekst, laat dit dan leeg: lege regels worden niet getoond.",
       of: [
         { key: "team", label: "Team", type: "text" },
         { key: "niveau", label: "Niveau", type: "text" },

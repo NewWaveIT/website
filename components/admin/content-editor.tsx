@@ -208,6 +208,7 @@ export function ContentEditor({
         if (pd) return pd;
       }
       if (f.defaultToday) return today;
+      if (f.standaard) return f.standaard;
     }
     return "";
   };
@@ -259,6 +260,15 @@ export function ContentEditor({
         defaultValue={initial(f)}
         help={f.help}
         variant="lite"
+      />
+    ) : f.type === "richtext-tekst" ? (
+      <RichTextEditor
+        key={f.key}
+        name={`f_${f.key}`}
+        label={f.label}
+        defaultValue={initial(f)}
+        help={f.help}
+        variant="tekst"
       />
     ) : (
       <div className="fld" key={f.key}>

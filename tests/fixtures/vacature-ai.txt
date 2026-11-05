@@ -1,0 +1,87 @@
+Over de vacature
+Over de rol
+The New Wave IT helpt organisaties bij de transformatie naar een AI-native organisatie. We combineren strategisch AI-advies met het daadwerkelijk ontwikkelen en implementeren van AI-oplossingen.
+Als Senior AI Engineer / Forward Deployed Engineer werk je direct bij onze klanten aan concrete AI-vraagstukken. Je vertaalt bedrijfsprocessen en uitdagingen naar schaalbare, veilige en productieklare AI-oplossingen.
+Je bent niet alleen een technisch specialist, maar begrijpt ook de business. Je werkt nauw samen met stakeholders, identificeert kansen en neemt verantwoordelijkheid voor de volledige technische realisatie: van prototype tot productie.
+
+Wat ga je doen?
+
+* Bedrijfsprocessen analyseren en kansen identificeren voor AI en automatisering.
+* AI-agents en LLM-gebaseerde applicaties ontwerpen, ontwikkelen en implementeren.
+* AI-oplossingen integreren met bestaande enterprise-systemen, databases en API's.
+* RAG-oplossingen, tool calling en agentic workflows ontwikkelen.
+* AI-prototypes doorontwikkelen naar betrouwbare productieoplossingen.
+* Zorgen voor AI-security, monitoring, evaluatie, schaalbaarheid en beheersbare operationele kosten (zoals tokenverbruik).
+* Technische keuzes onderbouwen en stakeholders adviseren over AI-architectuur.
+* Zelfstandig werken binnen complexe klantomgevingen en multidisciplinaire teams.
+
+
+Wat breng je mee?
+
+Must-haves
+Software engineering
+Hbo/wo werk- en denkniveau, bij voorkeur met een relevante technische opleiding (sterke voorkeur voor Informatica).
+Uitstekende beheersing van de Nederlandse taal, mondeling en schriftelijk.
+
+* Minimaal 5 jaar professionele softwareontwikkeling.
+* Uitstekende kennis van Python.
+* Ervaring met API-ontwikkeling, REST-integraties, SQL en databases.
+* Ervaring met softwarearchitectuur, testing en versiebeheer.
+
+
+AI engineering
+
+* Praktijkervaring met Large Language Models en model-API's.
+* Ervaring met RAG, embeddings en vector databases.
+* Ervaring met AI-agents, function/tool calling en workfloworkestratie.
+* Kennis van prompt engineering, evaluatie, betrouwbaarheid en kostenoptimalisatie van AI-systemen (modelkeuze en tokenverbruik).
+
+
+Cloud & production engineering
+
+* Ervaring met Azure en/of AWS.
+* Kennis van Docker, CI/CD en deployment.
+* Ervaring met security, logging en monitoring, inclusief veilige LLM-integraties, toegangsbeheer en bescherming tegen prompt injection.
+* Aantoonbare ervaring met het naar productie brengen van software- of AI-oplossingen.
+
+
+Consultancy & business
+
+* Ervaring in complexe enterprise-omgevingen.
+* Sterke communicatieve vaardigheden en stakeholdermanagement.
+* Vermogen om bedrijfsproblemen te vertalen naar technische oplossingen.
+* Zelfstandig kunnen opereren bij klanten.
+
+
+Nice-to-haves
+
+* Ervaring met LangChain, LangGraph of vergelijkbare agentframeworks.
+* Ervaring met n8n of andere orkestratieplatformen.
+* Kennis van machine learning, scikit-learn en voorspellende modellen.
+* Ervaring met data pipelines, modelvalidatie en MLOps.
+* Ervaring met Siemens AI Studio / RapidMiner.
+* Kennis van Mendix of andere enterprise low-code-platformen.
+
+
+Wat bieden wij jou?
+
+* Een bruto maandsalaris van € 5.000 tot € 6.500 op basis van 40 uur, afhankelijk van ervaring en expertise.
+* Een jaarlijkse bonusregeling tot maximaal 1,5 bruto maandsalaris.
+* Een business-ov-kaart, een reiskostenvergoeding of een combinatie daarvan. Wij bieden geen leaseauto.
+* Pensioen via StiPP met een werkgeversbijdrage van 15,9%.
+* Onbeperkt verlof, in overleg met je team en de klant.
+* Hybride werken: bij de klant, op ons kantoor in hartje Utrecht en vanuit huis.
+
+
+Wat maakt deze rol bijzonder?
+Je werkt op het snijvlak van AI, software engineering en bedrijfsprocessen.
+Waar traditionele AI-specialisten zich vaak richten op modellen en experimenten, ben jij verantwoordelijk voor de daadwerkelijke toepassing van AI binnen organisaties.
+Je combineert technische diepgang met pragmatische implementatiekracht.
+Je krijgt bovendien de mogelijkheid om nieuwe technologieën zoals Siemens AI Studio te verkennen en daarmee bij te dragen aan de verdere ontwikkeling van onze AI-dienstverlening.
+
+Wat zoeken we nadrukkelijk niet?
+
+* Een pure data scientist die voornamelijk modellen onderzoekt.
+* Een prompt engineer zonder stevige software-engineeringachtergrond.
+* Een AI-strateeg zonder aantoonbare implementatie-ervaring.
+* Een junior AI-developer die nog intensieve technische begeleiding nodig heeft.

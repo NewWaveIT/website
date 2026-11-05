@@ -321,9 +321,11 @@
   border-color: var(--color-primary);
 }
 .cms .choicechips .chip.on {
-  background: var(--color-primary);
+  /* Wit op Flame Orange haalt voor kleine tekst maar 3.4:1; zacht oranje + AA-oranje tekst wel. */
+  background: var(--color-primary-soft);
   border-color: var(--color-primary);
-  color: var(--white);
+  color: var(--orange-text);
+  font-weight: var(--fw-semibold, 600);
 }
 
 /* Auteur-keuze */
@@ -432,6 +434,25 @@
 }
 .cms .rte-lite .ProseMirror {
   min-height: 130px;
+}
+/* Vacaturetekst: één groot vlak, ruim genoeg voor een hele vacature. */
+.cms .rte-tekst .ProseMirror {
+  min-height: 420px;
+}
+/* De eerste alinea komt als intro in de header van de pagina; het label maakt dat zichtbaar. */
+.cms .rte .ProseMirror .rte-intro {
+  border-left: 3px solid var(--color-primary);
+  padding-left: 12px;
+}
+.cms .rte .ProseMirror .rte-intro::before {
+  content: attr(data-label);
+  display: block;
+  margin-bottom: 4px;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-kicker);
+  text-transform: uppercase;
+  color: var(--orange-text);
 }
 .cms .rte .ProseMirror h2 {
   font-size: var(--text-xl);

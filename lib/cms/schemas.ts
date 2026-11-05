@@ -284,21 +284,24 @@ const artikelen = z.object({
   sector: optTekst,
 });
 
+/** Een lege waarde is hier een geldige: elk feit is optioneel, en een lege regel wordt niet getoond. */
+const feit = tekst.default("");
+
 const vacatures = z.object({
   slug: tekst,
   functietitel: tekst,
   discipline: tekst,
   locatie: tekst,
-  tags: lijst,
-  intro: tekst,
-  secties: z.array(z.object({ titel: tekst, items: lijst })),
-  facts: z.object({
-    team: tekst,
-    niveau: tekst,
-    locatie: tekst,
-    uren: tekst,
-    salaris: tekst,
-  }),
+  tags: lijst.default([]),
+  /** De hele vacature als opgemaakte tekst; de eerste alinea is de intro (`splitsVacature`). */
+  inhoud: optTekst,
+  // Oud model, van vóór `inhoud`: een aparte intro en secties met bullets. Alleen nog gelezen
+  // voor rijen die er nog zo uitzien; het admin-formulier schrijft ze niet meer.
+  intro: tekst.default(""),
+  secties: z.array(z.object({ titel: tekst, items: lijst })).default([]),
+  facts: z
+    .object({ team: feit, niveau: feit, locatie: feit, uren: feit, salaris: feit })
+    .default({ team: "", niveau: "", locatie: "", uren: "", salaris: "" }),
   employmentType: tekst,
   gepubliceerdOp: tekst,
 });

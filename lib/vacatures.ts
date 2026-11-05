@@ -18,8 +18,15 @@ export interface Vacature {
   discipline: string; // korte label voor de lijst, bv. "Mendix · Senior"
   locatie: string;
   tags: string[];
+  /** De hele vacature als opgemaakte HTML uit de editor; de eerste alinea is de intro. */
+  inhoud?: string;
+  /** Afgeleid van `inhoud` bij het lezen: de tekst onder de header, ontsmet. */
+  inhoudHtml?: string;
+  /** Intro in de header. Bij `inhoud` afgeleid van de eerste alinea; anders het oude losse veld. */
   intro: string;
+  /** Oud model (vóór `inhoud`): alleen nog voor rijen die er nog zo uitzien. */
   secties: VacatureSectie[];
+  /** Optioneel kaartje naast de tekst; lege regels worden niet getoond. */
   facts: { team: string; niveau: string; locatie: string; uren: string; salaris: string };
   employmentType: string;
   gepubliceerdOp: string;

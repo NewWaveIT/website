@@ -15,7 +15,7 @@ faalt de unittest.
 | sectoren  | `cms_sectoren`  | 43     | `lib/sectoren-detail.ts` | `lib/sectoren-detail-data.ts` | `/admin/sectoren`  | `/sectoren`      |
 | services  | `cms_services`  | 49     | `lib/services.ts`        | `lib/services-data.ts`        | `/admin/services`  | `/diensten`      |
 | teamleden | `cms_teamleden` | 7      | `lib/team.ts`            | `lib/team-data.ts`            | `/admin/teamleden` | —                |
-| vacatures | `cms_vacatures` | 9      | `lib/vacatures.ts`       | `lib/vacatures-data.ts`       | `/admin/vacatures` | `/vacatures`     |
+| vacatures | `cms_vacatures` | 8      | `lib/vacatures.ts`       | `lib/vacatures-data.ts`       | `/admin/vacatures` | `/vacatures`     |
 
 ## Paginateksten
 
@@ -63,8 +63,8 @@ faalt de unittest.
 
 ## Aantallen
 
-- bronbestanden: 228
+- bronbestanden: 230
 - clientComponenten: 45
-- servercomponenten: 183
-- unittests: 40
-- e2etests: 15
+- servercomponenten: 185
+- unittests: 41
+- e2etests: 16

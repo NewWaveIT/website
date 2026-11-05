@@ -53,7 +53,9 @@ describe("elk schemaveld is te bewerken in de admin", () => {
     // Artikelen wijken af: de editor gebruikt andere veldnamen (cover, samenvatting,
     // inhoud) die inzichten-data.ts vertaalt, en titel komt van de rijtitel.
     artikelen: ["slug", "titel", "cat", "image", "intro", "body", "inhoudHtml", "auteurFoto"],
-    vacatures: ["slug"],
+    // `intro` en `secties` zijn het oude model, alleen nog gelezen voor rijen van vóór `inhoud`;
+    // `inhoudHtml` wordt bij het lezen afgeleid.
+    vacatures: ["slug", "intro", "secties", "inhoudHtml"],
     teamleden: ["slug", "naam"],
   };
 

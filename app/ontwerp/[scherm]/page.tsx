@@ -104,6 +104,20 @@ export default async function OntwerpScherm({ params }: { params: Promise<{ sche
     );
   }
 
+  if (sleutel === "editor-vacature") {
+    return (
+      <>
+        <Kop sleutel={sleutel} />
+        <ContentEditor
+          type="vacatures"
+          label={ADMIN_PADEN.vacatures.label}
+          listPath="/ontwerp"
+          row={null}
+        />
+      </>
+    );
+  }
+
   if (sleutel === "editor-webadres") {
     return (
       <>

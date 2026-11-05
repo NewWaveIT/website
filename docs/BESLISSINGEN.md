@@ -299,6 +299,22 @@ Cache Components streamt eerst een shell; daarna staat de HTTP-status vast en ve
 `/vacatures/[slug]` is de gedocumenteerde uitzondering: er zijn geen live vacatures, dus
 die geeft een 200 met `noindex`.
 
+**De vacaturetekst is één veld, en de eerste alinea is de intro** — 5 november 2026
+Een vacature bestond uit een losse intro, secties met alleen bullets (elke bullet een eigen
+invoerveld) en een kaartje met feiten. Een vacature met 12 koppen en 40 bullets was uren
+klikwerk, en de pagina kon geen alinea of subkop tonen. Nu is er één editor, "Vacaturetekst",
+met koppen, alinea's en opsommingen, waarin je de hele tekst in één keer plakt
+(`lib/cms/vacature-tekst.ts`). De eerste alinea is de intro in de header; de editor labelt
+hem, en `splitsVacature` doet dezelfde splitsing bij het lezen. Een aparte intro bestaat niet
+meer, want twee plekken voor dezelfde tekst lopen uit elkaar. Feiten zijn optioneel en lege
+regels worden niet getoond.
+Het plakken is een inschatting op de vorm van een regel (kort, geen punt aan het eind), niet
+een vertaler: klopt een kop niet, dan zet de redacteur hem met één klik om. Het oude model
+(`intro`, `secties`) wordt nog gelezen tot elke rij `inhoud` heeft
+(`supabase/scripts/20261105-vacatures-naar-een-tekstveld.sql`); daarna volgt het opruimen:
+die twee velden uit `lib/cms/schemas.ts`, de terugval op de vacaturepagina en de uitzondering
+in `tests/unit/cms-schemas.spec.ts`.
+
 **Wat per request verschilt, hoort niet in een cache-scope** — 18 september 2026
 `searchParams`, `cookies()` en `new Date()` mogen niet binnen `use cache`. De verleiding is
 om de pagina dan maar dynamisch te maken; de goedkopere uitweg is de waarde in de browser

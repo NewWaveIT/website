@@ -10,6 +10,19 @@ Welk niveau wanneer hoort, staat in [`CLAUDE.md`](CLAUDE.md#werkwijze-bij-elke-w
 Een wijziging zonder gevolg voor de site (alleen tests, documentatie, een refactor) krijgt
 geen eigen versie; die valt onder de eerstvolgende regel hieronder.
 
+## 1.3.0 — 5 november 2026
+
+- Een vacature opmaken kan nu in één groot tekstveld. Plak de hele vacature in één keer (uit
+  LinkedIn of Word): koppen, alinea's en opsommingen worden vanzelf herkend en de opsommingen
+  krijgen op de site het oranje vinkje. Koppen die niet kloppen zet je met één klik om.
+- De eerste alinea van de vacaturetekst is de intro in de header van de pagina. De editor
+  laat dat zien met het label "Intro in de header" bij die alinea.
+- Een vacature kan nu gewone alinea's en subkoppen tonen, niet alleen koppen met opsommingen.
+- Het kaartje met feiten naast de vacature is optioneel: lege regels, of het hele kaartje als
+  er niets is ingevuld, worden niet meer getoond.
+- Locatie, type dienstverband en publicatiedatum staan bij een nieuwe vacature al ingevuld.
+- Zoekmachines krijgen bij een vacature nu de volledige tekst, niet alleen de intro.
+
 ## 1.2.4 — 27 oktober 2026
 
 - Wie "verminderde beweging" aan heeft staan zag op de homepage nog steeds de klantenband

@@ -87,7 +87,7 @@ export async function generateMetadata({
   if (!v) return {};
   return {
     title: `Vacature ${v.functietitel}`,
-    description: kort(stripHtml(v.intro), 155),
+    description: kort(stripHtml(v.intro || v.inhoudHtml || ""), 155),
     alternates: { canonical: `/vacatures/${slug}` },
   };
 }
@@ -112,11 +112,23 @@ export default async function VacaturePage({ params }: { params: Promise<{ slug:
   const recTel = rec?.telefoon || contact.telefoonWeergave;
   const recMail = rec?.email || contact.email;
 
+  // Alleen de feiten die zijn ingevuld: een lege regel of een leeg kaartje is ruis.
+  const feiten = (
+    [
+      [t.labelTeam, v.facts.team],
+      [t.labelNiveau, v.facts.niveau],
+      [t.labelLocatie, v.facts.locatie],
+      [t.labelUren, v.facts.uren],
+      [t.labelSalaris, v.facts.salaris],
+    ] as const
+  ).filter(([, waarde]) => waarde.trim() !== "");
+
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "JobPosting",
     title: v.functietitel,
-    description: stripHtml(v.intro),
+    // Google voor banen toont de volledige vacature en verwacht die hier; alleen de intro is te weinig.
+    description: v.inhoudHtml ? `<p>${v.intro}</p>${v.inhoudHtml}` : stripHtml(v.intro),
     datePosted: v.gepubliceerdOp,
     // Zonder einddatum laat Google Jobs een vacature na verloop van tijd vallen;
     // een jaar na plaatsing is ruim en voorkomt dat een open rol stil verdwijnt.
@@ -145,7 +157,7 @@ export default async function VacaturePage({ params }: { params: Promise<{ slug:
           </div>
         }
         titel={v.functietitel}
-        leadHtml={v.intro}
+        leadHtml={v.intro || undefined}
       >
         <div className="hero-actions">
           <a href="#solliciteer" className="btn btn-primary">
@@ -161,18 +173,25 @@ export default async function VacaturePage({ params }: { params: Promise<{ slug:
       <section className="block">
         <div className="wrap-wide vac-grid">
           <div className="vac-body">
-            {v.secties.map((sectie) => (
-              <section key={sectie.titel}>
-                <h2>{sectie.titel}</h2>
-                <ul>
-                  {sectie.items.map((it, i) => (
-                    <li key={i}>
-                      <Check /> {it}
-                    </li>
-                  ))}
-                </ul>
-              </section>
-            ))}
+            {v.inhoudHtml ? (
+              // Eén stuk tekst uit de editor (al ontsmet in `vacatures-data`). De vinkjes bij de
+              // opsommingen komen uit de CSS, niet uit een icoon per regel.
+              <div className="vac-tekst" dangerouslySetInnerHTML={{ __html: v.inhoudHtml }} />
+            ) : (
+              // Oud model: secties met alleen bullets. Verdwijnt zodra elke rij `inhoud` heeft.
+              v.secties.map((sectie) => (
+                <section key={sectie.titel}>
+                  <h2>{sectie.titel}</h2>
+                  <ul>
+                    {sectie.items.map((it, i) => (
+                      <li key={i}>
+                        <Check /> {it}
+                      </li>
+                    ))}
+                  </ul>
+                </section>
+              ))
+            )}
           </div>
           <aside className="vac-aside" id="solliciteer">
             <div className="apply-card kaart">
@@ -217,30 +236,18 @@ export default async function VacaturePage({ params }: { params: Promise<{ slug:
                 solPrivacyLink: t.solPrivacyLink,
               }}
             />
-            <div className="facts">
-              <dl>
-                <div className="frow">
-                  <dt>{t.labelTeam}</dt>
-                  <dd>{v.facts.team}</dd>
-                </div>
-                <div className="frow">
-                  <dt>{t.labelNiveau}</dt>
-                  <dd>{v.facts.niveau}</dd>
-                </div>
-                <div className="frow">
-                  <dt>{t.labelLocatie}</dt>
-                  <dd>{v.facts.locatie}</dd>
-                </div>
-                <div className="frow">
-                  <dt>{t.labelUren}</dt>
-                  <dd>{v.facts.uren}</dd>
-                </div>
-                <div className="frow">
-                  <dt>{t.labelSalaris}</dt>
-                  <dd>{v.facts.salaris}</dd>
-                </div>
-              </dl>
-            </div>
+            {feiten.length > 0 && (
+              <div className="facts">
+                <dl>
+                  {feiten.map(([label, waarde]) => (
+                    <div className="frow" key={label}>
+                      <dt>{label}</dt>
+                      <dd>{waarde}</dd>
+                    </div>
+                  ))}
+                </dl>
+              </div>
+            )}
           </aside>
         </div>
       </section>

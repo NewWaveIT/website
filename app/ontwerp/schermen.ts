@@ -21,6 +21,11 @@ export const SCHERMEN = [
     titel: "Editor: nieuw item",
     toelichting: "Wat je ziet als je op Nieuw klikt.",
   },
+  {
+    sleutel: "editor-vacature",
+    titel: "Editor: nieuwe vacature",
+    toelichting: "Eén groot tekstveld waarin de hele vacature in één keer wordt geplakt.",
+  },
   { sleutel: "aanvragen", titel: "Aanvragenbord", toelichting: "Opvolging met kaartjes en lade." },
   { sleutel: "activiteit", titel: "Activiteit", toelichting: "Wie wat wanneer aanpaste." },
   { sleutel: "gebruikers", titel: "Gebruikers", toelichting: "Beheerders en hun toegang." },

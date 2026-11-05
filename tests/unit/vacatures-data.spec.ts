@@ -82,6 +82,67 @@ describe("getVacatures", () => {
     expect(v?.intro).toContain("<b>daar</b>");
   });
 
+  describe("met één tekstveld (inhoud)", () => {
+    /** Zo slaat het admin-formulier een nieuwe vacature op: geen aparte intro, secties of feiten. */
+    const nieuw = (inhoud: string) =>
+      rij("ai", "AI", { inhoud, intro: undefined, secties: undefined, facts: undefined });
+
+    it("leest een rij zonder losse intro, secties en feiten", async () => {
+      state.rows = [nieuw("<p>Intro.</p><h2>Kop</h2><p>Tekst.</p>")];
+      const [v] = await getVacatures();
+      expect(v?.functietitel).toBe("AI");
+      expect(v?.secties).toEqual([]);
+      expect(v?.facts).toEqual({ team: "", niveau: "", locatie: "", uren: "", salaris: "" });
+    });
+
+    it("haalt de intro uit de eerste alinea en laat de rest als tekst", async () => {
+      state.rows = [nieuw("<p>Dit is de intro.</p><h2>Kop</h2><p>Tekst.</p>")];
+      const [v] = await getVacatures();
+      expect(v?.intro).toBe("Dit is de intro.");
+      expect(v?.inhoudHtml).toBe("<h2>Kop</h2><p>Tekst.</p>");
+    });
+
+    it("laat een kop vóór de eerste alinea bij de tekst staan", async () => {
+      state.rows = [nieuw("<h2>Over de rol</h2><p>Intro.</p><p>Vervolg.</p>")];
+      const [v] = await getVacatures();
+      expect(v?.intro).toBe("Intro.");
+      expect(v?.inhoudHtml).toBe("<h2>Over de rol</h2><p>Vervolg.</p>");
+    });
+
+    it("ontsmet intro en tekst", async () => {
+      state.rows = [
+        nieuw(
+          "<p>Hoi <script>alert(1)</script><b>daar</b></p><p onclick='x()'>Tekst</p><script>x</script>",
+        ),
+      ];
+      const [v] = await getVacatures();
+      expect(v?.intro).not.toContain("<script");
+      expect(v?.intro).toContain("<b>daar</b>");
+      expect(v?.inhoudHtml).not.toContain("onclick");
+      expect(v?.inhoudHtml).not.toContain("<script");
+    });
+
+    it("gebruikt de oude losse intro niet meer zodra er inhoud is", async () => {
+      state.rows = [rij("ai", "AI", { inhoud: "<p>Nieuwe intro.</p>", intro: "Oude intro." })];
+      const [v] = await getVacatures();
+      expect(v?.intro).toBe("Nieuwe intro.");
+    });
+
+    it("heeft geen intro als de tekst met een lijst begint", async () => {
+      state.rows = [nieuw("<ul><li><p>een</p></li></ul>")];
+      const [v] = await getVacatures();
+      expect(v?.intro).toBe("");
+      expect(v?.inhoudHtml).toContain("<li>");
+    });
+
+    it("negeert een lege inhoud en valt terug op het oude model", async () => {
+      state.rows = [rij("oud", "Oud", { inhoud: "  " })];
+      const [v] = await getVacatures();
+      expect(v?.inhoudHtml).toBeUndefined();
+      expect(v?.secties[0]?.items).toEqual(["Mendix-ervaring"]);
+    });
+  });
+
   /** Zonder seed is er geen vangnet, dus een halve rij hoort niet te renderen. */
   it("slaat een onvolledige rij over", async () => {
     state.rows = [

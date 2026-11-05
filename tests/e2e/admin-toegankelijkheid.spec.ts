@@ -22,6 +22,7 @@ import AxeBuilder from "@axe-core/playwright";
 const SCHERMEN = [
   "/ontwerp/lijst",
   "/ontwerp/editor",
+  "/ontwerp/editor-vacature",
   "/ontwerp/aanvragen",
   "/ontwerp/activiteit",
   "/ontwerp/gebruikers",
