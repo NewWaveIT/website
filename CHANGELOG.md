@@ -10,6 +10,10 @@ Welk niveau wanneer hoort, staat in [`CLAUDE.md`](CLAUDE.md#werkwijze-bij-elke-w
 Een wijziging zonder gevolg voor de site (alleen tests, documentatie, een refactor) krijgt
 geen eigen versie; die valt onder de eerstvolgende regel hieronder.
 
+## 1.3.1 — 5 november 2026
+
+- De vacature-editor toont opsommingen nu met dezelfde oranje vinkjes als de site, in plaats van kale ingesprongen regels.
+
 ## 1.3.0 — 5 november 2026
 
 - Een vacature opmaken kan nu in één groot tekstveld. Plak de hele vacature in één keer (uit
