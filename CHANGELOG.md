@@ -10,6 +10,10 @@ Welk niveau wanneer hoort, staat in [`CLAUDE.md`](CLAUDE.md#werkwijze-bij-elke-w
 Een wijziging zonder gevolg voor de site (alleen tests, documentatie, een refactor) krijgt
 geen eigen versie; die valt onder de eerstvolgende regel hieronder.
 
+## 1.3.3 — 9 november 2026
+
+- Het Vink Bouw-logo in de "Vertrouwd door"-band toont de kubus nu als witte 3D-kubus, in plaats van een witte vlek.
+
 ## 1.3.2 — 9 november 2026
 
 - De "Vertrouwd door"-band op de homepage toont nu ook het logo van Vink Bouw.
