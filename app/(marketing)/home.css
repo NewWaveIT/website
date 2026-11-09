@@ -53,6 +53,11 @@
 }
 .logo-track {
   overflow: hidden;
+  /* De band is 34px hoog, maar sommige logo's zijn hoger (IND 52, Vink Bouw 50) en werden
+     boven en onder afgeknipt. Extra ruimte binnen de knip, met een negatieve marge die de
+     hoogte van de band gelijk houdt. */
+  padding-block: 12px;
+  margin-block: -12px;
   display: flex;
   -webkit-mask-image: linear-gradient(to right, transparent, #000 6%, #000 94%, transparent);
   mask-image: linear-gradient(to right, transparent, #000 6%, #000 94%, transparent);

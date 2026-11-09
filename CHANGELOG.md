@@ -10,6 +10,10 @@ Welk niveau wanneer hoort, staat in [`CLAUDE.md`](CLAUDE.md#werkwijze-bij-elke-w
 Een wijziging zonder gevolg voor de site (alleen tests, documentatie, een refactor) krijgt
 geen eigen versie; die valt onder de eerstvolgende regel hieronder.
 
+## 1.3.4 — 9 november 2026
+
+- Logo's in de "Vertrouwd door"-band worden niet meer boven en onder afgeknipt; dat was te zien bij het Vink Bouw-logo.
+
 ## 1.3.3 — 9 november 2026
 
 - Het Vink Bouw-logo in de "Vertrouwd door"-band toont de kubus nu als witte 3D-kubus, in plaats van een witte vlek.
