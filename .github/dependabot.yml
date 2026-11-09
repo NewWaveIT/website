@@ -5,6 +5,15 @@ updates:
     schedule:
       interval: "weekly"
     open-pull-requests-limit: 10
+    # eslint 10 en TypeScript 7 passen nog niet bij eslint-config-next (de plugins import, react
+    # en jsx-a11y stoppen bij eslint 9) en typescript-eslint (stopt onder TypeScript 6.1); de CI
+    # faalde daarop (PR 16). Pas weer meenemen als Next.js ze ondersteunt. Beveiligingsupdates
+    # blijven gewoon binnenkomen: deze regel geldt alleen voor gewone versie-updates.
+    ignore:
+      - dependency-name: "eslint"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "typescript"
+        update-types: ["version-update:semver-major"]
     groups:
       npm-minor-patch:
         update-types: ["minor", "patch"]
