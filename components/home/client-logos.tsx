@@ -41,6 +41,9 @@ export const CLIENTS: Client[] = [
     h: 211,
     hoogte: 44,
   },
+  // vink-bouw.svg: de witte variant van vinkbouw.nl (nieuwe klant; gebruik afgestemd met de klant).
+  // Het bestand heeft ruime witruimte boven en onder, vandaar de grotere weergavehoogte.
+  { naam: "Vink Bouw", logo: "/assets/logos/klanten/vink-bouw.svg", w: 209, h: 54, hoogte: 50 },
 ];
 
 export { AWARD } from "@/lib/award";
